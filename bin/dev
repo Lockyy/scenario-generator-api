@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -e
+
+cp Dockerfile.development Dockerfile
+docker build -t codelittinc/fletcher .
+rm Dockerfile
+
+docker run --name fletcher-db -e POSTGRES_PASSWORD=postgres -d postgres
+
+docker run \
+    -ti \
+    --name fletcher-ruby \
+    -e FLETCHER_DATABASE_PASSWORD=postgres \
+    -e FLETCHER_DATABASE_USER=postgres \
+    -v $(pwd):/share \
+    -p 3000:3000 \
+    -p 4000:4000 \
+    --link fletcher-db:db codelittinc/fletcher /bin/bash -l
+
+echo -e "Next steps:\n"
+echo -e "\t1. Bundle install"
+echo -e "\t2. rake db:create"
+echo -e "\t3. run ./script/seed.sh from your docker host"
