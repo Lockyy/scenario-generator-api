@@ -4,6 +4,7 @@ var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.hot.config');
 var sleep = require('sleep');
+var ip = require( 'os' ).networkInterfaces()['eth0'][0]['address']
 
 var comments = [{author: 'Pete Hunt', text: 'Hey there!'},
   {author: 'Justin Gordon', text: 'Aloha from @railsonmaui'}];
@@ -33,7 +34,7 @@ server.app.post('/comments.json', function(req, res) {
   res.send(JSON.stringify(req.body.comment));
 });
 
-server.listen(3000, 'localhost', function(err) {
+server.listen(3000, ip, function(err) {
   if (err) {
     console.log(err);
   }
