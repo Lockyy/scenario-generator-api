@@ -1,15 +1,15 @@
-source "https://rubygems.org"
-ruby "2.2.0"
+source 'https://rubygems.org'
+ruby '2.2.0'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.3'
 # Use sqlite3 as the database for Active Record
-gem "pg"
+gem 'pg'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
-gem "bootstrap-sass", "~> 3.3.1"
+gem 'bootstrap-sass', '~> 3.3.1'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 # Use CoffeeScript for .coffee assets and views
@@ -30,12 +30,12 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Rails Html Sanitizer for HTML sanitization
-gem "rails-html-sanitizer"
+gem 'rails-html-sanitizer'
 
 # Use Unicorn as the app server
 # gem 'unicorn'
 
-gem "autoprefixer-rails"
+gem 'autoprefixer-rails'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -50,31 +50,31 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
-  gem "spring-commands-rspec"
+  gem 'spring-commands-rspec'
 
   # Manage application processes
-  gem "foreman"
+  gem 'foreman'
 
-  gem "factory_girl_rails"
+  gem 'factory_girl_rails'
 
-  gem "rubocop", require: false
+  gem 'rubocop', require: false
 
-  gem "ruby-lint", require: false
+  gem 'ruby-lint', require: false
 
-  gem "scss-lint", require: false
+  gem 'scss-lint', require: false
 
-  gem "brakeman", require: false
+  gem 'brakeman', require: false
 
-  gem "bundler-audit", require: false
+  gem 'bundler-audit', require: false
 
-  gem "rainbow"
+  gem 'rainbow'
 end
 
 group :test  do
-  gem "rspec-rails"
-  gem "capybara"
-  gem "capybara-screenshot"
-  gem "capybara-webkit"
-  gem "database_cleaner"
-  gem "launchy"
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'capybara-screenshot'
+  gem 'capybara-webkit'
+  gem 'database_cleaner'
+  gem 'launchy'
 end
