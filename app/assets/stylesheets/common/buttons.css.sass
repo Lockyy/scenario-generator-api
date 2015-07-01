@@ -1,0 +1,22 @@
+@import 'common/variables'
+
+body .btn
+  width: 100%
+  letter-spacing: 1px
+  border-radius: 0px
+  font-size: 12px
+  text-transform: uppercase
+  padding-top: 10px
+  padding-bottom: 10px
+
+  &.btn-red
+    background: $primary-red
+    color: white
+    &:hover, &:active, &:focus
+      color: white
+
+  &.btn-white
+    background: white
+    color: $primary-red
+    &:hover, &:active, &:focus
+      color: $primary-red
