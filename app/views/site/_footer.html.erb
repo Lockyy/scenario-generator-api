@@ -2,7 +2,11 @@
   <div class="container">
     <div class="row">
       <div class="col-xs-12 logo">
-        <%= image_tag 'logos/footer-logo.png' %>
+        <% if params[:action] == 'short' %>
+          <%= image_tag 'logos/mark-red.png' %>
+        <% else %>
+          <%= image_tag 'logos/mark-grey.png' %>
+        <% end %>
       </div>
     </div>
     <div class="row">
