@@ -8,13 +8,30 @@
   background-position: 100%
   text-align: center
   img
-    box-shadow: 0px 3px 10px $shadow-grey
+    box-shadow: 0px 3px 10px $grey
   .container > .row
     @include flexbox-centered-children
   .header
-    font-size: 20px
+    font-size: 30px
   .slide-show-boxes
     margin-top: 50px
+    .slide-show-box
+      img
+        box-shadow: none
+        margin-bottom: 10px
+        height: 35px
+        &.active
+          display: none
+      &.active
+        img
+          display: none
+          &.active
+            display: inline-block
+
+    .second-row
+      position: relative
+      top: -1px
+      left: -1px
     .slide-show-box
       cursor: pointer
       padding-top: 15px
@@ -22,20 +39,16 @@
       @include flexbox-centered-children
       color: $font-grey
       &.discover
-        border-right: 1px solid $shadow-grey
-        border-bottom: 1px solid $shadow-grey
-      &.share
-        border-top: 1px solid $shadow-grey
-        border-right: 1px solid $shadow-grey
-      &.review
-        border-bottom: 1px solid $shadow-grey
-        border-left: 1px solid $shadow-grey
+        border-right: 1px solid $grey
+        border-bottom: 1px solid $grey
       &.learn
-        border-top: 1px solid $shadow-grey
-        border-left: 1px solid $shadow-grey
+        border-top: 1px solid $grey
+        border-left: 1px solid $grey
+      &.share.active
+        border-top: 1px solid $grey
       &.active
         color: $primary-red
-        background: #DFDFDF
+        background: $shadow-grey
 
 .slides
   color: white
@@ -49,7 +62,7 @@
         content: ''
         width: 12px
         height: 12px
-        border: 2px solid grey
+        border: 1px solid grey
         border-radius: 45px
       &.active
         &::before
@@ -75,7 +88,7 @@ $x-offset: 200px
 $y-offset: 0px
 
 .slides.carousal
-  color: $shadow-grey
+  color: $font-grey
   text-align: center
 
   .slidesjs-navigation
