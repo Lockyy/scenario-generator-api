@@ -19,6 +19,3 @@
 
 //= require generated/client-bundle
 //= require turbolinks
-
-//= require_tree ./app/
-//= require_tree ./common/
