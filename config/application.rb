@@ -25,5 +25,8 @@ module Fletcher
 
     # Add client/assets/stylesheets to asset pipeline's search path.
     config.assets.paths << Rails.root.join('client', 'assets', 'stylesheets')
+
+    # add app/services/**/* to autoload_path
+    config.autoload_paths += Dir[Rails.root.join('app', 'services', '{**/}')]
   end
 end
