@@ -299,6 +299,7 @@ DEPENDENCIES
   foreman
   jbuilder (~> 2.0)
   jquery-rails
+  jwt
   launchy
   omniauth
   omniauth-yammer
