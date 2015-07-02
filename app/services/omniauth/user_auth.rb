@@ -1,6 +1,6 @@
 module Omniauth
   class UserAuth
-    attr_reader :user
+    attr_reader :user, :result
 
     def initialize(user, provider_result)
       @user = user
@@ -8,7 +8,8 @@ module Omniauth
     end
 
     def authenticate!
-      @user ||= User.joins(:user_oauths).where(user_oauths: {provider: @result.provider, uid: @result.uid}).first
+      # TODO: Refactor and use scope
+      @user ||= User.joins(:user_oauths).where(user_oauths: { provider: @result.provider, uid: @result.uid }).first
       @user ||= create_user!
       update_info!
       @user

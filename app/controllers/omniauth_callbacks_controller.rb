@@ -1,21 +1,28 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def yammer
-    result = Omniauth::Result.new(env["omniauth.auth"])
+    # TODO: maybe it's better to use a separated controller to create tokens
+    token = authenticate_user
+    session['auth_token'] = token.try(:encode)
 
-    user_auth = Omniauth::UserAuth.new(current_user, result)
-
-    if user_auth.authenticate!
-      sign_in user_auth.user
-      set_flash_message(:notice, :success, kind: result.provider.capitalize) if is_navigational_format?
-      #redirect_to dashboard_path
-      redirect_to root_path
-    else
-      set_flash_message(:error, :error, kind: result.provider.capitalize) if is_navigational_format?
-      redirect_to root_path
-    end
+    redirect_to root_path
   end
 
   def failure
-    redirect_to root_url, alert: 'Sorry, something went wrong while trying to log you in.. Please try again!'
+    redirect_to root_url, alert: 'Sorry, something went wrong... Please try again!'
+  end
+
+  private
+
+  def authenticate_user
+    result = Omniauth::Result.new(env['omniauth.auth'])
+    user_auth = Omniauth::UserAuth.new(current_user, result)
+    provider = result.provider.capitalize
+
+    if user_auth.authenticate!
+      set_flash_message(:notice, :success, kind: provider)
+      Fletcher::AuthToken.new(user_auth.user, result).create!
+    else
+      set_flash_message(:error, :error, kind: provider)
+    end
   end
 end

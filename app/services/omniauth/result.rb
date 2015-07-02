@@ -19,5 +19,9 @@ module Omniauth
     def avatar_url
       original_oauth_info.info.image
     end
+
+    def token
+      original_oauth_info.credentials.token
+    end
   end
 end

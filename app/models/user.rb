@@ -6,4 +6,5 @@ class User < ActiveRecord::Base
          :omniauthable, omniauth_providers: [:yammer]
 
   has_many :user_oauths, dependent: :destroy
+  has_many :tokens, dependent: :destroy
 end
