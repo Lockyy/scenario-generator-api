@@ -1,0 +1,142 @@
+@import "common/variables"
+
+.slideshow
+  padding-top: 50px
+  padding-bottom: 50px
+  background-image: image_url('backgrounds/tour.jpg')
+  background-size: cover
+  background-position: 100%
+  text-align: center
+  img
+    box-shadow: 0px 3px 10px $grey
+  .container > .row
+    @include flexbox-centered-children
+  .header
+    font-size: 30px
+  .slide-show-boxes
+    margin-top: 50px
+    .slide-show-box
+      img
+        box-shadow: none
+        margin-bottom: 10px
+        height: 35px
+        &.active
+          display: none
+      &.active
+        img
+          display: none
+          &.active
+            display: inline-block
+
+    .second-row
+      position: relative
+      top: -1px
+      left: -1px
+    .slide-show-box
+      cursor: pointer
+      padding-top: 15px
+      padding-bottom: 15px
+      @include flexbox-centered-children
+      color: $font-grey
+      &.discover
+        border-right: 1px solid $grey
+        border-bottom: 1px solid $grey
+      &.learn
+        border-top: 1px solid $grey
+        border-left: 1px solid $grey
+      &.share.active
+        border-top: 1px solid $grey
+      &.active
+        color: $primary-red
+        background: $shadow-grey
+
+.slides
+  color: white
+  @include sans-serif
+  .slidesjs-pagination-item
+    a
+      display: block
+      color: transparent !important
+      &::before
+        display: block
+        content: ''
+        width: 12px
+        height: 12px
+        border: 1px solid grey
+        border-radius: 45px
+      &.active
+        &::before
+          border-color: $primary-red
+  .page-content
+    padding-bottom: 0px
+
+.slidesjs-pagination
+  list-style: none
+  margin-left: 0px
+  text-align: center
+  padding-left: 0px
+  .slidesjs-pagination-item
+    display: inline-block
+    margin-right: 5px
+
+.slidesjs-navigation
+  color: transparent !important
+
+// Carousal slide css
+
+$x-offset: 200px
+$y-offset: 0px
+
+.slides.carousal
+  color: $font-grey
+  text-align: center
+
+  .slidesjs-navigation
+    display: block
+    height: 500px
+    position: absolute
+    width: 50%
+    cursor: pointer
+    z-index: 99
+
+  .slidesjs-previous
+
+  .slidesjs-next
+    right: 0px
+
+  .slidesjs-pagination
+    display: none
+
+  .front, .left, .right
+    transition: 1s
+    margin-top: 150px
+    display: block !important
+    img
+      transition: 1s
+
+  .left, .right
+    .caption
+      display: none
+
+  .left, .right
+    opacity: 0.5
+    z-index: 2 !important
+    -ms-transform: scale(0.8, 0.8)
+    -webkit-transform: scale(0.8, 0.8)
+    transform: scale(0.8, 0.8)
+
+  .front
+    left: 0px !important
+    top: $y-offset !important
+    z-index: 3 !important
+
+  .left
+    left: 0px - $x-offset !important
+
+  .right
+    left: $x-offset !important
+
+.slides
+  .slidesjs-container
+    margin-left: auto
+    margin-right: auto//
