@@ -9,19 +9,29 @@ module Omniauth
     end
 
     def email
-      original_oauth_info.info.email
+      info.email
     end
 
     def name
-      original_oauth_info.info.name
+      info.name
     end
 
     def avatar_url
-      original_oauth_info.info.image
+      info.image
     end
 
     def token
       original_oauth_info.credentials.token
+    end
+
+    private
+
+    def info
+      original_oauth_info.info.nil? ? Hash.new('') : original_oauth_info.info
+    end
+
+    def credentials
+      original_oauth_info.credentials.nil? ? Hash.new('') : original_oauth_info.credentials
     end
   end
 end
