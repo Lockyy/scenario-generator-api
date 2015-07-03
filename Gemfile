@@ -63,6 +63,7 @@ group :development, :test do
   gem 'bundler-audit', require: false
   gem 'rainbow'
 
+  gem 'quiet_assets'
   gem "better_errors"
   gem "binding_of_caller"
   gem 'pry-rails'
