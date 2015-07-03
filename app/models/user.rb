@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
 
   scope :with_oauth, ->(provider, uid) { joins(:user_oauths).where(user_oauths: { provider: provider, uid: uid }) }
 
+  validates :name, presence: true
+
   def self.generate_password
     Devise.friendly_token
   end
