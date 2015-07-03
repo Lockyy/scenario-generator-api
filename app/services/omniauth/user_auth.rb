@@ -2,17 +2,14 @@ module Omniauth
   class UserAuth
     attr_reader :user, :result
 
-    def initialize(user, provider_result)
-      @user = user
+    def initialize(provider_result)
       @result = provider_result
     end
 
     def authenticate!
-      # TODO: Refactor and use scope
-      @user ||= User.joins(:user_oauths).where(user_oauths: { provider: @result.provider, uid: @result.uid }).first
+      @user ||= User.find_with_oauth(@result.provider, @result.uid)
       @user ||= create_user!
       update_info!
-      @user
     end
 
     private
@@ -24,9 +21,7 @@ module Omniauth
 
     def update_info!
       @user.update(name: @result.name, email: @result.email, avatar_url: @result.avatar_url)
-      oauth = @user.user_oauths.where(provider: @result.provider, uid: @result.uid).first_or_initialize
-      oauth.last_login_hash = @result.original_oauth_info || {}
-      oauth.save
+      @user.update_oauth!(@result.provider, @result.uid, @result.original_oauth_info)
       @user
     end
   end

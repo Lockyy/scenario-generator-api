@@ -14,7 +14,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def authenticate_user
     result = Omniauth::Result.new(env['omniauth.auth'])
-    user_auth = Omniauth::UserAuth.new(current_user, result)
+    user_auth = Omniauth::UserAuth.new(result)
     provider = result.provider.capitalize
 
     if user_auth.authenticate!
