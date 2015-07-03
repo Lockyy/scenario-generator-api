@@ -1,0 +1,21 @@
+<div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 logo">
+        <% if params[:action] == 'short' %>
+          <%= image_tag 'logos/mark-red.svg' %>
+        <% else %>
+          <%= image_tag 'logos/mark-grey.svg' %>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">© Copyright 2015 Jones Lang LaSalle, IP, Inc.</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <%= link_to 'Terms', '#' %> - <%= link_to 'Privacy', '#' %> - <%= link_to 'Contact', '/contact' %> - <%= link_to 'Support', '/support' %>
+      </div>
+    </div>
+  </div>
+</div>
