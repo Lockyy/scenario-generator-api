@@ -72,6 +72,7 @@ group :development, :test do
 end
 
 group :test  do
+  gem 'shoulda-matchers'
   gem 'capybara'
   gem 'capybara-screenshot'
   gem 'capybara-webkit'
