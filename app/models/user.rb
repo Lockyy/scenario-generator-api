@@ -24,4 +24,8 @@ class User < ActiveRecord::Base
     oauth.save
     oauth
   end
+
+  def create_token!(value)
+    tokens.create!(token: value)
+  end
 end
