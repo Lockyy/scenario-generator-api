@@ -1,5 +1,4 @@
 class SiteController < ApplicationController
-
   layout 'site'
 
   def long
@@ -9,15 +8,14 @@ class SiteController < ApplicationController
   end
 
   def contact
-    @title = "Contact us"
+    @title = 'Contact us'
 
     render 'contact'
   end
 
   def support
-    @title = "Employee Support"
+    @title = 'Employee Support'
 
     render 'contact'
   end
-
 end
