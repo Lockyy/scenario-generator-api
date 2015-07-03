@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   get 'short', to: 'site#short'
   get 'contact', to: 'site#contact'
   get 'support', to: 'site#support'
+  get 'app', to: 'app#index'
 end

@@ -1,10 +1,9 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def yammer
-    # TODO: maybe it's better to use a separated controller to create tokens
     token = authenticate_user
     session['auth_token'] = token.try(:encode)
 
-    redirect_to root_path
+    redirect_to app_path
   end
 
   def failure
