@@ -1,10 +1,15 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def yammer
-    user = authenticate_user
-    token = generate_token(user) unless user.nil?
-    session['auth_token'] = token.try(:encode)
+    result = Omniauth::Result.new(env['omniauth.auth'])
+    user = authenticate_user!(result)
 
-    redirect_to app_path
+    if user.nil?
+      redirect_to root_url
+    else
+      token = generate_token!(user, result)
+      session['auth_token'] = token.try(:encode)
+      redirect_to app_path
+    end
   end
 
   def failure
@@ -13,8 +18,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   private
 
-  def authenticate_user
-    result = Omniauth::Result.new(env['omniauth.auth'])
+  def authenticate_user!(result)
     user_auth = Omniauth::UserAuth.new(result)
     provider = result.provider.capitalize
 
@@ -27,7 +31,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     user_auth.user
   end
 
-  def generate_token(user)
+  def generate_token!(user, result)
     secret = Rails.application.secrets.secret_key_base
     Fletcher::AuthToken.new(user, result.token, secret).create!
   end
