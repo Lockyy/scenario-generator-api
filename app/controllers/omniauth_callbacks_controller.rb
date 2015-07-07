@@ -7,7 +7,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to root_url
     else
       token = generate_token!(user, result)
-      session['auth_token'] = token.try(:encode)
+      cookies['auth_token'] = token.try(:encode)
+      sign_in user
       redirect_to app_path
     end
   end
