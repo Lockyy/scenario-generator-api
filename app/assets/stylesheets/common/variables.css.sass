@@ -8,9 +8,10 @@ $grey: #DBDCDD
 $font-grey: #969595
 $header-font-grey: #3C3C3B
 
-
 $serif-font-family: "adobe-garamond-pro", serif
 $sans-serif-font-family: 'Open Sans', sans-serif
+
+$default_rounded_amount: 5px
 
 @mixin serif
   font-family: $serif-font-family
@@ -26,3 +27,8 @@ $sans-serif-font-family: 'Open Sans', sans-serif
   -webkit-box-align: center
   align-items: center
   justify-content: center
+
+@mixin round-corners($amount: $default_rounded_amount)
+  border-radius: $amount
+  -moz-border-radius: $amount
+  -webkit-border-radius: $amount

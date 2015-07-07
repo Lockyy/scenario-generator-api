@@ -1,0 +1,77 @@
+@import 'bootstrap/variables'
+@import "common/variables"
+
+.welcome-message
+  background-size: cover
+  background-position: bottom center
+  color: white
+  font-weight: 100
+  .container
+    position: relative
+    .header
+      font-size: 30px
+    .message
+      font-size: 20px
+      margin: 0 auto
+      max-width: 55%
+    .close-welcome
+      display: none
+
+@media only screen and (max-width: 750px)
+  .welcome-message
+    background-image: image_url('backgrounds/welcome_message/welcome_message_mobile.jpg')
+    background-position: 100% bottom center
+    margin-top: -60px
+    padding-top: 60px
+    height: 100vh
+    .text
+      .header
+        margin: 20px 0
+        font-size: 30px
+      .message
+        font-size: 16px
+        max-width: 85%
+      .close-welcome
+        color: $primary-red
+        display: block
+        margin: 50px auto
+        padding: 10px 0
+        width: 100px
+        text-transform: uppercase
+        font-weight: bold
+        background: $primary-grey
+        @include round-corners(25px)
+
+@media only screen and (min-width: 750px) and (max-width: $screen-md-max)
+  .welcome-message
+    background-image: image_url('backgrounds/welcome_message/welcome_message_1200.jpg')
+    height: 420px
+    .text
+      font-size: 16px
+      .header
+        margin-top: 40px 0
+
+@media only screen and (min-width: $screen-md-max) and (max-width: $screen-lg-min)
+  .welcome-message
+    background-image: image_url('backgrounds/welcome_message/welcome_message_1600.jpg')
+    height: 420px
+    .text
+      font-size: 20px
+      .header
+        margin-top: 70px
+        font-size: 50px
+      .message
+        margin: 0 auto
+        max-width: 55%
+
+@media only screen and (min-width: $screen-lg-min)
+  .welcome-message
+    padding: 0 0 150px 0
+    background-image: image_url('backgrounds/welcome_message/welcome_message_large.jpg')
+    background-size: cover
+    height: 675px
+
+/* CSS for high-resolution devices */
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)
+  .welcome-message
+    background-image: image_url('backgrounds/welcome_message/welcome_message_large@2x.jpg')
