@@ -9,11 +9,16 @@ class User < ActiveRecord::Base
   has_many :tokens, dependent: :destroy
 
   scope :with_oauth, ->(provider, uid) { joins(:user_oauths).where(user_oauths: { provider: provider, uid: uid }) }
+  scope :with_token, ->(token) { joins(:tokens).where(tokens: { token: token }) }
 
   validates :name, presence: true
 
   def self.generate_password
     Devise.friendly_token
+  end
+
+  def self.find_with_token(token)
+    with_token(token).first
   end
 
   def self.find_with_oauth(provider, uid)

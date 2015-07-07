@@ -6,8 +6,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if user.nil?
       redirect_to root_url
     else
-      token = generate_token!(user, result)
-      cookies['auth_token'] = token.try(:encode)
+      generate_token!(user, result)
       sign_in user
       redirect_to app_path
     end
@@ -34,6 +33,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def generate_token!(user, result)
     secret = Rails.application.secrets.secret_key_base
-    Fletcher::AuthToken.new(user, result.token, secret).create!
+    token = Fletcher::AuthToken.new(user, result.token, secret).create!
+    cookies['auth_token'] = { value: token.try(:encode!), expires: 24.hours.from_now }
+    token
   end
 end
