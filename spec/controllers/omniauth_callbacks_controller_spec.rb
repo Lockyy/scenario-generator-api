@@ -14,9 +14,14 @@ describe OmniauthCallbacksController do
     env
   end
 
+  def stub_sign_in
+    allow(@controller).to receive(:sign_in)
+  end
+
   before :each do
     request.env['devise.mapping'] = Devise.mappings[:user]
     @env = stub_env_for_omniauth
+    stub_sign_in
     @oauth_hash = @env['omniauth.auth']
   end
 
@@ -50,17 +55,17 @@ describe OmniauthCallbacksController do
     end
 
     it 'creates a new user token' do
-      token = Token.find_by_token(@oauth_hash.credentials.token)
+      user = User.find_with_oauth(@oauth_hash.provider, @oauth_hash.uid)
 
-      expect(token).not_to be_nil
+      expect(user.tokens.size).to be_eql(1)
     end
 
     it 'sets the auth_token' do
-      expect(session['auth_token']).not_to be_nil
+      expect(cookies['auth_token']).not_to be_nil
     end
 
     it 'encodes the auth_token' do
-      expect(session['auth_token']).not_to be_eql(@oauth_hash.credentials.token)
+      expect(cookies['auth_token']).not_to be_eql(@oauth_hash.credentials.token)
     end
 
     it { is_expected.to redirect_to app_path }
