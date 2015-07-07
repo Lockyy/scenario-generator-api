@@ -37,6 +37,6 @@ class User < ActiveRecord::Base
   end
 
   def first_login?
-    sign_in_count == 0
+    sign_in_count == 1
   end
 end
