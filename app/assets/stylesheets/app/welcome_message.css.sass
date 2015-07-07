@@ -14,7 +14,17 @@
       font-size: 20px
       margin: 0 auto
       max-width: 55%
-    .close-welcome
+    .close-welcome-message
+      font-size: 13px
+      color: white
+      position: absolute
+      top: 30px
+      right: 10px
+      .glyphicon-remove
+        margin-left: 10px
+        font-size: 16px
+        font-weight: lighter
+    .close-welcome-button
       display: none
 
 @media only screen and (max-width: 750px)
@@ -31,7 +41,9 @@
       .message
         font-size: 16px
         max-width: 85%
-      .close-welcome
+      .close-welcome-message
+        display: none
+      .close-welcome-button
         color: $primary-red
         display: block
         margin: 50px auto
