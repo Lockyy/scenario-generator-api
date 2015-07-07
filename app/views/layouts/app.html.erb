@@ -9,8 +9,8 @@
 <body class="app <%= params[:action] %>">
 
 <%= render 'app/header' %>
-<%#<%= render 'welcome_message' if current_user.first_login? %>
-<%= render 'welcome_message' %>
+
+<%= render 'welcome_message' if current_user && current_user.first_login? %>
 
 <%= yield %>
 

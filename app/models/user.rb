@@ -30,4 +30,8 @@ class User < ActiveRecord::Base
   def create_token!(value)
     tokens.create!(token: value)
   end
+
+  def first_login?
+    sign_in_count == 0
+  end
 end
