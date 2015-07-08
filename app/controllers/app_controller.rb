@@ -1,7 +1,21 @@
 class AppController < ApplicationController
   layout 'app'
 
+  before_filter :authenticate!
+
   def index
-    @auth_token = session.delete('auth_token')
+  end
+
+  private
+
+  def authenticate!
+    @auth_token = auth_token
+    @user = User.find_with_token(@auth_token)
+
+    redirect_to short_path if @auth_token.nil? || @user.nil?
+  end
+
+  def auth_token
+    cookies['auth_token'] || headers['X-Authentication'] || params['auth_token']
   end
 end

@@ -1,6 +1,6 @@
 module Fletcher
   class AuthToken
-    attr_reader :encode, :value
+    attr_reader :value, :user, :encoded
 
     def initialize(user, value, secret)
       @user = user
@@ -9,12 +9,12 @@ module Fletcher
     end
 
     def create!
-      @token = @user.create_token!(@value)
+      @token = @user.create_token!(encode!)
       self
     end
 
-    def encode(encoder = Fletcher::Token::Encoder::JWTEncoder)
-      encoder.encode(value, @secret)
+    def encode!(encoder = Fletcher::Token::Encoder::JWTEncoder)
+      @encoded ||= encoder.encode(value, @secret)
     end
   end
 end

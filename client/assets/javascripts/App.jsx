@@ -8,7 +8,7 @@ $(function onLoad() {
       React.render(
         <div>
           <div className='container'>
-              <h3 className='open-sans-light'>{token !== "" ? 'AuthToken: ' + token : 'Please login!'}</h3>
+              <h3 className='open-sans-light'>{token !== "" && token !== undefined ? 'Welcome to fletcher' : 'Please login!'}</h3>
           </div>
         </div>,
         document.getElementById('content')

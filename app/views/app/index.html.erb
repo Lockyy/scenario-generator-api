@@ -1,10 +1,8 @@
+
 <% flash.each do |name, msg| -%>
-  <%= content_tag :div, msg, class: name %>
+  <% name = name == 'notice' ? 'success' : name  %>
+  <%= content_tag :div, msg, class: "alert alert-#{name}" %>
 <% end -%>
 
-<h1>Using React</h1>
-<hr/>
-
-<%= link_to "Sign in with Yammer", user_omniauth_authorize_path(:yammer) %>
-
 <div id="content" data-auth-token='<%= @auth_token %>'></div>
+
