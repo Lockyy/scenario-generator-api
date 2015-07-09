@@ -1,8 +1,5 @@
+<%= render 'app/flash_messages' %>
 
-<% flash.each do |name, msg| -%>
-  <% name = name == 'notice' ? 'success' : name  %>
-  <%= content_tag :div, msg, class: "alert alert-#{name}" %>
-<% end -%>
-
-<div id="content" data-auth-token='<%= @auth_token %>'></div>
-
+<div class="container">
+  <div id="content"></div>
+</div>
