@@ -1,0 +1,210 @@
+$light-grey: #f6f6f6
+$medium-grey: #e5e6e7
+$dark-grey: #929497
+$red: #b8141a
+
+$screen-xs:                  480px
+$screen-xs-min:              $screen-xs
+$screen-phone:               $screen-xs-min
+
+$screen-sm:                  768px
+$screen-sm-min:              $screen-sm
+$screen-tablet:              $screen-sm-min
+
+$screen-md:                  992px
+$screen-md-min:              $screen-md
+$screen-desktop:             $screen-md-min
+
+$screen-lg:                  1200px
+$screen-lg-min:              $screen-lg
+$screen-lg-desktop:          $screen-lg-min
+
+$screen-xs-max:              ($screen-sm-min - 1)
+$screen-sm-max:              ($screen-md-min - 1)
+$screen-md-max:              ($screen-lg-min - 1)
+
+.product
+  margin: 10px 0
+  padding: 0
+
+  .content
+    height: 450px
+    background: $light-grey
+    overflow: hidden
+    border-top: 2px solid $red
+    padding: 0
+
+    .data
+      padding: 10px 25px
+      display: flex
+      order: 1
+      flex-direction: column
+      justify-content: space-between
+
+      .title
+        margin-top: 0
+        font-weight: 600
+        font-size: 1em
+        margin-bottom: 0
+
+      .company
+        font-size: 0.75em
+        margin-top: 0
+
+      .description
+        overflow: hidden
+        font-size: 0.70em
+        line-height: 1.25em
+
+      .review
+        display: flex
+        justify-content: space-between
+        height: 30px
+        color: #929497
+        font-size: 0.66666666em
+
+      .footer
+        font-size: 0.60em
+        border-top: 1px solid $medium-grey
+        color: $dark-grey
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        padding: 10px 0
+
+    .picture
+      order: 2
+      display: flex
+
+      padding: 0
+
+  &.box-0
+    @extend .col-xs-12
+    @extend .col-md-3
+
+    padding: 0
+
+    .content
+      height: 215px
+
+      .data
+        .description
+          display: none
+
+  &.box-1
+    @extend .col-md-3
+    @extend .col-xs-12
+    padding: 0
+
+    .content
+      flex-direction: column-reverse
+      justify-content: space-between
+      overflow: none
+
+      .data
+        @extend .col-xs-12
+        @extend .col-md-12
+        height: 60%
+
+        .description
+          max-height: 45px
+
+      .picture
+        @extend .col-xs-12
+        @extend .col-md-12
+
+        height: 40%
+        padding: 0
+
+  &.box-2
+    @extend .col-xs-12
+    @extend .col-md-6
+
+    padding: 0
+
+    .data
+      @extend .col-xs-12
+      @extend .col-md-6
+
+    .picture
+      @extend .col-xs-12
+      @extend .col-md-6
+
+      padding: 0
+
+  &.box-3
+    @extend .col-xs-12
+    @extend .col-md-9
+
+    padding: 0
+
+    .data
+      @extend .col-xs-12
+      @extend .col-md-4
+
+    .picture
+      @extend .col-xs-12
+      @extend .col-md-8
+
+  &.no-pic-box
+    .content
+      .data
+        @extend .col-xs-12
+        @extend .col-md-12
+
+        height: 100%
+
+        .description
+          max-height: 220px
+
+      .picture
+        height: 0
+        display: none
+
+@media only screen and (max-width: $screen-sm-max)
+  body.app .container
+    width: 100%
+    overflow-x: hidden
+    padding: 0
+    margin: 0
+
+  .product
+    .content
+      display: flex
+      flex-direction: column-reverse
+      font-size: 17.5px
+
+      .data
+        height: 60%
+
+      .picture
+        height: 40%
+        padding: 0
+
+@media only screen and (min-width: $screen-md-min)
+  .product
+    .content
+      display: flex
+      flex-direction: row
+
+@media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max)
+  .product
+    .content
+      margin: 20px 10px 0 0
+      font-size: 20px
+
+      .data
+        .description
+          max-height: 255px
+
+@media only screen and (min-width: $screen-lg-min)
+  .product
+    .content
+      margin: 60px 40px 0 0
+      font-size: 25px
+      .data
+
+        .description
+          height: 250px
+          max-height: 250px
+
