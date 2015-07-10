@@ -1,4 +1,6 @@
 import React from 'react';
+import AutoFitPicture from './AutoFitPicture';
+import _ from 'lodash';
 
 class Product extends React.Component {
   constructor() {
@@ -6,21 +8,13 @@ class Product extends React.Component {
     this.displayName = 'Product';
   }
 
-  _setBackgroundImage() {
-    let component = React.findDOMNode(this);
-    let pictureContainer = $(component).find('.picture');
-    let picture = $(pictureContainer).find('img');
-
-    picture.hide();
-    pictureContainer.css('background-image', `url(${picture.attr('src')})`);
-  }
-
-  componentDidMount() {
-    this._setBackgroundImage();
+  hasPicture() {
+    return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image))
   }
 
   render() {
     var classes = `product ${this.props.boxClass || ''}`;
+    var picture = this.hasPicture() ? <AutoFitPicture src={this.props.image} containerClass='picture' /> : '';
 
     return (<div className={classes}>
       <div className='content'>
@@ -43,9 +37,7 @@ class Product extends React.Component {
           </div>
         </div>
 
-        <div className='picture'>
-          <img src={this.props.image} />
-        </div>
+        {picture}
       </div>
     </div>);
   }
