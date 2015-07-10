@@ -1,10 +1,26 @@
 import React from 'react';
 
-const Product = React.createClass({
-  displayName: 'Product',
+class Product extends React.Component {
+  constructor() {
+    super();
+    this.displayName = 'Product';
+  }
+
+  _setBackgroundImage() {
+    let component = React.findDOMNode(this);
+    let pictureContainer = $(component).find('.picture');
+    let picture = $(pictureContainer).find('img');
+
+    picture.hide();
+    pictureContainer.css('background-image', `url(${picture.attr('src')})`);
+  }
+
+  componentDidMount() {
+    this._setBackgroundImage();
+  }
+
   render() {
     var classes = `product ${this.props.boxClass || ''}`;
-    var imageStyle = { backgroundImage: `url('${this.props.image}')` }
 
     return (<div className={classes}>
       <div className='content'>
@@ -27,11 +43,12 @@ const Product = React.createClass({
           </div>
         </div>
 
-        <div className='picture' style={imageStyle}>
+        <div className='picture'>
+          <img src={this.props.image} />
         </div>
       </div>
     </div>);
   }
-});
+}
 
 export default Product;
