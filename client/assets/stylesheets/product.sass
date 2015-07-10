@@ -162,7 +162,7 @@ $screen-md-max:              ($screen-lg-min - 1)
         height: 0
         display: none
 
-@media only screen and (max-width: $screen-sm-max)
+@media only screen and (max-width: $screen-xs-max)
   body.app .container
     width: 100%
     overflow-x: hidden
@@ -182,13 +182,13 @@ $screen-md-max:              ($screen-lg-min - 1)
         height: 40%
         padding: 0
 
-@media only screen and (min-width: $screen-md-min)
+@media only screen and (min-width: $screen-sm-min)
   .product
     .content
       display: flex
       flex-direction: row
 
-@media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max)
+@media only screen and (min-width: $screen-sm-min) and (max-width: $screen-md-max)
   .product
     .content
       margin: 20px 10px 0 0
