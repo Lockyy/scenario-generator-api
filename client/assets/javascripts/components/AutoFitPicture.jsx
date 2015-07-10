@@ -10,24 +10,6 @@ function _setBackgroundImage() {
 }
 
 class AutoFitPicture extends React.Component {
-  constructor() {
-    super()
-
-    this.propTypes = {
-      containerClass: 'React.PropTypes.string',
-      src: 'React.PropTypes.string.isRequired'
-    }
-
-    this._defaults = {
-      containerClass: 'autofit-picture-container',
-      containerStyle : {
-        overflow: 'hidden',
-        backgroundSize: 'cover',
-        backgroundRepeat: 'no-repeat'
-      }
-    }
-  }
-
   componentDidMount() {
     _setBackgroundImage.call(this);
   }
@@ -37,14 +19,27 @@ class AutoFitPicture extends React.Component {
   }
 
   render() {
-    let containerStyle = this._defaults.containerStyle;
-    let containerClasses = _.compact(['.autofit-picture-container', this.props.containerClass]).join(' ')
+    let containerStyle = this.props.containerStyle;
+    let containerClasses = `.autofit-picture-container ${this.props.containerClass}`;
     let img = <img src={this.props.src} />;
 
     return (<div className={containerClasses} style={containerStyle}>
             {img}
             </div>);
   }
+}
+
+AutoFitPicture.defaultProps = {
+  containerStyle : {
+    overflow: 'hidden',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat'
+  }
+}
+
+AutoFitPicture.propTypes = {
+  containerClass: React.PropTypes.string,
+  src: React.PropTypes.string.isRequired
 }
 
 export default AutoFitPicture;
