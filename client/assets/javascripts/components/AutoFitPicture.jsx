@@ -1,11 +1,20 @@
 import React from 'react';
 import _ from 'lodash';
 
+function _setBackgroundImage() {
+  let component = $(React.findDOMNode(this));
+  let picture = $(component).find('img');
+
+  picture.hide();
+  component.css('background-image', `url(${picture.attr('src')})`);
+}
+
 class AutoFitPicture extends React.Component {
   constructor() {
     super()
 
     this.propTypes = {
+      containerClass: 'React.PropTypes.string',
       src: 'React.PropTypes.string.isRequired'
     }
 
@@ -20,15 +29,11 @@ class AutoFitPicture extends React.Component {
   }
 
   componentDidMount() {
-    this._setBackgroundImage();
+    _setBackgroundImage.call(this);
   }
 
-  _setBackgroundImage() {
-    let component = $(React.findDOMNode(this));
-    let picture = $(component).find('img');
-
-    picture.hide();
-    component.css('background-image', `url(${picture.attr('src')})`);
+  componentDidUpdate() {
+    _setBackgroundImage.call(this);
   }
 
   render() {
