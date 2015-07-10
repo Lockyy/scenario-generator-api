@@ -1,6 +1,6 @@
 import $ from 'jquery';
 import React from 'react';
-import Product from './components/Product';
+import ProductBox from './components/ProductBox';
 
 $(function onLoad() {
   function render() {
@@ -37,7 +37,7 @@ $(function onLoad() {
             <h2 className='section-title'>{title}</h2>
             <div className='products'>
               {items.map(function(product) {
-                return <Product {...product} />;
+                return <ProductBox {...product} />;
               })}
             </div>
           </div>

@@ -2,10 +2,22 @@ import React from 'react';
 import AutoFitPicture from './AutoFitPicture';
 import _ from 'lodash';
 
-class Product extends React.Component {
+class ProductBox extends React.Component {
   constructor() {
     super();
-    this.displayName = 'Product';
+
+    this.displayName = 'ProductBox';
+    this.propTypes = {
+      author: 'React.PropTypes.string.isRequired',
+      boxClass: 'React.PropTypes.string.isRequired',
+      company: 'React.PropTypes.string.isRequired',
+      created_at: 'React.PropTypes.string.isRequired',
+      description: 'React.PropTypes.string.isRequired',
+      rating: 'React.PropTypes.string.isRequired',
+      review: 'React.PropTypes.string.isRequired',
+      title: 'React.PropTypes.string.isRequired',
+      image: 'React.PropTypes.string'
+    };
   }
 
   hasPicture() {
@@ -43,4 +55,4 @@ class Product extends React.Component {
   }
 }
 
-export default Product;
+export default ProductBox;
