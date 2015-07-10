@@ -4,6 +4,7 @@ const Product = React.createClass({
   displayName: 'Product',
   render() {
     var classes = `product ${this.props.boxClass || ''}`;
+    var imageStyle = { backgroundImage: `url('${this.props.image}')` }
 
     return (<div className={classes}>
       <div className='content'>
@@ -26,8 +27,7 @@ const Product = React.createClass({
           </div>
         </div>
 
-        <div className='picture'>
-          <image className='image' src={this.props.image} />
+        <div className='picture' style={imageStyle}>
         </div>
       </div>
     </div>);
