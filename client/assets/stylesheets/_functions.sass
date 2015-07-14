@@ -1,0 +1,12 @@
+$rails: false !default
+// defaults to false (e.g. webpack environment)
+// Sass 3 removes image-url helper
+
+// https://github.com/sass/libsass/issues/489
+$image-url-path: '/assets/' !default
+
+@function img-url($image)
+  @if $rails
+    @return image-url($image)
+  @else
+    @return url('#{$image-url-path}#{$image}')
