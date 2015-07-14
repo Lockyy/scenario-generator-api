@@ -1,31 +1,16 @@
 import React from 'react';
-import AutoFitPicture from './AutoFitPicture';
 import _ from 'lodash';
+import AutoFitPicture from './AutoFitPicture';
+import Rating from './Rating';
 
 class ProductBox extends React.Component {
-  constructor() {
-    super();
-
-    this.displayName = 'ProductBox';
-    this.propTypes = {
-      author: 'React.PropTypes.string.isRequired',
-      boxClass: 'React.PropTypes.string.isRequired',
-      company: 'React.PropTypes.string.isRequired',
-      created_at: 'React.PropTypes.string.isRequired',
-      description: 'React.PropTypes.string.isRequired',
-      rating: 'React.PropTypes.string.isRequired',
-      review: 'React.PropTypes.string.isRequired',
-      title: 'React.PropTypes.string.isRequired',
-      image: 'React.PropTypes.string'
-    };
-  }
 
   hasPicture() {
     return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image))
   }
 
   render() {
-    var classes = `product ${this.props.boxClass || ''}`;
+    var classes = _.compact(['product', this.props.boxClass]).join(' ');
     var picture = this.hasPicture() ? <AutoFitPicture src={this.props.image} containerClass='picture' /> : '';
 
     return (<div className={classes}>
@@ -37,7 +22,7 @@ class ProductBox extends React.Component {
           </div>
 
           <div className='review'>
-            <span className='rating'>&#9734;&#9734;&#9734;&#9734;&#9734;</span>
+            <Rating value={this.props.rating} name='rating'/>
             <span className='reviews'>{this.props.reviews} reviews</span>
           </div>
 
@@ -54,5 +39,17 @@ class ProductBox extends React.Component {
     </div>);
   }
 }
+
+ProductBox.propTypes = {
+  author: React.PropTypes.string.isRequired,
+  boxClass: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.array]).isRequired,
+  company: React.PropTypes.string.isRequired,
+  created_at: React.PropTypes.string.isRequired,
+  description: React.PropTypes.string.isRequired,
+  rating: React.PropTypes.string.isRequired,
+  review: React.PropTypes.string.isRequired,
+  title: React.PropTypes.string.isRequired,
+  image: React.PropTypes.string
+};
 
 export default ProductBox;
