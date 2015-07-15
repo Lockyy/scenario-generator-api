@@ -1139,6 +1139,11 @@
         }
       }
     },
+    "timeago": {
+      "version": "0.2.0",
+      "from": "timeago@^0.2.0",
+      "resolved": "https://registry.npmjs.org/timeago/-/timeago-0.2.0.tgz"
+    },
     "webpack": {
       "version": "1.9.7",
       "from": "https://registry.npmjs.org/webpack/-/webpack-1.9.7.tgz",

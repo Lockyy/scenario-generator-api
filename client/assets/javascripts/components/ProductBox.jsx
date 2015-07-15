@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import timeago from 'timeago';
 import AutoFitPicture from './AutoFitPicture';
 import Rating from './Rating';
 
@@ -35,7 +36,7 @@ class ProductBox extends React.Component {
 
           <div className='footer'>
             <span className='author'>Added by {this.props.author}</span>
-            <span className='created_at'>{this.props.created_at}</span>
+            <span className='created_at'>{timeago(this.props.created_at)}</span>
           </div>
         </div>
 
