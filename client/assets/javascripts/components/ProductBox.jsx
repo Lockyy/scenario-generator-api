@@ -5,19 +5,18 @@ import AutoFitPicture from './AutoFitPicture';
 import Rating from './Rating';
 
 class ProductBox extends React.Component {
+  hasPicture() {
+    return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image))
+  }
 
-    hasPicture() {
-      return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image))
+  render() {
+    var boxSize = this.props.size == 0.5 ? 0 : this.props.size;
+    var boxClass = `box-${boxSize}`;
+    if (!this.props.image) {
+      boxClass += ' no-pic-box';
     }
-
-    render() {
-      var boxSize = this.props.size == 0.5 ? 0 : this.props.size;
-      var boxClass = `box-${boxSize}`;
-      if (!this.props.image) {
-        boxClass += ' no-pic-box';
-      }
-      var classes = _.compact(['product', boxClass]).join(' ');
-      var picture = this.hasPicture() ? <AutoFitPicture src={this.props.image} containerClass='picture' /> : '';
+    var classes = _.compact(['product', boxClass]).join(' ');
+    var picture = this.hasPicture() ? <AutoFitPicture src={this.props.image} containerClass='picture' /> : '';
 
     return (<div className={classes}>
       <div className='content'>
@@ -48,14 +47,14 @@ class ProductBox extends React.Component {
 
 ProductBox.propTypes = {
   author: React.PropTypes.string.isRequired,
-  boxSize: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
   company: React.PropTypes.string.isRequired,
   created_at: React.PropTypes.string.isRequired,
   description: React.PropTypes.string.isRequired,
   rating: React.PropTypes.string.isRequired,
-  review: React.PropTypes.string.isRequired,
+  size: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
   title: React.PropTypes.string.isRequired,
-  image: React.PropTypes.string
+  image: React.PropTypes.string,
+  review: React.PropTypes.string
 };
 
 export default ProductBox;
