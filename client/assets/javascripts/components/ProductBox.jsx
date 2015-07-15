@@ -10,9 +10,10 @@ class ProductBox extends React.Component {
   }
 
   render() {
-    var boxSize = this.props.size == 0.5 ? 0 : this.props.size;
+    var isHalfBox = this.props.size == 0.5;
+    var boxSize = isHalfBox ? 0 : this.props.size;
     var boxClass = `box-${boxSize}`;
-    if (!this.props.image) {
+    if (!this.props.image || isHalfBox) {
       boxClass += ' no-pic-box';
     }
     var classes = _.compact(['product', boxClass]).join(' ');

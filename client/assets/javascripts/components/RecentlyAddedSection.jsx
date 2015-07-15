@@ -4,7 +4,7 @@ import ProductBox from './ProductBox';
 import SectionRow from './SectionRow';
 import Section from './Section';
 
-class RecentlyAddedSection extends Section {
+class RecentlyAddedSection extends React.Component {
   constructor() {
     super()
 

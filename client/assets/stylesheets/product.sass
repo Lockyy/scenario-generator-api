@@ -48,7 +48,14 @@
         justify-content: space-between
         padding: 10px 0
 
+        .author
+          max-width: 50%
+          whitespace: no-wrap
+          overflow: hidden
+          text-overflow: ellipsis
+
     .picture
+      height: 100%
       order: 2
       padding: 0
 
@@ -139,6 +146,8 @@
     margin: 0
 
   .product
+    padding: 10px 0 !important
+
     .content
       display: flex
       flex-direction: column-reverse
@@ -151,13 +160,13 @@
         height: 40%
         padding: 0
 
-@media only screen and (min-width: $screen-sm-min)
+@media only screen and (min-width: $screen-md-min)
   .product
     .content
       display: flex
       flex-direction: row
 
-@media only screen and (min-width: $screen-sm-min) and (max-width: $screen-md-max)
+@media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max)
   .product
     padding: 20px !important
 
