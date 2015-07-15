@@ -2,6 +2,7 @@ import $ from 'jquery';
 import React from 'react';
 import ProductBox from './components/ProductBox';
 import Section from './components/Section';
+import RecentlyAddedSection from './components/RecentlyAddedSection';
 
 $(function onLoad() {
   function render() {
@@ -50,7 +51,7 @@ $(function onLoad() {
       ];
 
       let sections = data.map(function(section) {
-        return (<Section {...section} />);
+        return (<RecentlyAddedSection {...section} />);
       })
 
       React.render(
