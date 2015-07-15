@@ -38,8 +38,8 @@ AutoFitPicture.defaultProps = {
 }
 
 AutoFitPicture.propTypes = {
-  containerClass: React.PropTypes.string,
-  src: React.PropTypes.string.isRequired
+  src: React.PropTypes.string.isRequired,
+  containerClass: React.PropTypes.string
 }
 
 export default AutoFitPicture;

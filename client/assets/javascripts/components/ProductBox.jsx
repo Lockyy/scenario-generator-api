@@ -5,13 +5,18 @@ import Rating from './Rating';
 
 class ProductBox extends React.Component {
 
-  hasPicture() {
-    return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image))
-  }
+    hasPicture() {
+      return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image))
+    }
 
-  render() {
-    var classes = _.compact(['product', this.props.boxClass]).join(' ');
-    var picture = this.hasPicture() ? <AutoFitPicture src={this.props.image} containerClass='picture' /> : '';
+    render() {
+      var boxSize = this.props.size == 0.5 ? 0 : this.props.size;
+      var boxClass = `box-${boxSize}`;
+      if (!this.props.image) {
+        boxClass += ' no-pic-box';
+      }
+      var classes = _.compact(['product', boxClass]).join(' ');
+      var picture = this.hasPicture() ? <AutoFitPicture src={this.props.image} containerClass='picture' /> : '';
 
     return (<div className={classes}>
       <div className='content'>
@@ -42,7 +47,7 @@ class ProductBox extends React.Component {
 
 ProductBox.propTypes = {
   author: React.PropTypes.string.isRequired,
-  boxClass: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.array]).isRequired,
+  boxSize: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
   company: React.PropTypes.string.isRequired,
   created_at: React.PropTypes.string.isRequired,
   description: React.PropTypes.string.isRequired,

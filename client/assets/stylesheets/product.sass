@@ -1,38 +1,12 @@
-$light-grey: #f6f6f6
-$medium-grey: #e5e6e7
-$dark-grey: #929497
-$red: #b8141a
-
-$screen-xs:                  480px
-$screen-xs-min:              $screen-xs
-$screen-phone:               $screen-xs-min
-
-$screen-sm:                  768px
-$screen-sm-min:              $screen-sm
-$screen-tablet:              $screen-sm-min
-
-$screen-md:                  992px
-$screen-md-min:              $screen-md
-$screen-desktop:             $screen-md-min
-
-$screen-lg:                  1200px
-$screen-lg-min:              $screen-lg
-$screen-lg-desktop:          $screen-lg-min
-
-$screen-xs-max:              ($screen-sm-min - 1)
-$screen-sm-max:              ($screen-md-min - 1)
-$screen-md-max:              ($screen-lg-min - 1)
+@import 'variables'
+@import 'functions'
 
 .product
-  margin: 10px 0
-  padding: 0
-
   .content
     height: 450px
     background: $light-grey
     overflow: hidden
     border-top: 2px solid $red
-    padding: 0
 
     .data
       padding: 10px 25px
@@ -46,6 +20,8 @@ $screen-md-max:              ($screen-lg-min - 1)
         font-weight: 600
         font-size: 1em
         margin-bottom: 0
+        max-height: 55px
+        overflow: hidden
 
       .company
         font-size: 0.75em
@@ -79,8 +55,7 @@ $screen-md-max:              ($screen-lg-min - 1)
   &.box-0
     @extend .col-xs-12
     @extend .col-md-3
-
-    padding: 0
+    padding: 20px 20px 0 20px !important
 
     .content
       height: 215px
@@ -117,7 +92,6 @@ $screen-md-max:              ($screen-lg-min - 1)
   &.box-2
     @extend .col-xs-12
     @extend .col-md-6
-
     padding: 0
 
     .data
@@ -127,13 +101,11 @@ $screen-md-max:              ($screen-lg-min - 1)
     .picture
       @extend .col-xs-12
       @extend .col-md-6
-
       padding: 0
 
   &.box-3
     @extend .col-xs-12
     @extend .col-md-9
-
     padding: 0
 
     .data
@@ -159,7 +131,7 @@ $screen-md-max:              ($screen-lg-min - 1)
         height: 0
         display: none
 
-@media only screen and (max-width: $screen-xs-max)
+@media only screen and (max-width: $screen-sm-max)
   body.app .container
     width: 100%
     overflow-x: hidden
@@ -187,8 +159,9 @@ $screen-md-max:              ($screen-lg-min - 1)
 
 @media only screen and (min-width: $screen-sm-min) and (max-width: $screen-md-max)
   .product
+    padding: 20px !important
+
     .content
-      margin: 20px 10px 0 0
       font-size: 20px
 
       .data
@@ -197,12 +170,12 @@ $screen-md-max:              ($screen-lg-min - 1)
 
 @media only screen and (min-width: $screen-lg-min)
   .product
+    padding: 20px !important
+
     .content
-      margin: 60px 40px 0 0
       font-size: 25px
       .data
 
         .description
           height: 250px
           max-height: 250px
-

@@ -2,7 +2,7 @@
 
 .section
   margin: 60px 0 0 0
-  padding: 20px 0 0 0
+  padding: 10px 0 0 0
 
   & > .header
     display: flex
@@ -41,3 +41,22 @@
   &.recently-added-products
     h2
       background-image: img-url('icons/recently-added.svg')
+
+  .show-more-container
+    text-align: center
+
+    .show-more, .show-more:active, .show-more:target, .show-more:focus
+
+      text-transform: uppercase
+      margin: 0 auto
+      padding: 15px 80px
+      font-weight: bolder
+      font-size: 12px
+      background: white
+      border: 1px solid
+      @include border-radius(30px)
+
+@media only screen and (max-width: $screen-sm-max)
+  .section
+    margin: 60px 0 0 0
+    padding: 0

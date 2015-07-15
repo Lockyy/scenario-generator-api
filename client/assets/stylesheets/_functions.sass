@@ -10,3 +10,9 @@ $image-url-path: '/assets/' !default
     @return image-url($image)
   @else
     @return url('#{$image-url-path}#{$image}')
+
+=border-radius($radius)
+  -webkit-border-radius: $radius
+  -moz-border-radius:    $radius
+  -ms-border-radius:     $radius
+  border-radius:         $radius
