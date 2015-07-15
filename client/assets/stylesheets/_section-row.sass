@@ -1,0 +1,12 @@
+@import 'variables'
+@import 'functions'
+
+.section-row
+  @extend .row
+
+@media only screen and (min-width: $screen-md-min)
+  .section-row
+    max-height: 550px
+    overflow: hidden
+    padding: 20px 0
+
