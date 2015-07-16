@@ -1,13 +1,11 @@
 import React from 'react';
 import _ from 'lodash';
-import ProductBox from './ProductBox';
-import SectionRow from './SectionRow';
 
 class Section extends React.Component {
 
   componentDidMount() {
     let component = $(React.findDOMNode(this));
-    let items = $(component).find('.items')
+    let items = $(component).find('.items');
     let _toggleSection = _.throttle(function() {
       let hiddenLink = component.find('.toggle-section:hidden');
       let visibleLink = component.find('.toggle-section:visible');
@@ -16,21 +14,21 @@ class Section extends React.Component {
         items.slideToggle('slow', function() {
           hiddenLink.fadeToggle('fast');
         });
-      })
-    }, 300, {'trailing' : false});
+      });
+    }, 300, {trailing: false});
 
     $(component).on('click', '.toggle-section', _toggleSection);
   }
 
   render() {
-    var itemClasses = _.compact(['items', this.props.itemsClass]).join(' ');
-    var sectionClass = this.props.title.toLowerCase().replace(/\s+/g, '-');
+    let itemClasses = _.compact(['items', this.props.itemsClass]).join(' ');
+    let sectionClass = this.props.title.toLowerCase().replace(/\s+/g, '-');
     let sectionClasses = _.compact(['section', sectionClass]).join(' ');
 
-    return(<div className={sectionClasses}>
+    return (<div className={sectionClasses}>
       <div className='header'>
         <h2 className='section-title'>{this.props.title}</h2>
-        <a href='#' className='toggle-section show-section' style={{'display' : 'none'}}>
+        <a href='#' className='toggle-section show-section' style={{display: 'none'}}>
           <i className='glyphicon glyphicon-chevron-down'></i>SHOW
         </a>
         <a href='#' className='toggle-section hide-section'>
@@ -38,7 +36,7 @@ class Section extends React.Component {
         </a>
       </div>
 
-      <div className='items'>
+      <div className={itemClasses}>
         {this.props.children}
 
         <div className='show-more-container'>
@@ -49,11 +47,13 @@ class Section extends React.Component {
   }
 }
 
+Section.displayName = 'Section';
+
 Section.propTypes = {
   cols: React.PropTypes.number.isRequired,
   rows: React.PropTypes.number.isRequired,
   title: React.PropTypes.string.isRequired,
   itemsClass: React.PropTypes.string
-}
+};
 
 export default Section;

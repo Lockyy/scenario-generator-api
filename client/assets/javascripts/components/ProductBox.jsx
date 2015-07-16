@@ -6,18 +6,20 @@ import Rating from './Rating';
 
 class ProductBox extends React.Component {
   hasPicture() {
-    return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image))
+    return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image));
   }
 
   render() {
-    var isHalfBox = this.props.size == 0.5;
-    var boxSize = isHalfBox ? 0 : this.props.size;
-    var boxClass = `box-${boxSize}`;
+    let isHalfBox = this.props.size === 0.5;
+    let boxSize = isHalfBox ? 0 : this.props.size;
+    let boxClass = `box-${boxSize}`;
+    let classes = _.compact(['product', boxClass]).join(' ');
+    let picture = this.hasPicture() ?
+      <AutoFitPicture src={this.props.image} containerClass='picture'/> : '';
+
     if (!this.props.image || isHalfBox) {
       boxClass += ' no-pic-box';
     }
-    var classes = _.compact(['product', boxClass]).join(' ');
-    var picture = this.hasPicture() ? <AutoFitPicture src={this.props.image} containerClass='picture' /> : '';
 
     return (<div className={classes}>
       <div className='content'>
@@ -45,6 +47,8 @@ class ProductBox extends React.Component {
     </div>);
   }
 }
+
+ProductBox.displayName = 'ProductBox';
 
 ProductBox.propTypes = {
   author: React.PropTypes.string.isRequired,

@@ -4,92 +4,97 @@ import ProductBox from './ProductBox';
 import SectionRow from './SectionRow';
 import Section from './Section';
 
+function sumSizeFunc(item) {
+  return item.props.size;
+}
+
 class RecentlyAddedSection extends React.Component {
   constructor() {
-    super()
+    super();
 
     this._currentItem = 0;
   }
 
-  _getCurrentBoxSize(products, product) {
+  getCurrentBoxSize(products, product) {
     let gridSize = this.props.cols;
     let boxSize = gridSize - 1;
-    let lastBoxes = _.takeRight(products, gridSize);
-    let sumLastBoxes = _.sum(lastBoxes, 'props.size');
     let countBoxSizes = _.countBy(_.map(products, 'props.size'));
-    let lastProductBoxSize = _.last(products) ? _.last(products).props.size : 0
 
     if (products.length > 0) {
       boxSize = _.min([_.last(products).props.size, gridSize - (_.last(products).props.size || 0)]);
-      if(countBoxSizes[boxSize] >= gridSize || countBoxSizes[boxSize] * boxSize >= gridSize) { boxSize = _.max([0, boxSize - 1]) }
-    } else {
-      if(!product.image) { boxSize = _.max([0, boxSize - 1]) }
+      if (countBoxSizes[boxSize] >= gridSize || countBoxSizes[boxSize] * boxSize >= gridSize) {
+        boxSize = _.max([0, boxSize - 1]);
+      }
+    } else if (!product.image) {
+      boxSize = _.max([0, boxSize - 1]);
     }
 
-    return boxSize == 0 ? 0.5 : boxSize;
+    return boxSize === 0 ? 0.5 : boxSize;
   }
 
-  _buildRows(products) {
+  buildRows(products) {
     let sectionRows = [];
+    let row;
 
-    while(products.length > 0) {
-      let row = _.last(sectionRows);
+    while (products.length > 0) {
+      row = _.last(sectionRows);
 
-        if (!row || _.sum(row, function(item) { return item.props.size }) >= this.props.cols) {
+      if (!row || _.sum(row, sumSizeFunc) >= this.props.cols) {
         row = [];
         sectionRows.push(row);
       }
 
-      let product = products.shift();
-      row.push(product);
+      row.push(products.shift());
     }
 
-    return sectionRows.map(function(row) { return (<SectionRow items={row} />); });
+    return sectionRows.map(function mapRows(sectionRow) {
+      return (<SectionRow items={sectionRow}/>);
+    });
   }
 
-  _fetchItems() {
-    let self = this;
-    let keepFetching = true;
+  fetchItems() {
+    let product;
     let products = [];
-    let hasItems, needsItem;
+    let hasItems;
+    let needsItem;
+    let sumItems;
 
-    if (!self.props.items) return [];
+    if (!this.props.items) return [];
 
     do {
-      let product = self.props.items[self._currentItem++];
+      product = this.props.items[this._currentItem++];
 
-      products.push(<ProductBox size={self._getCurrentBoxSize(products, product)} {...product} />);
+      products.push(<ProductBox size={this.getCurrentBoxSize(products, product)} {...product} />);
 
-      hasItems = self.props.items.length > self._currentItem;
-      let sumItems = _.sum(products, function(product) { return product.props.size });
-      needsItem = sumItems < self.props.rows * self.props.cols;
-    } while(hasItems && needsItem);
+      hasItems = this.props.items.length > this._currentItem;
+      sumItems = _.sum(products, sumSizeFunc);
+      needsItem = sumItems < this.props.rows * this.props.cols;
+    } while (hasItems && needsItem);
 
-    return this._buildRows(products);
+    return this.buildRows(products);
   }
 
   render() {
-    var itemClasses = _.compact(['items', this.props.itemsClass]).join(' ');
-    var sectionClass = this.props.title.toLowerCase().replace(/\s+/g, '-');
-    let sectionClasses = _.compact(['section', sectionClass]).join(' ');
-
-    return(<Section {...this.props}>
-      {this._fetchItems()}
+    return (<Section {...this.props}>
+      {this.fetchItems()}
     </Section>);
   }
 }
+
+RecentlyAddedSection.displayName = 'RecentlyAddedSection';
 
 RecentlyAddedSection.defaultProps = {
   cols: 4,
   rows: 2,
   title: ''
-}
+};
 
 RecentlyAddedSection.propTypes = {
   cols: React.PropTypes.number.isRequired,
+  items: React.PropTypes.array.isRequired,
   rows: React.PropTypes.number.isRequired,
   title: React.PropTypes.string.isRequired,
   itemsClass: React.PropTypes.string
-}
+};
 
 export default RecentlyAddedSection;
