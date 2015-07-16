@@ -10,16 +10,15 @@ class ProductBox extends React.Component {
   }
 
   render() {
-    let isHalfBox = this.props.size === 0.5;
+    let isHalfBox = this.props.size === 0.5 || this.props.size === 0;
     let boxSize = isHalfBox ? 0 : this.props.size;
     let boxClass = `box-${boxSize}`;
-    let classes = _.compact(['product', boxClass]).join(' ');
     let picture = this.hasPicture() ?
       <AutoFitPicture src={this.props.image} containerClass='picture'/> : '';
-
     if (!this.props.image || isHalfBox) {
       boxClass += ' no-pic-box';
     }
+    let classes = _.compact(['product', boxClass]).join(' ');
 
     return (<div className={classes}>
       <div className='content'>
