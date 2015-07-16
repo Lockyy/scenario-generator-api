@@ -4,6 +4,13 @@
 .section-row
   @extend .row
 
+.section-row-enter
+  opacity: 0.00
+
+.section-row-enter.section-row-enter-active
+  opacity: 1
+  transition: opacity .5s ease-in
+
 @media only screen and (min-width: $screen-md-min)
   .section-row
     max-height: 550px

@@ -8,19 +8,20 @@ module.exports = {
     let data = [
       {
         type: 'recently_added',
-        items: _.times(params.max, function(n) {
-          return {
-            id: n + params.offset,
-            title: Faker.random.bs_buzz(),
-            company: Faker.Company.companyName(),
-            rating: Faker.Helpers.randomNumber(5),
-            reviews: Faker.Helpers.randomNumber(9999),
-            description: Faker.Lorem.paragraph(),
-            created_at: Faker.Date.past(2),
-            image: Faker.Helpers.randomNumber(5) % 2 == 0 ? `${Faker.Image.imageUrl()}?random=${Faker.Helpers.randomNumber(99999)}` : null,
-            author: Faker.Name.findName()
-          }
-        })
+        items: _.sortBy(_.times(params.max, function(n) {
+            return {
+              id: n + params.offset,
+              title: Faker.random.bs_buzz(),
+              company: Faker.Company.companyName(),
+              rating: Faker.Helpers.randomNumber(5),
+              reviews: Faker.Helpers.randomNumber(9999),
+              description: Faker.Lorem.paragraph(),
+              created_at: Faker.Date.past(2),
+              image: Faker.Helpers.randomNumber(5) % 2 == 0 ? `${Faker.Image.imageUrl()}?random=${Faker.Helpers.randomNumber(99999)}` : null,
+              author: Faker.Name.findName()
+            }
+          }), 'created_at'
+        ).reverse()
       }];
 
     return JSON.stringify(data);

@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react/addons';
+const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 import _ from 'lodash';
 import ProductBox from './ProductBox';
 import SectionRow from './SectionRow';
@@ -12,7 +13,17 @@ class RecentlyAddedSection extends React.Component {
   constructor() {
     super();
 
-    this._currentItem = 0;
+    this._offset = 0;
+    this._rows = 2;
+  }
+
+  getOffset() {
+    return this._offset;
+  }
+
+  getMax() {
+    // TODO: add smart method to calculate
+    return 8;
   }
 
   getCurrentBoxSize(products, product) {
@@ -58,25 +69,30 @@ class RecentlyAddedSection extends React.Component {
     let hasItems;
     let needsItem;
     let sumItems;
+    let currentItem = 0;
 
     if (!this.props.items) return [];
 
     do {
-      product = this.props.items[this._currentItem++];
+      product = this.props.items[currentItem++];
 
       products.push(<ProductBox size={this.getCurrentBoxSize(products, product)} {...product} />);
 
-      hasItems = this.props.items.length > this._currentItem;
+      hasItems = this.props.items.length > currentItem;
       sumItems = _.sum(products, sumSizeFunc);
-      needsItem = sumItems < this.props.rows * this.props.cols;
+      needsItem = sumItems < this._rows * this.props.cols;
     } while (hasItems && needsItem);
 
+    this._offset += currentItem;
     return this.buildRows(products);
   }
 
   render() {
+    debugger;
     return (<Section {...this.props}>
-      {this.fetchItems()}
+      <ReactCSSTransitionGroup transitionName="section-row">
+        {this.fetchItems()}
+      </ReactCSSTransitionGroup >
     </Section>);
   }
 }
@@ -86,13 +102,12 @@ RecentlyAddedSection.displayName = 'RecentlyAddedSection';
 RecentlyAddedSection.defaultProps = {
   cols: 4,
   rows: 2,
-  title: ''
+  title: 'Recently Added Products'
 };
 
 RecentlyAddedSection.propTypes = {
   cols: React.PropTypes.number.isRequired,
   items: React.PropTypes.array.isRequired,
-  rows: React.PropTypes.number.isRequired,
   title: React.PropTypes.string.isRequired,
   itemsClass: React.PropTypes.string
 };

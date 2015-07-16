@@ -20,6 +20,12 @@ class Section extends React.Component {
     $(component).on('click', '.toggle-section', _toggleSection);
   }
 
+  showMore() {
+    if (_.isFunction(this.props.onShowMore)) {
+      this.props.onShowMore();
+    }
+  }
+
   render() {
     let itemClasses = _.compact(['items', this.props.itemsClass]).join(' ');
     let sectionClass = this.props.title.toLowerCase().replace(/\s+/g, '-');
@@ -40,7 +46,8 @@ class Section extends React.Component {
         {this.props.children}
 
         <div className='show-more-container'>
-          <button type='button' className='show-more'>Show More</button>
+          <button type='button' className='show-more' onClick={this.showMore.bind(this)}>Show More
+          </button>
         </div>
       </div>
     </div>);
@@ -53,7 +60,8 @@ Section.propTypes = {
   cols: React.PropTypes.number.isRequired,
   rows: React.PropTypes.number.isRequired,
   title: React.PropTypes.string.isRequired,
-  itemsClass: React.PropTypes.string
+  itemsClass: React.PropTypes.string,
+  onShowMore: React.PropTypes.func
 };
 
 export default Section;
