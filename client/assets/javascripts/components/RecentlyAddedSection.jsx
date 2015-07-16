@@ -88,7 +88,6 @@ class RecentlyAddedSection extends React.Component {
   }
 
   render() {
-    debugger;
     return (<Section {...this.props}>
       <ReactCSSTransitionGroup transitionName="section-row">
         {this.fetchItems()}

@@ -31,7 +31,6 @@ class Dashboard extends React.Component {
 
   onChange(data) {
     this.setState(function(oldData) {
-      debugger;
       return {
         data: _.merge(oldData.data, data.data, function(a, b) {
           if (_.isArray(a)) { return a.concat(b) }
