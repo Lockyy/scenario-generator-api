@@ -13,12 +13,14 @@ class RecentlyAddedSection extends React.Component {
   constructor() {
     super();
 
-    this._offset = 0;
-    this._rows = 2;
+    this.state = {
+      offset: 0,
+      rows: 2
+    };
   }
 
   getOffset() {
-    return this._offset;
+    return this.state.offset;
   }
 
   getMax() {
@@ -80,10 +82,10 @@ class RecentlyAddedSection extends React.Component {
 
       hasItems = this.props.items.length > currentItem;
       sumItems = _.sum(products, sumSizeFunc);
-      needsItem = sumItems < this._rows * this.props.cols;
+      needsItem = sumItems < this.state.rows * this.props.cols;
     } while (hasItems && needsItem);
 
-    this._offset += currentItem;
+    this.state.offset += currentItem;
     return this.buildRows(products);
   }
 

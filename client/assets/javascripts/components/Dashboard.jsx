@@ -55,7 +55,7 @@ class Dashboard extends React.Component {
       max: section.getMax()
     };
 
-    section._rows++;
+    section.setState({rows: section.state.rows + 1});
     FluxDashboardActions.loadMoreProducts(sectionName, paginationParams)
   }
 
