@@ -85,7 +85,7 @@ class RecentlyAddedSection extends React.Component {
       needsItem = sumItems < this.state.rows * this.props.cols;
     } while (hasItems && needsItem);
 
-    this.state.offset += currentItem;
+    this.state.offset = currentItem;
     return this.buildRows(products);
   }
 

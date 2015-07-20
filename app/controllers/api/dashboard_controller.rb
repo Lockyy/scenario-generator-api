@@ -3,7 +3,7 @@ module Api
     respond_to :json
 
     def index
-      @products = Product.all
+      @dashboard = Fletcher::Dashboard.new(params)
 
       respond_to do |format|
         format.json { render }

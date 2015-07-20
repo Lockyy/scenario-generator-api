@@ -3,11 +3,11 @@ import _ from 'lodash';
 import DashboardAPI from '../utils/DashboardAPI';
 
 class FluxDashboardActions {
-  fetchData() {
+  fetchData(paginationParams) {
     this.dispatch();
 
     DashboardAPI.getData(
-      {},
+      paginationParams || {},
       (data) => {
         this.actions.updateData(data);
       },
@@ -17,15 +17,13 @@ class FluxDashboardActions {
     );
   }
 
-  loadMoreProducts(sectionName, paginationParams) {
+  loadMoreProducts(paginationParams) {
     this.dispatch();
 
     DashboardAPI.getData(
-      paginationParams,
-      (data) => {
-        this.actions.showMoreProducts(_.take(data, paginationParams.max));
-      },
-      (error) => {
+      paginationParams || {}, (data) => {
+        this.actions.showMoreProducts(data);
+      }, (error) => {
         this.actions.registerError(error);
       }
     );

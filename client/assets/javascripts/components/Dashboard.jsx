@@ -3,6 +3,7 @@ import _ from 'lodash';
 import Section from './Section';
 import RecentlyAddedSection from './RecentlyAddedSection';
 import DashboardStore from '../stores/DashboardStore'
+import DashboardConstants from '../utils/DashboardConstants'
 import FluxDashboardActions from '../actions/FluxDashboardActions'
 
 function sumSizeFunc(item) {
@@ -13,7 +14,7 @@ class Dashboard extends React.Component {
   constructor() {
     super();
 
-    this.state = {data: []};
+    this.state = {data: {}};
   }
 
   componentDidMount() {
@@ -22,10 +23,7 @@ class Dashboard extends React.Component {
   }
 
   getRecentlyAddedData() {
-    let recentlyAddedData = _.find(this.state.data, function(section) {
-      return section.type === 'recently_added'
-    });
-
+    let recentlyAddedData = this.state.data[DashboardConstants.RECENTLY_ADDED_SECTION];
     return recentlyAddedData ? recentlyAddedData : {items: []};
   }
 
@@ -49,14 +47,14 @@ class Dashboard extends React.Component {
 
   showMoreProducts(sectionName) {
     let section = this.getSection(sectionName);
-    let paginationParams = {
-      type: sectionName,
+    let paginationParams = {};
+    paginationParams[sectionName] = {
       offset: section.getOffset(),
       max: section.getMax()
     };
 
     section.setState({rows: section.state.rows + 1});
-    FluxDashboardActions.loadMoreProducts(sectionName, paginationParams)
+    FluxDashboardActions.loadMoreProducts(paginationParams)
   }
 
   render() {
