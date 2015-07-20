@@ -24,8 +24,8 @@ class ProductBox extends React.Component {
       <div className='content'>
         <div className='data'>
           <div className="header">
-            <h3 className='title'>{this.props.title}</h3>
-            <h4 className='company'>{this.props.company}</h4>
+            <h3 className='title'>{this.props.name}</h3>
+            <h4 className='company'>{this.props.company.name}</h4>
           </div>
 
           <div className='review'>
@@ -51,7 +51,7 @@ ProductBox.displayName = 'ProductBox';
 
 ProductBox.propTypes = {
   author: React.PropTypes.string.isRequired,
-  company: React.PropTypes.string.isRequired,
+  company: React.PropTypes.object.isRequired,
   created_at: React.PropTypes.string.isRequired,
   description: React.PropTypes.string.isRequired,
   rating: React.PropTypes.string.isRequired,

@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users, only: [:omniauth_callbacks], controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  namespace :api do
+    get 'dashboard(.:format)', action: :index, controller: 'dashboard', defaults: {format: 'json'}
+  end
+
+  devise_for :users, only: [:omniauth_callbacks], controllers: {omniauth_callbacks: 'omniauth_callbacks'}
 
   root 'site#long'
   get 'long', to: 'site#long'
