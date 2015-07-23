@@ -33,4 +33,8 @@ class Product < ActiveRecord::Base
   def number_of_views
     Faker::Number.between(0, 99999999)
   end
+
+  validates :name, presence: true, presence: true, uniqueness: { scope: :company_id }
+  validates :description, presence: true
+  validates :company, presence: true
 end
