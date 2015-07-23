@@ -1,0 +1,28 @@
+module Omniauth
+  class UserAuth
+    attr_reader :user, :result
+
+    def initialize(provider_result)
+      @result = provider_result
+    end
+
+    def authenticate!
+      @user ||= User.find_with_oauth(@result.provider, @result.uid)
+      @user ||= create_user!
+      update_info!
+    end
+
+    private
+
+    def create_user!
+      @user = User.create!(name: @result.name, email: @result.email, password: User.generate_password)
+      @user
+    end
+
+    def update_info!
+      @user.update(name: @result.name, email: @result.email, avatar_url: @result.avatar_url)
+      @user.update_oauth!(@result.provider, @result.uid, @result.original_oauth_info)
+      @user
+    end
+  end
+end
