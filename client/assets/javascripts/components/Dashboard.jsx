@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import Section from './Section';
 import RecentlyAddedSection from './RecentlyAddedSection';
+import MostPopularSection from './MostPopularSection';
 import DashboardStore from '../stores/DashboardStore'
 import DashboardConstants from '../utils/DashboardConstants'
 import FluxDashboardActions from '../actions/FluxDashboardActions'
@@ -25,6 +26,11 @@ class Dashboard extends React.Component {
   getRecentlyAddedData() {
     let recentlyAddedData = this.state.data[DashboardConstants.RECENTLY_ADDED_SECTION];
     return recentlyAddedData ? recentlyAddedData : {items: []};
+  }
+
+  getMostPopularData() {
+    let mostPopularData = this.state.data[DashboardConstants.MOST_POPULAR_SECTION];
+    return mostPopularData ? mostPopularData : {items: {products: [], tags: []}};
   }
 
   onChange(data) {
@@ -59,13 +65,19 @@ class Dashboard extends React.Component {
 
   render() {
     let recentlyAddedData = this.getRecentlyAddedData();
-    let addMoreRecentlyAddedCb = this.showMoreProducts.bind(this, 'recently_added');
+    let addMoreRecentlyAddedCb = this.showMoreProducts.bind(this,
+      DashboardConstants.RECENTLY_ADDED_SECTION);
 
+    let mostPopularData = this.getMostPopularData();
     return (<div className='sections'>
       {_.isUndefined(recentlyAddedData) || !recentlyAddedData.items.length ?
         <div /> :
-        <RecentlyAddedSection ref='recently_added'
-                              onShowMore={addMoreRecentlyAddedCb} {...recentlyAddedData}/>}
+        <RecentlyAddedSection ref={DashboardConstants.RECENTLY_ADDED_SECTION}
+          onShowMore={addMoreRecentlyAddedCb} {...recentlyAddedData}/>}
+      {_.isUndefined(mostPopularData) || !mostPopularData.items.products.length ?
+        <div /> :
+        <MostPopularSection ref={DashboardConstants.MOST_POPULAR_SECTION}
+          {...mostPopularData}/>}
     </div>);
   }
 }
