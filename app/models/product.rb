@@ -4,18 +4,14 @@ class Product < ActiveRecord::Base
   belongs_to :company
   has_many :reviews, as: :reviewable
 
-  # TODO: REMOVE LIMIT AND OFFSET
-  scope :recently_added, ->(params = {}) do
-    params = {max: 10, offset: 0}.merge(params || {}).with_indifferent_access
-    order('created_at desc').limit(params[:max]).offset(params[:offset])
+  scope :recently_added, -> do
+    order('created_at desc')
   end
 
-  # TODO: REMOVE LIMIT AND OFFSET
-  scope :most_popular, ->(params = {}) do
-    params = {max: 2, offset: 0}.merge(params || {}).with_indifferent_access
+  scope :most_popular, -> do
     # TODO:
     # order('number_of_views').limit(params[:max]).offset(params[:offset])
-    limit(params[:max]).offset(params[:offset])
+    where
   end
 
   def image
@@ -34,7 +30,7 @@ class Product < ActiveRecord::Base
     Faker::Number.between(0, 99999999)
   end
 
-  validates :name, presence: true, presence: true, uniqueness: { scope: :company_id }
+  validates :name, presence: true, uniqueness: { scope: :company_id }
   validates :description, presence: true
   validates :company, presence: true
 end
