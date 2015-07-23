@@ -20,4 +20,8 @@ class Product < ActiveRecord::Base
   def author
     Faker::Name.name
   end
+
+  validates :name, presence: true, presence: true, uniqueness: { scope: :company_id }
+  validates :description, presence: true
+  validates :company, presence: true
 end
