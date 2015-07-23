@@ -2,22 +2,26 @@ import React from 'react';
 import _ from 'lodash';
 
 class Section extends React.Component {
+  constructor() {
+    super();
+  }
 
   componentDidMount() {
     let component = $(React.findDOMNode(this));
-    let items = $(component).find('.items');
+    let items = $(component).find('> .items');
+
     let _toggleSection = _.throttle(function() {
       let hiddenLink = component.find('.toggle-section:hidden');
       let visibleLink = component.find('.toggle-section:visible');
 
-      visibleLink.fadeToggle('fast', function() {
-        items.slideToggle('slow', function() {
-          hiddenLink.fadeToggle('fast');
+      visibleLink.stop().fadeToggle('fast', function() {
+        items.stop().slideToggle('slow', function() {
+          hiddenLink.stop().fadeToggle('fast');
         });
       });
     }, 300, {trailing: false});
 
-    $(component).on('click', '.toggle-section', _toggleSection);
+    $(component).find('.toggle-section').on('click', _toggleSection);
   }
 
   showMore() {
@@ -45,10 +49,11 @@ class Section extends React.Component {
       <div className={itemClasses}>
         {this.props.children}
 
-        <div className='show-more-container'>
+        {this.props.hasPagination ? (<div className='show-more-container'>
           <button type='button' className='show-more' onClick={this.showMore.bind(this)}>Show More
           </button>
-        </div>
+        </div>) : ''}
+
       </div>
     </div>);
   }
@@ -61,7 +66,12 @@ Section.propTypes = {
   rows: React.PropTypes.number.isRequired,
   title: React.PropTypes.string.isRequired,
   itemsClass: React.PropTypes.string,
+  hasPagination: React.PropTypes.bool,
   onShowMore: React.PropTypes.func
+};
+
+Section.defaultProps = {
+  hasPagination: true
 };
 
 export default Section;
