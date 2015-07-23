@@ -11,7 +11,7 @@ class Product < ActiveRecord::Base
   scope :most_popular, -> do
     # TODO:
     # order('number_of_views').limit(params[:max]).offset(params[:offset])
-    where
+    all
   end
 
   def image
