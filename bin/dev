@@ -2,6 +2,7 @@
 
 set -e
 
+cp config/database.yml.example config/database.yml
 cp Dockerfile.development Dockerfile
 docker build -t codelittinc/fletcher .
 rm Dockerfile
