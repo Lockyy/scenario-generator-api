@@ -34,10 +34,17 @@
 
       .review
         display: flex
-        justify-content: space-between
+        justify-content: flex-start
         height: 30px
         color: #929497
         font-size: 0.66666666em
+
+        .reviews
+          margin: 0 10px
+
+          &:before
+            content: '/'
+            margin-right: 10px
 
       .footer
         font-size: 0.60em
