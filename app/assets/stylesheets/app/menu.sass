@@ -1,0 +1,105 @@
+@import "bootstrap"
+@import "common/variables"
+
+.menu.hamburger-menu
+  width: 25%
+  // TODO FIX THE HEIGHT
+  position: absolute
+  top: 0
+  right: 0
+  z-index: 5000
+  background: #dfdfdf
+  color: #3c3c3c
+  display: none
+  box-shadow: -5px 0px 10px 0px rgba(50, 50, 50, 0.45)
+  align-self: stretch
+
+  .container
+    width: 90%
+
+    h2
+      font-size: 20px
+      font-weight: bolder
+
+    .menu-nav
+      padding: 0
+      margin: 10px 0 0 0
+      display: flex
+      align-items: center
+      justify-content: space-between
+      list-style: none
+
+      li.close-hamburger-menu
+        a
+          width: 50px
+          height: 50px
+          display: block
+          background: image_url('icons/menu-red.svg') no-repeat center center
+          outline: none
+
+      li.logout
+        a, a:link, a:hover, a:visited
+          color: #3c3c3c
+          text-transform: uppercase
+          text-decoration: none
+          margin: 0 auto
+          padding: 10px 20px
+          font-weight: bolder
+          font-size: 12px
+          border: 1px solid
+          outline: none
+          @include round-corners(30px)
+
+    .profile-container, .my-tags-container, .my-bookmarks-container, .my-recent-activity-container
+      border-bottom: 2px solid #e5e6e7
+
+      .no-content, .content
+        margin: 30px 0
+        color: #999898
+        font-size: 15px
+        font-style: italic
+
+    .profile-container
+      .avatar
+        margin: 35px 0
+        width: 60px
+        @extend .img-circle
+
+      a, a:link, a:hover, a:visited
+        color: #3c3c3c
+        text-decoration: none
+        margin: 0 auto
+        padding: 10px 20px
+        font-weight: bolder
+        font-size: 20px
+        outline: none
+
+    .my-tags-container
+      .btn-add-edit-tags
+        color: $orange
+        background: white
+        margin: 40px auto
+        padding: 10px 20px
+        font-weight: bolder
+        font-size: 12px
+        border: 1px solid
+        outline: none
+        @include round-corners(30px)
+        display: block
+        max-width: 170px
+
+    .my-recent-activity-container
+      border: none
+
+@media only screen and (max-width: $screen-md-max)
+  .menu.hamburger-menu
+    width: 40%
+
+@media only screen and (max-width: $screen-sm-max)
+  .menu.hamburger-menu
+    width: 95%
+    box-shadow: -55px 0px 70px 0px rgba(50, 50, 50, 0.85)
+
+    .container
+      margin: 0 auto
+      width: 95%

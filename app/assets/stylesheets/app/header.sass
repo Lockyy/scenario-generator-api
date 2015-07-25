@@ -1,23 +1,70 @@
+@import "bootstrap"
 @import "common/variables"
 
 .navbar.navbar-default
-  .container
-    width: 100%
-
   background-color: $primary-red
   color: $primary-grey
   margin-bottom: 0px
   border: none
   border-bottom: 1px solid #aa3a3f
-  .brand
-    img
-      padding: 10px
-      height: 60px
-  .navbar-right
-    padding-top: 5px
-  .navbar-brand
-    color: $primary-grey
-  .navbar-nav > li > a
-    color: $primary-grey
-    padding: 0px
-    margin: 15px
+
+  .container
+    width: 95%
+    padding: 5px
+
+    .brand
+      width: 40px
+      float: left
+
+    .navbar-right
+      padding-top: 5px
+
+    .navbar-brand
+      color: $primary-grey
+
+    .search-container
+      @extend .col-sm-5
+
+      padding: 0
+
+      form
+        @extend .navbar-form
+        width: 100%
+
+        .form-group, .form-control
+          width: 100%
+
+    .main-nav
+      @extend .col-xs-8
+      @extend .col-sm-5
+      display: flex
+      justify-content: flex-end
+      list-style:none
+      margin: 0
+      padding: 0
+      text-align: right
+
+      li
+        display: flex
+        align-items: center
+        margin-left: 15px
+
+        a
+          color: $primary-grey
+          padding: 0px
+
+      li.toggle-search
+        display: none
+
+      li.show-hamburger-menu
+        a
+          width: 50px
+          height: 50px
+          display: block
+          background: image_url('icons/menu-white.svg') no-repeat center center
+
+@media only screen and (max-width: $screen-sm-max)
+  .navbar.navbar-default
+    .container
+      .search-container
+        display: none
