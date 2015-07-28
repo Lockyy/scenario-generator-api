@@ -1,0 +1,72 @@
+@import 'functions'
+@import 'variables'
+
+$orange: #e36308
+
+.section
+  &.most-popular
+    & > .header
+      & > h2
+        background-image: img-url('icons/most-popular.svg')
+
+    .section-row
+      max-height: none
+
+      .tags
+        @extend .col-sm-3
+        @extend .col-xs-12
+        padding: 20px
+
+        & > .content
+          color: white
+          height: $box-height + 100px
+          background: $orange img-url('backgrounds/most-popular-tags-bg.svg')
+          display: flex
+          flex-direction: column
+          justify-content: space-between
+          overflow: hidden
+
+          .header
+            text-align: center
+            padding: 30px 30px 50px 30px
+
+            h2
+              font-size: 31.25px
+              background: img-url('icons/popular-tags.svg') no-repeat left bottom
+              font-style: italic
+              margin: 0
+
+          .items
+            padding: 0 30px
+            max-height: 320px
+            overflow: hidden
+
+            ul
+              @extend .list-inline
+
+              li
+                background: $orange
+                padding: 8px 12px
+                margin: 8px 5px
+                font-size: 15px
+                border: 1px solid
+
+          .see-all-tags-container
+            text-align: center
+            padding: 60px 0 70px 0
+
+            .btn, .btn:hover, .btn:active, .btn:link, .btn:visited
+              color: white
+              background: $orange
+              border: 1px solid white
+              font-weight: bold
+              text-transform: uppercase
+              padding: 15px 45px
+              @include border-radius(30px)
+
+@media only screen and (min-width: $screen-sm-min)
+  .section
+    &.most-popular
+      .section-row
+        display: flex
+        align-items: flex-end

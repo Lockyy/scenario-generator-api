@@ -7,8 +7,12 @@ class User < ActiveRecord::Base
 
   has_many :user_oauths, dependent: :destroy
   has_many :tokens, dependent: :destroy
+  has_and_belongs_to_many :tags
 
-  scope :with_oauth, ->(provider, uid) { joins(:user_oauths).where(user_oauths: { provider: provider, uid: uid }) }
+  scope :with_oauth, ->(provider, uid) do
+    joins(:user_oauths).where(user_oauths: { provider: provider, uid: uid })
+  end
+
   scope :with_token, ->(token) { joins(:tokens).where(tokens: { token: token }) }
 
   validates :name, presence: true
