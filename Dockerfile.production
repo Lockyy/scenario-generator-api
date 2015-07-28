@@ -22,11 +22,15 @@ RUN apt-get update \
 EXPOSE 4000
 
 WORKDIR /share
+ADD Gemfile /share/Gemfile
+ADD Gemfile.lock /share/Gemfile.lock
+RUN bundle install
 ADD ./ /share
 
 CMD cp config/database.yml.example config/database.yml
 ENV RAILS_ENV production
-RUN bundle install
-RUN cd client && $(npm bin)/webpack --config webpack.rails.config.js && cd ..
+ENV NODE_ENV production
+ENV SECRET_KEY_BASE ghuoim20873mjcs092jimclkxwemc9k230kpodzl
+RUN cd client && npm install && node_modules/webpack/bin/webpack.js --config webpack.rails.config.js && cd ..
 RUN rake assets:precompile
 CMD rails s Puma -b 0.0.0.0 -e production -p 4000
