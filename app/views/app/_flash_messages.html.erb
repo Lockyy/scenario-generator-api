@@ -1,0 +1,4 @@
+<% flash.each do |name, msg| -%>
+  <% name = name == 'notice' ? 'success' : name  %>
+  <%= content_tag :div, msg, class: "alert alert-#{name}" %>
+<% end -%>

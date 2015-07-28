@@ -1,0 +1,192 @@
+@import 'variables'
+@import 'functions'
+
+.product
+  .content
+    height: 450px
+    background: $light-grey
+    overflow: hidden
+    border-top: 2px solid $red
+
+    .data
+      padding: 10px 25px
+      display: flex
+      order: 1
+      flex-direction: column
+      justify-content: space-between
+
+      .title
+        margin-top: 0
+        font-weight: 600
+        font-size: 1em
+        margin-bottom: 0
+        max-height: 55px
+        overflow: hidden
+
+      .company
+        font-size: 0.75em
+        margin-top: 0
+
+      .description
+        overflow: hidden
+        font-size: 0.70em
+        line-height: 1.25em
+
+      .review
+        display: flex
+        justify-content: space-between
+        height: 30px
+        color: #929497
+        font-size: 0.66666666em
+
+      .footer
+        font-size: 0.60em
+        border-top: 1px solid $medium-grey
+        color: $dark-grey
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        padding: 10px 0
+
+        .author
+          max-width: 50%
+          white-space: nowrap
+          overflow: hidden
+          text-overflow: ellipsis
+
+    .picture
+      height: 100%
+      order: 2
+      padding: 0
+
+  &.box-0
+    @extend .col-xs-12
+    @extend .col-md-3
+
+    .content
+      height: 205px
+
+      .data
+        .description
+          display: none
+
+  &.box-1
+    @extend .col-md-3
+    @extend .col-xs-12
+    padding: 0
+
+    .content
+      flex-direction: column-reverse
+      justify-content: space-between
+      overflow: none
+
+      .data
+        @extend .col-xs-12
+        @extend .col-md-12
+        height: 60%
+
+        .description
+          max-height: 45px
+
+      .picture
+        @extend .col-xs-12
+        @extend .col-md-12
+
+        height: 40%
+        padding: 0
+
+  &.box-2
+    @extend .col-xs-12
+    @extend .col-md-6
+    padding: 0
+
+    .data
+      @extend .col-xs-12
+      @extend .col-md-6
+
+    .picture
+      @extend .col-xs-12
+      @extend .col-md-6
+      padding: 0
+
+  &.box-3
+    @extend .col-xs-12
+    @extend .col-md-9
+    padding: 0
+
+    .data
+      @extend .col-xs-12
+      @extend .col-md-4
+
+    .picture
+      @extend .col-xs-12
+      @extend .col-md-8
+
+  &.no-pic-box
+    .content
+      .data
+        @extend .col-xs-12
+        @extend .col-md-12
+
+        height: 100%
+
+        .description
+          max-height: 220px
+
+      .picture
+        height: 0
+        display: none
+
+@media only screen and (max-width: $screen-sm-max)
+  body.app .container
+    width: 100%
+    overflow-x: hidden
+    padding: 0
+    margin: 0
+
+  .product
+    padding: 10px 0 !important
+
+    &.box-0
+      padding: 20px 0 !important
+
+    .content
+      display: flex
+      flex-direction: column-reverse
+      font-size: 17.5px
+
+      .data
+        height: 60%
+
+      .picture
+        height: 40%
+        padding: 0
+
+@media only screen and (min-width: $screen-md-min)
+  .product
+    .content
+      display: flex
+      flex-direction: row
+
+@media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max)
+  .product
+    padding: 20px !important
+
+    .content
+      font-size: 20px
+
+      .data
+        .description
+          max-height: 255px
+
+@media only screen and (min-width: $screen-lg-min)
+  .product
+    padding: 20px !important
+
+    .content
+      font-size: 25px
+      .data
+
+        .description
+          height: 250px
+          max-height: 250px

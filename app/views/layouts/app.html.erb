@@ -3,16 +3,16 @@
 <head>
 <title>Fletcher</title>
 <%= stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track' => true %>
-<%= javascript_include_tag 'app', 'data-turbolinks-track' => true %>
 <%= csrf_meta_tags %>
 </head>
 <body class="app <%= params[:action] %>">
 
 <%= render 'app/header' %>
-<%= render 'welcome_message' if @user.first_login? %>
 
+<%= render 'welcome_message' if @user.first_login? %>
 
 <%= yield %>
 
+<%= javascript_include_tag 'app', 'data-turbolinks-track' => true %>
 </body>
 </html>

@@ -9,10 +9,11 @@ const webpack = require('webpack');
 // See: https://github.com/justin808/bootstrap-sass-loader
 config.entry.push('webpack-dev-server/client?http://localhost:3000',
   'webpack/hot/dev-server',
-  './scripts/webpack_only',
 
   // custom bootstrap
-  'bootstrap-sass!./bootstrap-sass.config.js');
+  'bootstrap-sass!./bootstrap-sass.config.js',
+  './scripts/webpack_only'
+                 );
 config.output = {
 
   // this file is served directly by webpack
@@ -25,6 +26,11 @@ config.devtool = 'eval-source-map';
 // All the styling loaders only apply to hot-reload, not rails
 config.module.loaders.push(
   {test: /\.jsx?$/, loaders: ['react-hot', 'babel'], exclude: /node_modules/},
+  {
+    test: /\.sass$/,
+    loader: 'style!css!sass?indentedSyntax=sass&outputStyle=expanded&imagePath=/assets/images&includePaths[]=' +
+    path.resolve(__dirname, './assets/stylesheets')
+  },
   {test: /\.css$/, loader: 'style-loader!css-loader'},
   {
     test: /\.scss$/,

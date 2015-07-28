@@ -1,25 +1,13 @@
 import $ from 'jquery';
 import React from 'react';
+import Dashboard from './components/Dashboard';
 
 $(function onLoad() {
   function render() {
-    if ($('#content').length > 0) {
-      var token = $('#content').data('authToken')
-      React.render(
-        <div>
-          <div className='container'>
-              <h3 className='open-sans-light'>{token !== "" && token !== undefined ? 'Welcome to fletcher' : 'Please login!'}</h3>
-          </div>
-        </div>,
-        document.getElementById('content')
-      );
-    }
+    React.render(<Dashboard />,
+      document.getElementById('content')
+    );
   }
 
   render();
-
-  // Next part is to make this work with turbo-links
-  $(document).on('page:change', () => {
-    render();
-  });
 });
