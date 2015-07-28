@@ -27,4 +27,6 @@ ADD ./ /share
 CMD cp config/database.yml.example config/database.yml
 ENV RAILS_ENV production
 RUN bundle install
+RUN cd client && $(npm bin)/webpack --config webpack.rails.config.js && cd ..
+RUN rake assets:precompile
 CMD rails s Puma -b 0.0.0.0 -e production -p 4000
