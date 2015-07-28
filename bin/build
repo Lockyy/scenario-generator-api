@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -e
+
+rm -f Dockerfile
+cp Dockerfile.production Dockerfile
+docker build -t codelittinc/fletcher-ruby .
+rm Dockerfile
