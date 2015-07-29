@@ -31,7 +31,7 @@ config.module.loaders.push(
 module.exports = config;
 
 // Next line is Heroku specific. You'll have BUILDPACK_URL defined for your Heroku install.
-const devBuild = (typeof process.env.BUILDPACK_URL) === 'undefined';
+const devBuild = (typeof process.env.BUILDPACK_URL) === 'undefined' && (process.env.NODE_ENV != 'production');
 if (devBuild) {
   console.log('Webpack dev build for Rails'); // eslint-disable-line no-console
   module.exports.devtool = 'eval-source-map';

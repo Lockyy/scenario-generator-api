@@ -1,0 +1,36 @@
+# This is our PRODUCTION dockerfile.
+#
+# This uses Codelitt's Ruby 2.2 image found at:
+# https://github.com/codelittinc/dockerfiles/blob/master/ruby/Dockerfile
+FROM codelittinc/ruby:2.2
+MAINTAINER Codelitt, Inc.
+
+# Mount any shared volumes from host to container @ /share
+VOLUME ["/share"]
+
+# Install dependencies and rails-api
+RUN apt-get update
+RUN apt-get install -y python-software-properties \
+    python g++ make software-properties-common
+RUN add-apt-repository -y ppa:chris-lea/node.js
+RUN apt-get update \
+    && apt-get install -y nodejs \
+    && apt-get install -y qt5-default libqt5webkit5-dev \
+    && gem install --no-rdoc --no-ri rails-api \
+    && gem install --no-rdoc --no-ri puma
+
+EXPOSE 4000
+
+WORKDIR /share
+ADD Gemfile /share/Gemfile
+ADD Gemfile.lock /share/Gemfile.lock
+RUN bundle install
+ADD ./ /share
+
+CMD cp config/database.yml.example config/database.yml
+ENV RAILS_ENV production
+ENV NODE_ENV production
+ENV SECRET_KEY_BASE ghuoim20873mjcs092jimclkxwemc9k230kpodzl
+RUN cd client && npm install && node_modules/webpack/bin/webpack.js --config webpack.rails.config.js && cd ..
+RUN rake assets:precompile
+CMD rails s Puma -b 0.0.0.0 -e production -p 4000
