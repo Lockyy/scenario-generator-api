@@ -10,7 +10,7 @@ class Section extends React.Component {
     let component = $(React.findDOMNode(this));
     let items = $(component).find('> .items');
 
-    let _toggleSection = _.throttle(function() {
+    let _toggleSection = _.throttle(function(e) {
       let hiddenLink = component.find('.toggle-section:hidden');
       let visibleLink = component.find('.toggle-section:visible');
 
@@ -19,6 +19,8 @@ class Section extends React.Component {
           hiddenLink.stop().fadeToggle('fast');
         });
       });
+
+      e.preventDefault();
     }, 300, {trailing: false});
 
     $(component).find('.toggle-section').on('click', _toggleSection);

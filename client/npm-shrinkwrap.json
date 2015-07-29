@@ -818,6 +818,11 @@
       "from": "https://registry.npmjs.org/jquery/-/jquery-2.1.4.tgz",
       "resolved": "https://registry.npmjs.org/jquery/-/jquery-2.1.4.tgz"
     },
+    "jquery-outside-events": {
+      "version": "1.0.0",
+      "from": "jquery-outside-events@^1.0.0",
+      "resolved": "https://registry.npmjs.org/jquery-outside-events/-/jquery-outside-events-1.0.0.tgz"
+    },
     "loader-utils": {
       "version": "0.2.7",
       "from": "https://registry.npmjs.org/loader-utils/-/loader-utils-0.2.7.tgz",

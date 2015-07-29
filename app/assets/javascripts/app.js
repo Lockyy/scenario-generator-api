@@ -10,13 +10,11 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
+//= require jquery2
 //= require jquery_ujs
-
+//= require jquery-ui/effect-slide
 //= require bootstrap-sprockets
-
 // Important to import jquery_ujs before rails-bundle as that patches jquery xhr to use the authenticity token!
-
 //= require_tree ./common/
-//= require_tree ./app/
 //= require generated/client-bundle
+//= require_tree ./app/

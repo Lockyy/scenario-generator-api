@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   end
 
   devise_for :users, only: [:omniauth_callbacks], controllers: {omniauth_callbacks: 'omniauth_callbacks'}
+  devise_scope :user do
+    get 'sign_out', to: 'devise/sessions#destroy'
+  end
 
   root 'site#long'
   get 'long', to: 'site#long'
