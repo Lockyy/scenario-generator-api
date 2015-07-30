@@ -1,6 +1,9 @@
 @import 'common/variables'
 
 .btn
+  letter-spacing: 0.125em
+  text-transform: uppercase
+
   &.btn-red
     background: $primary-red
     color: white
@@ -13,4 +16,8 @@
     &:hover, &:active, &:focus
       color: $primary-red
 
-  &.round-button
+  &.btn-round
+    font-weight: bolder
+    border: 1px solid
+    outline: none
+    @include round-corners(30px)
