@@ -5,3 +5,5 @@
 require('es5-shim/es5-shim');
 require('es5-shim/es5-sham');
 require('jquery-outside-events');
+require('h5f');
+require('bootstrap-validator');
