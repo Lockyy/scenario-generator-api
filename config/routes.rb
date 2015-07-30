@@ -8,10 +8,15 @@ Rails.application.routes.draw do
     get 'sign_out', to: 'devise/sessions#destroy'
   end
 
-  root 'site#long'
   get 'long', to: 'site#long'
   get 'short', to: 'site#short'
   get 'contact', to: 'site#contact'
   get 'support', to: 'site#support'
+
   get 'app', to: 'app#index'
+  scope :app do
+    get '*route', to: 'app#index'
+  end
+
+  root 'site#long'
 end
