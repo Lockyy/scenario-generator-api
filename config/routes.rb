@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   namespace :api do
     get 'dashboard(.:format)', action: :index, controller: 'dashboard', defaults: {format: 'json'}
+    resources :reviews
   end
 
   devise_for :users, only: [:omniauth_callbacks], controllers: {omniauth_callbacks: 'omniauth_callbacks'}
