@@ -1,38 +1,68 @@
 import React from 'react';
 import _ from 'lodash';
-import { Link } from 'react-router';
+import { Link, Navigation } from 'react-router';
+import  FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import  ReviewPageStore from '../../stores/ReviewPageStore'
 
-class ProductNew extends React.Component {
-  constructor() {
-    super();
+const NewReviewPage  = React.createClass({
+  displayName: 'NewReviewPage',
+  mixins: [ Navigation ],
 
-    this.state = {data: {}};
-  }
+  componentDidMount: function componentDidMount() {
+    $(this.refs.new_review_form.getDOMNode()).validator();
+  },
 
-  componentDidMount() {
-  }
+  _getReview: function _getReview() {
+    let refs = this.refs;
 
-  _getNewProductFields() {
+    return {
+      product: {
+        name: refs.product_name.getDOMNode().value,
+        description: refs.product_description.getDOMNode().value,
+        url: refs.product_url.getDOMNode().value,
+        company: {
+          name: refs.product_company_name.getDOMNode().value
+        }
+      }
+    };
+  },
+
+  _onChange: function _onChange() {
+    FluxReviewPageActions.updateReview(this._getReview());
+  },
+
+  _onSubmit: function _onSubmit(e) {
+    this._onChange();
+
+    let review = ReviewPageStore.getState().review;
+    FluxReviewPageActions.submitReview(review, this.context.router);
+    e.preventDefault();
+  },
+
+  _getNewProductFields: function _getNewProductFields() {
     return (<fieldset>
       <span class='instructions'>Complete the form below to add a new product</span>
       <div className='form-group'>
-        <label htmlFor='product_company'>Company Name <span className='required'>*</span></label>
-        <input type='text' className='form-control' placeholder='e.g. Microsoft' name='product_company' />
+        <label htmlFor='product[company[name]]'>Company Name <span className='required'>*</span></label>
+        <input type='text' className='form-control' placeholder='e.g. Microsoft' name='product[company[name]]'
+          ref='product_company_name' onChange={this._onChange} required/>
       </div>
 
       <div className='form-group'>
-        <label htmlFor='product_url'>Product's website <span className='required'>*</span></label>
-        <input type='text' className='form-control' placeholder='www.' name='product_url' />
+        <label htmlFor='product[url]'>Product's website <span className='required'>*</span></label>
+        <input type='url' className='form-control' placeholder='www.' name='product[url]'
+          ref='product_url' onChange={this._onChange} required/>
       </div>
 
       <div className='form-group'>
-        <label htmlFor='product_description'>Description <span className='required'>*</span></label>
-        <textarea type='text' className='form-control' placeholder='Write a brief description of the product' name='product_description' rows='10'/>
+        <label htmlFor='product[description]'>Description <span className='required'>*</span></label>
+        <textarea type='text' className='form-control' placeholder='Write a brief description of the product'
+          name='product[description]' rows='10' ref='product_description' onChange={this._onChange} required/>
       </div>
     </fieldset>);
-  }
+  },
 
-  render() {
+  render: function render() {
     let isNewProduct = true;
 
     return (
@@ -43,11 +73,12 @@ class ProductNew extends React.Component {
       </div>
       <div className='main-content'>
         <h1 className='title'>Product Directory</h1>
-        <form className='form review new'>
+        <form className='form review new' ref='new_review_form' onSubmit={this._onSubmit}>
           <div className='form-group'>
-            <label htmlFor='product_name'>Product's Name</label>
+            <label htmlFor='product[name]'>Product's Name</label>
             <div className='input-group'>
-              <input type='text' className='form-control' placeholder='e.g. Hololens' name='product_name' />
+              <input type='text' className='form-control' placeholder='e.g. Hololens' name='product[name]'
+                ref='product_name' onChange={this._onChange} required/>
               <span className="input-group-btn">
                 <button className="btn btn-default" type="button" disabled={true}>Go</button>
               </span>
@@ -78,18 +109,6 @@ class ProductNew extends React.Component {
     </div>
     );
   }
-}
+})
 
-ProductNew.displayName = 'ProductNew';
-
-ProductNew.defaultProps = {
-  data: {
-    items: []
-  }
-};
-
-ProductNew.propTypes = {
-  data: React.PropTypes.object.isRequired
-};
-
-export default ProductNew;
+export default NewReviewPage;

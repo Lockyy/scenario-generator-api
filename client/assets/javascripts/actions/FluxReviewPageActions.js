@@ -13,6 +13,7 @@ class FluxReviewPageActions {
 
     NewReviewPageAPI.submit(review,
       function(data) {
+        router.transitionTo('/app')
       },
       function(error) {
         console.error(error)
