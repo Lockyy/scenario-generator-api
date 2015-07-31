@@ -1,0 +1,130 @@
+@import 'variables'
+
+$grey: #dfdfdf
+$blue-ish: #4dbcc6
+
+.product.new
+  font-size: 18.75px
+
+  h1.title
+    font-size: 1em
+    letter-spacing: 0.125em
+    text-transform: uppercase
+    font-weight: bold
+    border-bottom: 1px solid $grey
+    padding: 10px 0
+    margin-bottom: 50px
+
+  .help, .info, .main-content
+    padding: 0 30px
+
+  .help, .info
+    @extend .col-xs-12
+    @extend .col-md-3
+
+  .help
+    h1.title
+      color: $red
+
+    .instructions
+      color: $grey
+
+  .main-content
+    @extend .col-xs-12
+    @extend .col-md-6
+
+    .review.new
+      label
+        font-weight: normal
+        color: $red
+
+      .form-group
+        margin: 50px 0
+
+        label
+          margin-bottom: 15px
+
+        input
+          padding: 25px 20px
+          border-color: $grey
+
+        button, button:disabled
+          font-weight: bolder
+          padding: 15px
+          background-color: $grey
+          border-color: $grey
+          color: $white
+          opacity: 1
+
+        &.has-error
+          input
+            border-color: $red
+
+      .actions
+        padding: 50px 0
+        text-align: center
+        border-top: 1px solid $grey
+
+        .btn
+          margin: 20px 15px
+          padding: 15px 30px
+
+        .submit
+          color: $red
+
+  .info
+    .instructions
+      font-size: 22.5px
+      background: $blue-ish image-url('icons/cant-find-product.svg') no-repeat center 40px
+      color: $white
+      text-align: center
+      padding: 80px 30px 40px
+      margin-top: 120px
+      @include border-radius(3px)
+
+      .more-instructions
+        padding: 0 20px
+
+        .add-symbol
+          width: 20px
+          content: image-url('icons/icon-add-black.svg')
+          margin: 0 10px
+
+@media only screen and (max-width: $screen-sm-max)
+  .product.new
+    font-size: 15px
+
+    .help, .info, .main-content
+      padding: 0 10px
+
+      h1.title
+        padding: 10px 0
+        margin-bottom: 10px
+
+
+    .help
+      .instructions
+        display: none
+
+    .main-content
+      h1.title
+        display: none
+
+      .review.new
+        .form-group
+          margin: 30px 0
+
+        .actions
+          padding: 30px 0
+
+          .btn
+            color: $white
+            margin: 10px 0
+            width: 100%
+            background: $dark-grey
+
+          .submit
+            background: $red
+
+    .info
+      display: none

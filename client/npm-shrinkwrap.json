@@ -789,10 +789,30 @@
         }
       }
     },
+    "bootstrap-validator": {
+      "version": "0.9.0",
+      "from": "bootstrap-validator@^0.9.0",
+      "resolved": "https://registry.npmjs.org/bootstrap-validator/-/bootstrap-validator-0.9.0.tgz"
+    },
     "es5-shim": {
       "version": "4.1.3",
       "from": "https://registry.npmjs.org/es5-shim/-/es5-shim-4.1.3.tgz",
       "resolved": "https://registry.npmjs.org/es5-shim/-/es5-shim-4.1.3.tgz"
+    },
+    "formsy-react": {
+      "version": "0.14.1",
+      "from": "formsy-react@^0.14.1",
+      "resolved": "https://registry.npmjs.org/formsy-react/-/formsy-react-0.14.1.tgz"
+    },
+    "formsy-react-components": {
+      "version": "0.4.0",
+      "from": "formsy-react-components@^0.4.0",
+      "resolved": "https://registry.npmjs.org/formsy-react-components/-/formsy-react-components-0.4.0.tgz"
+    },
+    "h5f": {
+      "version": "1.1.1",
+      "from": "h5f@^1.1.1",
+      "resolved": "https://registry.npmjs.org/h5f/-/h5f-1.1.1.tgz"
     },
     "imports-loader": {
       "version": "0.6.3",
