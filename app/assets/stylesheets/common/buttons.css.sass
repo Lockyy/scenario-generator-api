@@ -1,8 +1,9 @@
 @import 'common/variables'
 
-.btn
+.btn, .btn:hover, .btn:active, .btn:focus
   letter-spacing: 0.125em
   text-transform: uppercase
+  outline: none !important
 
   &.btn-red
     background: $primary-red
@@ -19,5 +20,4 @@
   &.btn-round
     font-weight: bolder
     border: 1px solid
-    outline: none
     @include round-corners(30px)
