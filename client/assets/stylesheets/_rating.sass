@@ -1,15 +1,21 @@
 @import 'functions'
 
-@mixin star($image, $cursor)
+@mixin rating-icon($image, $cursor)
   background: img-url($image) no-repeat
   background-size: cover
   cursor: $cursor
 
 @mixin star-on
-  @include star('icons/star-on.svg', 'pointer')
+  @include rating-icon('icons/star-on.svg', 'pointer')
 
 @mixin star-off
-  @include star('icons/star-off.svg', 'default')
+  @include rating-icon('icons/star-off.svg', 'default')
+
+@mixin money-on
+  @include rating-icon('icons/money-on.svg', 'pointer')
+
+@mixin money-off
+  @include rating-icon('icons/money-off.svg', 'default')
 
 .rating-container
   display: flex
@@ -30,9 +36,23 @@
     padding: 10px
     @include star-off
 
+    &.money
+      @include money-off
+
   input[type='radio'] + label.marked,
   input[type='radio']:checked + label
     @include star-on
 
   input[type='radio']:disabled
     @include star-off
+
+  &.money
+    input[type='radio'] + label
+      @include money-off
+
+    input[type='radio'] + label.marked,
+    input[type='radio']:checked + label
+      @include money-on
+
+    input[type='radio'] + label, input[type='radio']:disabled
+      @include money-off

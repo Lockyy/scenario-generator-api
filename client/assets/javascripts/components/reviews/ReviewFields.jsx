@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import Rating from '../Rating'
+import PriceRating from '../PriceRating'
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 
 const ProductFields  = React.createClass({
@@ -16,7 +17,6 @@ const ProductFields  = React.createClass({
   //TODO: Create attachment component
   //TODO: Implement backend to attachments
   //TODO: Create add-links component
-  //TODO: Modify rating component to support custom icons
   //TODO: Create add-tags component
 */
 
@@ -62,7 +62,7 @@ const ProductFields  = React.createClass({
 
         <div className='form-group inline rating'>
           <label htmlFor='product[review[price_score]]'>Pricing</label>
-          <Rating name='product[review[price_score]]' ratingEnabled={true} ref='product_review_price_score' />
+          <PriceRating name='product[review[price_score]]' ratingEnabled={true} ref='product_review_price_score' />
         </div>
 
         <div className='form-group'>
