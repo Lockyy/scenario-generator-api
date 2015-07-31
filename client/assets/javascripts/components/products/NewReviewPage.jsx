@@ -41,7 +41,7 @@ const NewReviewPage  = React.createClass({
 
   _getNewProductFields: function _getNewProductFields() {
     return (<fieldset>
-      <span class='instructions'>Complete the form below to add a new product</span>
+      <span className='instructions'>Complete the form below to add a new product</span>
       <div className='form-group'>
         <label htmlFor='product[company[name]]'>Company Name <span className='required'>*</span></label>
         <input type='text' className='form-control' placeholder='e.g. Microsoft' name='product[company[name]]'
