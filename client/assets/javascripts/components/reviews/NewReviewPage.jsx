@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import  ProductFields from './ProductFields'
+import  ReviewFields from './ReviewFields'
 import  FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import  ReviewPageStore from '../../stores/ReviewPageStore'
 
@@ -38,6 +39,10 @@ const NewReviewPage  = React.createClass({
   },
 
   render: function render() {
+    /* TODO
+      //TODO: Implement validation messages
+    */
+
     return (
     <div className='product new'>
       <div className='help'>
@@ -48,6 +53,7 @@ const NewReviewPage  = React.createClass({
         <form className='form review new' ref='new_review_form' onSubmit={this._onSubmit}>
 
           <ProductFields ref='product_fields'/>
+          <ReviewFields ref='review_fields'/>
 
           <div className='actions'>
             <Link to={'/app'} >
