@@ -10,7 +10,7 @@ class Product < ActiveRecord::Base
 
   scope :most_popular, -> do
     # TODO:
-    # order('number_of_views').limit(params[:max]).offset(params[:offset])
+    # order('views').limit(params[:max]).offset(params[:offset])
     all
   end
 
@@ -26,8 +26,9 @@ class Product < ActiveRecord::Base
     Faker::Name.name
   end
 
-  def number_of_views
-    Faker::Number.between(0, 99999999)
+  def increment_views!
+    self.views = self.views + 1
+    self.save
   end
 
   validates :name, presence: true, uniqueness: { scope: :company_id }

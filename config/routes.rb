@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   namespace :api do
     get 'dashboard(.:format)', action: :index, controller: 'dashboard', defaults: {format: 'json'}
+
+    resources :products
     resources :reviews
   end
 
