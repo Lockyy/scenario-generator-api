@@ -1,0 +1,76 @@
+$color-darkred: #b8141a
+$color-darkgrey: #929497
+$color-orange: #e36307
+
+.company.profile.show
+
+  h1.title
+    color: $color-darkred
+    width: 40%
+
+  #company-main-info-container
+    font-weight: bold
+    margin-left: 0
+
+    #logo-container, #buttons-container
+      display: flex
+      align-items: center
+
+    #logo-container
+      @extend .col-sm-4
+      @extend .col-xs-12
+      text-transform: uppercase
+      padding-bottom: 50px
+      height: 100%
+
+      #company-name
+        padding: 65px 0 65px 50px
+        vertical-align: middle
+        vertical-align: bottom
+
+    #buttons-container
+      @extend .col-md-8
+      @extend .col-xs-6
+      height: 100%
+      padding: 55px 0
+      justify-content: flex-end
+
+      .btn
+        margin-left: 20px
+
+  #company-secondary-info-container
+    height: 100%
+
+    #website-container
+      @extend .col-sm-4
+      @extend .col-xs-12
+      padding: 15px 0
+      margin-right: 20px
+      border-top: solid 1px $grey
+      border-bottom: solid 2px $grey
+      color: $dark-grey
+      font-weight: bold
+      font-size: 14px
+
+      #website-generic-icon
+        padding-right: 20px
+
+    #tags
+      @extend .col-xs-5
+      @extend .col-md-7
+      border-left: solid 1px $grey
+      padding-left: 20px
+
+      #tags-container
+
+        .tag
+          padding: 5px
+          margin: 0px 10px 10px 0px
+          display: inline-block
+          border: solid 2px $color-orange
+          color: $color-orange
+
+      #add-edit-tag-btn
+        color: $color-orange
+        border-color: $color-orange
+        margin-top: 20px
