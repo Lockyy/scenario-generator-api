@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_many :user_oauths, dependent: :destroy
   has_many :tokens, dependent: :destroy
+  has_many :reviews
   has_and_belongs_to_many :tags
 
   scope :with_oauth, ->(provider, uid) do
