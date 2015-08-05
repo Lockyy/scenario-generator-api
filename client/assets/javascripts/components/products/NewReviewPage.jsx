@@ -49,7 +49,7 @@ const NewReviewPage  = React.createClass({
       </div>
 
       <div className='form-group'>
-        <label htmlFor='product[url]'>Product's website <span className='required'>*</span></label>
+        <label htmlFor='product[url]'>Product&#39;s website <span className='required'>*</span></label>
         <input type='url' className='form-control' placeholder='www.' name='product[url]'
           ref='product_url' onChange={this._onChange} required/>
       </div>
@@ -75,7 +75,7 @@ const NewReviewPage  = React.createClass({
         <h1 className='title'>Product Directory</h1>
         <form className='form review new' ref='new_review_form' onSubmit={this._onSubmit}>
           <div className='form-group'>
-            <label htmlFor='product[name]'>Product's Name</label>
+            <label htmlFor='product[name]'>Product&#39;s Name</label>
             <div className='input-group'>
               <input type='text' className='form-control' placeholder='e.g. Hololens' name='product[name]'
                 ref='product_name' onChange={this._onChange} required/>
