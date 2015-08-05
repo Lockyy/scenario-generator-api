@@ -7,12 +7,12 @@ class TagsBox extends React.Component {
     return (<div className='tags'>
       <div className='content'>
         <div className='header'>
-          <h2>Popular tags</h2>
+          <h2>{this.props.title}</h2>
         </div>
         <div className='items'>
           <ul>
             {this.props.children.map(function(tag) {
-              return (<li>{tag.name}</li>);
+              return (<li className='tag'>{tag.name}</li>);
             })}
           </ul>
         </div>
