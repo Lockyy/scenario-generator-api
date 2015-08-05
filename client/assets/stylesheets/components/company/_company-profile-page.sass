@@ -2,34 +2,64 @@ $color-darkred: #b8141a
 $color-darkgrey: #929497
 $color-orange: #e36307
 
+body.app .container
+  padding: 15px
+
 .company.profile.show
+
+  .desktop-version
+    display: inline
+
+  .mobile-version
+    display: none
+
+  .section
+    border-top: solid 2px $color-darkred
+
+    .header
+      padding: 10px
+      margin-top: 0px
+      border-bottom: solid 1px $grey
+      .toggle-section-container
+        display: none
+
+    .section-title
+      padding: 0 0 0 50px
+      color: $color-darkgrey
+      background: no-repeat left bottom
+      background-image: img-url('icons/icon-related-products.svg')
 
   h1.title
     color: $color-darkred
     width: 40%
 
+
   #company-main-info-container
     font-weight: bold
     margin-left: 0
 
-    #logo-container, #buttons-container
+    .row
+      margin: 0
+
+    .logo-container, .buttons-container
       display: flex
       align-items: center
 
-    #logo-container
+    .logo-container
       @extend .col-sm-4
       @extend .col-xs-12
       text-transform: uppercase
       padding-bottom: 50px
       height: 100%
 
-      #company-name
+      .company-name
         padding: 65px 0 65px 50px
         vertical-align: middle
         vertical-align: bottom
+        font-size: 30px
 
-    #buttons-container
-      @extend .col-md-8
+    .buttons-container
+      @extend .col-sm-8
       @extend .col-xs-6
       height: 100%
       padding: 55px 0
@@ -37,13 +67,14 @@ $color-orange: #e36307
 
       .btn
         margin-left: 20px
+        padding: 7px 30px
 
-  #company-secondary-info-container
+  .company-secondary-info-container
     height: 100%
 
-    #website-container
-      @extend .col-sm-4
+    .website-container
       @extend .col-xs-12
+      @extend .col-sm-4
       padding: 15px 0
       margin-right: 20px
       border-top: solid 1px $grey
@@ -52,25 +83,152 @@ $color-orange: #e36307
       font-weight: bold
       font-size: 14px
 
-      #website-generic-icon
-        padding-right: 20px
+      .url-site
+        background: no-repeat left bottom
+        background-image: img-url('icons/icon-website.svg')
+        padding-left: 40px
+        padding: 10px 0 0 40px
 
-    #tags
+    .tags
       @extend .col-xs-5
-      @extend .col-md-7
+      @extend .col-sm-7
       border-left: solid 1px $grey
       padding-left: 20px
 
-      #tags-container
 
-        .tag
-          padding: 5px
-          margin: 0px 10px 10px 0px
-          display: inline-block
-          border: solid 2px $color-orange
-          color: $color-orange
-
-      #add-edit-tag-btn
+      .add-edit-tag-btn
         color: $color-orange
         border-color: $color-orange
         margin-top: 20px
+        font-weight: bold
+
+  .tags-container
+
+    .tag
+      padding: 5px
+      margin: 0px 10px 10px 0px
+      display: inline-block
+      border: solid 1px $color-orange
+      color: $color-orange
+      font-size: 12px
+
+@media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max)
+  body.app .container
+    width: 100%
+    padding: 15px
+
+  .company.profile.show
+    .desktop-version
+      .section
+        .header
+          .section-title
+            padding-top: 20px
+
+@media (max-width: $screen-xs-max)
+
+  $color-lightgrey: #f6f6f6
+  $color-blackcharcoal: #3c3c3b
+
+  body.app .container
+    width: 100%
+    padding: 0
+
+  .company.profile.show
+    padding: 0 10px
+
+    h1.title
+      width: 100%
+      border-color: $color-darkred
+
+    #company-main-info-container
+      .desktop-version
+        display: none
+
+      .mobile-version
+        display: block
+
+      .mobile-version
+
+        .section
+          margin-top: 30px
+          border: solid 1px $grey
+
+          .header
+            padding: 10px
+            margin: 0px
+            border-bottom: none
+
+            .section-title
+              background-image: none
+              padding: 0
+
+            .toggle-section-container
+              display: inline
+
+              .toggle-section
+                span
+                  color: $color-blackcharcoal
+                  font-weight: bold
+          .tag
+            margin: 10px
+
+        .logo-container
+          flex-direction: column
+          padding-bottom: 15px
+          text-transform: none
+
+          .company-name
+            padding: 0
+            font-size: 35px
+            margin-top: 5px
+
+        .row
+          margin: 0
+
+        .social-media-container
+          border-left: solid 1px $grey
+          border-right: solid 1px $grey
+          border-top: solid 2px $color-darkred
+
+          .website-container
+            padding: 0px 30px 10px 30px
+
+            .url-site
+              background: no-repeat left bottom
+              background-image: img-url('icons/icon-website.svg')
+              font-size: 17.5px
+              padding: 10px 0 0 40px
+              color: $color-darkred
+              text-decoration: underline
+              margin-top: 10px
+
+          .actions-container
+            .share-btn, .bookmark-btn
+              padding: 15px
+              width: 50%
+              display: inline
+              border-radius: 0
+              background-color: $color-lightgrey
+              border: solid 1px $grey
+              color: $color-darkred
+              font-size: 10px
+              text-transform: none
+              span
+                background: no-repeat left bottom
+                padding: 10px 0 10px 30px
+                background-position: 0
+
+            .share-btn
+              border-right: none
+              .with-icon
+                background-image: img-url('icons/icon-share.svg')
+
+            .bookmark-btn
+              border-left: none
+              .with-icon
+                background-image: img-url('icons/icon-bookmarks.svg')
+
+
+
+          .product.box-1:last-child
+            padding-bottom: 0 !important
