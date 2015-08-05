@@ -22,8 +22,16 @@ class Product < ActiveRecord::Base
     Faker::Number.between(0, 5)
   end
 
+  def price
+    Faker::Number.between(0, 4)
+  end
+
   def author
     Faker::Name.name
+  end
+
+  def tags
+    Faker::Lorem.words(10)
   end
 
   def increment_views!
