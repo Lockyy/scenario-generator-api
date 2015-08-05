@@ -40,7 +40,7 @@ body.app .container
   h1.title
     color: $color-darkred
     width: 40%
-
+    margin-bottom: 0
 
   #company-main-info-container
     font-weight: bold
@@ -53,7 +53,7 @@ body.app .container
       align-items: center
 
     .logo-container
-      @extend .col-sm-4
+      @extend .col-sm-6
       @extend .col-xs-12
       text-transform: uppercase
       padding-bottom: 50px
@@ -66,10 +66,10 @@ body.app .container
         font-size: 30px
 
     .buttons-container
-      @extend .col-sm-8
+      @extend .col-sm-6
       @extend .col-xs-6
       height: 100%
-      padding: 55px 0
+      padding: 65px 0
       justify-content: flex-end
 
       .btn
@@ -180,7 +180,7 @@ body.app .container
 
         .logo-container
           flex-direction: column
-          padding-bottom: 15px
+          padding: 30px 0
           text-transform: none
 
           .company-name
@@ -233,8 +233,6 @@ body.app .container
               border-left: none
               .with-icon
                 background-image: img-url('icons/icon-bookmarks.svg')
-
-
 
           .product.box-1:last-child
             padding-bottom: 0 !important

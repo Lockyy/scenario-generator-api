@@ -108,7 +108,7 @@ const CompanyProfileHeader  = React.createClass({
 
   render: function render() {
     return (
-      <div id='company-main-info-container' className='container'>
+      <div id='company-main-info-container'>
         {this._getMobileVersion()}
         {this._getDesktopVersion()}
       </div>
