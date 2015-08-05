@@ -1,15 +1,16 @@
 import React from 'react';
 import _ from 'lodash';
+import { Router, Link } from 'react-router';
 import timeago from 'timeago';
 import AutoFitPicture from './AutoFitPicture';
 import Rating from './Rating';
 
-class ProductBox extends React.Component {
-  hasPicture() {
+const ProductBox = React.createClass ({
+  hasPicture: function hasPicture() {
     return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image));
-  }
+  },
 
-  render() {
+  render: function render() {
     let isHalfBox = this.props.size === 0.5 || this.props.size === 0;
     let boxSize = isHalfBox ? 0 : this.props.size;
     let boxClass = `box-${boxSize}`;
@@ -19,13 +20,17 @@ class ProductBox extends React.Component {
       boxClass += ' no-pic-box';
     }
     let classes = _.compact(['product', boxClass]).join(' ');
+    let router = Router
+    let company = this.props.company
 
     return (<div className={classes}>
       <div className='content'>
         <div className='data'>
           <div className="header">
             <h3 className='title'>{this.props.name}</h3>
-            <h4 className='company'>{this.props.company.name}</h4>
+            <Link to={`/app/companies/${company.id}`} >
+              <h4 className='company'>{company.name}</h4>
+            </Link>
           </div>
 
           <div className='review'>
@@ -45,7 +50,7 @@ class ProductBox extends React.Component {
       </div>
     </div>);
   }
-}
+});
 
 ProductBox.displayName = 'ProductBox';
 
