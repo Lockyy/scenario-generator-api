@@ -10,7 +10,7 @@ class TagsBox extends React.Component {
           <h2>{this.props.title}</h2>
         </div>
         <div className='items'>
-          <ul>
+          <ul className='tags-list'>
             {this.props.children.map(function(tag) {
               return (<li className='tag'>{tag.name}</li>);
             })}
