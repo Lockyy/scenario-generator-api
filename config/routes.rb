@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   namespace :api do
     get 'dashboard(.:format)', action: :index, controller: 'dashboard', defaults: {format: 'json'}
 
-    resources :products
+    resources :products do
+      resources :reviews, only: [:index]
+    end
     resources :reviews
   end
 

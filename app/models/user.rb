@@ -44,4 +44,8 @@ class User < ActiveRecord::Base
   def first_login?
     sign_in_count == 1
   end
+
+  def total_reviews
+    self.reviews.size
+  end
 end
