@@ -10,7 +10,7 @@ module Fletcher
       @product = fetch_product!
       @review = build_review
       @product.reviews << @review
-      @product.save!
+      @product.save
     end
 
     def errors
@@ -32,7 +32,7 @@ module Fletcher
       params.delete(:attachments)
 
       review = Review.new(params)
-      review.attachments.build(review_params[:attachments])
+      review.attachments.build(attachments_params) unless attachments_params.empty?
 
       review
     end
@@ -42,6 +42,10 @@ module Fletcher
       name = company_params['name']
 
       Company.where(name: name).first_or_create
+    end
+
+    def attachments_params
+      @attachments_params ||= (review_params[:attachments] || [])
     end
 
     def product_params

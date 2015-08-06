@@ -3,14 +3,24 @@ require 'rails_helper'
 RSpec.describe Fletcher::NewReview do
   let(:params) {
       {
+        title: Faker::Company.bs,
+        quality_review: Faker::Lorem.paragraph,
+        quality_score: 5,
+        price_review: Faker::Lorem.paragraph,
+        price_score: '4',
+        attachments: [{
+          name: 'header.png',
+          size: 12364,
+          content_type: 'image/png',
+          url: 'http://img.fletcher.com/random_seq/header.png'
+        }],
         product: {
           name: 'product',
           description: 'description',
           url: 'http://url.com',
           company: {
             name: 'company name'
-          }
-        }
+          }        }
       }.with_indifferent_access
     }
 
@@ -62,10 +72,10 @@ RSpec.describe Fletcher::NewReview do
       end
     end
 
-    it 'verifies if the product is persisted' do
-      product = double()
-      expect(product).to receive(:persisted?).and_return(true)
-      expect(Product).to receive_message_chain(:where, :first_or_create).and_return(product)
+    it 'saves the product' do
+      product = double().as_null_object
+      expect(product).to receive(:save).and_return(true)
+      expect(Product).to receive_message_chain(:where, :first).and_return(product)
 
       subject.save!
     end
