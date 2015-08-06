@@ -12,10 +12,14 @@ $orange: #e36308
     .section-row
       max-height: none
 
-      .tags
+      .tag-box
         @extend .col-sm-3
         @extend .col-xs-12
         padding: 20px
+
+        .tag-holder
+          overflow: hidden
+          margin-top: 10px
 
         & > .content
           color: white
@@ -25,10 +29,10 @@ $orange: #e36308
           flex-direction: column
           justify-content: space-between
           overflow: hidden
+          padding: 30px
 
           .header
             text-align: center
-            padding: 30px 30px 50px 30px
 
             h2
               font-size: 20px
@@ -38,7 +42,7 @@ $orange: #e36308
 
           .items
             padding: 0 30px
-            max-height: 320px
+            max-height: 220px
             overflow: hidden
 
             ul
@@ -53,7 +57,7 @@ $orange: #e36308
 
           .see-all-tags-container
             text-align: center
-            padding: 60px 0 70px 0
+            padding: 20px 0 20px 0
 
             .btn, .btn:hover, .btn:active, .btn:link, .btn:visited
               color: white
@@ -61,7 +65,6 @@ $orange: #e36308
               border: 1px solid white
               font-weight: bold
               text-transform: uppercase
-              padding: 15px 45px
               @include border-radius(30px)
 
 @media only screen and (min-width: $screen-sm-min)

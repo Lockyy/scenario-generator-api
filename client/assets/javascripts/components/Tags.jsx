@@ -19,6 +19,13 @@ class Tags extends React.Component {
     }
   }
 
+  getMax() {
+    if(this.props.max) {
+      return this.props.max
+    }
+    return this.getTags().length
+  }
+
   getTags() {
     if(this.props) {
       return this.props.tags
@@ -30,16 +37,16 @@ class Tags extends React.Component {
     let tags = this.getTags()
 
     if(tags) {
-      for (let i = 0; i < this.props.max; i++) {
+      for (let i = 0; i < this.getMax(); i++) {
         tagTags.push(<span className='tag'>{tags[i]}</span>);
       }
 
-      return <div className='tags'>{tagTags}</div>;
+      return <div className={`tags ${this.props.containerClass}`}>{tagTags}</div>;
     }
   }
 
   linkRequired() {
-    return this.getTags() && this.getTags().length > this.props.max && this.props.link && this.props.name
+    return this.getTags() && this.getTags().length > this.getMax() && this.props.link && this.props.name
   }
 
   renderLink() {
