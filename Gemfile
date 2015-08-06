@@ -6,7 +6,9 @@ ruby '2.2.0'
 gem 'rails', '4.2.3'
 # Use sqlite3 as the database for Active Record
 gem 'pg'
-gem 'activeadmin', '~> 1.0.0.pre1'
+gem 'activeadmin', github: 'activeadmin'
+gem 'paperclip', :git => 'https://github.com/CloudVLab/paperclip.git', :branch => 'aws_v2'
+gem 'aws-sdk', '~> 2'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.1'

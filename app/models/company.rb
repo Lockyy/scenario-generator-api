@@ -1,11 +1,9 @@
 class Company < ActiveRecord::Base
   has_many :products
   has_many :tags, as: :taggable
+  has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }
 
   validates :name, presence: true, uniqueness: true
-
-  def image_url
-    "http://lorempixel.com/150/150/technics?random=#{id}"
-  end
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
 end
