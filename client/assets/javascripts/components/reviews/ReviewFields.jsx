@@ -4,21 +4,22 @@ import { Link } from 'react-router';
 import UploadManager from './UploadManager'
 import Rating from '../Rating'
 import PriceRating from '../PriceRating'
+import QualityReview from './QualityReview'
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 
 const ReviewFields  = React.createClass({
-  displayName: 'ProductFields',
+  displayName: 'ReviewFields',
 
   getFields: function getFields() {
     let refs = this.refs;
+    let quality_review_fields = refs.quality_review.getFields();
 
-    return {
+    return _.merge(quality_review_fields, {
       quality_score: React.findDOMNode(refs.product_review_quality_score).value,
-      quality_review: React.findDOMNode(refs.product_review_quality_review).value,
       attachments: refs.upload_manager.getFiles(),
       price_score: React.findDOMNode(refs.product_review_price_score).value,
       price_review: React.findDOMNode(refs.product_review_price_review).value,
-    }
+    });
   },
 
   render: function render() {
@@ -42,14 +43,7 @@ const ReviewFields  = React.createClass({
           <Rating name='product[review[quality_score]]' ratingEnabled={true} ref='product_review_quality_score' />
         </div>
 
-        <div className='form-group quality-review'>
-          <label htmlFor='product[review[quality_review]]'>Review</label>
-          <label htmlFor='product[review[quality_title]]' className='sr-only'>Title</label>
-          <input type='text' className='form-control' placeholder='Title' name='product[review[quality_review]]'
-            ref='product_review_quality_review' />
-          <textarea type='text' className='form-control' placeholder='Say something' name='product[review[quality_review]]'
-            rows='10' ref='product_review_quality_review'/>
-        </div>
+        <QualityReview ref='quality_review' />
 
         <div className='form-group attachments'>
           <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>

@@ -41,6 +41,9 @@ $blue-ish: #4dbcc6
       .form-group
         margin: 50px 0
 
+        *:focus
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $red
+
         label
           margin-bottom: 15px
 
@@ -89,19 +92,26 @@ $blue-ish: #4dbcc6
               width: 30px
 
         &.quality-review
-          input.form-control
-            border-bottom: none !important
-            outline: 0px none transparent
-            font-size: 25px
-            border-bottom-left-radius: 0
-            border-bottom-right-radius: 0
+          .fields_container
+            input.form-control:focus, textarea.form-control:focus
+              box-shadow: none
 
-          textarea.form-control
-            border-top-left-radius: 0!important
-            border-top-right-radius: 0 !important
-            border-top: 0px none transparent
-            outline: 0px none transparent
-            border-box: none
+            input.form-control, input.form-control:focus
+              border-bottom: none !important
+              outline: 0px none transparent
+              font-size: 25px
+              border-bottom-left-radius: 0
+              border-bottom-right-radius: 0
+
+            textarea.form-control
+              border-top-left-radius: 0!important
+              border-top-right-radius: 0 !important
+              border-top: 0px none transparent
+              outline: 0px none transparent
+              border-box: none
+
+            &.focus
+              box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $red
 
         &.attachments, &.links
           @extend .row
