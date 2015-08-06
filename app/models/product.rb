@@ -19,11 +19,11 @@ class Product < ActiveRecord::Base
   end
 
   def rating
-    Faker::Number.between(0, 5)
+    self.reviews.map(&:quality_score).average
   end
 
   def price
-    Faker::Number.between(0, 4)
+    self.reviews.map(&:price_score).average
   end
 
   def author
