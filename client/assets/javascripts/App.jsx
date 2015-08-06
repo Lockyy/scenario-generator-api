@@ -12,7 +12,7 @@ $(function onLoad() {
       <Router history={history}>
         <Route path="app" component={Dashboard}>
         </Route>
-        <Route path="app/products/review/new" component={NewReviewPage}>
+        <Route name="reviews" path="app/reviews/new" component={NewReviewPage}>
         </Route>
       </Router>
     ),document.getElementById('content'));
