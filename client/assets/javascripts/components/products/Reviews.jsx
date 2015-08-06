@@ -1,5 +1,6 @@
 import React from 'react/addons';
 import _ from 'lodash';
+import { Link } from 'react-router';
 import FluxProductReviewsActions from '../../actions/FluxProductReviewsActions'
 import ReviewsStore from '../../stores/ReviewsStore'
 import Rating from '../Rating';
@@ -30,7 +31,10 @@ const Reviews = React.createClass({
           <img src={review.user.avatar_url} />
           <div className='details'>
             <div className='name'>
-              {review.user.name}
+              <Link
+                to='#'>
+                {review.user.name}
+              </Link>
             </div>
             <div className='job'>
               {review.user.job_title}
