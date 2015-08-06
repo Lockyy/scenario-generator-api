@@ -2,6 +2,11 @@ Rails.application.routes.draw do
   namespace :api do
     get 'dashboard(.:format)', action: :index, controller: 'dashboard', defaults: {format: 'json'}
     post 'uploads(.:format)', action: :create, controller: 's3_upload', defaults: {format: 'json'}
+    
+    resources :products do
+      resources :reviews, only: [:index], defaults: {format: :json}
+    end
+    
     resources :reviews, defaults: {format: :json}
   end
 

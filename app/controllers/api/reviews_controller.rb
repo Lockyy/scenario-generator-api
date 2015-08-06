@@ -5,7 +5,12 @@ module Api
     # GET /reviews
     # GET /reviews.json
     def index
-      @reviews = Review.all
+      @product = Product.find_by(id: params[:product_id])
+      @reviews = @product.reviews
+
+      respond_to do |format|
+        format.json { render }
+      end
     end
 
     # GET /reviews/1
@@ -58,9 +63,9 @@ module Api
     # Never trust parameters from the scary internet, only allow the white list through.
     def review_params
       params[:review].permit(
-        :quality_score, :quality_review, :title, :price_review, :price_score,
-        { attachments: [:name, :url, :content_type, :size] },
-        { product: [:name, { company: [:name] }, :url, :description] }
+          :quality_score, :quality_review, :title, :price_review, :price_score,
+          { attachments: [:name, :url, :content_type, :size] },
+          { product: [:name, { company: [:name] }, :url, :description] }
       )
     end
   end
