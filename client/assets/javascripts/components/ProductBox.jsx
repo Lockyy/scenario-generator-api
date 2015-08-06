@@ -25,22 +25,24 @@ const ProductBox = React.createClass ({
     return (<div className={classes}>
       <div className='content'>
         <div className='data'>
-          <div className="header">
-            <Link to={`/app/products/${this.props.id}`}>
-              <h3 className='title'>{this.props.name}</h3>
-            </Link>
-            <h4 className='company'>{this.props.company.name}</h4>
-          </div>
 
-          <div className='review'>
-            <Rating value={this.props.rating} name='rating'/>
-            <span className='reviews'>{this.props.reviews.length} review(s)</span>
-          </div>
+          <div className='details'>
+            <div className="header">
+              <Link to={`/app/products/${this.props.id}`}>
+                <h3 className='title'>{this.props.name}</h3>
+              </Link>
+              <h4 className='company'>{this.props.company.name}</h4>
+            </div>
 
-          <p className='description'>{this.props.description}</p>
+            <div className='review'>
+              <Rating value={this.props.rating} name='rating'/>
+              <span className='reviews'>{this.props.reviews.length} review(s)</span>
+            </div>
+
+            <p className='description'>{this.props.description}</p>
+          </div>
 
           <div className='footer'>
-            <span className='author'>Added by {this.props.author}</span>
             <span className='created_at'>{timeago(this.props.created_at)}</span>
           </div>
         </div>

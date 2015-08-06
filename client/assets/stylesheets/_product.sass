@@ -9,43 +9,49 @@
     border-top: 2px solid $red
 
     .data
-      padding: 10px 25px
+      padding: 20px 25px 10px
       display: flex
       order: 1
       flex-direction: column
       justify-content: space-between
 
-      .title
-        margin-top: 0
-        font-weight: 600
-        font-size: 1em
-        margin-bottom: 0
-        max-height: 55px
-        overflow: hidden
+      .details
+        max-height: 315px
 
-      .company
-        font-size: 0.75em
-        margin-top: 0
+        .title
+          margin-top: 0
+          font-weight: 600
+          font-size: 18px
+          text-transform: capitalize
+          margin-bottom: 0
+          max-height: 55px
+          overflow: hidden
 
-      .description
-        overflow: hidden
-        font-size: 0.70em
-        line-height: 1.25em
+        .company
+          font-size: 16px
+          margin-top: 3px
+          margin-bottom: 0px
 
-      .review
-        display: flex
-        justify-content: flex-start
-        height: 30px
-        color: #929497
-        font-size: 0.66666666em
+        .description
+          overflow: hidden
+          font-size: 14px
+          line-height: 1.25em
 
-        .reviews
-          margin: 0 10px
-          font-size: 15px
+        .review
+          display: flex
+          justify-content: flex-start
+          height: 30px
+          color: #929497
+          font-size: 0.66666666em
+          margin-top: 10px
+          margin-bottom: 5px
 
-          &:before
-            content: '/'
-            margin-right: 10px
+          .reviews
+            margin: 0 10px
+
+            &:before
+              content: '/'
+              margin-right: 10px
 
       .footer
         font-size: 0.60em
@@ -56,11 +62,8 @@
         justify-content: space-between
         padding: 10px 0
 
-        .author
-          max-width: 50%
-          white-space: nowrap
-          overflow: hidden
-          text-overflow: ellipsis
+        .created_at
+          float: right
 
     .picture
       height: 100%
@@ -72,7 +75,7 @@
     @extend .col-md-3
 
     .content
-      height: 205px
+      height: ($box-height / 2) - 20
 
       .data
         .description
@@ -91,16 +94,16 @@
       .data
         @extend .col-xs-12
         @extend .col-md-12
-        height: 60%
+        height: 70%
 
         .description
-          max-height: 45px
+          max-height: 85px
 
       .picture
         @extend .col-xs-12
         @extend .col-md-12
 
-        height: 40%
+        height: 30%
         padding: 0
 
   &.box-2
