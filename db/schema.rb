@@ -42,8 +42,9 @@ ActiveRecord::Schema.define(version: 20150805170934) do
     t.text     "description"
     t.string   "url"
     t.integer  "company_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "views",       default: 0
   end
 
   create_table "reviews", force: :cascade do |t|
