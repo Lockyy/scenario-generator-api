@@ -1,15 +1,17 @@
 import React from 'react';
 import _ from 'lodash';
+import { Link } from 'react-router';
 import timeago from 'timeago';
 import AutoFitPicture from './AutoFitPicture';
 import Rating from './Rating';
 
-class ProductBox extends React.Component {
-  hasPicture() {
-    return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image));
-  }
+const ProductBox = React.createClass ({
 
-  render() {
+  hasPicture: function() {
+    return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image));
+  },
+
+  render: function() {
     let isHalfBox = this.props.size === 0.5 || this.props.size === 0;
     let boxSize = isHalfBox ? 0 : this.props.size;
     let boxClass = `box-${boxSize}`;
@@ -24,13 +26,15 @@ class ProductBox extends React.Component {
       <div className='content'>
         <div className='data'>
           <div className="header">
-            <h3 className='title'>{this.props.name}</h3>
+            <Link to={`/app/products/${this.props.id}`}>
+              <h3 className='title'>{this.props.name}</h3>
+            </Link>
             <h4 className='company'>{this.props.company.name}</h4>
           </div>
 
           <div className='review'>
             <Rating value={this.props.rating} name='rating'/>
-            <span className='reviews'>{this.props.reviews} reviews</span>
+            <span className='reviews'>{this.props.reviews.length} review(s)</span>
           </div>
 
           <p className='description'>{this.props.description}</p>
@@ -45,11 +49,12 @@ class ProductBox extends React.Component {
       </div>
     </div>);
   }
-}
+})
 
 ProductBox.displayName = 'ProductBox';
 
 ProductBox.propTypes = {
+  id: React.PropTypes.string.isRequired,
   author: React.PropTypes.string.isRequired,
   company: React.PropTypes.object.isRequired,
   created_at: React.PropTypes.string.isRequired,
