@@ -11,10 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150803201614) do
+ActiveRecord::Schema.define(version: 20150805170934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "attachments", force: :cascade do |t|
+    t.integer  "attachable_id"
+    t.string   "attachable_type"
+    t.string   "url"
+    t.string   "name"
+    t.string   "content_type"
+    t.integer  "size"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "attachments", ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable_type_and_attachable_id", using: :btree
 
   create_table "companies", force: :cascade do |t|
     t.string   "name"
@@ -44,6 +57,7 @@ ActiveRecord::Schema.define(version: 20150803201614) do
     t.string   "reviewable_type"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "user_id"
   end
 
   add_index "reviews", ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id", using: :btree
