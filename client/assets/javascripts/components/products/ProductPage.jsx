@@ -66,7 +66,10 @@ const ProductPage = React.createClass({
               {this.getProductData('name')}
             </div>
             <div className='company'>
-              {this.getCompanyData('name')}
+              <Link
+                to='#'>
+                {this.getCompanyData('name')}
+              </Link>
             </div>
           </div>
         </div>
@@ -77,9 +80,17 @@ const ProductPage = React.createClass({
   renderTopButtons: function() {
     return (
       <div className='links'>
-        <a className='btn btn-red btn-round'  href="/app/products/review/new">Add a Review</a>
-        <a className='btn btn-grey btn-round' href="#">Share</a>
-        <a className='btn btn-grey btn-round' href="#">Bookmark</a>
+        <Link to={'/app/products/review/new'} className='btn btn-red btn-round'>
+          Add a Review
+        </Link>
+        <a
+          href={`mailto:?subject=Check%20out%20this%20product&body=${window.location.href}`}
+          className='btn btn-grey btn-round'>
+          Share
+        </a>
+        <Link to={'#'} className='btn btn-grey btn-round'>
+          Bookmark
+        </Link>
       </div>
     )
   },
