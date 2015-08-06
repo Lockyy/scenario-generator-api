@@ -16,26 +16,27 @@ const NewReviewPage  = React.createClass({
 
   _getReview: function _getReview() {
     let prodRefs = this.refs.product_fields.refs;
+    let review = this.refs.review_fields.getFields();
 
-    return {
-      product: {
-        name: prodRefs.product_name.getDOMNode().value,
-        description: prodRefs.product_description.getDOMNode().value,
-        url: prodRefs.product_url.getDOMNode().value,
-        company: {
-          name: prodRefs.product_company_name.getDOMNode().value
-        }
+    review.product = {
+      name: prodRefs.product_name.getDOMNode().value,
+      description: prodRefs.product_description.getDOMNode().value,
+      url: prodRefs.product_url.getDOMNode().value,
+      company: {
+        name: prodRefs.product_company_name.getDOMNode().value
       }
-    };
+    }
+
+    return { review: review };
   },
 
   _onSubmit: function _onSubmit(e) {
+    e.preventDefault();
+
     let review = this._getReview();
 
     FluxReviewPageActions.updateReview(review);
     FluxReviewPageActions.submitReview(review, this.context.router);
-
-    e.preventDefault();
   },
 
   render: function render() {
