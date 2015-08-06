@@ -7,14 +7,19 @@
   margin-bottom: 0px
   border: none
   border-bottom: 1px solid #aa3a3f
+  padding-top: 10px
+  padding-bottom: 10px
 
   .container
     width: 95%
     padding: 5px
+    @include flexbox-centered-children
 
     .brand
-      width: 40px
+      @extend .col-sm-3
       float: left
+      img
+        width: 120px
 
     .navbar-right
       padding-top: 5px
@@ -24,25 +29,30 @@
 
     .search-container
       @extend .col-sm-5
+      @extend .col-sm-offset-1
 
       padding: 0
 
       form
         @extend .navbar-form
+        margin: 0px
         width: 100%
 
         .form-group, .form-control
           width: 100%
+          border-radius: 45px
 
     .main-nav
       @extend .col-xs-8
-      @extend .col-sm-5
+      @extend .col-sm-3
+      @extend .col-sm-offset-1
       display: flex
-      justify-content: flex-end
+      justify-content: space-between
       list-style:none
-      margin: 0
+      margin-bottom: 0
       padding: 0
       text-align: right
+
 
       li
         display: flex
@@ -53,18 +63,25 @@
           color: $primary-grey
           padding: 0px
 
-      li.toggle-search
-        display: none
+        &.write-a-review img
+          width: 30px
+          margin-right: 5px
 
-      li.show-hamburger-menu
-        a
-          width: 50px
-          height: 50px
-          display: block
-          background: image_url('icons/menu-white.svg') no-repeat center center
+        &.toggle-search
+          display: none
+
+        &.show-hamburger-menu
+          a
+            width: 35px
+            height: 35px
+            display: block
+            background: image_url('icons/menu-white.svg') no-repeat center center
+            background-size: contain
 
 @media only screen and (max-width: $screen-sm-max)
   .navbar.navbar-default
     .container
       .search-container
         display: none
+      .main-nav
+        justify-content: flex-end
