@@ -30,7 +30,7 @@ class ProductBox extends React.Component {
 
           <div className='review'>
             <Rating value={this.props.rating} name='rating'/>
-            <span className='reviews'>{this.props.reviews} reviews</span>
+            <span className='reviews'>{this.props.reviews.length} reviews</span>
           </div>
 
           <p className='description'>{this.props.description}</p>
@@ -58,7 +58,7 @@ ProductBox.propTypes = {
   size: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
   title: React.PropTypes.string.isRequired,
   image: React.PropTypes.string,
-  review: React.PropTypes.string
+  reviews: React.PropTypes.array
 };
 
 export default ProductBox;
