@@ -17,8 +17,8 @@ const ProductFields  = React.createClass({
 
       <div className='form-group'>
         <label htmlFor='product[url]'>Product's website <span className='required'>*</span></label>
-        <input type='url' className='form-control' placeholder='www.' name='product[url]'
-          ref='product_url' required/>
+        <input type='text' className='form-control' placeholder='www.' name='product[url]'
+          pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)" title="Include a valid url" ref='product_url' required/>
       </div>
 
       <div className='form-group'>
