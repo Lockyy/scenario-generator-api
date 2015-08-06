@@ -45,6 +45,12 @@ class User < ActiveRecord::Base
     sign_in_count == 1
   end
 
+  def signed_in_minutes
+    diff_seconds = (Time.now - current_sign_in_at).round
+    diff_minutes = diff_seconds / 60
+    return diff_minutes
+  end
+
   def total_reviews
     self.reviews.size
   end
