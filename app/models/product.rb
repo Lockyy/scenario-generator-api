@@ -14,6 +14,7 @@ class Product < ActiveRecord::Base
     all
   end
 
+  # TODO: use attachments
   def image
     Faker::Number.between(0, 5).odd? ? "http://lorempixel.com/960/540/technics?random=#{id}" : nil
   end
