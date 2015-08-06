@@ -11,7 +11,7 @@
 
 <%= render 'app/menu' %>
 
-<%= render 'welcome_message' if @user.first_login? %>
+<%= render 'welcome_message' if @user.first_login? && @user.signed_in_minutes <= 1 %>
 
 <%= yield %>
 
