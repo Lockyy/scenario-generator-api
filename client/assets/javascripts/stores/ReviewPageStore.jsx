@@ -20,8 +20,13 @@ class ReviewPageStore {
     this.bindListeners({
       handleUpdateReview: FluxReviewPageActions.UPDATE_REVIEW,
       handleSubmitReview: FluxReviewPageActions.SUBMIT_REVIEW,
+      handleUploadFile: FluxReviewPageActions.UPLOAD_FILE,
       handleRegisterError: FluxReviewPageActions.REGISTER_ERROR
     });
+  }
+
+  handleUploadFile(file) {
+    // TODO
   }
 
   handleUpdateReview(review) {

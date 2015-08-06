@@ -6,7 +6,25 @@ module.exports = {
     let url = NewReviewPageConstants.CREATE_URL;
 
     return new Promise(function() {
-      $.post(url, review, resolve).fail(reject);
+      $.ajax({
+        url: url,
+        method: 'POST',
+        data: JSON.stringify(review),
+        dataType: 'json',
+        contentType: 'application/json',
+        success: resolve,
+        error: reject
+      })
+    });
+  },
+  getSignedUploadUrl: function getSignedUploadUrl(file) {
+    return $.ajax({
+      url:      NewReviewPageConstants.CREATE_UPLOAD_URL,
+      method:     'POST',
+      dataType: 'json',
+      data: {
+        upload: { filename: file.name }
+      }
     });
   }
 };
