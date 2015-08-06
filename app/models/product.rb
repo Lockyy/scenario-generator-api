@@ -9,9 +9,7 @@ class Product < ActiveRecord::Base
   end
 
   scope :most_popular, -> do
-    # TODO:
-    # order('views').limit(params[:max]).offset(params[:offset])
-    all
+    order('views')
   end
 
   # TODO: use attachments
@@ -20,11 +18,11 @@ class Product < ActiveRecord::Base
   end
 
   def rating
-    self.reviews.map(&:quality_score).average
+    self.reviews.map(&:quality_score).compact.average || 0
   end
 
   def price
-    self.reviews.map(&:price_score).average
+    self.reviews.map(&:price_score).compact.average || 0
   end
 
   def author
