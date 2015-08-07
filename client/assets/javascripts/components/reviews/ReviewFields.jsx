@@ -17,7 +17,7 @@ const ReviewFields  = React.createClass({
     return _.merge(quality_review_fields, {
       quality_score: refs.product_review_quality_score.getValue(),
       attachments: refs.upload_manager.getFiles(),
-      price_score: refs.product_review_quality_score.getValue(),
+      price_score: refs.product_review_price_score.getValue(),
       price_review: React.findDOMNode(refs.product_review_price_review).value,
     });
   },
