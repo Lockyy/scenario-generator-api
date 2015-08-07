@@ -69,7 +69,7 @@ const Reviews = React.createClass({
             {review.price_review}
           </div>
           <Tags
-            tags={review.tags} />
+            tags={review.tag_list} />
         </div>
       </div>
     )
