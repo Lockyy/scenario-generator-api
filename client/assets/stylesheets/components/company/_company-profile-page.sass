@@ -39,7 +39,7 @@ body.app .container
 
   h1.title
     color: $color-darkred
-    width: 40%
+    width: 33.3%
     margin-bottom: 0
 
   #company-main-info-container
@@ -61,7 +61,8 @@ body.app .container
         padding: 65px 0 65px 50px
         vertical-align: middle
         vertical-align: bottom
-        font-size: 30px
+        text-transform: none
+        font-size: 20px
 
     .buttons-container
       @extend .col-sm-6
@@ -73,9 +74,16 @@ body.app .container
       .btn
         margin-left: 20px
         padding: 7px 30px
+        color: $color-darkgrey
+        border: 1px solid $color-darkgrey
+
+        &:hover, &:active, &:focus
+          background: $color-darkgrey
+          color: $white
 
   .company-secondary-info-container
     height: 100%
+    margin: 0
 
     .website-container
       @extend .col-xs-12
@@ -105,7 +113,13 @@ body.app .container
         color: $color-orange
         border-color: $color-orange
         margin-top: 20px
+        padding: 10px 20px
         font-weight: bold
+
+        &:hover, &:active, &:focus
+          background-color: $color-orange
+          color: $white
+
 
       .tag
         border: solid 1px $color-orange
