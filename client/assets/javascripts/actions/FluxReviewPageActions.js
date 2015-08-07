@@ -46,6 +46,11 @@ class FluxReviewPageActions {
     callbacks.success(link)
   }
 
+  addTag(tag, callbacks) {
+    this.dispatch(tag);
+    callbacks.success(tag)
+  }
+
   uploadFile(file, callbacks) {
     let _this = this;
 

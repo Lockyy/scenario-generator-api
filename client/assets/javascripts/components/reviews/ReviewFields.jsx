@@ -6,6 +6,7 @@ import LinksManager from './LinksManager'
 import PriceRating from '../PriceRating'
 import QualityReview from './QualityReview'
 import Rating from '../Rating'
+import TagsManager from './TagsManager'
 import UploadManager from './UploadManager'
 
 const ReviewFields  = React.createClass({
@@ -19,6 +20,7 @@ const ReviewFields  = React.createClass({
       quality_score: refs.product_review_quality_score.getValue(),
       attachments: refs.upload_manager.getFiles(),
       links: refs.links_manager.getLinks(),
+      tags: refs.tags_manager.getTags(),
       price_score: refs.product_review_price_score.getValue(),
       price_review: React.findDOMNode(refs.product_review_price_review).value,
     });
@@ -29,8 +31,7 @@ const ReviewFields  = React.createClass({
 
 
 /* TODO
-  //TODO: Create add-links component
-  //TODO: Create add-tags component
+  //TODO: Fix add-tags component style
 */
 
     return (
@@ -69,7 +70,8 @@ const ReviewFields  = React.createClass({
         </div>
 
         <div className='form-group tags'>
-          <button type='button' className='btn btn-default btn-round'>Add / Edit tags</button>
+          <label htmlFor='product[review[tags]]'>Add / Edit Tags</label>
+          <TagsManager ref='tags_manager' />
         </div>
       </fieldset>
     );
