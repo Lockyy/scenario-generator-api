@@ -88,7 +88,7 @@ class Dashboard extends React.Component {
     let paginationParams = {};
     paginationParams[sectionName] = {
       offset: section.getOffset(),
-      max: section.getMax()
+      limit: section.getMax(),
     };
     paginationParams['ids'] = JSON.stringify(this.getCurrentIDs(sectionName))
 
