@@ -2,9 +2,10 @@
 
 $grey: #dfdfdf
 $blue-ish: #4dbcc6
+$default-font-size: 17px
 
 .product.new
-  font-size: 18.75px
+  font-size: $default-font-size
 
   h1.title
     font-size: 1em
@@ -41,8 +42,8 @@ $blue-ish: #4dbcc6
       .form-group
         margin: 50px 0
 
-        *:focus
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $red
+        input:focus, textarea:focus
+          @include box-shadow($red)
 
         label
           margin-bottom: 15px
@@ -51,7 +52,7 @@ $blue-ish: #4dbcc6
           font-weight: bolder
 
         input, textarea
-          font-size: 18.75px
+          font-size: $default-font-size
           padding: 30px 20px
           border-color: $grey
 
@@ -102,7 +103,7 @@ $blue-ish: #4dbcc6
             input.form-control, input.form-control:focus
               border-bottom: none !important
               outline: 0px none transparent
-              font-size: 25px
+              font-size: $default-font-size + 5px
               border-bottom-left-radius: 0
               border-bottom-right-radius: 0
 
@@ -135,6 +136,10 @@ $blue-ish: #4dbcc6
             margin: 10px 0
             background: $white
 
+            &:hover
+              color: $white
+              background: $orange
+
       .actions
         padding: 50px 0
         text-align: center
@@ -143,13 +148,28 @@ $blue-ish: #4dbcc6
         .btn
           margin: 20px 15px
           padding: 15px 30px
+          color: $dark-grey
+
+
+          &:hover, &:active, &:focus
+            outline: none
+            color: $white
+            background: $dark-grey
 
         .submit
           color: $red
 
+          &:hover, &:active, &:focus
+            outline: none
+            color: $white
+            background: $red
+
+          &:disabled, &.disabled
+            color: $grey
+
   .info
     .instructions
-      font-size: 22.5px
+      font-size: $default-font-size + 5px
       background: $blue-ish image-url('icons/cant-find-product.svg') no-repeat center 40px
       color: $white
       text-align: center
