@@ -52,8 +52,8 @@ const UploadManager = React.createClass({
 
   render: function render() {
     return (
-      <div className='upload-manager'>
-        <ul className='files' ref='files'>
+      <div className='upload-manager items-manager'>
+        <ul className='files items' ref='files'>
           {_.map(this.state.files, function(file) {
             let id = Math.floor((Math.random() * 1000000) + 1);
 

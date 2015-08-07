@@ -46,8 +46,8 @@ const LinksManager = React.createClass({
 
   render: function render() {
     return (
-      <div className='links-manager'>
-        <ul className='links' ref='links'>
+      <div className='links-manager items-manager'>
+        <ul className='links items' ref='links'>
           {_.map(this.state.links, function(link) {
             let id = Math.floor((Math.random() * 1000000) + 1);
 
