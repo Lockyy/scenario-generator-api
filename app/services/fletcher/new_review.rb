@@ -32,9 +32,11 @@ module Fletcher
 
       params.delete(:product)
       params.delete(:attachments)
+      params.delete(:links)
 
       review = Review.new(params)
       review.attachments.build(attachments_params) unless attachments_params.empty?
+      review.links.build(links_params) unless links_params.empty?
 
       review
     end
@@ -48,6 +50,10 @@ module Fletcher
 
     def attachments_params
       @attachments_params ||= (review_params[:attachments] || [])
+    end
+
+    def links_params
+      @links_params ||= (review_params[:links] || [])
     end
 
     def product_params

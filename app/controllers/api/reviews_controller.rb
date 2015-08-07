@@ -65,6 +65,7 @@ module Api
       params[:review].permit(
           :quality_score, :quality_review, :title, :price_review, :price_score,
           { attachments: [:name, :url, :content_type, :size] },
+          { links: [:url] },
           { product: [:name, { company: [:name] }, :url, :description] }
       )
     end
