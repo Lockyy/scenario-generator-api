@@ -40,12 +40,14 @@ class Section extends React.Component {
     return (<div className={sectionClasses}>
       <div className='header'>
         <h2 className='section-title'>{this.props.title}</h2>
-        <a href='#' className='toggle-section show-section' style={{display: 'none'}}>
-          <i className='glyphicon glyphicon-chevron-down'></i>SHOW
-        </a>
-        <a href='#' className='toggle-section hide-section'>
-          <i className='glyphicon glyphicon-chevron-up'></i>HIDE
-        </a>
+        <div className='toggle-section-container'>
+          <a href='#' className='toggle-section show-section' style={{display: 'none'}}>
+            <i className='glyphicon glyphicon-chevron-down'></i>SHOW
+          </a>
+          <a href='#' className='toggle-section hide-section'>
+            <i className='glyphicon glyphicon-chevron-up'></i>HIDE
+          </a>
+        </div>
       </div>
 
       <div className={itemClasses}>

@@ -1,5 +1,6 @@
 class Tag < ActiveRecord::Base
   has_and_belongs_to_many :users
+  belongs_to :taggable, polymorphic: true
 
   scope :most_popular, ->() do
     joins('LEFT OUTER JOIN tags_users ON tags.id = tags_users.tag_id')
