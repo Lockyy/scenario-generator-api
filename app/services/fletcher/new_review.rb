@@ -33,10 +33,12 @@ module Fletcher
       params.delete(:product)
       params.delete(:attachments)
       params.delete(:links)
+      params.delete(:tags)
 
       review = Review.new(params)
       review.attachments.build(attachments_params) unless attachments_params.empty?
       review.links.build(links_params) unless links_params.empty?
+      review.tags = tags_params.map { |tag| Tag.where(name: tag[:name]).first_or_create } unless tags_params.empty?
 
       review
     end
@@ -46,6 +48,10 @@ module Fletcher
       name = company_params['name']
 
       Company.where(name: name).first_or_create
+    end
+
+    def tags_params
+      @tags_params ||= (review_params[:tags] || [])
     end
 
     def attachments_params
