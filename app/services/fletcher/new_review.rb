@@ -24,7 +24,7 @@ module Fletcher
     def fetch_product!
       params = {}.merge(product_params).with_indifferent_access
       params[:company] = fetch_company!
-      params[:name] = params[:name]
+      params[:name].downcase! if params[:name]
       Product.where(name: product_params['name']).first || Product.new(params)
     end
 
@@ -47,8 +47,8 @@ module Fletcher
     def fetch_company!
       company_params = product_params[:company] || {}
       name = company_params['name']
-
-      Company.where(name: name.downcase).first_or_create
+      name.downcase! if name
+      Company.where(name: name).first_or_create
     end
 
     def tags_params
