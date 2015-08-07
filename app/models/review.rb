@@ -9,5 +9,9 @@ class Review < ActiveRecord::Base
     created_at.strftime('%b %e, %Y')
   end
 
+  def tag_list
+    self.tags.map(&:name)
+  end
+
   # TODO: implement custom validator(validate presence of at least one of the fields)
 end
