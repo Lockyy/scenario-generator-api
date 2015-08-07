@@ -1,5 +1,6 @@
 import React from 'react'
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import RegexConstants from '../../utils/constants/RegexConstants'
 
 const LinksManager = React.createClass({
   getInitialState: function getInitialState() {
@@ -10,7 +11,13 @@ const LinksManager = React.createClass({
 
   _handleAddLink: function _handleAddLink(e) {
     let link_to_add = React.findDOMNode(this.refs.product_review_link_to_add)
-    let link = { url: link_to_add.value };
+    let url = link_to_add.value;
+
+    if(!new RegExp(RegexConstants.URL_PATTERN).test(url)) {
+      return ;
+    }
+
+    let link = { url: url };
     var _this = this;
 
     FluxReviewPageActions.addLink(link, {
@@ -53,18 +60,15 @@ const LinksManager = React.createClass({
           })}
         </ul>
 
-        <div className='form-group links'>
-          <label htmlFor='product[review[link]]' className='sr-only'>Review's links</label>
-          <div className='input-group'>
-            <input type='text' className='form-control' placeholder='Add a link' name='product[review[link]]'
-              pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
-              title="Include a valid url" ref='product_review_link_to_add'/>
+        <div className='input-group'>
+          <input type='text' className='form-control' placeholder='Add a link' name='product[review[link]]'
+            pattern={RegexConstants.URL_PATTERN} title="Include a valid url" ref='product_review_link_to_add'/>
 
-            <span className="input-group-btn">
-              <button className="btn btn-default" type="button" onClick={this._handleAddLink} >Add</button>
-            </span>
-          </div>
+          <span className="input-group-btn">
+            <button className="btn btn-default" type="button" onClick={this._handleAddLink} >Add</button>
+          </span>
         </div>
+        <span className="help-block with-errors col-xs-12"></span>
       </div>
     );
   }

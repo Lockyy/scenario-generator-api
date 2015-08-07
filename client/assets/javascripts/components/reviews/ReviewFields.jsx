@@ -50,7 +50,11 @@ const ReviewFields  = React.createClass({
           <UploadManager ref='upload_manager' />
         </div>
 
-        <LinksManager ref='links_manager' />
+        <div className='form-group links'>
+          <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
+
+          <LinksManager ref='links_manager' />
+        </div>
 
         <div className='form-group inline rating'>
           <label htmlFor='product[review[price_score]]'>Pricing</label>
@@ -60,7 +64,7 @@ const ReviewFields  = React.createClass({
         <div className='form-group'>
           <label htmlFor='product[review[price_review]]' className='sr-only'>Price Review</label>
 
-          <textarea type='text' className='form-control' placeholder='Write a brief description of the product'
+          <textarea type='text' className='form-control' placeholder='Add a brief description of the product’s pricing'
             name='product[review[price_review]]' rows='10' ref='product_review_price_review'/>
         </div>
 

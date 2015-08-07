@@ -52,6 +52,7 @@ $default-font-size: 17px
           font-weight: bolder
 
         input, textarea
+          font-style: italic
           font-size: $default-font-size
           padding: 30px 20px
           border-color: $grey
@@ -66,15 +67,6 @@ $default-font-size: 17px
           border-color: $grey
           color: $white
           opacity: 1
-
-        /*TODO*/
-        input::-webkit-input-placeholder,
-        input:-moz-placeholder,
-        input::-moz-placeholder,
-        input:-ms-input-placeholder
-          font-style: italic
-          color: red
-          background: red
 
         &.has-error
           input
@@ -113,6 +105,7 @@ $default-font-size: 17px
               border-top: 0px none transparent
               outline: 0px none transparent
               border-box: none
+              padding: 0 20px
 
             &.focus
               box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $red
