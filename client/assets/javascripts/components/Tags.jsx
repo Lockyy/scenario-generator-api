@@ -52,7 +52,7 @@ class Tags extends React.Component {
   renderLink() {
     if(this.linkRequired()) {
       return (
-        <a>Show more tags for {this.props.name}</a>
+        <a>Show more tags for <span className='product-name'>{this.props.name}</span></a>
       )
     }
   }
