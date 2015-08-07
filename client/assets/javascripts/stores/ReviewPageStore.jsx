@@ -2,6 +2,8 @@ import alt from '../FluxAlt';
 import FluxReviewPageActions from '../actions/FluxReviewPageActions'
 
 const emptyReview = {
+  links: [],
+  attachments: [],
   product: {
     name: '',
     description: '',
@@ -21,12 +23,17 @@ class ReviewPageStore {
       handleUpdateReview: FluxReviewPageActions.UPDATE_REVIEW,
       handleSubmitReview: FluxReviewPageActions.SUBMIT_REVIEW,
       handleUploadFile: FluxReviewPageActions.UPLOAD_FILE,
+      handleAddLink: FluxReviewPageActions.ADD_LINK,
       handleRegisterError: FluxReviewPageActions.REGISTER_ERROR
     });
   }
 
   handleUploadFile(file) {
-    // TODO
+    this.review.attachments.push(file);
+  }
+
+  handleAddLink(link) {
+    this.review.links.push(link);
   }
 
   handleUpdateReview(review) {

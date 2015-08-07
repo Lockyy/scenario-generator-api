@@ -1,11 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
-import UploadManager from './UploadManager'
-import Rating from '../Rating'
+import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import LinksManager from './LinksManager'
 import PriceRating from '../PriceRating'
 import QualityReview from './QualityReview'
-import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import Rating from '../Rating'
+import UploadManager from './UploadManager'
 
 const ReviewFields  = React.createClass({
   displayName: 'ReviewFields',
@@ -17,6 +18,7 @@ const ReviewFields  = React.createClass({
     return _.merge(quality_review_fields, {
       quality_score: refs.product_review_quality_score.getValue(),
       attachments: refs.upload_manager.getFiles(),
+      links: refs.links_manager.getLinks(),
       price_score: refs.product_review_price_score.getValue(),
       price_review: React.findDOMNode(refs.product_review_price_review).value,
     });
@@ -48,16 +50,7 @@ const ReviewFields  = React.createClass({
           <UploadManager ref='upload_manager' />
         </div>
 
-        <div className='form-group links'>
-          <label htmlFor='product[link]' className='sr-only'>Product's link</label>
-          <div className='input-group'>
-            <input type='text' className='form-control' placeholder='Add a link' name='product[link]'
-              ref='product_link'/>
-            <span className="input-group-btn">
-              <button className="btn btn-default" type="button" >Add</button>
-            </span>
-          </div>
-        </div>
+        <LinksManager ref='links_manager' />
 
         <div className='form-group inline rating'>
           <label htmlFor='product[review[price_score]]'>Pricing</label>

@@ -4,6 +4,7 @@ import { Router, Navigation } from 'react-router'
 import NewReviewPageAPI from '../utils/NewReviewPageAPI';
 
 
+//TODO: refactor to another file
 function uploadFileToS3(file, uploadUrl, contentType, callbacks) {
   var deferred = $.Deferred();
 
@@ -37,7 +38,12 @@ function uploadFileToS3(file, uploadUrl, contentType, callbacks) {
 
 class FluxReviewPageActions {
   updateReview(review) {
-    this.dispatch(review)
+    this.dispatch(review);
+  }
+
+  addLink(link, callbacks) {
+    this.dispatch(link);
+    callbacks.success(link)
   }
 
   uploadFile(file, callbacks) {
