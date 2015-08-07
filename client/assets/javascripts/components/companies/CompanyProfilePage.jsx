@@ -17,12 +17,12 @@ const CompanyProfilePage  = React.createClass({
 
   componentDidMount() {
     CompanyStore.listen(this.onChange.bind(this));
-    let params = this.context.router.state.params
+    let params = this.context.router.state.params;
     FluxCompanyActions.fetchData(params);
   },
 
   render: function render() {
-    let company  = this.state.company
+    let company  = this.state.company;
     return (
     <div className='company profile show'>
       <div className='main-content'>

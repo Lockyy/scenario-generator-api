@@ -2,7 +2,13 @@ Rails.application.routes.draw do
   ActiveAdmin.routes(self)
   namespace :api do
     get 'dashboard(.:format)', action: :index, controller: 'dashboard', defaults: {format: 'json'}
-    resources :reviews
+    post 'uploads(.:format)', action: :create, controller: 's3_upload', defaults: {format: 'json'}
+
+    resources :products, defaults: {format: :json} do
+      resources :reviews, only: [:index], defaults: {format: :json}
+    end
+
+    resources :reviews, except: [:index], defaults: {format: :json}
     resources :companies, defaults: {format: 'json'}
   end
 

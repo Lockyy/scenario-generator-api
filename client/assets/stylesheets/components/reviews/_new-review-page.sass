@@ -1,0 +1,228 @@
+@import 'variables'
+
+$grey: #dfdfdf
+$blue-ish: #4dbcc6
+$default-font-size: 17px
+
+.product.new
+  font-size: $default-font-size
+
+  h1.title
+    font-size: 1em
+    letter-spacing: 0.125em
+    text-transform: uppercase
+    font-weight: bold
+    border-bottom: 1px solid $grey
+    padding: 10px 0
+    margin-bottom: 50px
+
+  .help, .info, .main-content
+    padding: 0 30px
+
+  .help, .info
+    @extend .col-xs-12
+    @extend .col-md-3
+
+  .help
+    h1.title
+      color: $red
+
+    .instructions
+      color: $grey
+
+  .main-content
+    @extend .col-xs-12
+    @extend .col-md-6
+
+    .review.new
+      label
+        font-weight: normal
+        color: $red
+
+      .form-group
+        margin: 50px 0
+
+        input:focus, textarea:focus
+          @include box-shadow($red)
+          color: $dark-grey
+
+        label
+          margin-bottom: 15px
+
+        .help-block.with-errors
+          font-weight: bolder
+
+        input, textarea
+          font-style: italic
+          font-size: $default-font-size
+          padding: 18px 20px
+          color: $dark-grey
+          border-color: $grey
+
+        input
+          box-sizing: border-box
+          height: 100%
+          max-height: 62px
+
+        textarea
+          resize: vertical
+
+        button, button:disabled
+          font-weight: bolder
+          padding: 20px
+          background-color: $grey
+          border-color: $grey
+          color: $white
+          opacity: 1
+
+        &.has-error
+          input
+            border-color: $red
+            color: $dark-grey
+
+        &.inline
+          label
+            @extend .col-sm-2
+            padding: 0
+
+        &.rating
+          height: 30px
+          .rating-container
+            height: 100%
+
+            label
+              margin: 0
+              height: 30px
+              width: 30px
+
+        &.quality-review
+          .fields_container
+            input.form-control:focus, textarea.form-control:focus
+              box-shadow: none
+              color: $dark-grey
+
+
+            input.form-control, input.form-control:focus
+              border-bottom: none !important
+              outline: 0px none transparent
+              font-size: $default-font-size + 5px
+              border-bottom-left-radius: 0
+              border-bottom-right-radius: 0
+              color: $dark-grey
+
+            textarea.form-control
+              border-top-left-radius: 0!important
+              border-top-right-radius: 0 !important
+              border-top: 0px none transparent
+              outline: 0px none transparent
+              border-box: none
+              padding: 0 20px
+
+            &.focus
+              box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $red
+
+        &.attachments, &.links, &.tags
+          @extend .row
+
+          .input-group
+            @extend .col-lg-8
+
+            button
+              background-color: $red
+              width: 115px
+
+        &.tags
+          .input-group
+            input
+              border-right-color:  $orange
+              color: $dark-grey
+
+            .btn
+              background-color: $orange
+              border-color:  $orange
+              color: $white
+
+
+      .actions
+        padding: 50px 0
+        text-align: center
+        border-top: 1px solid $grey
+
+        .btn
+          margin: 20px 15px
+          padding: 15px 30px
+          color: $dark-grey
+
+
+          &:hover, &:active, &:focus
+            outline: none
+            color: $white
+            background: $dark-grey
+
+        .submit
+          color: $red
+
+          &:hover, &:active, &:focus
+            outline: none
+            color: $white
+            background: $red
+
+          &:disabled, &.disabled
+            color: $grey
+
+  .info
+    .instructions
+      font-size: $default-font-size + 5px
+      background: $blue-ish image-url('icons/cant-find-product.svg') no-repeat center 40px
+      color: $white
+      text-align: center
+      padding: 80px 30px 40px
+      margin-top: 120px
+      @include border-radius(3px)
+
+      .more-instructions
+        padding: 0 20px
+
+        .add-symbol
+          width: 20px
+          content: image-url('icons/icon-add-black.svg')
+          margin: 0 10px
+
+@media only screen and (max-width: $screen-sm-max)
+  .product.new
+    font-size: 15px
+
+    .help, .info, .main-content
+      padding: 0 10px
+
+      h1.title
+        padding: 10px 0
+        margin-bottom: 10px
+
+
+    .help
+      .instructions
+        display: none
+
+    .main-content
+      h1.title
+        display: none
+
+      .review.new
+        .form-group
+          margin: 30px 0
+
+        .actions
+          padding: 30px 0
+
+          .btn
+            color: $white
+            margin: 10px 0
+            width: 100%
+            background: $dark-grey
+
+          .submit
+            background: $red
+
+    .info
+      display: none

@@ -14,7 +14,7 @@ const CompanyProfileHeader  = React.createClass({
 
   _getMobileVersion: function(){
     let products = this._getFormatedProducts();
-    let tags = this.props.tags
+    let tags = this._getTags();
 
     return(
       <div className='mobile-version'>
@@ -39,7 +39,7 @@ const CompanyProfileHeader  = React.createClass({
         </div>
 
         <Section hasPagination={false} title={"Tags (" + tags.length + ")"}>
-          <TagsBox children={tags} rows={1} cols={4}/>
+            <TagsBox tags={tags} max={tags.length} rows={1} cols={4}/>
         </Section>
 
         <Section hasPagination={false} rows={1} cols={4} title={"Products (" + products.length + ")"}>
@@ -52,9 +52,9 @@ const CompanyProfileHeader  = React.createClass({
 
   _getDesktopVersion: function(){
     let products = this._getFormatedProducts();
-    let tags = this._getFormatedTagsForDesktop();
+    let tags = this._getTags();
 
-    return(
+      return(
       <div className='desktop-version'>
         <div className='row'>
 
@@ -75,9 +75,9 @@ const CompanyProfileHeader  = React.createClass({
             <span className='url-site'>{this.props.url}</span>
           </div>
 
-          <div className="tags">
+          <div className="tag-group">
             <div className="tags-container">
-            {tags}
+              <TagsBox tags={tags} max={tags.length} rows={1} cols={4}/>
             </div>
 
             <button  className="add-edit-tag-btn btn btn-default btn-round" type="button">ADD / EDIT TAGS</button>
@@ -94,9 +94,9 @@ const CompanyProfileHeader  = React.createClass({
     )
   },
 
-  _getFormatedTagsForDesktop: function(){
-    return _.collect(this.props.tags, function(tag) {
-     return <span className='tag'> {tag.name} </span>
+  _getTags: function(){
+    return _.collect(this.props.tags, function(tag){
+      return tag.name;
     });
   },
 

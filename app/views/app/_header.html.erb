@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default">
   <div class="container">
-    <%= link_to image_tag('logos/mark-red.svg'), '/', class: 'brand' %>
+    <%= link_to image_tag('logos/logo-white-2.svg'), '/app', class: 'brand' %>
 
     <div class="search-container">
       <form class='form-search' role="search">
@@ -12,7 +12,10 @@
 
     <ul class="main-nav pull-right">
       <li class="toggle-search"><%= link_to "Search", '#' %></li>
-      <li class="write-a-review"><%= link_to "Write a Review", '/app/products/review/new' %></li>
+      <li class="write-a-review">
+        <%= link_to image_tag('icons/review.svg'), '/app/reviews/new' %>
+        <%= link_to "Write a Review", '/app/reviews/new', class: 'hidden-xs' %>
+      </li>
       <li class="show-hamburger-menu text-hide"><%= link_to 'Menu', '#' %></li>
     </ul>
   </div>

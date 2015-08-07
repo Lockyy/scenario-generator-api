@@ -7,6 +7,7 @@ class User < ActiveRecord::Base
 
   has_many :user_oauths, dependent: :destroy
   has_many :tokens, dependent: :destroy
+  has_many :reviews
   has_and_belongs_to_many :tags
   has_attached_file :avatar, :styles => { :large => "900x900", :medium => "300x300>", :thumb => "100x100>" }
 
@@ -45,5 +46,15 @@ class User < ActiveRecord::Base
 
   def first_login?
     sign_in_count == 1
+  end
+
+  def signed_in_minutes
+    diff_seconds = (Time.now - current_sign_in_at).round
+    diff_minutes = diff_seconds / 60
+    return diff_minutes
+  end
+
+  def total_reviews
+    self.reviews.size
   end
 end

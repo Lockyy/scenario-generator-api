@@ -9,25 +9,33 @@ class Product < ActiveRecord::Base
   end
 
   scope :most_popular, -> do
-    # TODO:
-    # order('number_of_views').limit(params[:max]).offset(params[:offset])
-    all
+    order('views desc')
   end
 
+  # TODO: use attachments
   def image
     Faker::Number.between(0, 5).odd? ? "http://lorempixel.com/960/540/technics?random=#{id}" : nil
   end
 
   def rating
-    Faker::Number.between(0, 5)
+    self.reviews.map(&:quality_score).compact.average || 0
+  end
+
+  def price
+    self.reviews.map(&:price_score).compact.average || 0
   end
 
   def author
     Faker::Name.name
   end
 
-  def number_of_views
-    Faker::Number.between(0, 99999999)
+  def tags
+    Faker::Lorem.words(10)
+  end
+
+  def increment_views!
+    self.views = self.views + 1
+    self.save
   end
 
   validates :name, presence: true, uniqueness: { scope: :company_id }
