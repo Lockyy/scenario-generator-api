@@ -8,11 +8,16 @@ const TagsManager = React.createClass({
     };
   },
 
+  _validate: function validate(name) {
+    let isUnique = !_.find(this.state.tags, function(tag) { return tag.name.toLowerCase() == name.toLowerCase() });
+    return name && isUnique;
+  },
+
   _handleAddTag: function _handleAddTag(e) {
     let tag_to_add = React.findDOMNode(this.refs.product_review_tag_to_add)
     let name = tag_to_add.value;
 
-    if(!name) {
+    if(!this._validate(name)) {
       return ;
     }
 

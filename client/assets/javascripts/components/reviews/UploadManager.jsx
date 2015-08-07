@@ -8,13 +8,23 @@ const UploadManager = React.createClass({
     };
   },
 
-  _handleUploadFiles: function _handleUploadFiles(e) {
-    let uploads = _.map(e.target.files, function(file) {
-      return { name: file.name, size: file.size, loaded: 0 }
+  _validate: function validate(newFile) {
+    let isUnique = !_.find(this.state.files, function(file) {
+      return file.name.toLowerCase() == newFile.name.toLowerCase() &&
+        file.size == newFile.size
     });
-    var _this = this;
 
-    _.each(e.target.files, function(file) {
+    return newFile && isUnique;
+  },
+
+  _handleUploadFiles: function _handleUploadFiles(e) {
+    let _this = this;
+    let uploads = _.compact(_.map(e.target.files, function(file) {
+      if(!_this._validate(file)) { return }
+      return { name: file.name, size: file.size, loaded: 0 }
+    }));
+
+    _.each(uploads, function(file) {
       FluxReviewPageActions.uploadFile(file, {
         onProgress: function(file, fileSize) {
           console.log('Just uploaded ' + fileSize + ' of ' + file.size + ' from ' + file.name )

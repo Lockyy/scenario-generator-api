@@ -9,11 +9,16 @@ const LinksManager = React.createClass({
     };
   },
 
+  _validate: function validate(url) {
+    let isUnique = !_.find(this.state.links, function(link) { return link.url.toLowerCase() == url.toLowerCase() });
+    return new RegExp(RegexConstants.URL_PATTERN).test(url) && isUnique;
+  },
+
   _handleAddLink: function _handleAddLink(e) {
     let link_to_add = React.findDOMNode(this.refs.product_review_link_to_add)
     let url = link_to_add.value;
 
-    if(!new RegExp(RegexConstants.URL_PATTERN).test(url)) {
+    if(!this._validate(url)) {
       return ;
     }
 
