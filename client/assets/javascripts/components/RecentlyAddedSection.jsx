@@ -65,7 +65,7 @@ class RecentlyAddedSection extends React.Component {
     });
   }
 
-  fetchItems() {
+  fetchProducts() {
     let product;
     let products = [];
     let hasItems;
@@ -92,7 +92,7 @@ class RecentlyAddedSection extends React.Component {
   render() {
     return (<Section {...this.props}>
       <ReactCSSTransitionGroup transitionName="section-row">
-        {this.fetchItems()}
+        {this.fetchProducts()}
       </ReactCSSTransitionGroup >
     </Section>);
   }
