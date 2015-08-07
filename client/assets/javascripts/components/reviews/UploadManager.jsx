@@ -8,6 +8,14 @@ const UploadManager = React.createClass({
     };
   },
 
+  getDefaultProps: function getDefaultProps() {
+    return {
+      buttonText: 'Browse',
+      uploadText: 'Upload a file',
+      uploadingText: 'Uploading...'
+    }
+  },
+
   _validate: function validate(newFile) {
     let isUnique = !_.find(this.state.files, function(file) {
       return file.name.toLowerCase() == newFile.name.toLowerCase() &&
@@ -21,13 +29,18 @@ const UploadManager = React.createClass({
     let _this = this;
     let uploads = _.compact(_.map(e.target.files, function(file) {
       if(!_this._validate(file)) { return }
-      return { name: file.name, size: file.size, loaded: 0 }
+      return { name: file.name, size: file.size, loaded: 0, file: file }
     }));
 
     _.each(uploads, function(file) {
-      FluxReviewPageActions.uploadFile(file, {
+      let $input = $(React.findDOMNode(_this.refs.product_attachment_placeholder));
+      let $button = $(React.findDOMNode(_this.refs.product_attachment_button));
+
+      FluxReviewPageActions.uploadFile(file.file, {
         onProgress: function(file, fileSize) {
-          console.log('Just uploaded ' + fileSize + ' of ' + file.size + ' from ' + file.name )
+          let percentage = (fileSize / file.size * 100).toFixed(2)
+          $input.addClass('uploading').prop('disabled', true).attr('value', _this.props.uploadingText + " " + percentage  + "%");
+          $button.addClass('uploading').prop('disabled', true);
         },
         success: function(file, downloadUrl) {
           file.downloadUrl = downloadUrl;
@@ -36,7 +49,12 @@ const UploadManager = React.createClass({
             if (_.isArray(a)) { return a.concat(b) }
           }))
 
-          React.findDOMNode(_this.refs.product_attachment).value = null;
+          $input.removeClass('uploading').prop('disabled', false).attr('value', _this.props.uploadText);
+          $button.addClass('uploading').prop('disabled', false);
+        },
+        error: function(error) {
+          $input.removeClass('uploading').prop('disabled', false).attr('value', _this.props.uploadText);
+          $button.addClass('uploading').prop('disabled', false);
         }
       });
     });
@@ -83,10 +101,11 @@ const UploadManager = React.createClass({
           ref='product_attachment' onChange={this._handleUploadFiles} style={{display: 'none'}}/>
 
         <div className='input-group'>
-          <input type='text' className='form-control' placeholder='Upload a file' defaultValue='Upload a file'
+          <input type='text' className='form-control' placeholder='Upload a file' defaultValue={this.props.uploadText}
             ref='product_attachment_placeholder' onChange={this._handleUploadFiles} onClick={this._addFile} readOnly/>
           <span className="input-group-btn">
-            <button className="btn btn-default" type="button" onClick={this._addFile.bind(this)}>Browse</button>
+            <button className="btn btn-default" type="button" onClick={this._addFile.bind(this)}
+              ref='product_attachment_button'>{this.props.buttonText}</button>
           </span>
         </div>
       </div>
