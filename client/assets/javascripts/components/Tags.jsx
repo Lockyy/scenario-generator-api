@@ -34,8 +34,9 @@ class Tags extends React.Component {
 
   renderTags() {
     let tagTags = [];
-    let tags = this.getTags();
+    let tags = this.getTags() || [];
     let max = _.min([tags.length, this.getMax()]);
+
     for (let i = 0; i < max; i++) {
       tagTags.push(<span className='tag'>{tags[i]}</span>);
     }

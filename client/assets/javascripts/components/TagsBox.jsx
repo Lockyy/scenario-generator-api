@@ -5,6 +5,7 @@ import Tags from './Tags';
 class TagsBox extends React.Component {
   render() {
     let max = this.props.max || 13;
+
     return (<div className='tag-box'>
       <div className='content'>
         <div className='header'>

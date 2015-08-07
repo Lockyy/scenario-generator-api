@@ -95,7 +95,7 @@ class MostPopularSection extends React.Component {
   fetchTags() {
     if (!this.props.items || !this.props.items.tags) return '';
 
-    return (<TagsBox title={'Popular tags'}>{this.props.items.tags}</TagsBox>);
+    return (<TagsBox title={'Popular tags'} tags={this.props.items.tags} />);
   }
 
   fetchItems() {
