@@ -1,24 +1,48 @@
 import React from 'react';
 import _ from 'lodash';
 
-class Rating extends React.Component {
-  _getAllStars() {
-    return $(React.findDOMNode(this.refs.container)).find('.rating-group');
-  }
+const Rating = React.createClass({
+  displayName: 'Rating',
 
-  _getPreviousStars(currentStar) {
+  getDefaultProps: function getDefaultProps() {
+    return {
+      max: 5,
+      name: 'rating',
+      ratingEnabled: false,
+      containerClass: '',
+      id: '',
+      value: 0
+    }
+  },
+
+  //TODO: change implementation to be reactive
+  getValue: function getValue() {
+    return this._getCheckedStar().find('input.rating-item').val();
+  },
+
+  _getAllStars: function _getAllStars() {
+    return $(React.findDOMNode(this.refs.container)).find('.rating-group');
+  },
+
+  _getCheckedStar: function _getCheckedStar() {
+    return $(this.refs.container.getDOMNode()).find('.rating-group').filter(function() {
+      return $(this).find('label.marked').length;
+    });
+  },
+
+  _getPreviousStars: function _getPreviousStars(currentStar) {
     return this._getAllStars(currentStar).filter(function( index ) {
       let label = $(this).find('label');
       let input = $(this).find('input.rating-item');
       return input.val() < currentStar.find('input.rating-item').val();
     })
-  }
+  },
 
-  _getCurrentStar(label) {
+  _getCurrentStar: function _getCurrentStar(label) {
     return $(label).parent('.rating-group');
-  }
+  },
 
-  _onMouseOver(e) {
+  _onMouseOver: function _onMouseOver(e) {
     if (!this.props.ratingEnabled)
       return
 
@@ -27,18 +51,18 @@ class Rating extends React.Component {
     this._getAllStars().find('label').removeClass('hover');
     this._getPreviousStars(this._getCurrentStar($label)).find('label').addClass('hover');
     $label.addClass('hover')
-  }
+  },
 
-  _onMouseOut(e) {
+  _onMouseOut: function _onMouseOut(e) {
     if (!this.props.ratingEnabled)
       return
 
     let $label = $(e.target)
 
     this._getAllStars().find('label').removeClass('hover');
-  }
+  },
 
-  _onClick(e) {
+  _onClick: function _onClick(e) {
     if (!this.props.ratingEnabled)
       return
 
@@ -48,9 +72,10 @@ class Rating extends React.Component {
     this._getAllStars().find('label').removeClass('marked').removeClass('before-marked');
     this._getPreviousStars($star).find('label').addClass('before-marked');
     $label.addClass('marked');
-  }
+    this.setState({value: $star.find('input.rating-item').val()})
+  },
 
-  buildStar(starValue) {
+  buildStar: function buildStar(starValue) {
     let name = this.props.name;
     let id = this.props.id ? this.props.id : `${name}_${starValue}_${_.random(1, 99999)}`;
     let ratingEnabled = this.props.ratingEnabled;
@@ -60,14 +85,15 @@ class Rating extends React.Component {
 
     return (<div className='rating-group'>
       <input className='rating-item' type='radio' id={id} name={name} value={starValue}
-             disabled={!ratingEnabled} checked={checked}/>
-           <label htmlFor={id} className={marked ? 'marked' : ''}
-             onMouseOver={this._onMouseOver.bind(this)} onMouseOut={this._onMouseOut.bind(this)}
-             onClick={this._onClick.bind(this)} ></label>
-    </div>);
-  }
+             disabled={!ratingEnabled} checked={checked} onChange={this.props.onChange}/>
 
-  render() {
+           <label htmlFor={id} className={marked ? 'marked' : ''}
+             onMouseOver={this._onMouseOver} onMouseOut={this._onMouseOut}
+             onClick={this._onClick} ></label>
+    </div>);
+  },
+
+  render: function render() {
     let _this = this;
     let max = this.props.max;
     let containerClass = this.props.containerClass;
@@ -83,9 +109,7 @@ class Rating extends React.Component {
       </div>
     </div>);
   }
-}
-
-Rating.displayName = 'Rating';
+})
 
 Rating.propTypes = {
   max: React.PropTypes.number.isRequired,
@@ -97,15 +121,6 @@ Rating.propTypes = {
     React.PropTypes.string,
     React.PropTypes.number
   ])
-};
-
-Rating.defaultProps = {
-  max: 5,
-  name: 'rating',
-  ratingEnabled: false,
-  containerClass: '',
-  id: '',
-  value: 0
 };
 
 export default Rating;

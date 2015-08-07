@@ -3,9 +3,13 @@ import _ from 'lodash';
 import Rating from './Rating'
 
 class PriceRating extends React.Component {
+  getValue() {
+    return this.refs.rating.getValue();
+  }
+
   render() {
     return (
-      <Rating {... this.props} />
+      <Rating ref='rating' {... this.props} />
     );
   }
 }
