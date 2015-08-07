@@ -42,7 +42,7 @@ module Fletcher
 
     def most_popular_products
       params = pagination_params(@params['most_popular'].try(:[], 'products'), DEFAULTS[MOST_POPULAR_SECTION][:products])
-      Product.where.not(id: @existing_ids).limit(params[:limit]).offset(params[:offset])
+      Product.where.not(id: @existing_ids).most_popular.limit(params[:limit]).offset(params[:offset])
     end
 
     def pagination_params(params, defaults)
