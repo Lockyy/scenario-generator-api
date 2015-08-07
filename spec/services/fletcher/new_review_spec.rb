@@ -1,6 +1,11 @@
 require 'rails_helper'
 
+#TODO: ADD TESTS 
 RSpec.describe Fletcher::NewReview do
+  let(:user) {
+    double(:user).as_null_object
+  }
+
   let(:params) {
       {
         title: Faker::Company.bs,
@@ -24,7 +29,7 @@ RSpec.describe Fletcher::NewReview do
       }.with_indifferent_access
     }
 
-  subject { Fletcher::NewReview.new(params) }
+  subject { Fletcher::NewReview.new(user, params) }
 
   describe '#save!' do
     context 'with an existing product' do
@@ -74,6 +79,15 @@ RSpec.describe Fletcher::NewReview do
 
     it 'saves the product' do
       product = double().as_null_object
+      expect(product).to receive(:save).and_return(true)
+      expect(Product).to receive_message_chain(:where, :first).and_return(product)
+
+      subject.save!
+    end
+
+    it 'add the product to the user' do
+      product = double().as_null_object
+      expect(user).to receive_message_chain(:reviews, :<<)
       expect(product).to receive(:save).and_return(true)
       expect(Product).to receive_message_chain(:where, :first).and_return(product)
 
