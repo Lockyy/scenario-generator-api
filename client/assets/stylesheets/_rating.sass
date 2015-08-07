@@ -1,57 +1,86 @@
 @import 'functions'
 
-@mixin star($image, $cursor)
+@mixin icon($image)
   background: img-url($image) no-repeat
-  background-size: cover
-  cursor: $cursor
+  background-size: contain
 
 @mixin star-on
-  @include star('icons/star-on.svg', 'pointer')
+  @include icon('icons/star-on.svg')
 
 @mixin star-off
-  @include star('icons/star-off.svg', 'default')
+  @include icon('icons/star-off.svg')
 
 @mixin price-on
-  @include star('icons/price-on.svg', 'pointer')
+  @include icon('icons/price-on.svg')
 
 @mixin price-off
-  @include star('icons/price-off.svg', 'default')
+  @include icon('icons/price-off.svg')
 
 .rating-container
-  display: flex
-  overflow: hidden
+  .items
+    display: inline-block
+    overflow: hidden
 
-  .rating-group
-    height: 20px
+    .rating-group
+      height: 20px
+      float: left
+      height: 100%
 
-  input[type='radio']
-    opacity: 0
-    position: absolute
-    z-index: 0
-    cursor: default
+      input[type='radio']
+        opacity: 0
+        position: absolute
+        z-index: 0
+        cursor: default
 
-  input[type='radio'] + label
-    z-index: 100
-    margin: 0
-    text-indent: -2000px
-    clear: none
-    padding: 10px
-    @include star-off
+      input[type='radio'] + label
+        z-index: 100
+        margin: 0
+        text-indent: -2000px
+        clear: none
+        padding: 10px
+        @include star-off
 
-  input[type='radio'] + label.marked,
-  input[type='radio']:checked + label
-    @include star-on
+      input[type='radio'] + label.marked,
+      input[type='radio']:checked + label
+        @include star-on
 
-  input[type='radio']:disabled
-    @include star-off
+.rating-container.rating-enabled
+  .items
+    .rating-group
+      input[type='radio'] + label
+        @include star-off
 
-  &.price
-    input[type='radio'] + label
-      @include price-off
+      input[type='radio'] + label.marked,
+      input[type='radio'] + label.before-marked
+        @include star-on
 
-    input[type='radio'] + label.marked,
-    input[type='radio']:checked + label
-      @include price-on
+    &:hover
+      .rating-group
+        input[type='radio'] + label
+          @include star-off
+          cursor: pointer
 
-    input[type='radio']:disabled
-      @include price-off
+        input[type='radio'] + label.hover
+          @include star-on
+          cursor: pointer
+
+.rating-container.price
+  .items
+    .rating-group
+      input[type='radio'] + label
+        @include price-off
+
+      input[type='radio'] + label.marked,
+      input[type='radio'] + label.before-marked,
+      input[type='radio']:checked + label
+        @include price-on
+
+  &.rating-enabled
+    .items
+      &:hover
+        .rating-group
+          input[type='radio'] + label
+            @include price-off
+
+          input[type='radio'] + label.hover
+            @include price-on
