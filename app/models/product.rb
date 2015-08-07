@@ -9,7 +9,7 @@ class Product < ActiveRecord::Base
   end
 
   scope :most_popular, -> do
-    order('views')
+    order('views desc')
   end
 
   # TODO: use attachments
