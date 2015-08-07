@@ -1,6 +1,11 @@
+@import 'variables'
+
 .upload-manager
-  list-style-image: image-url('icons/attachment-red.svg')
-  
+  .items
+    list-style-image: image-url('icons/attachment-red.svg')
+
   .input-group
-    input[type=file].form-control
-      color: transparent
+    input[type=text].form-control
+      cursor: pointer
+      color: $dark-grey
+      background: $white

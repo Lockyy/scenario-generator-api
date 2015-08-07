@@ -56,11 +56,9 @@ const TagsManager = React.createClass({
           {_.map(this.state.tags, function(tag) {
             let id = Math.floor((Math.random() * 1000000) + 1);
 
-            return <li className='tag' id={`tag_${id}`} ref={`tag_${id}`}>
-              <div className=''>
-                <input type='hidden' className='tag_name' name={`review[tags[${id}][name]]`} value={tag.name} />
+            return <li className='tag item' id={`tag_${id}`} ref={`tag_${id}`}>
                 {tag.name}
-              </div>
+                <input type='hidden' className='tag_name' name={`review[tags[${id}][name]]`} value={tag.name} />
             </li>
           })}
         </ul>
