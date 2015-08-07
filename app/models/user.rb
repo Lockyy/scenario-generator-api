@@ -9,9 +9,8 @@ class User < ActiveRecord::Base
   has_many :tokens, dependent: :destroy
   has_many :reviews
   has_and_belongs_to_many :tags
-  has_attached_file :avatar, :styles => { :large => "900x900", :medium => "300x300>", :thumb => "100x100>" }
 
-  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+  include HasAvatar
 
   scope :with_oauth, ->(provider, uid) do
     joins(:user_oauths).where(user_oauths: { provider: provider, uid: uid })
