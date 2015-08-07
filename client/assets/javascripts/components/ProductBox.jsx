@@ -21,6 +21,7 @@ const ProductBox = React.createClass ({
       boxClass += ' no-pic-box';
     }
     let classes = _.compact(['product', boxClass]).join(' ');
+    let company = this.props.company;
 
     return (<div className={classes}>
       <div className='content'>
@@ -31,7 +32,10 @@ const ProductBox = React.createClass ({
               <Link to={`/app/products/${this.props.id}`}>
                 <h3 className='title'>{this.props.name}</h3>
               </Link>
-              <h4 className='company'>{this.props.company.name}</h4>
+              
+              <Link to={`/app/companies/${company.id}`} >
+                <h4 className='company'>{company.name}</h4>
+              </Link>
             </div>
 
             <div className='review'>

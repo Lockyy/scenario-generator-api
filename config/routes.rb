@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :reviews, only: [:index]
     end
     resources :reviews
+    resources :companies, defaults: {format: 'json'}
   end
 
   devise_for :users, only: [:omniauth_callbacks], controllers: {omniauth_callbacks: 'omniauth_callbacks'}
