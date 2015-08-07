@@ -11,9 +11,9 @@ module Fletcher
       }
     }
 
-    def initialize(params = {})
+    def initialize(existing_ids, params = {})
       @params = params
-      @existing_ids = []
+      @existing_ids = existing_ids || []
     end
 
     def recently_added

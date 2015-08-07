@@ -33,6 +33,24 @@ class Dashboard extends React.Component {
     return mostPopularData ? mostPopularData : {items: {products: [], tags: []}};
   }
 
+  getCurrentIDs(sectionName) {
+    let sectionsToExclude = [DashboardConstants.MOST_POPULAR_SECTION, DashboardConstants.RECENTLY_ADDED_SECTION];
+    let sectionToExclude, products, sectionIDs;
+    let idsToExclude = [];
+
+    for(let i = 0; i < sectionsToExclude.length; i++) {
+      sectionToExclude = sectionsToExclude[i]
+      if(sectionToExclude == sectionName) {
+        continue
+      }
+
+      products = this.refs[sectionToExclude].fetchProducts()
+      sectionIDs = _.map(products, function(obj) { return obj.props.id })
+      idsToExclude = _.union(idsToExclude, sectionIDs)
+    }
+    return idsToExclude
+  }
+
   onChange(data) {
     this.setState(function(oldData) {
       return {
@@ -58,6 +76,7 @@ class Dashboard extends React.Component {
       offset: section.getOffset(),
       max: section.getMax()
     };
+    paginationParams['ids'] = JSON.stringify(this.getCurrentIDs(sectionName))
 
     section.setState({rows: section.state.rows + 1});
     FluxDashboardActions.loadMoreProducts(paginationParams)
