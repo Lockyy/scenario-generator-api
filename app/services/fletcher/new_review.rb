@@ -2,7 +2,8 @@ module Fletcher
   class NewReview
     attr_reader :product, :review
 
-    def initialize(params)
+    def initialize(user, params)
+      @user = user
       @review_params = (params || {} )
     end
 
@@ -10,6 +11,7 @@ module Fletcher
       @product = fetch_product!
       @review = build_review
       @product.reviews << @review
+      @user.reviews << @review
       @product.save
     end
 

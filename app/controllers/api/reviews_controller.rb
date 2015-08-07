@@ -21,7 +21,7 @@ module Api
     # POST /reviews
     # POST /reviews.json
     def create
-      review = Fletcher::NewReview.new(review_params)
+      review = Fletcher::NewReview.new(@user, review_params)
 
       respond_to do |format|
         if (review.save!)
