@@ -13,6 +13,9 @@ body.app .container
   .mobile-version
     display: none
 
+  .see-all-tags-container
+    display: none
+
   .section
     border-top: solid 2px $color-darkred
 
@@ -24,18 +27,15 @@ body.app .container
         display: none
 
     .section-title
-      padding: 0 0 0 50px
+      padding: 10px 0 10px 50px
       color: $color-darkgrey
       background: no-repeat left bottom
       background-image: img-url('icons/icon-related-products.svg')
 
-  .tag
-    padding: 5px
-    margin: 0px 10px 10px 0px
-    display: inline-block
-    border: solid 1px $color-orange
-    color: $color-orange
-    font-size: 12px
+    .items
+      .section-row
+        max-height: none
+
 
   h1.title
     color: $color-darkred
@@ -44,9 +44,7 @@ body.app .container
 
   #company-main-info-container
     font-weight: bold
-
-    .row
-      margin: 0
+    padding-top: 25px
 
     .logo-container, .buttons-container
       display: flex
@@ -96,12 +94,12 @@ body.app .container
         padding-left: 40px
         padding: 10px 0 0 40px
 
-    .tags
+    .tag-group
       @extend .col-xs-5
       @extend .col-sm-7
       border-left: solid 1px $grey
-      padding-left: 20px
-
+      .header
+        display: none
 
       .add-edit-tag-btn
         color: $color-orange
@@ -109,6 +107,14 @@ body.app .container
         margin-top: 20px
         font-weight: bold
 
+      .tag
+        border: solid 1px $color-orange
+        background-color: white
+        color: $color-orange
+
+      .white
+        width: 100%
+        padding: 0
 
 @media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max)
   body.app .container
@@ -168,15 +174,6 @@ body.app .container
                 span
                   color: $color-blackcharcoal
                   font-weight: bold
-          .tags
-            .tags-list
-              padding: 0
-
-              .tag
-                margin: 10px
-
-            .see-all-tags-container
-              display: none
 
         .logo-container
           flex-direction: column
@@ -207,6 +204,7 @@ body.app .container
               color: $color-darkred
               text-decoration: underline
               margin-top: 10px
+              min-height: 29px
 
           .actions-container
             .share-btn, .bookmark-btn

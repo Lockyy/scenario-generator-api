@@ -3,8 +3,8 @@ import _ from 'lodash';
 import Tags from './Tags';
 
 class TagsBox extends React.Component {
-
   render() {
+    let max = this.props.max || 13;
     return (<div className='tag-box'>
       <div className='content'>
         <div className='header'>
@@ -13,7 +13,7 @@ class TagsBox extends React.Component {
         <Tags
           tags={this.props.tags}
           containerClass='white'
-          max={13} />
+          max={max} />
         <div className='see-all-tags-container'>
           <a href='#' className='btn all-tags'>See all tags</a>
         </div>
@@ -25,7 +25,7 @@ class TagsBox extends React.Component {
 TagsBox.displayName = 'TagsBox';
 
 TagsBox.defaultProps = {
-  children: []
+  tags: []
 };
 
 TagsBox.propTypes = {};

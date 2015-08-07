@@ -18,7 +18,7 @@ $(function onLoad() {
         </Route>
         <Route path="app/products/:id" component={ProductPage}>
         </Route>
-        <Route name="company" path="app/companies/:companyId" handler={CompanyProfilePage}>
+        <Route name="company" path="app/companies/:companyId" component={CompanyProfilePage}>
         </Route>
       </Router>
     ),document.getElementById('content'));

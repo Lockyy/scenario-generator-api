@@ -34,15 +34,14 @@ class Tags extends React.Component {
 
   renderTags() {
     let tagTags = [];
-    let tags = this.getTags()
-
-    if(tags) {
-      for (let i = 0; i < this.getMax(); i++) {
-        tagTags.push(<span className='tag'>{tags[i]}</span>);
-      }
-
-      return <div className={`tags ${this.props.containerClass}`}>{tagTags}</div>;
+    let tags = this.getTags();
+    let max = _.min([tags.length, this.getMax()]);
+    for (let i = 0; i < max; i++) {
+      tagTags.push(<span className='tag'>{tags[i]}</span>);
     }
+
+    return <div className={`tags ${this.props.containerClass}`}>{tagTags}</div>;
+
   }
 
   linkRequired() {

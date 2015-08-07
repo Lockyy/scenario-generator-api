@@ -47,7 +47,7 @@ const ProductPage = React.createClass({
 
   renderTags: function() {
     let tagTags = [];
-    let tags = this.getProductData('tags')
+    let tags = this.getProductData('tags');
     if(tags) {
       for (let i = 0; i < tags.length; i++) {
         tagTags.push(<span className='tag'>{tags[i]}</span>);

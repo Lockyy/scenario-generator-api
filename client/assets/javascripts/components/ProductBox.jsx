@@ -21,7 +21,6 @@ const ProductBox = React.createClass ({
       boxClass += ' no-pic-box';
     }
     let classes = _.compact(['product', boxClass]).join(' ');
-    let router = Router;
     let company = this.props.company;
 
     return (<div className={classes}>
@@ -37,7 +36,7 @@ const ProductBox = React.createClass ({
               <Link to={`/app/companies/${company.id}`} >
                 <h4 className='company'>{company.name}</h4>
               </Link>
-</div>
+            </div>
 
             <div className='review'>
               <Rating value={this.props.rating} name='rating'/>
