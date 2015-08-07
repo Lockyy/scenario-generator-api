@@ -5,6 +5,7 @@ import FluxProductPageActions from '../../actions/FluxProductPageActions'
 import ProductStore from '../../stores/ProductStore'
 import Reviews from './Reviews'
 import Rating from '../Rating';
+import PriceRating from '../PriceRating';
 import Tags from '../Tags';
 
 const ProductPage = React.createClass({
@@ -105,10 +106,7 @@ const ProductPage = React.createClass({
               {this.totalReviews()} Review(s)
             </div>
           </div>
-          <Rating value={this.getProductData('price')}
-                  max={4}
-                  containerClass='price'
-                  name='rating'/>
+          <PriceRating value={this.getProductData('price')} name='rating'/>
         </div>
         <div className='col-xs-6 information'>
           <div className='link'>
