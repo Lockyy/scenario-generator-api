@@ -54,8 +54,22 @@ class Dashboard extends React.Component {
   onChange(data) {
     this.setState(function(oldData) {
       return {
+        // Merge the old data with the new data
         data: _.merge(oldData.data, data.data, function(a, b) {
-          if (_.isArray(a)) { return a.concat(b) }
+          // We only do comparisons if the attribute being merged is an array, that means
+          // that it is a collection of either tags or products
+          if (_.isArray(a)) {
+            // Concatinate the arrays and return the unique values. We do this because
+            // The old values will sometimes contain more products than are displayed,
+            // but the offset we sent was based upon the amount displayed, so we remove
+            // any products that might be in the old and new data.
+            return _.unique(a.concat(b), function(obj) {
+              // If it's an array of products, check the objects name attribute.
+              if(typeof a[0] === 'object') { return obj.name }
+              // If it's an array of tags, just check the tag directly.
+              return obj
+            })
+          }
         })
       };
     });
