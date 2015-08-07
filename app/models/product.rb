@@ -9,21 +9,20 @@ class Product < ActiveRecord::Base
   end
 
   scope :most_popular, -> do
-    # TODO:
-    # order('views').limit(params[:max]).offset(params[:offset])
-    all
+    order('views desc')
   end
 
+  # TODO: use attachments
   def image
     Faker::Number.between(0, 5).odd? ? "http://lorempixel.com/960/540/technics?random=#{id}" : nil
   end
 
   def rating
-    self.reviews.map(&:quality_score).average
+    self.reviews.map(&:quality_score).compact.average || 0
   end
 
   def price
-    self.reviews.map(&:price_score).average
+    self.reviews.map(&:price_score).compact.average || 0
   end
 
   def author

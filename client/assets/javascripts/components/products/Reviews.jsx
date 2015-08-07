@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import FluxProductReviewsActions from '../../actions/FluxProductReviewsActions'
 import ReviewsStore from '../../stores/ReviewsStore'
 import Rating from '../Rating';
+import PriceRating from '../PriceRating';
 import Tags from '../Tags';
 
 const Reviews = React.createClass({
@@ -61,9 +62,7 @@ const Reviews = React.createClass({
             {review.quality_review}
           </div>
           <div className="price-score">
-            <Rating value={review.quality_score}
-                    max={4}
-                    containerClass='price'
+            <PriceRating value={review.price_score}
                     name='rating'/>
           </div>
           <div className="price-review">

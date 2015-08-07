@@ -46,6 +46,8 @@ gem 'omniauth'
 gem 'omniauth-yammer'
 gem 'jwt'
 
+gem 'aws-sdk'
+
 # TODO
 gem 'faker'
 

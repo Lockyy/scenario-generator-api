@@ -69,7 +69,7 @@ ProductBox.propTypes = {
   size: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
   title: React.PropTypes.string.isRequired,
   image: React.PropTypes.string,
-  review: React.PropTypes.string
+  reviews: React.PropTypes.array
 };
 
 export default ProductBox;
