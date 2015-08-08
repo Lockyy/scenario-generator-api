@@ -1,5 +1,5 @@
 ActiveAdmin.register Review do
-  permit_params :name, :description, :url, :company_id, default_image: [:id]
+  permit_params :user_id, :title, :quality_review, :quality_score, :price_review, :price_score, :reviewable_type
 
   form do |f|
     f.semantic_errors

@@ -7,9 +7,9 @@ ActiveAdmin.register User do
       input :name
       input :job_title
       input :location
-      input :avatar, :as => :file,  :hint => f.object.avatar.present? \
-     ? image_tag(f.object.avatar.url(:thumb))
-     : content_tag(:span, "no cover page yet")
+      input :avatar, :as => :file, :hint => f.object.avatar.present? \
+     ? image_tag(f.object.avatar.url(:thumb), :class => "custom-image")
+                   : content_tag(:span, "no cover page yet")
     end
     f.actions
   end
@@ -20,7 +20,7 @@ ActiveAdmin.register User do
       row :job_title
       row :location
       row :avatar do
-        image_tag(ad.avatar.url(:thumb))
+        image_tag(ad.avatar.url(:thumb), :class => "custom-image")
       end
     end
   end

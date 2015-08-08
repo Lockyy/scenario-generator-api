@@ -22,7 +22,6 @@ ActiveAdmin.register Product do
       input :name
       input :company
       input :description
-
     end
 
     inputs 'Default Image', :for => [:default_image, f.object.default_image || Attachment.new] do |image_f|
@@ -31,9 +30,7 @@ ActiveAdmin.register Product do
                     label: '',
                     member_label: proc { |obj| image_tag(obj.url, :class => "custom-image") },
                     wrapper_html: {class: 'thumbnail'}
-
-    end
-
+    end unless f.object.default_image.nil?
 
     f.actions
   end
@@ -47,7 +44,6 @@ ActiveAdmin.register Product do
       row :default_image do
         image_tag(ad.default_image.url, :class => "custom-image")
       end unless ad.default_image.nil?
-
     end
   end
 end
