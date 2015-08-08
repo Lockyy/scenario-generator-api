@@ -18,10 +18,12 @@ function uploadFileToS3(file, uploadUrl, contentType, callbacks) {
       deferred.resolve(uploadUrl.split('?')[0]);
     } else {
       deferred.reject(xhr);
+      callbacks.error(xhr);
     }
   };
 
   xhr.onerror = function() {
+    callbacks.error(xhr);
     deferred.reject(xhr);
   };
 

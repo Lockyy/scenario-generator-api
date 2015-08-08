@@ -4,5 +4,18 @@ class Company < ActiveRecord::Base
 
   include HasAvatar
 
+  before_save :downcase_name
+
   validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: true
+
+  def image_url
+    "http://lorempixel.com/150/150/technics?random=#{id}"
+  end
+
+  private
+
+  def downcase_name
+    self.name = self.name.downcase
+  end
 end

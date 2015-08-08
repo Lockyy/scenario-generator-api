@@ -6,6 +6,12 @@ class Product < ActiveRecord::Base
   has_many :images, -> { with_images }, through: :reviews, source: :attachments
   has_one :default_image, class_name: 'Attachment'
 
+  before_save :downcase_name
+
+  validates :name, presence: true, uniqueness: { scope: :company_id }
+  validates :description, presence: true
+  validates :company, presence: true
+
   scope :recently_added, -> do
     order('created_at desc')
   end
@@ -40,7 +46,10 @@ class Product < ActiveRecord::Base
     self.save
   end
 
-  validates :name, presence: true, uniqueness: { scope: :company_id }
-  validates :description, presence: true
-  validates :company, presence: true
+  private
+
+  def downcase_name
+    self.name = self.name.downcase
+  end
+
 end

@@ -32,6 +32,14 @@ class Tags extends React.Component {
     }
   }
 
+  getContainerName() {
+    if(this.props.containerClass) {
+      return this.props.containerClass
+    } else {
+      return ''
+    }
+  }
+
   renderTags() {
     let tagTags = [];
     let tags = this.getTags() || [];
@@ -41,7 +49,7 @@ class Tags extends React.Component {
       tagTags.push(<span className='tag'>{tags[i]}</span>);
     }
 
-    return <div className={`tags ${this.props.containerClass}`}>{tagTags}</div>;
+    return <div className={`tags ${this.getContainerName()}`}>{tagTags}</div>;
 
   }
 
@@ -52,7 +60,7 @@ class Tags extends React.Component {
   renderLink() {
     if(this.linkRequired()) {
       return (
-        <a>Show more tags for {this.props.name}</a>
+        <a>Show more tags for <span className='product-name'>{this.props.name}</span></a>
       )
     }
   }

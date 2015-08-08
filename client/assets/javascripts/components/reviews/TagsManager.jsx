@@ -8,11 +8,16 @@ const TagsManager = React.createClass({
     };
   },
 
+  _validate: function validate(name) {
+    let isUnique = !_.find(this.state.tags, function(tag) { return tag.name.toLowerCase() == name.toLowerCase() });
+    return name && isUnique;
+  },
+
   _handleAddTag: function _handleAddTag(e) {
     let tag_to_add = React.findDOMNode(this.refs.product_review_tag_to_add)
     let name = tag_to_add.value;
 
-    if(!name) {
+    if(!this._validate(name)) {
       return ;
     }
 
@@ -51,11 +56,9 @@ const TagsManager = React.createClass({
           {_.map(this.state.tags, function(tag) {
             let id = Math.floor((Math.random() * 1000000) + 1);
 
-            return <li className='tag' id={`tag_${id}`} ref={`tag_${id}`}>
-              <div className=''>
-                <input type='hidden' className='tag_name' name={`review[tags[${id}][name]]`} value={tag.name} />
+            return <li className='tag item' id={`tag_${id}`} ref={`tag_${id}`}>
                 {tag.name}
-              </div>
+                <input type='hidden' className='tag_name' name={`review[tags[${id}][name]]`} value={tag.name} />
             </li>
           })}
         </ul>

@@ -3,7 +3,8 @@ module Api
     respond_to :json
 
     def index
-      @dashboard = Fletcher::Dashboard.new(params)
+      ids = JSON.parse(params[:ids]) if params[:ids]
+      @dashboard = Fletcher::Dashboard.new(ids, params)
 
       respond_to do |format|
         format.json { render }
