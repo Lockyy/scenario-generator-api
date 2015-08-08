@@ -7,9 +7,9 @@ ActiveAdmin.register Company do
       input :name
       input :url
       input :description
-      input :avatar, :as => :file,  :hint => f.object.avatar.present? \
-     ? image_tag(f.object.avatar.url(:thumb))
-     : content_tag(:span, "no cover page yet")
+      input :avatar, :as => :file, :hint => f.object.avatar.present? \
+     ? image_tag(f.object.avatar.url(:thumb), :class => "custom-image")
+                   : content_tag(:span, "no cover page yet")
     end
     f.actions
   end

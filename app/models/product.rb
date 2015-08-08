@@ -3,6 +3,8 @@ gem 'faker'
 class Product < ActiveRecord::Base
   belongs_to :company
   has_many :reviews, as: :reviewable
+  has_many :images, -> { with_images }, through: :reviews, source: :attachments
+  has_one :default_image, class_name: 'Attachment'
 
   scope :recently_added, -> do
     order('created_at desc')
