@@ -79,9 +79,10 @@ const ProductPage = React.createClass({
   },
 
   renderTopButtons: function() {
+    let url = `/app/products/${this.id()}/reviews/new`;
     return (
       <div className='links'>
-        <Link to={'/app/reviews/new'} className='btn btn-red btn-round'>
+        <Link to={url} className='btn btn-red btn-round'>
           Add a Review
         </Link>
         <a

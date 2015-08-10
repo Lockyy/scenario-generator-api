@@ -10,8 +10,13 @@ const NewReviewPage  = React.createClass({
   displayName: 'NewReviewPage',
   mixins: [ Navigation ],
 
+  contextTypes: {
+    router: React.PropTypes.func
+  },
+
   componentDidMount: function componentDidMount() {
     $(this.refs.new_review_form.getDOMNode()).validator();
+    let params = this.context.router.state.params;
   },
 
   _getReview: function _getReview() {

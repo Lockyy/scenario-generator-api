@@ -6,6 +6,11 @@ import AutoFitPicture from './AutoFitPicture';
 import Rating from './Rating';
 
 const ProductBox = React.createClass ({
+  displayName: 'ProductBox',
+
+  contextTypes: {
+    router: React.PropTypes.func
+  },
 
   hasPicture: function() {
     return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image));
@@ -32,7 +37,7 @@ const ProductBox = React.createClass ({
               <Link to={`/app/products/${this.props.id}`}>
                 <h3 className='title'>{this.props.name}</h3>
               </Link>
-              
+
               <Link to={`/app/companies/${company.id}`} >
                 <h4 className='company'>{company.name}</h4>
               </Link>
