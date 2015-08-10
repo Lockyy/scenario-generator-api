@@ -10,7 +10,7 @@ class Company < ActiveRecord::Base
   validates :name, presence: true, uniqueness: true
 
   def image_url
-    "http://lorempixel.com/150/150/technics?random=#{id}"
+    avatar.try(:url)
   end
 
   private
