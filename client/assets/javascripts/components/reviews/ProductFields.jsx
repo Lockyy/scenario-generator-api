@@ -2,9 +2,16 @@ import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import Rating from '../../components/Rating'
 
 const ProductFields  = React.createClass({
   displayName: 'ProductFields',
+
+  getDefaultProps: function getDefaultProps() {
+    return {
+      name: ''
+    }
+  },
 
   _getNewProductFields: function _getNewProductFields() {
     return (<fieldset>
@@ -33,8 +40,23 @@ const ProductFields  = React.createClass({
     </fieldset>);
   },
 
+  _getProductFieldsInfo: function _getProductFieldsInfo() {
+    return (
+      <div className='details'>
+        <div className="header">
+          <h3 className='title'><Link to={`/app/products/${this.props.id}`}>{this.props.name}</Link></h3>
+          <h4 className='company'><Link to={`/app/companies/${this.props.company.id}`} >{this.props.company.name}</Link></h4>
+        </div>
+
+        <Rating value={this.props.rating} name='rating'/>
+
+        <p className='description'>{this.props.description}</p>
+      </div>
+    );
+  },
+
   render: function render() {
-    let newProduct = true;
+    let newProduct = this.props.id === undefined;
 
     return (
       <fieldset>
@@ -43,7 +65,7 @@ const ProductFields  = React.createClass({
           <label htmlFor='product[name]'>Product's Name</label>
           <div className='input-group'>
             <input type='text' className='form-control' placeholder='e.g. Hololens' name='product[name]'
-              ref='product_name' required/>
+              ref='product_name' value={this.props.name} onChange={this.props.onChange} required/>
             <span className="input-group-btn">
               <button className="btn btn-default" type="button" disabled={true}>Go</button>
             </span>
@@ -51,7 +73,7 @@ const ProductFields  = React.createClass({
           <span className="help-block with-errors"></span>
         </div>
 
-        {newProduct ? this._getNewProductFields() : ''}
+        {newProduct ? this._getNewProductFields() : this._getProductFieldsInfo()}
       </fieldset>
     );
   }

@@ -1,5 +1,5 @@
-import React from 'react';
 import _ from 'lodash';
+import React from 'react';
 import { Link, Navigation } from 'react-router';
 import  ProductFields from './ProductFields'
 import  ReviewFields from './ReviewFields'
@@ -11,28 +11,80 @@ const NewReviewPage  = React.createClass({
   mixins: [ Navigation ],
 
   contextTypes: {
-    router: React.PropTypes.func
+    router: React.PropTypes.object
+  },
+
+  getInitialState: function getInitialState() {
+    return {
+      review: {
+        product: {}
+      }
+    }
   },
 
   componentDidMount: function componentDidMount() {
-    $(this.refs.new_review_form.getDOMNode()).validator();
+   ReviewPageStore.listen(this._onChange);
     let params = this.context.router.state.params;
+    if (params.productId) {
+      FluxReviewPageActions.fetchProduct(params.productId, function(product) {
+        FluxReviewPageActions.setProduct(product);
+      });
+    }
+
+    $(this.refs.new_review_form.getDOMNode()).validator();
+  },
+
+  _getProductData: function _getProductData() {
+    return this.state.review.product || {}
+  },
+
+  _getProductId: function _getProductId() {
+    return this._getProductData().id;
   },
 
   _getReview: function _getReview() {
     let prodRefs = this.refs.product_fields.refs;
     let review = this.refs.review_fields.getFields();
 
-    review.product = {
-      name: prodRefs.product_name.getDOMNode().value,
-      description: prodRefs.product_description.getDOMNode().value,
-      url: prodRefs.product_url.getDOMNode().value,
-      company: {
-        name: prodRefs.product_company_name.getDOMNode().value
+    if (this._getProductId()) {
+      review.product = {
+        id: this._getProductId()
+      }
+    } else {
+      review.product = {
+        name: prodRefs.product_name.getDOMNode().value,
+        description: prodRefs.product_description.getDOMNode().value,
+        url: prodRefs.product_url.getDOMNode().value,
+        company: {
+          name: prodRefs.product_company_name.getDOMNode().value
+        }
       }
     }
 
     return { review: review };
+  },
+
+  _onChange: function _onChange(review) {
+    this.setState(function(oldReview) {
+      return {
+        // Merge the old data with the new data
+        data: _.merge(oldReview, review, function(a, b) {
+          if (_.isArray(a)) {
+            return _.unique(a.concat(b), function(obj) {
+              // check the objects id
+              if(typeof a[0] === 'object') { return obj.id }
+              // If it's an array of tags, just check the tag directly.
+              return obj
+            })
+          }
+        })
+      };
+    });
+  },
+
+  _onFormChange: function _onFormChange(e) {
+    let review = this._getReview();
+    this._onChange(review);
   },
 
   _onSubmit: function _onSubmit(e) {
@@ -58,7 +110,7 @@ const NewReviewPage  = React.createClass({
       <div className='main-content'>
         <form className='form review new' ref='new_review_form' onSubmit={this._onSubmit}>
 
-          <ProductFields ref='product_fields'/>
+          <ProductFields ref='product_fields' {...this._getProductData()} onChange={this._onFormChange} />
           <ReviewFields ref='review_fields'/>
 
           <div className='actions'>

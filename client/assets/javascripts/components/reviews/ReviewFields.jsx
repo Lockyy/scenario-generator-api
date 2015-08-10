@@ -35,8 +35,9 @@ const ReviewFields  = React.createClass({
 */
 
     return (
-      <fieldset>
+      <fieldset className='review-fields'>
         <h1 className='title'>Your Review</h1>
+        <span className='description'>Rate, review or tag this product. You can even upload files or an image.</span>
 
         <div className='form-group inline rating'>
           <label htmlFor='product[review[quality_score]]'>Rating</label>

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import alt from '../FluxAlt';
 import { Router, Navigation } from 'react-router'
 import NewReviewPageAPI from '../utils/NewReviewPageAPI';
-
+import ProductAPI from '../utils/ProductAPI';
 
 //TODO: refactor to another file
 function uploadFileToS3(file, uploadUrl, contentType, callbacks) {
@@ -51,6 +51,15 @@ class FluxReviewPageActions {
   addTag(tag, callbacks) {
     this.dispatch(tag);
     callbacks.success(tag)
+  }
+
+  fetchProduct(productId, success, error) {
+    this.dispatch(productId);
+    ProductAPI.getProduct(productId, success, error)
+  }
+
+  setProduct(product) {
+    this.dispatch(product);
   }
 
   uploadFile(file, callbacks) {

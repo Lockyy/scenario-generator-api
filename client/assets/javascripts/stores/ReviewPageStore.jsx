@@ -26,8 +26,13 @@ class ReviewPageStore {
       handleUploadFile: FluxReviewPageActions.UPLOAD_FILE,
       handleAddLink: FluxReviewPageActions.ADD_LINK,
       handleAddTag: FluxReviewPageActions.ADD_TAG,
+      handleSetProduct: FluxReviewPageActions.SET_PRODUCT,
       handleRegisterError: FluxReviewPageActions.REGISTER_ERROR
     });
+  }
+
+  getReview() {
+    return this.review;
   }
 
   handleUploadFile(file) {
@@ -40,6 +45,10 @@ class ReviewPageStore {
 
   handleAddTag(tag) {
     this.review.tags.push(tag);
+  }
+
+  handleSetProduct(product) {
+    _.merge(this.review.product, product);
   }
 
   handleUpdateReview(review) {

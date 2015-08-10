@@ -1,7 +1,7 @@
 @import 'variables'
 
 $blue-ish: #4dbcc6
-$default-font-size: 17px
+$default-font-size: 16px
 
 .product.new
   font-size: $default-font-size
@@ -34,6 +34,23 @@ $default-font-size: 17px
     @extend .col-md-6
 
     .review.new
+      h1.title
+        margin-bottom: 5px
+
+      .details
+        .header
+          h3.title, h4.company
+            text-transform: capitalize
+
+          h3.title
+            font-weight: bolder
+
+        .rating-container
+          margin: 25px 0
+
+        p.description
+          font-size: $default-font-size - 1px
+
       label
         font-weight: normal
         color: $red
