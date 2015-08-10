@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
     resources :reviews, except: [:index], defaults: {format: :json}
     resources :companies, defaults: {format: 'json'}
+
+    get 'search', to: 'search#index', as: 'search'
   end
 
   devise_for :users, only: [:omniauth_callbacks], controllers: {omniauth_callbacks: 'omniauth_callbacks'}
