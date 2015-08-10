@@ -19,8 +19,9 @@ ActiveAdmin.register Product do
 
     inputs 'Details' do
       input :name
-      input :company
+      input :url
       input :description
+      input :company
     end
 
     inputs 'Default Image', :for => [:default_image, f.object.default_image || Attachment.new] do |image_f|
@@ -34,12 +35,23 @@ ActiveAdmin.register Product do
     f.actions
   end
 
+  index do
+    id_column
+    column :name
+    column :url
+    column :description
+    column :company
+    column :views
+    actions
+  end
+
   show do |ad|
     attributes_table do
       row :name
-      row :company
+      row :url
       row :description
-      row :reviews
+      row :company
+      row :views
       row :default_image do
         image_tag(ad.default_image.url, :class => "custom-image")
       end unless ad.default_image.nil?

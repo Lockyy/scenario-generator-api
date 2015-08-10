@@ -14,13 +14,21 @@ ActiveAdmin.register Company do
     f.actions
   end
 
+  index do
+    id_column
+    column :name
+    column :url
+    column :description
+    actions
+  end
+
   show do |ad|
     attributes_table do
       row :name
       row :url
       row :description
       row :avatar do
-        image_tag(ad.avatar.url(:thumb))
+        image_tag(ad.avatar.url(:thumb), :class => "custom-image")
       end
     end
   end

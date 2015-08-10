@@ -3,8 +3,38 @@ ActiveAdmin.register Review do
 
   form do |f|
     f.semantic_errors
-    f.inputs
+    inputs 'Details' do
+      input :title
+      input :quality_review
+      input :quality_score
+      input :price_review
+      input :price_score
+      input :reviewable_type
+      input :reviewable_id
+      input :user
+      end
     f.actions
   end
+
+  index do
+    id_column
+    column :title
+    column :user
+    actions
+  end
+
+  show do |ad|
+    attributes_table do
+      row :title
+      row :quality_review
+      row :quality_score
+      row :price_review
+      row :price_score
+      row :reviewable_type
+      row :reviewable_id
+      row :user
+    end
+  end
+
 end
 

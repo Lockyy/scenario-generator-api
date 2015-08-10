@@ -4,7 +4,9 @@ module HasAvatar
     before_validation :ensure_avatar_uuid_has_a_value
 
     has_attached_file :avatar, :styles => { :large => "900x900", :medium => "300x300>", :thumb => "100x100>" },
-                      :path => "uploads/:instance_uuid/:style/:instance_uuid:basename.:extension"
+                      :path => "uploads/:instance_uuid/:style/:instance_uuid:basename.:extension",
+                      :default_url => ""
+
     validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
     private

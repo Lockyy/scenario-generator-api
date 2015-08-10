@@ -7,7 +7,6 @@ class Company < ActiveRecord::Base
   before_save :downcase_name
 
   validates :name, presence: true, uniqueness: true
-  validates :name, presence: true, uniqueness: true
 
   def image_url
     avatar.try(:url)
