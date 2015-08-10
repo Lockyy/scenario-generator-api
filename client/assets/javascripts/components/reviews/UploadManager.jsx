@@ -104,7 +104,7 @@ const UploadManager = React.createClass({
           <input type='text' className='form-control' placeholder='Upload a file' defaultValue={this.props.uploadText}
             ref='product_attachment_placeholder' onChange={this._handleUploadFiles} onClick={this._addFile} readOnly/>
           <span className="input-group-btn">
-            <button className="btn btn-default" type="button" onClick={this._addFile.bind(this)}
+            <button className="btn btn-default" type="button" onClick={this._addFile}
               ref='product_attachment_button'>{this.props.buttonText}</button>
           </span>
         </div>
