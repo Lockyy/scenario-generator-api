@@ -4,6 +4,7 @@ class Product < ActiveRecord::Base
   belongs_to :company
   has_many :reviews, as: :reviewable
   has_many :images, -> { with_images }, through: :reviews, source: :attachments
+  has_many :tags, through: :reviews
   has_one :default_image, class_name: 'Attachment'
 
   before_save :downcase_name
@@ -37,10 +38,6 @@ class Product < ActiveRecord::Base
     Faker::Name.name
   end
 
-  def tags
-    Faker::Lorem.words(10)
-  end
-
   def increment_views!
     self.views = self.views + 1
     self.save
@@ -51,5 +48,4 @@ class Product < ActiveRecord::Base
   def downcase_name
     self.name = self.name.downcase
   end
-
 end
