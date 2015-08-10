@@ -49,5 +49,4 @@ class Product < ActiveRecord::Base
   def downcase_name
     self.name = self.name.downcase
   end
-
 end
