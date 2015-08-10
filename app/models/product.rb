@@ -20,9 +20,9 @@ class Product < ActiveRecord::Base
     order('views desc')
   end
 
-  # TODO: use attachments
   def image
-    Faker::Number.between(0, 5).odd? ? "http://lorempixel.com/960/540/technics?random=#{id}" : nil
+    image = default_image || images.first
+    image.try(:url)
   end
 
   def rating

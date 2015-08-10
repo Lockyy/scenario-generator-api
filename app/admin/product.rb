@@ -30,7 +30,7 @@ ActiveAdmin.register Product do
                     label: '',
                     member_label: proc { |obj| image_tag(obj.url, :class => "custom-image") },
                     wrapper_html: {class: 'thumbnail'}
-    end unless f.object.default_image.nil?
+    end unless f.object.new_record?
 
     f.actions
   end
@@ -47,4 +47,3 @@ ActiveAdmin.register Product do
     end
   end
 end
-
