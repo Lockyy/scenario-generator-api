@@ -5,6 +5,9 @@ class Review < ActiveRecord::Base
   has_many :tags, as: :taggable
   has_many :links
 
+  accepts_nested_attributes_for :tags
+  accepts_nested_attributes_for :links, allow_destroy: true
+
   def display_date
     created_at.strftime('%b %e, %Y')
   end

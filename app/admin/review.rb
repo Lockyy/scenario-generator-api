@@ -1,19 +1,25 @@
 ActiveAdmin.register Review do
-  permit_params :user_id, :title, :quality_review, :quality_score, :price_review, :price_score, :reviewable_type
+  permit_params :user_id, :title, :quality_review, :quality_score, :price_review, :price_score, :reviewable_type,
+                :tags, :reviewable_id, links_attributes: [:url, :id, :_destroy]
 
-  form do |f|
-    f.semantic_errors
-    inputs 'Details' do
-      input :title
-      input :quality_review
-      input :quality_score
-      input :price_review
-      input :price_score
-      input :reviewable_type
-      input :reviewable_id
-      input :user
-      end
-    f.actions
+  actions :index, :show
+
+  before_filter only: [:update, :create] do
+    tags_attributes = params[:review][:tags_attributes]
+    @tags = Taggable.tags(tags_attributes)
+    params[:review].delete(:tags_attributes)
+  end
+
+  controller do
+    def update_resource(object, attributes)
+      attributes[0].merge!({tags: @tags})
+      super(object, attributes)
+    end
+
+    def create_resource(object)
+      object.tags= @tags
+      super(object)
+    end
   end
 
   index do
@@ -33,6 +39,12 @@ ActiveAdmin.register Review do
       row :reviewable_type
       row :reviewable_id
       row :user
+      row 'Tags' do |n|
+        ad.tags.map(&:name).join("<br />").html_safe
+      end
+      row 'Links' do |n|
+        ad.links.map(&:url).join("<br />").html_safe
+      end
     end
   end
 

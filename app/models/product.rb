@@ -5,9 +5,12 @@ class Product < ActiveRecord::Base
   has_many :reviews, as: :reviewable
   has_many :images, -> { with_images }, through: :reviews, source: :attachments
   has_many :tags, through: :reviews
+  has_many :links, through: :reviews
   has_one :default_image, class_name: 'Attachment'
 
   before_save :downcase_name
+
+  accepts_nested_attributes_for :reviews
 
   validates :name, presence: true, uniqueness: { scope: :company_id }
   validates :description, presence: true
