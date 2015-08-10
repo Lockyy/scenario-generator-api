@@ -75,7 +75,7 @@ ActiveAdmin.register Product do
       row :company
       row :views
       row 'Reviews' do |n|
-        ad.reviews.collect { |review| "<a href='#{admin_review_url(review)}'> Written by #{review.user.name} at  #{review.created_at} </a> " }.join('</br>').html_safe
+        reviews_links(ad.reviews)
       end
       row :default_image do
         image_tag(ad.default_image.url, :class => "custom-image")
