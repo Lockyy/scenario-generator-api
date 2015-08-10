@@ -4,6 +4,7 @@ ruby '2.2.0'
 # Core
 gem 'rails', '4.2.3'
 gem 'pg'
+gem 'squeel'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
