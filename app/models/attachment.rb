@@ -1,6 +1,5 @@
 class Attachment < ActiveRecord::Base
-  @@IMAGE_TYPES = ["image/jpeg", "image/pjpeg", "image/png", "image/x-png", "image/gif"]
-
+  @@IMAGE_TYPES = ["image/jpeg", "image/pjpeg", "image/png", "image/x-png", "image/gif", "image/svg+xml"]
 
   belongs_to :attachable, polymorphic: true
   belongs_to :product
