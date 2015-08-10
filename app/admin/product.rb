@@ -14,7 +14,6 @@ ActiveAdmin.register Product do
     end
   end
 
-
   form do |f|
     f.semantic_errors
 

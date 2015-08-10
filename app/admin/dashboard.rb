@@ -15,7 +15,7 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Recent Products" do
           ul do
-            Product.order('created_at DESC')[0..5].map do |product|
+            Product.limit(5).order('created_at DESC').map do |product|
               li link_to(product.name, admin_product_path(product))
             end
           end
@@ -25,8 +25,8 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         panel "Recent Reviews" do
           ul do
-            Review.order('created_at DESC')[0..5].map do |review|
-              li link_to(review.title, admin_review_path(review))
+            Review.limit(5).order('created_at DESC').map do |review|
+              li link_to("#{review.user.name} wrote a review on #{review.reviewable.name}", admin_review_path(review))
             end
           end
         end
