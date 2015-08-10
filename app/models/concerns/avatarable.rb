@@ -1,4 +1,4 @@
-module HasAvatar
+module Avatarable
   extend ActiveSupport::Concern
   included do
     before_validation :ensure_avatar_uuid_has_a_value

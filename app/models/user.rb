@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :reviews
   has_and_belongs_to_many :tags
 
-  include HasAvatar
+  include Avatarable
 
   scope :with_oauth, ->(provider, uid) do
     joins(:user_oauths).where(user_oauths: { provider: provider, uid: uid })

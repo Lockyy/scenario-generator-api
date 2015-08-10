@@ -2,7 +2,7 @@ class Company < ActiveRecord::Base
   has_many :products
   has_many :tags, as: :taggable
 
-  include HasAvatar
+  include Avatarable
 
   before_save :downcase_name
 
