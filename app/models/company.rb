@@ -2,12 +2,14 @@ class Company < ActiveRecord::Base
   has_many :products
   has_many :tags, as: :taggable
 
+  include Avatarable
+
   before_save :downcase_name
 
   validates :name, presence: true, uniqueness: true
 
   def image_url
-    "http://lorempixel.com/150/150/technics?random=#{id}"
+    avatar.try(:url)
   end
 
   private
@@ -15,5 +17,4 @@ class Company < ActiveRecord::Base
   def downcase_name
     self.name = self.name.downcase
   end
-
 end

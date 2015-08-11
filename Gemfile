@@ -4,13 +4,15 @@ ruby '2.2.0'
 # Core
 gem 'rails', '4.2.3'
 gem 'pg'
-gem 'squeel'
-# bundle exec rake doc:rails generates the API under doc/api.
-gem 'sdoc', '~> 0.4.0', group: :doc
-
-# CSS
+gem 'squeel', github: 'mchavarriagam/squeel'
+gem 'activeadmin', github: 'activeadmin'
+gem 'paperclip', git: 'https://github.com/CloudVLab/paperclip.git', branch: 'aws_v2'
+gem 'aws-sdk', '~> 2'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.1'
+
+# bundle exec rake doc:rails generates the API under doc/api.
+gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Javascript
 gem 'uglifier', '>= 1.3.0'
@@ -28,7 +30,6 @@ gem 'rails-html-sanitizer'
 gem 'omniauth'
 gem 'omniauth-yammer'
 gem 'jwt'
-gem 'aws-sdk'
 gem 'faker'
 
 
