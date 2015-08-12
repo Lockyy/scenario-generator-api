@@ -2,7 +2,6 @@ ActiveAdmin.register Product do
   permit_params :name, :description, :url, :company_id, :tags, :reviews,
                 default_image: [:id]
 
-
   before_filter only: [:update, :create] do
     attachment_id = params[:product][:default_image].try(:[], :id)
     @default_image = Attachment.find(attachment_id) if attachment_id
@@ -34,6 +33,14 @@ ActiveAdmin.register Product do
       input :company
     end
 
+    f.inputs 'Default Image', :for => [:default_image, f.object.default_image || Attachment.new] do |image_f|
+      image_f.input :id, as: :radio,
+        collection: f.object.images,
+        label: '',
+        member_label: proc { |obj| image_tag(obj.url, :class => "custom-image") },
+        wrapper_html: {class: 'thumbnail'}
+    end unless f.object.new_record?
+
     f.inputs 'Reviews' do
       f.has_many :reviews do |t|
         t.input :id, as: :hidden
@@ -44,9 +51,11 @@ ActiveAdmin.register Product do
         t.input :quality_score
         t.input :price_review
         t.input :price_score
+
         t.has_many :tags, heading: 'Tags', allow_destroy: true do |p|
           p.input :name
         end
+
         t.has_many :links, heading: 'Links', allow_destroy: true do |l|
           l.input :id, as: :hidden
           l.input :url
