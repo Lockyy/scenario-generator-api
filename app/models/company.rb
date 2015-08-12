@@ -13,7 +13,7 @@ class Company < ActiveRecord::Base
   end
 
   def short_desc
-    description.split[0...10].join(' ') if description
+    description.split[0...9].join(' ') if description
   end
 
   private
