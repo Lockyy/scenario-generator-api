@@ -10,7 +10,14 @@
       <div class='profile-container'>
         <%= image_tag current_user.avatar_url, class: 'avatar' %>
         <%= link_to 'My profile', '#' %>
+
+        <% if current_user.admin? %>
+          <div class='admin-container'>
+            <%= link_to 'Admin Area', admin_root_url, class: 'btn btn-default btn-round' %>
+          </div>
+        <% end %>
       </div>
+
 
       <div class='my-tags-container'>
         <h2>My tags</h2>

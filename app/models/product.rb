@@ -3,8 +3,14 @@ gem 'faker'
 class Product < ActiveRecord::Base
   belongs_to :company
   has_many :reviews, as: :reviewable
+  has_many :images, -> { with_images }, through: :reviews, source: :attachments
+  has_many :tags, through: :reviews
+  has_many :links, through: :reviews
+  has_one :default_image, class_name: 'Attachment'
 
   before_save :downcase_name
+
+  accepts_nested_attributes_for :reviews
 
   validates :name, presence: true, uniqueness: { scope: :company_id }
   validates :description, presence: true
@@ -18,9 +24,9 @@ class Product < ActiveRecord::Base
     order('views desc')
   end
 
-  # TODO: use attachments
   def image
-    Faker::Number.between(0, 5).odd? ? "http://lorempixel.com/960/540/technics?random=#{id}" : nil
+    image = default_image || images.first
+    image.try(:url)
   end
 
   def rating
@@ -33,10 +39,6 @@ class Product < ActiveRecord::Base
 
   def author
     Faker::Name.name
-  end
-
-  def tags
-    Faker::Lorem.words(10)
   end
 
   def increment_views!

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
   namespace :api do
     get 'dashboard(.:format)', action: :index, controller: 'dashboard', defaults: {format: 'json'}
     post 'uploads(.:format)', action: :create, controller: 's3_upload', defaults: {format: 'json'}
