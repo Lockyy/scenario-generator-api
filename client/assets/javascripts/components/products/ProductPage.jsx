@@ -46,18 +46,6 @@ const ProductPage = React.createClass({
     }
   },
 
-  renderTags: function() {
-    let tagTags = [];
-    let tags = this.getProductData('tags');
-    if(tags) {
-      for (let i = 0; i < tags.length; i++) {
-        tagTags.push(<span className='tag'>{tags[i]}</span>);
-      }
-
-      return <div className='tags'>{tagTags}</div>;
-    }
-  },
-
   renderTitle: function() {
     return (
       <div className='row'>
@@ -98,6 +86,7 @@ const ProductPage = React.createClass({
   },
 
   renderInfo: function() {
+    let tags = _.map(this.getProductData('tags'), function(tag) { return tag.name });
     return (
       <div className='row info-row'>
         <div className='col-xs-3 stats'>
@@ -119,7 +108,7 @@ const ProductPage = React.createClass({
         </div>
         <div className='col-xs-3'>
           <Tags
-            tags={this.getProductData('tags')}
+            tags={tags}
             name={this.getProductData('name')}
             link={'#'}
             max={9} />
