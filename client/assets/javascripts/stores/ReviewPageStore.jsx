@@ -40,7 +40,7 @@ class ReviewPageStore {
   }
 
   handleFetchProduct(product) {
-    this.setProduct(product);
+    this.handleSetProduct(product);
   }
 
   handleSetProduct(product) {

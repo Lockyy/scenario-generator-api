@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import ProductName from './ProductName'
 import Rating from '../../components/Rating'
 import TypeAhead from '../TypeAhead'
 
@@ -38,10 +39,6 @@ const ProductFields  = React.createClass({
     }
   },
 
-  _onNameChange: function _onNameChange(product_name) {
-    this._setProduct({ name: product_name }, false)
-  },
-
   _onCompanyNameChange: function _onCompanyNameChange(product_company_name) {
     this._updateProduct({ company: { name: product_company_name } }, true)
   },
@@ -52,15 +49,6 @@ const ProductFields  = React.createClass({
 
   _updateProduct: function _updateProduct(product, showDetails) {
     this.props.onUpdateProduct(product, showDetails)
-  },
-
-  _onSelectProduct: function _onSelectProduct(product) {
-    this._setProduct(product, true);
-  },
-
-  _onSelectCreateProduct: function _onSelectCreateProduct(name) {
-    let product = { name: name }
-    this._setProduct(product, true);
   },
 
   _onSelectCompany: function _onSelectCompany(company) {
@@ -172,19 +160,7 @@ const ProductFields  = React.createClass({
     return (
       <fieldset>
         <h1 className='title'>Product Directory</h1>
-        <div className='form-group'>
-          <label htmlFor='product[name]'>Product's Name</label>
-          <div className='input-group'>
-            <TypeAhead name='product[name]' value={this.props.name} placeholder='e.g. Hololens' className='form-control'
-              bloodhoundProps={productBloodhoundProps} typeaheadProps={productTypeaheadProps}
-              onSelectOption={this._onSelectProduct} onSelectNoOption={this._onSelectCreateProduct} onChange={this._onNameChange}
-              ref='product_name'/>
-            <span className="input-group-btn">
-              <button className="btn btn-default" type="button" disabled={this.props.showDetails}>Go</button>
-            </span>
-          </div>
-          <span className="help-block with-errors"></span>
-        </div>
+        <ProductName name={this.props.name} disableButton={!this.props.showDetails} onSetProduct={this._setProduct} />
 
         {details}
       </fieldset>

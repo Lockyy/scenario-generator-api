@@ -21,8 +21,21 @@ const Reviews = React.createClass({
 
   getReviews: function() {
     if(this.state) {
-      return this.state.data.reviews
+      return this.state.data.reviews;
     }
+  },
+
+  getFilteredReviews: function() {
+    return _.filter(this.getReviews(), function(review) {
+      let validFields = 0;
+      if (!_.isEmpty(review.title)) validFields++;
+      if (!_.isEmpty(review.quality_review)) validFields++;
+      if (!_.isNull(review.quality_score)) validFields++;
+      if (!_.isEmpty(review.price_review)) validFields++;
+      if (!_.isNull(review.price_score)) validFields++;
+
+      return validFields >= 2;
+    });
   },
 
   renderReview: function(review) {
@@ -73,7 +86,7 @@ const Reviews = React.createClass({
 
   renderReviews: function() {
     let renderedReviews = [];
-    let reviews = this.getReviews()
+    let reviews = this.getFilteredReviews();
 
     if(reviews) {
       for (let i = 0; i < reviews.length; i++) {
