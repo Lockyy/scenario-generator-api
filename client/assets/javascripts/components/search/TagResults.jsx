@@ -9,8 +9,16 @@ const TagResults = React.createClass ({
     return { data: [] }
   },
 
+  visible: function() {
+    return (this.active() || this.props.activeSection == 'all')
+  },
+
+  active: function() {
+    return this.props.activeSection && this.props.activeSection == 'tags'
+  },
+
   render: function() {
-    if(this.props.data.length > 0) {
+    if(this.visible()) {
       return (
         <div className='results tags'>
           <div className ='title'>
@@ -18,12 +26,12 @@ const TagResults = React.createClass ({
               Tags
             </div>
             <div className='size'>
-              { this.props.data.length } result(s) found
+              { this.props.data.total } result(s) found
             </div>
             <div className='clear'></div>
           </div>
           <Tags
-            tags={this.props.data} />
+            tags={this.props.data.data} />
         </div>
       )
     } else {

@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import Rating from '../Rating';
+import SearchConstants from '../../utils/SearchConstants';
 
 const Results = React.createClass ({
 
@@ -9,17 +10,16 @@ const Results = React.createClass ({
     return { data: [] }
   },
 
-
   getMaxDisplayedData: function() {
-    if(this.props.data.length > 5) {
-      return 5
-    } else {
-      return this.props.data.length
-    }
+    return Math.min(this.props.data.data.length, SearchConstants.PER_PAGE)
   },
 
-  title: function() {
-    return this.props.type
+  visible: function() {
+    return (this.active() || this.props.activeSection == 'all')
+  },
+
+  active: function() {
+    return this.props.activeSection && this.props.activeSection == this.props.type
   },
 
   renderCompany: function(result) {
@@ -28,7 +28,7 @@ const Results = React.createClass ({
         <div className='row'>
           <div className='col-xs-12'>
             <div className='name'>
-              <Link to={`/app/{this.props.type}/${result.id}`}>
+              <Link to={`/app/${this.props.type}/${result.id}`}>
                 { result.name }
               </Link>
             </div>
@@ -50,7 +50,7 @@ const Results = React.createClass ({
           </div>
           <div className='col-xs-8'>
             <div className='name'>
-              <Link to={`/app/{this.props.type}/${result.id}`}>
+              <Link to={`/app/${this.props.type}/${result.id}`}>
                 { result.name }
               </Link>
             </div>
@@ -74,42 +74,77 @@ const Results = React.createClass ({
   },
 
   renderResults: function() {
-    let tags = [];
+    if(this.props.data.data.length > 0) {
+      let resultTags = [];
 
-    for (let i = 0; i < this.getMaxDisplayedData(); i++) {
-      tags.push(this.renderResult(this.props.data[i]));
+      for (let i = 0; i < this.getMaxDisplayedData(); i++) {
+        resultTags.push(this.renderResult(this.props.data.data[i]));
+      }
+
+      return <div className={this.props.type}>{resultTags}</div>;
     }
-
-    return <div className={this.props.type}>{tags}</div>;
   },
 
   renderButton: function() {
-    if(this.props.data.length > this.getMaxDisplayedData()) {
-      return (
-        <div className='show-more'>
-          <Link to={`/app/search/${this.props.searchTerm}/${this.props.type}`} className='show-more-button'>
-            Show More
-          </Link>
-        </div>
-      )
+    return (
+      <div className='show-more'>
+        <Link to={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='show-more-button'>
+          Show More
+        </Link>
+      </div>
+    )
+  },
+
+  renderPagination: function() {
+    let pageLinks = [];
+
+    for (let i = 1; i <= this.props.data.pages; i++) {
+      let active = ''
+
+      if(this.props.currentPage == i) {
+        active = 'active'
+      }
+
+      pageLinks.push(
+        <span className={`pagination-link ${active}`} onClick={ () => this.props.changePage(i)}>{i}</span>
+      );
+    }
+
+    return (
+      <div className='pagination'>
+        {pageLinks}
+      </div>
+    )
+  },
+
+  renderMoreContentSection: function() {
+    // If there are excess results to display, show something
+    if(this.props.data.total > this.getMaxDisplayedData()) {
+      // If we're on this sections page, display pagination links
+      if(this.active()) {
+        return this.renderPagination()
+      // Otherwise show the 'show more' button
+      } else {
+        return this.renderButton()
+      }
     }
   },
 
   render: function() {
-    if(this.props.data.length > 0) {
+    if(this.visible()) {
       return (
         <div className='results'>
           <div className ='title'>
             <div className='name'>
-              { this.title() }
+              { this.props.type }
             </div>
             <div className='size'>
-              { this.props.data.length } result(s) found
+              { this.props.data.total } result(s) found
             </div>
             <div className='clear'></div>
           </div>
           { this.renderResults() }
-          { this.renderButton() }
+          { this.renderMoreContentSection() }
         </div>
       )
     } else {

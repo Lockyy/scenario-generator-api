@@ -50,10 +50,11 @@
         margin-bottom: 15px
 
   .links
-    a
+    .link
       display: block
       padding: 5px
       border-bottom: 1px solid $grey
+      cursor: pointer
       &:focus, &:active, &:hover
         text-decoration: none
 
@@ -70,3 +71,13 @@
       color: white
       border-radius: 25px
       margin-top: 25px
+
+.pagination
+  text-align: center
+  width: 100%
+  .pagination-link
+    padding: 5px
+    cursor: pointer
+    color: $medium-grey
+    &.active
+      color: $dark-grey

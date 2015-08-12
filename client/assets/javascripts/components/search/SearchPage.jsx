@@ -14,37 +14,49 @@ const SearchPage = React.createClass({
     return { data: { products: [], companies: [], tags: [] } }
   },
 
-  componentDidMount: function() {
+  performSearch: function(searchString, page) {
     SearchStore.listen(this.onChange.bind(this));
-    FluxSearchPageActions.getSearchResults(this.getSearchString());
+    FluxSearchPageActions.getSearchResults(searchString, page);
   },
 
-  doSearch: function(event) {
-    SearchStore.listen(this.onChange.bind(this));
-    FluxSearchPageActions.getSearchResults(event.target.value);
-    this.transitionTo(`/app/search/${event.target.value}`)
+  componentDidMount: function() {
+    this.performSearch(this.props.params.searchString, this.props.params.page);
   },
 
   onChange: function(data) {
     this.setState(data);
   },
 
-  getSearchString: function() {
-    return this.props.params.searchString
+  changePageAndSearch: function(params) {
+    let searchString = params.searchString || this.props.params.searchString
+    let section = params.section || this.props.params.section
+    let page = params.page || 1
+
+    this.performSearch(searchString, page);
+    this.transitionTo(`/app/search/${section}/${searchString}/${page}`);
   },
+
+  onSearchInput: function(event) {
+    this.changePageAndSearch({ searchString: event.target.value });
+  },
+
+  changeTab: function(section) {
+    this.changePageAndSearch({ section: section });
+  },
+
+  changePage: function(page) {
+    this.changePageAndSearch({ page: page });
+  },
+
 
   renderRightBar: function() {
     return (
       <div className='col-xs-3'>
         <div className='links'>
-          <Link
-            to={`/app/search/${this.getSearchString()}`}>All</Link>
-          <Link
-            to={`/app/search/${this.getSearchString()}/products`}>Products</Link>
-          <Link
-            to={`/app/search/${this.getSearchString()}/companies`}>Companies</Link>
-          <Link
-            to={`/app/search/${this.getSearchString()}/tags`}>Tags</Link>
+          <div className='link' onClick={ () => this.changeTab('all') }>All</div>
+          <div className='link' onClick={ () => this.changeTab('products') }>Products</div>
+          <div className='link' onClick={ () => this.changeTab('companies') }>Companies</div>
+          <div className='link' onClick={ () => this.changeTab('tags') }>Tags</div>
         </div>
         <div className='new-product'>
           { "Can't find a product?" }
@@ -67,18 +79,22 @@ const SearchPage = React.createClass({
       <div className='col-xs-6'>
         <Results
           type='products'
-          displayPartial={true}
+          activeSection={this.props.params.section}
           data={this.state.data.products}
-          searchTerm={this.getSearchString()} />
+          searchTerm={this.props.params.searchString}
+          changePage={this.changePage}
+          currentPage={this.props.params.page} />
         <Results
           type='companies'
-          displayPartial={true}
+          activeSection={this.props.params.section}
           data={this.state.data.companies}
-          searchTerm={this.getSearchString()} />
+          searchTerm={this.props.params.searchString}
+          changePage={this.changePage}
+          currentPage={this.props.params.page} />
         <TagResults
-          displayPartial={true}
+          activeSection={this.props.params.section}
           data={this.state.data.tags}
-          searchTerm={this.getSearchString()} />
+          searchTerm={this.props.params.searchString} />
       </div>
     )
   },
@@ -95,8 +111,8 @@ const SearchPage = React.createClass({
             <input
               className='search-box'
               ref='inputBox'
-              defaultValue={ this.getSearchString() }
-              onChange={ this.doSearch } />
+              defaultValue={ this.props.params.searchString }
+              onChange={ this.onSearchInput } />
           </div>
         </div>
         <div className='row'>
