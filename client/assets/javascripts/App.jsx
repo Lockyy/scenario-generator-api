@@ -21,7 +21,7 @@ $(function onLoad() {
         </Route>
         <Route name="company" path="app/companies/:companyId" component={CompanyProfilePage}>
         </Route>
-        <Route name="search" path="app/search/:searchString" component={SearchPage}>
+        <Route name="search" path="app/search/:section/:searchString/:page" component={SearchPage}>
         </Route>
       </Router>
     ),document.getElementById('content'));
