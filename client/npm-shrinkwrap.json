@@ -1246,8 +1246,8 @@
     },
     "typeahead.js": {
       "version": "0.11.1",
-      "from": "typeahead.js@^0.11.1",
-      "resolved": "https://registry.npmjs.org/typeahead.js/-/typeahead.js-0.11.1.tgz"
+      "from": "typeahead.js@git+https://github.com/halissonvit/typeahead.js",
+      "resolved": "git+https://github.com/halissonvit/typeahead.js#96a4cc540f73b0d6889e0f338e281ce5ffdfd2c6"
     },
     "webpack": {
       "version": "1.9.7",
