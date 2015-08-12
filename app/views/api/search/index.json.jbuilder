@@ -1,5 +1,7 @@
 json.search_string @results[:search_string]
 json.total_results @results[:total_results]
+json.per_page      @results[:per_page]
+json.page          @results[:page]
 
 json.products do
   json.total @results[:products][:total]
