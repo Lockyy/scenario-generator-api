@@ -6,8 +6,37 @@ import ProductAPI from '../utils/ProductAPI';
 import S3API from '../utils/S3API';
 
 class FluxReviewPageActions {
-  updateReview(review) {
-    this.dispatch(review);
+  setShowDetails(showDetails) {
+    this.dispatch(showDetails);
+  }
+
+  fetchProduct(productId, success, error) {
+    this.dispatch(productId);
+    ProductAPI.getProduct(productId, success, error)
+  }
+
+  setProduct(product) {
+    this.dispatch(product);
+  }
+
+  updateProduct(product) {
+    this.dispatch(product);
+  }
+
+  addFile(file, callbacks) {
+    let _this = this;
+
+    NewReviewPageAPI.getSignedUploadUrl(file)
+    .then(function(data) {
+        return S3API.uploadFileToS3(file, data.upload.url, data.upload.content_type, callbacks);
+    }).then(function(downloadUrl) {
+      _this.dispatch(file);
+      callbacks.success(file, downloadUrl)
+    })
+    .fail(function() {
+      //TODO
+      _this.registerError('error uploading file to s3');
+    });
   }
 
   addLink(link, callbacks) {
@@ -20,32 +49,12 @@ class FluxReviewPageActions {
     callbacks.success(tag)
   }
 
-  fetchProduct(productId, success, error) {
-    this.dispatch(productId);
-    ProductAPI.getProduct(productId, success, error)
+  setReview(review) {
+    this.dispatch(review);
   }
 
-  setShowDetails(showDetails) {
-    this.dispatch(showDetails);
-  }
-
-  setProduct(product) {
-    this.dispatch(product);
-  }
-
-  uploadFile(file, callbacks) {
-    let _this = this;
-
-    NewReviewPageAPI.getSignedUploadUrl(file)
-    .then(function(data) {
-        return uploadFileToS3(file, data.upload.url, data.upload.content_type, callbacks);
-    }).then(function(downloadUrl) {
-      callbacks.success(file, downloadUrl)
-    })
-    .fail(function() {
-      //TODO
-      _this.registerError('error uploading file to s3');
-    });
+  updateReview(review) {
+    this.dispatch(review);
   }
 
   submitReview(review, router) {

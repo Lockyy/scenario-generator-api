@@ -22,22 +22,37 @@ class ReviewPageStore {
     this.error = null;
 
     this.bindListeners({
-      handleUpdateReview: FluxReviewPageActions.UPDATE_REVIEW,
+      handleSetShowDetails: FluxReviewPageActions.SET_SHOW_DETAILS,
+      handleFetchProduct: FluxReviewPageActions.FETCH_PRODUCT,
+      handleSetProduct: FluxReviewPageActions.SET_PRODUCT,
+      handleUpdateProduct: FluxReviewPageActions.UPDATE_PRODUCT,
+      handleSetReview: FluxReviewPageActions.SET_REVIEW,
       handleSubmitReview: FluxReviewPageActions.SUBMIT_REVIEW,
-      handleUploadFile: FluxReviewPageActions.UPLOAD_FILE,
+      handleAddFile: FluxReviewPageActions.ADD_FILE,
       handleAddLink: FluxReviewPageActions.ADD_LINK,
       handleAddTag: FluxReviewPageActions.ADD_TAG,
-      handleSetProduct: FluxReviewPageActions.SET_PRODUCT,
-      handleSetShowDetails: FluxReviewPageActions.SET_SHOW_DETAILS,
       handleRegisterError: FluxReviewPageActions.REGISTER_ERROR
     });
   }
 
-  getReview() {
-    return this.review;
+  handleSetShowDetails(showDetails) {
+    this.showDetails = showDetails;
   }
 
-  handleUploadFile(file) {
+  handleFetchProduct(product) {
+    this.setProduct(product);
+  }
+
+  handleSetProduct(product) {
+    this.review = _.merge({}, emptyReview);
+    this.review.product = product;
+  }
+
+  handleUpdateProduct(product) {
+    _.merge(this.review.product, product);
+  }
+
+  handleAddFile(file) {
     this.review.attachments.push(file);
   }
 
@@ -49,25 +64,15 @@ class ReviewPageStore {
     this.review.tags.push(tag);
   }
 
-  handleMergeProduct(product) {
-    _.merge(this.review.product, product);
-  }
-
-  handleSetShowDetails(showDetails) {
-    this.showDetails = showDetails;
-  }
-
-  handleSetProduct(product) {
-    this.review.product = product;
+  handleSetReview(review) {
+    this.review = review;
   }
 
   handleUpdateReview(review) {
-    this.review = review;
-    this.error = null;
+    _.merge(this.review, review);
   }
 
   handleSubmitReview() {
-    this.review = emptyReview;
   }
 
   handleRegisterError(error) {
