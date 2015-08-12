@@ -1,9 +1,23 @@
 @import 'variables'
 
+$blackish-grey: #3c3c3b
 $blue-ish: #4dbcc6
 $default-font-size: 16px
 
 .product.new
+  .add-symbol, .review-symbol
+    width: 20px
+
+  .add-symbol
+    content: image-url('icons/icon-add.svg')
+
+    &.black
+      content: image-url('icons/icon-add-black.svg')
+
+  .review-symbol
+    content: image-url('icons/icon-review.svg')
+
+
   font-size: $default-font-size
 
   h1.title

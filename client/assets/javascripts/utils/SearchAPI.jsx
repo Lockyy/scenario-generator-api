@@ -1,5 +1,4 @@
 module.exports = {
-
   getSearchResults: function(searchString, resolve, reject) {
     if(searchString) {
       let url = `/api/search`
@@ -13,4 +12,3 @@ module.exports = {
     }
   }
 };
-

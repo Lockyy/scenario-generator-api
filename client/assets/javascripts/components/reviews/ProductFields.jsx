@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Link } from 'react-router';
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import Rating from '../../components/Rating'
+import TypeAhead from '../TypeAhead'
 
 const ProductFields  = React.createClass({
   displayName: 'ProductFields',
@@ -13,8 +14,29 @@ const ProductFields  = React.createClass({
     }
   },
 
+  _getTypeaheadProps: function _getTypeaheadProps() {
+    return {
+      name: 'products',
+      displayKey: 'name',
+      templates: {
+        header: function(data) {
+          let query = data.query;
+          return `<p class='tt-no-results' data-query='${query}'>“${query}”<span class='tt-help'>Create <i class="add-symbol"> + </i></span></p>`
+        },
+        empty: function(data) {
+          let query = data.query;
+          return `<p class='tt-no-results' data-query='${query}'>“${query}”<span class='tt-help'>Create <i class="add-symbol"> + </i></span></p>`
+        },
+        suggestion: function(data) {
+          let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+          return `<p>${name}<span class='tt-help'>Review <i class="review-symbol"> -> </i></span></p>`
+        }
+      },
+    }
+  },
+
   _getNewProductFields: function _getNewProductFields() {
-    return (<fieldset>
+    return (<fieldset className='details'>
       <span className='instructions'>Complete the form below to add a new product</span>
       <div className='form-group'>
         <label htmlFor='product[company[name]]'>Company Name <span className='required'>*</span></label>
@@ -55,8 +77,48 @@ const ProductFields  = React.createClass({
     );
   },
 
+  _onChange: function _onChange(product_name) {
+    this.props.onChange({ name: product_name }, false);
+  },
+
+  _onSelectProduct: function _onSelectProduct(product) {
+    this.props.onChange(product, true);
+  },
+
+  _onSelectCreateProduct: function _onSelectCreateProduct(name) {
+    let product = { name: name }
+    this.props.onChange(product, true);
+  },
+
   render: function render() {
     let newProduct = this.props.id === undefined;
+    let details = this.props.showDetails ? (newProduct ? this._getNewProductFields() : this._getProductFieldsInfo()) : '';
+    let productBloodhoundProps = {
+      remote: {
+        url: '/api/search?search=%QUERY&filter_by=name&match_mode=all',
+        wildcard: '%QUERY',
+        transform: function(data) { return data.products }
+      }
+    };
+
+    let productTypeaheadProps = {
+      name: 'products',
+      displayKey: 'name',
+      templates: {
+        header: function(data) {
+          let query = data.query;
+          return `<p class='tt-no-results' data-query='${query}'>“${query}”<span class='tt-help'>Create <i class="add-symbol"> + </i></span></p>`
+        },
+        empty: function(data) {
+          let query = data.query;
+          return `<p class='tt-no-results' data-query='${query}'>“${query}”<span class='tt-help'>Create <i class="add-symbol"> + </i></span></p>`
+        },
+        suggestion: function(data) {
+          let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+          return `<p>${name}<span class='tt-help'>Review <i class="review-symbol"> -> </i></span></p>`
+        }
+      },
+    };
 
     return (
       <fieldset>
@@ -64,8 +126,10 @@ const ProductFields  = React.createClass({
         <div className='form-group'>
           <label htmlFor='product[name]'>Product's Name</label>
           <div className='input-group'>
-            <input type='text' className='form-control' placeholder='e.g. Hololens' name='product[name]'
-              ref='product_name' value={this.props.name} onChange={this.props.onChange} required/>
+            <TypeAhead name='product[name]' value={this.props.name} placeholder='e.g. Hololens' className='form-control'
+              bloodhoundProps={productBloodhoundProps} typeaheadProps={productTypeaheadProps}
+              onSelectOption={this._onSelectProduct} onSelectNoOption={this._onSelectCreateProduct} onChange={this._onChange}
+              ref='product_name'/>
             <span className="input-group-btn">
               <button className="btn btn-default" type="button" disabled={true}>Go</button>
             </span>
@@ -73,7 +137,7 @@ const ProductFields  = React.createClass({
           <span className="help-block with-errors"></span>
         </div>
 
-        {newProduct ? this._getNewProductFields() : this._getProductFieldsInfo()}
+        {details}
       </fieldset>
     );
   }

@@ -27,6 +27,7 @@ const NewReviewPage  = React.createClass({
     let params = this.context.router.state.params;
     if (params.productId) {
       FluxReviewPageActions.fetchProduct(params.productId, function(product) {
+        FluxReviewPageActions.setShowDetails(true);
         FluxReviewPageActions.setProduct(product);
       });
     }
@@ -65,26 +66,17 @@ const NewReviewPage  = React.createClass({
   },
 
   _onChange: function _onChange(review) {
-    this.setState(function(oldReview) {
-      return {
-        // Merge the old data with the new data
-        data: _.merge(oldReview, review, function(a, b) {
-          if (_.isArray(a)) {
-            return _.unique(a.concat(b), function(obj) {
-              // check the objects id
-              if(typeof a[0] === 'object') { return obj.id }
-              // If it's an array of tags, just check the tag directly.
-              return obj
-            })
-          }
-        })
-      };
-    });
+    this.setState(review);
   },
 
   _onFormChange: function _onFormChange(e) {
     let review = this._getReview();
     this._onChange(review);
+  },
+
+  _onProductChange: function _onProductChange(product, showDetails) {
+    FluxReviewPageActions.setShowDetails(showDetails);
+    FluxReviewPageActions.setProduct(product);
   },
 
   _onSubmit: function _onSubmit(e) {
@@ -94,6 +86,19 @@ const NewReviewPage  = React.createClass({
 
     FluxReviewPageActions.updateReview(review);
     FluxReviewPageActions.submitReview(review, this.context.router);
+  },
+
+  _getActionsContent: function _getActionsContent() {
+    if (this.state.showDetails) {
+      return (<div className='actions'>
+        <Link to={'/app'} >
+          <button type='button' className='btn btn-default btn-round'>Cancel</button>
+        </Link>
+        <input type='submit' className='btn btn-default submit btn-round' value='Create Review' />
+      </div>);
+    } else {
+      return (<div />);
+    }
   },
 
   render: function render() {
@@ -110,15 +115,12 @@ const NewReviewPage  = React.createClass({
       <div className='main-content'>
         <form className='form review new' ref='new_review_form' onSubmit={this._onSubmit}>
 
-          <ProductFields ref='product_fields' {...this._getProductData()} onChange={this._onFormChange} />
-          <ReviewFields ref='review_fields'/>
+          <ProductFields ref='product_fields' onChange={this._onProductChange} showDetails={this.state.showDetails}
+            {...this._getProductData()} />
+          <ReviewFields ref='review_fields' showDetails={this.state.showDetails}/>
 
-          <div className='actions'>
-            <Link to={'/app'} >
-              <button type='button' className='btn btn-default btn-round'>Cancel</button>
-            </Link>
-            <input type='submit' className='btn btn-default submit btn-round' value='Create Review' />
-          </div>
+          {this._getActionsContent()}
+
         </form>
       </div>
 

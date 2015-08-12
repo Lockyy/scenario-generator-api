@@ -58,6 +58,10 @@ class FluxReviewPageActions {
     ProductAPI.getProduct(productId, success, error)
   }
 
+  setShowDetails(showDetails) {
+    this.dispatch(showDetails);
+  }
+
   setProduct(product) {
     this.dispatch(product);
   }

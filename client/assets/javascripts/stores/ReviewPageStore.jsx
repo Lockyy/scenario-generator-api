@@ -18,6 +18,7 @@ const emptyReview = {
 class ReviewPageStore {
   constructor() {
     this.review = emptyReview;
+    this.showDetails = false;
     this.error = null;
 
     this.bindListeners({
@@ -27,6 +28,7 @@ class ReviewPageStore {
       handleAddLink: FluxReviewPageActions.ADD_LINK,
       handleAddTag: FluxReviewPageActions.ADD_TAG,
       handleSetProduct: FluxReviewPageActions.SET_PRODUCT,
+      handleSetShowDetails: FluxReviewPageActions.SET_SHOW_DETAILS,
       handleRegisterError: FluxReviewPageActions.REGISTER_ERROR
     });
   }
@@ -47,8 +49,16 @@ class ReviewPageStore {
     this.review.tags.push(tag);
   }
 
-  handleSetProduct(product) {
+  handleMergeProduct(product) {
     _.merge(this.review.product, product);
+  }
+
+  handleSetShowDetails(showDetails) {
+    this.showDetails = showDetails;
+  }
+
+  handleSetProduct(product) {
+    this.review.product = product;
   }
 
   handleUpdateReview(review) {
