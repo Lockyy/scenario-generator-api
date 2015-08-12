@@ -1,7 +1,7 @@
 json.search_string params[:search]
 
 json.products @results[:products] do |product|
-  json.(product, :id, :name, :description, :url)
+  json.(product, :id, :name, :description, :url, :company, :rating)
 end
 
 json.companies @results[:companies] do |company|
