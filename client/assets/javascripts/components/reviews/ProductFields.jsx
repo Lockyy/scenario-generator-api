@@ -68,37 +68,12 @@ const ProductFields  = React.createClass({
   render: function render() {
     let newProduct = this.props.id === undefined;
     let details = this.props.showDetails ? (newProduct ? this._getNewProductFields() : this._getProductFieldsInfo()) : '';
-    let productBloodhoundProps = {
-      remote: {
-        url: '/api/search?search=%QUERY&filter_by=name&match_mode=all',
-        wildcard: '%QUERY',
-        transform: function(data) { return data.products }
-      }
-    };
-
-    let productTypeaheadProps = {
-      name: 'products',
-      displayKey: 'name',
-      templates: {
-        header: function(data) {
-          let query = data.query;
-          return `<p class='tt-no-results' data-query='${query}'>“${query}”<span class='tt-help'>Create <i class="add-symbol"> + </i></span></p>`
-        },
-        empty: function(data) {
-          let query = data.query;
-          return `<p class='tt-no-results' data-query='${query}'>“${query}”<span class='tt-help'>Create <i class="add-symbol"> + </i></span></p>`
-        },
-        suggestion: function(data) {
-          let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
-          return `<p>${name}<span class='tt-help'>Review <i class="review-symbol"> -> </i></span></p>`
-        }
-      },
-    };
 
     return (
       <fieldset>
         <h1 className='title'>Product Directory</h1>
-        <ProductName name={this.props.name} disableButton={!this.props.showDetails} onSetProduct={this._setProduct} />
+        <ProductName ref='product_name' name={this.props.name} disableButton={!this.props.showDetails}
+          onSetProduct={this._setProduct} />
 
         {details}
       </fieldset>

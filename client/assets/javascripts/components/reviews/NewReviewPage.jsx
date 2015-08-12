@@ -53,11 +53,11 @@ const NewReviewPage  = React.createClass({
       }
     } else {
       review.product = {
-        name: prodRefs.product_name.getDOMNode().value,
+        name: prodRefs.product_name.getValue(),
         description: prodRefs.product_description.getDOMNode().value,
         url: prodRefs.product_url.getDOMNode().value,
         company: {
-          name: prodRefs.product_company_name.getDOMNode().value
+          name: prodRefs.product_company_name.getValue()
         }
       }
     }
