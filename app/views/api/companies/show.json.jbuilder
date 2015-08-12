@@ -5,4 +5,3 @@ json.company do
   json.products @company.products, :id, :name, :description, :image, :company, :rating, :reviews, :created_at, :author
   json.tags @company.tags
 end
-

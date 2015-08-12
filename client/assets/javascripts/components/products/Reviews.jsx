@@ -58,16 +58,12 @@ const Reviews = React.createClass({
           <div className="title">
             {review.title}
           </div>
-          <div className="review-text">
-            {review.quality_review}
-          </div>
+          <div className="review-text" dangerouslySetInnerHTML={{__html: review.formatted_quality_review}} />
           <div className="price-score">
             <PriceRating value={review.price_score}
                     name='rating'/>
           </div>
-          <div className="price-review">
-            {review.price_review}
-          </div>
+          <div className="price-review" dangerouslySetInnerHTML={{__html: review.formatted_price_review}} />
           <Tags
             tags={review.tag_list} />
         </div>

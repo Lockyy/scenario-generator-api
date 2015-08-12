@@ -16,5 +16,9 @@ class Review < ActiveRecord::Base
     self.tags.map(&:name)
   end
 
+  def formatted_quality_review
+    (quality_review.nil? or quality_review.empty?) ? "" : ApplicationController.helpers.simple_format(quality_review)
+  end
+
   # TODO: implement custom validator(validate presence of at least one of the fields)
 end
