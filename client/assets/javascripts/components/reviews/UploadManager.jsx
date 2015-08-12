@@ -36,7 +36,7 @@ const UploadManager = React.createClass({
       let $input = $(React.findDOMNode(_this.refs.product_attachment_placeholder));
       let $button = $(React.findDOMNode(_this.refs.product_attachment_button));
 
-      FluxReviewPageActions.uploadFile(file.file, {
+      FluxReviewPageActions.addFile(file.file, {
         onProgress: function(file, fileSize) {
           let percentage = (fileSize / file.size * 100).toFixed(2)
           $input.addClass('uploading').prop('disabled', true).attr('value', _this.props.uploadingText + " " + percentage  + "%");
