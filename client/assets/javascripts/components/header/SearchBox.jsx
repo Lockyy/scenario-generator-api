@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Link } from 'react-router';
+import { Link, Navigation } from 'react-router';
 import timeago from 'timeago';
 import FluxSearchHeaderActions from '../../actions/FluxSearchHeaderActions'
 import SearchHeaderStore from '../../stores/SearchHeaderStore'
@@ -8,6 +8,11 @@ import Results from '../search/Results'
 import TagResults from '../search/TagResults'
 
 const SearchBox = React.createClass ({
+  mixins: [ Navigation ],
+
+  contextTypes: {
+    router: React.PropTypes.object
+  },
 
   getInitialState: function() {
     return {
@@ -31,6 +36,14 @@ const SearchBox = React.createClass ({
 
   onSearchInput: function(event) {
     this.performSearch(event.target.value)
+  },
+
+  onSubmit: function(event) {
+    event.preventDefault();
+    let searchTerm = $(this.refs.inputBox.getDOMNode()).val()
+    if(searchTerm) {
+      this.transitionTo(`/app/search/all/${searchTerm}/1`);
+    }
   },
 
   displayResults: function() {
@@ -71,13 +84,13 @@ const SearchBox = React.createClass ({
 
   render: function() {
     return (
-      <form className='form-search' role="search">
+      <form className='form-search' role="search" onSubmit={ this.onSubmit }>
         <div className="form-group">
           <input
             ref='inputBox'
             className="form-control"
             placeholder="Search"
-            onChange={ this.onSearchInput } />
+            onChange={ this.onSearchInput }  />
           { this.renderResults() }
         </div>
       </form>
