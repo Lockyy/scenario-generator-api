@@ -68,15 +68,15 @@ module Fletcher
     end
 
     def companies(terms)
-      search_by(:companies, @params[:filter_by], terms) || []
+      SearchCompanies.new(@params[:filter_by], terms).results
     end
 
     def products(terms)
-      search_by(:products, @params[:filter_by], terms) || []
+      SearchProducts.new(@params[:filter_by], terms).results
     end
 
     def tags(terms)
-      search_by(:tags, @params[:filter_by], terms) || []
+      SearchTags.new(@params[:filter_by], terms).results
     end
 
     # We're going to take the search string the user input, split it up into words and then
@@ -95,16 +95,8 @@ module Fletcher
 
     def build_search_by
       default_search_by = {
-          products: Hash.new(lambda { |terms| Product.where { (name.like_any(terms)) | (description.like_any(terms)) } }),
-          companies: Hash.new(lambda { |terms| Company.where { (name.like_any(terms)) | (description.like_any(terms)) } }),
           tags: Hash.new(lambda { |terms| Tag.where { (name.like_any(terms)) } }),
       }.with_indifferent_access
-
-      default_search_by[:products][:name] = lambda { |terms| Product.where { (name.like_any(terms)) } }
-      default_search_by[:products][:description] = lambda { |terms| Product.where { (description.like_any(terms)) } }
-
-      default_search_by[:companies][:name] = lambda { |terms| Company.where { (name.like_any(terms)) } }
-      default_search_by[:companies][:description] = lambda { |terms| Company.where { (description.like_any(terms)) } }
 
       default_search_by[:tags][:name] = lambda { |terms| Tag.where { (name.like_any(terms)) } }
       default_search_by
