@@ -1,3 +1,4 @@
+json.id company.id
 json.name titleize(company.name)
 json.description company.description
 json.short_desc company.short_desc
