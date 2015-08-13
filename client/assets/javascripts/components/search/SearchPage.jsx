@@ -83,22 +83,31 @@ const SearchPage = React.createClass({
       <div className='col-xs-6'>
         <Results
           type='products'
-          activeSection={this.props.params.section}
           data={this.state.data.products}
-          searchTerm={this.props.params.searchString}
+          searchTerm={this.props.params.search_string}
           changePage={this.changePage}
+          showButton={ this.props.params.section == 'all' }
+          showPagination={ this.props.params.section == 'products' }
+          showTopLink={false}
+          showImages={true}
+          hide={!this.displaySection('products')}
           currentPage={this.props.params.page} />
         <Results
           type='companies'
-          activeSection={this.props.params.section}
           data={this.state.data.companies}
-          searchTerm={this.props.params.searchString}
+          searchTerm={this.props.params.search_string}
           changePage={this.changePage}
+          showButton={ this.props.params.section == 'all' }
+          showPagination={ this.props.params.section == 'companies' }
+          showTopLink={false}
+          showImages={true}
+          hide={!this.displaySection('companies')}
           currentPage={this.props.params.page} />
         <TagResults
           activeSection={this.props.params.section}
           data={this.state.data.tags}
-          searchTerm={this.props.params.searchString} />
+          hide={!this.displaySection('tags')}
+          searchTerm={this.props.params.search_string} />
       </div>
     )
   },

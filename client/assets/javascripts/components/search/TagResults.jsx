@@ -9,18 +9,12 @@ const TagResults = React.createClass ({
     return { data: [] }
   },
 
-  visible: function() {
-    return (this.active() || this.props.activeSection == 'all')
-  },
-
-  active: function() {
-    return this.props.activeSection && this.props.activeSection == 'tags'
-  },
-
   render: function() {
-    if(this.visible()) {
+    if(this.props.hide) {
+      return <div></div>
+    } else {
       return (
-        <div className='results tags'>
+        <div className={`results tags ${this.props.containerClass}`}>
           <div className ='title'>
             <div className='name'>
               Tags
@@ -34,8 +28,6 @@ const TagResults = React.createClass ({
             tags={_.collect(this.props.data.data, function(tag) { return tag.name })} />
         </div>
       )
-    } else {
-      return <div></div>
     }
   }
 

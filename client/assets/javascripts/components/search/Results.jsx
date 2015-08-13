@@ -14,23 +14,15 @@ const Results = React.createClass ({
     return Math.min(this.props.data.data.length, SearchConstants.PER_PAGE)
   },
 
-  visible: function() {
-    return (this.active() || this.props.activeSection == 'all')
-  },
-
-  active: function() {
-    return this.props.activeSection && this.props.activeSection == this.props.type
-  },
-
   renderCompany: function(result) {
     if(this.props.type == 'companies') {
       return (
         <div className='row'>
           <div className='col-xs-12'>
             <div className='name'>
-              <Link to={`/app/${this.props.type}/${result.id}`}>
+              <a href={`/app/${this.props.type}/${result.id}`}>
                 { result.name }
-              </Link>
+              </a>
             </div>
             <div className='description'>
               { result.short_desc }
@@ -41,18 +33,34 @@ const Results = React.createClass ({
     }
   },
 
+  renderImage: function(result) {
+    if(this.props.showImages) {
+      return (
+        <div className='image-container col-xs-4'>
+          <img src={result.image} />
+        </div>
+      )
+    }
+  },
+
+  productContentClass: function() {
+    if(this.props.showImages) {
+      return 'col-xs-8'
+    } else {
+      return 'col-xs-12'
+    }
+  },
+
   renderProduct: function(result) {
     if(this.props.type == 'products') {
       return (
         <div className='row'>
-          <div className='image-container col-xs-4'>
-            <img src={result.image} />
-          </div>
-          <div className='col-xs-8'>
+          { this.renderImage(result) }
+          <div className={ this.productContentClass() }>
             <div className='name'>
-              <Link to={`/app/${this.props.type}/${result.id}`}>
+              <a href={`/app/${this.props.type}/${result.id}`}>
                 { result.name }
-              </Link>
+              </a>
             </div>
             <div className='description'>
               { result.short_desc }
@@ -86,69 +94,75 @@ const Results = React.createClass ({
   },
 
   renderButton: function() {
-    return (
-      <div className='show-more'>
-        <Link to={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='show-more-button'>
-          Show More
-        </Link>
-      </div>
-    )
+    if(this.props.showButton) {
+      return (
+        <div className='show-more'>
+          <Link to={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='show-more-button'>
+            Show More
+          </Link>
+        </div>
+      )
+    }
   },
 
   renderPagination: function() {
-    let pageLinks = [];
+    if(this.props.showPagination && this.props.data.pages > 1) {
+      let pageLinks = [];
 
-    for (let i = 1; i <= this.props.data.pages; i++) {
-      let active = ''
+      for (let i = 1; i <= this.props.data.pages; i++) {
+        let active = ''
 
-      if(this.props.currentPage == i) {
-        active = 'active'
+        if(this.props.currentPage == i) {
+          active = 'active'
+        }
+
+        pageLinks.push(
+          <span className={`pagination-link ${active}`} onClick={ () => this.props.changePage(i)}>{i}</span>
+        );
       }
 
-      pageLinks.push(
-        <span className={`pagination-link ${active}`} onClick={ () => this.props.changePage(i)}>{i}</span>
-      );
+      return (
+        <div className='pagination'>
+          {pageLinks}
+        </div>
+      )
     }
-
-    return (
-      <div className='pagination'>
-        {pageLinks}
-      </div>
-    )
   },
 
-  renderMoreContentSection: function() {
-    // If there are excess results to display, show something
-    if(this.props.data.total > this.getMaxDisplayedData()) {
-      // If we're on this sections page, display pagination links
-      if(this.active()) {
-        return this.renderPagination()
-      // Otherwise show the 'show more' button
-      } else {
-        return this.renderButton()
-      }
+  renderTopLink: function() {
+    if(this.props.showTopLink) {
+      return (
+        <div className='size'>
+          <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`}>More</a>
+        </div>
+      )
+    } else {
+      return (
+        <div className='size'>
+          { this.props.data.total } result(s) found
+        </div>
+      )
     }
   },
 
   render: function() {
-    if(this.visible()) {
+    if(this.props.hide) {
+      return <div></div>
+    } else {
       return (
-        <div className='results'>
+        <div className={`results ${this.props.containerClass}`}>
           <div className ='title'>
             <div className='name'>
               { this.props.type }
             </div>
-            <div className='size'>
-              { this.props.data.total } result(s) found
-            </div>
+            { this.renderTopLink() }
             <div className='clear'></div>
           </div>
           { this.renderResults() }
-          { this.renderMoreContentSection() }
+          { this.renderPagination() }
+          { this.renderButton() }
         </div>
       )
-    } else {
-      return <div></div>
     }
   }
 
