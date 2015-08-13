@@ -48,6 +48,10 @@ const SearchPage = React.createClass({
     this.changePageAndSearch({ page: page });
   },
 
+  displaySection: function(sectionName) {
+    return this.state.data[sectionName].total > 0 &&
+      (this.props.params.section == sectionName || this.props.params.section == 'all')
+  },
 
   renderRightBar: function() {
     return (
@@ -69,9 +73,9 @@ const SearchPage = React.createClass({
   },
 
   renderResults: function() {
-    if(this.state.data.products.length == 0 &&
-      this.state.data.companies.length == 0 &&
-      this.state.data.tags.length == 0) {
+    if(!this.displaySection('products') &&
+      !this.displaySection('companies') &&
+      !this.displaySection('tags')) {
       return <div className='no-results'>No Results</div>
     }
 
