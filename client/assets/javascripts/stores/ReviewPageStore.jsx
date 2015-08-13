@@ -13,11 +13,11 @@ const emptyReview = {
       name: ''
     }
   }
-}
+};
 
 class ReviewPageStore {
   constructor() {
-    this.review = emptyReview;
+    this.review = _.merge({}, emptyReview);
     this.showDetails = false;
     this.error = null;
 
@@ -72,6 +72,7 @@ class ReviewPageStore {
   }
 
   handleSubmitReview() {
+    this.review = _.merge({}, emptyReview);
   }
 
   handleRegisterError(error) {
