@@ -87,7 +87,7 @@ const ProductPage = React.createClass({
   },
 
   renderInfo: function() {
-    let tags = this.getProductData('tags');
+    let tags = _.map(this.getProductData('tags'), function(tag) { return tag.name });
     return (
       <div className='row info-row'>
         <div className='col-xs-3 stats'>
