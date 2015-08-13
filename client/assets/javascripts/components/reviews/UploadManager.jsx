@@ -1,5 +1,6 @@
 import React from 'react'
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import UrlHelper from '../../utils/helpers/UrlHelper'
 
 const UploadManager = React.createClass({
   getDefaultProps: function getDefaultProps() {
@@ -79,7 +80,9 @@ const UploadManager = React.createClass({
                 <input type='hidden' className='file_download_url' name={`product[attachment[${id}][url]]`} value={file.downloadUrl} />
                 <input type='hidden' className='file_type' name={`product[attachment[${id}][content_type]]`} value={file.type} />
                 <input type='hidden' className='file_size' name={`product[attachment[${id}][size]]`} value={file.size} />
-                <a href={file.downloadUrl}>{file.name}</a>
+                <a href={UrlHelper.addProtocol(file.downloadUrl)} target='_blank'>
+                  {file.name}
+                </a>
               </div>
             </li>
           })}

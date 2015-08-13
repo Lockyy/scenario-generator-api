@@ -7,6 +7,7 @@ import  SectionRow from '../SectionRow'
 import  ProductBox from '../ProductBox'
 import  FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import  ReviewPageStore from '../../stores/ReviewPageStore'
+import UrlHelper from '../../utils/helpers/UrlHelper'
 
 const CompanyProfileHeader  = React.createClass({
   displayName: 'CompanyProfileHeader',
@@ -28,7 +29,9 @@ const CompanyProfileHeader  = React.createClass({
         <div className='row'>
           <div className="social-media-container">
             <div className="website-container">
-              <h2 className='url-site'> {this.props.url} </h2>
+              <a className='url-site' href={UrlHelper.addProtocol(this.props.url)} target="_blank">
+                {UrlHelper.addProtocol(this.props.url)}
+              </a>
             </div>
 
             <div className="actions-container">
@@ -72,7 +75,9 @@ const CompanyProfileHeader  = React.createClass({
 
         <div className='company-secondary-info-container row'>
           <div className="website-container">
-            <span className='url-site'>{this.props.url}</span>
+            <a className='url-site' href={UrlHelper.addProtocol(this.props.url)} target="_blank">
+              {UrlHelper.addProtocol(this.props.url)}
+            </a>
           </div>
 
           <div className="tag-group">

@@ -1,6 +1,7 @@
 import React from 'react'
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import RegexConstants from '../../utils/constants/RegexConstants'
+import UrlHelper from '../../utils/helpers/UrlHelper'
 
 const LinksManager = React.createClass({
   getInitialState: function getInitialState() {
@@ -59,7 +60,9 @@ const LinksManager = React.createClass({
             return <li className='link' id={`link_${id}`} ref={`link_${id}`}>
               <div className=''>
                 <input type='hidden' className='link_url' name={`review[links[${id}][url]]`} value={link.url} />
-                <a href={link.url}>{link.url}</a>
+                <a href={UrlHelper.addProtocol(link.url)} target='_blank'>
+                  {UrlHelper.addProtocol(link.url)}
+                </a>
               </div>
             </li>
           })}
