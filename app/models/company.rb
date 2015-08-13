@@ -12,6 +12,10 @@ class Company < ActiveRecord::Base
     avatar.try(:url)
   end
 
+  def short_desc
+    description.split[0...9].join(' ') if description
+  end
+
   private
 
   def downcase_name

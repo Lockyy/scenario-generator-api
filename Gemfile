@@ -31,6 +31,7 @@ gem 'omniauth'
 gem 'omniauth-yammer'
 gem 'jwt'
 gem 'faker'
+gem 'will_paginate'
 
 
 group :development, :test do

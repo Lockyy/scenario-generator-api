@@ -1,13 +1,28 @@
-json.search_string params[:search]
+json.search_string @results[:search_string]
+json.total_results @results[:total_results]
+json.per_page      @results[:per_page]
+json.page          @results[:page]
 
-json.products @results[:products] do |product|
-  json.(product, :id, :name, :description, :url, :company, :rating)
+json.products do
+  json.total @results[:products][:total]
+  json.pages @results[:products][:pages]
+  json.data  @results[:products][:data] do |product|
+    json.(product, :id, :name, :image, :description, :company, :short_desc, :url, :rating, :total_reviews)
+  end
 end
 
-json.companies @results[:companies] do |company|
-  json.(company, :id, :name, :description, :url)
+json.companies do
+  json.total @results[:companies][:total]
+  json.pages @results[:companies][:pages]
+  json.data  @results[:companies][:data] do |company|
+    json.(company, :id, :name, :short_desc, :url)
+  end
 end
 
-json.tags @results[:tags] do |tag|
-  json.(tag, :id, :name)
+
+json.tags do
+  json.total @results[:tags][:total]
+  json.data  @results[:tags][:data] do |tag|
+    json.(tag, :id, :name)
+  end
 end

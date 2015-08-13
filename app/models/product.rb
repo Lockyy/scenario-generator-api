@@ -29,6 +29,10 @@ class Product < ActiveRecord::Base
     image.try(:url)
   end
 
+  def total_reviews
+    reviews.size
+  end
+
   def rating
     self.reviews.map(&:quality_score).compact.average || 0
   end
@@ -39,6 +43,14 @@ class Product < ActiveRecord::Base
 
   def author
     Faker::Name.name
+  end
+
+  def short_desc
+    description.split[0...9].join(' ') if description
+  end
+
+  def tags
+    Faker::Lorem.words(10)
   end
 
   def increment_views!
