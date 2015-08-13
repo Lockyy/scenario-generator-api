@@ -1,35 +1,40 @@
 require 'rails_helper'
 
-#TODO: ADD TESTS 
+#TODO: ADD TESTS
 RSpec.describe Fletcher::NewReview do
   let(:user) {
     double(:user).as_null_object
   }
 
-  let(:params) {
-      {
-        title: Faker::Company.bs,
-        quality_review: Faker::Lorem.paragraph,
-        quality_score: 5,
-        price_review: Faker::Lorem.paragraph,
-        price_score: '4',
-        attachments: [{
-          name: 'header.png',
-          size: 12364,
-          content_type: 'image/png',
-          url: 'http://img.fletcher.com/random_seq/header.png'
-        }],
-        product: {
-          name: 'product',
-          description: 'description',
-          url: 'http://url.com',
-          company: {
-            name: 'company name'
-          }        }
-      }.with_indifferent_access
-    }
+  let(:product) {
+    nil
+  }
 
-  subject { Fletcher::NewReview.new(user, params) }
+  let(:params) {
+    {
+      title: Faker::Company.bs,
+      quality_review: Faker::Lorem.paragraph,
+      quality_score: 5,
+      price_review: Faker::Lorem.paragraph,
+      price_score: '4',
+      attachments: [{
+        name: 'header.png',
+        size: 12364,
+        content_type: 'image/png',
+        url: 'http://img.fletcher.com/random_seq/header.png'
+      }],
+      product: {
+        name: 'product',
+        description: 'description',
+        url: 'http://url.com',
+        company: {
+          name: 'company name'
+        }
+      }
+    }.with_indifferent_access
+  }
+
+  subject { Fletcher::NewReview.new(user, product, params) }
 
   describe '#save!' do
     context 'with an existing product' do
@@ -41,6 +46,8 @@ RSpec.describe Fletcher::NewReview do
     end
 
     context 'without an existing product' do
+      subject { Fletcher::NewReview.new(user, nil, params) }
+
       it 'creates a new product' do
         Company.create(name: params[:product][:company][:name])
         expect { subject.save! }.to change { Product.count }

@@ -6,21 +6,19 @@ json.page          @results[:page]
 json.products do
   json.total @results[:products][:total]
   json.pages @results[:products][:pages]
-  json.data  @results[:products][:data] do |product|
-    json.(product, :id, :name, :image, :short_desc, :url, :rating, :total_reviews)
-  end
+  json.data  @results[:products][:data], partial: 'api/products/product', as: :product
 end
 
 json.companies do
   json.total @results[:companies][:total]
   json.pages @results[:companies][:pages]
-  json.data  @results[:companies][:data] do |company|
-    json.(company, :id, :name, :short_desc, :url)
-  end
+  json.data  @results[:companies][:data], partial: 'api/companies/company', as: :company
 end
 
 
 json.tags do
   json.total @results[:tags][:total]
-  json.data  @results[:tags][:data].map(&:name)
+  json.data  @results[:tags][:data] do |tag|
+    json.(tag, :id, :name)
+  end
 end

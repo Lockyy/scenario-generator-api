@@ -22,7 +22,7 @@ const CompanyProfilePage  = React.createClass({
   },
 
   render: function render() {
-    let company  = this.state.company;
+    let company  = this.state;
     return (
     <div className='company profile show'>
       <div className='main-content'>
@@ -35,7 +35,7 @@ const CompanyProfilePage  = React.createClass({
 
   onChange(data) {
     this.setState(function(oldData) {
-      data: _.merge(oldData.company, data.data.company, function(a, b) {
+      data: _.merge(oldData, data.data, function(a, b) {
         if (_.isArray(a)) { return a.concat(b) }
       })
     });
@@ -43,12 +43,10 @@ const CompanyProfilePage  = React.createClass({
 
   defaultProps: function defaultProps() {
     return {
-      company: {
-        products: [],
-        tags: []
-      }
-     }
+      products: [],
+      tags: []
+    }
   }
-})
+});
 
 export default CompanyProfilePage;

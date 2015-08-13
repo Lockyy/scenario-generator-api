@@ -31,7 +31,7 @@ const TagResults = React.createClass ({
             <div className='clear'></div>
           </div>
           <Tags
-            tags={this.props.data.data} />
+            tags={_.collect(this.props.data.data, function(tag) { return tag.name })} />
         </div>
       )
     } else {

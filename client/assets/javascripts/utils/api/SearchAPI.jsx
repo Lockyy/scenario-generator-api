@@ -2,7 +2,6 @@ import { Promise } from 'es6-promise';
 import SearchConstants from '../constants/SearchConstants';
 
 module.exports = {
-
   getSearchResults: function(searchString, page, resolve, reject) {
     if(searchString) {
       let url = `/api/search`
@@ -10,7 +9,8 @@ module.exports = {
         $.ajax({
           url: url,
           data: { search: searchString, page: page, per_page: SearchConstants.PER_PAGE },
-          success: resolve
+          success: resolve,
+          error: reject
         });
       });
     }

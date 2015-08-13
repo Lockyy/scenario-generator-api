@@ -9,6 +9,5 @@ module Api
         format.json { render }
       end
     end
-
   end
 end

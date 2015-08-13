@@ -36,7 +36,7 @@ const UploadManager = React.createClass({
       let $input = $(React.findDOMNode(_this.refs.product_attachment_placeholder));
       let $button = $(React.findDOMNode(_this.refs.product_attachment_button));
 
-      FluxReviewPageActions.uploadFile(file.file, {
+      FluxReviewPageActions.addFile(file.file, {
         onProgress: function(file, fileSize) {
           let percentage = (fileSize / file.size * 100).toFixed(2)
           $input.addClass('uploading').prop('disabled', true).attr('value', _this.props.uploadingText + " " + percentage  + "%");
@@ -101,10 +101,10 @@ const UploadManager = React.createClass({
           ref='product_attachment' onChange={this._handleUploadFiles} style={{display: 'none'}}/>
 
         <div className='input-group'>
-          <input type='text' className='form-control' placeholder='Upload a file' defaultValue={this.props.uploadText}
+          <input type='text' className='form-control upload' placeholder='Upload a file' defaultValue={this.props.uploadText}
             ref='product_attachment_placeholder' onChange={this._handleUploadFiles} onClick={this._addFile} readOnly/>
           <span className="input-group-btn">
-            <button className="btn btn-default" type="button" onClick={this._addFile.bind(this)}
+            <button className="btn btn-default" type="button" onClick={this._addFile}
               ref='product_attachment_button'>{this.props.buttonText}</button>
           </span>
         </div>

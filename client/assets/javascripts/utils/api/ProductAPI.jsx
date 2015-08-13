@@ -8,7 +8,8 @@ module.exports = {
     return new Promise(function() {
       $.ajax({
         url: url,
-        success: resolve
+        success: resolve,
+        error: reject
       });
     });
   }

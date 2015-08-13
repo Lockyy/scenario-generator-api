@@ -1,46 +1,42 @@
 import _ from 'lodash';
 import alt from '../FluxAlt';
 import { Router, Navigation } from 'react-router'
-import NewReviewPageAPI from '../utils/api/NewReviewPageAPI';
-
-
-//TODO: refactor to another file
-function uploadFileToS3(file, uploadUrl, contentType, callbacks) {
-  var deferred = $.Deferred();
-
-  var xhr = new XMLHttpRequest();
-  xhr.open('PUT', uploadUrl, true);
-  xhr.setRequestHeader('Content-Type', contentType);
-
-  xhr.onload = function() {
-    if (xhr.status === 200) {
-      callbacks.onProgress(file, file.size);
-      deferred.resolve(uploadUrl.split('?')[0]);
-    } else {
-      deferred.reject(xhr);
-      callbacks.error(xhr);
-    }
-  };
-
-  xhr.onerror = function() {
-    callbacks.error(xhr);
-    deferred.reject(xhr);
-  };
-
-  xhr.upload.onprogress = function(e) {
-    if (e.lengthComputable) {
-      callbacks.onProgress(file, e.loaded);
-    }
-  };
-
-  xhr.send(file);
-
-  return deferred.promise();
-}
+import NewReviewPageAPI from '../utils/NewReviewPageAPI';
+import ProductAPI from '../utils/ProductAPI';
+import S3API from '../utils/S3API';
 
 class FluxReviewPageActions {
-  updateReview(review) {
-    this.dispatch(review);
+  setShowDetails(showDetails) {
+    this.dispatch(showDetails);
+  }
+
+  fetchProduct(productId, success, error) {
+    this.dispatch(productId);
+    ProductAPI.getProduct(productId, success, error)
+  }
+
+  setProduct(product) {
+    this.dispatch(product);
+  }
+
+  updateProduct(product) {
+    this.dispatch(product);
+  }
+
+  addFile(file, callbacks) {
+    let _this = this;
+
+    NewReviewPageAPI.getSignedUploadUrl(file)
+    .then(function(data) {
+        return S3API.uploadFileToS3(file, data.upload.url, data.upload.content_type, callbacks);
+    }).then(function(downloadUrl) {
+      _this.dispatch(file);
+      callbacks.success(file, downloadUrl)
+    })
+    .fail(function() {
+      //TODO
+      _this.registerError('error uploading file to s3');
+    });
   }
 
   addLink(link, callbacks) {
@@ -53,32 +49,18 @@ class FluxReviewPageActions {
     callbacks.success(tag)
   }
 
-  uploadFile(file, callbacks) {
-    let _this = this;
-
-    NewReviewPageAPI.getSignedUploadUrl(file)
-    .then(function(data) {
-        return uploadFileToS3(file, data.upload.url, data.upload.content_type, callbacks);
-    }).then(function(downloadUrl) {
-      callbacks.success(file, downloadUrl)
-    })
-    .fail(function() {
-      //TODO
-      _this.registerError('error uploading file to s3');
-    });
+  setReview(review) {
+    this.dispatch(review);
   }
 
-  submitReview(review, router) {
+  updateReview(review) {
+    this.dispatch(review);
+  }
+
+  submitReview(review, success, error) {
     this.dispatch();
 
-    NewReviewPageAPI.submit(review,
-      function(data) {
-        router.transitionTo('/app')
-      },
-      function(error) {
-        console.error(error)
-      }
-    );
+    NewReviewPageAPI.submit(review, success, error);
   }
 
   registerError(error) {
