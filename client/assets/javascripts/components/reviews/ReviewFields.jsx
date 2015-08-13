@@ -56,7 +56,7 @@ const ReviewFields  = React.createClass({
           <div className='form-group links'>
             <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
 
-            <LinksManager ref='links_manager' />
+            <LinksManager ref='links_manager' links={this.props.links} />
           </div>
 
           <div className='form-group inline rating'>
