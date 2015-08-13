@@ -1,6 +1,6 @@
 import alt from '../FluxAlt';
 import _ from 'lodash';
-import ReviewsAPI from '../utils/ReviewsAPI';
+import ReviewsAPI from '../utils/api/ReviewsAPI';
 
 class FluxProductReviewsActions {
 

@@ -4,7 +4,7 @@ import Section from './Section';
 import RecentlyAddedSection from './RecentlyAddedSection';
 import MostPopularSection from './MostPopularSection';
 import DashboardStore from '../stores/DashboardStore'
-import DashboardConstants from '../utils/DashboardConstants'
+import DashboardConstants from '../utils/constants/DashboardConstants'
 import FluxDashboardActions from '../actions/FluxDashboardActions'
 
 function sumSizeFunc(item) {

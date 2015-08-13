@@ -1,6 +1,6 @@
 import alt from '../FluxAlt';
 import _ from 'lodash';
-import CompanyAPI from '../utils/CompanyAPI';
+import CompanyAPI from '../utils/api/CompanyAPI';
 
 class FluxCompanyActions {
   fetchData(paginationParams) {

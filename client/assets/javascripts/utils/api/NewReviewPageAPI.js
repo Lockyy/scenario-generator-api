@@ -1,4 +1,5 @@
-import NewReviewPageConstants from './constants/NewReviewPageConstants';
+import NewReviewPageConstants from '../constants/NewReviewPageConstants';
+import { Promise } from 'es6-promise';
 
 module.exports = {
   submit: function(data, resolve, reject) {

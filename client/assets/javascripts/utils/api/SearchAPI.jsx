@@ -1,4 +1,5 @@
-import SearchConstants from './SearchConstants';
+import { Promise } from 'es6-promise';
+import SearchConstants from '../constants/SearchConstants';
 
 module.exports = {
   getSearchResults: function(searchString, page, resolve, reject) {
