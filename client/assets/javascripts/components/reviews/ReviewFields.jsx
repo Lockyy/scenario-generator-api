@@ -68,7 +68,8 @@ const ReviewFields  = React.createClass({
             <label htmlFor='product[review[price_review]]' className='sr-only'>Price Review</label>
 
             <textarea type='text' className='form-control' placeholder='Add a brief description of the product’s pricing'
-              name='product[review[price_review]]' rows='10' ref='product_review_price_review'/>
+              name='product[review[price_review]]' rows='10' ref='product_review_price_review'
+              value={this.props.price_review} onChange={this.props.onChange} />
           </div>
 
           <div className='form-group tags'>
