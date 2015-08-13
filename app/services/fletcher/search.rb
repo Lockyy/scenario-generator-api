@@ -18,10 +18,10 @@ module Fletcher
 
     def results
       {
-          search_string: @params[:search],
+          search_string: @params[:searchString],
           page: @page,
           per_page: @per_page,
-          total_results: @companies.size + @products.size + @tags.size,
+          total_results: total_results,
           companies: data_hash(@companies),
           products: data_hash(@products),
           tags: {
@@ -58,7 +58,14 @@ module Fletcher
       data
     end
 
+    def total_results
+      return 0 if @params[:searchString].blank?
+      @companies.size + @products.size + @tags.size
+    end
+
     def data_hash(data)
+      return { total: 0, pages: 0, data: [] } if @params[:searchString].blank?
+
       filtered_data = paginate(sort(data))
       {
           total: data.size,
@@ -76,6 +83,7 @@ module Fletcher
     end
 
     def tags(terms)
+      return [] if @params[:searchString].blank?
       search_by(:tags, @params[:filter_by], terms) || []
     end
 
@@ -83,8 +91,7 @@ module Fletcher
     # search for each of those words anywhere in the targetted attributes. To do that we need to
     # prepend and append each word with % to show that it can appear anywhere in the searched string.
     def get_terms
-      return ['%%'] if @params[:search].nil?
-      terms = @params[:match_mode] == 'all' ? [@params[:search]] : @params[:search].split(' ')
+      terms = @params[:match_mode] == 'all' ? [@params[:searchString]] : @params[:searchString].split(' ')
       terms = terms.each { |s| s.prepend('%').concat('%') }
       terms.empty? ? ['%%'] : terms
     end

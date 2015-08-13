@@ -4,12 +4,11 @@ import SearchAPI from '../utils/SearchAPI';
 
 class FluxSearchPageActions {
 
-  getSearchResults(searchString, page) {
+  getSearchResults(data) {
     this.dispatch();
 
     SearchAPI.getSearchResults(
-      searchString,
-      page,
+      data,
       (data) => {
         this.actions.updateData(data);
       },

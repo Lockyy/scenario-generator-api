@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import FluxSearchPageActions from '../../actions/FluxSearchPageActions'
-import SearchStore from '../../stores/SearchStore'
+import SearchPageStore from '../../stores/SearchPageStore'
 import Results from './Results'
 import TagResults from './TagResults'
 
@@ -14,13 +14,13 @@ const SearchPage = React.createClass({
     return { data: { products: [], companies: [], tags: [] } }
   },
 
-  performSearch: function(searchString, page) {
-    SearchStore.listen(this.onChange.bind(this));
-    FluxSearchPageActions.getSearchResults(searchString, page);
+  performSearch: function(data) {
+    SearchPageStore.listen(this.onChange.bind(this));
+    FluxSearchPageActions.getSearchResults(data);
   },
 
   componentDidMount: function() {
-    this.performSearch(this.props.params.searchString, this.props.params.page);
+    this.performSearch({ searchString: this.props.params.searchString, page: this.props.params.page });
   },
 
   onChange: function(data) {
@@ -32,7 +32,7 @@ const SearchPage = React.createClass({
     let section = params.section || this.props.params.section
     let page = params.page || 1
 
-    this.performSearch(searchString, page);
+    this.performSearch({ searchString: searchString, page: page});
     this.transitionTo(`/app/search/${section}/${searchString}/${page}`);
   },
 
