@@ -1,4 +1,5 @@
 import DashboardConstants from './DashboardConstants';
+import { Promise } from 'es6-promise';
 
 module.exports = {
 

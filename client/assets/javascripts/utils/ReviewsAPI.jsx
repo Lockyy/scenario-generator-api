@@ -1,3 +1,4 @@
+import { Promise } from 'es6-promise';
 import ProductConstants from './ProductConstants';
 
 module.exports = {
