@@ -12,6 +12,12 @@ import UploadManager from './UploadManager'
 const ReviewFields  = React.createClass({
   displayName: 'ReviewFields',
 
+  getDefaultProps: function getDefaultProps() {
+    return {
+      onChange: function() {}
+    }
+  },
+
   getFields: function getFields() {
     let refs = this.refs;
     let quality_review_fields = refs.quality_review.getFields();
@@ -38,7 +44,8 @@ const ReviewFields  = React.createClass({
             <Rating name='product[review[quality_score]]' ratingEnabled={true} ref='product_review_quality_score' />
           </div>
 
-          <QualityReview ref='quality_review' />
+          <QualityReview ref='quality_review' title={this.props.title} quality_review={this.props.quality_review}
+            onChange={this.props.onChange} />
 
           <div className='form-group attachments'>
             <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>

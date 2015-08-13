@@ -66,7 +66,13 @@ const NewReviewPage  = React.createClass({
   },
 
   _onChange: function _onChange(review) {
-    this.setState(review);
+    this.setState(function(oldState) {
+      if(oldState.review.product.id === review.review.product.id) {
+        return _.merge(oldState, review);
+      } else {
+        return review;
+      }
+    });
   },
 
   _onFormChange: function _onFormChange(e) {
@@ -128,8 +134,8 @@ const NewReviewPage  = React.createClass({
 
           <ProductFields ref='product_fields' onUpdateProduct={this._onUpdateProduct} onSetProduct={this._onSetProduct}
             showDetails={this.state.showDetails} {...this._getProductData()} />
-          <ReviewFields ref='review_fields' showDetails={this.state.showDetails}/>
 
+          <ReviewFields ref='review_fields' onChange={this._onFormChange} showDetails={this.state.showDetails} {...this.state.review}/>
           {this._getActionsContent()}
 
         </form>

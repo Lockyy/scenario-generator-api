@@ -44,7 +44,6 @@ class ReviewPageStore {
   }
 
   handleSetProduct(product) {
-    this.review = _.merge({}, emptyReview);
     this.review.product = product;
   }
 
