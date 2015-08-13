@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import alt from '../FluxAlt';
 import { Router, Navigation } from 'react-router'
-import NewReviewPageAPI from '../utils/NewReviewPageAPI';
-import ProductAPI from '../utils/ProductAPI';
-import S3API from '../utils/S3API';
+import NewReviewPageAPI from '../utils/api/NewReviewPageAPI';
+import ProductAPI from '../utils/api/ProductAPI';
+import S3API from '../utils/api/S3API';
 
 class FluxReviewPageActions {
   setShowDetails(showDetails) {
