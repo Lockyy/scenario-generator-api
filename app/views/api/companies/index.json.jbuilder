@@ -1,1 +1,1 @@
-json.array! @companies, partial: 'api/companies/show', as: :company
+json.array! @companies, partial: 'api/companies/company', as: :company
