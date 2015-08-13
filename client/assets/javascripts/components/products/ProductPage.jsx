@@ -46,18 +46,6 @@ const ProductPage = React.createClass({
     }
   },
 
-  renderTags: function() {
-    let tagTags = [];
-    let tags = this.getProductData('tags');
-    if(tags) {
-      for (let i = 0; i < tags.length; i++) {
-        tagTags.push(<span className='tag'>{tags[i]}</span>);
-      }
-
-      return <div className='tags'>{tagTags}</div>;
-    }
-  },
-
   renderTitle: function() {
     return (
       <div className='row'>
@@ -79,9 +67,10 @@ const ProductPage = React.createClass({
   },
 
   renderTopButtons: function() {
+    let url = `/app/products/${this.id()}/reviews/new`;
     return (
       <div className='links'>
-        <Link to={'/app/reviews/new'} className='btn btn-red btn-round'>
+        <Link to={url} className='btn btn-red btn-round'>
           Add a Review
         </Link>
         <a
@@ -97,6 +86,7 @@ const ProductPage = React.createClass({
   },
 
   renderInfo: function() {
+    let tags = this.getProductData('tags');
     return (
       <div className='row info-row'>
         <div className='col-xs-3 stats'>
@@ -118,7 +108,7 @@ const ProductPage = React.createClass({
         </div>
         <div className='col-xs-3'>
           <Tags
-            tags={this.getProductData('tags')}
+            tags={tags}
             name={this.getProductData('name')}
             link={'#'}
             max={9} />

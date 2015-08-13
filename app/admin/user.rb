@@ -1,5 +1,6 @@
 ActiveAdmin.register User do
-  permit_params :name, :job_title, :location, :avatar
+  permit_params :name, :job_title, :location, :avatar, :admin, :email
+  actions :index, :show, :update, :edit
 
   form do |f|
     f.semantic_errors
@@ -9,9 +10,6 @@ ActiveAdmin.register User do
       input :location
       input :email
       input :admin
-      input :avatar, :as => :file, :hint => f.object.avatar.present? \
-     ? image_tag(f.object.avatar.url(:thumb), :class => "custom-image")
-                   : content_tag(:span, "no cover page yet")
     end
     f.actions
   end
@@ -33,7 +31,7 @@ ActiveAdmin.register User do
       row :email
       row :admin
       row :avatar do
-        image_tag(ad.avatar.url(:thumb), :class => "custom-image")
+        image_tag(ad.avatar_url, :class => "custom-image")
       end
     end
   end

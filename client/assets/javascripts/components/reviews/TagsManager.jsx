@@ -1,5 +1,6 @@
 import React from 'react'
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import TypeAhead from '../TypeAhead'
 
 const TagsManager = React.createClass({
   getInitialState: function getInitialState() {
@@ -17,14 +18,24 @@ const TagsManager = React.createClass({
     let tag_to_add = React.findDOMNode(this.refs.product_review_tag_to_add)
     let name = tag_to_add.value;
 
-    if(!this._validate(name)) {
+    this._buildAndAddTag(name);
+  },
+
+  _buildAndAddTag: function _buildAndAddTag(name) {
+    let tag = { name: name };
+
+    this._addTag(tag);
+  },
+
+  _addTag: function _addTag(tag) {
+    let _this = this;
+
+    if(!_this._validate(tag.name)) {
       return ;
     }
 
-    let tag = { name: name };
-    var _this = this;
-
     FluxReviewPageActions.addTag(tag, {
+
       success: function(tag) {
         var oldState = _this.state;
 
@@ -32,7 +43,7 @@ const TagsManager = React.createClass({
           if (_.isArray(a)) { return a.concat(b) }
         }))
 
-        React.findDOMNode(_this.refs.product_review_tag_to_add).value = null;
+        $(React.findDOMNode(_this.refs.product_review_tag_to_add.refs.typeahead_input)).typeahead('val', null);
       }
     });
   },
@@ -47,6 +58,34 @@ const TagsManager = React.createClass({
         name: $tag.find('.tag_name').val()
       }
     });
+  },
+
+
+  _getBloodhoundProps: function _getBloodhoundProps() {
+    return {
+      remote: {
+        url: '/api/search?search=%QUERY&filter_by=name&match_mode=all',
+        wildcard: '%QUERY',
+        transform: function(data) { return data.tags.data }
+      }
+    }
+  },
+
+  _getTypeaheadProps: function _getTypeaheadProps() {
+    return {
+      name: 'tags',
+      displayKey: 'name',
+      templates: {
+        empty: function(data) {
+          let query = data.query;
+          return `<p class='tt-no-results'>“${query}” will be created.</p>`
+        },
+        suggestion: function(data) {
+          let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+          return `<p>${name}</p>`
+        }
+      },
+    }
   },
 
   render: function render() {
@@ -64,12 +103,14 @@ const TagsManager = React.createClass({
         </ul>
 
         <div className='input-group'>
-          <input type='text' className='form-control' placeholder='Add a tag' name='product[review[tag]]'
-            title="Include a name" ref='product_review_tag_to_add'/>
+          <TypeAhead  placeholder='Add a tag' className='form-control' value={this.props.value}
+            typeaheadProps={this._getTypeaheadProps()} bloodhoundProps={this._getBloodhoundProps()}
+            onSelectOption={this._addTag} onSelectNoOption={this._buildAndAddTag}
+            ref='product_review_tag_to_add'/>
 
-          <span className="input-group-btn">
+          <div className="input-group-btn">
             <button className="btn btn-default" type="button" onClick={this._handleAddTag} >Add Tag</button>
-          </span>
+          </div>
         </div>
         <span className="help-block with-errors col-xs-12"></span>
       </div>

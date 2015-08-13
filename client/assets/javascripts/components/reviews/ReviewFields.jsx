@@ -26,55 +26,60 @@ const ReviewFields  = React.createClass({
     });
   },
 
+  _getContent: function _getContent() {
+    if (this.props.showDetails) {
+      return (
+        <fieldset className='review-fields'>
+          <h1 className='title'>Your Review</h1>
+          <span className='description'>Rate, review or tag this product. You can even upload files or an image.</span>
+
+          <div className='form-group inline rating'>
+            <label htmlFor='product[review[quality_score]]'>Rating</label>
+            <Rating name='product[review[quality_score]]' ratingEnabled={true} ref='product_review_quality_score' />
+          </div>
+
+          <QualityReview ref='quality_review' />
+
+          <div className='form-group attachments'>
+            <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
+
+            <UploadManager ref='upload_manager' />
+          </div>
+
+          <div className='form-group links'>
+            <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
+
+            <LinksManager ref='links_manager' />
+          </div>
+
+          <div className='form-group inline rating'>
+            <label htmlFor='product[review[price_score]]'>Pricing</label>
+            <PriceRating name='product[review[price_score]]' ratingEnabled={true} ref='product_review_price_score' />
+          </div>
+
+          <div className='form-group'>
+            <label htmlFor='product[review[price_review]]' className='sr-only'>Price Review</label>
+
+            <textarea type='text' className='form-control' placeholder='Add a brief description of the product’s pricing'
+              name='product[review[price_review]]' rows='10' ref='product_review_price_review'/>
+          </div>
+
+          <div className='form-group tags'>
+            <label htmlFor='product[review[tags]]'>Add / Edit Tags</label>
+            <TagsManager ref='tags_manager' />
+          </div>
+        </fieldset>
+      );
+    } else {
+      return (<div />);
+    }
+  },
+
   render: function render() {
-    let newProduct = true;
-
-
 /* TODO
   //TODO: Fix add-tags component style
 */
-
-    return (
-      <fieldset>
-        <h1 className='title'>Your Review</h1>
-
-        <div className='form-group inline rating'>
-          <label htmlFor='product[review[quality_score]]'>Rating</label>
-          <Rating name='product[review[quality_score]]' ratingEnabled={true} ref='product_review_quality_score' />
-        </div>
-
-        <QualityReview ref='quality_review' />
-
-        <div className='form-group attachments'>
-          <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
-
-          <UploadManager ref='upload_manager' />
-        </div>
-
-        <div className='form-group links'>
-          <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
-
-          <LinksManager ref='links_manager' />
-        </div>
-
-        <div className='form-group inline rating'>
-          <label htmlFor='product[review[price_score]]'>Pricing</label>
-          <PriceRating name='product[review[price_score]]' ratingEnabled={true} ref='product_review_price_score' />
-        </div>
-
-        <div className='form-group'>
-          <label htmlFor='product[review[price_review]]' className='sr-only'>Price Review</label>
-
-          <textarea type='text' className='form-control' placeholder='Add a brief description of the product’s pricing'
-            name='product[review[price_review]]' rows='10' ref='product_review_price_review'/>
-        </div>
-
-        <div className='form-group tags'>
-          <label htmlFor='product[review[tags]]'>Add / Edit Tags</label>
-          <TagsManager ref='tags_manager' />
-        </div>
-      </fieldset>
-    );
+    return this._getContent();
   }
 })
 

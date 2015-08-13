@@ -19,6 +19,8 @@ $(function onLoad() {
         </Route>
         <Route path="app/products/:id" component={ProductPage}>
         </Route>
+        <Route path="app/products/:productId/reviews/new" component={NewReviewPage}>
+        </Route>
         <Route name="company" path="app/companies/:companyId" component={CompanyProfilePage}>
         </Route>
         <Route name="search" path="app/search/:section/:searchString/:page" component={SearchPage}>

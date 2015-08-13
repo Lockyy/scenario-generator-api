@@ -2,9 +2,22 @@
 @import 'common'
 
 $blue-ish: #4dbcc6
-$default-font-size: 17px
+$default-font-size: 16px
 
 .product.new
+  .add-symbol, .review-symbol
+    width: 20px
+
+  .add-symbol
+    content: image-url('icons/icon-add.svg')
+
+    &.black
+      content: image-url('icons/icon-add-black.svg')
+
+  .review-symbol
+    content: image-url('icons/icon-review.svg')
+
+
   font-size: $default-font-size
 
   .help, .info, .main-content
@@ -26,17 +39,29 @@ $default-font-size: 17px
     @extend .col-md-6
 
     .review.new
+      h1.title
+        margin-bottom: 5px
+
+      .details
+        .header
+          h3.title, h4.company
+            text-transform: capitalize
+
+          h3.title
+            font-weight: bolder
+
+        .rating-container
+          margin: 25px 0
+
+        p.description
+          font-size: $default-font-size - 1px
+
       label
         font-weight: normal
         color: $red
 
       .form-group
         margin: 50px 0
-
-        input:focus, textarea:focus
-          box-shadow: none
-          border: 1px solid $red
-
         label
           margin-bottom: 15px
 
@@ -48,11 +73,18 @@ $default-font-size: 17px
           font-size: $default-font-size
           padding: 18px 20px
           border-color: $grey
+          box-shadow: none !important
+          color: $blackish-grey
 
         input
           box-sizing: border-box
           height: 100%
           max-height: 62px
+
+
+        input:focus, textarea:focus
+          box-shadow: none !important
+          border: 1px solid $red
 
         textarea
           resize: vertical
@@ -84,8 +116,7 @@ $default-font-size: 17px
           .fields_container
             input.form-control:focus, textarea.form-control:focus
               box-shadow: none
-              color: $dark-grey
-
+              color: $blackish-grey
 
             input.form-control, input.form-control:focus
               border-bottom: none !important
@@ -125,7 +156,6 @@ $default-font-size: 17px
           .input-group
             input
               border-right-color:  $orange
-              color: $dark-grey
 
             .btn
               background-color: $orange
@@ -174,8 +204,6 @@ $default-font-size: 17px
         padding: 0 20px
 
         .add-symbol
-          width: 20px
-          content: image-url('icons/icon-add-black.svg')
           margin: 0 10px
 
 @media only screen and (max-width: $screen-sm-max)

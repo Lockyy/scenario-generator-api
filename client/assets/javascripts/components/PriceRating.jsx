@@ -29,7 +29,7 @@ PriceRating.propTypes = {
 };
 
 PriceRating.defaultProps = {
-  max: 4,
+  max: 5,
   name: 'rating',
   ratingEnabled: false,
   containerClass: 'price',

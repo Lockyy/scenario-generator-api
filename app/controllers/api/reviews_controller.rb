@@ -1,11 +1,11 @@
 module Api
   class ReviewsController < AppController
+    before_action :set_product, only: [:index, :create]
     before_action :set_review, only: [:show, :update, :destroy]
 
     # GET /reviews
     # GET /reviews.json
     def index
-      @product = Product.find_by(id: params[:product_id])
       @reviews = @product.reviews
 
       respond_to do |format|
@@ -21,7 +21,7 @@ module Api
     # POST /reviews
     # POST /reviews.json
     def create
-      review = Fletcher::NewReview.new(@user, review_params)
+      review = Fletcher::NewReview.new(@user, @product, review_params)
 
       respond_to do |format|
         if (review.save!)
@@ -60,6 +60,11 @@ module Api
       @review = Review.find(params[:id])
     end
 
+    # Use callbacks to share common setup or constraints between actions.
+    def set_product
+      @product = Product.find(params[:product_id]) if params[:product_id]
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def review_params
       params[:review].permit(
@@ -67,7 +72,7 @@ module Api
           { attachments: [:name, :url, :content_type, :size] },
           { links: [:url] },
           { tags: [:name] },
-          { product: [:name, { company: [:name] }, :url, :description] }
+          { product: [:id, :name, { company: [:name] }, :url, :description] }
       )
     end
   end

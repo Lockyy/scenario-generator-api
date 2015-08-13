@@ -2,8 +2,9 @@ module Fletcher
   class NewReview
     attr_reader :product, :review
 
-    def initialize(user, params)
+    def initialize(user, product, params)
       @user = user
+      @product = product
       @review_params = (params || {} )
     end
 
@@ -22,6 +23,8 @@ module Fletcher
     private
 
     def fetch_product!
+      return @product unless @product.nil?
+
       params = {}.merge(product_params).with_indifferent_access
       params[:company] = fetch_company!
       params[:name].downcase! if params[:name]

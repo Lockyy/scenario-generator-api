@@ -21,8 +21,21 @@ const Reviews = React.createClass({
 
   getReviews: function() {
     if(this.state) {
-      return this.state.data.reviews
+      return this.state.data.reviews;
     }
+  },
+
+  getFilteredReviews: function() {
+    return _.filter(this.getReviews(), function(review) {
+      let validFields = 0;
+      if (!_.isEmpty(review.title)) validFields++;
+      if (!_.isEmpty(review.quality_review)) validFields++;
+      if (!_.isNull(review.quality_score)) validFields++;
+      if (!_.isEmpty(review.price_review)) validFields++;
+      if (!_.isNull(review.price_score)) validFields++;
+
+      return validFields >= 2;
+    });
   },
 
   renderReview: function(review) {
@@ -50,7 +63,7 @@ const Reviews = React.createClass({
         </div>
         <div className="col-xs-8 review-content">
           <div className="score">
-            <Rating value={review.quality_score} name='rating'/>
+            { review.quality_score ? <Rating value={review.quality_score} name='rating'/> : '' }
           </div>
           <div className="created_at">
             {review.display_date}
@@ -58,16 +71,11 @@ const Reviews = React.createClass({
           <div className="title">
             {review.title}
           </div>
-          <div className="review-text">
-            {review.quality_review}
-          </div>
+          <div className="review-text" dangerouslySetInnerHTML={{__html: review.formatted_quality_review}} />
           <div className="price-score">
-            <PriceRating value={review.price_score}
-                    name='rating'/>
+            { review.price_score ? <PriceRating value={review.price_score} name='rating'/> : '' }
           </div>
-          <div className="price-review">
-            {review.price_review}
-          </div>
+          <div className="price-review" dangerouslySetInnerHTML={{__html: review.formatted_price_review}} />
           <Tags
             tags={review.tag_list} />
         </div>
@@ -77,7 +85,7 @@ const Reviews = React.createClass({
 
   renderReviews: function() {
     let renderedReviews = [];
-    let reviews = this.getReviews()
+    let reviews = this.getFilteredReviews();
 
     if(reviews) {
       for (let i = 0; i < reviews.length; i++) {

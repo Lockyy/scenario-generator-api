@@ -1,7 +1,6 @@
 import ProductConstants from './ProductConstants';
 
 module.exports = {
-
   getReviews: function(productID, resolve, reject) {
     if(productID) {
       let url = `/api/products/${productID}/reviews`
@@ -14,4 +13,3 @@ module.exports = {
     }
   }
 };
-
