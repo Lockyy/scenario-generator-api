@@ -7,7 +7,9 @@ const TypeAhead  = React.createClass({
   displayName: 'TypeAhead',
 
   getDefaultProps: function getDefaultProps() {
-    return {}
+    return {
+      onRender: function() {}
+    }
   },
 
   componentDidMount: function componentDidMount() {
@@ -29,6 +31,7 @@ const TypeAhead  = React.createClass({
     };
 
     $typeaheadInput.on("typeahead:selected", onSelectOption)
+    $typeaheadInput.on("typeahead:render", this.props.onRender)
     $typeaheadInput.parents('.input-group').on('click', '.tt-no-results', onSelectNoOption)
   },
 

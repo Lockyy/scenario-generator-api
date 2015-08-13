@@ -33,7 +33,7 @@ const ProductName  = React.createClass({
       templates: {
         header: function(data) {
           let query = data.query;
-          return `<p class='tt-no-results' data-query='${query}'>“${query}”<span class='tt-help'>Create <i class="add-symbol"> + </i></span></p>`
+          return `<p class='tt-no-results tt-empty' data-query='${query}'>“${query}”<span class='tt-help'>Create <i class="add-symbol"> + </i></span></p>`
         },
         empty: function(data) {
           let query = data.query;
@@ -60,6 +60,22 @@ const ProductName  = React.createClass({
     this.props.onSetProduct(product, true);
   },
 
+  _hideCreateWhenMatch: function _hideCreateWhenMatch(e) {
+    let typeahead = $(e.target);
+    typeahead.on("typeahead:render", function() {
+      if (arguments.length < 2) return;
+
+      let suggestions = _.takeRight(arguments, arguments.length - 1);
+      let isSuggested = _.filter(suggestions, function(suggestion) {
+        return suggestion.name && typeahead.val() && suggestion.name.toLowerCase() == typeahead.val().toLowerCase()
+      }).length > 0
+
+      if (isSuggested) {
+        typeahead.siblings('.tt-menu').find('.tt-empty').hide()
+      }
+    });
+  },
+
   render: function render() {
     return (
       <div className='form-group'>
@@ -67,7 +83,8 @@ const ProductName  = React.createClass({
         <div className='input-group'>
           <TypeAhead name='product[name]' value={this.props.name} placeholder='e.g. Hololens' className='form-control'
             bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
-            onSelectOption={this._onSelectProduct} onSelectNoOption={this._onSelectCreateProduct} onChange={this._onNameChange}
+            onSelectOption={this._onSelectProduct} onSelectNoOption={this._onSelectCreateProduct}
+            onChange={this._onNameChange} onRender={this._hideCreateWhenMatch}
             ref='product_name'/>
           <span className="input-group-btn">
             <button className="btn btn-default" type="button" disabled={this.props.disableButton}>Go</button>
