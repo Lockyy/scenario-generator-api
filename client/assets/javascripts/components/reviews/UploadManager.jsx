@@ -5,6 +5,7 @@ import UrlHelper from '../../utils/helpers/UrlHelper'
 const UploadManager = React.createClass({
   getDefaultProps: function getDefaultProps() {
     return {
+      onChange: function() {},
       buttonText: 'Browse',
       uploadText: 'Upload a file',
       uploadingText: 'Uploading...'
@@ -40,6 +41,7 @@ const UploadManager = React.createClass({
         success: function(file, downloadUrl) {
           $input.removeClass('uploading').prop('disabled', false).attr('value', _this.props.uploadText);
           $button.addClass('uploading').prop('disabled', false);
+          _this.props.onChange(e);
         },
         error: function(error) {
           $input.removeClass('uploading').prop('disabled', false).attr('value', _this.props.uploadText);
@@ -61,7 +63,7 @@ const UploadManager = React.createClass({
       return {
         name: $file.find('.file_name').val(),
         url: $file.find('.file_download_url').val(),
-        content_type: $file.find('.file_type').val(),
+        content_type: $file.find('.file_content_type').val(),
         size: $file.find('.file_size').val(),
       }
     });
@@ -77,10 +79,10 @@ const UploadManager = React.createClass({
             return <li className='file' id={`file_${id}`} ref={`file_${id}`}>
               <div className=''>
                 <input type='hidden' className='file_name' name={`product[attachment[${id}][name]]`} value={file.name} />
-                <input type='hidden' className='file_download_url' name={`product[attachment[${id}][url]]`} value={file.downloadUrl} />
-                <input type='hidden' className='file_type' name={`product[attachment[${id}][content_type]]`} value={file.type} />
+                <input type='hidden' className='file_download_url' name={`product[attachment[${id}][url]]`} value={file.url} />
+                <input type='hidden' className='file_content_type' name={`product[attachment[${id}][content_type]]`} value={file.content_type} />
                 <input type='hidden' className='file_size' name={`product[attachment[${id}][size]]`} value={file.size} />
-                <a href={UrlHelper.addProtocol(file.downloadUrl)} target='_blank'>
+                <a href={UrlHelper.addProtocol(file.url)} target='_blank'>
                   {file.name}
                 </a>
               </div>

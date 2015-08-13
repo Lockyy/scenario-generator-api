@@ -50,7 +50,7 @@ const ReviewFields  = React.createClass({
           <div className='form-group attachments'>
             <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
 
-            <UploadManager ref='upload_manager' attachments={this.props.attachments} onChange={this.props.onChange}/>
+            <UploadManager ref='upload_manager' attachments={this.props.attachments} onChange={this.props.onChange} />
           </div>
 
           <div className='form-group links'>

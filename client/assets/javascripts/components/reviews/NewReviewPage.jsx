@@ -67,11 +67,11 @@ const NewReviewPage  = React.createClass({
 
   _onChange: function _onChange(review) {
     this.setState(function(oldState) {
-      if(oldState.review.product.id === review.review.product.id) {
-        return _.merge(oldState, review);
-      } else {
-        return review;
+      if (oldState.review.product.id === review.review.product.id) {
+        _.merge(review.review.product, oldState.review.product)
       }
+
+      return review;
     });
   },
 
