@@ -8,7 +8,10 @@ const TypeAhead  = React.createClass({
 
   getDefaultProps: function getDefaultProps() {
     return {
-      onRender: function() {}
+      onRender: function() {},
+      onChange: function() {},
+      onSelectOption: function() {},
+      onSelectNoOption: function() {}
     }
   },
 
@@ -69,7 +72,7 @@ const TypeAhead  = React.createClass({
   render: function render() {
     return (
       <input type='text' className={this.props.className} placeholder={this.props.placeholder} name={this.props.name}
-        ref='typeahead_input' value={this.props.value} onChange={this._onChange} required/>
+        ref='typeahead_input' value={this.props.value} onChange={this._onChange} />
     );
   }
 })
