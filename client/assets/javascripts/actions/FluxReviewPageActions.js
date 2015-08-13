@@ -57,17 +57,10 @@ class FluxReviewPageActions {
     this.dispatch(review);
   }
 
-  submitReview(review, router) {
+  submitReview(review, success, error) {
     this.dispatch();
 
-    NewReviewPageAPI.submit(review,
-      function(data) {
-        router.transitionTo('/app')
-      },
-      function(error) {
-        console.error(error)
-      }
-    );
+    NewReviewPageAPI.submit(review, success, error);
   }
 
   registerError(error) {
