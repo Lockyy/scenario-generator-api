@@ -1,0 +1,18 @@
+sudo docker pull codelittinc/fletcher-ruby && \
+sudo docker rm $(sudo docker ps -a -q -f name=previous-fletcher-prod) && \
+sudo docker stop $(sudo docker ps -a -q -f name=fletcher-prod) && \
+sudo docker rename fletcher-prod previous-fletcher-prod && \
+sudo docker run --name fletcher-prod -e FLETCHER_DATABASE_USER=postgres -e FLETCHER_DATABASE_PASSWORD='h4eu9Se;yAC:]E)?6M' \
+  -e YAMMER_KEY=X3nQNh7JfRWuokYAsLvrOg \
+  -e YAMMER_SECRET=tfkfeGqa0k6q8MDB6T3MSCywKyiOBDM7INxTRLCHIC4 \
+  -e SECRET_KEY_BASE=ghuoim20873mjcs092jimclkxwemc9k230kpodzl \
+  -e SECRET_TOKEN=ghuoim20873mjcs092jimclkxwemc9k230kpodzl \
+  -e S3_BUCKET_NAME="fletcher-qa" \
+  -e AWS_ACCESS_KEY_ID="AKIAIHZJZRFS2OIDQLQQ" \
+  -e AWS_SECRET_ACCESS_KEY="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" \
+  -e AWS_REGION="us-west-2" \
+  -e RAILS_SERVE_STATIC_FILES=true \
+  -p 3000:3000 \
+  -p 4000:4000 \
+  --link fletcher-db:db \
+  -d codelittinc/fletcher-ruby:latest
