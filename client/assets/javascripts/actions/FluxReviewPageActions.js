@@ -30,6 +30,7 @@ class FluxReviewPageActions {
     .then(function(data) {
         return S3API.uploadFileToS3(file, data.upload.url, data.upload.content_type, callbacks);
     }).then(function(downloadUrl) {
+      file.downloadUrl = downloadUrl
       _this.dispatch(file);
       callbacks.success(file, downloadUrl)
     })

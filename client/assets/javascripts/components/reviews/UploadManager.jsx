@@ -2,12 +2,6 @@ import React from 'react'
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 
 const UploadManager = React.createClass({
-  getInitialState: function getInitialState() {
-    return {
-      files: []
-    };
-  },
-
   getDefaultProps: function getDefaultProps() {
     return {
       buttonText: 'Browse',
@@ -17,7 +11,7 @@ const UploadManager = React.createClass({
   },
 
   _validate: function validate(newFile) {
-    let isUnique = !_.find(this.state.files, function(file) {
+    let isUnique = !_.find(this.props.attachments, function(file) {
       return file.name.toLowerCase() == newFile.name.toLowerCase() &&
         file.size == newFile.size
     });
@@ -43,12 +37,6 @@ const UploadManager = React.createClass({
           $button.addClass('uploading').prop('disabled', true);
         },
         success: function(file, downloadUrl) {
-          file.downloadUrl = downloadUrl;
-          var oldState = _this.state;
-          _this.setState(_.merge({}, oldState, {files: [file]}, function(a, b) {
-            if (_.isArray(a)) { return a.concat(b) }
-          }))
-
           $input.removeClass('uploading').prop('disabled', false).attr('value', _this.props.uploadText);
           $button.addClass('uploading').prop('disabled', false);
         },
@@ -82,7 +70,7 @@ const UploadManager = React.createClass({
     return (
       <div className='upload-manager items-manager'>
         <ul className='files items' ref='files'>
-          {_.map(this.state.files, function(file) {
+          {_.map(this.props.attachments, function(file) {
             let id = Math.floor((Math.random() * 1000000) + 1);
 
             return <li className='file' id={`file_${id}`} ref={`file_${id}`}>
