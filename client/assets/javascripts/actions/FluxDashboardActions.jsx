@@ -1,6 +1,6 @@
 import alt from '../FluxAlt';
 import _ from 'lodash';
-import DashboardAPI from '../utils/DashboardAPI';
+import DashboardAPI from '../utils/api/DashboardAPI';
 
 class FluxDashboardActions {
   fetchData(paginationParams) {

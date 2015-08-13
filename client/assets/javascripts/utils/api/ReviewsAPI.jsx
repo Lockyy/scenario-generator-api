@@ -1,5 +1,5 @@
 import { Promise } from 'es6-promise';
-import ProductConstants from './ProductConstants';
+import ProductConstants from '../constants/ProductConstants';
 
 module.exports = {
 
@@ -15,4 +15,3 @@ module.exports = {
     }
   }
 };
-

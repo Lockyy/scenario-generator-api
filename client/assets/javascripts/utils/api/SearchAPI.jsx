@@ -1,5 +1,5 @@
 import { Promise } from 'es6-promise';
-import SearchConstants from './SearchConstants';
+import SearchConstants from '../constants/SearchConstants';
 
 module.exports = {
 
@@ -16,4 +16,3 @@ module.exports = {
     }
   }
 };
-

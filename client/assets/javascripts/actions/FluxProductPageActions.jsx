@@ -1,6 +1,6 @@
 import alt from '../FluxAlt';
 import _ from 'lodash';
-import ProductAPI from '../utils/ProductAPI';
+import ProductAPI from '../utils/api/ProductAPI';
 
 class FluxProductPageActions {
 

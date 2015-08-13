@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import alt from '../FluxAlt';
 import { Router, Navigation } from 'react-router'
-import NewReviewPageAPI from '../utils/NewReviewPageAPI';
+import NewReviewPageAPI from '../utils/api/NewReviewPageAPI';
 
 
 //TODO: refactor to another file

@@ -1,10 +1,9 @@
-import ProductConstants from './ProductConstants';
+import CompanyConstants from '../constants/CompanyConstants';
 import { Promise } from 'es6-promise';
 
 module.exports = {
-
-  getProduct: function(id, resolve, reject) {
-    let url = `/api/products/${id}`
+  getData: function(params, resolve, reject) {
+    let url = CompanyConstants.COMPANY_URL + "/" + params.companyId
     return new Promise(function() {
       $.ajax({
         url: url,
