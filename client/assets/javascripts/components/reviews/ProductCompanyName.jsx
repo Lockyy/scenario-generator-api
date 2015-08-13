@@ -23,7 +23,7 @@ const ProductCompanyName  = React.createClass({
       remote: {
         url: '/api/search?search=%QUERY&filter_by=name&match_mode=all',
         wildcard: '%QUERY',
-        transform: function(data) { return data.companies }
+        transform: function(data) { return data.companies.data }
       }
     }
   },
