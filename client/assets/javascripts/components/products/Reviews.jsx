@@ -63,7 +63,7 @@ const Reviews = React.createClass({
         </div>
         <div className="col-xs-8 review-content">
           <div className="score">
-            <Rating value={review.quality_score} name='rating'/>
+            { review.quality_score ? <Rating value={review.quality_score} name='rating'/> : '' }
           </div>
           <div className="created_at">
             {review.display_date}
@@ -73,8 +73,7 @@ const Reviews = React.createClass({
           </div>
           <div className="review-text" dangerouslySetInnerHTML={{__html: review.formatted_quality_review}} />
           <div className="price-score">
-            <PriceRating value={review.price_score}
-                    name='rating'/>
+            { review.price_score ? <PriceRating value={review.price_score} name='rating'/> : '' }
           </div>
           <div className="price-review" dangerouslySetInnerHTML={{__html: review.formatted_price_review}} />
           <Tags
