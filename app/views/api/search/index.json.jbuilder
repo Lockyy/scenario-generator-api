@@ -7,7 +7,7 @@ json.products do
   json.total @results[:products][:total]
   json.pages @results[:products][:pages]
   json.data  @results[:products][:data] do |product|
-    json.(product, :id, :name, :short_desc, :url, :rating, :total_reviews)
+    json.(product, :id, :name, :image, :short_desc, :url, :rating, :total_reviews)
   end
 end
 

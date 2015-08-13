@@ -45,8 +45,8 @@ const Results = React.createClass ({
     if(this.props.type == 'products') {
       return (
         <div className='row'>
-          <div className='col-xs-4'>
-            <img src={'https://placehold.it/350x150'} />
+          <div className='image-container col-xs-4'>
+            <img src={result.image} />
           </div>
           <div className='col-xs-8'>
             <div className='name'>
