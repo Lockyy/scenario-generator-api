@@ -1,3 +1,1 @@
-json.array!(@companies) do |company|
-  json.extract! company, :id, :name, :image_url, :url, :products, :tags
-end
+json.array! @companies, partial: 'api/companies/show', as: :company
