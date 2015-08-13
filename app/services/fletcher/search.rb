@@ -88,18 +88,5 @@ module Fletcher
       terms = terms.each { |s| s.prepend('%').concat('%') }
       terms.empty? ? ['%%'] : terms
     end
-
-    def search_by(type, attribute, terms)
-      ((@search_by ||= build_search_by)[type][attribute]).call(terms)
-    end
-
-    def build_search_by
-      default_search_by = {
-          tags: Hash.new(lambda { |terms| Tag.where { (name.like_any(terms)) } }),
-      }.with_indifferent_access
-
-      default_search_by[:tags][:name] = lambda { |terms| Tag.where { (name.like_any(terms)) } }
-      default_search_by
-    end
   end
 end
