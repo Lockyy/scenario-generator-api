@@ -5,6 +5,7 @@ import NewReviewPage from './components/reviews/NewReviewPage';
 import CompanyProfilePage from './components/companies/CompanyProfilePage';
 import ProductPage from './components/products/ProductPage';
 import SearchPage from './components/search/SearchPage';
+import SearchBox from './components/header/SearchBox';
 import { Router, Route } from 'react-router';
 import { history } from 'react-router/lib/BrowserHistory';
 
@@ -26,7 +27,11 @@ $(function onLoad() {
         <Route name="search" path="app/search/:section/:searchString/:page" component={SearchPage}>
         </Route>
       </Router>
-    ),document.getElementById('content'));
+    ), $('#content')[0]);
+
+    React.render((
+      <SearchBox/>
+    ), $('.search-container')[0]);
   }
 
   render();
