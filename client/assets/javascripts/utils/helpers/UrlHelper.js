@@ -1,7 +1,9 @@
 import _ from 'lodash';
+import RegexConstants from '../constants/RegexConstants'
 
 module.exports = {
   addProtocol: function(url) {
-    return (_.isEmpty(url) || new RegExp("^[http(s)|ftp]://").test(url)) ? url : `http://${url}`;
+    debugger;
+    return (_.isEmpty(url) || new RegExp(RegexConstants.URL_PROTOCOL).test(url)) ? url : `http://${url}`;
   }
 };
