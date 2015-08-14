@@ -75,7 +75,7 @@ const ProductFields  = React.createClass({
     return (
       <fieldset>
         <h1 className='title'>Product Directory</h1>
-        <ProductName ref='product_name' name={this.props.name} disableButton={!this.props.showDetails}
+        <ProductName ref='product_name' value={this.props.name} disableButton={!this.props.showDetails}
           onSetProduct={this._setProduct} />
 
         {details}
