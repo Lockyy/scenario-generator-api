@@ -2,7 +2,8 @@ class Review < ActiveRecord::Base
   belongs_to :reviewable, polymorphic: true
   belongs_to :user
   has_many :attachments, as: :attachable
-  has_many :tags, as: :taggable
+  has_many :tag_taggables, as: :taggable
+  has_many :tags, through: :tag_taggables
   has_many :links
 
   accepts_nested_attributes_for :tags
