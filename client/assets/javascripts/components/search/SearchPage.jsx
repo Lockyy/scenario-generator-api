@@ -25,6 +25,11 @@ const SearchPage = React.createClass({
 
   onChange: function(data) {
     this.setState(data);
+    // For handling when a user submits a search via the header search input rather than
+    // the search page input whilst on the search page.
+    $('.search-container input').val('')
+    $(this.refs.inputBox.getDOMNode()).val(data.data.search_string)
+    $(this.refs.inputBox.getDOMNode()).focus()
   },
 
   changePageAndSearch: function(params) {

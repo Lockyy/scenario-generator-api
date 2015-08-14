@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import timeago from 'timeago';
 import FluxSearchHeaderActions from '../../actions/FluxSearchHeaderActions'
+import FluxSearchPageActions from '../../actions/FluxSearchPageActions'
 import SearchHeaderStore from '../../stores/SearchHeaderStore'
 import Results from '../search/Results'
 import TagResults from '../search/TagResults'
@@ -35,19 +36,30 @@ const SearchBox = React.createClass ({
   },
 
   onSearchInput: function(event) {
-    this.performSearch(event.target.value)
-  },
-
-  onSubmit: function(event) {
-    event.preventDefault();
-    let searchString = $(this.refs.inputBox.getDOMNode()).val()
-    if(searchString) {
-      this.props.router.transitionTo(`/app/search/all/${searchString}/1`);
+    if(this.alreadyOnSearchPage()) {
+      this.onSubmit();
+    } else {
+      this.performSearch(event.target.value);
     }
   },
 
+  onSubmit: _.debounce(function(event) {
+    if(event) { event.preventDefault() };
+
+    let searchString = $(this.refs.inputBox.getDOMNode()).val()
+    if(searchString) {
+      this.setState(this.getInitialState());
+      this.props.router.transitionTo(`/app/search/all/${searchString}/1`);
+      FluxSearchPageActions.getSearchResults({searchString: searchString})
+    }
+  }, 300),
+
+  alreadyOnSearchPage: function() {
+    return window.location.href.indexOf("/app/search") > -1
+  },
+
   displayResults: function() {
-    return this.state.data.total_results > 0
+    return this.state.data.total_results > 0 && !this.alreadyOnSearchPage()
   },
 
   renderResults: function() {
