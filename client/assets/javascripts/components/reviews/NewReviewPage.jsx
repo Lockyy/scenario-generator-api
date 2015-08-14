@@ -133,13 +133,13 @@ const NewReviewPage  = React.createClass({
       </div>
       <div className='main-content'>
         <form className='form review new' ref='new_review_form' onSubmit={this._onSubmit}>
-
           <ProductFields ref='product_fields' onUpdateProduct={this._onUpdateProduct} onSetProduct={this._onSetProduct}
-            showDetails={this.state.showDetails} {...this._getProductData()} />
+            onChange={this._onFormChange} showDetails={this.state.showDetails} {...this._getProductData()} />
 
-          <ReviewFields ref='review_fields' onChange={this._onFormChange} showDetails={this.state.showDetails} {...this.state.review}/>
+          <ReviewFields ref='review_fields' onChange={this._onFormChange} showDetails={this.state.showDetails}
+            {...this.state.review} />
+
           {this._getActionsContent()}
-
         </form>
       </div>
 

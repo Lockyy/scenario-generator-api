@@ -10,7 +10,8 @@ const ProductCompanyName  = React.createClass({
 
   getDefaultProps: function getDefaultProps() {
     return {
-      name: ''
+      name: '',
+      value: ''
     }
   },
 
@@ -66,7 +67,7 @@ const ProductCompanyName  = React.createClass({
       <div className='form-group'>
         <label htmlFor='product[company[name]]'>Company Name <span className='required'>*</span></label>
 
-        <TypeAhead name='product[company[name]]' value={this.props.name} placeholder='e.g. Microsoft'
+        <TypeAhead name='product[company[name]]' value={this.props.value} placeholder='e.g. Microsoft'
           className='form-control' bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
           onSelectOption={this._onSelectCompany} onSelectNoOption={this._onSelectCreateCompany} onChange={this._onCompanyNameChange}
           ref='product_company_name' required/>
