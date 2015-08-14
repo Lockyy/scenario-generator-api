@@ -7,27 +7,33 @@ import ProductPage from './components/products/ProductPage';
 import SearchPage from './components/search/SearchPage';
 import { Router, Route } from 'react-router';
 import { history } from 'react-router/lib/BrowserHistory';
+import UserAPI from './utils/api/UserAPI'
 
 $(function onLoad() {
   function render() {
-
-    React.render((
-      <Router history={history}>
-        <Route path="app" component={Dashboard}>
-        </Route>
-        <Route path="app/reviews/new" component={NewReviewPage}>
-        </Route>
-        <Route path="app/products/:id" component={ProductPage}>
-        </Route>
-        <Route path="app/products/:productId/reviews/new" component={NewReviewPage}>
-        </Route>
-        <Route name="company" path="app/companies/:companyId" component={CompanyProfilePage}>
-        </Route>
-        <Route name="search" path="app/search/:section/:searchString/:page" component={SearchPage}>
-        </Route>
-      </Router>
-    ),document.getElementById('content'));
-  }
+    UserAPI.getCurrentUser(function(currentUser) {
+      React.withContext({'currentUser': currentUser}, function() {
+        React.render((
+          <Router history={history}>
+            <Route path="app" component={Dashboard}>
+            </Route>
+            <Route path="app/reviews/new" component={NewReviewPage}>
+            </Route>
+            <Route path="app/products/:id" component={ProductPage}>
+            </Route>
+            <Route path="app/products/:productId/reviews/new" component={NewReviewPage}>
+            </Route>
+            <Route path="app/products/:productId/reviews/:reviewId" component={NewReviewPage}>
+            </Route>
+            <Route name="company" path="app/companies/:companyId" component={CompanyProfilePage}>
+            </Route>
+            <Route name="search" path="app/search/:section/:searchString/:page" component={SearchPage}>
+            </Route>
+          </Router>
+        ), document.getElementById('content'));
+      });
+    })
+  };
 
   render();
 });
