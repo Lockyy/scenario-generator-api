@@ -1,15 +1,11 @@
 import React from 'react'
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import UrlHelper from '../../utils/helpers/UrlHelper'
 
 const UploadManager = React.createClass({
-  getInitialState: function getInitialState() {
-    return {
-      files: []
-    };
-  },
-
   getDefaultProps: function getDefaultProps() {
     return {
+      onChange: function() {},
       buttonText: 'Browse',
       uploadText: 'Upload a file',
       uploadingText: 'Uploading...'
@@ -17,7 +13,7 @@ const UploadManager = React.createClass({
   },
 
   _validate: function validate(newFile) {
-    let isUnique = !_.find(this.state.files, function(file) {
+    let isUnique = !_.find(this.props.attachments, function(file) {
       return file.name.toLowerCase() == newFile.name.toLowerCase() &&
         file.size == newFile.size
     });
@@ -43,14 +39,9 @@ const UploadManager = React.createClass({
           $button.addClass('uploading').prop('disabled', true);
         },
         success: function(file, downloadUrl) {
-          file.downloadUrl = downloadUrl;
-          var oldState = _this.state;
-          _this.setState(_.merge({}, oldState, {files: [file]}, function(a, b) {
-            if (_.isArray(a)) { return a.concat(b) }
-          }))
-
           $input.removeClass('uploading').prop('disabled', false).attr('value', _this.props.uploadText);
           $button.addClass('uploading').prop('disabled', false);
+          _this.props.onChange(e);
         },
         error: function(error) {
           $input.removeClass('uploading').prop('disabled', false).attr('value', _this.props.uploadText);
@@ -72,7 +63,7 @@ const UploadManager = React.createClass({
       return {
         name: $file.find('.file_name').val(),
         url: $file.find('.file_download_url').val(),
-        content_type: $file.find('.file_type').val(),
+        content_type: $file.find('.file_content_type').val(),
         size: $file.find('.file_size').val(),
       }
     });
@@ -82,16 +73,18 @@ const UploadManager = React.createClass({
     return (
       <div className='upload-manager items-manager'>
         <ul className='files items' ref='files'>
-          {_.map(this.state.files, function(file) {
+          {_.map(this.props.attachments, function(file) {
             let id = Math.floor((Math.random() * 1000000) + 1);
 
             return <li className='file' id={`file_${id}`} ref={`file_${id}`}>
               <div className=''>
                 <input type='hidden' className='file_name' name={`product[attachment[${id}][name]]`} value={file.name} />
-                <input type='hidden' className='file_download_url' name={`product[attachment[${id}][url]]`} value={file.downloadUrl} />
-                <input type='hidden' className='file_type' name={`product[attachment[${id}][content_type]]`} value={file.type} />
+                <input type='hidden' className='file_download_url' name={`product[attachment[${id}][url]]`} value={file.url} />
+                <input type='hidden' className='file_content_type' name={`product[attachment[${id}][content_type]]`} value={file.content_type} />
                 <input type='hidden' className='file_size' name={`product[attachment[${id}][size]]`} value={file.size} />
-                <a href={file.downloadUrl}>{file.name}</a>
+                <a href={UrlHelper.addProtocol(file.url)} target='_blank'>
+                  {file.name}
+                </a>
               </div>
             </li>
           })}

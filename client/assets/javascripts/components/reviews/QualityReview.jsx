@@ -5,6 +5,14 @@ import { Link } from 'react-router';
 const QualityReview  = React.createClass({
   displayName: 'QualityReview',
 
+  getDefaultProps: function getDefaultProps() {
+    return {
+      onChange: function() {},
+      title: '',
+      quality_review: ''
+    }
+  },
+
   getFields: function getFields() {
     let refs = this.refs;
 
@@ -30,9 +38,11 @@ const QualityReview  = React.createClass({
 
         <div className='fields_container' ref='fields_container'>
           <input type='text' className='form-control' placeholder='Title' name='product[review[title]]'
-            ref='product_review_title' onFocus={this._onFocus} onBlur={this._onBlur} />
+            ref='product_review_title' value={this.props.title}
+            onFocus={this._onFocus} onBlur={this._onBlur} onChange={this.props.onChange} />
           <textarea type='text' className='form-control' placeholder='Say something' name='product[review[quality_review]]'
-            rows='10' ref='product_review_quality_review' onFocus={this._onFocus} onBlur={this._onBlur} />
+            rows='10' ref='product_review_quality_review' value={this.props.quality_review}
+            onFocus={this._onFocus} onBlur={this._onBlur} onChange={this.props.onChange} />
         </div>
       </div>
     );

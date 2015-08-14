@@ -12,6 +12,12 @@ import UploadManager from './UploadManager'
 const ReviewFields  = React.createClass({
   displayName: 'ReviewFields',
 
+  getDefaultProps: function getDefaultProps() {
+    return {
+      onChange: function() {}
+    }
+  },
+
   getFields: function getFields() {
     let refs = this.refs;
     let quality_review_fields = refs.quality_review.getFields();
@@ -35,38 +41,42 @@ const ReviewFields  = React.createClass({
 
           <div className='form-group inline rating'>
             <label htmlFor='product[review[quality_score]]'>Rating</label>
-            <Rating name='product[review[quality_score]]' ratingEnabled={true} ref='product_review_quality_score' />
+            <Rating name='product[review[quality_score]]' ratingEnabled={true} ref='product_review_quality_score'
+              value={this.props.quality_score} onChange={this.props.onChange} />
           </div>
 
-          <QualityReview ref='quality_review' />
+          <QualityReview ref='quality_review' title={this.props.title} quality_review={this.props.quality_review}
+            onChange={this.props.onChange} />
 
           <div className='form-group attachments'>
             <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
 
-            <UploadManager ref='upload_manager' />
+            <UploadManager ref='upload_manager' attachments={this.props.attachments} onChange={this.props.onChange} />
           </div>
 
           <div className='form-group links'>
             <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
 
-            <LinksManager ref='links_manager' />
+            <LinksManager ref='links_manager' links={this.props.links} />
           </div>
 
           <div className='form-group inline rating'>
             <label htmlFor='product[review[price_score]]'>Pricing</label>
-            <PriceRating name='product[review[price_score]]' ratingEnabled={true} ref='product_review_price_score' />
+            <PriceRating name='product[review[price_score]]' ratingEnabled={true} ref='product_review_price_score'
+              value={this.props.price_score} onChange={this.props.onChange}/>
           </div>
 
           <div className='form-group'>
             <label htmlFor='product[review[price_review]]' className='sr-only'>Price Review</label>
 
             <textarea type='text' className='form-control' placeholder='Add a brief description of the product’s pricing'
-              name='product[review[price_review]]' rows='10' ref='product_review_price_review'/>
+              name='product[review[price_review]]' rows='10' ref='product_review_price_review'
+              value={this.props.price_review} onChange={this.props.onChange} />
           </div>
 
           <div className='form-group tags'>
             <label htmlFor='product[review[tags]]'>Add / Edit Tags</label>
-            <TagsManager ref='tags_manager' />
+            <TagsManager ref='tags_manager' tags={this.props.tags} />
           </div>
         </fieldset>
       );

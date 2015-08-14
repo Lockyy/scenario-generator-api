@@ -799,6 +799,11 @@
       "from": "https://registry.npmjs.org/es5-shim/-/es5-shim-4.1.3.tgz",
       "resolved": "https://registry.npmjs.org/es5-shim/-/es5-shim-4.1.3.tgz"
     },
+    "es6-promise": {
+      "version": "3.0.2",
+      "from": "es6-promise@^3.0.2",
+      "resolved": "https://registry.npmjs.org/es6-promise/-/es6-promise-3.0.2.tgz"
+    },
     "formsy-react": {
       "version": "0.14.1",
       "from": "formsy-react@^0.14.1",

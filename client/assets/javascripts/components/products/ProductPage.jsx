@@ -7,6 +7,7 @@ import Reviews from './Reviews'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
 import Tags from '../Tags';
+import UrlHelper from '../../utils/helpers/UrlHelper'
 
 const ProductPage = React.createClass({
   displayName: 'ProductPage',
@@ -86,7 +87,7 @@ const ProductPage = React.createClass({
   },
 
   renderInfo: function() {
-    let tags = this.getProductData('tags');
+    let tags = _.map(this.getProductData('tags'), function(tag) { return tag.name });
     return (
       <div className='row info-row'>
         <div className='col-xs-3 stats'>
@@ -100,7 +101,9 @@ const ProductPage = React.createClass({
         </div>
         <div className='col-xs-6 information'>
           <div className='link'>
-            <a href={this.getProductData('url')} className='red'>{this.getProductData('url')}</a>
+            <a href={UrlHelper.addProtocol(this.getProductData('url'))} className='red' target='_blank'>
+              {UrlHelper.addProtocol(this.getProductData('url'))}
+            </a>
           </div>
           <div className='description'>
             {this.getProductData('description')}

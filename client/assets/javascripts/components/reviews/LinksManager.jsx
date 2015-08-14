@@ -1,16 +1,13 @@
 import React from 'react'
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import RegexConstants from '../../utils/constants/RegexConstants'
+import UrlHelper from '../../utils/helpers/UrlHelper'
 
 const LinksManager = React.createClass({
-  getInitialState: function getInitialState() {
-    return {
-      links: []
-    };
-  },
+  displayName: 'LinksManager',
 
   _validate: function validate(url) {
-    let isUnique = !_.find(this.state.links, function(link) { return link.url.toLowerCase() == url.toLowerCase() });
+    let isUnique = !_.find(this.props.links, function(link) { return link.url.toLowerCase() == url.toLowerCase() });
     return new RegExp(RegexConstants.URL_PATTERN).test(url) && isUnique;
   },
 
@@ -27,12 +24,6 @@ const LinksManager = React.createClass({
 
     FluxReviewPageActions.addLink(link, {
       success: function(link) {
-        var oldState = _this.state;
-
-        _this.setState(_.merge({}, oldState, {links: [link]}, function(a, b) {
-          if (_.isArray(a)) { return a.concat(b) }
-        }))
-
         React.findDOMNode(_this.refs.product_review_link_to_add).value = null;
       }
     });
@@ -53,13 +44,15 @@ const LinksManager = React.createClass({
     return (
       <div className='links-manager items-manager'>
         <ul className='links items' ref='links'>
-          {_.map(this.state.links, function(link) {
+          {_.map(this.props.links, function(link) {
             let id = Math.floor((Math.random() * 1000000) + 1);
 
             return <li className='link' id={`link_${id}`} ref={`link_${id}`}>
               <div className=''>
                 <input type='hidden' className='link_url' name={`review[links[${id}][url]]`} value={link.url} />
-                <a href={link.url}>{link.url}</a>
+                <a href={UrlHelper.addProtocol(link.url)} target='_blank'>
+                  {UrlHelper.addProtocol(link.url)}
+                </a>
               </div>
             </li>
           })}

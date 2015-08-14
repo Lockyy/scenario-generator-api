@@ -1,4 +1,5 @@
-import CompanyConstants from './CompanyConstants';
+import CompanyConstants from '../constants/CompanyConstants';
+import { Promise } from 'es6-promise';
 
 module.exports = {
   getData: function(params, resolve, reject) {

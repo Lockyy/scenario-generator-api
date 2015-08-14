@@ -3,14 +3,9 @@ import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import TypeAhead from '../TypeAhead'
 
 const TagsManager = React.createClass({
-  getInitialState: function getInitialState() {
-    return {
-      tags: []
-    };
-  },
 
   _validate: function validate(name) {
-    let isUnique = !_.find(this.state.tags, function(tag) { return tag.name.toLowerCase() == name.toLowerCase() });
+    let isUnique = !_.find(this.props.tags, function(tag) { return tag.name.toLowerCase() == name.toLowerCase() });
     return name && isUnique;
   },
 
@@ -35,14 +30,7 @@ const TagsManager = React.createClass({
     }
 
     FluxReviewPageActions.addTag(tag, {
-
       success: function(tag) {
-        var oldState = _this.state;
-
-        _this.setState(_.merge({}, oldState, {tags: [tag]}, function(a, b) {
-          if (_.isArray(a)) { return a.concat(b) }
-        }))
-
         $(React.findDOMNode(_this.refs.product_review_tag_to_add.refs.typeahead_input)).typeahead('val', null);
       }
     });
@@ -92,7 +80,7 @@ const TagsManager = React.createClass({
     return (
       <div className='tags-manager items-manager'>
         <ul className='tags items' ref='tags'>
-          {_.map(this.state.tags, function(tag) {
+          {_.map(this.props.tags, function(tag) {
             let id = Math.floor((Math.random() * 1000000) + 1);
 
             return <li className='tag item' id={`tag_${id}`} ref={`tag_${id}`}>

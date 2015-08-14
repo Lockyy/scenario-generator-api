@@ -49,10 +49,6 @@ class Product < ActiveRecord::Base
     description.split[0...9].join(' ') if description
   end
 
-  def tags
-    Faker::Lorem.words(10)
-  end
-
   def increment_views!
     self.views = self.views + 1
     self.save

@@ -1,6 +1,6 @@
 import alt from '../FluxAlt';
 import _ from 'lodash';
-import SearchAPI from '../utils/SearchAPI';
+import SearchAPI from '../utils/api/SearchAPI';
 
 class FluxSearchPageActions {
 

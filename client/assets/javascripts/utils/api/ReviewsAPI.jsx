@@ -1,4 +1,5 @@
-import ProductConstants from './ProductConstants';
+import { Promise } from 'es6-promise';
+import ProductConstants from '../constants/ProductConstants';
 
 module.exports = {
   getReviews: function(productID, resolve, reject) {
