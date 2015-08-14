@@ -37,7 +37,7 @@ module Fletcher
       {
           filter_by: '',
           match_mode: 'any',
-          search_string: '',
+          searchString: '',
           page: DEFAULT_PAGE,
           per_page: DEFAULT_PER_PAGE
       }
@@ -54,10 +54,6 @@ module Fletcher
       data.paginate(:page => @page, :per_page => @per_page)
     end
 
-    def sort(data)
-      data
-    end
-
     def total_results
       return 0 if @params[:searchString].blank?
       @companies.size + @products.size + @tags.size
@@ -66,7 +62,7 @@ module Fletcher
     def data_hash(data)
       return { total: 0, pages: 0, data: [] } if @params[:searchString].blank?
 
-      filtered_data = paginate(sort(data))
+      filtered_data = paginate(data)
       {
           total: data.size,
           pages: filtered_data.total_pages,
