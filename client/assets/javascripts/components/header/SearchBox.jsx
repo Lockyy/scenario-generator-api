@@ -37,14 +37,14 @@ const SearchBox = React.createClass ({
 
   onSearchInput: function(event) {
     if(this.alreadyOnSearchPage()) {
-      this.onSubmit();
+      _.debounce(this.onSubmit)();
     } else {
       this.performSearch(event.target.value);
     }
   },
 
-  onSubmit: _.debounce(function(event) {
-    if(event) { event.preventDefault() };
+  onSubmit: function(event) {
+    try { event.preventDefault() } catch(err) { }
 
     let searchString = $(this.refs.inputBox.getDOMNode()).val()
     if(searchString) {
@@ -52,7 +52,7 @@ const SearchBox = React.createClass ({
       this.props.router.transitionTo(`/app/search/all/${searchString}/1`);
       FluxSearchPageActions.getSearchResults({searchString: searchString})
     }
-  }, 300),
+  },
 
   alreadyOnSearchPage: function() {
     return window.location.href.indexOf("/app/search") > -1
