@@ -22,3 +22,11 @@ json.tags do
     json.(tag, :id, :name)
   end
 end
+
+
+json.related_tags do
+  json.total @results[:related_tags][:total]
+  json.data  @results[:related_tags][:data] do |tag|
+    json.(tag, :id, :name)
+  end
+end

@@ -14,6 +14,7 @@ module Fletcher
       @products = products(@terms)
       @companies = companies(@terms)
       @tags = tags(@terms)
+      @related_tags = related_tags(@products, @companies)
     end
 
     def results
@@ -24,6 +25,10 @@ module Fletcher
           total_results: total_results,
           companies: data_hash(@companies),
           products: data_hash(@products),
+          related_tags: {
+            total: @related_tags.size,
+            data: @related_tags
+          },
           tags: {
               total: @tags.size,
               data: @tags
@@ -83,6 +88,10 @@ module Fletcher
     def tags(terms)
       return [] if @params[:searchString].blank?
       SearchTags.new(@params[:filter_by], terms).results
+    end
+
+    def related_tags(products, companies)
+      products.map(&:tags).flatten + companies.map(&:tags).flatten
     end
 
     # We're going to take the search string the user input, split it up into words and then
