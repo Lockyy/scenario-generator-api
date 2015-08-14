@@ -5,13 +5,14 @@ import FluxSearchPageActions from '../../actions/FluxSearchPageActions'
 import SearchPageStore from '../../stores/SearchPageStore'
 import Results from './Results'
 import TagResults from './TagResults'
+import Tags from '../Tags'
 
 const SearchPage = React.createClass({
   mixins: [ Navigation ],
   displayName: 'SearchPage',
 
   getInitialState: function() {
-    return { data: { products: [], companies: [], tags: [] } }
+    return { data: { products: [], companies: [], tags: [], related_tags: [] } }
   },
 
   performSearch: function(data) {
@@ -109,16 +110,24 @@ const SearchPage = React.createClass({
           hide={!this.displaySection('companies')}
           currentPage={this.props.params.page} />
         <TagResults
-          activeSection={this.props.params.section}
           data={this.state.data.tags}
           hide={!this.displaySection('tags')}
+          showSize={true}
           searchTerm={this.props.params.search_string} />
       </div>
     )
   },
 
   renderFilters: function() {
-    return ( <div className='col-xs-3'></div>)
+    return (
+      <div className='col-xs-3'>
+        <TagResults
+          title={'Related Tags'}
+          data={this.state.data.related_tags}
+          hide={this.state.data.related_tags.total <= 0}
+          searchTerm={this.props.params.search_string} />
+      </div>
+    )
   },
 
   render: function() {
