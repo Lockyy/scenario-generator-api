@@ -41,7 +41,8 @@ const ReviewFields  = React.createClass({
 
           <div className='form-group inline rating'>
             <label htmlFor='product[review[quality_score]]'>Rating</label>
-            <Rating name='product[review[quality_score]]' ratingEnabled={true} ref='product_review_quality_score' />
+            <Rating name='product[review[quality_score]]' ratingEnabled={true} ref='product_review_quality_score'
+              value={this.props.quality_score} onChange={this.props.onChange} />
           </div>
 
           <QualityReview ref='quality_review' title={this.props.title} quality_review={this.props.quality_review}
@@ -61,7 +62,8 @@ const ReviewFields  = React.createClass({
 
           <div className='form-group inline rating'>
             <label htmlFor='product[review[price_score]]'>Pricing</label>
-            <PriceRating name='product[review[price_score]]' ratingEnabled={true} ref='product_review_price_score' />
+            <PriceRating name='product[review[price_score]]' ratingEnabled={true} ref='product_review_price_score'
+              value={this.props.price_score} onChange={this.props.onChange}/>
           </div>
 
           <div className='form-group'>

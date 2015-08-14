@@ -11,13 +11,14 @@ const Rating = React.createClass({
       ratingEnabled: false,
       containerClass: '',
       id: '',
-      value: 0
+      value: 0,
+      onChange: function() {}
     }
   },
 
   //TODO: change implementation to be reactive
   getValue: function getValue() {
-    return this._getCheckedStar().find('input.rating-item').val();
+    return $(this.refs.container.getDOMNode()).find(':checked').val();
   },
 
   _getAllStars: function _getAllStars() {
@@ -72,7 +73,6 @@ const Rating = React.createClass({
     this._getAllStars().find('label').removeClass('marked').removeClass('before-marked');
     this._getPreviousStars($star).find('label').addClass('before-marked');
     $label.addClass('marked');
-    this.setState({value: $star.find('input.rating-item').val()})
   },
 
   buildStar: function buildStar(starValue) {
@@ -80,16 +80,15 @@ const Rating = React.createClass({
     let id = this.props.id ? this.props.id : `${name}_${starValue}_${_.random(1, 99999)}`;
     let ratingEnabled = this.props.ratingEnabled;
     let value = this.props.value;
-    let checked = starValue === value;
+    let checked = starValue == value;
     let marked = starValue <= value;
 
-    return (<div className='rating-group'>
+    return (<div className='rating-group' id={`name_${starValue}`}>
       <input className='rating-item' type='radio' id={id} name={name} value={starValue}
              disabled={!ratingEnabled} checked={checked} onChange={this.props.onChange}/>
-
-           <label htmlFor={id} className={marked ? 'marked' : ''}
-             onMouseOver={this._onMouseOver} onMouseOut={this._onMouseOut}
-             onClick={this._onClick} ></label>
+       <label htmlFor={id} className={marked ? 'marked' : ''}
+         onMouseOver={this._onMouseOver} onMouseOut={this._onMouseOut}
+         onClick={this._onClick} ></label>
     </div>);
   },
 
