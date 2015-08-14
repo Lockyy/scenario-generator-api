@@ -12,7 +12,7 @@ import { history } from 'react-router/lib/BrowserHistory';
 $(function onLoad() {
   function render() {
 
-    React.render((
+    let router = React.render((
       <Router history={history}>
         <Route path="app" component={Dashboard}>
         </Route>
@@ -30,7 +30,7 @@ $(function onLoad() {
     ), $('#content')[0]);
 
     React.render((
-      <SearchBox/>
+      <SearchBox router={router} />
     ), $('.search-container')[0]);
   }
 
