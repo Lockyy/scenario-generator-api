@@ -33,9 +33,10 @@ const TypeAhead  = React.createClass({
       _this.props.onSelectNoOption(value);
     };
 
-    $typeaheadInput.on("typeahead:selected", onSelectOption)
-    $typeaheadInput.on("typeahead:render", this.props.onRender)
-    $typeaheadInput.parents('.input-group').on('click', '.tt-no-results', onSelectNoOption)
+    $typeaheadInput.typeahead('val', this.props.value);
+    $typeaheadInput.on("typeahead:selected", onSelectOption);
+    $typeaheadInput.on("typeahead:render", this.props.onRender);
+    $typeaheadInput.parents('.input-group').on('click', '.tt-no-results', onSelectNoOption);
   },
 
   _onChange: function _onChange(e) {
@@ -67,6 +68,11 @@ const TypeAhead  = React.createClass({
         }
       },
     }, this.props.typeaheadProps);
+  },
+
+  componentDidUpdate: function componentDidUpdate(oldProps) {
+    let $typeaheadInput = $(React.findDOMNode(this.refs.typeahead_input));
+    $typeaheadInput.typeahead('val', this.props.value);
   },
 
   render: function render() {

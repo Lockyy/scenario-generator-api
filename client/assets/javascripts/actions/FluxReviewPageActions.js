@@ -30,11 +30,14 @@ class FluxReviewPageActions {
     .then(function(data) {
         return S3API.uploadFileToS3(file, data.upload.url, data.upload.content_type, callbacks);
     }).then(function(downloadUrl) {
+      file.url = downloadUrl;
+      file.content_type = file.type;
+      callbacks.success(file, downloadUrl);
       _this.dispatch(file);
-      callbacks.success(file, downloadUrl)
     })
-    .fail(function() {
+    .fail(function(error) {
       //TODO
+      callbacks.error(error);
       _this.registerError('error uploading file to s3');
     });
   }
@@ -58,9 +61,12 @@ class FluxReviewPageActions {
   }
 
   submitReview(review, success, error) {
-    this.dispatch();
-
-    NewReviewPageAPI.submit(review, success, error);
+    let _this = this;
+    NewReviewPageAPI.submit(review,
+      function(data) {
+        _this.dispatch();
+        success(data);
+      }, error);
   }
 
   registerError(error) {

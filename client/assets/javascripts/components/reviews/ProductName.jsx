@@ -7,7 +7,7 @@ const ProductName  = React.createClass({
 
   getDefaultProps: function getDefaultProps() {
     return {
-      name: '',
+      value: '',
       disableButton: false
     }
   },
@@ -81,7 +81,7 @@ const ProductName  = React.createClass({
       <div className='form-group'>
         <label htmlFor='product[name]'>Product's Name</label>
         <div className='input-group'>
-          <TypeAhead name='product[name]' value={this.props.name} placeholder='e.g. Hololens' className='form-control'
+          <TypeAhead name='product[name]' value={this.props.value} placeholder='e.g. Hololens' className='form-control'
             bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
             onSelectOption={this._onSelectProduct} onSelectNoOption={this._onSelectCreateProduct}
             onChange={this._onNameChange} onRender={this._hideCreateWhenMatch}
