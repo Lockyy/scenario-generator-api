@@ -41,7 +41,7 @@ module Fletcher
     def default_params
       {
           filter_by: '',
-          match_mode: 'any',
+          match_mode: 'all',
           search_string: '',
           page: DEFAULT_PAGE,
           per_page: DEFAULT_PER_PAGE
@@ -53,6 +53,10 @@ module Fletcher
       per_page = sent_per_page || DEFAULT_PER_PAGE
       return MAX_PER_PAGE if per_page > MAX_PER_PAGE
       per_page
+    end
+
+    def sort(data)
+      data.order(name: :asc)
     end
 
     def paginate(data)
@@ -67,7 +71,9 @@ module Fletcher
     def data_hash(data)
       return { total: 0, pages: 0, data: [] } if @params[:search_string].blank?
 
-      filtered_data = paginate(data)
+      sorted_data = sort(data)
+      filtered_data = paginate(sorted_data)
+
       {
           total: data.size,
           pages: filtered_data.total_pages,
