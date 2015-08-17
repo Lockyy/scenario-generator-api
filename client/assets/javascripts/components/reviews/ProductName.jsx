@@ -85,7 +85,7 @@ const ProductName  = React.createClass({
             bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
             onSelectOption={this._onSelectProduct} onSelectNoOption={this._onSelectCreateProduct}
             onChange={this._onNameChange} onRender={this._hideCreateWhenMatch}
-            ref='product_name'/>
+            ref='product_name' required/>
           <span className="input-group-btn">
             <button className="btn btn-default" type="button" disabled={this.props.disableButton}>Go</button>
           </span>
