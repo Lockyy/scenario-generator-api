@@ -18,7 +18,7 @@ const SearchBox = React.createClass ({
   getInitialState: function() {
     return {
       data: {
-        searchString: '',
+        search_string: '',
         products: { data: [] },
         companies: { data: [] },
         tags: { data: [] },
@@ -26,9 +26,9 @@ const SearchBox = React.createClass ({
     }
   },
 
-  performSearch: function(searchString) {
+  performSearch: function(search_string) {
     SearchHeaderStore.listen(this.onChange.bind(this));
-    FluxSearchHeaderActions.getSearchResults({ searchString: searchString, page: 1, per_page: 2});
+    FluxSearchHeaderActions.getSearchResults({ search_string: search_string, page: 1, per_page: 2, filter_by: 'name' });
   },
 
   onChange: function(data) {
@@ -46,11 +46,11 @@ const SearchBox = React.createClass ({
   onSubmit: function(event) {
     try { event.preventDefault() } catch(err) { }
 
-    let searchString = $(this.refs.inputBox.getDOMNode()).val()
-    if(searchString) {
+    let search_string = $(this.refs.inputBox.getDOMNode()).val()
+    if(search_string) {
       this.setState(this.getInitialState());
-      this.props.router.transitionTo(`/app/search/all/${searchString}/1`);
-      FluxSearchPageActions.getSearchResults({searchString: searchString})
+      this.props.router.transitionTo(`/app/search/all/${search_string}/1`);
+      FluxSearchPageActions.getSearchResults({search_string: search_string})
     }
   },
 

@@ -16,12 +16,12 @@ const SearchPage = React.createClass({
   },
 
   performSearch: function(data) {
-    SearchPageStore.listen(this.onChange.bind(this));
     FluxSearchPageActions.getSearchResults(data);
   },
 
   componentDidMount: function() {
-    this.performSearch({ searchString: this.props.params.searchString, page: this.props.params.page });
+    SearchPageStore.listen(this.onChange.bind(this));
+    this.performSearch({ search_string: this.props.params.search_string, page: this.props.params.page });
   },
 
   onChange: function(data) {
@@ -34,16 +34,20 @@ const SearchPage = React.createClass({
   },
 
   changePageAndSearch: function(params) {
-    let searchString = params.searchString || this.props.params.searchString
-    let section = params.section || this.props.params.section
+    let search_string = _.isUndefined(params.search_string) ? this.props.params.search_string : params.search_string
+    let section = params.section || this.props.params.section || 'all'
     let page = params.page || 1
 
-    this.performSearch({ searchString: searchString, page: page});
-    this.transitionTo(`/app/search/${section}/${searchString}/${page}`);
+    this.performSearch({ search_string: search_string, page: page});
+    if (search_string && section && page) {
+      this.transitionTo(`/app/search/${section}/${search_string}/${page}`);
+    } else {
+      this.transitionTo(`/app/search/${section}`);
+    }
   },
 
   onSearchInput: function(event) {
-    this.changePageAndSearch({ searchString: event.target.value });
+    this.changePageAndSearch({ search_string: event.target.value });
   },
 
   changeTab: function(section) {
@@ -138,7 +142,7 @@ const SearchPage = React.createClass({
             <input
               className='search-box'
               ref='inputBox'
-              defaultValue={ this.props.params.searchString }
+              defaultValue={ this.props.params.search_string }
               onChange={ this.onSearchInput } />
           </div>
         </div>

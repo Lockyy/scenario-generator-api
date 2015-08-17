@@ -19,7 +19,7 @@ module Fletcher
 
     def results
       {
-          search_string: @params[:searchString],
+          search_string: @params[:search_string],
           page: @page,
           per_page: @per_page,
           total_results: total_results,
@@ -42,7 +42,7 @@ module Fletcher
       {
           filter_by: '',
           match_mode: 'any',
-          searchString: '',
+          search_string: '',
           page: DEFAULT_PAGE,
           per_page: DEFAULT_PER_PAGE
       }
@@ -60,12 +60,12 @@ module Fletcher
     end
 
     def total_results
-      return 0 if @params[:searchString].blank?
+      return 0 if @params[:search_string].blank?
       @companies.size + @products.size + @tags.size
     end
 
     def data_hash(data)
-      return { total: 0, pages: 0, data: [] } if @params[:searchString].blank?
+      return { total: 0, pages: 0, data: [] } if @params[:search_string].blank?
 
       filtered_data = paginate(data)
       {
@@ -76,17 +76,17 @@ module Fletcher
     end
 
     def companies(terms)
-      return [] if @params[:searchString].blank?
+      return [] if @params[:search_string].blank?
       SearchCompanies.new(@params[:filter_by], terms).results
     end
 
     def products(terms)
-      return [] if @params[:searchString].blank?
+      return [] if @params[:search_string].blank?
       SearchProducts.new(@params[:filter_by], terms).results
     end
 
     def tags(terms)
-      return [] if @params[:searchString].blank?
+      return [] if @params[:search_string].blank?
       SearchTags.new(@params[:filter_by], terms).results
     end
 
@@ -98,8 +98,9 @@ module Fletcher
     # search for each of those words anywhere in the targetted attributes. To do that we need to
     # prepend and append each word with % to show that it can appear anywhere in the searched string.
     def get_terms
-      terms = @params[:match_mode] == 'all' ? [@params[:searchString]] : @params[:searchString].split(' ')
-      terms = terms.each { |s| s.prepend('%').concat('%') }
+      @params[:search_string] = (@params[:search_string].try(:strip) || '')
+      terms = @params[:match_mode] == 'all' ? [@params[:search_string]] : @params[:search_string].split(' ')
+      terms = terms.collect { |s| "%#{s}%" }
       terms.empty? ? ['%%'] : terms
     end
   end
