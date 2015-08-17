@@ -11,8 +11,6 @@
 
 <%= render 'app/menu' %>
 
-<%= render 'welcome_message' if @user.first_login? && @user.signed_in_minutes <= 1 %>
-
 <%= yield %>
 
 <%= javascript_include_tag 'app', 'data-turbolinks-track' => true %>
