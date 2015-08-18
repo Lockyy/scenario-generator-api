@@ -13,7 +13,6 @@ const ProductFields  = React.createClass({
 
   getDefaultProps: function getDefaultProps() {
     return {
-      onChange: function() {},
       name: '',
       company: {
         name: ''
@@ -22,11 +21,13 @@ const ProductFields  = React.createClass({
   },
 
   _setProduct: function _setProduct(product, showDetails) {
-    this.props.onSetProduct(product, showDetails);
+    FluxReviewPageActions.setShowDetails(showDetails);
+    FluxReviewPageActions.setProduct(product);
   },
 
   _updateProduct: function _updateProduct(product, showDetails) {
-    this.props.onUpdateProduct(product, showDetails)
+    FluxReviewPageActions.setShowDetails(showDetails);
+    FluxReviewPageActions.updateProduct(product);
   },
 
   _updateProductUrl: function _updateProductUrl(e) {
@@ -43,8 +44,7 @@ const ProductFields  = React.createClass({
     return (<fieldset className='details'>
       <span className='instructions'>Complete the form below to add a new product</span>
 
-      <ProductCompanyName ref='product_company_name' value={this.props.company.name}
-        onUpdateProduct={this._updateProduct} />
+      <ProductCompanyName ref='product_company_name' value={this.props.company.name} onUpdateProduct={this._updateProduct} />
 
       <div className='form-group'>
         <label htmlFor='product[url]'>Product's website <span className='required'>*</span></label>

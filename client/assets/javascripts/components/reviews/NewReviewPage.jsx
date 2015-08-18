@@ -82,16 +82,6 @@ const NewReviewPage  = React.createClass({
     this._onChange(review);
   },
 
-  _onSetProduct: function _onSetProduct(product, showDetails) {
-    FluxReviewPageActions.setShowDetails(showDetails);
-    FluxReviewPageActions.setProduct(product);
-  },
-
-  _onUpdateProduct: function _onSetProduct(product, showDetails) {
-    FluxReviewPageActions.setShowDetails(showDetails);
-    FluxReviewPageActions.updateProduct(product);
-  },
-
   _onSubmit: function _onSubmit(e) {
     e.preventDefault();
 
@@ -134,8 +124,7 @@ const NewReviewPage  = React.createClass({
       </div>
       <div className='main-content'>
         <form className='form review new' ref='new_review_form' onSubmit={this._onSubmit}>
-          <ProductFields ref='product_fields' onUpdateProduct={this._onUpdateProduct} onSetProduct={this._onSetProduct}
-            onChange={this._onFormChange} showDetails={this.state.showDetails} {...this._getProductData()} />
+          <ProductFields ref='product_fields' showDetails={this.state.showDetails} {...this._getProductData()} />
 
           <ReviewFields ref='review_fields' onChange={this._onFormChange} showDetails={this.state.showDetails}
             {...this.state.review} />
