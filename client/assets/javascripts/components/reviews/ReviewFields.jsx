@@ -60,13 +60,13 @@ const ReviewFields  = React.createClass({
             quality_review={this.props.quality_review} onChangeQualityReview={this.updateQualityReview} />
 
           <div className='form-group attachments'>
-            <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
+            <label htmlFor='product[attachment]' className='sr-only'>Review's attachments</label>
 
             <UploadManager ref='upload_manager' attachments={this.props.attachments} />
           </div>
 
           <div className='form-group links'>
-            <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
+            <label htmlFor='product[attachment]' className='sr-only'>Review's links</label>
 
             <LinksManager ref='links_manager' links={this.props.links} />
           </div>
