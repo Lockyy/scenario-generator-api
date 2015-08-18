@@ -1,26 +1,23 @@
 module Fletcher
   class UpdateReview
-    attr_reader :product, :review
+    attr_reader :review
 
-    def initialize(user, product, params)
-      @user = user
-      @product = product
+    def initialize(review, params)
+      @review = review
       @review_params = (params || {} )
     end
 
     def save!
-      @review = fetch_review
-      @review.reviewable = @product
-      @review.save
+      update_review!
     end
 
     def errors
-      { product: @product.errors }
+      { review: @review.errors }
     end
 
     private
 
-    def fetch_review
+    def update_review!
       params = {}.merge(review_params).with_indifferent_access
 
       params.delete(:attachments)
@@ -32,11 +29,10 @@ module Fletcher
       params.delete(:product)
       params.delete(:tags)
 
-      review = @user.reviews.find(params[:id])
-      review.update_attributes(params)
-      review.tags = tags_params.empty? ? [] : tags_params.map { |tag| Tag.where(name: tag[:name].downcase).first_or_create }
+      @review.tags = tags_params.empty? ? [] : tags_params.map { |tag| Tag.where(name: tag[:name].downcase).first_or_create }
+      @review.update(params)
 
-      review
+      @review.save!
     end
 
     def tags_params

@@ -40,11 +40,11 @@ module Api
     # PATCH/PUT /reviews/1
     # PATCH/PUT /reviews/1.json
     def update
-      review = Fletcher::UpdateReview.new(@user, @product, review_params)
+      @review = @user.reviews.find(params[:id])
+      review = Fletcher::UpdateReview.new(@review, review_params)
 
       respond_to do |format|
         if review.save!
-          @review = review.review
           format.json { render :show, status: :ok, location: api_review_url(@review) }
         else
           format.json { render json: @review.errors, status: :unprocessable_entity }
