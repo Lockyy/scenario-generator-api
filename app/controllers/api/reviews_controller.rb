@@ -1,7 +1,6 @@
 module Api
   class ReviewsController < AppController
-    before_action :set_product, only: [:index, :create]
-    before_action :set_review, only: [:show, :update, :destroy]
+    before_action :set_product, only: [:index, :create, :show, :update]
 
     # GET /reviews
     # GET /reviews.json
@@ -16,6 +15,11 @@ module Api
     # GET /reviews/1
     # GET /reviews/1.json
     def show
+      @review = @product.reviews.find(params[:id])
+
+      respond_to do |format|
+        format.json { render }
+      end
     end
 
     # POST /reviews
@@ -36,9 +40,12 @@ module Api
     # PATCH/PUT /reviews/1
     # PATCH/PUT /reviews/1.json
     def update
+      review = Fletcher::UpdateReview.new(@user, @product, review_params)
+
       respond_to do |format|
-        if @review.update(review_params)
-          format.json { render :show, status: :ok, location: @review }
+        if review.save!
+          @review = review.review
+          format.json { render :show, status: :ok, location: api_review_url(@review) }
         else
           format.json { render json: @review.errors, status: :unprocessable_entity }
         end
@@ -68,11 +75,12 @@ module Api
     # Never trust parameters from the scary internet, only allow the white list through.
     def review_params
       params[:review].permit(
-          :quality_score, :quality_review, :title, :price_review, :price_score,
-          { attachments: [:name, :url, :content_type, :size] },
-          { links: [:url] },
-          { tags: [:name] },
-          { product: [:id, :name, { company: [:name] }, :url, :description] }
+          :id, :quality_score, :quality_review, :title, :price_review, :price_score,
+          :attachable_id, :attachable_type,
+          { attachments: [:name, :url, :content_type, :size, :id] },
+          { links: [:url, :id] },
+          { tags: [:name, :id] },
+          { product: [:id, :name, { company: [:name, :id] }, :url, :description] }
       )
     end
   end
