@@ -43,28 +43,6 @@ const NewReviewPage  = React.createClass({
     return this._getProductData().id;
   },
 
-  _getReview: function _getReview() {
-    let prodRefs = this.refs.product_fields.refs;
-    let review = this.refs.review_fields.getFields();
-
-    if (this._getProductId()) {
-      review.product = {
-        id: this._getProductId()
-      }
-    } else {
-      review.product = {
-        name: prodRefs.product_name.getValue(),
-        description: prodRefs.product_description.getDOMNode().value,
-        url: prodRefs.product_url.getDOMNode().value,
-        company: {
-          name: prodRefs.product_company_name.getValue()
-        }
-      }
-    }
-
-    return { review: review };
-  },
-
   _onChange: function _onChange(review) {
     this.setState(function(oldState) {
       let newState = _.merge({}, oldState, review);
@@ -75,11 +53,6 @@ const NewReviewPage  = React.createClass({
 
       return newState;
     });
-  },
-
-  _onFormChange: function _onFormChange(e) {
-    let review = this._getReview();
-    this._onChange(review);
   },
 
   _onSubmit: function _onSubmit(e) {
@@ -125,9 +98,7 @@ const NewReviewPage  = React.createClass({
       <div className='main-content'>
         <form className='form review new' ref='new_review_form' onSubmit={this._onSubmit}>
           <ProductFields ref='product_fields' showDetails={this.state.showDetails} {...this._getProductData()} />
-
-          <ReviewFields ref='review_fields' onChange={this._onFormChange} showDetails={this.state.showDetails}
-            {...this.state.review} />
+          <ReviewFields ref='review_fields' showDetails={this.state.showDetails} {...this.state.review} />
 
           {this._getActionsContent()}
         </form>

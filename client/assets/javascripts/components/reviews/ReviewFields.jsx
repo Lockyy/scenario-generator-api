@@ -13,21 +13,6 @@ import UploadManager from './UploadManager'
 const ReviewFields  = React.createClass({
   displayName: 'ReviewFields',
 
-  getDefaultProps: function getDefaultProps() {
-    return {
-      onChange: function() {}
-    }
-  },
-
-  getFields: function getFields() {
-    let refs = this.refs;
-    let quality_review_fields = refs.quality_review.getFields();
-
-    return _.merge(quality_review_fields, {
-      tags: refs.tags_manager.getTags()
-    });
-  },
-
   updateQualityScore: function updateQualityScore(e) {
     ReviewPageReviewFieldsActions.updateQualityScore(e.target.value);
   },
