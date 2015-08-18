@@ -21,24 +21,24 @@ const SearchPage = React.createClass({
 
   componentDidMount: function() {
     SearchPageStore.listen(this.onChange.bind(this));
-    this.performSearch({ search_string: this.props.params.search_string, page: this.props.params.page });
+    this.performSearch(this.getSearchParams(this.props.params));
   },
 
   onChange: function(data) {
     this.setState(data);
     // For handling when a user submits a search via the header search input rather than
     // the search page input whilst on the search page.
-    $('.search-container input').val('')
-    $(this.refs.inputBox.getDOMNode()).val(data.data.search_string)
-    $(this.refs.inputBox.getDOMNode()).focus()
+    $('.search-container input').val('');
+    $(this.refs.inputBox.getDOMNode()).val(data.data.search_string);
+    $(this.refs.inputBox.getDOMNode()).focus();
   },
 
   changePageAndSearch: function(params) {
-    let search_string = _.isUndefined(params.search_string) ? this.props.params.search_string : params.search_string
-    let section = params.section || this.props.params.section || 'all'
-    let page = params.page || 1
+    let search_string = _.isUndefined(params.search_string) ? this.props.params.search_string : params.search_string;
+    let section = params.section || this.props.params.section || 'all';
+    let page = params.page || 1;
 
-    this.performSearch({ search_string: search_string, page: page});
+    this.performSearch(this.getSearchParams({ search_string: search_string, page: page }));
     if (search_string && section && page) {
       this.transitionTo(`/app/search/${section}/${search_string}/${page}`);
     } else {
@@ -82,6 +82,16 @@ const SearchPage = React.createClass({
     )
   },
 
+  setQuery: function(query) {
+    this.transitionTo(this.context.router.state.location.pathname, query);
+    let _data = _.merge(this.getSearchParams(this.state.data), query);
+    this.performSearch(_data);
+  },
+
+  getSearchParams: function(data){
+    return { search_string: data.search_string, page: data.page }
+  },
+
   renderResults: function() {
     if(!this.displaySection('products') &&
       !this.displaySection('companies') &&
@@ -96,12 +106,15 @@ const SearchPage = React.createClass({
           data={this.state.data.products}
           searchTerm={this.props.params.search_string}
           changePage={this.changePage}
-          showButton={ this.props.params.section == 'all' }
-          showPagination={ this.props.params.section == 'products' }
+          showButton={this.props.params.section == 'all'}
+          showPagination={this.props.params.section == 'products'}
           showTopLink={false}
           showImages={true}
           hide={!this.displaySection('products')}
-          currentPage={this.props.params.page} />
+          currentPage={this.props.params.page}
+          section={this.props.params.section}
+          onSetQuery={this.setQuery}
+            />
         <Results
           type='companies'
           data={this.state.data.companies}
@@ -112,12 +125,16 @@ const SearchPage = React.createClass({
           showTopLink={false}
           showImages={true}
           hide={!this.displaySection('companies')}
-          currentPage={this.props.params.page} />
+          currentPage={this.props.params.page}
+          section={this.props.params.section}
+            />
         <TagResults
           data={this.state.data.tags}
           hide={!this.displaySection('tags')}
           showSize={true}
-          searchTerm={this.props.params.search_string} />
+          searchTerm={this.props.params.search_string}
+          section={this.props.params.section}
+            />
       </div>
     )
   },

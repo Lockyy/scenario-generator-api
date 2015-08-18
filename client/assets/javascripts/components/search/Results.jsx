@@ -110,7 +110,7 @@ const Results = React.createClass ({
       let pageLinks = [];
 
       for (let i = 1; i <= this.props.data.pages; i++) {
-        let active = ''
+        let active = '';
 
         if(this.props.currentPage == i) {
           active = 'active'
@@ -130,13 +130,34 @@ const Results = React.createClass ({
   },
 
   renderTopLink: function() {
+      let section = this.props.section;
     if(this.props.showTopLink) {
       return (
         <div className='size'>
           <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`}>More</a>
         </div>
       )
-    } else {
+    } else if(this.getMaxDisplayedData() <  this.props.data.total && section == 'all'){
+        return(
+        <div className='size'>
+            Showing { this.getMaxDisplayedData() } of {this.props.data.total} results found
+        </div>)
+    } else if(section == 'products'){
+        return(
+            <div className='size'>
+                <div className='form-group'>
+                    <label for="sort"> Sort by: </label>
+                    <select id='sort' name="sort" onChange={ (e) => this.props.onSetQuery({sort_by: e.target.value})}>
+                        <option value='relevance'>Relevance</option>
+                        <option value='latest'>Latest</option>
+                        <option value='high_to_low'>Rating High to Low</option>
+                        <option value='low_to_high'>Rating Low to Hight</option>
+                        <option value='alphabetical_order'>Alphabetical order</option>
+                    </select>
+                </div>
+            </div>)
+    }
+    else {
       return (
         <div className='size'>
           { this.props.data.total } result(s) found

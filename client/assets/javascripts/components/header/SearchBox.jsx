@@ -46,7 +46,7 @@ const SearchBox = React.createClass ({
   onSubmit: function(event) {
     try { event.preventDefault() } catch(err) { }
 
-    let search_string = $(this.refs.inputBox.getDOMNode()).val()
+    let search_string = $(this.refs.inputBox.getDOMNode()).val();
     if(search_string) {
       this.setState(this.getInitialState());
       this.props.router.transitionTo(`/app/search/all/${search_string}/1`);
