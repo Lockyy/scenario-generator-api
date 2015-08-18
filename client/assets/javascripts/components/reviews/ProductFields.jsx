@@ -13,6 +13,7 @@ const ProductFields  = React.createClass({
 
   getDefaultProps: function getDefaultProps() {
     return {
+      canChangeProduct: true,
       name: '',
       company: {
         name: ''
@@ -88,7 +89,7 @@ const ProductFields  = React.createClass({
       <fieldset>
         <h1 className='title'>Product Directory</h1>
         <ProductName ref='product_name' value={this.props.name} disableButton={!this.props.showDetails}
-          onSetProduct={this._setProduct} />
+          onSetProduct={this._setProduct} disabled={!this.props.canChangeProduct} />
         {details}
       </fieldset>
     );

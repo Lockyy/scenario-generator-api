@@ -13,6 +13,10 @@ class FluxReviewPageActions {
     this.dispatch(mode);
   }
 
+  setCanChangeProduct(canChangeProduct) {
+    this.dispatch(canChangeProduct);
+  }
+
   fetchProduct(productId, success, error) {
     this.dispatch(productId);
     ProductAPI.getProduct(productId, success, error)

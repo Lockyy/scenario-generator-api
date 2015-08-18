@@ -85,9 +85,11 @@ const ProductName  = React.createClass({
             bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
             onSelectOption={this._onSelectProduct} onSelectNoOption={this._onSelectCreateProduct}
             onChange={this._onNameChange} onRender={this._hideCreateWhenMatch}
-            ref='product_name' required/>
+            ref='product_name' disabled={this.props.disabled} required/>
           <span className="input-group-btn">
-            <button className="btn btn-default" type="button" disabled={this.props.disableButton}>Go</button>
+            <button className="btn btn-default" type="button" disabled={this.props.disableButton || this.props.disabled}>
+              Go
+            </button>
           </span>
         </div>
         <span className="help-block with-errors"></span>

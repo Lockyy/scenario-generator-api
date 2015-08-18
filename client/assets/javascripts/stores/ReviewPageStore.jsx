@@ -24,6 +24,7 @@ class ReviewPageStore {
     this.bindListeners({
       handleSetShowDetails: FluxReviewPageActions.SET_SHOW_DETAILS,
       handleSetMode: FluxReviewPageActions.SET_MODE,
+      handleSetCanChangeProduct: FluxReviewPageActions.SET_CAN_CHANGE_PRODUCT,
       handleFetchProduct: FluxReviewPageActions.FETCH_PRODUCT,
       handleSetProduct: FluxReviewPageActions.SET_PRODUCT,
       handleUpdateProduct: FluxReviewPageActions.UPDATE_PRODUCT,
@@ -50,6 +51,10 @@ class ReviewPageStore {
 
   handleSetShowDetails(showDetails) {
     this.showDetails = showDetails;
+  }
+
+  handleSetCanChangeProduct(canChangeProduct) {
+    this.canChangeProduct = canChangeProduct;
   }
 
   handleFetchProduct(product) {
@@ -128,6 +133,7 @@ class ReviewPageStore {
     this.review = _.merge({}, emptyReview);
     this.showDetails = false;
     this.mode = 'create';
+    this.canChangeProduct = true;
     this.error = null;
   }
 }

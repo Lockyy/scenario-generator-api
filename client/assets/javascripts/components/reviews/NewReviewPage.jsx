@@ -31,11 +31,13 @@ const NewReviewPage  = React.createClass({
       FluxReviewPageActions.fetchReview(params.productId, params.reviewId, function(review) {
         FluxReviewPageActions.setReview(review);
         FluxReviewPageActions.setMode('update');
+        FluxReviewPageActions.setCanChangeProduct(false);
         FluxReviewPageActions.setShowDetails(true);
       });
     }
     if (params.productId) {
       FluxReviewPageActions.fetchProduct(params.productId, function(product) {
+        FluxReviewPageActions.setCanChangeProduct(false);
         FluxReviewPageActions.setShowDetails(true);
         FluxReviewPageActions.setProduct(product);
       });
@@ -108,7 +110,8 @@ const NewReviewPage  = React.createClass({
       </div>
       <div className='main-content'>
         <form className='form review new' ref='new_review_form' onSubmit={this._onSubmit}>
-          <ProductFields ref='product_fields' mode={this.state.mode} showDetails={this.state.showDetails} {...this._getProductData()} />
+          <ProductFields ref='product_fields' canChangeProduct={this.state.canChangeProduct} mode={this.state.mode}
+            showDetails={this.state.showDetails} {...this._getProductData()} />
           <ReviewFields ref='review_fields' showDetails={this.state.showDetails} {...this.state.review} />
 
           {this._getActionsContent()}
