@@ -84,6 +84,10 @@ class ReviewPageStore {
     _.merge(this.review, review);
   }
 
+  handleUpdateReviewQualityScore(score) {
+    this.review.quality_score = score
+  }
+
   handleSubmitReview() {
     this.review = _.merge({}, emptyReview);
   }
