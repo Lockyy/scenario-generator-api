@@ -1,7 +1,7 @@
 module Fletcher
   class Search::SearchCompanies < Search::SearchBase
-    def initialize(attribute, terms)
-      super(attribute, terms)
+    def initialize(attribute, terms, sort_description)
+      super(attribute, terms, sort_description)
     end
 
     private

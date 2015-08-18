@@ -55,10 +55,6 @@ module Fletcher
       per_page
     end
 
-    def sort(data)
-      data.order(name: :asc)
-    end
-
     def paginate(data)
       data.paginate(:page => @page, :per_page => @per_page)
     end
@@ -71,29 +67,28 @@ module Fletcher
     def data_hash(data)
       return { total: 0, pages: 0, data: [] } if @params[:search_string].blank?
 
-      sorted_data = sort(data)
-      filtered_data = paginate(sorted_data)
+      paginated_data = paginate(data)
 
       {
           total: data.size,
-          pages: filtered_data.total_pages,
-          data: filtered_data
+          pages: paginated_data.total_pages,
+          data: paginated_data
       }
     end
 
     def companies(terms)
       return [] if @params[:search_string].blank?
-      SearchCompanies.new(@params[:filter_by], terms).results
+      SearchCompanies.new(@params[:filter_by], terms, @params[:sort_by]).results
     end
 
     def products(terms)
       return [] if @params[:search_string].blank?
-      SearchProducts.new(@params[:filter_by], terms).results
+      SearchProducts.new(@params[:filter_by], terms, @params[:sort_by]).results
     end
 
     def tags(terms)
       return [] if @params[:search_string].blank?
-      SearchTags.new(@params[:filter_by], terms).results
+      SearchTags.new(@params[:filter_by], terms, @params[:sort_by]).results
     end
 
     def related_tags(products, companies)
