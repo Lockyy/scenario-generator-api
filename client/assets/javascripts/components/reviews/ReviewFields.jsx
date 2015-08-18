@@ -24,9 +24,7 @@ const ReviewFields  = React.createClass({
     let quality_review_fields = refs.quality_review.getFields();
 
     return _.merge(quality_review_fields, {
-      links: refs.links_manager.getLinks(),
       tags: refs.tags_manager.getTags(),
-      price_score: refs.product_review_price_score.getValue(),
       price_review: React.findDOMNode(refs.product_review_price_review).value,
     });
   },
@@ -41,6 +39,10 @@ const ReviewFields  = React.createClass({
 
   updateQualityReview: function updateQualityReview(e) {
     ReviewPageReviewFieldsActions.updateQualityReview(e.target.value);
+  },
+
+  updatePriceScore: function updatePriceScore(e) {
+    ReviewPageReviewFieldsActions.updatePriceScore(e.target.value);
   },
 
   _getContent: function _getContent() {
@@ -74,7 +76,7 @@ const ReviewFields  = React.createClass({
           <div className='form-group inline rating'>
             <label htmlFor='product[review[price_score]]'>Pricing</label>
             <PriceRating name='product[review[price_score]]' ratingEnabled={true} ref='product_review_price_score'
-              value={this.props.price_score} onChange={this.props.onChange}/>
+              value={this.props.price_score} onChange={this.updatePriceScore} />
           </div>
 
           <div className='form-group'>

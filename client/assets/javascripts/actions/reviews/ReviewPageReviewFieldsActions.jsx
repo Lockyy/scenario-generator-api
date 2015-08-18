@@ -42,6 +42,10 @@ class ReviewPageReviewFieldsActions {
     this.dispatch(score);
   }
 
+  updatePriceScore(score) {
+    this.dispatch(score);
+  }
+
   updateTitle(title) {
     this.dispatch(title);
   }

@@ -34,6 +34,7 @@ class ReviewPageStore {
       handleUpdateReviewQualityScore: ReviewPageReviewFieldsActions.UPDATE_QUALITY_SCORE,
       handleUpdateReviewTitle: ReviewPageReviewFieldsActions.UPDATE_TITLE,
       handleUpdateReviewQualityReview: ReviewPageReviewFieldsActions.UPDATE_QUALITY_REVIEW,
+      handleUpdateReviewPriceScore: ReviewPageReviewFieldsActions.UPDATE_PRICE_SCORE,
       handleSubmitReview: FluxReviewPageActions.SUBMIT_REVIEW,
       handleAddFile: ReviewPageReviewFieldsActions.ADD_FILE,
       handleAddLink: ReviewPageReviewFieldsActions.ADD_LINK,
@@ -96,6 +97,10 @@ class ReviewPageStore {
 
   handleUpdateReviewQualityReview(qualityReview) {
     this.review.quality_review = qualityReview
+  }
+
+  handleUpdateReviewPriceScore(score) {
+    this.review.price_score = score
   }
 
   handleSubmitReview() {
