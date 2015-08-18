@@ -1,11 +1,12 @@
 import React from 'react'
-import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import ReviewPageReviewFieldsActions from '../../actions/reviews/ReviewPageReviewFieldsActions'
 import UrlHelper from '../../utils/helpers/UrlHelper'
 
 const UploadManager = React.createClass({
   getDefaultProps: function getDefaultProps() {
     return {
-      onChange: function() {},
+      onAddFile: function(file) {},
+      onError: function(error, file) {},
       buttonText: 'Browse',
       uploadText: 'Upload a file',
       uploadingText: 'Uploading...'
@@ -32,7 +33,7 @@ const UploadManager = React.createClass({
       let $input = $(React.findDOMNode(_this.refs.product_attachment_placeholder));
       let $button = $(React.findDOMNode(_this.refs.product_attachment_button));
 
-      FluxReviewPageActions.addFile(file.file, {
+      ReviewPageReviewFieldsActions.addFile(file.file, {
         onProgress: function(file, fileSize) {
           let percentage = (fileSize / file.size * 100).toFixed(2)
           $input.addClass('uploading').prop('disabled', true).attr('value', _this.props.uploadingText + " " + percentage  + "%");
@@ -41,11 +42,12 @@ const UploadManager = React.createClass({
         success: function(file, downloadUrl) {
           $input.removeClass('uploading').prop('disabled', false).attr('value', _this.props.uploadText);
           $button.addClass('uploading').prop('disabled', false);
-          _this.props.onChange(e);
+          _this.props.onAddFile(file);
         },
         error: function(error) {
           $input.removeClass('uploading').prop('disabled', false).attr('value', _this.props.uploadText);
           $button.addClass('uploading').prop('disabled', false);
+          _this.props.onError(error, file);
         }
       });
     });
