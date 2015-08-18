@@ -3,7 +3,6 @@ import alt from '../FluxAlt';
 import { Router, Navigation } from 'react-router'
 import NewReviewPageAPI from '../utils/api/NewReviewPageAPI';
 import ProductAPI from '../utils/api/ProductAPI';
-import S3API from '../utils/api/S3API';
 
 class FluxReviewPageActions {
   setShowDetails(showDetails) {

@@ -1,5 +1,7 @@
 import _ from 'lodash';
 import alt from '../../FluxAlt';
+import NewReviewPageAPI from '../../utils/api/NewReviewPageAPI';
+import S3API from '../../utils/api/S3API';
 
 class ReviewPageReviewFieldsActions {
   addFile(file, callbacks) {

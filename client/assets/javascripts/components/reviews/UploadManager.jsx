@@ -1,5 +1,5 @@
 import React from 'react'
-import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import ReviewPageReviewFieldsActions from '../../actions/reviews/ReviewPageReviewFieldsActions'
 import UrlHelper from '../../utils/helpers/UrlHelper'
 
 const UploadManager = React.createClass({
@@ -33,7 +33,7 @@ const UploadManager = React.createClass({
       let $input = $(React.findDOMNode(_this.refs.product_attachment_placeholder));
       let $button = $(React.findDOMNode(_this.refs.product_attachment_button));
 
-      FluxReviewPageActions.addFile(file.file, {
+      ReviewPageReviewFieldsActions.addFile(file.file, {
         onProgress: function(file, fileSize) {
           let percentage = (fileSize / file.size * 100).toFixed(2)
           $input.addClass('uploading').prop('disabled', true).attr('value', _this.props.uploadingText + " " + percentage  + "%");
