@@ -7,7 +7,8 @@ const QualityReview  = React.createClass({
 
   getDefaultProps: function getDefaultProps() {
     return {
-      onChange: function() {},
+      onChangeTitle: function(e) {},
+      onChangeQualityReview: function(e) {},
       title: '',
       quality_review: ''
     }
@@ -39,10 +40,10 @@ const QualityReview  = React.createClass({
         <div className='fields_container' ref='fields_container'>
           <input type='text' className='form-control' placeholder='Title' name='product[review[title]]'
             ref='product_review_title' value={this.props.title}
-            onFocus={this._onFocus} onBlur={this._onBlur} onChange={this.props.onChange} />
+            onFocus={this._onFocus} onBlur={this._onBlur} onChange={this.props.onChangeTitle} />
           <textarea type='text' className='form-control' placeholder='Say something' name='product[review[quality_review]]'
             rows='10' ref='product_review_quality_review' value={this.props.quality_review}
-            onFocus={this._onFocus} onBlur={this._onBlur} onChange={this.props.onChange} />
+            onFocus={this._onFocus} onBlur={this._onBlur} onChange={this.props.onChangeQualityReview} />
         </div>
       </div>
     );

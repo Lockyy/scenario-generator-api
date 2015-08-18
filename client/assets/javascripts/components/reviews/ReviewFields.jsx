@@ -35,6 +35,14 @@ const ReviewFields  = React.createClass({
     ReviewPageReviewFieldsActions.updateQualityScore(e.target.value);
   },
 
+  updateTitle: function updateTitle(e) {
+    ReviewPageReviewFieldsActions.updateTitle(e.target.value);
+  },
+
+  updateQualityReview: function updateQualityReview(e) {
+    ReviewPageReviewFieldsActions.updateQualityReview(e.target.value);
+  },
+
   _getContent: function _getContent() {
     if (this.props.showDetails) {
       return (
@@ -48,8 +56,8 @@ const ReviewFields  = React.createClass({
               value={this.props.quality_score} onChange={this.updateQualityScore} />
           </div>
 
-          <QualityReview ref='quality_review' title={this.props.title} quality_review={this.props.quality_review}
-            onChange={this.props.onChange} />
+          <QualityReview ref='quality_review' title={this.props.title} onChangeTitle={this.updateTitle}
+            quality_review={this.props.quality_review} onChangeQualityReview={this.updateQualityReview} />
 
           <div className='form-group attachments'>
             <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>

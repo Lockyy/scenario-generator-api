@@ -39,6 +39,14 @@ class ReviewPageReviewFieldsActions {
   updateQualityScore(score) {
     this.dispatch(score);
   }
+
+  updateTitle(title) {
+    this.dispatch(title);
+  }
+
+  updateQualityReview(QualityReview) {
+    this.dispatch(QualityReview);
+  }
 }
 
 export default alt.createActions(ReviewPageReviewFieldsActions);
