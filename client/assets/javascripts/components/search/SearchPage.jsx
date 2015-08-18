@@ -38,11 +38,13 @@ const SearchPage = React.createClass({
     let section = params.section || this.props.params.section || 'all';
     let page = params.page || 1;
 
-    this.performSearch(this.getSearchParams({ search_string: search_string, page: page }));
+    let query = this.context.router.state.location.query;
+    this.performSearch(this.getSearchParams({ search_string: search_string, page: page}));
+
     if (search_string && section && page) {
-      this.transitionTo(`/app/search/${section}/${search_string}/${page}`);
+      this.transitionTo(`/app/search/${section}/${search_string}/${page}`, query);
     } else {
-      this.transitionTo(`/app/search/${section}`);
+      this.transitionTo(`/app/search/${section}`, query);
     }
   },
 
@@ -89,7 +91,8 @@ const SearchPage = React.createClass({
   },
 
   getSearchParams: function(data){
-    return { search_string: data.search_string, page: data.page }
+    let _data = {search_string: data.search_string, page: data.page};
+    return _.merge(_data, this.context.router.state.location.query);
   },
 
   renderResults: function() {

@@ -139,19 +139,19 @@ const Results = React.createClass ({
       )
     } else if(this.getMaxDisplayedData() <  this.props.data.total && section == 'all'){
         return(
-        <div className='size'>
-            Showing { this.getMaxDisplayedData() } of {this.props.data.total} results found
+        <div id='results-text-container' className='size'>
+            <span> Showing <span className='value'>{ this.getMaxDisplayedData() }</span> of <span className='value'>{this.props.data.total}</span> results found </span>
         </div>)
     } else if(section == 'products'){
         return(
-            <div className='size'>
+            <div id='sort-container'>
                 <div className='form-group'>
                     <label for="sort"> Sort by: </label>
                     <select id='sort' name="sort" onChange={ (e) => this.props.onSetQuery({sort_by: e.target.value})}>
                         <option value='relevance'>Relevance</option>
                         <option value='latest'>Latest</option>
                         <option value='high_to_low'>Rating High to Low</option>
-                        <option value='low_to_high'>Rating Low to Hight</option>
+                        <option value='low_to_high'>Rating Low to High</option>
                         <option value='alphabetical_order'>Alphabetical order</option>
                     </select>
                 </div>

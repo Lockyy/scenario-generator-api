@@ -8,19 +8,32 @@
   .results
     margin-top: 10px
     .title
-      border-bottom: 1px solid $grey
       .name
         float: left
         font-size: 14px
         text-transform: uppercase
+
+      #results-text-container
+        color: $dark-grey
+
+        .value
+          font-weight: bold
+
       .size
         float: right
+
+      #sort-container
+        float: right
+
+        label
+          font-weight: normal
+          color: $dark-grey
 
         #sort
           margin-left: 10px
           border: none
           background-color: white
-
+          -webkit-appearance: none
 
     .result
       padding: 0px !important
@@ -92,8 +105,9 @@
   text-align: center
   width: 100%
   .pagination-link
+    color: $dark-grey
     padding: 5px
     cursor: pointer
-    color: $medium-grey
     &.active
-      color: $dark-grey
+      font-weight: bold
+
