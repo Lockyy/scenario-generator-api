@@ -5,7 +5,8 @@ import UrlHelper from '../../utils/helpers/UrlHelper'
 const UploadManager = React.createClass({
   getDefaultProps: function getDefaultProps() {
     return {
-      onChange: function() {},
+      onAddFile: function(file) {},
+      onError: function(error, file) {},
       buttonText: 'Browse',
       uploadText: 'Upload a file',
       uploadingText: 'Uploading...'
@@ -41,11 +42,12 @@ const UploadManager = React.createClass({
         success: function(file, downloadUrl) {
           $input.removeClass('uploading').prop('disabled', false).attr('value', _this.props.uploadText);
           $button.addClass('uploading').prop('disabled', false);
-          _this.props.onChange(e);
+          _this.props.onAddFile(file);
         },
         error: function(error) {
           $input.removeClass('uploading').prop('disabled', false).attr('value', _this.props.uploadText);
           $button.addClass('uploading').prop('disabled', false);
+          _this.props.onError(error, file);
         }
       });
     });

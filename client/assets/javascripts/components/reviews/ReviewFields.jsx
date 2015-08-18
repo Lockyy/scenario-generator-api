@@ -24,7 +24,6 @@ const ReviewFields  = React.createClass({
 
     return _.merge(quality_review_fields, {
       quality_score: refs.product_review_quality_score.getValue(),
-      attachments: refs.upload_manager.getFiles(),
       links: refs.links_manager.getLinks(),
       tags: refs.tags_manager.getTags(),
       price_score: refs.product_review_price_score.getValue(),
@@ -51,7 +50,7 @@ const ReviewFields  = React.createClass({
           <div className='form-group attachments'>
             <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
 
-            <UploadManager ref='upload_manager' attachments={this.props.attachments} onChange={this.props.onChange} />
+            <UploadManager ref='upload_manager' attachments={this.props.attachments} />
           </div>
 
           <div className='form-group links'>
