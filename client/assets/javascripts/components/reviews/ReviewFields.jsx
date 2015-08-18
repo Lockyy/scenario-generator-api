@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import ReviewPageReviewFieldsActions from '../../actions/reviews/ReviewPageReviewFieldsActions'
 import LinksManager from './LinksManager'
 import PriceRating from '../PriceRating'
 import QualityReview from './QualityReview'

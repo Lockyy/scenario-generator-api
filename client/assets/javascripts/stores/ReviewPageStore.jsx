@@ -1,6 +1,7 @@
 import alt from '../FluxAlt';
 import FluxReviewPageActions from '../actions/FluxReviewPageActions'
 import ReviewPageProductFieldsActions from '../actions/reviews/ReviewPageProductFieldsActions'
+import ReviewPageReviewFieldsActions from '../actions/reviews/ReviewPageReviewFieldsActions'
 
 const emptyReview = {
   links: [],
@@ -30,10 +31,11 @@ class ReviewPageStore {
       handleUpdateProductDescription: ReviewPageProductFieldsActions.UPDATE_PRODUCT_DESCRIPTION,
       handleUpdateProductUrl: ReviewPageProductFieldsActions.UPDATE_PRODUCT_URL,
       handleSetReview: FluxReviewPageActions.SET_REVIEW,
+      handleUpdateReviewQualityScore: ReviewPageReviewFieldsActions.UPDATE_QUALITY_SCORE,
       handleSubmitReview: FluxReviewPageActions.SUBMIT_REVIEW,
-      handleAddFile: FluxReviewPageActions.ADD_FILE,
-      handleAddLink: FluxReviewPageActions.ADD_LINK,
-      handleAddTag: FluxReviewPageActions.ADD_TAG,
+      handleAddFile: ReviewPageReviewFieldsActions.ADD_FILE,
+      handleAddLink: ReviewPageReviewFieldsActions.ADD_LINK,
+      handleAddTag: ReviewPageReviewFieldsActions.ADD_TAG,
       handleRegisterError: FluxReviewPageActions.REGISTER_ERROR
     });
   }
