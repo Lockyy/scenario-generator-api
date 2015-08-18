@@ -19,17 +19,17 @@ const emptyReview = {
 
 class ReviewPageStore {
   constructor() {
-    this.review = _.merge({}, emptyReview);
-    this.showDetails = false;
-    this.error = null;
+    this.resetDefaultState();
 
     this.bindListeners({
       handleSetShowDetails: FluxReviewPageActions.SET_SHOW_DETAILS,
+      handleSetMode: FluxReviewPageActions.SET_MODE,
       handleFetchProduct: FluxReviewPageActions.FETCH_PRODUCT,
       handleSetProduct: FluxReviewPageActions.SET_PRODUCT,
       handleUpdateProduct: FluxReviewPageActions.UPDATE_PRODUCT,
       handleUpdateProductDescription: ReviewPageProductFieldsActions.UPDATE_PRODUCT_DESCRIPTION,
       handleUpdateProductUrl: ReviewPageProductFieldsActions.UPDATE_PRODUCT_URL,
+      handleFetchReview: FluxReviewPageActions.FETCH_REVIEW,
       handleSetReview: FluxReviewPageActions.SET_REVIEW,
       handleUpdateReviewQualityScore: ReviewPageReviewFieldsActions.UPDATE_QUALITY_SCORE,
       handleUpdateReviewTitle: ReviewPageReviewFieldsActions.UPDATE_TITLE,
@@ -42,6 +42,10 @@ class ReviewPageStore {
       handleAddTag: ReviewPageReviewFieldsActions.ADD_TAG,
       handleRegisterError: FluxReviewPageActions.REGISTER_ERROR
     });
+  }
+
+  handleSetMode(mode) {
+    this.mode = mode;
   }
 
   handleSetShowDetails(showDetails) {
@@ -80,6 +84,10 @@ class ReviewPageStore {
     this.review.tags.push(tag);
   }
 
+  handleFetchReview(review) {
+    this.review = review;
+  }
+
   handleSetReview(review) {
     this.review = review;
   }
@@ -109,11 +117,18 @@ class ReviewPageStore {
   }
 
   handleSubmitReview() {
-    this.review = _.merge({}, emptyReview);
+    this.resetDefaultState();
   }
 
   handleRegisterError(error) {
     this.error = error;
+  }
+
+  resetDefaultState() {
+    this.review = _.merge({}, emptyReview);
+    this.showDetails = false;
+    this.mode = 'create';
+    this.error = null;
   }
 }
 

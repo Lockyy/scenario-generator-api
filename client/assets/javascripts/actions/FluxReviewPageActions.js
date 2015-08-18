@@ -9,6 +9,10 @@ class FluxReviewPageActions {
     this.dispatch(showDetails);
   }
 
+  setMode(mode) {
+    this.dispatch(mode);
+  }
+
   fetchProduct(productId, success, error) {
     this.dispatch(productId);
     ProductAPI.getProduct(productId, success, error)
@@ -20,6 +24,10 @@ class FluxReviewPageActions {
 
   updateProduct(product) {
     this.dispatch(product);
+  }
+
+  fetchReview(productId, reviewId, resolve, reject) {
+    NewReviewPageAPI.fetchReview(productId, reviewId, resolve, reject);
   }
 
   setReview(review) {

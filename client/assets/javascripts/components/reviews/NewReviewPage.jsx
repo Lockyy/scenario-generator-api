@@ -17,6 +17,7 @@ const NewReviewPage  = React.createClass({
   getInitialState: function getInitialState() {
     return {
       review: {
+        mode: 'create',
         product: {}
       }
     }
@@ -25,6 +26,14 @@ const NewReviewPage  = React.createClass({
   componentDidMount: function componentDidMount() {
    ReviewPageStore.listen(this._onChange);
     let params = this.context.router.state.params;
+
+    if (params.reviewId) {
+      FluxReviewPageActions.fetchReview(params.productId, params.reviewId, function(review) {
+        FluxReviewPageActions.setReview(review);
+        FluxReviewPageActions.setMode('update');
+        FluxReviewPageActions.setShowDetails(true);
+      });
+    }
     if (params.productId) {
       FluxReviewPageActions.fetchProduct(params.productId, function(product) {
         FluxReviewPageActions.setShowDetails(true);
@@ -72,12 +81,14 @@ const NewReviewPage  = React.createClass({
   },
 
   _getActionsContent: function _getActionsContent() {
+    let submitText = `${this.state.mode} Review`;
+
     if (this.state.showDetails) {
       return (<div className='actions'>
         <Link to={'/app'} >
           <button type='button' className='btn btn-default btn-round'>Cancel</button>
         </Link>
-        <input type='submit' className='btn btn-default submit btn-round' value='Create Review' />
+        <input type='submit' className='btn btn-default submit btn-round' value={submitText} />
       </div>);
     } else {
       return (<div />);
@@ -97,7 +108,7 @@ const NewReviewPage  = React.createClass({
       </div>
       <div className='main-content'>
         <form className='form review new' ref='new_review_form' onSubmit={this._onSubmit}>
-          <ProductFields ref='product_fields' showDetails={this.state.showDetails} {...this._getProductData()} />
+          <ProductFields ref='product_fields' mode={this.state.mode} showDetails={this.state.showDetails} {...this._getProductData()} />
           <ReviewFields ref='review_fields' showDetails={this.state.showDetails} {...this.state.review} />
 
           {this._getActionsContent()}
