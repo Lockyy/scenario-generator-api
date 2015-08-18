@@ -1,5 +1,6 @@
 import alt from '../FluxAlt';
 import FluxReviewPageActions from '../actions/FluxReviewPageActions'
+import ReviewPageProductFieldsActions from '../actions/reviews/ReviewPageProductFieldsActions'
 
 const emptyReview = {
   links: [],
@@ -26,6 +27,8 @@ class ReviewPageStore {
       handleFetchProduct: FluxReviewPageActions.FETCH_PRODUCT,
       handleSetProduct: FluxReviewPageActions.SET_PRODUCT,
       handleUpdateProduct: FluxReviewPageActions.UPDATE_PRODUCT,
+      handleUpdateProductDescription: ReviewPageProductFieldsActions.UPDATE_PRODUCT_DESCRIPTION,
+      handleUpdateProductUrl: ReviewPageProductFieldsActions.UPDATE_PRODUCT_URL,
       handleSetReview: FluxReviewPageActions.SET_REVIEW,
       handleSubmitReview: FluxReviewPageActions.SUBMIT_REVIEW,
       handleAddFile: FluxReviewPageActions.ADD_FILE,
@@ -49,6 +52,14 @@ class ReviewPageStore {
 
   handleUpdateProduct(product) {
     _.merge(this.review.product, product);
+  }
+
+  handleUpdateProductDescription(description) {
+    this.review.product.description = description;
+  }
+
+  handleUpdateProductUrl(url) {
+    this.review.product.url = url;
   }
 
   handleAddFile(file) {
