@@ -96,15 +96,16 @@ const NewReviewPage  = React.createClass({
     e.preventDefault();
 
     let _this = this;
-    let review = _this._getReview();
+    let review = _this.state;
 
-    FluxReviewPageActions.updateReview(review);
-    FluxReviewPageActions.submitReview(review, function(data) {
-      _this.context.router.transitionTo(`/app/products/${data.reviewable.id}`)
-    },
-    function(error) {
-      console.error(error)
-    });
+    FluxReviewPageActions.submitReview(review,
+      function(data) {
+        _this.context.router.transitionTo(`/app/products/${data.reviewable.id}`)
+      },
+      function(error) {
+        console.error(error)
+      }
+    );
   },
 
   _getActionsContent: function _getActionsContent() {
