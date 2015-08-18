@@ -24,8 +24,7 @@ const ReviewFields  = React.createClass({
     let quality_review_fields = refs.quality_review.getFields();
 
     return _.merge(quality_review_fields, {
-      tags: refs.tags_manager.getTags(),
-      price_review: React.findDOMNode(refs.product_review_price_review).value,
+      tags: refs.tags_manager.getTags()
     });
   },
 
@@ -43,6 +42,10 @@ const ReviewFields  = React.createClass({
 
   updatePriceScore: function updatePriceScore(e) {
     ReviewPageReviewFieldsActions.updatePriceScore(e.target.value);
+  },
+
+  updatePriceReview: function updatePriceReview(e) {
+    ReviewPageReviewFieldsActions.updatePriceReview(e.target.value);
   },
 
   _getContent: function _getContent() {
@@ -84,7 +87,7 @@ const ReviewFields  = React.createClass({
 
             <textarea type='text' className='form-control' placeholder='Add a brief description of the product’s pricing'
               name='product[review[price_review]]' rows='10' ref='product_review_price_review'
-              value={this.props.price_review} onChange={this.props.onChange} />
+              value={this.props.price_review} onChange={this.updatePriceReview} />
           </div>
 
           <div className='form-group tags'>

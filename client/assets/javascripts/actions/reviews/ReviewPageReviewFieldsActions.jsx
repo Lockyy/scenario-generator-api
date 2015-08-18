@@ -50,8 +50,12 @@ class ReviewPageReviewFieldsActions {
     this.dispatch(title);
   }
 
-  updateQualityReview(QualityReview) {
-    this.dispatch(QualityReview);
+  updateQualityReview(qualityReview) {
+    this.dispatch(qualityReview);
+  }
+
+  updatePriceReview(priceReview) {
+    this.dispatch(priceReview);
   }
 }
 
