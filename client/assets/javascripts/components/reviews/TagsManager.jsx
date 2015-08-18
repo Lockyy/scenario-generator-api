@@ -1,5 +1,5 @@
 import React from 'react'
-import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import ReviewPageReviewFieldsActions from '../../actions/reviews/ReviewPageReviewFieldsActions'
 import TypeAhead from '../TypeAhead'
 
 const TagsManager = React.createClass({
@@ -29,7 +29,7 @@ const TagsManager = React.createClass({
       return ;
     }
 
-    FluxReviewPageActions.addTag(tag, {
+    ReviewPageReviewFieldsActions.addTag(tag, {
       success: function(tag) {
         $(React.findDOMNode(_this.refs.product_review_tag_to_add.refs.typeahead_input)).typeahead('val', null);
       }
