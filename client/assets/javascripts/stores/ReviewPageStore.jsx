@@ -30,6 +30,7 @@ class ReviewPageStore {
       handleUpdateProduct: FluxReviewPageActions.UPDATE_PRODUCT,
       handleUpdateProductDescription: ReviewPageProductFieldsActions.UPDATE_PRODUCT_DESCRIPTION,
       handleUpdateProductUrl: ReviewPageProductFieldsActions.UPDATE_PRODUCT_URL,
+      resetDefaultState: FluxReviewPageActions.CLEAR_REVIEW,
       handleFetchReview: FluxReviewPageActions.FETCH_REVIEW,
       handleSetReview: FluxReviewPageActions.SET_REVIEW,
       handleUpdateReviewQualityScore: ReviewPageReviewFieldsActions.UPDATE_QUALITY_SCORE,

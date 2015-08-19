@@ -26,6 +26,7 @@ const NewReviewPage  = React.createClass({
   componentDidMount: function componentDidMount() {
    ReviewPageStore.listen(this._onChange);
     let params = this.context.router.state.params;
+    FluxReviewPageActions.clearReview();
 
     if (params.reviewId) {
       FluxReviewPageActions.fetchReview(params.productId, params.reviewId, function(review) {
