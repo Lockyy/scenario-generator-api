@@ -154,7 +154,7 @@ const SearchPage = React.createClass({
 
   renderFilters: function() {
     return (
-      <div className='col-xs-3'>
+      <div id='tag-filter-container' className='col-xs-3'>
         <TagResults
           title={'Related Tags'}
           data={this.state.data.related_tags}
