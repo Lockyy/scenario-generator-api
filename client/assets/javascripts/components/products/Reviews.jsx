@@ -10,6 +10,10 @@ import Tags from '../Tags';
 const Reviews = React.createClass({
   displayName: 'Reviews',
 
+  contextTypes: {
+      currentUser: React.PropTypes.object.isRequired
+  },
+
   componentDidMount: function() {
     ReviewsStore.listen(this.onChange.bind(this));
     FluxProductReviewsActions.fetchReviews(this.props.productID);
@@ -76,8 +80,13 @@ const Reviews = React.createClass({
             { review.price_score ? <PriceRating value={review.price_score} name='rating'/> : '' }
           </div>
           <div className="price-review" dangerouslySetInnerHTML={{__html: review.formatted_price_review}} />
-          <Tags
-            tags={review.tag_list} />
+          <Tags tags={review.tag_list} />
+          <div className='edit-review-container'>
+            {this.context.currentUser.id == review.user.id ?
+              (<Link to={`/app/products/${review.reviewable.id}/reviews/${review.id}`}
+                className='btn btn-white btn-round'>Edit my review</Link>) : ''
+            }
+          </div>
         </div>
       </div>
     )

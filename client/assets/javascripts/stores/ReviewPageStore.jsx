@@ -1,5 +1,7 @@
 import alt from '../FluxAlt';
 import FluxReviewPageActions from '../actions/FluxReviewPageActions'
+import ReviewPageProductFieldsActions from '../actions/reviews/ReviewPageProductFieldsActions'
+import ReviewPageReviewFieldsActions from '../actions/reviews/ReviewPageReviewFieldsActions'
 
 const emptyReview = {
   links: [],
@@ -17,26 +19,42 @@ const emptyReview = {
 
 class ReviewPageStore {
   constructor() {
-    this.review = _.merge({}, emptyReview);
-    this.showDetails = false;
-    this.error = null;
+    this.resetDefaultState();
 
     this.bindListeners({
       handleSetShowDetails: FluxReviewPageActions.SET_SHOW_DETAILS,
+      handleSetMode: FluxReviewPageActions.SET_MODE,
+      handleSetCanChangeProduct: FluxReviewPageActions.SET_CAN_CHANGE_PRODUCT,
       handleFetchProduct: FluxReviewPageActions.FETCH_PRODUCT,
       handleSetProduct: FluxReviewPageActions.SET_PRODUCT,
       handleUpdateProduct: FluxReviewPageActions.UPDATE_PRODUCT,
+      handleUpdateProductDescription: ReviewPageProductFieldsActions.UPDATE_PRODUCT_DESCRIPTION,
+      handleUpdateProductUrl: ReviewPageProductFieldsActions.UPDATE_PRODUCT_URL,
+      handleFetchReview: FluxReviewPageActions.FETCH_REVIEW,
       handleSetReview: FluxReviewPageActions.SET_REVIEW,
+      handleUpdateReviewQualityScore: ReviewPageReviewFieldsActions.UPDATE_QUALITY_SCORE,
+      handleUpdateReviewTitle: ReviewPageReviewFieldsActions.UPDATE_TITLE,
+      handleUpdateReviewQualityReview: ReviewPageReviewFieldsActions.UPDATE_QUALITY_REVIEW,
+      handleUpdateReviewPriceScore: ReviewPageReviewFieldsActions.UPDATE_PRICE_SCORE,
+      handleUpdateReviewPriceReview: ReviewPageReviewFieldsActions.UPDATE_PRICE_REVIEW,
       handleSubmitReview: FluxReviewPageActions.SUBMIT_REVIEW,
-      handleAddFile: FluxReviewPageActions.ADD_FILE,
-      handleAddLink: FluxReviewPageActions.ADD_LINK,
-      handleAddTag: FluxReviewPageActions.ADD_TAG,
+      handleAddFile: ReviewPageReviewFieldsActions.ADD_FILE,
+      handleAddLink: ReviewPageReviewFieldsActions.ADD_LINK,
+      handleAddTag: ReviewPageReviewFieldsActions.ADD_TAG,
       handleRegisterError: FluxReviewPageActions.REGISTER_ERROR
     });
   }
 
+  handleSetMode(mode) {
+    this.mode = mode;
+  }
+
   handleSetShowDetails(showDetails) {
     this.showDetails = showDetails;
+  }
+
+  handleSetCanChangeProduct(canChangeProduct) {
+    this.canChangeProduct = canChangeProduct;
   }
 
   handleFetchProduct(product) {
@@ -51,6 +69,14 @@ class ReviewPageStore {
     _.merge(this.review.product, product);
   }
 
+  handleUpdateProductDescription(description) {
+    this.review.product.description = description;
+  }
+
+  handleUpdateProductUrl(url) {
+    this.review.product.url = url;
+  }
+
   handleAddFile(file) {
     this.review.attachments.push(file);
   }
@@ -63,6 +89,10 @@ class ReviewPageStore {
     this.review.tags.push(tag);
   }
 
+  handleFetchReview(review) {
+    this.review = review;
+  }
+
   handleSetReview(review) {
     this.review = review;
   }
@@ -71,12 +101,40 @@ class ReviewPageStore {
     _.merge(this.review, review);
   }
 
+  handleUpdateReviewQualityScore(score) {
+    this.review.quality_score = score
+  }
+
+  handleUpdateReviewTitle(title) {
+    this.review.title = title
+  }
+
+  handleUpdateReviewQualityReview(qualityReview) {
+    this.review.quality_review = qualityReview
+  }
+
+  handleUpdateReviewPriceScore(score) {
+    this.review.price_score = score
+  }
+
+  handleUpdateReviewPriceReview(priceReview) {
+    this.review.price_review = priceReview
+  }
+
   handleSubmitReview() {
-    this.review = _.merge({}, emptyReview);
+    this.resetDefaultState();
   }
 
   handleRegisterError(error) {
     this.error = error;
+  }
+
+  resetDefaultState() {
+    this.review = _.merge({}, emptyReview);
+    this.showDetails = false;
+    this.mode = 'create';
+    this.canChangeProduct = true;
+    this.error = null;
   }
 }
 

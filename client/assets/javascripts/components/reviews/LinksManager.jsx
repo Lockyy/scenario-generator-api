@@ -1,5 +1,5 @@
 import React from 'react'
-import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import ReviewPageReviewFieldsActions from '../../actions/reviews/ReviewPageReviewFieldsActions'
 import RegexConstants from '../../utils/constants/RegexConstants'
 import UrlHelper from '../../utils/helpers/UrlHelper'
 
@@ -22,7 +22,7 @@ const LinksManager = React.createClass({
     let link = { url: url };
     var _this = this;
 
-    FluxReviewPageActions.addLink(link, {
+    ReviewPageReviewFieldsActions.addLink(link, {
       success: function(link) {
         React.findDOMNode(_this.refs.product_review_link_to_add).value = null;
       }
