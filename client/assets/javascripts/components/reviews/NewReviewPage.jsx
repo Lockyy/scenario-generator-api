@@ -46,6 +46,11 @@ const NewReviewPage  = React.createClass({
     $(this.refs.new_review_form.getDOMNode()).validator();
   },
 
+  componentDidUpdate: function componentDidUpdate() {
+    $(this.refs.new_review_form.getDOMNode()).validator('destroy');
+    $(this.refs.new_review_form.getDOMNode()).validator();
+  },
+
   _getProductData: function _getProductData() {
     return this.state.review.product || {}
   },
