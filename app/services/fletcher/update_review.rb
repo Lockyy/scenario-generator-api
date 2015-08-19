@@ -30,9 +30,7 @@ module Fletcher
       params.delete(:tags)
 
       @review.tags = tags_params.empty? ? [] : tags_params.map { |tag| Tag.where(name: tag[:name].downcase).first_or_create }
-      @review.update(params)
-
-      @review.save!
+      @review.update!(params)
     end
 
     def tags_params

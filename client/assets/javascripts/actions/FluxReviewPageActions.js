@@ -34,6 +34,10 @@ class FluxReviewPageActions {
     NewReviewPageAPI.fetchReview(productId, reviewId, resolve, reject);
   }
 
+  clearReview() {
+    this.dispatch();
+  }
+
   setReview(review) {
     this.dispatch(review);
   }
