@@ -9,11 +9,13 @@ class Product < ActiveRecord::Base
   has_many :tags, through: :tag_taggables
   has_one :default_image, class_name: 'Attachment'
 
+  include SearchableByNameAndDescription
+
   before_save :downcase_name
 
   accepts_nested_attributes_for :reviews
 
-  validates :name, presence: true, uniqueness: { scope: :company_id }
+  validates :name, presence: true, uniqueness: {scope: :company_id}
   validates :description, presence: true
   validates :company, presence: true
 
@@ -23,6 +25,23 @@ class Product < ActiveRecord::Base
 
   scope :most_popular, -> do
     order('views desc')
+  end
+
+  scope :rating, -> rating_order do
+    joins('LEFT JOIN reviews rev ON products.id = rev.reviewable_id')
+        .select('sum(COALESCE(rev.quality_score, 0)) as total_quality_score, products.id, products.name, products.description,
+products.url, company_id, products.views, products.created_at, products.updated_at')
+        .group('products.id, products.name, products.description,
+products.url, company_id, products.views, products.created_at, products.updated_at')
+        .order("total_quality_score #{rating_order}")
+  end
+
+  scope :best_rating, -> do
+    rating('desc')
+  end
+
+  scope :worst_rating, -> do
+    rating('asc')
   end
 
   def image

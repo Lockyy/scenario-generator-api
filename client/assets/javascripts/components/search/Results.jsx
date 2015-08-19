@@ -6,6 +6,8 @@ import SearchConstants from '../../utils/constants/SearchConstants';
 
 const Results = React.createClass ({
 
+  SORT_FIELDS_SIMPLE_SEARCH : ['high_to_low', 'low_to_high'],
+
   getInitialState: function() {
     return { data: [] }
   },
@@ -110,7 +112,7 @@ const Results = React.createClass ({
       let pageLinks = [];
 
       for (let i = 1; i <= this.props.data.pages; i++) {
-        let active = ''
+        let active = '';
 
         if(this.props.currentPage == i) {
           active = 'active'
@@ -129,14 +131,40 @@ const Results = React.createClass ({
     }
   },
 
+  addSortParam: function(sortDescription) {
+    let match_mode = _.contains(this.SORT_FIELDS_SIMPLE_SEARCH, sortDescription) ? 'any' : 'all';
+    this.props.onSetQuery({sort_by: sortDescription, match_mode: match_mode})
+  },
+
   renderTopLink: function() {
+      let section = this.props.section;
     if(this.props.showTopLink) {
       return (
         <div className='size'>
           <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`}>More</a>
         </div>
       )
-    } else {
+    } else if(this.getMaxDisplayedData() <  this.props.data.total && section == 'all'){
+        return(
+        <div id='results-text-container' className='size'>
+            <span> Showing <span className='value'>{ this.getMaxDisplayedData() }</span> of <span className='value'>{this.props.data.total}</span> results found </span>
+        </div>)
+    } else if(section == 'products'){
+        return(
+            <div id='sort-container'>
+                <div className='form-group'>
+                    <label for="sort"> Sort by: </label>
+                    <select id='sort' name="sort" onChange={ (e) => this.addSortParam(e.target.value)}>
+                        <option value='relevance'>Relevance</option>
+                        <option value='latest'>Latest</option>
+                        <option value='high_to_low'>Rating High to Low</option>
+                        <option value='low_to_high'>Rating Low to High</option>
+                        <option value='alphabetical_order'>Alphabetical order</option>
+                    </select>
+                </div>
+            </div>)
+    }
+    else {
       return (
         <div className='size'>
           { this.props.data.total } result(s) found
