@@ -6,6 +6,8 @@ import SearchConstants from '../../utils/constants/SearchConstants';
 
 const Results = React.createClass ({
 
+  SORT_FIELDS_SIMPLE_SEARCH : ['high_to_low', 'low_to_high'],
+
   getInitialState: function() {
     return { data: [] }
   },
@@ -130,8 +132,7 @@ const Results = React.createClass ({
   },
 
   addSortParam: function(sortDescription) {
-    let sortFieldsSimpleSearch = ['high_to_low', 'low_to_high'];
-    let match_mode = _.contains(sortFieldsSimpleSearch, sortDescription) ? 'any' : 'all';
+    let match_mode = _.contains(this.SORT_FIELDS_SIMPLE_SEARCH, sortDescription) ? 'any' : 'all';
     this.props.onSetQuery({sort_by: sortDescription, match_mode: match_mode})
   },
 
