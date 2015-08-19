@@ -6,7 +6,7 @@ class Product < ActiveRecord::Base
   has_many :images, -> { with_images }, through: :reviews, source: :attachments
   has_many :links, through: :reviews
   has_many :tag_taggables, as: :taggable
-  has_many :tags, through: :tag_taggables
+  has_many :tags, through: :reviews
   has_one :default_image, class_name: 'Attachment'
 
   include SearchableByNameAndDescription
