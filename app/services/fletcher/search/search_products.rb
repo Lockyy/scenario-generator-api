@@ -1,5 +1,7 @@
 module Fletcher
   class Search::SearchProducts < Search::SearchBase
+    SORT_FIELDS_SIMPLE_SEARCH = [:high_to_low, :low_to_high]
+
     def initialize(attribute, terms, sort_description)
       super(attribute, terms, sort_description)
     end
@@ -7,8 +9,7 @@ module Fletcher
     private
 
     def search_by(attribute, terms)
-      sort_fields_simple_search = [:high_to_low, :low_to_high]
-      @search_by = sort_fields_simple_search.include?(@sort_description) ? build_search_by : build_full_text_search_by
+      @search_by = SORT_FIELDS_SIMPLE_SEARCH.include?(@sort_description) ? build_search_by : build_full_text_search_by
       @search_by[attribute].call(terms)
     end
 
