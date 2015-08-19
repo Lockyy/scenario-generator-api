@@ -2,7 +2,7 @@
 @import 'common'
 
 $blue-ish: #4dbcc6
-$default-font-size: 16px
+$default-font-size: 15px
 
 .product.new
   .add-symbol, .review-symbol
@@ -32,7 +32,7 @@ $default-font-size: 16px
       color: $red
 
     .instructions
-      color: $grey
+      color: $dark-grey
 
   .main-content
     @extend .col-xs-12
@@ -71,27 +71,24 @@ $default-font-size: 16px
         input, textarea
           font-style: italic
           font-size: $default-font-size
-          padding: 18px 20px
           border-color: $grey
           box-shadow: none !important
           color: $blackish-grey
 
         input
-          box-sizing: border-box
-          height: 100%
-          max-height: 62px
-
+          height: 45px
 
         input:focus, textarea:focus
           box-shadow: none !important
           border: 1px solid $red
 
         textarea
+          padding-top: 10px
           resize: vertical
 
         button, button:disabled
           font-weight: bolder
-          padding: 20px
+          height: 45px
           background-color: $grey
           border-color: $grey
           color: $white
@@ -131,7 +128,6 @@ $default-font-size: 16px
               border-top: 0px none transparent
               outline: 0px none transparent
               border-box: none
-              padding: 0 20px
 
             &.focus
               textarea:focus, input:focus
@@ -150,9 +146,10 @@ $default-font-size: 16px
 
             button
               background-color: $red
+              border-color: $red
               width: 115px
 
-        &.tags
+        &.review-tags
           .input-group
             input
               border-right-color:  $orange
@@ -192,7 +189,7 @@ $default-font-size: 16px
 
   .info
     .instructions
-      font-size: $default-font-size + 5px
+      font-size: $default-font-size + 2px
       background: $blue-ish image-url('icons/cant-find-product.svg') no-repeat center 40px
       color: $white
       text-align: center
@@ -208,7 +205,7 @@ $default-font-size: 16px
 
 @media only screen and (max-width: $screen-sm-max)
   .product.new
-    font-size: 15px
+    font-size: $default-font-size - 1px
 
     .help, .info, .main-content
       padding: 0 10px

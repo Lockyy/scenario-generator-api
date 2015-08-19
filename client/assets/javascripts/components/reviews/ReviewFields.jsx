@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import ReviewPageReviewFieldsActions from '../../actions/reviews/ReviewPageReviewFieldsActions'
 import LinksManager from './LinksManager'
 import PriceRating from '../PriceRating'
 import QualityReview from './QualityReview'
@@ -12,24 +13,24 @@ import UploadManager from './UploadManager'
 const ReviewFields  = React.createClass({
   displayName: 'ReviewFields',
 
-  getDefaultProps: function getDefaultProps() {
-    return {
-      onChange: function() {}
-    }
+  updateQualityScore: function updateQualityScore(e) {
+    ReviewPageReviewFieldsActions.updateQualityScore(e.target.value);
   },
 
-  getFields: function getFields() {
-    let refs = this.refs;
-    let quality_review_fields = refs.quality_review.getFields();
+  updateTitle: function updateTitle(e) {
+    ReviewPageReviewFieldsActions.updateTitle(e.target.value);
+  },
 
-    return _.merge(quality_review_fields, {
-      quality_score: refs.product_review_quality_score.getValue(),
-      attachments: refs.upload_manager.getFiles(),
-      links: refs.links_manager.getLinks(),
-      tags: refs.tags_manager.getTags(),
-      price_score: refs.product_review_price_score.getValue(),
-      price_review: React.findDOMNode(refs.product_review_price_review).value,
-    });
+  updateQualityReview: function updateQualityReview(e) {
+    ReviewPageReviewFieldsActions.updateQualityReview(e.target.value);
+  },
+
+  updatePriceScore: function updatePriceScore(e) {
+    ReviewPageReviewFieldsActions.updatePriceScore(e.target.value);
+  },
+
+  updatePriceReview: function updatePriceReview(e) {
+    ReviewPageReviewFieldsActions.updatePriceReview(e.target.value);
   },
 
   _getContent: function _getContent() {
@@ -42,20 +43,20 @@ const ReviewFields  = React.createClass({
           <div className='form-group inline rating'>
             <label htmlFor='product[review[quality_score]]'>Rating</label>
             <Rating name='product[review[quality_score]]' ratingEnabled={true} ref='product_review_quality_score'
-              value={this.props.quality_score} onChange={this.props.onChange} />
+              value={this.props.quality_score} onChange={this.updateQualityScore} />
           </div>
 
-          <QualityReview ref='quality_review' title={this.props.title} quality_review={this.props.quality_review}
-            onChange={this.props.onChange} />
+          <QualityReview ref='quality_review' title={this.props.title} onChangeTitle={this.updateTitle}
+            quality_review={this.props.quality_review} onChangeQualityReview={this.updateQualityReview} />
 
           <div className='form-group attachments'>
-            <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
+            <label htmlFor='product[attachment]' className='sr-only'>Review's attachments</label>
 
-            <UploadManager ref='upload_manager' attachments={this.props.attachments} onChange={this.props.onChange} />
+            <UploadManager ref='upload_manager' attachments={this.props.attachments} />
           </div>
 
           <div className='form-group links'>
-            <label htmlFor='product[attachment]' className='sr-only'>Product's attachment</label>
+            <label htmlFor='product[attachment]' className='sr-only'>Review's links</label>
 
             <LinksManager ref='links_manager' links={this.props.links} />
           </div>
@@ -63,7 +64,7 @@ const ReviewFields  = React.createClass({
           <div className='form-group inline rating'>
             <label htmlFor='product[review[price_score]]'>Pricing</label>
             <PriceRating name='product[review[price_score]]' ratingEnabled={true} ref='product_review_price_score'
-              value={this.props.price_score} onChange={this.props.onChange}/>
+              value={this.props.price_score} onChange={this.updatePriceScore} />
           </div>
 
           <div className='form-group'>
@@ -71,10 +72,10 @@ const ReviewFields  = React.createClass({
 
             <textarea type='text' className='form-control' placeholder='Add a brief description of the product’s pricing'
               name='product[review[price_review]]' rows='10' ref='product_review_price_review'
-              value={this.props.price_review} onChange={this.props.onChange} />
+              value={this.props.price_review} onChange={this.updatePriceReview} />
           </div>
 
-          <div className='form-group tags'>
+          <div className='form-group review-tags'>
             <label htmlFor='product[review[tags]]'>Add / Edit Tags</label>
             <TagsManager ref='tags_manager' tags={this.props.tags} />
           </div>

@@ -3,11 +3,18 @@ import alt from '../FluxAlt';
 import { Router, Navigation } from 'react-router'
 import NewReviewPageAPI from '../utils/api/NewReviewPageAPI';
 import ProductAPI from '../utils/api/ProductAPI';
-import S3API from '../utils/api/S3API';
 
 class FluxReviewPageActions {
   setShowDetails(showDetails) {
     this.dispatch(showDetails);
+  }
+
+  setMode(mode) {
+    this.dispatch(mode);
+  }
+
+  setCanChangeProduct(canChangeProduct) {
+    this.dispatch(canChangeProduct);
   }
 
   fetchProduct(productId, success, error) {
@@ -23,33 +30,12 @@ class FluxReviewPageActions {
     this.dispatch(product);
   }
 
-  addFile(file, callbacks) {
-    let _this = this;
-
-    NewReviewPageAPI.getSignedUploadUrl(file)
-    .then(function(data) {
-        return S3API.uploadFileToS3(file, data.upload.url, data.upload.content_type, callbacks);
-    }).then(function(downloadUrl) {
-      file.url = downloadUrl;
-      file.content_type = file.type;
-      callbacks.success(file, downloadUrl);
-      _this.dispatch(file);
-    })
-    .fail(function(error) {
-      //TODO
-      callbacks.error(error);
-      _this.registerError('error uploading file to s3');
-    });
+  fetchReview(productId, reviewId, resolve, reject) {
+    NewReviewPageAPI.fetchReview(productId, reviewId, resolve, reject);
   }
 
-  addLink(link, callbacks) {
-    this.dispatch(link);
-    callbacks.success(link)
-  }
-
-  addTag(tag, callbacks) {
-    this.dispatch(tag);
-    callbacks.success(tag)
+  clearReview() {
+    this.dispatch();
   }
 
   setReview(review) {

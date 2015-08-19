@@ -81,13 +81,16 @@ const ProductName  = React.createClass({
       <div className='form-group'>
         <label htmlFor='product[name]'>Product's Name</label>
         <div className='input-group'>
-          <TypeAhead name='product[name]' value={this.props.value} placeholder='e.g. Hololens' className='form-control'
+          <TypeAhead name='product[name]' value={this.props.value} className='form-control'
+            placeholder='Type in the name of the product you’re looking to review, e.g. Hololens'
             bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
             onSelectOption={this._onSelectProduct} onSelectNoOption={this._onSelectCreateProduct}
             onChange={this._onNameChange} onRender={this._hideCreateWhenMatch}
-            ref='product_name'/>
+            ref='product_name' disabled={this.props.disabled} required/>
           <span className="input-group-btn">
-            <button className="btn btn-default" type="button" disabled={this.props.disableButton}>Go</button>
+            <button className="btn btn-default" type="button" disabled={this.props.disableButton || this.props.disabled}>
+              Go
+            </button>
           </span>
         </div>
         <span className="help-block with-errors"></span>
