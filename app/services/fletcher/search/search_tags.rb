@@ -8,7 +8,7 @@ module Fletcher
 
     def build_search_by
       default_search_by = Hash.new(lambda { |terms|
-        Tag.where { (name.like_any(terms)) }
+        Tag.search_by_name(terms.join(' '))
       }).with_indifferent_access
     end
   end
