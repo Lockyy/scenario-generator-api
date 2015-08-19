@@ -52,7 +52,7 @@ const TagsManager = React.createClass({
   _getBloodhoundProps: function _getBloodhoundProps() {
     return {
       remote: {
-        url: '/api/search?search=%QUERY&filter_by=name&match_mode=all',
+        url: '/api/search?search_string=%QUERY&filter_by=name&match_mode=all',
         wildcard: '%QUERY',
         transform: function(data) { return data.tags.data }
       }
