@@ -36,9 +36,7 @@ const SearchBox = React.createClass ({
   },
 
   onSearchInput: function(event) {
-    if(!this.alreadyOnSearchPage()) {
       this.performSearch(event.target.value);
-    }
   },
 
   onSubmit: function(event) {
@@ -52,12 +50,8 @@ const SearchBox = React.createClass ({
     }
   },
 
-  alreadyOnSearchPage: function() {
-    return window.location.href.indexOf("/app/search") > -1
-  },
-
   displayResults: function() {
-    return this.state.data.total_results > 0 && !this.alreadyOnSearchPage()
+    return this.state.data.total_results > 0
   },
 
   renderResults: function() {
