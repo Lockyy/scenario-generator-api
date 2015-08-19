@@ -14,16 +14,21 @@ module Fletcher
       @products = products(@terms)
       @companies = companies(@terms)
       @tags = tags(@terms)
+      @related_tags = related_tags(@products, @companies)
     end
 
     def results
       {
-          search_string: @params[:search],
+          search_string: @params[:search_string],
           page: @page,
           per_page: @per_page,
-          total_results: @companies.size + @products.size + @tags.size,
+          total_results: total_results,
           companies: data_hash(@companies),
           products: data_hash(@products),
+          related_tags: {
+            total: @related_tags.size,
+            data: @related_tags
+          },
           tags: {
               total: @tags.size,
               data: @tags
@@ -36,7 +41,7 @@ module Fletcher
     def default_params
       {
           filter_by: '',
-          match_mode: 'any',
+          match_mode: 'all',
           search_string: '',
           page: DEFAULT_PAGE,
           per_page: DEFAULT_PER_PAGE
@@ -54,38 +59,49 @@ module Fletcher
       data.paginate(:page => @page, :per_page => @per_page)
     end
 
-    def sort(data)
-      data
+    def total_results
+      return 0 if @params[:search_string].blank?
+      @companies.size + @products.size + @tags.size
     end
 
     def data_hash(data)
-      filtered_data = paginate(sort(data))
+      return { total: 0, pages: 0, data: [] } if @params[:search_string].blank?
+
+      paginated_data = paginate(data)
+
       {
           total: data.size,
-          pages: filtered_data.total_pages,
-          data: filtered_data
+          pages: paginated_data.total_pages,
+          data: paginated_data
       }
     end
 
     def companies(terms)
-      SearchCompanies.new(@params[:filter_by], terms).results
+      return [] if @params[:search_string].blank?
+      SearchCompanies.new(@params[:filter_by], terms, @params[:sort_by]).results
     end
 
     def products(terms)
-      SearchProducts.new(@params[:filter_by], terms).results
+      return [] if @params[:search_string].blank?
+      SearchProducts.new(@params[:filter_by], terms, @params[:sort_by]).results
     end
 
     def tags(terms)
-      SearchTags.new(@params[:filter_by], terms).results
+      return [] if @params[:search_string].blank?
+      SearchTags.new(@params[:filter_by], terms, @params[:sort_by]).results
+    end
+
+    def related_tags(products, companies)
+      products.map(&:tags).flatten + companies.map(&:tags).flatten
     end
 
     # We're going to take the search string the user input, split it up into words and then
     # search for each of those words anywhere in the targetted attributes. To do that we need to
     # prepend and append each word with % to show that it can appear anywhere in the searched string.
     def get_terms
-      return ['%%'] if @params[:search].nil?
-      terms = @params[:match_mode] == 'all' ? [@params[:search]] : @params[:search].split(' ')
-      terms = terms.each { |s| s.prepend('%').concat('%') }
+      @params[:search_string] = (@params[:search_string].try(:strip) || '')
+      terms = @params[:match_mode] == 'all' ? [@params[:search_string]] : @params[:search_string].split(' ')
+      terms = terms.collect { |s| "%#{s}%" }
       terms.empty? ? ['%%'] : terms
     end
   end

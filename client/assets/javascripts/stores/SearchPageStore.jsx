@@ -1,7 +1,7 @@
 import alt from '../FluxAlt';
 import FluxSearchPageActions from '../actions/FluxSearchPageActions'
 
-class SearchStore {
+class SearchPageStore {
 
   constructor() {
     this.data = [];
@@ -28,4 +28,4 @@ class SearchStore {
   }
 }
 
-module.exports = alt.createStore(SearchStore, 'SearchStore');
+module.exports = alt.createStore(SearchPageStore, 'SearchPageStore');

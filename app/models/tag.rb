@@ -1,6 +1,10 @@
 class Tag < ActiveRecord::Base
+  include SearchableByName
+
   has_and_belongs_to_many :users
-  belongs_to :taggable, polymorphic: true
+  has_many :tag_taggables
+  has_many :products, :through => :tag_taggables, :source => :taggable, :source_type => 'Product'
+  has_many :companies, :through => :tag_taggables, :source => :taggable, :source_type => 'Company'
 
   scope :most_popular, ->() do
     joins('LEFT OUTER JOIN tags_users ON tags.id = tags_users.tag_id')
