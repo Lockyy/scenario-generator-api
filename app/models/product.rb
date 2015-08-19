@@ -34,6 +34,7 @@ class Product < ActiveRecord::Base
                                                      :tsearch => {:any_word => true, :prefix => true},
                                                      :dmetaphone => {:any_word => true, :sort_only => true}
                                                  }
+
   pg_search_scope :search_by_name, :against => :name, :using => {
                                      :tsearch => {:any_word => true, :prefix => true},
                                      :dmetaphone => {:any_word => true, :sort_only => true}
