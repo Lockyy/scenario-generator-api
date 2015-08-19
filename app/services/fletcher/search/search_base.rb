@@ -3,7 +3,7 @@ module Fletcher
     def initialize(attribute, terms, sort_description)
       @attribute = attribute
       @terms = terms
-      @sort_description = sort_description
+      @sort_description = sort_description ? sort_description.to_sym: sort_description
       @results = results
     end
 
