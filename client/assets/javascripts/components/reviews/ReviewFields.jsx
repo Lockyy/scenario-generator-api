@@ -75,7 +75,7 @@ const ReviewFields  = React.createClass({
               value={this.props.price_review} onChange={this.updatePriceReview} />
           </div>
 
-          <div className='form-group tags'>
+          <div className='form-group review-tags'>
             <label htmlFor='product[review[tags]]'>Add / Edit Tags</label>
             <TagsManager ref='tags_manager' tags={this.props.tags} />
           </div>
