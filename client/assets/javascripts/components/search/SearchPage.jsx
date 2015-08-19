@@ -71,13 +71,18 @@ const SearchPage = React.createClass({
       return 'link ' + active;
     }
 
+    let qtdeProducts = this.state.data.products.total || 0;
+    let qtdeCompanies = this.state.data.companies.total || 0;
+    let qtdeTags = this.state.data.tags.total || 0;
+    let qtdeAll = qtdeProducts + qtdeCompanies + qtdeTags;
+
     return (
       <div className='col-xs-3'>
         <div className='links'>
-          <div className={ build_link_class('all') } onClick={ () => this.changeTab('all') }>All</div>
-          <div className={ build_link_class('products') } onClick={ () => this.changeTab('products') }>Products</div>
-          <div className={ build_link_class('companies') } onClick={ () => this.changeTab('companies') }>Companies</div>
-          <div className={ build_link_class('tags') } onClick={ () => this.changeTab('tags') }>Tags</div>
+          <div className={ build_link_class('all') } onClick={ () => this.changeTab('all') }>All ({qtdeAll})</div>
+          <div className={ build_link_class('products') } onClick={ () => this.changeTab('products') }>Products ({qtdeProducts})</div>
+          <div className={ build_link_class('companies') } onClick={ () => this.changeTab('companies') }>Companies ({qtdeCompanies})</div>
+          <div className={ build_link_class('tags') } onClick={ () => this.changeTab('tags') }>Tags ({qtdeTags})</div>
         </div>
         <div className='new-product'>
           { "Can't find a product?" }
