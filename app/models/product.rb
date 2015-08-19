@@ -1,8 +1,6 @@
 gem 'faker'
 
 class Product < ActiveRecord::Base
-  include PgSearch
-
   belongs_to :company
   has_many :reviews, as: :reviewable
   has_many :images, -> { with_images }, through: :reviews, source: :attachments
@@ -10,6 +8,8 @@ class Product < ActiveRecord::Base
   has_many :tag_taggables, as: :taggable
   has_many :tags, through: :tag_taggables
   has_one :default_image, class_name: 'Attachment'
+
+  include SearchableByNameAndDescription
 
   before_save :downcase_name
 
@@ -26,24 +26,6 @@ class Product < ActiveRecord::Base
   scope :most_popular, -> do
     order('views desc')
   end
-
-  pg_search_scope :search_by_name_and_description, :against => [
-                                                     [:name, 'A'],
-                                                     [:description, 'B']
-                                                 ], :using => {
-                                                     :tsearch => {:any_word => true, :prefix => true},
-                                                     :dmetaphone => {:any_word => true, :sort_only => true}
-                                                 }
-
-  pg_search_scope :search_by_name, :against => :name, :using => {
-                                     :tsearch => {:any_word => true, :prefix => true},
-                                     :dmetaphone => {:any_word => true, :sort_only => true}
-                                 }
-
-  pg_search_scope :search_by_description, :against => :description, :using => {
-                                     :tsearch => {:any_word => true, :prefix => true},
-                                     :dmetaphone => {:any_word => true, :sort_only => true}
-                                 }
 
   scope :rating, -> rating_order do
     joins('LEFT JOIN reviews rev ON products.id = rev.reviewable_id')
