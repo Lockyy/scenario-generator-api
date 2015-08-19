@@ -1,6 +1,8 @@
 gem 'faker'
 
 class Product < ActiveRecord::Base
+  include PgSearch
+
   belongs_to :company
   has_many :reviews, as: :reviewable
   has_many :images, -> { with_images }, through: :reviews, source: :attachments
@@ -25,7 +27,24 @@ class Product < ActiveRecord::Base
     order('views desc')
   end
 
-  scope :rating, -> rating_order   do
+  pg_search_scope :search_by_name_and_description, :against => [
+                                                     [:name, 'A'],
+                                                     [:description, 'B']
+                                                 ], :using => {
+                                                     :tsearch => {:any_word => true, :prefix => true},
+                                                     :dmetaphone => {:any_word => true, :sort_only => true}
+                                                 }
+  pg_search_scope :search_by_name, :against => :name, :using => {
+                                     :tsearch => {:any_word => true, :prefix => true},
+                                     :dmetaphone => {:any_word => true, :sort_only => true}
+                                 }
+
+  pg_search_scope :search_by_description, :against => :description, :using => {
+                                     :tsearch => {:any_word => true, :prefix => true},
+                                     :dmetaphone => {:any_word => true, :sort_only => true}
+                                 }
+
+  scope :rating, -> rating_order do
     joins('LEFT JOIN reviews rev ON products.id = rev.reviewable_id')
         .select('sum(COALESCE(rev.quality_score, 0)) as total_quality_score, products.id, products.name, products.description,
 products.url, company_id, products.views, products.created_at, products.updated_at')
