@@ -2,9 +2,13 @@
 
 .search-page, .search-container
   .search-box
-    border: 0px
+    border: 0
     font-size: 50px
     outline-width: 0
+
+    &:disabled
+      background-color: white
+
   .results
     margin-top: 10px
     .title
@@ -15,6 +19,7 @@
 
       #results-text-container
         color: $dark-grey
+        font-size: 11px
 
         .value
           font-weight: bold
@@ -28,8 +33,10 @@
         label
           font-weight: normal
           color: $dark-grey
+          font-size: 11px
 
         #sort
+          font-size: 11px
           outline: none
           margin-left: 10px
           border: none
@@ -77,7 +84,7 @@
     &.header
       color: black
       .result
-        border-bottom: 0px
+        border-bottom: 0
 
   .links
     .link
@@ -85,8 +92,12 @@
       padding: 5px
       border-bottom: 1px solid $grey
       cursor: pointer
+
       &:focus, &:active, &:hover
         text-decoration: none
+
+      &.active
+        font-weight: bold
 
   .new-product
     margin-top: 25px

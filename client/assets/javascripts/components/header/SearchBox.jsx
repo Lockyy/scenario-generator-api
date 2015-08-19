@@ -21,7 +21,7 @@ const SearchBox = React.createClass ({
         search_string: '',
         products: { data: [] },
         companies: { data: [] },
-        tags: { data: [] },
+        tags: { data: [] }
       }
     }
   },
@@ -36,9 +36,7 @@ const SearchBox = React.createClass ({
   },
 
   onSearchInput: function(event) {
-    if(this.alreadyOnSearchPage()) {
-      _.debounce(this.onSubmit)();
-    } else {
+    if(!this.alreadyOnSearchPage()) {
       this.performSearch(event.target.value);
     }
   },

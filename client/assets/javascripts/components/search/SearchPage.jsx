@@ -28,9 +28,7 @@ const SearchPage = React.createClass({
     this.setState(data);
     // For handling when a user submits a search via the header search input rather than
     // the search page input whilst on the search page.
-    $('.search-container input').val('');
     $(this.refs.inputBox.getDOMNode()).val(data.data.search_string);
-    $(this.refs.inputBox.getDOMNode()).focus();
   },
 
   changePageAndSearch: function(params) {
@@ -66,13 +64,20 @@ const SearchPage = React.createClass({
   },
 
   renderRightBar: function() {
+
+    let section = this.props.params.section;
+    function build_link_class(name) {
+      let active = section == name ? 'active' : '';
+      return 'link ' + active;
+    }
+
     return (
       <div className='col-xs-3'>
         <div className='links'>
-          <div className='link' onClick={ () => this.changeTab('all') }>All</div>
-          <div className='link' onClick={ () => this.changeTab('products') }>Products</div>
-          <div className='link' onClick={ () => this.changeTab('companies') }>Companies</div>
-          <div className='link' onClick={ () => this.changeTab('tags') }>Tags</div>
+          <div className={ build_link_class('all') } onClick={ () => this.changeTab('all') }>All</div>
+          <div className={ build_link_class('products') } onClick={ () => this.changeTab('products') }>Products</div>
+          <div className={ build_link_class('companies') } onClick={ () => this.changeTab('companies') }>Companies</div>
+          <div className={ build_link_class('tags') } onClick={ () => this.changeTab('tags') }>Tags</div>
         </div>
         <div className='new-product'>
           { "Can't find a product?" }
@@ -163,7 +168,7 @@ const SearchPage = React.createClass({
               className='search-box'
               ref='inputBox'
               defaultValue={ this.props.params.search_string }
-              onChange={ this.onSearchInput } />
+              onChange={ this.onSearchInput } disabled/>
           </div>
         </div>
         <div className='row'>
