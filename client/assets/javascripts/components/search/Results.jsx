@@ -129,6 +129,12 @@ const Results = React.createClass ({
     }
   },
 
+  addSortParam: function(sortDescription) {
+    let sortFieldsSimpleSearch = ['high_to_low', 'low_to_high'];
+    let match_mode = _.contains(sortFieldsSimpleSearch, sortDescription) ? 'any' : 'all';
+    this.props.onSetQuery({sort_by: sortDescription, match_mode: match_mode})
+  },
+
   renderTopLink: function() {
       let section = this.props.section;
     if(this.props.showTopLink) {
@@ -147,7 +153,7 @@ const Results = React.createClass ({
             <div id='sort-container'>
                 <div className='form-group'>
                     <label for="sort"> Sort by: </label>
-                    <select id='sort' name="sort" onChange={ (e) => this.props.onSetQuery({sort_by: e.target.value})}>
+                    <select id='sort' name="sort" onChange={ (e) => this.addSortParam(e.target.value)}>
                         <option value='relevance'>Relevance</option>
                         <option value='latest'>Latest</option>
                         <option value='high_to_low'>Rating High to Low</option>

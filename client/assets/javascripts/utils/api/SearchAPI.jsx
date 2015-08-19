@@ -4,7 +4,7 @@ import SearchConstants from '../constants/SearchConstants';
 module.exports = {
 
   getSearchResults: _.debounce(function(data, resolve, reject) {
-    let url = `/api/search`
+    let url = `/api/search`;
     return new Promise(function() {
       $.ajax({
         url: url,
