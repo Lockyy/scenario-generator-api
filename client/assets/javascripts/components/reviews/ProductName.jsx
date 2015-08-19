@@ -81,7 +81,8 @@ const ProductName  = React.createClass({
       <div className='form-group'>
         <label htmlFor='product[name]'>Product's Name</label>
         <div className='input-group'>
-          <TypeAhead name='product[name]' value={this.props.value} placeholder='e.g. Hololens' className='form-control'
+          <TypeAhead name='product[name]' value={this.props.value} className='form-control'
+            placeholder='Type in the name of the product you’re looking to review, e.g. Hololens'
             bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
             onSelectOption={this._onSelectProduct} onSelectNoOption={this._onSelectCreateProduct}
             onChange={this._onNameChange} onRender={this._hideCreateWhenMatch}

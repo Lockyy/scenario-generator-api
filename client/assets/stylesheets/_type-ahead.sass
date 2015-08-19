@@ -1,11 +1,11 @@
 .typeahead
   max-width: 320px
-  margin: 3% auto
+  margin: 0 auto
 
 .twitter-typeahead
   width: 100%
   transition: opacity 0.4s
-  margin-top: 2px
+  margin-top: 5px
 
   .typeahead-wrap.loading
     opacity: 0.5
@@ -17,47 +17,48 @@
     padding: 0.5em 0.8em
     border-radius: 0
 
-.typeahead:focus
-  border-color: #aaa
+  .typeahead:focus
+    border-color: #aaa
 
-.tt-query
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075)
+  .tt-query
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075)
 
-.tt-hint
-  color: $white
+  .tt-hint
+    color: $white
 
-.tt-menu
-  width: 100%
-  padding: 8px 0 0
-  background-color: $blackish-grey
-  color: $white
-  border: 1px solid $grey
-  box-shadow: 0 1px 2px rgba(0,0,0,.1)
+  .tt-menu
+    width: 100%
+    padding: 8px 0 0
+    background-color: $blackish-grey
+    color: $white
+    border: 1px solid $grey
+    box-shadow: 0 1px 2px rgba(0,0,0,.1)
 
-.tt-suggestion, .tt-no-results
-  display: block
-  padding: 1.8em  0.8em 0.5em 0.8em
-  border: none
-  color: $white
-
-  .tt-help
-    float: right
-    font-style: italic
-    font-size: $default-font-size - 2px
-    color: $blackish-grey
-
-  &:hover
-    cursor: pointer
-    transition: background-color 0.4s
+  .tt-suggestion, .tt-no-results
+    display: block
+    padding: 1.2em  0.8em 1.2em 0.8em
+    border: none
+    color: $white
 
     .tt-help
-      color: $white
+      float: right
+      font-style: italic
+      font-size: $default-font-size - 2px
+      color: $blackish-grey
 
-  strong
-    font-weight: normal
+    &:hover
+      cursor: pointer
+      background: $red
+      transition: background-color 0.4s
 
-  .add-symbol, .review-symbol
-    width: 15px !important
+      .tt-help
+        color: $white
 
-.tt-suggestion.tt-cursor
-  background-color: $dark-grey
+    strong
+      font-weight: normal
+
+    .add-symbol, .review-symbol
+      width: 15px !important
+
+  .tt-suggestion.tt-cursor
+    background-color: $dark-grey
