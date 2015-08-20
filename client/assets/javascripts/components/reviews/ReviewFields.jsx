@@ -7,7 +7,7 @@ import LinksManager from './LinksManager'
 import PriceRating from '../PriceRating'
 import QualityReview from './QualityReview'
 import Rating from '../Rating'
-import TagsManager from './TagsManager'
+import ReviewTagsManager from './ReviewTagsManager'
 import AttachmentsManager from './AttachmentsManager'
 
 const ReviewFields  = React.createClass({
@@ -77,7 +77,7 @@ const ReviewFields  = React.createClass({
 
           <div className='form-group review-tags'>
             <label htmlFor='product[review[tags]]'>Add / Edit Tags</label>
-            <TagsManager ref='tags_manager' tags={this.props.tags} />
+            <ReviewTagsManager tags={this.props.tags} />
           </div>
         </fieldset>
       );
