@@ -8,7 +8,7 @@ import PriceRating from '../PriceRating'
 import QualityReview from './QualityReview'
 import Rating from '../Rating'
 import TagsManager from './TagsManager'
-import UploadManager from './UploadManager'
+import AttachmentsManager from './AttachmentsManager'
 
 const ReviewFields  = React.createClass({
   displayName: 'ReviewFields',
@@ -52,7 +52,7 @@ const ReviewFields  = React.createClass({
           <div className='form-group attachments'>
             <label htmlFor='product[attachment]' className='sr-only'>Review's attachments</label>
 
-            <UploadManager ref='upload_manager' attachments={this.props.attachments} />
+            <AttachmentsManager ref='upload_manager' attachments={this.props.attachments} />
           </div>
 
           <div className='form-group links'>
