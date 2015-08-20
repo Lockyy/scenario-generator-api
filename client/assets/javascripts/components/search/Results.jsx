@@ -137,14 +137,14 @@ const Results = React.createClass ({
   },
 
   renderTopLink: function() {
-      let section = this.props.section;
+    let section = this.props.section;
     if(this.props.showTopLink) {
       return (
         <div className='size'>
           <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`}>More</a>
         </div>
       )
-    } else if(this.getMaxDisplayedData() <  this.props.data.total && section == 'all'){
+    } else if(this.getMaxDisplayedData() < this.props.data.total && section == 'all'){
         return(
         <div id='results-text-container' className='size'>
             <span> Showing <span className='value'>{ this.getMaxDisplayedData() }</span> of <span className='value'>{this.props.data.total}</span> results found </span>

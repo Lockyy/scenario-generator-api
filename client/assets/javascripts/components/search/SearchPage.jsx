@@ -6,6 +6,7 @@ import SearchPageStore from '../../stores/SearchPageStore'
 import Results from './Results'
 import TagResults from './TagResults'
 import Tags from '../Tags'
+import TagsBox from '../TagsBox'
 
 const SearchPage = React.createClass({
   mixins: [ Navigation ],
@@ -101,7 +102,7 @@ const SearchPage = React.createClass({
   },
 
   getSearchParams: function(data){
-    let _data = {search_string: data.search_string, page: data.page};
+    let _data = {search_string: data.search_string, page: data.page, filter_by: data.filter_by};
     return _.merge(_data, this.context.router.state.location.query);
   },
 
@@ -153,12 +154,23 @@ const SearchPage = React.createClass({
   },
 
   renderFilters: function() {
+    let relatedTags = this.state.data.related_tags;
+    let hide = !relatedTags.total || relatedTags.total <= 0;
+    let self = this;
+
+    let tagEvent = function(e){
+      let data = self.getSearchParams(_.merge({},self.state.data,{filter_by: e.target.textContent}));
+      self.performSearch(data)
+    };
+
     return (
       <div id='tag-filter-container' className='col-xs-3'>
         <TagResults
-          title={'Related Tags'}
-          data={this.state.data.related_tags}
-          hide={this.state.data.related_tags.total <= 0}
+          title={'FILTER BY'}
+          data={relatedTags}
+          hide={hide}
+          showLinkAllTags={true}
+          onClick={tagEvent}
           searchTerm={this.props.params.search_string} />
       </div>
     )

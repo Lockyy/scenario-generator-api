@@ -20,6 +20,7 @@ const TagResults = React.createClass ({
   },
 
   render: function() {
+    let showAllTags = this.props.showLinkAllTags ? <span className='all-tags-link'> Browse all tags</span> : '';
     if(this.props.hide) {
       return <div></div>
     } else {
@@ -33,7 +34,10 @@ const TagResults = React.createClass ({
             <div className='clear'></div>
           </div>
           <Tags
-            tags={_.collect(this.props.data.data, function(tag) { return tag.name })} />
+            tags={_.collect(this.props.data.data, function(tag) { return tag.name })}
+            onClick={this.props.onClick}
+           />
+            {showAllTags}
         </div>
       )
     }
