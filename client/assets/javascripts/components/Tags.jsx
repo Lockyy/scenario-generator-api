@@ -30,6 +30,12 @@ class Tags extends React.Component {
     }
   }
 
+  getSelectedTags() {
+    if(this.props) {
+      return this.props.selected
+    }
+  }
+
   getContainerName() {
     if(this.props.containerClass) {
       return this.props.containerClass
@@ -41,10 +47,13 @@ class Tags extends React.Component {
   renderTags() {
     let tagTags = [];
     let tags = this.getTags() || [];
+    let selectedTags = this.getSelectedTags();
     let max = _.min([tags.length, this.getMax()]);
-
     for (let i = 0; i < max; i++) {
-      tagTags.push(<span className='tag' onClick={ this.props.onClick }>{tags[i]}</span>);
+      let tag = tags[i];
+      let isSelected = _.includes(selectedTags, tag) ;
+      let classes = "tag " + ( isSelected ? 'selected': '');
+      tagTags.push(<span className={classes} onClick={ this.props.onClick }>{tag}</span>);
     }
 
     return <div className={`tags ${this.getContainerName()}`}>{tagTags}</div>;

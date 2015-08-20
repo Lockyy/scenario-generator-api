@@ -99,9 +99,9 @@ const Results = React.createClass ({
     if(this.props.showButton) {
       return (
         <div className='show-more'>
-          <Link to={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='show-more-button'>
+          <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='show-more-button'>
             Show More
-          </Link>
+          </a>
         </div>
       )
     }

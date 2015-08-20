@@ -24,6 +24,11 @@ const TagResults = React.createClass ({
     if(this.props.hide) {
       return <div></div>
     } else {
+
+      function getTagNames(tags){
+        return _.collect(tags, function(tag) { return tag.name })
+      }
+
       return (
         <div className={`results tags ${this.props.containerClass}`}>
           <div className ='title'>
@@ -34,8 +39,9 @@ const TagResults = React.createClass ({
             <div className='clear'></div>
           </div>
           <Tags
-            tags={_.collect(this.props.data.data, function(tag) { return tag.name })}
+            tags={getTagNames(this.props.data.data)}
             onClick={this.props.onClick}
+            selected={getTagNames(this.props.selected)}
            />
             {showAllTags}
         </div>
@@ -43,7 +49,7 @@ const TagResults = React.createClass ({
     }
   }
 
-})
+});
 
 TagResults.displayName = 'TagResults';
 
