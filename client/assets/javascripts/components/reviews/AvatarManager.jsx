@@ -42,10 +42,6 @@ const AvatarManager = React.createClass({
     });
   },
 
-  _addFile: function _addFile(e) {
-    React.findDOMNode(this.refs.product_attachment).click();
-  },
-
   render: function render() {
     return (
       <UploadManager name='product[company[avatar]]'
