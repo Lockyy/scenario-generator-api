@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Link } from 'react-router';
 import ReviewPageCompanyFieldsActions from '../../actions/reviews/ReviewPageCompanyFieldsActions'
 import ProductCompanyName from './ProductCompanyName'
+import AvatarManager from './AvatarManager'
 import TypeAhead from '../TypeAhead'
 
 const CompanyFields  = React.createClass({
@@ -34,8 +35,7 @@ const CompanyFields  = React.createClass({
   },
 
   _getNewCompanyFields: function _getNewCompanyFields() {
-    return (<fieldset className='details'>
-      <span className='instructions'>Complete the form below to add a new company</span>
+    return (<fieldset className='company_details'>
       <div className='form-group'>
         <label htmlFor='product[company[url]]'>Company's website <span className='required'>*</span></label>
         <input type='text' className='form-control' placeholder='www.' name='product[company[url]]'
@@ -52,6 +52,13 @@ const CompanyFields  = React.createClass({
           onChange={this._updateCompanyDescription} required/>
         <span className="help-block with-errors"></span>
       </div>
+
+      <div className='form-group avatar'>
+        <label htmlFor='product[company[avatar]]' className='sr-only'>Company logo</label>
+
+        <AvatarManager ref='upload_manager' attachments={_.compact([this.props.avatar])} />
+      </div>
+
     </fieldset>);
   },
 
@@ -72,13 +79,13 @@ const CompanyFields  = React.createClass({
 
   render: function render() {
     let newCompany = this.props.id === undefined;
-    let details = newCompany && !_.isEmpty(this.props.name) ? this._getNewCompanyFields() : '';
+    let details = newCompany ? this._getNewCompanyFields() : '';
 
     return (
       <fieldset>
         <ProductCompanyName ref='company_name' value={this.props.name} disableButton={!this.props.showDetails}
           onSetCompany={this._setCompany} />
-        { this.props.showDetails ? details : ''}
+         { this.props.showDetails ? details : '' }
       </fieldset>
     );
   }

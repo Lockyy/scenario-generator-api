@@ -35,6 +35,7 @@ class ReviewPageStore {
       handleUpdateCompany: ReviewPageCompanyFieldsActions.UPDATE_COMPANY,
       handleUpdateCompanyUrl: ReviewPageCompanyFieldsActions.UPDATE_COMPANY_URL,
       handleUpdateCompanyDescription: ReviewPageCompanyFieldsActions.UPDATE_COMPANY_DESCRIPTION,
+      handleUpdateCompanyAvatar: ReviewPageCompanyFieldsActions.UPDATE_COMPANY_AVATAR,
       resetDefaultState: FluxReviewPageActions.CLEAR_REVIEW,
       handleFetchReview: FluxReviewPageActions.FETCH_REVIEW,
       handleSetReview: FluxReviewPageActions.SET_REVIEW,
@@ -145,6 +146,10 @@ class ReviewPageStore {
 
   handleUpdateCompanyDescription(description) {
     this.review.product.company.description = description;
+  }
+
+  handleUpdateCompanyAvatar(avatar) {
+    this.review.product.company.avatar = avatar;
   }
 
   handleRegisterError(error) {
