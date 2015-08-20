@@ -45,6 +45,15 @@ class ReviewPageCompanyFieldsActions {
       _this.registerError('error uploading file to s3');
     });
   }
+
+  addTag(tag, callbacks) {
+    callbacks = callbacks || {};
+    this.dispatch(tag);
+
+    if (_.isFunction(callbacks.success)) {
+      callbacks.success(tag)
+    }
+  }
 }
 
 export default alt.createActions(ReviewPageCompanyFieldsActions);

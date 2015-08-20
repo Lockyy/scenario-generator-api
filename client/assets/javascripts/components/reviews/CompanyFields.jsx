@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import ReviewPageCompanyFieldsActions from '../../actions/reviews/ReviewPageCompanyFieldsActions'
 import ProductCompanyName from './ProductCompanyName'
 import AvatarManager from './AvatarManager'
-import TypeAhead from '../TypeAhead'
+import CompanyTagsManager from './CompanyTagsManager'
 
 const CompanyFields  = React.createClass({
   displayName: 'CompanyFields',
@@ -12,6 +12,7 @@ const CompanyFields  = React.createClass({
   getDefaultProps: function getDefaultProps() {
     return {
       name: '',
+      tags: [],
       showDetails: false,
     }
   },
@@ -59,6 +60,10 @@ const CompanyFields  = React.createClass({
         <AvatarManager ref='upload_manager' attachments={_.compact([this.props.avatar])} />
       </div>
 
+      <div className='form-group review-tags'>
+        <label htmlFor='product[company[tags]]'>Company Tags</label>
+        <CompanyTagsManager tags={this.props.tags} />
+      </div>
     </fieldset>);
   },
 

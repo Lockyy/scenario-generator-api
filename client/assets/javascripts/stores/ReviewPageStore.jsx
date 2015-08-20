@@ -13,7 +13,8 @@ const emptyReview = {
     description: '',
     url: '',
     company: {
-      name: ''
+      name: '',
+      tags: []
     }
   }
 };
@@ -36,6 +37,7 @@ class ReviewPageStore {
       handleUpdateCompanyUrl: ReviewPageCompanyFieldsActions.UPDATE_COMPANY_URL,
       handleUpdateCompanyDescription: ReviewPageCompanyFieldsActions.UPDATE_COMPANY_DESCRIPTION,
       handleUpdateCompanyAvatar: ReviewPageCompanyFieldsActions.UPDATE_COMPANY_AVATAR,
+      handleAddCompanyTag: ReviewPageCompanyFieldsActions.ADD_TAG,
       resetDefaultState: FluxReviewPageActions.CLEAR_REVIEW,
       handleFetchReview: FluxReviewPageActions.FETCH_REVIEW,
       handleSetReview: FluxReviewPageActions.SET_REVIEW,
@@ -150,6 +152,11 @@ class ReviewPageStore {
 
   handleUpdateCompanyAvatar(avatar) {
     this.review.product.company.avatar = avatar;
+  }
+
+  handleAddCompanyTag(tag) {
+    this.review.product.company.tags = this.review.product.company.tags || [];
+    this.review.product.company.tags.push(tag);
   }
 
   handleRegisterError(error) {
