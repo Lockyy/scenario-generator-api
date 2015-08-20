@@ -30,3 +30,10 @@ json.related_tags do
     json.(tag, :id, :name)
   end
 end
+
+json.filtered_tags do
+  json.total @results[:filtered_tags][:total]
+  json.data  @results[:filtered_tags][:data] do |tag|
+    json.(tag, :id, :name)
+  end
+end

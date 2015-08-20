@@ -10,6 +10,7 @@ class Product < ActiveRecord::Base
   has_one :default_image, class_name: 'Attachment'
 
   include SearchableByNameAndDescription
+  include SearchableByTag
 
   before_save :downcase_name
 

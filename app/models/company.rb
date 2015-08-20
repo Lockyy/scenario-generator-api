@@ -5,6 +5,7 @@ class Company < ActiveRecord::Base
 
   include Avatarable
   include SearchableByNameAndDescription
+  include SearchableByTag
 
   before_save :downcase_name
 
