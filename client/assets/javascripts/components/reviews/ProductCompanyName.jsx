@@ -1,7 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
-import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import ProductName from './ProductName'
 import TypeAhead from '../TypeAhead'
 
@@ -10,8 +9,8 @@ const ProductCompanyName  = React.createClass({
 
   getDefaultProps: function getDefaultProps() {
     return {
-      name: '',
-      value: ''
+      value: '',
+      disableButton: false
     }
   },
 
@@ -34,43 +33,72 @@ const ProductCompanyName  = React.createClass({
       name: 'companies',
       displayKey: 'name',
       templates: {
+        header: function(data) {
+          let query = data.query;
+          return `<p class='tt-no-results tt-empty' data-query='${query}'>` +
+            `“${query}”<span class='tt-help'>Create company <i class="add-symbol"> + </i></span>` +
+            `</p>`;
+        },
         empty: function(data) {
           let query = data.query;
-          return `<p class='tt-no-results'>“${query}” will be created.</p>`
+          return `<p class='tt-no-results' data-query='${query}'>` +
+            `“${query}”<span class='tt-help'>Create company <i class="add-symbol"> + </i></span>` +
+            `</p>`;
         },
         suggestion: function(data) {
           let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
-          return `<p>${name}</p>`
+          return `<p>${name}<span class='tt-help'><i class="review-symbol"> -> </i></span></p>`
         }
       },
     }
   },
 
-  _onCompanyNameChange: function _onCompanyNameChange(product_company_name) {
-    this._updateProduct({ company: { name: product_company_name } }, true)
-  },
-
-  _updateProduct: function _updateProduct(product, showDetails) {
-    this.props.onUpdateProduct(product, showDetails)
-  },
-
-  _onSelectCompany: function _onSelectCompany(company) {
-    this._onCompanyNameChange(company.name);
+  _onCompanyNameChange: function _onCompanyNameChange(company_name) {
+    this.props.onSetCompany({ name: company_name, showDetails: false });
   },
 
   _onSelectCreateCompany: function _onSelectCreateCompany(name) {
-    this._onCompanyNameChange(name);
+    let company = { name: name, showDetails: true }
+    this.props.onSetCompany(company);
+  },
+
+  _onSelectCompany: function _onSelectCompany(company) {
+    this.props.onSetCompany(_.merge({showDetails: false}), company);
+  },
+
+  _hideCreateWhenMatch: function _hideCreateWhenMatch(e) {
+    let typeahead = $(e.target);
+    typeahead.on("typeahead:render", function() {
+      if (arguments.length < 2) return;
+
+      let suggestions = _.takeRight(arguments, arguments.length - 1);
+      let isSuggested = _.filter(suggestions, function(suggestion) {
+        return suggestion.name && typeahead.val() && suggestion.name.toLowerCase() == typeahead.val().toLowerCase()
+      }).length > 0
+
+      if (isSuggested) {
+        typeahead.siblings('.tt-menu').find('.tt-empty').hide()
+      }
+    });
   },
 
   render: function render() {
     return (
       <div className='form-group'>
         <label htmlFor='product[company[name]]'>Company Name <span className='required'>*</span></label>
-
-        <TypeAhead name='product[company[name]]' value={this.props.value} placeholder='e.g. Microsoft'
-          className='form-control' bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
-          onSelectOption={this._onSelectCompany} onSelectNoOption={this._onSelectCreateCompany} onChange={this._onCompanyNameChange}
-          ref='product_company_name' required/>
+          <div className='input-group'>
+            <TypeAhead name='product[company[name]]' value={this.props.value} placeholder='e.g. Microsoft'
+              className='form-control'
+              bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
+              onChange={this._onCompanyNameChange} onRender={this._hideCreateWhenMatch}
+              onSelectOption={this._onSelectCompany} onSelectNoOption={this._onSelectCreateCompany}
+              ref='product_company_name' required/>
+            <span className="input-group-btn">
+              <button className="btn btn-default" type="button" disabled={this.props.disableButton || this.props.disabled}>
+                Go
+              </button>
+            </span>
+          </div>
           <span className="help-block with-errors"></span>
       </div>
     );

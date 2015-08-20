@@ -67,6 +67,10 @@ const NewReviewPage  = React.createClass({
       if (oldState.review.product.id !== review.review.product.id) {
         newState.review.product.id = review.review.product.id;
       }
+      if (oldState.review.product.company && review.review.product.company &&
+          oldState.review.product.company.id !== review.review.product.company.id) {
+        newState.review.product.company.id = review.review.product.company.id;
+      }
 
       return newState;
     });
