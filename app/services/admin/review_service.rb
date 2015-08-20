@@ -11,7 +11,7 @@ class Admin::ReviewService
       _review.price_score = review[:price_score]
       _review.reviewable_id = review[:reviewable_id]
       _review.reviewable_type = review[:reviewable_type]
-      _review.user = current_user
+      _review.user = current_user if _review.user.nil?
       _review.links = links(review[:links_attributes])
       review.delete(:tags_attributes)
       review.delete(:links_attributes)

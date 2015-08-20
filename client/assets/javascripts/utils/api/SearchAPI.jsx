@@ -2,17 +2,17 @@ import { Promise } from 'es6-promise';
 import SearchConstants from '../constants/SearchConstants';
 
 module.exports = {
-  getSearchResults: function(searchString, page, resolve, reject) {
-    if(searchString) {
-      let url = `/api/search`
-      return new Promise(function() {
-        $.ajax({
-          url: url,
-          data: { search: searchString, page: page, per_page: SearchConstants.PER_PAGE },
-          success: resolve,
-          error: reject
-        });
+
+  getSearchResults: _.debounce(function(data, resolve, reject) {
+    let url = `/api/search`;
+    return new Promise(function() {
+      $.ajax({
+        url: url,
+        data: data,
+        success: resolve,
+        error: reject
       });
-    }
-  }
+    });
+  }, 300)
+
 };

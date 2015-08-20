@@ -2,7 +2,7 @@ import alt from '../FluxAlt';
 import _ from 'lodash';
 import SearchAPI from '../utils/api/SearchAPI';
 
-class FluxSearchPageActions {
+class FluxSearchHeaderActions {
 
   getSearchResults(data) {
     this.dispatch();
@@ -27,4 +27,4 @@ class FluxSearchPageActions {
   }
 }
 
-export default alt.createActions(FluxSearchPageActions);
+export default alt.createActions(FluxSearchHeaderActions);

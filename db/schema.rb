@@ -11,10 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150812200934) do
+ActiveRecord::Schema.define(version: 20150819153459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_trgm"
+  enable_extension "fuzzystrmatch"
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -91,16 +93,21 @@ ActiveRecord::Schema.define(version: 20150812200934) do
 
   add_index "reviews", ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id", using: :btree
 
-  create_table "tags", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+  create_table "tag_taggables", force: :cascade do |t|
+    t.integer  "tag_id"
     t.integer  "taggable_id"
     t.string   "taggable_type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
-  add_index "tags", ["taggable_type", "taggable_id"], name: "index_tags_on_taggable_type_and_taggable_id", using: :btree
 
   create_table "tags_users", force: :cascade do |t|
     t.integer "user_id"

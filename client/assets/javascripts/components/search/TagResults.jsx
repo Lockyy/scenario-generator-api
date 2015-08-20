@@ -9,33 +9,33 @@ const TagResults = React.createClass ({
     return { data: [] }
   },
 
-  visible: function() {
-    return (this.active() || this.props.activeSection == 'all')
-  },
-
-  active: function() {
-    return this.props.activeSection && this.props.activeSection == 'tags'
+  renderSize: function() {
+    if(this.props.showSize) {
+      return (
+        <div className='size'>
+          { this.props.data.total } result(s) found
+        </div>
+      )
+    }
   },
 
   render: function() {
-    if(this.visible()) {
+    if(this.props.hide) {
+      return <div></div>
+    } else {
       return (
-        <div className='results tags'>
+        <div className={`results tags ${this.props.containerClass}`}>
           <div className ='title'>
             <div className='name'>
-              Tags
+              {this.props.title || 'Tags'}
             </div>
-            <div className='size'>
-              { this.props.data.total } result(s) found
-            </div>
+            { this.renderSize() }
             <div className='clear'></div>
           </div>
           <Tags
             tags={_.collect(this.props.data.data, function(tag) { return tag.name })} />
         </div>
       )
-    } else {
-      return <div></div>
     }
   }
 
