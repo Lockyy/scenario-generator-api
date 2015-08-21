@@ -17,7 +17,7 @@ module Omniauth
     end
 
     def avatar_url
-      info.image
+      original_oauth_info.extra.raw_info.mugshot_url_template.gsub(/(\{width\})|(\{height\})/, '150')
     end
 
     def token
