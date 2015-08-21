@@ -25,7 +25,7 @@ module Api
     # POST /reviews
     # POST /reviews.json
     def create
-      review = Fletcher::NewReview.new(@user, @product, review_params)
+      review = Fletcher::NewReview.new(@user, @product, create_params)
 
       respond_to do |format|
         if (review.save!)
@@ -81,6 +81,22 @@ module Api
           { links: [:url, :id] },
           { tags: [:name, :id] },
           { product: [:id, :name, { company: [:name, :id] }, :url, :description] }
+      )
+    end
+
+    def create_params
+      params[:review].permit(
+        :id, :quality_score, :quality_review, :title, :price_review, :price_score,
+        :attachable_id, :attachable_type,
+        { attachments: [:name, :url, :content_type, :size, :id] },
+        { links: [:url, :id] },
+        { tags: [:name, :id] },
+        { product: [:id, :name, :url, :description,
+          { company: [:name, :id, :tags, :url, :description,
+            { tags: [:name, :id] },
+            { avatar: [:name, :url, :content_type, :size] }]
+          }]
+        }
       )
     end
   end
