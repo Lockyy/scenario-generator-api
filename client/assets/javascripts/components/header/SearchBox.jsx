@@ -33,7 +33,7 @@ const SearchBox = React.createClass ({
 
   onChange: function(data) {
     this.setState(data);
-    let resultsHolder = $('.results-holder');
+    let resultsHolder = $(React.findDOMNode(this.refs.resultsHolder));
     resultsHolder.show();
     resultsHolder.on('clickoutside', function(){
       $(this).hide()
@@ -63,7 +63,7 @@ const SearchBox = React.createClass ({
     if(this.displayResults()) {
 
       return (
-        <div className='results-holder'>
+        <div ref='resultsHolder' className='results-holder'>
           <Results
             type='products'
             data={this.state.data.products}

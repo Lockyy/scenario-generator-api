@@ -44,6 +44,7 @@ module Fletcher
 
     def default_params
       {
+          filter_by: '',
           filter_by_tags: [],
           match_mode: 'all',
           search_string: '',
@@ -69,7 +70,7 @@ module Fletcher
     end
 
     def data_hash(data)
-      return {total: 0, pages: 0, data: []} if @params[:search_string].blank?
+      return {total: 0, pages: 0, data: [] } if @params[:search_string].blank?
 
       paginated_data = paginate(data)
 
@@ -102,14 +103,14 @@ module Fletcher
     def related_tags
       section = @params[:section]
 
-      if section.nil? || section == 'all'
-        (@products_related_tags + @companies_related_tags).uniq
-      elsif section == 'products'
+      if section == 'products'
         @products_related_tags
       elsif section == 'companies'
         @companies_related_tags
       elsif section == 'tags'
         []
+      else
+        (@products_related_tags + @companies_related_tags).uniq
       end
     end
 
