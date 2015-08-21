@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150821203817) do
+ActiveRecord::Schema.define(version: 20150821223104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,14 @@ ActiveRecord::Schema.define(version: 20150821203817) do
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.integer  "views",       default: 0
+  end
+
+  create_table "review_votes", force: :cascade do |t|
+    t.integer  "review_id"
+    t.integer  "user_id"
+    t.boolean  "helpful"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "reviews", force: :cascade do |t|
@@ -157,12 +165,13 @@ ActiveRecord::Schema.define(version: 20150821203817) do
     t.integer  "avatar_file_size"
     t.datetime "avatar_updated_at"
     t.string   "avatar_uuid"
-    t.string   "department"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "review_votes", "reviews"
+  add_foreign_key "review_votes", "users"
   add_foreign_key "tokens", "users"
   add_foreign_key "user_oauths", "users"
 end
