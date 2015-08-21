@@ -25,6 +25,10 @@ class FluxProductReviewsActions {
   registerError(error) {
     this.dispatch(error);
   }
+
+  voteOnReview(productId, reviewId, helpful, resolve, reject) {
+    ReviewsAPI.voteOnReview(productId, reviewId, helpful, resolve, reject);
+  }
 }
 
 export default alt.createActions(FluxProductReviewsActions);
