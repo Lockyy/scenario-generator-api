@@ -33,10 +33,15 @@ const SearchBox = React.createClass ({
 
   onChange: function(data) {
     this.setState(data);
+    let resultsHolder = $('.results-holder');
+    resultsHolder.show();
+    resultsHolder.on('clickoutside', function(){
+      $(this).hide()
+    });
   },
 
   onSearchInput: function(event) {
-      this.performSearch(event.target.value);
+    this.performSearch(event.target.value);
   },
 
   onSubmit: function(event) {
@@ -56,6 +61,7 @@ const SearchBox = React.createClass ({
 
   renderResults: function() {
     if(this.displayResults()) {
+
       return (
         <div className='results-holder'>
           <Results
