@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Link } from 'react-router';
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import ReviewPageProductFieldsPageActions from '../../actions/reviews/ReviewPageProductFieldsActions'
-import ProductCompanyName from './ProductCompanyName'
+import CompanyFields from './CompanyFields'
 import ProductName from './ProductName'
 import Rating from '../../components/Rating'
 import TypeAhead from '../TypeAhead'
@@ -44,9 +44,6 @@ const ProductFields  = React.createClass({
   _getNewProductFields: function _getNewProductFields() {
     return (<fieldset className='details'>
       <span className='instructions'>Complete the form below to add a new product</span>
-
-      <ProductCompanyName ref='product_company_name' value={this.props.company.name} onUpdateProduct={this._updateProduct} />
-
       <div className='form-group'>
         <label htmlFor='product[url]'>Product's website <span className='required'>*</span></label>
         <input type='text' className='form-control' placeholder='www.' name='product[url]'
@@ -63,6 +60,8 @@ const ProductFields  = React.createClass({
           onChange={this._updateProductDescription} required/>
         <span className="help-block with-errors"></span>
       </div>
+
+      <CompanyFields ref='product_company_fields' {...this.props.company} />
     </fieldset>);
   },
 

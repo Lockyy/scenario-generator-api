@@ -34,8 +34,12 @@ class ReviewPageReviewFieldsActions {
   }
 
   addTag(tag, callbacks) {
+    callbacks = callbacks || {};
     this.dispatch(tag);
-    callbacks.success(tag)
+
+    if (_.isFunction(callbacks.success)) {
+      callbacks.success(tag)
+    }
   }
 
   updateQualityScore(score) {

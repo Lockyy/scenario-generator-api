@@ -5,70 +5,34 @@ import UrlHelper from '../../utils/helpers/UrlHelper'
 const UploadManager = React.createClass({
   getDefaultProps: function getDefaultProps() {
     return {
-      onAddFile: function(file) {},
-      onError: function(error, file) {},
+      name: '',
+      multiple: false,
+      max: 0,
       buttonText: 'Browse',
       uploadText: 'Upload a file',
-      uploadingText: 'Uploading...'
+      uploadingText: 'Uploading...',
+      onAddFile: function(file) {},
+      onValidateFile: function(file) {}
     }
-  },
-
-  _validate: function validate(newFile) {
-    let isUnique = !_.find(this.props.attachments, function(file) {
-      return file.name.toLowerCase() == newFile.name.toLowerCase() &&
-        file.size == newFile.size
-    });
-
-    return newFile && isUnique;
   },
 
   _handleUploadFiles: function _handleUploadFiles(e) {
     let _this = this;
     let uploads = _.compact(_.map(e.target.files, function(file) {
-      if(!_this._validate(file)) { return }
+      if(!_this.props.onValidateFile(file)) { return }
       return { name: file.name, size: file.size, loaded: 0, file: file }
     }));
 
     _.each(uploads, function(file) {
-      let $input = $(React.findDOMNode(_this.refs.product_attachment_placeholder));
-      let $button = $(React.findDOMNode(_this.refs.product_attachment_button));
+      let $input = $(React.findDOMNode(_this.refs.input_file_placeholder));
+      let $button = $(React.findDOMNode(_this.refs.input_file_button));
 
-      ReviewPageReviewFieldsActions.addFile(file.file, {
-        onProgress: function(file, fileSize) {
-          let percentage = (fileSize / file.size * 100).toFixed(2)
-          $input.addClass('uploading').prop('disabled', true).attr('value', _this.props.uploadingText + " " + percentage  + "%");
-          $button.addClass('uploading').prop('disabled', true);
-        },
-        success: function(file, downloadUrl) {
-          $input.removeClass('uploading').prop('disabled', false).attr('value', _this.props.uploadText);
-          $button.addClass('uploading').prop('disabled', false);
-          _this.props.onAddFile(file);
-        },
-        error: function(error) {
-          $input.removeClass('uploading').prop('disabled', false).attr('value', _this.props.uploadText);
-          $button.addClass('uploading').prop('disabled', false);
-          _this.props.onError(error, file);
-        }
-      });
+      _this.props.onAddFile(file, $input, $button);
     });
   },
 
   _addFile: function _addFile(e) {
-    React.findDOMNode(this.refs.product_attachment).click();
-  },
-
-  getFiles: function getFiles() {
-    let filesContainer = $(this.refs.files.getDOMNode());
-    return _.map(filesContainer.find('.file'), function(file) {
-      let $file = $(file);
-
-      return {
-        name: $file.find('.file_name').val(),
-        url: $file.find('.file_download_url').val(),
-        content_type: $file.find('.file_content_type').val(),
-        size: $file.find('.file_size').val(),
-      }
-    });
+    React.findDOMNode(this.refs.input_file).click();
   },
 
   render: function render() {
@@ -80,27 +44,21 @@ const UploadManager = React.createClass({
 
             return <li className='file' id={`file_${id}`} ref={`file_${id}`}>
               <div className=''>
-                <input type='hidden' className='file_name' name={`product[attachment[${id}][name]]`} value={file.name} />
-                <input type='hidden' className='file_download_url' name={`product[attachment[${id}][url]]`} value={file.url} />
-                <input type='hidden' className='file_content_type' name={`product[attachment[${id}][content_type]]`} value={file.content_type} />
-                <input type='hidden' className='file_size' name={`product[attachment[${id}][size]]`} value={file.size} />
-                <a href={UrlHelper.addProtocol(file.url)} target='_blank'>
-                  {file.name}
-                </a>
+                <a href={UrlHelper.addProtocol(file.url)} target='_blank'>{file.name}</a>
               </div>
             </li>
           })}
         </ul>
 
-        <input type='file' className='form-control' placeholder='Upload a file' name='product[attachment]'
-          ref='product_attachment' onChange={this._handleUploadFiles} style={{display: 'none'}}/>
+        <input type='file' className='form-control' name={this.props.name}
+          ref='input_file' onChange={this._handleUploadFiles} style={{display: 'none'}}/>
 
         <div className='input-group'>
-          <input type='text' className='form-control upload' placeholder='Upload a file' defaultValue={this.props.uploadText}
-            ref='product_attachment_placeholder' onChange={this._handleUploadFiles} onClick={this._addFile} readOnly/>
+          <input type='button' className='form-control upload' value={this.props.uploadText}
+            ref='input_file_placeholder' onClick={this._addFile} />
           <span className="input-group-btn">
             <button className="btn btn-default" type="button" onClick={this._addFile}
-              ref='product_attachment_button'>{this.props.buttonText}</button>
+              ref='input_file_button'>{this.props.buttonText}</button>
           </span>
         </div>
       </div>

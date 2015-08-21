@@ -33,11 +33,11 @@ const ProductName  = React.createClass({
       templates: {
         header: function(data) {
           let query = data.query;
-          return `<p class='tt-no-results tt-empty' data-query='${query}'>“${query}”<span class='tt-help'>Create <i class="add-symbol"> + </i></span></p>`
+          return `<p class='tt-no-results tt-empty' data-query='${query}'>“${query}”<span class='tt-help'>Add and review <i class="add-symbol"> + </i></span></p>`
         },
         empty: function(data) {
           let query = data.query;
-          return `<p class='tt-no-results' data-query='${query}'>“${query}”<span class='tt-help'>Create <i class="add-symbol"> + </i></span></p>`
+          return `<p class='tt-no-results' data-query='${query}'>“${query}”<span class='tt-help'>Add and review <i class="add-symbol"> + </i></span></p>`
         },
         suggestion: function(data) {
           let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });

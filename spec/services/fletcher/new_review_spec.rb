@@ -28,7 +28,11 @@ RSpec.describe Fletcher::NewReview do
         description: 'description',
         url: 'http://url.com',
         company: {
-          name: 'company name'
+          name: 'company name',
+          url: 'test',
+          avatar: {
+            url: 'http://img.fletcher.com/random_seq/logo.png'
+          }
         }
       }
     }.with_indifferent_access
@@ -39,8 +43,9 @@ RSpec.describe Fletcher::NewReview do
   describe '#save!' do
     context 'with an existing product' do
       it 'does not create a new one' do
-        params[:product][:company] = Company.create(name: params[:product][:company][:name])
-        expect { Product.create(params[:product]) }.to change { Product.count }
+        product_params = {}.merge(params[:product]).with_indifferent_access
+        product_params[:company] = Company.create(name: params[:product][:company][:name])
+        expect { Product.create(product_params) }.to change { Product.count }
         expect { subject.save! }.to_not change{ Product.count }
       end
     end
