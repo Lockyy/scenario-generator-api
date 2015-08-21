@@ -13,7 +13,9 @@ const Results = React.createClass ({
   },
 
   getMaxDisplayedData: function() {
-    return Math.min(this.props.data.data.length, SearchConstants.PER_PAGE)
+    let data = this.props.data.data;
+    let dataMax = data ? data.length : 0;
+    return Math.min(dataMax, SearchConstants.PER_PAGE)
   },
 
   renderCompany: function(result) {
@@ -83,20 +85,25 @@ const Results = React.createClass ({
     )
   },
 
-  renderResults: function() {
-    if(this.props.data.data.length > 0) {
-      let resultTags = [];
+  hasData: function(){
+    let data = this.props.data.data;
+    return !!data && data.length > 0;
+  },
 
+  renderResults: function() {
+    if(this.hasData()) {
+      let resultTags = [];
       for (let i = 0; i < this.getMaxDisplayedData(); i++) {
         resultTags.push(this.renderResult(this.props.data.data[i]));
       }
-
       return <div className={this.props.type}>{resultTags}</div>;
+    }else{
+      return this.props.emptyResults;
     }
   },
 
   renderButton: function() {
-    if(this.props.showButton) {
+    if(this.props.showButton && this.hasData()) {
       return (
         <div className='show-more'>
           <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='show-more-button'>

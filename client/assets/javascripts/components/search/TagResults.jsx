@@ -19,16 +19,28 @@ const TagResults = React.createClass ({
     }
   },
 
+  getTagNames: function(tags){
+    return _.collect(tags, function(tag) { return tag.name })
+  },
+
+  getTags: function() {
+    let data = this.props.data.data;
+    if(data && data.length > 0){
+      return <Tags
+        tags={this.getTagNames(data)}
+        onClick={this.props.onClick}
+        selected={this.getTagNames(this.props.selected)}
+        />
+    }else{
+      return this.props.emptyResults
+    }
+  },
+
   render: function() {
     let showAllTags = this.props.showLinkAllTags ? <span className='all-tags-link'> Browse all tags</span> : '';
     if(this.props.hide) {
       return <div></div>
     } else {
-
-      function getTagNames(tags){
-        return _.collect(tags, function(tag) { return tag.name })
-      }
-
       return (
         <div className={`results tags ${this.props.containerClass}`}>
           <div className ='title'>
@@ -38,11 +50,8 @@ const TagResults = React.createClass ({
             { this.renderSize() }
             <div className='clear'></div>
           </div>
-          <Tags
-            tags={getTagNames(this.props.data.data)}
-            onClick={this.props.onClick}
-            selected={getTagNames(this.props.selected)}
-           />
+          {this.props.noResultsTag}
+            {this.getTags()}
             {showAllTags}
         </div>
       )

@@ -10,6 +10,11 @@
       background-color: white
 
   .results
+    .no-results
+      padding: 20px 10px
+      font-weight: bold
+      display: block
+
     .title
       border-bottom: 1px solid $grey
       padding-bottom: 10px
@@ -32,18 +37,29 @@
       #sort-container
         float: right
 
-        label
-          font-weight: normal
-          color: $dark-grey
-          font-size: 11px
+        .form-group
+          margin-bottom: 0
 
-        #sort
-          font-size: 11px
-          outline: none
-          margin-left: 10px
-          border: none
-          background-color: white
-          -webkit-appearance: none
+          label
+            font-weight: normal
+            color: $dark-grey
+            font-size: 11px
+            margin: 0
+
+          #sort
+            font-size: 11px
+            outline: none
+            margin-left: 10px
+            border: none
+            background-color: white
+            -webkit-appearance: none
+            -moz-appearance: none
+            -ms-appearance: none
+            -o-appearance: none
+            appearance: none
+
+            &::-ms-expand
+              display: none
 
     .result
       padding: 0 !important
@@ -87,6 +103,11 @@
       color: black
       .result
         border-bottom: 0
+
+  .results
+    &.tags
+      .no-results
+        margin-top: -15px
 
   .links
     .link

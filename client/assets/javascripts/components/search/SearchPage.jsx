@@ -60,8 +60,7 @@ const SearchPage = React.createClass({
   },
 
   displaySection: function(sectionName) {
-    return this.state.data[sectionName].total > 0 &&
-      (this.props.params.section == sectionName || this.props.params.section == 'all')
+    return (this.props.params.section == sectionName || this.props.params.section == 'all')
   },
 
   renderRightBar: function() {
@@ -113,10 +112,11 @@ const SearchPage = React.createClass({
   },
 
   renderResults: function() {
+    let noResultsTag = <div className='no-results'>We couldn’t find any results for your search.</div>;
     if(this.state.data.total_results == 0 && !this.displaySection('products') &&
       !this.displaySection('companies') &&
       !this.displaySection('tags')) {
-      return <div className='no-results'>No Results</div>
+      return noResultsTag;
     }
 
     return (
@@ -134,6 +134,7 @@ const SearchPage = React.createClass({
           currentPage={this.props.params.page}
           section={this.props.params.section}
           onSetQuery={this.setQuery}
+          emptyResults={noResultsTag}
             />
         <Results
           type='companies'
@@ -147,6 +148,7 @@ const SearchPage = React.createClass({
           hide={!this.displaySection('companies')}
           currentPage={this.props.params.page}
           section={this.props.params.section}
+          emptyResults={noResultsTag}
             />
         <TagResults
           data={this.state.data.tags}
@@ -154,6 +156,7 @@ const SearchPage = React.createClass({
           showSize={true}
           searchTerm={this.props.params.search_string}
           section={this.props.params.section}
+          emptyResults={noResultsTag}
             />
       </div>
     )
