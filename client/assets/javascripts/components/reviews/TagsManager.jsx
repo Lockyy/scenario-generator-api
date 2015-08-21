@@ -56,9 +56,13 @@ const TagsManager = React.createClass({
       name: 'tags',
       displayKey: 'name',
       templates: {
+        header: function(data) {
+          let query = data.query;
+          return `<p class='tt-no-results tt-empty'>Create tag “${query}”</p>`
+        },
         empty: function(data) {
           let query = data.query;
-          return `<p class='tt-no-results'>“${query}” will be created.</p>`
+          return `<p class='tt-no-results'>Create tag “${query}”</p>`
         },
         suggestion: function(data) {
           let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
@@ -66,6 +70,22 @@ const TagsManager = React.createClass({
         }
       },
     }
+  },
+
+  _hideCreateWhenMatch: function _hideCreateWhenMatch(e) {
+    let typeahead = $(e.target);
+    typeahead.on("typeahead:render", function() {
+      if (arguments.length < 2) return;
+
+      let suggestions = _.takeRight(arguments, arguments.length - 1);
+      let isSuggested = _.filter(suggestions, function(suggestion) {
+        return suggestion.name && typeahead.val() && suggestion.name.toLowerCase() == typeahead.val().toLowerCase()
+      }).length > 0
+
+      if (isSuggested) {
+        typeahead.siblings('.tt-menu').find('.tt-empty').hide()
+      }
+    });
   },
 
   render: function render() {
@@ -84,7 +104,7 @@ const TagsManager = React.createClass({
         <div className='input-group'>
           <TypeAhead placeholder={this.props.placeholder} className='form-control'
             typeaheadProps={this._getTypeaheadProps()} bloodhoundProps={this._getBloodhoundProps()} name={this.props.name}
-            onSelectOption={this._addTag} onSelectNoOption={this._buildAndAddTag}
+            onSelectOption={this._addTag} onSelectNoOption={this._buildAndAddTag} onRender={this._hideCreateWhenMatch}
             ref='tag_to_add'/>
 
           <div className="input-group-btn">
