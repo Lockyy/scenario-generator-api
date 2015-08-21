@@ -177,9 +177,8 @@ const SearchPage = React.createClass({
         selectedTags.push({name: e.target.textContent});
       }
 
-
       $(e.target).addClass(newStatus);
-      let data = self.getSearchParams(_.merge({},self.state.data,{section: self.props.params.section}));
+      let data = self.getSearchParams(_.merge({},self.state.data,{section: self.props.params.section, page: '1'}));
       self.performSearch(data);
     };
     let filteredTags = this.state.data.filtered_tags.data;
