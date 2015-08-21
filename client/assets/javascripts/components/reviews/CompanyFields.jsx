@@ -90,7 +90,7 @@ const CompanyFields  = React.createClass({
       <fieldset>
         <ProductCompanyName ref='company_name' value={this.props.name} disableButton={!this.props.showDetails}
           onSetCompany={this._setCompany} />
-         { this.props.showDetails ? details : '' }
+        { false ? details : '' }
       </fieldset>
     );
   }
