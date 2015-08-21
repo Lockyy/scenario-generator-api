@@ -3,14 +3,22 @@ import ReviewPageReviewFieldsActions from '../../actions/reviews/ReviewPageRevie
 import TypeAhead from '../TypeAhead'
 
 const TagsManager = React.createClass({
-
+  getDefaultProps: function getDefaultProps() {
+    return {
+      tags: [],
+      placeholder: 'Add a tag',
+      value: '',
+      buttonText: 'Add Tag',
+      onAddTag: function(tag) {}
+    }
+  },
   _validate: function validate(name) {
     let isUnique = !_.find(this.props.tags, function(tag) { return tag.name.toLowerCase() == name.toLowerCase() });
     return name && isUnique;
   },
 
   _handleAddTag: function _handleAddTag(e) {
-    let tag_to_add = React.findDOMNode(this.refs.product_review_tag_to_add)
+    let tag_to_add = React.findDOMNode(this.refs.tag_to_add)
     let name = tag_to_add.value;
 
     this._buildAndAddTag(name);
@@ -29,25 +37,9 @@ const TagsManager = React.createClass({
       return ;
     }
 
-    ReviewPageReviewFieldsActions.addTag(tag, {
-      success: function(tag) {
-        $(React.findDOMNode(_this.refs.product_review_tag_to_add.refs.typeahead_input)).typeahead('val', null);
-      }
-    });
+    this.props.onAddTag(tag);
+    $(React.findDOMNode(_this.refs.tag_to_add.refs.typeahead_input)).typeahead('val', null);
   },
-
-  getTags: function getTags() {
-    let tagsContainer = $(React.findDOMNode(this.refs.tags));
-
-    return _.map(tagsContainer.find('.tag'), function(tag) {
-      let $tag = $(tag);
-
-      return {
-        name: $tag.find('.tag_name').val()
-      }
-    });
-  },
-
 
   _getBloodhoundProps: function _getBloodhoundProps() {
     return {
@@ -64,9 +56,13 @@ const TagsManager = React.createClass({
       name: 'tags',
       displayKey: 'name',
       templates: {
+        header: function(data) {
+          let query = data.query;
+          return `<p class='tt-no-results tt-empty'>Create tag “${query}”</p>`
+        },
         empty: function(data) {
           let query = data.query;
-          return `<p class='tt-no-results'>“${query}” will be created.</p>`
+          return `<p class='tt-no-results'>Create tag “${query}”</p>`
         },
         suggestion: function(data) {
           let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
@@ -76,6 +72,22 @@ const TagsManager = React.createClass({
     }
   },
 
+  _hideCreateWhenMatch: function _hideCreateWhenMatch(e) {
+    let typeahead = $(e.target);
+    typeahead.on("typeahead:render", function() {
+      if (arguments.length < 2) return;
+
+      let suggestions = _.takeRight(arguments, arguments.length - 1);
+      let isSuggested = _.filter(suggestions, function(suggestion) {
+        return suggestion.name && typeahead.val() && suggestion.name.toLowerCase() == typeahead.val().toLowerCase()
+      }).length > 0
+
+      if (isSuggested) {
+        typeahead.siblings('.tt-menu').find('.tt-empty').hide()
+      }
+    });
+  },
+
   render: function render() {
     return (
       <div className='tags-manager items-manager'>
@@ -83,21 +95,20 @@ const TagsManager = React.createClass({
           {_.map(this.props.tags, function(tag) {
             let id = Math.floor((Math.random() * 1000000) + 1);
 
-            return <li className='tag item' id={`tag_${id}`} ref={`tag_${id}`}>
+            return <li className='tag item' key={`tag_${id}`} id={`tag_${id}`} ref={`tag_${id}`}>
                 {tag.name}
-                <input type='hidden' className='tag_name' name={`review[tags[${id}][name]]`} value={tag.name} />
             </li>
           })}
         </ul>
 
         <div className='input-group'>
-          <TypeAhead  placeholder='Add a tag' className='form-control' value={this.props.value}
-            typeaheadProps={this._getTypeaheadProps()} bloodhoundProps={this._getBloodhoundProps()}
-            onSelectOption={this._addTag} onSelectNoOption={this._buildAndAddTag}
-            ref='product_review_tag_to_add'/>
+          <TypeAhead placeholder={this.props.placeholder} className='form-control'
+            typeaheadProps={this._getTypeaheadProps()} bloodhoundProps={this._getBloodhoundProps()} name={this.props.name}
+            onSelectOption={this._addTag} onSelectNoOption={this._buildAndAddTag} onRender={this._hideCreateWhenMatch}
+            ref='tag_to_add'/>
 
           <div className="input-group-btn">
-            <button className="btn btn-default" type="button" onClick={this._handleAddTag} >Add Tag</button>
+            <button className="btn btn-default" type="button" onClick={this._handleAddTag} >{this.props.buttonText}</button>
           </div>
         </div>
         <span className="help-block with-errors col-xs-12"></span>

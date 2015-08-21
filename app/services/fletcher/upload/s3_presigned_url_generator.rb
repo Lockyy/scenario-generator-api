@@ -16,6 +16,6 @@ class Fletcher::Upload::S3PresignedUrlGenerator
 
   # TODO: Confirm if the url should keep the filename
   def url(filename)
-    "uploads/#{SecureRandom.uuid}/#{filename}"
+    "uploads/#{SecureRandom.uuid}/original/#{filename}"
   end
 end

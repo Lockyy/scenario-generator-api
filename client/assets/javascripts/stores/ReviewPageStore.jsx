@@ -1,6 +1,7 @@
 import alt from '../FluxAlt';
 import FluxReviewPageActions from '../actions/FluxReviewPageActions'
 import ReviewPageProductFieldsActions from '../actions/reviews/ReviewPageProductFieldsActions'
+import ReviewPageCompanyFieldsActions from '../actions/reviews/ReviewPageCompanyFieldsActions'
 import ReviewPageReviewFieldsActions from '../actions/reviews/ReviewPageReviewFieldsActions'
 
 const emptyReview = {
@@ -12,7 +13,8 @@ const emptyReview = {
     description: '',
     url: '',
     company: {
-      name: ''
+      name: '',
+      tags: []
     }
   }
 };
@@ -30,6 +32,12 @@ class ReviewPageStore {
       handleUpdateProduct: FluxReviewPageActions.UPDATE_PRODUCT,
       handleUpdateProductDescription: ReviewPageProductFieldsActions.UPDATE_PRODUCT_DESCRIPTION,
       handleUpdateProductUrl: ReviewPageProductFieldsActions.UPDATE_PRODUCT_URL,
+      handleSetCompany: ReviewPageCompanyFieldsActions.SET_COMPANY,
+      handleUpdateCompany: ReviewPageCompanyFieldsActions.UPDATE_COMPANY,
+      handleUpdateCompanyUrl: ReviewPageCompanyFieldsActions.UPDATE_COMPANY_URL,
+      handleUpdateCompanyDescription: ReviewPageCompanyFieldsActions.UPDATE_COMPANY_DESCRIPTION,
+      handleUpdateCompanyAvatar: ReviewPageCompanyFieldsActions.UPDATE_COMPANY_AVATAR,
+      handleAddCompanyTag: ReviewPageCompanyFieldsActions.ADD_TAG,
       resetDefaultState: FluxReviewPageActions.CLEAR_REVIEW,
       handleFetchReview: FluxReviewPageActions.FETCH_REVIEW,
       handleSetReview: FluxReviewPageActions.SET_REVIEW,
@@ -124,6 +132,31 @@ class ReviewPageStore {
 
   handleSubmitReview() {
     this.resetDefaultState();
+  }
+
+  handleSetCompany(company) {
+    this.review.product.company = _.merge({}, company);
+  }
+
+  handleUpdateCompany(company) {
+    _.merge(this.review.product.company, company);
+  }
+
+  handleUpdateCompanyUrl(url) {
+    this.review.product.company.url = url;
+  }
+
+  handleUpdateCompanyDescription(description) {
+    this.review.product.company.description = description;
+  }
+
+  handleUpdateCompanyAvatar(avatar) {
+    this.review.product.company.avatar = avatar;
+  }
+
+  handleAddCompanyTag(tag) {
+    this.review.product.company.tags = this.review.product.company.tags || [];
+    this.review.product.company.tags.push(tag);
   }
 
   handleRegisterError(error) {

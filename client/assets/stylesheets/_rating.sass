@@ -31,6 +31,7 @@
         position: absolute
         z-index: 0
         cursor: default
+        height: 0 !important
 
       input[type='radio'] + label
         z-index: 5
@@ -54,16 +55,6 @@
       input[type='radio'] + label.before-marked
         @include star-on
 
-    &:hover
-      .rating-group
-        input[type='radio'] + label
-          @include star-off
-          cursor: pointer
-
-        input[type='radio'] + label.hover
-          @include star-on
-          cursor: pointer
-
 .rating-container.price
   .items
     .rating-group
@@ -74,13 +65,3 @@
       input[type='radio'] + label.before-marked,
       input[type='radio']:checked + label
         @include price-on
-
-  &.rating-enabled
-    .items
-      &:hover
-        .rating-group
-          input[type='radio'] + label
-            @include price-off
-
-          input[type='radio'] + label.hover
-            @include price-on
