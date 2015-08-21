@@ -113,7 +113,7 @@ const SearchPage = React.createClass({
   },
 
   renderResults: function() {
-    if(!this.displaySection('products') &&
+    if(this.state.data.total_results == 0 && !this.displaySection('products') &&
       !this.displaySection('companies') &&
       !this.displaySection('tags')) {
       return <div className='no-results'>No Results</div>
