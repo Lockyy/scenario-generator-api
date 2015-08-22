@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   has_many :user_oauths, dependent: :destroy
   has_many :tokens, dependent: :destroy
   has_many :reviews
+  has_many :attachments, through: :reviews
   has_and_belongs_to_many :tags
 
   scope :with_oauth, ->(provider, uid) do
@@ -17,6 +18,10 @@ class User < ActiveRecord::Base
   scope :with_token, ->(token) { joins(:tokens).where(tokens: { token: token }) }
 
   validates :name, presence: true
+
+  def total_attachments
+    attachments.size
+  end
 
   def self.generate_password
     Devise.friendly_token
