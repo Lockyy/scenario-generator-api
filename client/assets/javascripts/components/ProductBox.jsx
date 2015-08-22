@@ -9,7 +9,7 @@ const ProductBox = React.createClass ({
   displayName: 'ProductBox',
 
   contextTypes: {
-    router: React.PropTypes.func
+    router: React.PropTypes.object
   },
 
   hasPicture: function() {

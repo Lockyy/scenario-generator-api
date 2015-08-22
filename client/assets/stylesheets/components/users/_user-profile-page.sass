@@ -1,0 +1,233 @@
+@import 'variables'
+@import 'common'
+
+$default-font-size: 15px
+
+$color-darkred: #b8141a
+$color-darkgrey: #929497
+$color-orange: #e36307
+$color-lightgrey: #f6f6f6
+$color-blackcharcoal: #3c3c3b
+
+.user.profile.show
+  font-size: $default-font-size
+
+  .desktop-version
+    display: inline
+
+  .mobile-version
+    display: none
+
+  .section
+    border-top: solid 2px $color-darkred
+    padding-top: 0
+
+    .header
+      border-bottom: solid 1px $grey
+      .toggle-section-container
+        display: none
+
+    .section-title
+      color: $color-darkgrey
+      background-image: img-url('icons/recently-added.svg')
+
+    .items
+      .section-row
+        max-height: none
+
+
+  h1.title
+    color: $color-darkred
+    width: 33.3%
+    margin-bottom: 0
+
+  #user-main-info-container
+    font-weight: bold
+    padding-top: 25px
+
+    .avatar-container
+      display: flex
+      align-items: center
+
+    .avatar-container
+      text-transform: uppercase
+      padding-bottom: 50px
+      height: 100%
+      margin: 0
+
+      .user-avatar
+        width: 150px
+        height: 150px
+
+      .user-name
+        padding: 65px 0 65px 50px
+        vertical-align: middle
+        vertical-align: bottom
+        text-transform: none
+        font-size: $default-font-size * 2
+
+  .user-secondary-info-container
+    height: 100%
+    margin: 0
+
+    .info-container
+      @extend .col-xs-12
+      @extend .col-sm-4
+
+      margin-right: 20px
+      padding-right: 60px
+      color: $dark-grey
+      font-weight: normal
+      border-right: solid 1px $grey
+
+      .department, .location
+        border-bottom: solid 1px $grey
+        background: no-repeat 5px center
+        padding: 20px 0 20px 50px
+        display: block
+
+      .department
+        border-top: solid 1px $grey
+        background-image: img-url('icons/department.svg')
+
+      .location
+        background-image: img-url('icons/location.svg')
+
+
+    .totals-container
+      @extend .col-xs-5
+      @extend .col-sm-7
+
+      margin: 0 auto
+      .totals
+        width: 80%
+
+        th, td
+          border: none
+          padding: 0
+          text-align: center
+          min-width: 30%
+
+        th
+          color: $color-darkgrey
+          text-transform: uppercase
+          font-size: $default-font-size
+
+        td
+          font-size: $default-font-size + 5px
+          font-weight: normal
+
+@media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max)
+  body.app .container
+    width: 100%
+    padding: 15px
+
+  .user.profile.show
+    .desktop-version
+      .section
+        .header
+          .section-title
+            padding-top: 20px
+
+@media (max-width: $screen-xs-max)
+  body.app .container
+    width: 100%
+    padding: 0
+    overflow: visible
+
+  .user.profile.show
+    padding: 0 10px
+    font-size: $default-font-size - 3px
+
+    h1.title
+      width: 100%
+      border-color: $color-darkred
+
+    #user-main-info-container
+      .desktop-version
+        display: none
+
+      .mobile-version
+        display: block
+
+      .mobile-version
+        .section
+          margin-top: 30px
+          border: solid 1px $grey
+          border-top: solid 2px $color-darkred
+
+          .header
+            padding: 10px
+            margin: 0px
+            border-bottom: none
+
+            .section-title
+              background-image: none
+              padding: 0
+
+            .toggle-section-container
+              display: inline
+
+              .toggle-section
+                span
+                  color: $color-blackcharcoal
+                  font-weight: bold
+
+        .avatar-container
+          flex-direction: column
+          padding: 30px 0
+          text-transform: none
+
+          .user-avatar
+            width: 150px
+            height: 150px
+
+          .user-name
+            padding: 0
+            font-size: $default-font-size * 2
+            margin-top: 5px
+
+        .row
+          margin: 0
+
+        .info-container
+          border-left: solid 1px $grey
+          border-right: solid 1px $grey
+          border-top: solid 2px $color-darkred
+          padding: 0px
+
+          .department, .location
+            background: no-repeat 25px center
+            padding: 20px 0 20px 70px
+
+          .department
+            border-top: none
+            background-image: img-url('icons/department.svg')
+            display: block
+
+          .location
+            background-image: img-url('icons/location.svg')
+
+        .totals-container
+          margin: 0 auto
+          width: 100%
+          border: solid 1px $grey
+          border-top: none
+
+          .totals
+            width: 100%
+
+            th, td
+              border: none
+              padding: 0
+              text-align: center
+              min-width: 30%
+
+            th
+              color: $color-darkgrey
+              text-transform: uppercase
+              font-size: $default-font-size
+
+            td
+              font-size: $default-font-size + 5px
+              font-weight: normal

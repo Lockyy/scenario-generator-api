@@ -62,7 +62,7 @@ products.url, company_id, products.views, products.created_at, products.updated_
   end
 
   def author
-    Faker::Name.name
+    reviews.order('created_at ASC').last.try(:user)
   end
 
   def short_desc

@@ -50,7 +50,7 @@ const Reviews = React.createClass({
           <div className='details'>
             <div className='name'>
               <Link
-                to='#'>
+                to={`/app/users/${review.user.id}`}>
                 {review.user.name}
               </Link>
             </div>
