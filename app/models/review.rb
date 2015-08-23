@@ -5,6 +5,7 @@ class Review < ActiveRecord::Base
   has_many :tag_taggables, as: :taggable
   has_many :tags, through: :tag_taggables
   has_many :links
+  has_many :reviewVotes
 
   accepts_nested_attributes_for :reviewable
   accepts_nested_attributes_for :tags

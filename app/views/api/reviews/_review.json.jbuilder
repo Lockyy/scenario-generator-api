@@ -1,5 +1,5 @@
 json.extract! review, :id, :title, :quality_review, :quality_score, :price_review,
-  :price_score, :attachments, :links, :created_at, :updated_at, :tag_list, :tags, :reviewable
+  :price_score, :attachments, :links, :created_at, :updated_at, :tag_list, :tags, :reviewable, :reviewVotes
 
 json.attachments review.attachments, :id, :attachable_id, :attachable_type, :url, :name, :content_type, :size, :created_at,
 :updated_at, :product_id, :author

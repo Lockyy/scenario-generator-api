@@ -6,8 +6,9 @@ module Api
     def create
       review_vote = Fletcher::CreateReviewVote.new(current_user, @review, vote_params)
       respond_to do |format|
-        if review_vote.save!
-          @review_vote = review_vote.review_vote
+        review_vote.save!
+        @review_vote = review_vote.review_vote
+        if @review_vote.valid?
           url = api_product_review_review_votes_url(@product, @review, @review_vote)
           format.json { render 'api/reviews/review_votes/show', status: :created, location: url }
         else
