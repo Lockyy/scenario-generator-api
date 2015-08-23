@@ -6,9 +6,7 @@ class Company < ActiveRecord::Base
   include Avatarable
   include SearchableByNameAndDescription
 
-  before_save :downcase_name
-
-  validates :name, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: { case_sensitive: false }
 
   pg_search_scope :search_by_name_and_description, :against => [
                                                      [:name, 'A'],
@@ -34,11 +32,5 @@ class Company < ActiveRecord::Base
 
   def short_desc
     description.split[0...9].join(' ') if description
-  end
-
-  private
-
-  def downcase_name
-    self.name = self.name.downcase
   end
 end
