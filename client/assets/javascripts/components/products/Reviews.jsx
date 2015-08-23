@@ -43,35 +43,50 @@ const Reviews = React.createClass({
   },
 
   voteOnReview: function(e){
-    let elementData = $(e.target).data();
+		let element = $(e.target);
+    let elementData = element.data();
     let prodId = elementData.productId;
     let revId = elementData.reviewId;
     let helpful = elementData.helpful;
 
-    FluxProductReviewsActions.voteOnReview(prodId, revId, helpful);
+    FluxProductReviewsActions.voteOnReview(prodId, revId, helpful, function() {
+			element.parent().fadeOut(1000);
+		});
   },
 
+	getEditReviewTag: function(review) {
+		return <div className='edit-review-container'>
+			<Link to={`/app/products/${review.reviewable.id}/reviews/${review.id}`}
+				className='btn btn-white btn-round'>Edit my review</Link>
+		</div>;
+	},
+
+	getVoteOnReviewTag: function(review, userId) {
+		let productId = review.product.id;
+		let reviewId = review.id;
+
+		let voteOnReviewTag =  <div className='helpful-review-container'>
+			<span className='helpful-reviews-text'> Was this review helpful to you? </span>
+			<button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
+				data-helpful='true' onClick={this.voteOnReview}> Yes </button>
+			<button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
+				data-helpful='false' onClick={this.voteOnReview}> No </button>
+		</div>;
+
+		let alreadyVoted = !!_.find(review.reviewVotes, function(reviewVote){
+			return reviewVote.user_id == userId
+		});
+
+		return alreadyVoted ? '': voteOnReviewTag;
+	},
+
+	getReviewActionTag: function(review) {
+		let currentUserId = this.context.currentUser.id;
+		let writtenByCurrentUser = currentUserId == review.user.id;
+		return writtenByCurrentUser ? this.getEditReviewTag(review) : this.getVoteOnReviewTag(review, currentUserId);
+	},
+
   renderReview: function(review) {
-    let wrotByCurrentUser = this.context.currentUser.id == review.user.id;
-
-    let editMyReview =  <div className='edit-review-container'>
-                          <Link to={`/app/products/${review.reviewable.id}/reviews/${review.id}`}
-                               className='btn btn-white btn-round'>Edit my review</Link>
-                        </div>;
-
-    let productId = review.product.id;
-    let reviewId = review.id;
-    let itWasHelpful = <div className='helpful-review-container'>
-                          <span className='helpful-reviews-text'> Was this review helpful to you?</span>
-                          <button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
-                                  data-helpful='true' onClick={this.voteOnReview}> Yes </button>
-                          <button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
-                                  data-helpful='false' onClick={this.voteOnReview}> No </button>
-                        </div>;
-
-    let userEditAction =   wrotByCurrentUser ? editMyReview
-      : itWasHelpful;
-
     return (
       <div className="row review">
         <div className="col-xs-4 user">
@@ -111,7 +126,7 @@ const Reviews = React.createClass({
           <div className="price-review" dangerouslySetInnerHTML={{__html: review.formatted_price_review}} />
           <Tags tags={review.tag_list} />
 
-          {userEditAction}
+          {this.getReviewActionTag(review)}
         </div>
       </div>
     )
