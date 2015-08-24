@@ -84,7 +84,7 @@ const ProductCompanyName  = React.createClass({
 
   render: function render() {
     return (
-      <div className='form-group'>
+      <div className='form-group company-name'>
         <label htmlFor='product[company[name]]'>Company Name <span className='required'>*</span></label>
           <div className='input-group'>
             <TypeAhead name='product[company[name]]' value={this.props.value} placeholder='e.g. Microsoft'
