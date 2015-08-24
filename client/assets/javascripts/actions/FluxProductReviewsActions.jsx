@@ -4,11 +4,12 @@ import ReviewsAPI from '../utils/api/ReviewsAPI';
 
 class FluxProductReviewsActions {
 
-  fetchReviews(productID) {
+  fetchReviews(productID, sorting) {
     this.dispatch();
 
     ReviewsAPI.getReviews(
       productID,
+      sorting,
       (data) => {
         this.actions.updateData(data);
       },
@@ -16,6 +17,11 @@ class FluxProductReviewsActions {
         this.actions.registerError(error);
       }
     );
+  }
+
+  changeSorting(sorting, productID) {
+    this.dispatch(sorting);
+    this.actions.fetchReviews(productID, sorting);
   }
 
   updateData(data) {
