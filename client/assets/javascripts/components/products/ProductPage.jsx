@@ -1,5 +1,6 @@
-import React from 'react';
 import _ from 'lodash';
+import React from 'react';
+import timeago from 'timeago';
 import { Link, Navigation } from 'react-router';
 import FluxProductPageActions from '../../actions/FluxProductPageActions'
 import ProductStore from '../../stores/ProductStore'
@@ -8,10 +9,23 @@ import Rating from '../Rating';
 import PriceRating from '../PriceRating';
 import Tags from '../Tags';
 import UrlHelper from '../../utils/helpers/UrlHelper'
+import FileHelper from '../../utils/helpers/FileHelper'
 
 const ProductPage = React.createClass({
   displayName: 'ProductPage',
   mixins: [ Navigation ],
+  getInitialState: function getInitialState() {
+    return {
+      data: {
+        name: '',
+        company: {
+          name: ''
+        },
+        attachments: [],
+        links: []
+      }
+    };
+  },
 
   id: function() {
     return this.props.params.id
@@ -86,8 +100,23 @@ const ProductPage = React.createClass({
     )
   },
 
+  showFiles: function(e) {
+    e.preventDefault();
+
+    $('#files-modal').modal();
+  },
+
+  showLinks: function(e) {
+    e.preventDefault();
+
+    $('#links-modal').modal();
+  },
+
   renderInfo: function() {
     let tags = _.map(this.getProductData('tags'), function(tag) { return tag.name });
+    let attachments = this.getProductData('attachments');
+    let links = this.getProductData('links');
+
     return (
       <div className='row info-row'>
         <div className='col-xs-3 stats'>
@@ -98,6 +127,18 @@ const ProductPage = React.createClass({
             </div>
           </div>
           <PriceRating value={this.getProductData('price')} name='rating'/>
+          <div className="files">
+            <a className="files-link" href='#show-attachments' onClick={this.showFiles}
+              data-toggle="modal" data-target="#files-modal" >
+              {this.getProductData('attachments').length} File{attachments.length > 1 || attachments.length == 0 ? 's' : ''} Added
+            </a>
+          </div>
+          <div className="more-links">
+            <a className="links-link" href='#show-links' onClick={this.showLinks}
+              data-toggle="modal" data-target="#links-modal" >
+              {this.getProductData('links').length} Link{links.length > 1 || links.length == 0 ? 's' : ''} Added
+            </a>
+          </div>
         </div>
         <div className='col-xs-6 information'>
           <div className='link'>
@@ -120,9 +161,69 @@ const ProductPage = React.createClass({
     )
   },
 
+  renderLinksModal: function() {
+    let links = _.collect(this.getProductData('links'), function(link) {
+      return (<li className='link'>
+        <div className='link-details'>
+          <a className="link" href={UrlHelper.addProtocol(link.url)} target='_blank'>{link.url}</a>
+        </div>
+      </li>);
+    });
+
+    return (
+      <div className="modal fade" id="links-modal">
+        <div className="modal-content links-modal-content">
+          <div className="modal-header">
+            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h2 className="modal-title">Links Added</h2>
+          </div>
+          <div className="modal-body">
+            <ul className="links">
+              {links}
+            </ul>
+          </div>
+        </div>
+      </div>
+    )
+  },
+
+  renderFilesModal: function() {
+    let attachments = _.collect(this.getProductData('attachments'), function(attachment) {
+      return (<li className='attachment'>
+        {FileHelper.isImage(attachment.name) ?
+          <img src={UrlHelper.addProtocol(attachment.url)} className='thumbnail' width='50px' />
+          : ''}
+
+        <div className='attachment-details'>
+          <a className="link" href={UrlHelper.addProtocol(attachment.url)} target='_blank'>{attachment.name}</a>
+          <span className='author'>{attachment.author ? `Uploaded by ${attachment.author.name}` : ''}</span>
+          <span className='created_at'>{timeago(attachment.created_at)}</span>
+        </div>
+      </li>);
+    });
+
+    return (
+      <div className="modal fade" id="files-modal">
+        <div className="modal-content files-modal-content">
+          <div className="modal-header">
+            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h2 className="modal-title">Files Added</h2>
+          </div>
+          <div className="modal-body">
+            <ul className="attachments">
+              {attachments}
+            </ul>
+          </div>
+        </div>
+      </div>
+    )
+  },
+
   render: function() {
     return (
       <div className='product show container'>
+        {this.renderFilesModal()}
+        {this.renderLinksModal()}
         {this.renderTitle()}
         {this.renderTopButtons()}
         {this.renderInfo()}

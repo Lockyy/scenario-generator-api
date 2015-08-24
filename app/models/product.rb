@@ -3,6 +3,7 @@ gem 'faker'
 class Product < ActiveRecord::Base
   belongs_to :company
   has_many :reviews, as: :reviewable
+  has_many :attachments, through: :reviews, source: :attachments
   has_many :images, -> { with_images }, through: :reviews, source: :attachments
   has_many :links, through: :reviews
   has_many :tag_taggables, as: :taggable

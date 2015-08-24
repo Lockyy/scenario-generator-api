@@ -2,7 +2,7 @@
 
 @mixin icon($image)
   background: img-url($image) no-repeat
-  background-size: contain
+  background-size: cover
 
 @mixin star-on
   @include icon('icons/star-on.svg')
@@ -17,12 +17,12 @@
   @include icon('icons/price-off.svg')
 
 .rating-container
-  .items
+  & > .items
     display: inline-block
     overflow: hidden
+    height: 20px
 
     .rating-group
-      height: 20px
       float: left
       height: 100%
 

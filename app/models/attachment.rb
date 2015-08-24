@@ -12,4 +12,8 @@ class Attachment < ActiveRecord::Base
   validates :content_type, presence: true
   validates :url, presence: true
   validates :size, presence: true
+
+  def author
+    attachable.user
+  end
 end
