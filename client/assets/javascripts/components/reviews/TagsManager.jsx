@@ -65,8 +65,7 @@ const TagsManager = React.createClass({
           return `<p class='tt-no-results'>Create tag “${query}”</p>`
         },
         suggestion: function(data) {
-          let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
-          return `<p>${name}</p>`
+          return `<p>${data.name}</p>`
         }
       },
     }
