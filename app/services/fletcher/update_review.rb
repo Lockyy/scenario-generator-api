@@ -29,7 +29,7 @@ module Fletcher
       params.delete(:product)
       params.delete(:tags)
 
-      @review.tags = tags_params.empty? ? [] : tags_params.map { |tag| Tag.where(name: tag[:name].downcase).first_or_create }
+      @review.tags = tags_params.empty? ? [] : tags_params.map { |tag| Tag.where(name: tag[:name]).first_or_create }
       @review.update!(params)
     end
 

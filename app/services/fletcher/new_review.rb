@@ -27,7 +27,6 @@ module Fletcher
 
       params = {}.merge(product_params).with_indifferent_access
       params[:company] = fetch_company! unless company_params.empty?
-      params[:name].downcase! if params[:name]
       Product.where(name: product_params['name']).first || Product.new(params)
     end
 
@@ -53,7 +52,7 @@ module Fletcher
       params.delete(:tags)
       add_avatar_info!(params)
 
-      company = (Company.where(name: params['name'].try(:downcase)).first || Company.new(params))
+      company = Company.where(name: params['name']).first || Company.new(params)
       company.tags = fetch_tags(company_tags_params)
       company.save!
       company
@@ -71,7 +70,7 @@ module Fletcher
     end
 
     def fetch_tags(tags_params)
-      tags_params.empty? ? [] : tags_params.map { |tag| Tag.where(name: tag[:name].downcase).first_or_create }
+      tags_params.empty? ? [] : tags_params.map { |tag| Tag.where(name: tag[:name]).first_or_create }
     end
 
     def company_params

@@ -1,6 +1,6 @@
 json.(product, :id, :name, :description, :image, :rating, :url, :tags, :price,
     :created_at, :updated_at, :author, :views, :default_image, :images, :short_desc)
-json.name titleize(product.name)
+json.name product.name
 
 json.reviews product.reviews, partial: 'api/reviews/review', as: :review
 
