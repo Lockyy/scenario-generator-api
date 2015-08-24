@@ -10,8 +10,15 @@
       background-color: white
 
   .results
-    margin-top: 10px
+    .no-results
+      padding: 20px 10px
+      font-weight: bold
+      display: block
+
     .title
+      border-bottom: 1px solid $grey
+      padding-bottom: 10px
+
       .name
         float: left
         font-size: 14px
@@ -30,27 +37,37 @@
       #sort-container
         float: right
 
-        label
-          font-weight: normal
-          color: $dark-grey
-          font-size: 11px
+        .form-group
+          margin-bottom: 0
 
-        #sort
-          font-size: 11px
-          outline: none
-          margin-left: 10px
-          border: none
-          background-color: white
-          -webkit-appearance: none
+          label
+            font-weight: normal
+            color: $dark-grey
+            font-size: 11px
+            margin: 0
+
+          #sort
+            font-size: 11px
+            outline: none
+            margin-left: 10px
+            border: none
+            background-color: white
+            -webkit-appearance: none
+            -moz-appearance: none
+            -ms-appearance: none
+            -o-appearance: none
+            appearance: none
+
+            &::-ms-expand
+              display: none
 
     .result
-      padding: 0px !important
+      padding: 0 !important
       padding-top: 15px !important
       padding-bottom: 15px !important
       border-bottom: 1px solid $grey
       .name
         font-size: 18px
-        text-transform: capitalize
       .description
         margin-top: 5px
         margin-bottom: 5px
@@ -86,6 +103,11 @@
       .result
         border-bottom: 0
 
+  .results
+    &.tags
+      .no-results
+        margin-top: -15px
+
   .links
     .link
       display: block
@@ -98,7 +120,7 @@
 
       &.active
         font-weight: bold
-  
+
   #tag-filter-container
     float: right
 
@@ -108,6 +130,7 @@
     background: $turquoise
     color: white
     text-align: center
+
     a
       display: block
       padding: 10px 25px
@@ -115,6 +138,26 @@
       color: white
       border-radius: 25px
       margin-top: 25px
+
+  #tag-filter-container
+    .results.tags
+      .tag-holder
+        padding-top: 10px
+
+        .tag
+          margin: 4px 4px 4px 0
+          color: $dark-grey
+          border-color: $dark-grey
+
+          &.selected
+            color: $orange
+            border-color: $orange
+
+      .all-tags-link
+        @extend .pull-right
+        margin-top: 10px
+        font-size: 11px
+        text-decoration: underline
 
 .pagination
   text-align: center

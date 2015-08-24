@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Link } from 'react-router';
 import FluxProductReviewsActions from '../../actions/FluxProductReviewsActions'
 import ReviewsStore from '../../stores/ReviewsStore'
+import UrlHelper from '../../utils/helpers/UrlHelper'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
 import Tags from '../Tags';
@@ -43,6 +44,18 @@ const Reviews = React.createClass({
   },
 
   renderReview: function(review) {
+    let attachments = _.collect(review.attachments, function(attachment) {
+      return (<li className='attachment'>
+        <a className="link" href={UrlHelper.addProtocol(attachment.url)} target='_blank'>{attachment.name}</a>
+      </li>);
+    });
+
+    let links = _.collect(review.links, function(link) {
+      return (<li className='link'>
+        <a className="link" href={UrlHelper.addProtocol(link.url)} target='_blank'>{UrlHelper.addProtocol(link.url)}</a>
+      </li>);
+    });
+
     return (
       <div className="row review">
         <div className="col-xs-4 user">
@@ -76,6 +89,12 @@ const Reviews = React.createClass({
             {review.title}
           </div>
           <div className="review-text" dangerouslySetInnerHTML={{__html: review.formatted_quality_review}} />
+          <ul className="attachments">
+            {attachments}
+          </ul>
+          <ul className="links">
+            {links}
+          </ul>
           <div className="price-score">
             { review.price_score ? <PriceRating value={review.price_score} name='rating'/> : '' }
           </div>

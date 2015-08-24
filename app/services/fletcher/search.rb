@@ -1,6 +1,5 @@
 module Fletcher
   class Search
-
     DEFAULT_PER_PAGE = 5
     MAX_PER_PAGE = 100
     DEFAULT_PAGE = 1
@@ -11,10 +10,11 @@ module Fletcher
       @page = @params[:page]
       @per_page = calculate_per_page(@params[:per_page].to_i)
 
+      @filter_tags = filtered_tags(@params[:filtered_tags])
       @products = products(@terms)
       @companies = companies(@terms)
       @tags = tags(@terms)
-      @related_tags = related_tags(@products, @companies)
+      @related_tags = related_tags
     end
 
     def results
@@ -26,12 +26,16 @@ module Fletcher
           companies: data_hash(@companies),
           products: data_hash(@products),
           related_tags: {
-            total: @related_tags.size,
-            data: @related_tags
+              total: @related_tags.size,
+              data: @related_tags
           },
           tags: {
               total: @tags.size,
               data: @tags
+          },
+          filtered_tags: {
+              total: @filter_tags.size,
+              data: @filter_tags
           }
       }
     end
@@ -41,6 +45,7 @@ module Fletcher
     def default_params
       {
           filter_by: '',
+          filter_by_tags: [],
           match_mode: 'all',
           search_string: '',
           page: DEFAULT_PAGE,
@@ -65,7 +70,7 @@ module Fletcher
     end
 
     def data_hash(data)
-      return { total: 0, pages: 0, data: [] } if @params[:search_string].blank?
+      return {total: 0, pages: 0, data: [] } if @params[:search_string].blank?
 
       paginated_data = paginate(data)
 
@@ -78,21 +83,41 @@ module Fletcher
 
     def companies(terms)
       return [] if @params[:search_string].blank?
-      SearchCompanies.new(@params[:filter_by], terms, @params[:sort_by]).results
+      search_companies = SearchCompanies.new(@params[:filter_by_tags], terms, @params[:sort_by], @filter_tags)
+      @companies_related_tags = search_companies.related_tags
+      search_companies.results
     end
 
     def products(terms)
       return [] if @params[:search_string].blank?
-      SearchProducts.new(@params[:filter_by], terms, @params[:sort_by]).results
+      search_products = SearchProducts.new(@params[:filter_by_tags], terms, @params[:sort_by], @filter_tags)
+      @products_related_tags = search_products.related_tags
+      search_products.results
     end
 
     def tags(terms)
       return [] if @params[:search_string].blank?
-      SearchTags.new(@params[:filter_by], terms, @params[:sort_by]).results
+      SearchTags.new(@params[:filter_by_tags], terms, @params[:sort_by], @filter_tags).results
     end
 
-    def related_tags(products, companies)
-      products.map(&:tags).flatten + companies.map(&:tags).flatten
+    def related_tags
+      section = @params[:section]
+
+      if section == 'products'
+        @products_related_tags
+      elsif section == 'companies'
+        @companies_related_tags
+      elsif section == 'tags'
+        []
+      else
+        (@products_related_tags + @companies_related_tags).uniq
+      end
+    end
+
+    def filtered_tags(filtered_tags)
+      tags_names = filtered_tags[:data] if filtered_tags
+      return [] if tags_names.nil? || tags_names.empty?
+      tags_names.collect { |index, tag| Tag.where({name: tag[:name]}).first }
     end
 
     # We're going to take the search string the user input, split it up into words and then

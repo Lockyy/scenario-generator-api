@@ -1,5 +1,5 @@
 json.id company.id
-json.name titleize(company.name)
+json.name company.name
 json.description company.description
 json.short_desc company.short_desc
 json.url company.url

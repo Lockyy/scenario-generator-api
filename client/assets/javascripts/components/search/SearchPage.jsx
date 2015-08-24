@@ -6,13 +6,14 @@ import SearchPageStore from '../../stores/SearchPageStore'
 import Results from './Results'
 import TagResults from './TagResults'
 import Tags from '../Tags'
+import TagsBox from '../TagsBox'
 
 const SearchPage = React.createClass({
   mixins: [ Navigation ],
   displayName: 'SearchPage',
 
   getInitialState: function() {
-    return { data: { products: [], companies: [], tags: [], related_tags: [] } }
+    return { data: { products: [], companies: [], tags: [], related_tags: [], filtered_tags: [] } }
   },
 
   performSearch: function(data) {
@@ -37,7 +38,7 @@ const SearchPage = React.createClass({
     let page = params.page || 1;
 
     let query = this.context.router.state.location.query;
-    this.performSearch(this.getSearchParams({ search_string: search_string, page: page}));
+    this.performSearch(this.getSearchParams({ search_string: search_string, page: page, section: section}));
 
     if (search_string && section && page) {
       this.transitionTo(`/app/search/${section}/${search_string}/${page}`, query);
@@ -59,8 +60,7 @@ const SearchPage = React.createClass({
   },
 
   displaySection: function(sectionName) {
-    return this.state.data[sectionName].total > 0 &&
-      (this.props.params.section == sectionName || this.props.params.section == 'all')
+    return (this.props.params.section == sectionName || this.props.params.section == 'all')
   },
 
   renderRightBar: function() {
@@ -101,15 +101,22 @@ const SearchPage = React.createClass({
   },
 
   getSearchParams: function(data){
-    let _data = {search_string: data.search_string, page: data.page};
+    let _data = {
+      search_string: data.search_string,
+      page: data.page,
+      filter_by: data.filter_by,
+      filtered_tags: data.filtered_tags,
+      section: data.section
+    };
     return _.merge(_data, this.context.router.state.location.query);
   },
 
   renderResults: function() {
-    if(!this.displaySection('products') &&
+    let noResultsTag = <div className='no-results'>We couldn’t find any results for your search.</div>;
+    if(this.state.data.total_results == 0 && !this.displaySection('products') &&
       !this.displaySection('companies') &&
       !this.displaySection('tags')) {
-      return <div className='no-results'>No Results</div>
+      return noResultsTag;
     }
 
     return (
@@ -127,6 +134,7 @@ const SearchPage = React.createClass({
           currentPage={this.props.params.page}
           section={this.props.params.section}
           onSetQuery={this.setQuery}
+          emptyResults={noResultsTag}
             />
         <Results
           type='companies'
@@ -140,6 +148,7 @@ const SearchPage = React.createClass({
           hide={!this.displaySection('companies')}
           currentPage={this.props.params.page}
           section={this.props.params.section}
+          emptyResults={noResultsTag}
             />
         <TagResults
           data={this.state.data.tags}
@@ -147,18 +156,44 @@ const SearchPage = React.createClass({
           showSize={true}
           searchTerm={this.props.params.search_string}
           section={this.props.params.section}
+          emptyResults={noResultsTag}
             />
       </div>
     )
   },
 
   renderFilters: function() {
+    let relatedTags = this.state.data.related_tags;
+    let hide = !relatedTags.total || relatedTags.total <= 0;
+    let self = this;
+
+    let tagEvent = function(e){
+      let selectedTags = self.state.data.filtered_tags.data;
+      let selectedTag = { 'name': e.target.textContent };
+      let tagAlreadySelected = _.findWhere(selectedTags, selectedTag);
+      let newStatus = tagAlreadySelected ? 'unselected': 'selected';
+      if(newStatus == 'unselected') {
+        _.remove(selectedTags, function(tag) {
+          return tag == tagAlreadySelected;
+        });
+      } else {
+        selectedTags.push({name: e.target.textContent});
+      }
+
+      $(e.target).addClass(newStatus);
+      let data = self.getSearchParams(_.merge({},self.state.data,{section: self.props.params.section, page: '1'}));
+      self.performSearch(data);
+    };
+    let filteredTags = this.state.data.filtered_tags.data;
     return (
       <div id='tag-filter-container' className='col-xs-3'>
         <TagResults
-          title={'Related Tags'}
-          data={this.state.data.related_tags}
-          hide={this.state.data.related_tags.total <= 0}
+          title={'FILTER BY'}
+          data={relatedTags}
+          hide={hide}
+          showLinkAllTags={true}
+          onClick={tagEvent}
+          selected={filteredTags}
           searchTerm={this.props.params.search_string} />
       </div>
     )
