@@ -13,5 +13,13 @@ class Tag < ActiveRecord::Base
       .order('users_count DESC')
   end
 
+  before_validation :downcase_name!
+
   validates :name, presence: true, uniqueness: true
+
+  private
+
+  def downcase_name!
+    self.name = self.name.downcase! if self.name
+  end
 end
