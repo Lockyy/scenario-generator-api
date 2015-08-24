@@ -1,0 +1,1 @@
+json.(review_vote, :id, :helpful, :user, :review)

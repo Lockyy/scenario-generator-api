@@ -5,7 +5,9 @@ Rails.application.routes.draw do
     post 'uploads(.:format)', action: :create, controller: 's3_upload', defaults: {format: 'json'}
 
     resources :products, defaults: {format: :json} do
-      resources :reviews, only: [:index, :create, :show, :update], defaults: {format: :json}
+      resources :reviews, only: [:index, :create, :show, :update], defaults: {format: :json} do
+        resources :review_votes, only: [:create, :show], defaults: {format: :json}
+      end
     end
 
     resources :reviews, except: [:index, :update, :new, :edit], defaults: {format: :json}

@@ -1,4 +1,5 @@
 @import "variables"
+@import 'common/buttons'
 
 .product.show
 
@@ -191,6 +192,9 @@
           .total-reviews::before
             background-image: img-url('icons/reviews.svg')
       .review-content
+        .helpful-reviews-container
+          background-color: red
+
         .score, .created_at
           display: inline-block
         .created_at
@@ -219,3 +223,19 @@
               background: $red
               border-color: $red
               color: $light-grey
+
+        .helpful-review-container
+          margin-top: 25px
+          padding: 15px 25px
+          color: $dark-grey
+          background-color: $light-grey
+
+          .helpful-reviews-text
+            padding-right: 10px
+            font-size: 13px
+
+          .btn
+            width: 50px
+            margin-left: 10px
+            text-align: center
+            font-size: 10px
