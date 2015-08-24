@@ -44,6 +44,9 @@ const ProductFields  = React.createClass({
   _getNewProductFields: function _getNewProductFields() {
     return (<fieldset className='details'>
       <span className='instructions'>Complete the form below to add a new product</span>
+
+      <CompanyFields ref='product_company_fields' {...this.props.company} />
+
       <div className='form-group'>
         <label htmlFor='product[url]'>Product's website <span className='required'>*</span></label>
         <input type='text' className='form-control' placeholder='www.' name='product[url]'
@@ -61,7 +64,6 @@ const ProductFields  = React.createClass({
         <span className="help-block with-errors"></span>
       </div>
 
-      <CompanyFields ref='product_company_fields' {...this.props.company} />
     </fieldset>);
   },
 
