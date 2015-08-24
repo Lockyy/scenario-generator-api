@@ -7,21 +7,35 @@ import UrlHelper from '../../utils/helpers/UrlHelper'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
 import Tags from '../Tags';
+import SortingDropdown from '../SortingDropdown';
+import ReviewConstants from '../../utils/constants/ReviewConstants';
 
 const Reviews = React.createClass({
   displayName: 'Reviews',
 
   contextTypes: {
-      currentUser: React.PropTypes.object.isRequired
+    currentUser: React.PropTypes.object.isRequired
   },
 
   componentDidMount: function() {
     ReviewsStore.listen(this.onChange.bind(this));
-    FluxProductReviewsActions.fetchReviews(this.props.productID);
+    FluxProductReviewsActions.fetchReviews(this.props.productID, this.currentSorting());
   },
 
   onChange: function(data) {
     this.setState(data);
+  },
+
+  changeSorting: function(sorting) {
+    FluxProductReviewsActions.changeSorting(sorting, this.props.productID);
+  },
+
+  currentSorting: function() {
+    if(this.state) {
+      return this.state.sorting;
+    } else {
+      return ReviewConstants.DEFAULT_SORTING
+    }
   },
 
   getReviews: function() {
@@ -187,10 +201,28 @@ const Reviews = React.createClass({
     }
   },
 
+  renderSortingDropdown: function() {
+    return (
+      <SortingDropdown
+        onClick={this.changeSorting}
+        active={this.currentSorting()}
+        options={{
+          latest: 'Latest',
+          highScore: 'Score: Low to High',
+          lowScore: 'Score: High to Low',
+          helpful: 'Most Helpful: Low to High',
+          unhelpful: 'Most Helpful: High to Low'
+        }} />
+    )
+  },
+
   render: function() {
     return (
-      <div className='row reviews'>
-        {this.renderReviews()}
+      <div>
+       { this.renderSortingDropdown() }
+        <div className='row reviews'>
+          {this.renderReviews()}
+        </div>
       </div>
     )
   }
