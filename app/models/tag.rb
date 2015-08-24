@@ -20,6 +20,6 @@ class Tag < ActiveRecord::Base
   private
 
   def downcase_name!
-    self.name = self.name.downcase! if self.name
+    self.name = self.name.downcase if self.name
   end
 end
