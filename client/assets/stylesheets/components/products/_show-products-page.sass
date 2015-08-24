@@ -112,17 +112,26 @@
           margin-bottom: 30px
         .review-text
           margin-bottom: 20px
-        .attachments
+
+        .attachments, .links
           padding-left: 10px
           margin: 20px 0
           list-style-image: image-url('icons/attachment-red.svg')
 
-          .attachment
+          .attachment, .link
+            text-align: left
             padding-left: 10px
 
             .link
               text-decoration: underline
               color: $dark-grey
+
+        .links
+          list-style-image: image-url('icons/link-red.svg')
+          padding-left: 14px
+
+          .link
+            padding-left: 8px
 
         .price-review
           margin-top: 15px

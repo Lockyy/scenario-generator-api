@@ -50,6 +50,12 @@ const Reviews = React.createClass({
       </li>);
     });
 
+    let links = _.collect(review.links, function(link) {
+      return (<li className='link'>
+        <a className="link" href={UrlHelper.addProtocol(link.url)} target='_blank'>{UrlHelper.addProtocol(link.url)}</a>
+      </li>);
+    });
+
     return (
       <div className="row review">
         <div className="col-xs-4 user">
@@ -85,6 +91,9 @@ const Reviews = React.createClass({
           <div className="review-text" dangerouslySetInnerHTML={{__html: review.formatted_quality_review}} />
           <ul className="attachments">
             {attachments}
+          </ul>
+          <ul className="links">
+            {links}
           </ul>
           <div className="price-score">
             { review.price_score ? <PriceRating value={review.price_score} name='rating'/> : '' }
