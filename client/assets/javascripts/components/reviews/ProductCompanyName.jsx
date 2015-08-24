@@ -86,19 +86,12 @@ const ProductCompanyName  = React.createClass({
     return (
       <div className='form-group company-name'>
         <label htmlFor='product[company[name]]'>Company Name <span className='required'>*</span></label>
-          <div className='input-group'>
-            <TypeAhead name='product[company[name]]' value={this.props.value} placeholder='e.g. Microsoft'
-              className='form-control'
-              bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
-              onChange={this._onCompanyNameChange} onRender={this._hideCreateWhenMatch}
-              onSelectOption={this._onSelectCompany} onSelectNoOption={this._onSelectCreateCompany}
-              ref='product_company_name' required/>
-            <span className="input-group-btn">
-              <button className="btn btn-default" type="button" disabled={this.props.disableButton || this.props.disabled}>
-                Go
-              </button>
-            </span>
-          </div>
+          <TypeAhead name='product[company[name]]' value={this.props.value} placeholder='e.g. Microsoft'
+            className='form-control'
+            bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
+            onChange={this._onCompanyNameChange} onRender={this._hideCreateWhenMatch}
+            onSelectOption={this._onSelectCompany} onSelectNoOption={this._onSelectCreateCompany}
+            ref='product_company_name' required/>
           <span className="help-block with-errors"></span>
       </div>
     );
