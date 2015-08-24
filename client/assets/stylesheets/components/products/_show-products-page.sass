@@ -3,12 +3,88 @@
 .product.show
 
   .title
-    text-transform: capitalize
     .name
       font-size: 20px
       font-weight: bold
     .company
       font-size: 15px
+
+
+  .attachments, .links
+    padding-left: 10px
+    margin: 20px 0
+    list-style-image: image-url('icons/attachment-red.svg')
+
+    .attachment, .link
+      text-align: left
+      padding-left: 10px
+
+      .link
+        text-decoration: underline
+        color: $dark-grey
+
+  .links
+    list-style-image: image-url('icons/link-red.svg')
+    padding-left: 14px
+
+    .link
+      padding-left: 8px
+
+
+  #files-modal, #links-modal
+    display: none
+
+    .modal-content
+      margin: 150px auto
+      padding: 10px 50px 40px 50px
+      width: 40%
+
+      .modal-header
+        border-bottom: 2px solid $red
+        padding: 20px 0 30px 0
+
+        .modal-title
+          background: image-url('icons/attachment-red.svg') no-repeat center left
+          background-size: contain
+          font-style: italic
+          padding-left: 50px
+
+      .modal-body
+        padding: 0
+
+        .attachments
+          list-style: none
+          padding: 0
+          margin-top: 0
+
+          .attachment
+            color: $dark-grey
+            padding: 15px 0
+            border-bottom: 1px solid $grey
+
+            .thumbnail
+              float: left
+              margin-right: 20px
+
+            .link
+              padding: 0
+              display: block
+              color: $blackish-grey
+              margin-bottom: 10px
+
+            .author, .created_at
+              font-size: 13px
+
+            .created_at
+              float: right
+
+  #links-modal
+    .modal-content
+      .modal-header
+        .modal-title
+          background: image-url('icons/link-red.svg') no-repeat center left
+          background-size: contain
+          padding-left: 75px
 
   .info-row
     display: flex
@@ -21,11 +97,23 @@
       flex-direction: column
 
     .stats
-      .stars, .price, .files
+      .stars, .price, .files, .more-links
         border-top: 1px solid $light-grey
-        padding: 5px 0px
-      .files
+        padding: 10px 0px
+
+      .files, .more-links
         border-bottom: 1px solid $light-grey
+
+        .files-link, .links-link
+          text-decoration: underline
+          outline: none
+          color: $dark-grey
+          padding-left: 20px
+          background: image-url('icons/attachment-red.svg') no-repeat center left
+
+        .links-link
+          background: image-url('icons/link-red.svg') no-repeat center left
+
       .stars
         .total-reviews
           float: right
@@ -113,6 +201,7 @@
           margin-bottom: 30px
         .review-text
           margin-bottom: 20px
+
         .price-review
           margin-top: 15px
           margin-bottom: 20px

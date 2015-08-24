@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery-ui/effect-slide
 //= require bootstrap-sprockets
+//= require bootstrap/modal
 // Important to import jquery_ujs before rails-bundle as that patches jquery xhr to use the authenticity token!
 //= require_tree ./common/
 //= require generated/client-bundle
