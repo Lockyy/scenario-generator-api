@@ -3,6 +3,7 @@ gem 'faker'
 class Product < ActiveRecord::Base
   belongs_to :company
   has_many :reviews, as: :reviewable
+  has_many :attachments, through: :reviews, source: :attachments
   has_many :images, -> { with_images }, through: :reviews, source: :attachments
   has_many :links, through: :reviews
   has_many :tag_taggables, as: :taggable
@@ -12,11 +13,9 @@ class Product < ActiveRecord::Base
   include SearchableByNameAndDescription
   include SearchableByTag
 
-  before_save :downcase_name
-
   accepts_nested_attributes_for :reviews
 
-  validates :name, presence: true, uniqueness: {scope: :company_id}
+  validates :name, presence: true, uniqueness: { scope: :company_id, case_sensitive: false }
   validates :description, presence: true
   validates :company, presence: true
 
@@ -73,11 +72,5 @@ products.url, company_id, products.views, products.created_at, products.updated_
   def increment_views!
     self.views = self.views + 1
     self.save
-  end
-
-  private
-
-  def downcase_name
-    self.name = self.name.downcase
   end
 end
