@@ -5,6 +5,7 @@ class Company < ActiveRecord::Base
 
   include Avatarable
   include SearchableByNameAndDescription
+  include SearchableByTag
 
   validates :name, presence: true, uniqueness: { case_sensitive: false }
 

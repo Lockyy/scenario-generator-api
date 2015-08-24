@@ -2,8 +2,8 @@ module Fletcher
   class Search::SearchProducts < Search::SearchBase
     SORT_FIELDS_SIMPLE_SEARCH = [:high_to_low, :low_to_high]
 
-    def initialize(attribute, terms, sort_description)
-      super(attribute, terms, sort_description)
+    def initialize(attribute, terms, sort_description, filter_tags)
+      super(attribute, terms, sort_description, filter_tags)
     end
 
     private

@@ -11,6 +11,7 @@ class Product < ActiveRecord::Base
   has_one :default_image, class_name: 'Attachment'
 
   include SearchableByNameAndDescription
+  include SearchableByTag
 
   accepts_nested_attributes_for :reviews
 

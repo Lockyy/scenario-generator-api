@@ -7,8 +7,6 @@ import _ from 'lodash';
 // that and display a hyperlink with text 'name' and href 'link'. This can be used to
 // direct the user to a full list of tags. By default max is set to the length of tags and will display all of them.
 class Tags extends React.Component {
-  displayName: 'Tags'
-
   constructor() {
     super();
   }
@@ -32,6 +30,12 @@ class Tags extends React.Component {
     }
   }
 
+  getSelectedTags() {
+    if(this.props) {
+      return this.props.selected
+    }
+  }
+
   getContainerName() {
     if(this.props.containerClass) {
       return this.props.containerClass
@@ -43,10 +47,13 @@ class Tags extends React.Component {
   renderTags() {
     let tagTags = [];
     let tags = this.getTags() || [];
+    let selectedTags = this.getSelectedTags();
     let max = _.min([tags.length, this.getMax()]);
-
     for (let i = 0; i < max; i++) {
-      tagTags.push(<span className='tag'>{tags[i]}</span>);
+      let tag = tags[i];
+      let isSelected = _.includes(selectedTags, tag) ;
+      let classes = "tag " + ( isSelected ? 'selected': '');
+      tagTags.push(<span className={classes} onClick={ this.props.onClick }>{tag}</span>);
     }
 
     return <div className={`tags ${this.getContainerName()}`}>{tagTags}</div>;
