@@ -12,6 +12,25 @@ class Review < ActiveRecord::Base
   accepts_nested_attributes_for :links, allow_destroy: true
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
+  before_save :cache_helpfulness
+
+  def self.sorted(sort_string)
+    case sort_string
+    when 'highScore'
+      order(quality_score: :asc)
+    when 'lowScore'
+      order(quality_score: :desc)
+    when 'helpful'
+      order(cached_helpfulness: :desc)
+    when 'unhelpful'
+      order(cached_helpfulness: :asc)
+    when 'latest'
+      order(created_at: :desc)
+    else
+      order(created_at: :asc)
+    end
+  end
+
   def display_date
     created_at.strftime('%b %e, %Y')
   end
@@ -30,6 +49,20 @@ class Review < ActiveRecord::Base
 
   private
 
+  def cache_helpfulness
+    self.cached_helpfulness = calculate_helpfulness
+  end
+
+  def calculate_helpfulness
+    helpfulness = 0
+    reviewVotes.each do |vote|
+      helpfulness -= 1
+      helpfulness += 2 if vote.helpful
+    end
+
+    helpfulness
+  end
+
   def has_at_least_one_field
     invalid_title = title.nil? || title.empty?
     invalid_quality_review = quality_review.nil? || quality_review.empty?
@@ -46,4 +79,5 @@ class Review < ActiveRecord::Base
       errors.add(:review, "at least one field is required")
     end
   end
+
 end
