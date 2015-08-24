@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150821223104) do
+ActiveRecord::Schema.define(version: 20150824194731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,9 +94,10 @@ ActiveRecord::Schema.define(version: 20150821223104) do
     t.integer  "price_score"
     t.integer  "reviewable_id"
     t.string   "reviewable_type"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.integer  "user_id"
+    t.integer  "cached_helpfulness"
   end
 
   add_index "reviews", ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id", using: :btree
