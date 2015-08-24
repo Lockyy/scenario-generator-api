@@ -5,7 +5,7 @@ module Api
     # GET /reviews
     # GET /reviews.json
     def index
-      @reviews = @product.reviews
+      @reviews = @product.reviews.sorted(params[:sorting])
 
       respond_to do |format|
         format.json { render }
