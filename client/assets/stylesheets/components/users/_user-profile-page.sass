@@ -30,6 +30,10 @@ $color-blackcharcoal: #3c3c3b
         color: $blackish-grey
         background-image: img-url('icons/recently-added.svg')
 
+      .customHeaderTag
+        margin-top: 20px
+        margin-right: 60px
+
     &> .items
       padding-top: 30px
 
@@ -207,9 +211,14 @@ $color-blackcharcoal: #3c3c3b
       border-top: 0
 
       & > .header
-        padding: 36px 0
+        padding: 5px 0
+
         .section-title
-          display: none
+          opacity: 0
+
+          .sort-links-container
+            .sort-links-label
+              color: $dark-grey
 
       .message
         font-style: italic

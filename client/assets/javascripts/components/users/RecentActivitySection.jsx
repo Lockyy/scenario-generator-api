@@ -1,10 +1,12 @@
 import React from 'react/addons';
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 import _ from 'lodash';
+import ReviewConstants from '../../utils/constants/ReviewConstants';
 import EditReviewBox from './EditReviewBox';
 import ReviewBox from './ReviewBox';
 import Section from '../Section';
 import SectionRow from '../SectionRow';
+import SortingDropdown from '../SortingDropdown';
 
 function sumSizeFunc(item) {
   return item.props.size;
@@ -72,8 +74,36 @@ class RecentActivitySection extends React.Component {
     return this.buildRows(reviews);
   }
 
+  changeSorting(sorting) {
+    console.log('change sorting')
+  }
+
+  currentSorting() {
+    if(this.state.sorting) {
+      return this.state.sorting;
+    } else {
+      return ReviewConstants.DEFAULT_SORTING
+    }
+  }
+
+  renderSortingDropdown() {
+    return (
+      <SortingDropdown
+        onClick={this.changeSorting}
+        active={this.currentSorting()}
+        options={{
+          latest: 'Latest',
+          highScore: 'Score: Low to High',
+          lowScore: 'Score: High to Low',
+          helpful: 'Most Helpful: Low to High',
+          unhelpful: 'Most Helpful: High to Low'
+        }} />
+    )
+  }
+
   render() {
-    return (<Section hasPagination={this.props.items.length > 5} {...this.props}>
+    return (
+      <Section hasPagination={this.props.items.length > 5} customHeaderTag={this.renderSortingDropdown()} {...this.props}>
       {this.props.showMessage ?
         <span className='message'>You can browse or edit your reviews at any time, even add or delete files and images.</span>
         : ''
@@ -81,7 +111,8 @@ class RecentActivitySection extends React.Component {
       <ReactCSSTransitionGroup transitionName="section-row">
         {this.fetchReviews()}
       </ReactCSSTransitionGroup >
-    </Section>);
+      </Section>
+    );
   }
 }
 

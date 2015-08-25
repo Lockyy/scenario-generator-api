@@ -32,6 +32,17 @@ class Section extends React.Component {
     }
   }
 
+  customHeaderTag() {
+    return this.props.customHeaderTag ? this.props.customHeaderTag : (<div className='toggle-section-container'>
+        <a href='#' className='toggle-section show-section' style={{display: 'none'}}>
+          <i className='glyphicon glyphicon-chevron-down'></i>SHOW
+        </a>
+        <a href='#' className='toggle-section hide-section'>
+          <i className='glyphicon glyphicon-chevron-up'></i>HIDE
+        </a>
+      </div>);
+  }
+
   render() {
     let itemClasses = _.compact(['items', this.props.itemsClass]).join(' ');
     let sectionClass = this.props.title.toLowerCase().replace(/\s+/g, '-');
@@ -40,14 +51,11 @@ class Section extends React.Component {
     return (<div className={sectionClasses}>
       <div className='header'>
         <h2 className='section-title'>{this.props.title}</h2>
-        <div className='toggle-section-container'>
-          <a href='#' className='toggle-section show-section' style={{display: 'none'}}>
-            <i className='glyphicon glyphicon-chevron-down'></i>SHOW
-          </a>
-          <a href='#' className='toggle-section hide-section'>
-            <i className='glyphicon glyphicon-chevron-up'></i>HIDE
-          </a>
+
+        <div className='customHeaderTag'>
+          {this.customHeaderTag()}
         </div>
+
       </div>
 
       <div className={itemClasses}>
