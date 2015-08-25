@@ -24,24 +24,15 @@ const NewReviewPage  = React.createClass({
   },
 
   componentDidMount: function componentDidMount() {
-   ReviewPageStore.listen(this._onChange);
+    ReviewPageStore.listen(this._onChange);
     let params = this.context.router.state.params;
     FluxReviewPageActions.clearReview();
 
-    if (params.reviewId) {
-      FluxReviewPageActions.fetchReview(params.productId, params.reviewId, function(review) {
-        FluxReviewPageActions.setReview(review);
-        FluxReviewPageActions.setMode('update');
-        FluxReviewPageActions.setCanChangeProduct(false);
-        FluxReviewPageActions.setShowDetails(true);
-      });
-    }
     if (params.productId) {
-      FluxReviewPageActions.fetchProduct(params.productId, function(product) {
-        FluxReviewPageActions.setCanChangeProduct(false);
-        FluxReviewPageActions.setShowDetails(true);
-        FluxReviewPageActions.setProduct(product);
-      });
+      this._fetchProduct(params.productId);
+      if (params.reviewId) {
+        this._fetchReview(params.productId, params.reviewId);
+      }
     }
 
     $(this.refs.new_review_form.getDOMNode()).validator();
@@ -52,12 +43,46 @@ const NewReviewPage  = React.createClass({
     $(this.refs.new_review_form.getDOMNode()).validator();
   },
 
+  _fetchReview: function _fetchReview(productID, reviewID) {
+    FluxReviewPageActions.fetchReview(productID, reviewID, function(review) {
+      FluxReviewPageActions.setReview(review);
+      FluxReviewPageActions.setMode('update');
+      FluxReviewPageActions.setCanChangeProduct(false);
+      FluxReviewPageActions.setShowDetails(true);
+    });
+  },
+
+  _fetchProduct: function _fetchProduct(productID) {
+    FluxReviewPageActions.fetchProduct(productID, function(product) {
+      FluxReviewPageActions.setCanChangeProduct(false);
+      FluxReviewPageActions.setShowDetails(true);
+      FluxReviewPageActions.setProduct(product);
+    });
+  },
+
   _getProductData: function _getProductData() {
     return this.state.review.product || {}
   },
 
   _getProductId: function _getProductId() {
     return this._getProductData().id;
+  },
+
+  _getCurrentUserReviewId: function _getCurrentUserReviewId() {
+    if(this.state && this.state.review.product && this.state.review.product.review) {
+      return this.state.review.product.review.id
+    }
+    return undefined
+  },
+
+  _checkForRedirect: function _checkForRedirect() {
+    let params = this.context.router.state.params
+    let reviewID = this._getCurrentUserReviewId()
+
+    if(reviewID && params.reviewId != reviewID) {
+      this.context.router.transitionTo(`/app/products/${this._getProductId()}/reviews/${reviewID}`)
+      this._fetchReview(this._getProductId(), reviewID);
+    }
   },
 
   _onChange: function _onChange(review) {
@@ -74,6 +99,8 @@ const NewReviewPage  = React.createClass({
 
       return newState;
     });
+
+    this._checkForRedirect();
   },
 
   _onSubmit: function _onSubmit(e) {
