@@ -18,13 +18,12 @@ module Fletcher
     end
 
     def results
-      {
+      _results = {
           search_string: @params[:search_string],
           page: @page,
           per_page: @per_page,
-          total_results: total_results,
           companies: data_hash(@companies),
-          products: data_hash(@products),
+          products: product_data_hash(@products),
           related_tags: {
               total: @related_tags.size,
               data: @related_tags
@@ -38,6 +37,8 @@ module Fletcher
               data: @filter_tags
           }
       }
+      _results[:total_results] = total_results _results
+      _results
     end
 
     private
@@ -64,21 +65,32 @@ module Fletcher
       data.paginate(:page => @page, :per_page => @per_page)
     end
 
-    def total_results
+    def total_results results
       return 0 if @params[:search_string].blank?
-      @companies.size + @products.size + @tags.size
+      [:companies, :tags, :products].inject(0) { |sum, type| sum + results[type][:total] }
+    end
+
+    def product_data_hash(data)
+      data_size = Product.where("name ilike ?", @params[:search_string]).size
+      build_data_hash(data, data_size)
     end
 
     def data_hash(data)
-      return {total: 0, pages: 0, data: [] } if @params[:search_string].blank?
+      build_data_hash(data, data.size)
+    end
 
+    def build_data_hash(data, data_size)
+      return default_data_hash if @params[:search_string].blank?
       paginated_data = paginate(data)
-
       {
-          total: data.size,
+          total: data_size,
           pages: paginated_data.total_pages,
           data: paginated_data
       }
+    end
+
+    def default_data_hash
+      {total: 0, pages: 0, data: []}
     end
 
     def companies(terms)
