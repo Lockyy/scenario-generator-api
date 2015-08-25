@@ -71,7 +71,7 @@ const ProductPage = React.createClass({
             </div>
             <div className='company'>
               <Link
-                to={`/app/companies/${this.getCompanyData('id')}`}>
+                to={`/app/companies/${this.getCompanyData('slug')}`}>
                 {this.getCompanyData('name')}
               </Link>
             </div>
