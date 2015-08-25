@@ -3,7 +3,7 @@ module Api
     respond_to :json
 
     def show
-      @product = Product.find_by(id: params[:id])
+      @product = Product.friendly.find(params[:id])
       @product.increment_views!
 
       respond_to do |format|
