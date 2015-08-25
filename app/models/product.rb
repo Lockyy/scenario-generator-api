@@ -76,4 +76,8 @@ products.url, company_id, products.views, products.created_at, products.updated_
     self.views = self.views + 1
     self.save
   end
+
+  def reviewed_by_user?(user)
+    reviews.where(user: user).size > 0
+  end
 end
