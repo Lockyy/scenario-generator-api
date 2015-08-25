@@ -1,8 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import ReviewBox from './ReviewBox';
-import Section from '../Section'
-import SectionRow from '../SectionRow'
+import RecentActivitySection from './RecentActivitySection';
 
 const UserProfilePage  = React.createClass({
   displayName: 'UserProfilePage',
@@ -29,9 +28,7 @@ const UserProfilePage  = React.createClass({
 
     return (
       <div id='recent-activity'>
-        <Section hasPagination={false} rows={1} cols={4} title={"Recent Activity"}>
-          <SectionRow items={recent_activity} rows={1} cols={4}/>
-        </Section>
+        <RecentActivitySection items={this.props.recent_activity} rows={1} cols={4}/>
       </div>
     );
   },

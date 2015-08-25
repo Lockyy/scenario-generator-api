@@ -20,18 +20,19 @@ $color-blackcharcoal: #3c3c3b
 
   .section
     border-top: solid 2px $color-darkred
-    padding-top: 0
 
     .header
       border-bottom: solid 1px $grey
       .toggle-section-container
         display: none
 
-    .section-title
-      color: $color-darkgrey
-      background-image: img-url('icons/recently-added.svg')
+      .section-title
+        color: $blackish-grey
+        background-image: img-url('icons/recently-added.svg')
 
-    .items
+    &> .items
+      padding-top: 30px
+
       .section-row
         max-height: none
 
@@ -116,6 +117,124 @@ $color-blackcharcoal: #3c3c3b
         td
           font-size: $default-font-size + 5px
           font-weight: normal
+
+
+
+  .product.review-box
+    .header
+      border: none
+      margin-bottom: 20px
+
+      .activity-type
+        color: $color-darkgrey
+        font-size: 15px
+        padding-left: 25px
+        background: no-repeat left center
+        background-image: img-url('icons/icon-review-grey.svg')
+        background-size: contain
+        margin-bottom: 20px
+        display: block
+
+    .review
+      display: block
+      color: $blackish-grey
+
+      .rating
+        display: flex
+        justify-content: space-between
+        margin-bottom: 20px
+
+    .footer
+      display: block
+      .created_at
+        display: block
+        text-align: right
+
+  #work-area
+    margin-top: 60px
+    border-top: solid 2px $color-darkred
+
+    .work-area-sidebar
+      margin-top: 20px
+      padding: 0
+      padding-right: 20px
+      text-transform: uppercase
+
+      .sidebar-element
+        padding: 20px 0 20px 40px
+        border-bottom: 1px solid $grey
+        background: no-repeat center left
+        background-size: 30px
+
+        &.reviews
+          background-image: img-url('icons/icon-review-grey.svg')
+
+          &.active
+            background-image: img-url('icons/icon-review-red.svg')
+
+        &.tags
+          background-image: img-url('icons/icon-tags-grey.svg')
+
+          &.active
+            background-image: img-url('icons/icon-tags-red.svg')
+
+        &.lists
+          background-image: img-url('icons/icon-lists-grey.svg')
+
+          &.active
+            background-image: img-url('icons/icon-lists-red.svg')
+
+        &.active
+          font-weight: bold
+          color: $color-darkred
+
+          &::after
+            content: '>'
+            float: right
+
+
+    .work-area-content
+      padding: 0
+      padding-left: 20px
+
+      .product.review-box
+        &.box-1
+          width: 33%
+
+    .section.recent-activity
+      border: none
+      margin-top: 0
+      border-top: 0
+
+      & > .header
+        padding: 36px 0
+        .section-title
+          display: none
+
+      .message
+        font-style: italic
+        color: $dark-grey
+        margin-bottom: 20px
+        display: block
+
+      .product.review-box
+        .footer
+          border: none
+          text-align: right
+
+          .btn
+            padding: 5px 20px
+            border-color: $grey
+            color: $red
+            font-weight: bold
+
+            &:hover
+              background: $grey
+
+            .icon-edit-review
+              padding-left: 20px
+              background: image-url('icons/icon-edit-review.svg') no-repeat center left
+              background-size: 12px
 
 @media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max)
   body.app .container

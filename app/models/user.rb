@@ -59,4 +59,8 @@ class User < ActiveRecord::Base
   def total_reviews
     self.reviews.size
   end
+
+  def recent_activity
+    reviews.sorted('latest')
+  end
 end

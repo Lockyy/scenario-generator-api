@@ -54,13 +54,15 @@ const EditReviewBox = React.createClass ({
               </div>
 
               <h3 className='review-title'>{this.props.title}</h3>
-              <p className='description'>{this.props.quality_review}</p>
+              <p className='description'>{this.props.quality_review ? this.props.quality_review :
+                  <span className='message'>Click Edit to add a review</span>}
+                  </p>
             </div>
           </div>
 
           <div className='footer'>
-            {timeago(this.props.created_at)}
-            Edit
+            <Link to={`/app/products/${this.props.reviewable.id}/reviews/${this.props.id}`}
+              className='btn btn-round'><span className='icon-edit-review'>Edit</span></Link>
           </div>
         </div>
       </div>

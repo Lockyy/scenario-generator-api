@@ -2,8 +2,9 @@ import React from 'react/addons';
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 import _ from 'lodash';
 import EditReviewBox from './EditReviewBox';
-import SectionRow from '../SectionRow';
+import ReviewBox from './ReviewBox';
 import Section from '../Section';
+import SectionRow from '../SectionRow';
 
 function sumSizeFunc(item) {
   return item.props.size;
@@ -51,14 +52,16 @@ class RecentActivitySection extends React.Component {
     let sumItems;
     let currentItem = 0;
 
-    if (!this.props.items) return [];
+    if (_.isEmpty(this.props.items)) return [];
 
     do {
       review = this.props.items[currentItem++];
 
-      debugger;
+      let box = this.props.editable ?
+        <EditReviewBox size={this.getCurrentBoxSize(reviews, review)} {...review} /> :
+        <ReviewBox size={this.getCurrentBoxSize(reviews, review)} {...review} />;
 
-      reviews.push(<EditReviewBox size={this.getCurrentBoxSize(reviews, review)} {...review} />);
+      reviews.push(box);
 
       hasItems = this.props.items.length > currentItem;
       sumItems = _.sum(reviews, sumSizeFunc);
@@ -70,7 +73,11 @@ class RecentActivitySection extends React.Component {
   }
 
   render() {
-    return (<Section {...this.props}>
+    return (<Section hasPagination={this.props.items.length > 5} {...this.props}>
+      {this.props.showMessage ?
+        <span className='message'>You can browse or edit your reviews at any time, even add or delete files and images.</span>
+        : ''
+      }
       <ReactCSSTransitionGroup transitionName="section-row">
         {this.fetchReviews()}
       </ReactCSSTransitionGroup >
@@ -83,7 +90,9 @@ RecentActivitySection.displayName = 'RecentActivitySection';
 RecentActivitySection.defaultProps = {
   cols: 3,
   rows: 2,
-  title: 'Recent Activity'
+  title: 'Recent Activity',
+  showMessage: false,
+  editable: false
 };
 
 RecentActivitySection.propTypes = {
