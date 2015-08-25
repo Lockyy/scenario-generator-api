@@ -34,8 +34,8 @@ const ProductBox = React.createClass ({
 
           <div className='details'>
             <div className="header">
-              <h3 className='title'><Link to={`/app/products/${this.props.id}`}>{this.props.name}</Link></h3>
-              <h4 className='company'><Link to={`/app/companies/${company.id}`} >{company.name}</Link></h4>
+              <h3 className='title'><Link to={`/app/products/${this.props.slug}`}>{this.props.name}</Link></h3>
+              <h4 className='company'><Link to={`/app/companies/${company.slug}`} >{company.name}</Link></h4>
             </div>
 
             <div className='review'>
@@ -61,6 +61,7 @@ ProductBox.displayName = 'ProductBox';
 
 ProductBox.propTypes = {
   id: React.PropTypes.string.isRequired,
+  slug: React.PropTypes.string.isRequired,
   author: React.PropTypes.string.isRequired,
   company: React.PropTypes.object.isRequired,
   created_at: React.PropTypes.string.isRequired,
