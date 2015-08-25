@@ -1,6 +1,9 @@
 gem 'faker'
 
 class Product < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name, use: :slugged
+
   belongs_to :company
   has_many :reviews, as: :reviewable
   has_many :attachments, through: :reviews, source: :attachments

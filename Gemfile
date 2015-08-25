@@ -33,6 +33,7 @@ gem 'omniauth-yammer'
 gem 'jwt'
 gem 'faker'
 gem 'will_paginate'
+gem 'friendly_id', '~> 5.1.0'
 
 
 group :development, :test do
