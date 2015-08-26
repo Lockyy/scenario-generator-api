@@ -13,7 +13,9 @@ const UserProfilePage  = React.createClass({
 
   getDefaultProps: function() {
     return {
-      recent_activity: []
+      sorting: 'latest',
+      recent_activity: [],
+      onChangeSorting: function(sorting) {}
     }
   },
 
@@ -28,7 +30,8 @@ const UserProfilePage  = React.createClass({
 
     return (
       <div id='recent-activity'>
-        <RecentActivitySection items={this.props.recent_activity} rows={1} cols={4}/>
+        <RecentActivitySection sorting={this.props.sorting} items={this.props.recent_activity} rows={1} cols={4}
+          onChangeSorting={this.props.onChangeSorting} />
       </div>
     );
   },

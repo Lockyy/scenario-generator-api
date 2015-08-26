@@ -12,21 +12,32 @@ function sumSizeFunc(item) {
   return item.props.size;
 }
 
-class RecentActivitySection extends React.Component {
-  constructor() {
-    super();
+const RecentActivitySection = React.createClass({
+  displayName: 'RecentActivitySection',
 
-    this.state = {
+  getInitialState: function() {
+    return    {
       offset: 0,
       rows: 2
     };
-  }
+  },
 
-  getCurrentBoxSize(reviews, review) {
+  getCurrentBoxSize: function(reviews, review) {
     return 1;
-  }
+  },
 
-  buildRows(reviews) {
+  getDefaultProps: function(){
+    return {
+      cols: 3,
+      rows: 2,
+      title: 'Recent Activity',
+      showMessage: false,
+      editable: false,
+      onChangeSorting: function(sorting) {}
+    };
+  },
+
+  buildRows: function(reviews) {
     let sectionRows = [];
     let row;
 
@@ -44,9 +55,9 @@ class RecentActivitySection extends React.Component {
     return sectionRows.map(function mapRows(sectionRow) {
       return (<SectionRow items={sectionRow}/>);
     });
-  }
+  },
 
-  fetchReviews() {
+  fetchReviews: function() {
     let review;
     let reviews = [];
     let hasItems;
@@ -72,21 +83,17 @@ class RecentActivitySection extends React.Component {
 
     this.state.offset = currentItem;
     return this.buildRows(reviews);
-  }
+  },
 
-  changeSorting(sorting) {
-    console.log('change sorting')
-  }
+  changeSorting: function(sorting) {
+    this.props.onChangeSorting(sorting)
+  },
 
-  currentSorting() {
-    if(this.state.sorting) {
-      return this.state.sorting;
-    } else {
-      return ReviewConstants.DEFAULT_SORTING
-    }
-  }
+  currentSorting: function() {
+    return this.props.sorting ? this.props.sorting : ReviewConstants.DEFAULT_SORTING;
+  },
 
-  renderSortingDropdown() {
+  renderSortingDropdown: function() {
     return (
       <SortingDropdown
         onClick={this.changeSorting}
@@ -99,9 +106,9 @@ class RecentActivitySection extends React.Component {
           unhelpful: 'Most Helpful: High to Low'
         }} />
     )
-  }
+  },
 
-  render() {
+  render: function() {
     return (
       <Section hasPagination={this.props.items.length > 5} customHeaderTag={this.renderSortingDropdown()} {...this.props}>
       {this.props.showMessage ?
@@ -114,23 +121,6 @@ class RecentActivitySection extends React.Component {
       </Section>
     );
   }
-}
-
-RecentActivitySection.displayName = 'RecentActivitySection';
-
-RecentActivitySection.defaultProps = {
-  cols: 3,
-  rows: 2,
-  title: 'Recent Activity',
-  showMessage: false,
-  editable: false
-};
-
-RecentActivitySection.propTypes = {
-  cols: React.PropTypes.number.isRequired,
-  items: React.PropTypes.array.isRequired,
-  title: React.PropTypes.string.isRequired,
-  itemsClass: React.PropTypes.string
-};
+});
 
 export default RecentActivitySection;

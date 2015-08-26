@@ -33,9 +33,7 @@ const UserProfilePage  = React.createClass({
 
   onChange(data) {
     this.setState(function(oldData) {
-      data: _.merge(oldData, data.data, function(a, b) {
-        if (_.isArray(a)) { return a.concat(b) }
-      })
+      data: _.merge(oldData, data.data);
     });
   },
 
@@ -43,10 +41,17 @@ const UserProfilePage  = React.createClass({
     return (<div />);
   },
 
+  onChangeReviewsSorting: function onChangeReviewsSorting(sorting) {
+    this.setState({ sorting: sorting });
+    FluxUserActions.fetchRecentActivity(this.context.router.state.params.userId, { sort_by: sorting });
+  },
+
   render: function render() {
     let user  = this.state;
 
-    let page = user.id == this.context.currentUser.id ? <UserProfileWorkArea {...user} /> : <UserProfileRecentActivity {...user}/>
+    let page = user.id == this.context.currentUser.id ?
+      <UserProfileWorkArea sorting={this.props.sorting} onChangeSorting={this.onChangeReviewsSorting} {...user} /> :
+      <UserProfileRecentActivity sorting={this.props.sorting} onChangeSorting={this.onChangeReviewsSorting} {...user}/>
 
     return (
     <div className='user profile show'>

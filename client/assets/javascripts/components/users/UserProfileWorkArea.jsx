@@ -13,7 +13,9 @@ const UserProfileWorkArea  = React.createClass({
 
   getDefaultProps: function() {
     return {
-      recent_activity: []
+      recent_activity: [],
+      sorting: 'latest',
+      onChangeSorting: function(sorting) {}
     }
   },
 
@@ -30,7 +32,8 @@ const UserProfileWorkArea  = React.createClass({
           <div className='sidebar-element lists'>Lists</div>
         </div>
         <div className='work-area-content col-xs-10'>
-          <RecentActivitySection items={this.props.recent_activity} editable={true} showMessage={true} rows={1} cols={3}/>
+          <RecentActivitySection sorting={this.props.sorting} items={this.props.recent_activity} editable={true} showMessage={true} rows={1} cols={3}
+            onChangeSorting={this.props.onChangeSorting} />
         </div>
       </div>
     );

@@ -26,17 +26,14 @@ module.exports = {
   },
 
   getUserRecentActivity(id, paginationParams, resolve, reject) {
-    //TODO
-    let url = _.template(UserConstants.USER_URL)({ userId: id });
+    let url = _.template(UserConstants.USER_RECENT_ACTIVIY_URL)({ userId: id });
 
     return new Promise(function() {
-      // $.ajax({
-      //   url: url,
-      //   success: resolve
-      // });
-      setTimeout(function() {
-        resolve([]);
-      }, 500)
+      $.ajax({
+        url: url,
+        data: paginationParams,
+        success: resolve
+      });
     });
   }
 };
