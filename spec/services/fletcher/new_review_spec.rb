@@ -51,7 +51,7 @@ RSpec.describe Fletcher::NewReview do
     end
 
     context 'without an existing product' do
-      subject { Fletcher::NewReview.new(user, nil, params) }
+      subject { Fletcher::NewReview.new(create(:user), nil, params) }
 
       it 'creates a new product' do
         Company.create(name: params[:product][:company][:name])
@@ -74,6 +74,8 @@ RSpec.describe Fletcher::NewReview do
 
     context 'with invalid data' do
       let(:params) { {} }
+
+      subject { Fletcher::NewReview.new(create(:user), product, params) }
 
       it 'does not create a new product' do
         expect { subject.save! }.to_not change { Product.count }
@@ -101,6 +103,7 @@ RSpec.describe Fletcher::NewReview do
       product = double().as_null_object
       expect(user).to receive_message_chain(:reviews, :<<)
       expect(product).to receive(:save).and_return(true)
+      expect(product).to receive(:persisted?).and_return(true)
       expect(Product).to receive_message_chain(:where, :first).and_return(product)
 
       subject.save!

@@ -28,6 +28,7 @@ module Fletcher
       params = {}.merge(product_params).with_indifferent_access
       params[:company] = fetch_company! unless company_params.empty?
       product = Product.where(name: product_params['name']).first || Product.new(params)
+
       return product if product.persisted?
 
       product.user = @user
