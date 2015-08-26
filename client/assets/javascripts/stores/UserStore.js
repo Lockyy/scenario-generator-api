@@ -10,6 +10,7 @@ class UserStore {
       handleFetchData: FluxUserActions.FETCH_DATA,
       handleUpdateData: FluxUserActions.UPDATE_DATA,
       handleFetchRecentActivity: FluxUserActions.FETCH_RECENT_ACTIVITY,
+      handleSetPaginationParams: FluxUserActions.SET_PAGINATION_PARAMS,
       handleRegisterError: FluxUserActions.REGISTER_ERROR
     });
   }
@@ -24,7 +25,11 @@ class UserStore {
   }
 
   handleFetchRecentActivity(data) {
-    _.merge(this.data, data);
+    this.data.recent_activity = data.recent_activity;
+  }
+
+  handleSetPaginationParams(paginationParams) {
+    _.merge(this.data, paginationParams);
   }
 
   handleRegisterError(error) {

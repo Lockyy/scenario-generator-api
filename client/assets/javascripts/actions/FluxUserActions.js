@@ -4,8 +4,6 @@ import UserAPI from '../utils/api/UserAPI';
 
 class FluxUserActions {
   fetchData(id) {
-    this.dispatch();
-
     UserAPI.getUser(id,
       (data) => {
         this.actions.updateData(data);
@@ -17,16 +15,18 @@ class FluxUserActions {
   }
 
   fetchRecentActivity(id, paginationParams) {
-    this.dispatch();
-
     UserAPI.getUserRecentActivity(id, paginationParams,
       (data) => {
-        this.actions.updateData(data);
+        this.dispatch(data);
       },
       (error) => {
         this.actions.registerError(error);
       }
     );
+  }
+
+  setPaginationParams(paginationParams) {
+    this.dispatch(paginationParams);
   }
 
   updateData(data) {

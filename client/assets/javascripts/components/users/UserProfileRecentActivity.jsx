@@ -3,7 +3,7 @@ import _ from 'lodash';
 import ReviewBox from './ReviewBox';
 import RecentActivitySection from './RecentActivitySection';
 
-const UserProfilePage  = React.createClass({
+const UserProfileRecentActivity  = React.createClass({
   displayName: 'UserProfilePage',
 
   contextTypes: {
@@ -24,17 +24,16 @@ const UserProfilePage  = React.createClass({
   },
 
   render: function render() {
-    let recent_activity  = _.map(this.props.recent_activity, function(activity) {
-      return (<ReviewBox key={activity.id} {...activity}/>);
-    });
+    let cols = 4;
+    let rows = Math.ceil((this.props.recent_activity.length ? this.props.recent_activity.length : cols) / cols);
 
     return (
       <div id='recent-activity'>
-        <RecentActivitySection sorting={this.props.sorting} items={this.props.recent_activity} rows={1} cols={4}
-          onChangeSorting={this.props.onChangeSorting} />
+        <RecentActivitySection sorting={this.props.sorting} items={this.props.recent_activity} rows={rows} cols={cols}
+          onChangeSorting={this.props.onChangeSorting} onShowMore={this.props.onShowMore} />
       </div>
     );
   },
 });
 
-export default UserProfilePage;
+export default UserProfileRecentActivity;

@@ -15,13 +15,6 @@ function sumSizeFunc(item) {
 const RecentActivitySection = React.createClass({
   displayName: 'RecentActivitySection',
 
-  getInitialState: function() {
-    return    {
-      offset: 0,
-      rows: 2
-    };
-  },
-
   getCurrentBoxSize: function(reviews, review) {
     return 1;
   },
@@ -78,10 +71,9 @@ const RecentActivitySection = React.createClass({
 
       hasItems = this.props.items.length > currentItem;
       sumItems = _.sum(reviews, sumSizeFunc);
-      needsItem = sumItems < this.state.rows * this.props.cols;
+      needsItem = sumItems < this.props.rows * this.props.cols;
     } while (hasItems && needsItem);
 
-    this.state.offset = currentItem;
     return this.buildRows(reviews);
   },
 
@@ -108,16 +100,21 @@ const RecentActivitySection = React.createClass({
     )
   },
 
+  onShowMore: function() {
+    if (_.isFunction(this.props.onShowMore)) {
+      this.props.onShowMore(this.props.items.length + this.props.cols);
+    }
+  },
+
   render: function() {
     return (
-      <Section hasPagination={this.props.items.length > 5} customHeaderTag={this.renderSortingDropdown()} {...this.props}>
-      {this.props.showMessage ?
-        <span className='message'>You can browse or edit your reviews at any time, even add or delete files and images.</span>
-        : ''
-      }
-      <ReactCSSTransitionGroup transitionName="section-row">
+      <Section hasPagination={this.props.items.length >= this.props.cols * this.props.rows}
+        customHeaderTag={this.renderSortingDropdown()} {...this.props} onShowMore={this.onShowMore}>
+        {this.props.showMessage ?
+          <span className='message'>You can browse or edit your reviews at any time, even add or delete files and images.</span>
+          : ''
+        }
         {this.fetchReviews()}
-      </ReactCSSTransitionGroup >
       </Section>
     );
   }
