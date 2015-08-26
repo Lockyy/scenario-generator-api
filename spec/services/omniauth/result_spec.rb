@@ -10,6 +10,11 @@ RSpec.describe Omniauth::Result do
       },
       credentials: {
         token: 'r4nd0m7ok3n'
+      },
+      extra: {
+        raw_info: {
+          mugshot_url_template: 'http://ima.g.es/{width}x{height}/so.me-img.jpg'
+        }
       })
   end
 
@@ -24,7 +29,7 @@ RSpec.describe Omniauth::Result do
   end
 
   it 'has avatar_url' do
-    expect(subject.avatar_url).to be_eql('http://ima.g.es/so.me-img.jpg')
+    expect(subject.avatar_url).to be_eql('http://ima.g.es/150x150/so.me-img.jpg')
   end
 
   it 'has token' do
