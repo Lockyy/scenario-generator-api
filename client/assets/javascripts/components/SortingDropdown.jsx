@@ -46,3 +46,4 @@ const SortingDropdown = React.createClass({
 })
 
 export default SortingDropdown;
+

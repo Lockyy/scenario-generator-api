@@ -79,4 +79,5 @@ class Review < ActiveRecord::Base
       errors.add(:review, "at least one field is required")
     end
   end
+
 end

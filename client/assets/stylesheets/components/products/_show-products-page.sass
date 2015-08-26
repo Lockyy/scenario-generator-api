@@ -151,6 +151,31 @@
           color: $red
           content: '>'
 
+  .sort-links
+    float: right
+    width: 200px
+    border: 1px solid $light-grey
+    position: relative
+    z-index: 99
+    top: -10px
+    .dropdown
+      display: none
+      width: 200px
+      position: absolute
+      left: -1px
+      border: 1px solid $light-grey
+      border-top: none
+    .sort-link
+    .active-sort-link
+    .sort-link, .active-sort-link
+      background: white
+      padding: 5px 10px
+      cursor: pointer
+    &.active
+      border-bottom: 1px solid white
+      .dropdown
+        display: block
+
   .reviews
     .review
       border-top: 1px solid $light-grey
