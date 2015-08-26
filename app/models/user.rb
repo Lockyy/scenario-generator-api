@@ -66,7 +66,6 @@ class User < ActiveRecord::Base
   end
 
   def recent_activity(sort_by)
-    reviews.sorted(sort_by).joins('LEFT JOIN attachments attachments ON reviews.id = attachments.attachable_id')
-      .order('attachments.attachable_id NULLS FIRST')
+    reviews.sorted(sort_by)
   end
 end
