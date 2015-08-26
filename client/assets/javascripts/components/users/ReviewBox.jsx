@@ -51,7 +51,7 @@ const ReviewBox = React.createClass ({
               </div>
 
               <h3 className='title'>{this.props.title}</h3>
-              <p className='description'>{this.props.quality_review}</p>
+              <p className='description'>{_.trunc(this.props.quality_review, {lenght: 250, separator: ',?\. +'})}</p>
             </div>
           </div>
 

@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :tokens, dependent: :destroy
   has_many :reviews
   has_many :attachments, through: :reviews
+  has_many :products
   has_and_belongs_to_many :tags
 
   scope :with_oauth, ->(provider, uid) do
@@ -60,7 +61,12 @@ class User < ActiveRecord::Base
     self.reviews.size
   end
 
-  def recent_activity
-    reviews
+  def total_products
+    self.products.size
+  end
+
+  def recent_activity(sort_by)
+    reviews.sorted(sort_by).joins('LEFT JOIN attachments attachments ON reviews.id = attachments.attachable_id')
+      .order('attachments.attachable_id NULLS FIRST')
   end
 end

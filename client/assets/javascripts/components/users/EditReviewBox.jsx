@@ -54,7 +54,7 @@ const EditReviewBox = React.createClass ({
               </div>
 
               <h3 className='review-title'>{this.props.title}</h3>
-              <p className='description'>{this.props.quality_review ? this.props.quality_review :
+              <p className='description'>{this.props.quality_review ? _.trunc(this.props.quality_review, 250) :
                   <span className='message'>Click Edit to add a review</span>}
                   </p>
             </div>
