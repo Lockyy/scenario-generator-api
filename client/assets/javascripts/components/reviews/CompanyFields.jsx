@@ -35,6 +35,12 @@ const CompanyFields  = React.createClass({
     ReviewPageCompanyFieldsActions.updateCompanyDescription(description);
   },
 
+  _onKeyPress: function _onKeyPress(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  },
+
   _getNewCompanyFields: function _getNewCompanyFields() {
     return (<fieldset className='company_details'>
       <div className='form-group'>
@@ -42,7 +48,7 @@ const CompanyFields  = React.createClass({
         <input type='text' className='form-control' placeholder='www.' name='product[company[url]]'
           pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
           title="Include a valid url" ref='company_url' value={this.props.url}
-          onChange={this._updateCompanyUrl} required/>
+          onChange={this._updateCompanyUrl} onKeyPress={this._onKeyPress} required/>
         <span className="help-block with-errors"></span>
       </div>
 
@@ -50,7 +56,7 @@ const CompanyFields  = React.createClass({
         <label htmlFor='product[company[description]]'>Description <span className='required'>*</span></label>
         <textarea type='text' className='form-control' placeholder='Write a brief description of the company'
           name='product[company[description]]' rows='10' ref='company_description' value={this.props.description}
-          onChange={this._updateCompanyDescription} required/>
+          onChange={this._updateCompanyDescription} onKeyPress={this._onKeyPress} required/>
         <span className="help-block with-errors"></span>
       </div>
 

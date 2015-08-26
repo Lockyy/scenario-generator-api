@@ -12,7 +12,8 @@ const TypeAhead  = React.createClass({
       onRender: function() {},
       onChange: function() {},
       onSelectOption: function() {},
-      onSelectNoOption: function() {}
+      onSelectNoOption: function() {},
+      onPressEnter: function() {}
     }
   },
 
@@ -42,6 +43,13 @@ const TypeAhead  = React.createClass({
 
   _onChange: function _onChange(e) {
     this.props.onChange(e.target.value);
+  },
+
+  _onKeyPress: function _onKeyPress(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      this.props.onPressEnter(e.target.value);
+    }
   },
 
   _getBloodhoundProps: function _getBloodhoundProps() {
@@ -80,7 +88,7 @@ const TypeAhead  = React.createClass({
     return (
       <input type='text' className={this.props.className} placeholder={this.props.placeholder} name={this.props.name}
         ref='typeahead_input' value={this.props.value} onChange={this._onChange}
-        required={this.props.required} disabled={this.props.disabled} />
+        required={this.props.required} disabled={this.props.disabled} onKeyPress={this._onKeyPress} />
     );
   }
 })

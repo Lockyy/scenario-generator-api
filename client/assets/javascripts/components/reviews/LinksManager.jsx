@@ -40,6 +40,14 @@ const LinksManager = React.createClass({
     });
   },
 
+  _onKeyPress: function _onKeyPress(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+
+      this._handleAddLink(e);
+    }
+  },
+
   render: function render() {
     return (
       <div className='links-manager items-manager'>
@@ -60,7 +68,8 @@ const LinksManager = React.createClass({
 
         <div className='input-group'>
           <input type='text' className='form-control' placeholder='Add a link' name='product[review[link]]'
-            pattern={RegexConstants.URL_PATTERN} title="Include a valid url" ref='product_review_link_to_add'/>
+            pattern={RegexConstants.URL_PATTERN} title="Include a valid url" ref='product_review_link_to_add'
+            onKeyPress={this._onKeyPress} />
 
           <span className="input-group-btn">
             <button className="btn btn-default" type="button" onClick={this._handleAddLink} >Add</button>

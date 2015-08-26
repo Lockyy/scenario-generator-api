@@ -12,7 +12,8 @@ const UploadManager = React.createClass({
       uploadText: 'Upload a file',
       uploadingText: 'Uploading...',
       onAddFile: function(file) {},
-      onValidateFile: function(file) {}
+      onValidateFile: function(file) {},
+      onPressEnter: function() {}
     }
   },
 
@@ -35,6 +36,10 @@ const UploadManager = React.createClass({
     React.findDOMNode(this.refs.input_file).click();
   },
 
+  _onKeyPress: function _onKeyPress(e) {
+    e.preventDefault();
+  },
+
   render: function render() {
     return (
       <div className='upload-manager items-manager'>
@@ -55,7 +60,7 @@ const UploadManager = React.createClass({
 
         <div className='input-group'>
           <input type='button' className='form-control upload' value={this.props.uploadText}
-            ref='input_file_placeholder' onClick={this._addFile} />
+            ref='input_file_placeholder' onClick={this._addFile} onKeyPress={this._onKeyPress} />
           <span className="input-group-btn">
             <button className="btn btn-default" type="button" onClick={this._addFile}
               ref='input_file_button'>{this.props.buttonText}</button>

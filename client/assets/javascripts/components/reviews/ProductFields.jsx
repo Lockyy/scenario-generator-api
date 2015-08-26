@@ -21,6 +21,12 @@ const ProductFields  = React.createClass({
     }
   },
 
+  _onKeyPress: function _onKeyPress(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+    }
+  },
+
   _setProduct: function _setProduct(product, showDetails) {
     FluxReviewPageActions.setShowDetails(showDetails);
     FluxReviewPageActions.setProduct(product);
@@ -52,7 +58,7 @@ const ProductFields  = React.createClass({
         <input type='text' className='form-control' placeholder='www.' name='product[url]'
           pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
           title="Include a valid url" ref='product_url' value={this.props.url}
-          onChange={this._updateProductUrl} required/>
+          onChange={this._updateProductUrl} onKeyPress={this._onKeyPress} required/>
         <span className="help-block with-errors"></span>
       </div>
 

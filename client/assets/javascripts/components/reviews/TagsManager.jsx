@@ -87,6 +87,10 @@ const TagsManager = React.createClass({
     });
   },
 
+  _onPressEnter: function _onPressEnter(e) {
+    this._handleAddTag();
+  },
+
   render: function render() {
     return (
       <div className='tags-manager items-manager'>
@@ -104,6 +108,7 @@ const TagsManager = React.createClass({
           <TypeAhead placeholder={this.props.placeholder} className='form-control'
             typeaheadProps={this._getTypeaheadProps()} bloodhoundProps={this._getBloodhoundProps()} name={this.props.name}
             onSelectOption={this._addTag} onSelectNoOption={this._buildAndAddTag} onRender={this._hideCreateWhenMatch}
+            onPressEnter={this._onPressEnter}
             ref='tag_to_add'/>
 
           <div className="input-group-btn">
