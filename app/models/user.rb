@@ -61,6 +61,6 @@ class User < ActiveRecord::Base
   end
 
   def recent_activity
-    reviews.sorted('latest')
+    reviews
   end
 end
