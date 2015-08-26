@@ -9,7 +9,7 @@
 
       <div class='profile-container'>
         <%= image_tag current_user.avatar_url, class: 'avatar' %>
-        <%= link_to 'My profile', '#' %>
+        <%= link_to 'My profile', '/app/users/current' %>
 
         <% if current_user.admin? %>
           <div class='admin-container'>

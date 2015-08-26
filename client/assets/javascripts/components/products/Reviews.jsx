@@ -113,6 +113,25 @@ const Reviews = React.createClass({
         <a className="link" href={UrlHelper.addProtocol(link.url)} target='_blank'>{UrlHelper.addProtocol(link.url)}</a>
       </li>);
     });
+    let wrotByCurrentUser = this.context.currentUser.id == review.user.id;
+
+    let editMyReview =  <div className='edit-review-container'>
+                          <Link to={`/app/products/${review.reviewable.id}/reviews/${review.id}`}
+                               className='btn btn-white btn-round'>Edit my review</Link>
+                        </div>;
+
+    let productId = review.product.id;
+    let reviewId = review.id;
+    let itWasHelpful = <div className='helpful-review-container'>
+                          <span className='helpful-reviews-text'> Was this review helpful to you?</span>
+                          <button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
+                                  data-helpful='true' onClick={this.voteOnReview}> Yes </button>
+                          <button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
+                                  data-helpful='false' onClick={this.voteOnReview}> No </button>
+                        </div>;
+
+    let userEditAction =   wrotByCurrentUser ? editMyReview
+      : itWasHelpful;
 
     return (
       <div className="row review">
@@ -121,7 +140,7 @@ const Reviews = React.createClass({
           <div className='details'>
             <div className='name'>
               <Link
-                to='#'>
+                to={`/app/users/${review.user.id}`}>
                 {review.user.name}
               </Link>
             </div>

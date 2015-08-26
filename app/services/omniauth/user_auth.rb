@@ -20,7 +20,15 @@ module Omniauth
     end
 
     def update_info!
-      @user.update(name: @result.name, email: @result.email, avatar_url: @result.avatar_url)
+      params = {
+        name: @result.name,
+        email: @result.email,
+        avatar_url: @result.avatar_url,
+        department: @result.department,
+        location: @result.location
+      }
+
+      @user.update(params)
       @user.update_oauth!(@result.provider, @result.uid, @result.original_oauth_info)
       @user
     end

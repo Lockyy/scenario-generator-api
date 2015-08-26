@@ -6,10 +6,17 @@ RSpec.describe Omniauth::UserAuth do
       info: {
         email: 'us@fletch.er',
         name: 'Fl. Etcher',
-        image: 'http://ima.g.es/so.me-img.jpg'
+        image: 'http://ima.g.es/so.me-img.jpg',
+        location: 'goiania'
       },
       credentials: {
         token: 'r4nd0m7ok3n'
+      },
+      extra: {
+        raw_info: {
+          department: 'awesomeness',
+          mugshot_url_template: 'http://ima.g.es/{width}x{height}/so.me-img.jpg'
+        }
       })
   end
 
@@ -35,9 +42,16 @@ RSpec.describe Omniauth::UserAuth do
 
     it "updates the user's info" do
       user = double('user')
+      user_params = {
+        name: result.name,
+        email: result.email,
+        avatar_url: 'http://ima.g.es/150x150/so.me-img.jpg',
+        department: 'awesomeness',
+        location: 'goiania'
+      }
 
       expect(User).to receive(:find_with_oauth).and_return(user)
-      expect(user).to receive(:update).with(name: result.name, email: result.email, avatar_url: result.avatar_url)
+      expect(user).to receive(:update).with(user_params)
       expect(user).to receive(:update_oauth!).with(result.provider, result.uid, result.original_oauth_info)
 
       subject.authenticate!

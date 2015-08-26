@@ -3,6 +3,7 @@ import React from 'react';
 import Dashboard from './components/Dashboard';
 import NewReviewPage from './components/reviews/NewReviewPage';
 import CompanyProfilePage from './components/companies/CompanyProfilePage';
+import UserProfilePage from './components/users/UserProfilePage';
 import ProductPage from './components/products/ProductPage';
 import SearchPage from './components/search/SearchPage';
 import SearchBox from './components/header/SearchBox';
@@ -27,6 +28,8 @@ $(function onLoad() {
                         <Route path="app/products/:productId/reviews/:reviewId" component={NewReviewPage}>
                         </Route>
                         <Route name="company" path="app/companies/:companyId" component={CompanyProfilePage}>
+                        </Route>
+                        <Route name="user" path="app/users/:userId" component={UserProfilePage}>
                         </Route>
                         <Route name="search" path="app/search/:section/:search_string/:page" component={SearchPage}>
                         </Route>
