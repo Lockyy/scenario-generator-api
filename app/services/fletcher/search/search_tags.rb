@@ -1,7 +1,7 @@
 module Fletcher
   class Search::SearchTags < Search::SearchBase
-    def initialize(attribute, terms, sort_description, filter_tags)
-      super(attribute, terms, sort_description, filter_tags)
+    def initialize(attribute, terms, sort_description, filter_tags, match_mode)
+      super(attribute, terms, sort_description, filter_tags, match_mode)
     end
 
     private
@@ -15,9 +15,7 @@ module Fletcher
     end
 
     def build_search_by
-      default_search_by = Hash.new(lambda { |terms|
-        Tag.search_by_name(terms.join(' '))
-      }).with_indifferent_access
+      default_search_by = Hash.new(lambda { |terms| Tag.where { (name.like_any(terms)) } }).with_indifferent_access
     end
   end
 end

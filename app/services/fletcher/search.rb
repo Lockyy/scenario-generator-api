@@ -23,7 +23,7 @@ module Fletcher
           page: @page,
           per_page: @per_page,
           companies: data_hash(@companies),
-          products: product_data_hash(@products),
+          products: data_hash(@products),
           related_tags: {
               total: @related_tags.size,
               data: @related_tags
@@ -47,7 +47,7 @@ module Fletcher
       {
           filter_by: '',
           filter_by_tags: [],
-          match_mode: 'all',
+          match_mode: 'any',
           search_string: '',
           page: DEFAULT_PAGE,
           per_page: DEFAULT_PER_PAGE
@@ -70,13 +70,8 @@ module Fletcher
       [:companies, :tags, :products].inject(0) { |sum, type| sum + results[type][:total] }
     end
 
-    def product_data_hash(data)
-      data_size = Product.where("name ilike ?", @params[:search_string]).size
-      build_data_hash(data, data_size)
-    end
-
     def data_hash(data)
-      build_data_hash(data, data.size)
+      build_data_hash(data, data.count)
     end
 
     def build_data_hash(data, data_size)
@@ -95,21 +90,21 @@ module Fletcher
 
     def companies(terms)
       return [] if @params[:search_string].blank?
-      search_companies = SearchCompanies.new(@params[:filter_by_tags], terms, @params[:sort_by], @filter_tags)
+      search_companies = SearchCompanies.new(@params[:filter_by], terms, @params[:sort_by], @filter_tags, @params[:match_mode])
       @companies_related_tags = search_companies.related_tags
       search_companies.results
     end
 
     def products(terms)
       return [] if @params[:search_string].blank?
-      search_products = SearchProducts.new(@params[:filter_by_tags], terms, @params[:sort_by], @filter_tags)
+      search_products = SearchProducts.new(@params[:filter_by], terms, @params[:sort_by], @filter_tags, @params[:match_mode])
       @products_related_tags = search_products.related_tags
       search_products.results
     end
 
     def tags(terms)
       return [] if @params[:search_string].blank?
-      SearchTags.new(@params[:filter_by_tags], terms, @params[:sort_by], @filter_tags).results
+      SearchTags.new(@params[:filter_by], terms, @params[:sort_by], @filter_tags, @params[:match_mode]).results
     end
 
     def related_tags
@@ -122,7 +117,7 @@ module Fletcher
       elsif section == 'tags'
         []
       else
-        (@products_related_tags + @companies_related_tags).uniq
+        ((@products_related_tags || []) + (@companies_related_tags || [])).uniq
       end
     end
 
