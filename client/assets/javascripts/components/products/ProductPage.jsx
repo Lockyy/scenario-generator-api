@@ -14,7 +14,7 @@ import FileHelper from '../../utils/helpers/FileHelper'
 const ProductPage = React.createClass({
   displayName: 'ProductPage',
   mixins: [ Navigation ],
-  getInitialState: function getInitialState() {
+  getInitialState: function() {
     return {
       data: {
         name: '',
@@ -52,6 +52,14 @@ const ProductPage = React.createClass({
     }
   },
 
+  getCurrentUserReview: function() {
+    if(this.state && this.state.data.review) {
+      return this.state.data.review
+    } else {
+      return false
+    }
+  },
+
   totalReviews: function() {
     let reviews = this.getProductData('reviews')
     if(reviews) {
@@ -81,12 +89,27 @@ const ProductPage = React.createClass({
     )
   },
 
+  reviewButtonText: function() {
+    if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
+      return 'Update Review'
+    } else {
+      return 'Add a Review'
+    }
+  },
+
+  reviewButtonURL: function() {
+    if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
+      return `/app/products/${this.id()}/reviews/${this.getCurrentUserReview().id}`
+    } else {
+      return `/app/products/${this.id()}/reviews/new`
+    }
+  },
+
   renderTopButtons: function() {
-    let url = `/app/products/${this.id()}/reviews/new`;
     return (
       <div className='links'>
-        <Link to={url} className='btn btn-red btn-round'>
-          Add a Review
+        <Link to={this.reviewButtonURL()} className='btn btn-red btn-round'>
+          { this.reviewButtonText() }
         </Link>
         <a
           href={`mailto:?subject=Check%20out%20this%20product&body=${window.location.href}`}
