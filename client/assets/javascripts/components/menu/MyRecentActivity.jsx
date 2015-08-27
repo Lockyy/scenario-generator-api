@@ -1,8 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
-import FluxUserActions from '../../actions/FluxUserActions'
-import UserStore from '../../stores/UserStore'
+import FluxCurrentUserActions from '../../actions/FluxCurrentUserActions'
+import CurrentUserStore from '../../stores/CurrentUserStore'
 import EditReviewBox from '../users/EditReviewBox'
 
 const MyRecentActivity = React.createClass ({
@@ -20,8 +20,8 @@ const MyRecentActivity = React.createClass ({
   },
 
   componentDidMount: function() {
-    UserStore.listen(this.onChange)
-    FluxUserActions.fetchRecentActivity(this.context.currentUser.id)
+    CurrentUserStore.listen(this.onChange)
+    FluxCurrentUserActions.fetchRecentActivity(this.context.currentUser.id)
   },
 
   onChange: function(data) {

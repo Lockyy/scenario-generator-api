@@ -2,8 +2,8 @@ import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import TagsManager from '../TagsManager'
-import FluxUserActions from '../../actions/FluxUserActions'
-import UserStore from '../../stores/UserStore'
+import FluxCurrentUserActions from '../../actions/FluxCurrentUserActions'
+import CurrentUserStore from '../../stores/CurrentUserStore'
 
 const MyTags = React.createClass ({
   mixins: [ Navigation ],
@@ -20,7 +20,7 @@ const MyTags = React.createClass ({
   },
 
   componentDidMount: function() {
-    UserStore.listen(this.onChange)
+    CurrentUserStore.listen(this.onChange)
   },
 
   onChange: function(data) {
@@ -28,21 +28,21 @@ const MyTags = React.createClass ({
   },
 
   _updateTags: function(tags) {
-    FluxUserActions.updateTags(tags);
+    FluxCurrentUserActions.updateTags(tags);
   },
 
   render: function() {
     let details = _.isEmpty(this.state.tags) ?
-      <div class='no-content'>Adding tags will update your News Feed with the latest news from the ones you follow</div> :
-
-      <TagsManager tags={this.state.tags} itemClass='myTagSuggestion' tagsinputProperties={{freeInput: false}}
-        onSetTags={this._updateTags} />
+      <div class='no-content'>Adding tags will update your News Feed with the latest news from the ones you follow</div> : ''
 
     return (
       <div class='my-tags'>
         <h2>My tags</h2>
 
         {details}
+        <TagsManager tags={this.state.tags} itemClass='myTagSuggestion' tagsinputProperties={{freeInput: false}}
+          onSetTags={this._updateTags} />
+
       </div>
     )
   }
