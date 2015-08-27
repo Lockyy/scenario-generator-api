@@ -111,15 +111,12 @@ ActiveRecord::Schema.define(version: 20150825105402) do
     t.integer  "quality_score"
     t.text     "price_review"
     t.integer  "price_score"
-    t.integer  "reviewable_id"
-    t.string   "reviewable_type"
+    t.integer  "product_id"
     t.datetime "created_at",         null: false
     t.datetime "updated_at",         null: false
     t.integer  "user_id"
     t.integer  "cached_helpfulness"
   end
-
-  add_index "reviews", ["reviewable_type", "reviewable_id"], name: "index_reviews_on_reviewable_type_and_reviewable_id", using: :btree
 
   create_table "tag_taggables", force: :cascade do |t|
     t.integer  "tag_id"

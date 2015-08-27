@@ -9,8 +9,7 @@ class Admin::ReviewService
       _review.quality_score = review[:quality_score]
       _review.price_review = review[:price_review]
       _review.price_score = review[:price_score]
-      _review.reviewable_id = review[:reviewable_id]
-      _review.reviewable_type = review[:reviewable_type]
+      _review.product_id = review[:product_id]
       _review.user = current_user if _review.user.nil?
       _review.links = links(review[:links_attributes])
       review.delete(:tags_attributes)

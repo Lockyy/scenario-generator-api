@@ -1,13 +1,14 @@
 class Review < ActiveRecord::Base
-  belongs_to :reviewable, polymorphic: true
+  belongs_to :product
   belongs_to :user
+  has_one :company, through: :product
   has_many :attachments, as: :attachable
   has_many :tag_taggables, as: :taggable
   has_many :tags, through: :tag_taggables
   has_many :links
   has_many :reviewVotes
 
-  accepts_nested_attributes_for :reviewable
+  accepts_nested_attributes_for :product
   accepts_nested_attributes_for :tags
   accepts_nested_attributes_for :links, allow_destroy: true
   accepts_nested_attributes_for :attachments, allow_destroy: true
@@ -45,7 +46,7 @@ class Review < ActiveRecord::Base
 
   validates :quality_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, allow_nil: true
   validates :price_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, allow_nil: true
-  validates :user_id, uniqueness: { scope: :reviewable_id }
+  validates :user_id, uniqueness: { scope: :product_id }
   validate :has_at_least_one_field
 
   private

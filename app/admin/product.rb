@@ -44,8 +44,7 @@ ActiveAdmin.register Product do
     f.inputs 'Reviews' do
       f.has_many :reviews do |t|
         t.input :id, as: :hidden
-        t.input :reviewable_id, as: :hidden
-        t.input :reviewable_type, as: :hidden
+        t.input :product_id, as: :hidden
         t.input :title
         t.input :quality_review
         t.input :quality_score
