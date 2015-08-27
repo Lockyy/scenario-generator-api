@@ -9,6 +9,7 @@ module Fletcher
       @terms = get_terms
       @page = @params[:page]
       @per_page = calculate_per_page(@params[:per_page].to_i)
+      @params[:sort_by] = @params[:sort_by] || 'relevance'
 
       @filter_tags = filtered_tags(@params[:filtered_tags])
       @products = products(@terms)
@@ -22,6 +23,7 @@ module Fletcher
           search_string: @params[:search_string],
           page: @page,
           per_page: @per_page,
+          sort_by: @params[:sort_by],
           companies: data_hash(@companies),
           products: data_hash(@products),
           related_tags: {
