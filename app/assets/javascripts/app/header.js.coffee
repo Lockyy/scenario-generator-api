@@ -2,13 +2,14 @@ ready = ->
   hamburgerMenu = $('.menu.hamburger-menu')
 
   showHamburgerMenu = ->
-    resizeHamburgerMenu()
     hamburgerMenu.stop().toggle("slide", { direction: 'right' }, 600, ->
-      hamburgerMenu.on 'clickoutside', (e)->
+      resizeHamburgerMenu()
+      hamburgerMenu.on 'clickoutside', _.throttle((e)->
         if _.include($(e.target).attr('class'), 'myTagSuggestion')
           return
 
         closeHamburgerMenu()
+      )
     )
 
   closeHamburgerMenu = (e)->
@@ -17,12 +18,14 @@ ready = ->
     )
 
   resizeHamburgerMenu = ->
-    hamburgerMenu.height($(document).height())
+    hamburgerMenu.height($(document).height());
 
   resizeHamburgerMenu()
 
-  $('.show-hamburger-menu').on 'click', showHamburgerMenu
-  $('.close-hamburger-menu').on 'click', closeHamburgerMenu
+  $('.show-hamburger-menu').on 'click', _.debounce(showHamburgerMenu, 250)
+  $('.close-hamburger-menu').on 'click', _.debounce(closeHamburgerMenu, 250)
+  hamburgerMenu.on 'click', _.debounce(resizeHamburgerMenu, 250)
+  $(window).on 'resize', _.debounce(resizeHamburgerMenu, 150)
 
 $(document).ready(ready)
 $(document).on('page:load', ready)
