@@ -118,6 +118,7 @@ const TagsManager = React.createClass({
       typeaheadjs: this._getTypeaheadProps()
     });
 
+    $tagsManagerInput.tagsinput('removeAll');
     _.each(this.props.tags, function(tag) {
       $tagsManagerInput.tagsinput('add', tag);
     });
