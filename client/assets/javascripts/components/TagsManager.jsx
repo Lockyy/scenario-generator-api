@@ -14,18 +14,45 @@ const TagsManager = React.createClass({
     }
   },
 
-  _handleAddTags: function _handleAddTags(e) {
-    e.preventDefault();
-
-    let _this = this;
-    let $tagsManagerContainer = $(React.findDOMNode(this.refs.tags_manager_container));
-    let $buttonContainer = $(React.findDOMNode(this.refs.button_container));
+  _hideTagsManager: function _hideTagsManager() {
+    let $tagsManagerContainer = this._getTagsManagerContainer();
+    let $buttonContainer = this._getButtonContainer();
 
     $tagsManagerContainer.addClass('hide');
     $buttonContainer.removeClass('hide');
+  },
 
-    let $tagsManagerInput = $tagsManagerContainer.find('.tags-manager-input');
-    this.props.onSetTags($tagsManagerInput.tagsinput('items'));
+  _showTagsManager: function _hideTagsManager() {
+    let $tagsManagerContainer = this._getTagsManagerContainer();
+    let $buttonContainer = this._getButtonContainer();
+
+    $tagsManagerContainer.removeClass('hide');
+    $buttonContainer.addClass('hide');
+  },
+
+  _getTagsManagerContainer: function _getTagsManagerContainer() {
+    return $(React.findDOMNode(this.refs.tags_manager_container));
+  },
+
+  _getButtonContainer: function _getButtonContainer() {
+    return $(React.findDOMNode(this.refs.button_container));
+  },
+
+  _getTagsManagerInput: function _getTagsManagerInput() {
+    return this._getTagsManagerContainer().find('.tags-manager-input');
+  },
+
+  _handleCancelAddTags: function _handleCancelAddTags(e) {
+    e.preventDefault();
+
+    this._hideTagsManager();
+  },
+
+  _handleAddTags: function _handleAddTags(e) {
+    e.preventDefault();
+
+    this._hideTagsManager();
+    this.props.onSetTags(this._getTagsManagerInput().tagsinput('items'));
   },
 
   _getBloodhoundProps: function _getBloodhoundProps() {
@@ -76,16 +103,11 @@ const TagsManager = React.createClass({
     e.preventDefault();
   },
 
-  _showTagsManager: function _showTagsManager(e) {
+  _enableTagsManager: function _enableTagsManager(e) {
     e.preventDefault();
 
-    let $buttonContainer = $(React.findDOMNode(this.refs.button_container));
-    $buttonContainer.addClass('hide');
-
-    let $tagsManagerContainer = $(React.findDOMNode(this.refs.tags_manager_container));
-    $tagsManagerContainer.removeClass('hide');
-
-    let $tagsManagerInput = $tagsManagerContainer.find('.tags-manager-input');
+    this._showTagsManager();
+    let $tagsManagerInput = this._getTagsManagerInput();
 
     $tagsManagerInput.tagsinput({
       freeInput: true,
@@ -134,7 +156,7 @@ const TagsManager = React.createClass({
         </div>
 
         <div className='button-container' ref='button_container'>
-          <a className="btn btn-white btn-round" type="button" onClick={this._showTagsManager} href="#">
+          <a className="btn btn-white btn-round" type="button" onClick={this._enableTagsManager} href="#">
             {this.props.buttonText}
           </a>
         </div>
@@ -149,7 +171,7 @@ const TagsManager = React.createClass({
             <a className="btn btn-round add" type="button" onClick={this._handleAddTags} href="#">
               Add / Edit
             </a>
-            <a className="btn btn-white btn-round cancel" type="button" href="#">
+            <a className="btn btn-white btn-round cancel" onClick={this._handleCancelAddTags} type="button" href="#">
               Cancel
             </a>
           </div>

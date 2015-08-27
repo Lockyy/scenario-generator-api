@@ -17,6 +17,6 @@ class Fletcher::User::UpdateUserTags
 
   def fetch_tags
     return [] if @tags.nil? || @tags.empty?
-    @tags.collect { |tag| Tag.where(name: tag[:name]).first_or_create }
+    @tags.collect { |tag| Tag.where(name: tag[:name].downcase).first_or_create }
   end
 end
