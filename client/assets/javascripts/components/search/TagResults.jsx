@@ -12,7 +12,7 @@ const TagResults = React.createClass ({
   renderSize: function() {
     if(this.props.showSize) {
       return (
-        <div className='size'>
+        <div className='top-right'>
           { this.props.data.total } result(s) found
         </div>
       )
@@ -29,8 +29,7 @@ const TagResults = React.createClass ({
       return <Tags
         tags={this.getTagNames(data)}
         onClick={this.props.onClick}
-        selected={this.getTagNames(this.props.selected)}
-        />
+        selected={this.getTagNames(this.props.selected)} />
     }else{
       return this.props.emptyResults
     }
@@ -44,7 +43,7 @@ const TagResults = React.createClass ({
       return (
         <div className={`results tags ${this.props.containerClass}`}>
           <div className ='title'>
-            <div className='name'>
+            <div className='top-left'>
               {this.props.title || 'Tags'}
             </div>
             { this.renderSize() }

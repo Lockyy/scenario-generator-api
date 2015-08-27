@@ -67,19 +67,15 @@ const SearchBox = React.createClass ({
           <Results
             type='products'
             data={this.state.data.products}
-            showButton={false}
-            showPagination={false}
-            showTopLink={true}
-            hide={this.state.data.products.total <= 0}
+            topLeft='type'
+            topRight='link'
             containerClass={'header'}
             searchTerm={this.state.data.search_string} />
           <Results
             type='companies'
             data={this.state.data.companies}
-            showButton={false}
-            showPagination={false}
-            showTopLink={true}
-            hide={this.state.data.companies.total <= 0}
+            topLeft='type'
+            topRight='link'
             containerClass={'header'}
             searchTerm={this.state.data.search_string} />
           <TagResults

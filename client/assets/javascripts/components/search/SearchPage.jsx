@@ -55,7 +55,7 @@ const SearchPage = React.createClass({
     this.changePageAndSearch({ section: section });
   },
 
-  changePage: function(page) {
+  onChangePage: function(page) {
     this.changePageAndSearch({ page: page });
   },
 
@@ -111,7 +111,7 @@ const SearchPage = React.createClass({
     return _.merge(_data, this.context.router.state.location.query);
   },
 
-  renderResults: function() {
+  renderAllResults: function() {
     let noResultsTag = <div className='no-results'>We couldn’t find any results for your search.</div>;
     if(this.state.data.total_results == 0 && !this.displaySection('products') &&
       !this.displaySection('companies') &&
@@ -124,42 +124,87 @@ const SearchPage = React.createClass({
         <Results
           type='products'
           data={this.state.data.products}
+          bottom='button'
           searchTerm={this.props.params.search_string}
-          changePage={this.changePage}
-          showButton={this.props.params.section == 'all'}
-          showPagination={this.props.params.section == 'products'}
-          showTopLink={false}
-          showImages={true}
-          hide={!this.displaySection('products')}
-          currentPage={this.props.params.page}
-          section={this.props.params.section}
-          onSetQuery={this.setQuery}
-          emptyResults={noResultsTag}
-            />
+          topLeft='type'
+          topRight='count' />
         <Results
           type='companies'
           data={this.state.data.companies}
+          bottom='button'
           searchTerm={this.props.params.search_string}
-          changePage={this.changePage}
-          showButton={ this.props.params.section == 'all' }
-          showPagination={ this.props.params.section == 'companies' }
-          showTopLink={false}
-          showImages={true}
-          hide={!this.displaySection('companies')}
-          currentPage={this.props.params.page}
-          section={this.props.params.section}
-          emptyResults={noResultsTag}
-            />
+          topLeft='type'
+          topRight='count' />
         <TagResults
           data={this.state.data.tags}
           hide={!this.displaySection('tags')}
           showSize={true}
           searchTerm={this.props.params.search_string}
           section={this.props.params.section}
-          emptyResults={noResultsTag}
-            />
+          emptyResults={noResultsTag} />
       </div>
     )
+  },
+
+  renderProductResults: function() {
+    return (
+      <div className='col-xs-6'>
+        <Results
+          type='products'
+          data={this.state.data.products}
+          bottom='pagination'
+          currentPage={this.props.params.page}
+          topLeft='type'
+          topRight='dropdown'
+          sort_by={this.state.data.sort_by}
+          onChangePage={this.onChangePage}
+          onSetQuery={this.setQuery} />
+      </div>
+    )
+  },
+
+  renderCompanyResults: function() {
+    return (
+      <div className='col-xs-6'>
+        <Results
+          type='companies'
+          data={this.state.data.companies}
+          bottom='pagination'
+          currentPage={this.props.params.page}
+          topLeft='type'
+          topRight='dropdown'
+          sort_by={this.state.data.sort_by}
+          onChangePage={this.onChangePage}
+          onSetQuery={this.setQuery} />
+      </div>
+    )
+  },
+
+  renderTagResults: function() {
+    return (
+      <div className='col-xs-6'>
+        <TagResults
+          data={this.state.data.tags}
+          hide={!this.displaySection('tags')}
+          showSize={true}
+          searchTerm={this.props.params.search_string}
+          section={this.props.params.section}
+          emptyResults={<div className='no-results'>We couldn’t find any results for your search.</div>} />
+      </div>
+    )
+  },
+
+  renderResults: function() {
+    switch(this.props.params.section) {
+      case 'all':
+        return this.renderAllResults()
+      case 'products':
+        return this.renderProductResults()
+      case 'companies':
+        return this.renderCompanyResults()
+      case 'tags':
+        return this.renderTagResults()
+    }
   },
 
   renderFilters: function() {
