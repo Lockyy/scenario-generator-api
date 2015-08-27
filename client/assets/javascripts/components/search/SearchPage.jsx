@@ -63,14 +63,24 @@ const SearchPage = React.createClass({
     return (this.props.params.section == sectionName || this.props.params.section == 'all')
   },
 
-  renderRightBar: function() {
-
+  renderSideLink: function(total, name, displayName) {
     let section = this.props.params.section;
     function build_link_class(name) {
       let active = section == name ? 'active' : '';
       return 'link ' + active;
     }
 
+    if(total || this.name == 'all') {
+      return (
+        <div  className={ build_link_class(name) }
+              onClick={ () => this.changeTab(name) }>
+          { displayName } ({total})
+        </div>
+      )
+    }
+  },
+
+  renderLeftBar: function() {
     let totalProducts = this.state.data.products.total || 0;
     let totalCompanies = this.state.data.companies.total || 0;
     let totalTags = this.state.data.tags.total || 0;
@@ -79,10 +89,10 @@ const SearchPage = React.createClass({
     return (
       <div className='col-xs-3'>
         <div className='links'>
-          <div className={ build_link_class('all') } onClick={ () => this.changeTab('all') }>All ({totalAll})</div>
-          <div className={ build_link_class('products') } onClick={ () => this.changeTab('products') }>Products ({totalProducts})</div>
-          <div className={ build_link_class('companies') } onClick={ () => this.changeTab('companies') }>Companies ({totalCompanies})</div>
-          <div className={ build_link_class('tags') } onClick={ () => this.changeTab('tags') }>Tags ({totalTags})</div>
+          { this.renderSideLink(totalAll, 'all', 'All')}
+          { this.renderSideLink(totalProducts, 'products', 'Products')}
+          { this.renderSideLink(totalCompanies, 'companies', 'Companies')}
+          { this.renderSideLink(totalTags, 'tags', 'Tags')}
         </div>
         <div className='new-product'>
           { "Can't find a product?" }
@@ -257,7 +267,7 @@ const SearchPage = React.createClass({
           </div>
         </div>
         <div className='row'>
-          { this.renderRightBar() }
+          { this.renderLeftBar() }
           { this.renderResults() }
           { this.renderFilters() }
         </div>
