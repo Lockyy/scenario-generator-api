@@ -201,7 +201,7 @@ const Reviews = React.createClass({
     }
   },
 
-  renderSortingDropdown: function() {
+  renderDropdown: function() {
     return (
       <Dropdown
         onClick={this.changeSorting}
@@ -219,7 +219,7 @@ const Reviews = React.createClass({
   render: function() {
     return (
       <div>
-       { this.renderSortingDropdown() }
+       { this.renderDropdown() }
         <div className='row reviews'>
           {this.renderReviews()}
         </div>

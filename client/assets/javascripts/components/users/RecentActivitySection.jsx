@@ -6,7 +6,7 @@ import EditReviewBox from './EditReviewBox';
 import ReviewBox from './ReviewBox';
 import Section from '../Section';
 import SectionRow from '../SectionRow';
-import SortingDropdown from '../SortingDropdown';
+import Dropdown from '../Dropdown';
 
 function sumSizeFunc(item) {
   return item.props.size;
@@ -85,9 +85,9 @@ const RecentActivitySection = React.createClass({
     return this.props.sorting ? this.props.sorting : ReviewConstants.DEFAULT_SORTING;
   },
 
-  renderSortingDropdown: function() {
+  renderDropdown: function() {
     return (
-      <SortingDropdown
+      <Dropdown
         onClick={this.changeSorting}
         active={this.currentSorting()}
         options={{
