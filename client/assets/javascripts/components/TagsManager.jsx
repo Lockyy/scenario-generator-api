@@ -132,8 +132,8 @@ const TagsManager = React.createClass({
       }
     });
 
-    $tagsManagerInput.tagsinput('input').on('keypress', function(e) {
-      if (e.keyCode === 13 || e.keyCode === 44) {
+    $tagsManagerInput.tagsinput('input').keypress(function(e) {
+      if ((e.keyCode === 13 || e.key === 'Enter') || e.keyCode === 44 || e.key === ',') {
         e.preventDefault();
         $tagsManagerInput.tagsinput('add', e.target.value);
         $tagsManagerInput.tagsinput('input').typeahead('close');
