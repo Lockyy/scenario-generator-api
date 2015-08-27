@@ -1,6 +1,6 @@
 import React from 'react'
 import ReviewPageReviewFieldsActions from '../../actions/reviews/ReviewPageReviewFieldsActions'
-import TagsManager from './TagsManager'
+import TagsManager from '../TagsManager'
 
 const ReviewTagsManager = React.createClass({
   getDefaultProps: function getDefaultProps() {

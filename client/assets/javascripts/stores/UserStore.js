@@ -9,6 +9,7 @@ class UserStore {
     this.bindListeners({
       handleFetchData: FluxUserActions.FETCH_DATA,
       handleUpdateData: FluxUserActions.UPDATE_DATA,
+      handleUpdateTags: FluxUserActions.UPDATE_TAGS,
       handleFetchRecentActivity: FluxUserActions.FETCH_RECENT_ACTIVITY,
       handleSetPaginationParams: FluxUserActions.SET_PAGINATION_PARAMS,
       handleRegisterError: FluxUserActions.REGISTER_ERROR
@@ -20,6 +21,11 @@ class UserStore {
   }
 
   handleUpdateData(data) {
+    this.data = data;
+    this.error = null;
+  }
+
+  handleUpdateTags(data) {
     this.data = data;
     this.error = null;
   }

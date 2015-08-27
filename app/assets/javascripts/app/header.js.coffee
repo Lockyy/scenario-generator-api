@@ -4,7 +4,11 @@ ready = ->
   showHamburgerMenu = ->
     resizeHamburgerMenu()
     hamburgerMenu.stop().toggle("slide", { direction: 'right' }, 600, ->
-      hamburgerMenu.on 'clickoutside', closeHamburgerMenu
+      hamburgerMenu.on 'clickoutside', (e)->
+        if _.include($(e.target).attr('class'), 'myTagSuggestion')
+          return
+
+        closeHamburgerMenu()
     )
 
   closeHamburgerMenu = (e)->

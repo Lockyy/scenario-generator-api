@@ -33,6 +33,17 @@ class FluxUserActions {
     this.dispatch(data);
   }
 
+  updateTags(tags) {
+    UserAPI.updateTags(tags,
+      (data) => {
+        this.dispatch(data);
+      },
+      (error) => {
+        this.actions.registerError(error);
+      }
+    );
+  }
+
   registerError(error) {
     this.dispatch(error);
   }

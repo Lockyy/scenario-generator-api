@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resources 'users', only: [:show], defaults: {format: :json} do
       member do
         get 'recent_activity'
+        patch 'tags'
       end
     end
   end

@@ -35,5 +35,21 @@ module.exports = {
         success: resolve
       });
     });
+  },
+
+  updateTags(tags, resolve, reject) {
+    let url = UserConstants.USER_TAGS_UPDATE_URL;
+
+    return new Promise(function() {
+      $.ajax({
+        url: url,
+        data:  JSON.stringify({tags: tags}),
+        method: 'PATCH',
+        dataType: 'json',
+        contentType: 'application/json',
+        success: resolve,
+        error: reject
+      });
+    });
   }
 };

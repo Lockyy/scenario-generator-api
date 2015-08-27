@@ -7,6 +7,7 @@ import UserProfilePage from './components/users/UserProfilePage';
 import ProductPage from './components/products/ProductPage';
 import SearchPage from './components/search/SearchPage';
 import SearchBox from './components/header/SearchBox';
+import MyTags from './components/menu/MyTags';
 import { Router, Route } from 'react-router';
 import { history } from 'react-router/lib/BrowserHistory';
 import UserAPI from './utils/api/UserAPI'
@@ -41,6 +42,10 @@ $(function onLoad() {
                 React.render((
                     <SearchBox router={router} />
                 ), $('.search-container')[0]);
+
+                React.render((
+                    <MyTags router={router} />
+                ), $('.my-tags-container')[0]);
             });
         })
     };

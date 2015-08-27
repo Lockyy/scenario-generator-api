@@ -1,7 +1,5 @@
 import React from 'react'
 import TagsInput from 'bootstrap-tagsinput'
-import ReviewPageReviewFieldsActions from '../../actions/reviews/ReviewPageReviewFieldsActions'
-import TypeAhead from '../TypeAhead'
 import Bloodhound from 'typeahead.js/dist/bloodhound';
 
 const TagsManager = React.createClass({
@@ -11,7 +9,8 @@ const TagsManager = React.createClass({
       placeholder: 'Start typing to add a tag',
       value: '',
       buttonText: 'Add / Edit Tags',
-      onAddTag: function(tag) {}
+      itemClass: 'tagSuggestion',
+      onSetTags: function(tags) {}
     }
   },
 
@@ -43,6 +42,7 @@ const TagsManager = React.createClass({
 
   _getTypeaheadProps: function _getTypeaheadProps() {
     let ds = new Bloodhound(this._getBloodhoundProps());
+    let _this = this;
 
     return _.merge({
       name: 'tags',
@@ -50,7 +50,7 @@ const TagsManager = React.createClass({
       source: ds.ttAdapter(),
       templates: {
         suggestion: function(data) {
-          return `<p>${data.name}</p>`
+          return `<p class='${_this.props.itemClass}'>${data.name}</p>`
         }
       }
     });
@@ -110,7 +110,6 @@ const TagsManager = React.createClass({
     });
 
     $tagsManagerInput.tagsinput('input').on('keypress', function(e) {
-      debugger;
       if (e.keyCode === 13 || e.keyCode === 44) {
         e.preventDefault();
         $tagsManagerInput.tagsinput('add', e.target.value);

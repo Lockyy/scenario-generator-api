@@ -23,6 +23,8 @@ module.exports = {
           type: 'POST',
           url: url,
           data: {helpful: helpful},
+          dataType: 'json',
+          contentType: 'application/json',
           success: resolve
         });
       });
