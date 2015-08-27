@@ -15,7 +15,7 @@ const ReviewBox = React.createClass ({
   getDefaultProps: function getDefaultProps() {
     return {
       size: 1,
-      reviewable: {
+      product: {
         company: {}
       }
     }
@@ -26,7 +26,7 @@ const ReviewBox = React.createClass ({
   },
 
   render: function() {
-    let product = this.props.reviewable;
+    let product = this.props.product;
     let isHalfBox = this.props.size === 0.5 || this.props.size === 0;
     let boxSize = isHalfBox ? 0 : this.props.size;
     let boxClass = `box-${boxSize} no-pic-box`;

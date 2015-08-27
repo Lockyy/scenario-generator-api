@@ -223,6 +223,7 @@ const SearchPage = React.createClass({
     let self = this;
 
     let tagEvent = function(e){
+      debugger;
       let selectedTags = self.state.data.filtered_tags.data;
       let selectedTag = { 'name': e.target.textContent };
       let tagAlreadySelected = _.findWhere(selectedTags, selectedTag);
@@ -239,6 +240,7 @@ const SearchPage = React.createClass({
       let data = self.getSearchParams(_.merge({},self.state.data,{section: self.props.params.section, page: '1'}));
       self.performSearch(data);
     };
+
     let filteredTags = this.state.data.filtered_tags.data;
     return (
       <div id='tag-filter-container' className='col-xs-3'>

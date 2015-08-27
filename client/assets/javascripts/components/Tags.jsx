@@ -44,11 +44,11 @@ const Tags = React.createClass({
     }
   },
 
-  onClick: function(tag) {
+  onClick: function(e) {
     if(this.props.onClick) {
-      this.props.onClick()
+      this.props.onClick(e)
     } else {
-      this.transitionTo(`/app/tags/${tag}/1`);
+      this.transitionTo(`/app/tags/${e.target.value}/1`);
     }
   },
 
@@ -61,7 +61,7 @@ const Tags = React.createClass({
       let tag = tags[i];
       let isSelected = _.includes(selectedTags, tag) ;
       let classes = "tag " + ( isSelected ? 'selected': '');
-      tagTags.push(<span className={classes} onClick={ () => this.onClick(tag) }>{tag}</span>);
+      tagTags.push(<span className={classes} onClick={ (e) => this.onClick(e) }>{tag}</span>);
     }
 
     return <div className={`tags ${this.getContainerName()}`}>{tagTags}</div>;

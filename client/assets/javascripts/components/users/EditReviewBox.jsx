@@ -16,7 +16,7 @@ const EditReviewBox = React.createClass ({
   getDefaultProps: function getDefaultProps() {
     return {
       size: 1,
-      reviewable: {
+      product: {
         company: {}
       }
     }
@@ -27,7 +27,7 @@ const EditReviewBox = React.createClass ({
   },
 
   render: function() {
-    let product = this.props.reviewable;
+    let product = this.props.product;
     let isHalfBox = this.props.size === 0.5 || this.props.size === 0;
     let boxSize = isHalfBox ? 0 : this.props.size;
     let boxClass = `box-${boxSize} no-pic-box`;
@@ -61,7 +61,7 @@ const EditReviewBox = React.createClass ({
           </div>
 
           <div className='footer'>
-            <Link to={`/app/products/${this.props.reviewable.id}/reviews/${this.props.id}`}
+            <Link to={`/app/products/${this.props.product.id}/reviews/${this.props.id}`}
               className='btn btn-round'><span className='icon-edit-review'>Edit</span></Link>
           </div>
         </div>

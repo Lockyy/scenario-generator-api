@@ -109,7 +109,7 @@ const RecentActivitySection = React.createClass({
   render: function() {
     return (
       <Section hasPagination={this.props.items.length >= this.props.cols * this.props.rows}
-        customHeaderTag={this.renderSortingDropdown()} {...this.props} onShowMore={this.onShowMore}>
+        customHeaderTag={this.renderDropdown()} {...this.props} onShowMore={this.onShowMore}>
         {this.props.showMessage ?
           <span className='message'>You can browse or edit your reviews at any time, even add or delete files and images.</span>
           : ''

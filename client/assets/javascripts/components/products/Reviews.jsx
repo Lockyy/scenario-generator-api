@@ -116,7 +116,7 @@ const Reviews = React.createClass({
     let wrotByCurrentUser = this.context.currentUser.id == review.user.id;
 
     let editMyReview =  <div className='edit-review-container'>
-                          <Link to={`/app/products/${review.reviewable.id}/reviews/${review.id}`}
+                          <Link to={`/app/products/${review.product.id}/reviews/${review.id}`}
                                className='btn btn-white btn-round'>Edit my review</Link>
                         </div>;
 

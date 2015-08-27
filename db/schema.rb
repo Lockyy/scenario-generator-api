@@ -132,9 +132,11 @@ ActiveRecord::Schema.define(version: 20150826143300) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string   "slug"
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
+  add_index "tags", ["slug"], name: "index_tags_on_slug", using: :btree
 
   create_table "tags_users", force: :cascade do |t|
     t.integer "user_id"
