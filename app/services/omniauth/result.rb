@@ -16,15 +16,31 @@ module Omniauth
       info.name
     end
 
+    def location
+      info.location
+    end
+
     def avatar_url
-      info.image
+      original_oauth_info.extra.raw_info.mugshot_url_template.gsub(/(\{width\})|(\{height\})/, '150')
     end
 
     def token
       original_oauth_info.credentials.token
     end
 
+    def department
+      raw_info.department
+    end
+
     private
+
+    def raw_info
+      extra.raw_info.nil? ? Hash.new('') : extra.raw_info
+    end
+
+    def extra
+      original_oauth_info.extra.nil? ? Hash.new('') : original_oauth_info.extra
+    end
 
     def info
       original_oauth_info.info.nil? ? Hash.new('') : original_oauth_info.info

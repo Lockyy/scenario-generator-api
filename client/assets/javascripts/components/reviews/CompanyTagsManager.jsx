@@ -1,6 +1,6 @@
 import React from 'react'
 import ReviewPageCompanyFieldsActions from '../../actions/reviews/ReviewPageCompanyFieldsActions'
-import TagsManager from './TagsManager'
+import TagsManager from '../TagsManager'
 
 const CompanyTagsManager = React.createClass({
   getDefaultProps: function getDefaultProps() {
@@ -9,13 +9,13 @@ const CompanyTagsManager = React.createClass({
     }
   },
 
-  _addTag: function _addTag(tag) {
-    ReviewPageCompanyFieldsActions.addTag(tag);
+  _setTags: function _setTags(tags) {
+    ReviewPageCompanyFieldsActions.setTags(tags);
   },
 
   render: function render() {
     return (
-      <TagsManager tags={this.props.tags} name='product[company[tags]]' onAddTag={this._addTag} />
+      <TagsManager tags={this.props.tags} name='product[company[tags]]' onSetTags={this._setTags} />
     );
   }
 });

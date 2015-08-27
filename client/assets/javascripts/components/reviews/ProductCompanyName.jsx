@@ -63,7 +63,7 @@ const ProductCompanyName  = React.createClass({
   },
 
   _onSelectCompany: function _onSelectCompany(company) {
-    this.props.onSetCompany(_.merge({showDetails: false}), company);
+    this.props.onSetCompany(_.merge({showDetails: false}, company));
   },
 
   _hideCreateWhenMatch: function _hideCreateWhenMatch(e) {

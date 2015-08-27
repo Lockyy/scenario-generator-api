@@ -31,10 +31,13 @@ const Dropdown = React.createClass({
 
   render: function() {
     return (
-      <div className={`sort-links ${this.props.containerClass}`}>
-        {this.renderActiveOption()}
-        <div className='dropdown'>
-          {_.map(this.props.options, this.renderSortOption)}
+      <div className='sort-links-container'>
+        <span className='sort-links-label'>Sort by:</span>
+        <div className={`sort-links ${this.props.containerClass}`}>
+          {this.renderActiveOption()}
+          <div className='dropdown'>
+            {_.map(this.props.options, this.renderSortOption)}
+          </div>
         </div>
       </div>
     )

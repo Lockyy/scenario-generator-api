@@ -54,6 +54,15 @@ class ReviewPageCompanyFieldsActions {
       callbacks.success(tag)
     }
   }
+
+  setTags(tags, callbacks) {
+    callbacks = callbacks || {};
+    this.dispatch(tags);
+
+    if (_.isFunction(callbacks.success)) {
+      callbacks.success(tags)
+    }
+  }
 }
 
 export default alt.createActions(ReviewPageCompanyFieldsActions);

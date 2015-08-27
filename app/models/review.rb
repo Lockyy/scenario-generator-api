@@ -18,17 +18,17 @@ class Review < ActiveRecord::Base
   def self.sorted(sort_string)
     case sort_string
     when 'highScore'
-      order(quality_score: :asc)
+      order('quality_score ASC NULLS LAST, id DESC')
     when 'lowScore'
-      order(quality_score: :desc)
+      order('quality_score DESC NULLS LAST, id DESC')
     when 'helpful'
-      order(cached_helpfulness: :desc)
+      order('cached_helpfulness DESC NULLS LAST, id DESC')
     when 'unhelpful'
-      order(cached_helpfulness: :asc)
-    when 'latest'
-      order(created_at: :desc)
-    else
+      order('cached_helpfulness ASC NULLS LAST, id DESC')
+    when 'oldest'
       order(created_at: :asc)
+    else
+      order(created_at: :desc)
     end
   end
 

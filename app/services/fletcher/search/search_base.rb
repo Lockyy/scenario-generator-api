@@ -1,10 +1,11 @@
 module Fletcher
   class Search::SearchBase
-    def initialize(attribute, terms, sort_description, filter_tags)
+    def initialize(attribute, terms, sort_description, filter_tags, match_mode)
       @attribute = attribute
       @terms = terms
       @sort_description = sort_description ? sort_description.to_sym: sort_description
       @filter_tags = filter_tags
+      @match_mode = match_mode || 'any'
       @results = results
     end
 
@@ -20,6 +21,7 @@ module Fletcher
     end
 
     private
+
     def obtain_related_tags(data)
       @related_tags ||= data.map(&:tags).flatten.uniq
     end
@@ -29,7 +31,6 @@ module Fletcher
 
       data.with_tags(filter_tags.map(&:name))
     end
-
 
     def search_by(attribute, terms)
       ((@search_by ||= build_search_by)[attribute]).call(terms)
@@ -48,6 +49,5 @@ module Fletcher
     def build_sort_by
       default_sort_by = Hash.new(lambda { |data| data.order(name: :asc) } ).with_indifferent_access
     end
-
   end
 end

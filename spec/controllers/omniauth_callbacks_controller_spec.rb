@@ -6,8 +6,21 @@ describe OmniauthCallbacksController do
       'omniauth.auth' => Hashie::Mash.new(
         provider: provider,
         uid: uid,
-        info: { email: email, name: name, image: 'http://im.ag/e.jpg' },
-        credentials: { token: '12345678' }
+        info: {
+          email: 'us@fletch.er',
+          name: 'Fl. Etcher',
+          image: 'http://ima.g.es/so.me-img.jpg',
+          location: 'goiania'
+        },
+        credentials: {
+          token: 'r4nd0m7ok3n'
+        },
+        extra: {
+          raw_info: {
+            department: 'awesomeness',
+            mugshot_url_template: 'http://ima.g.es/{width}x{height}/so.me-img.jpg'
+          }
+        }
       )
     }
     allow(@controller).to receive(:env).and_return(env)
@@ -45,7 +58,7 @@ describe OmniauthCallbacksController do
     it 'updates user info' do
       user = User.find_with_oauth(@oauth_hash.provider, @oauth_hash.uid)
 
-      expect(user.avatar_url).to be_eql(@oauth_hash.info.image)
+      expect(user.avatar_url).to be_eql('http://ima.g.es/150x150/so.me-img.jpg')
     end
 
     it 'updates user oauth info' do

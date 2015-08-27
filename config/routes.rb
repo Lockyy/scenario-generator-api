@@ -15,7 +15,13 @@ Rails.application.routes.draw do
     resources :tags, only: [:show]
 
     get 'search', to: 'search#index', as: 'search', defaults: {format: :json}
-    get 'users/current', defaults: {format: :json}
+
+    resources 'users', only: [:show], defaults: {format: :json} do
+      member do
+        get 'recent_activity'
+        patch 'tags'
+      end
+    end
   end
 
   devise_for :users, only: [:omniauth_callbacks], controllers: {omniauth_callbacks: 'omniauth_callbacks'}

@@ -11,6 +11,7 @@ class Product < ActiveRecord::Base
   has_many :links, through: :reviews
   has_many :tags, through: :reviews
   has_one :default_image, class_name: 'Attachment'
+  belongs_to :user
 
   include SearchableByNameAndDescription
   include SearchableByTag
@@ -27,6 +28,10 @@ class Product < ActiveRecord::Base
 
   scope :most_popular, -> do
     order('views desc')
+  end
+
+  scope :with_author, ->(author) do
+    where(user: author)
   end
 
   scope :rating, -> rating_order do
@@ -64,7 +69,7 @@ products.url, company_id, products.views, products.created_at, products.updated_
   end
 
   def author
-    Faker::Name.name
+    user
   end
 
   def short_desc
