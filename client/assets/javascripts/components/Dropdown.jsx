@@ -1,9 +1,9 @@
-import React from 'react/addons';
+import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 
-const SortingDropdown = React.createClass({
-  displayName: 'SortingDropdown',
+const Dropdown = React.createClass({
+  displayName: 'Dropdown',
 
   onClick: function(sortKey) {
     this.props.onClick(sortKey)
@@ -31,16 +31,22 @@ const SortingDropdown = React.createClass({
 
   render: function() {
     return (
-      <div className='sort-links'>
+      <div className={`sort-links ${this.props.containerClass}`}>
         {this.renderActiveOption()}
         <div className='dropdown'>
           {_.map(this.props.options, this.renderSortOption)}
         </div>
       </div>
     )
+  },
+
+  componentDidMount: function() {
+    $('.sort-links').on('clickoutside', function(){
+      $('.sort-links').removeClass('active')
+    })
   }
 
 })
 
-export default SortingDropdown;
+export default Dropdown;
 

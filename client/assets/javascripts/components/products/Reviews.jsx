@@ -7,7 +7,7 @@ import UrlHelper from '../../utils/helpers/UrlHelper'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
 import Tags from '../Tags';
-import SortingDropdown from '../SortingDropdown';
+import Dropdown from '../Dropdown';
 import ReviewConstants from '../../utils/constants/ReviewConstants';
 
 const Reviews = React.createClass({
@@ -184,7 +184,7 @@ const Reviews = React.createClass({
 
   renderSortingDropdown: function() {
     return (
-      <SortingDropdown
+      <Dropdown
         onClick={this.changeSorting}
         active={this.currentSorting()}
         options={{
