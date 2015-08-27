@@ -8,6 +8,7 @@ import ProductPage from './components/products/ProductPage';
 import SearchPage from './components/search/SearchPage';
 import SearchBox from './components/header/SearchBox';
 import MyTags from './components/menu/MyTags';
+import MyRecentActivity from './components/menu/MyRecentActivity';
 import { Router, Route } from 'react-router';
 import { history } from 'react-router/lib/BrowserHistory';
 import UserAPI from './utils/api/UserAPI'
@@ -46,6 +47,10 @@ $(function onLoad() {
                 React.render((
                     <MyTags router={router} />
                 ), $('.my-tags-container')[0]);
+
+                React.render((
+                    <MyRecentActivity router={router} />
+                ), $('.my-recent-activity-container')[0]);
             });
         })
     };

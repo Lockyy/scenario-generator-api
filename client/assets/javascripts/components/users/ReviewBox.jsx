@@ -21,14 +21,9 @@ const ReviewBox = React.createClass ({
     }
   },
 
-  hasPicture: function() {
-    return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image));
-  },
-
   render: function() {
     let product = this.props.reviewable;
-    let isHalfBox = this.props.size === 0.5 || this.props.size === 0;
-    let boxSize = isHalfBox ? 0 : this.props.size;
+    let boxSize = this.props.size;
     let boxClass = `box-${boxSize} no-pic-box`;
     let classes = _.compact(['product', 'review-box', boxClass]).join(' ');
     let company = product.company;
@@ -40,8 +35,8 @@ const ReviewBox = React.createClass ({
           <div className='details'>
             <div className="header">
               <span className='activity-type'>Review added</span>
-              <h3 className='title'><Link to={`/app/products/${product.id}`}>{product.name}</Link></h3>
-              <h4 className='company'><Link to={`/app/companies/${company.id}`} >{company.name}</Link></h4>
+              <h3 className='title'><a href={`/app/products/${product.id}`}>{product.name}</a></h3>
+              <h4 className='company'><a href={`/app/companies/${company.id}`} >{company.name}</a></h4>
             </div>
 
             <div className='review'>

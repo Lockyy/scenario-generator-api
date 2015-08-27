@@ -43,8 +43,8 @@ const EditReviewBox = React.createClass ({
               <span className='activity-type'>
                 Review added {this.props.created_at ? dated('M d')(new Date(this.props.created_at)) : ''}
               </span>
-              <h3 className='title'><Link to={`/app/products/${product.id}`}>{product.name}</Link></h3>
-              <h4 className='company'><Link to={`/app/companies/${company.id}`} >{company.name}</Link></h4>
+              <h3 className='title'><a href={`/app/products/${product.id}`}>{product.name}</a></h3>
+              <h4 className='company'><a href={`/app/companies/${company.id}`} >{company.name}</a></h4>
             </div>
 
             <div className='review'>
@@ -55,14 +55,15 @@ const EditReviewBox = React.createClass ({
 
               <h3 className='review-title'>{this.props.title}</h3>
               <p className='description'>{this.props.quality_review ? _.trunc(this.props.quality_review, 250) :
-                  <span className='message'>Click Edit to add a review</span>}
-                  </p>
+                <span className='message'>Click Edit to add a review</span>}
+              </p>
+
             </div>
           </div>
 
           <div className='footer'>
-            <Link to={`/app/products/${this.props.reviewable.id}/reviews/${this.props.id}`}
-              className='btn btn-round'><span className='icon-edit-review'>Edit</span></Link>
+            <a to={`/app/products/${this.props.reviewable.id}/reviews/${this.props.id}`}
+              className='btn btn-round'><span className='icon-edit-review'>Edit</span></a>
           </div>
         </div>
       </div>
