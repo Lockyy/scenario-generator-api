@@ -4,7 +4,7 @@ class Company < ActiveRecord::Base
 
   has_many :products
   has_many :tag_taggables, as: :taggable
-  has_many :tags, through: :products
+  has_many :tags, through: :tag_taggables
 
   include Avatarable
   include SearchableByNameAndDescription
