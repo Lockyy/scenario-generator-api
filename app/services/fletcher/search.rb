@@ -23,7 +23,7 @@ module Fletcher
           page: @page,
           per_page: @per_page,
           companies: data_hash(@companies),
-          products: product_data_hash(@products),
+          products: data_hash(@products),
           related_tags: {
               total: @related_tags.size,
               data: @related_tags
@@ -70,11 +70,6 @@ module Fletcher
       [:companies, :tags, :products].inject(0) { |sum, type| sum + results[type][:total] }
     end
 
-    def product_data_hash(data)
-      data_size = Product.where("name ilike ?", @params[:search_string]).size
-      build_data_hash(data, data_size)
-    end
-
     def data_hash(data)
       build_data_hash(data, data.size)
     end
@@ -119,7 +114,7 @@ module Fletcher
         @products_related_tags
       elsif section == 'companies'
         @companies_related_tags
-      elsif section == 'tags'
+      elsif section == 'tags' || @params[:search_string].blank?
         []
       else
         (@products_related_tags + @companies_related_tags).uniq
