@@ -208,8 +208,8 @@ const Reviews = React.createClass({
         active={this.currentSorting()}
         options={{
           latest: 'Latest',
-          highScore: 'Score: Low to High',
-          lowScore: 'Score: High to Low',
+          highScore: 'Rating: Low to High',
+          lowScore: 'Rating: High to Low',
           helpful: 'Most Helpful: Low to High',
           unhelpful: 'Most Helpful: High to Low'
         }} />
