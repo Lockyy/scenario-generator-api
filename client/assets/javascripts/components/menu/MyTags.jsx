@@ -38,7 +38,8 @@ const MyTags = React.createClass ({
         <div class='no-content'>Adding tags will update your News Feed with the latest news from the ones you follow</div>
         <div class='content'></div>
 
-        <TagsManager tags={this.state.tags} itemClass='myTagSuggestion' onSetTags={this._updateTags} />
+        <TagsManager tags={this.state.tags} itemClass='myTagSuggestion' tagsinputProperties={{freeInput: false}}
+          onSetTags={this._updateTags} />
       </div>
     )
   }
