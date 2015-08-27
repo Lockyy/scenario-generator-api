@@ -42,6 +42,15 @@ class ReviewPageReviewFieldsActions {
     }
   }
 
+  setTags(tags, callbacks) {
+    callbacks = callbacks || {};
+    this.dispatch(tags);
+
+    if (_.isFunction(callbacks.success)) {
+      callbacks.success(tags)
+    }
+  }
+
   updateQualityScore(score) {
     this.dispatch(score);
   }

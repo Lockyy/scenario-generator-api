@@ -9,13 +9,13 @@ const ReviewTagsManager = React.createClass({
     }
   },
 
-  _addTag: function _addTag(tag) {
-    ReviewPageReviewFieldsActions.addTag(tag);
+  _setTags: function _setTags(tags) {
+    ReviewPageReviewFieldsActions.setTags(tags);
   },
 
   render: function render() {
     return (
-      <TagsManager tags={this.props.tags} name='product[review[tags]]' onAddTag={this._addTag} />
+      <TagsManager tags={this.props.tags} name='product[review[tags]]' onSetTags={this._setTags} />
     );
   }
 });

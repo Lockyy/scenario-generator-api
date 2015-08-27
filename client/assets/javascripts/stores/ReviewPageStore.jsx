@@ -38,6 +38,7 @@ class ReviewPageStore {
       handleUpdateCompanyDescription: ReviewPageCompanyFieldsActions.UPDATE_COMPANY_DESCRIPTION,
       handleUpdateCompanyAvatar: ReviewPageCompanyFieldsActions.UPDATE_COMPANY_AVATAR,
       handleAddCompanyTag: ReviewPageCompanyFieldsActions.ADD_TAG,
+      handleSetCompanyTags: ReviewPageCompanyFieldsActions.SET_TAGS,
       resetDefaultState: FluxReviewPageActions.CLEAR_REVIEW,
       handleFetchReview: FluxReviewPageActions.FETCH_REVIEW,
       handleSetReview: FluxReviewPageActions.SET_REVIEW,
@@ -50,6 +51,7 @@ class ReviewPageStore {
       handleAddFile: ReviewPageReviewFieldsActions.ADD_FILE,
       handleAddLink: ReviewPageReviewFieldsActions.ADD_LINK,
       handleAddTag: ReviewPageReviewFieldsActions.ADD_TAG,
+      handleSetTags: ReviewPageReviewFieldsActions.SET_TAGS,
       handleRegisterError: FluxReviewPageActions.REGISTER_ERROR
     });
   }
@@ -96,6 +98,10 @@ class ReviewPageStore {
 
   handleAddTag(tag) {
     this.review.tags.push(tag);
+  }
+
+  handleSetTags(tags) {
+    this.review.tags = tags;
   }
 
   handleFetchReview(review) {
@@ -157,6 +163,10 @@ class ReviewPageStore {
   handleAddCompanyTag(tag) {
     this.review.product.company.tags = this.review.product.company.tags || [];
     this.review.product.company.tags.push(tag);
+  }
+
+  handleSetCompanyTags(tags) {
+    this.review.product.company.tags = tags;
   }
 
   handleRegisterError(error) {

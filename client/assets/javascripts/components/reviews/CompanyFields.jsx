@@ -67,7 +67,6 @@ const CompanyFields  = React.createClass({
       </div>
 
       <div className='form-group review-tags'>
-        <label htmlFor='product[company[tags]]'>Company Tags</label>
         <CompanyTagsManager tags={this.props.tags} />
       </div>
     </fieldset>);

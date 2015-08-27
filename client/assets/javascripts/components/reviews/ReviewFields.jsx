@@ -76,7 +76,6 @@ const ReviewFields  = React.createClass({
           </div>
 
           <div className='form-group review-tags'>
-            <label htmlFor='product[review[tags]]'>Add / Edit Tags</label>
             <ReviewTagsManager tags={this.props.tags} />
           </div>
         </fieldset>

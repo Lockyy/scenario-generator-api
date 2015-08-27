@@ -97,6 +97,10 @@ const NewReviewPage  = React.createClass({
         newState.review.product.company.id = review.review.product.company.id;
       }
 
+      if (review.review.tags) {
+        newState.review.tags = review.review.tags
+      }
+
       return newState;
     });
 

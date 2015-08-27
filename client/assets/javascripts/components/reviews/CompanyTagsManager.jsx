@@ -9,13 +9,13 @@ const CompanyTagsManager = React.createClass({
     }
   },
 
-  _addTag: function _addTag(tag) {
-    ReviewPageCompanyFieldsActions.addTag(tag);
+  _setTags: function _setTags(tags) {
+    ReviewPageCompanyFieldsActions.setTags(tags);
   },
 
   render: function render() {
     return (
-      <TagsManager tags={this.props.tags} name='product[company[tags]]' onAddTag={this._addTag} />
+      <TagsManager tags={this.props.tags} name='product[company[tags]]' onSetTags={this._setTags} />
     );
   }
 });

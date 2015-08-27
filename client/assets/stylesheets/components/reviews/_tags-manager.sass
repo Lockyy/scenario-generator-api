@@ -1,20 +1,62 @@
 @import 'variables'
 
 .tags-manager
-  .tags.items
-    list-style: none
+  padding: 20px
 
-    li.item.tag
-      display: inline-block
+  .item.tag
+    display: inline-block
+    color: $orange
+    background: $white
+    border: 1px solid $orange
+    margin: 5px
+    border-radius: 2px
+    cursor: pointer
+    border-radius: 0px
+    padding: 5px 15px
+
+  .button-container
+    padding: 20px
+    margin: 10px
+
+  .tags-manager-container
+    padding: 20px
+    margin-top: 20px
+    width: 100%
+
+    .title
+      font-size: 13px
+      font-weight: bold
+      padding-left: 30px
       color: $orange
-      border: 1px solid $orange
-      padding: 3px 0
-      margin: 2px
-      border-radius: 2px
-      cursor: pointer
+      text-transform: uppercase
+      background: image-url('icons/icon-add-tag.svg') no-repeat center left
+      background-size: contain
 
-    &.white
-      .tag
-        color: white
-        border-color: white
-        background-color: $orange
+    .bootstrap-tagsinput
+      margin-top: 20px
+
+      input
+        border: none !important
+        outline: none
+
+      .twitter-typeahead
+        width: auto
+
+        .tt-input
+          margin-top: -10px
+
+    .tag-actions
+      text-align: center
+      padding: 10px
+
+      .btn.btn-round.add
+        margin: 10px
+
+      .btn.btn-white.btn-round.cancel
+        margin: 10px
+        background: $white !important
+        color: $blackish-grey !important
+        border-color: $blackish-grey !important
+
+    .tags-manager-input
+      border: none !important
