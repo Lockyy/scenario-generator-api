@@ -170,7 +170,7 @@ const Reviews = React.createClass({
             { review.price_score ? <PriceRating value={review.price_score} name='rating'/> : '' }
           </div>
           <div className="price-review" dangerouslySetInnerHTML={{__html: review.formatted_price_review}} />
-          <Tags tags={review.tag_list} />
+          <Tags tags={review.tags} />
 
           {this.getReviewActionTag(review)}
         </div>

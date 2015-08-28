@@ -136,7 +136,6 @@ const ProductPage = React.createClass({
   },
 
   renderInfo: function() {
-    let tags = _.map(this.getProductData('tags'), function(tag) { return tag.name });
     let attachments = this.getProductData('attachments');
     let links = this.getProductData('links');
 
@@ -174,7 +173,7 @@ const ProductPage = React.createClass({
         </div>
         <div className='col-xs-3'>
           <Tags
-            tags={tags}
+            tags={this.getProductData('tags')}
             name={this.getProductData('name')}
             link={'#'}
             max={9} />

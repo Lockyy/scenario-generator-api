@@ -37,4 +37,8 @@ class Company < ActiveRecord::Base
   def short_desc
     description.split[0...9].join(' ') if description
   end
+
+  def should_generate_new_friendly_id?
+    true
+  end
 end
