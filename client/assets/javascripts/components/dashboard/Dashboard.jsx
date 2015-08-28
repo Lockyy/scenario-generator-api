@@ -1,11 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
-import Section from './Section';
 import RecentlyAddedSection from './RecentlyAddedSection';
 import MostPopularSection from './MostPopularSection';
-import DashboardStore from '../stores/DashboardStore'
-import DashboardConstants from '../utils/constants/DashboardConstants'
-import FluxDashboardActions from '../actions/FluxDashboardActions'
+import DashboardStore from '../../stores/DashboardStore'
+import DashboardConstants from '../../utils/constants/DashboardConstants'
+import FluxDashboardActions from '../../actions/FluxDashboardActions'
 
 function sumSizeFunc(item) {
   return item.props.size;
