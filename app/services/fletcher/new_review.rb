@@ -57,7 +57,7 @@ module Fletcher
       params.delete(:tags)
       add_avatar_info!(params)
 
-      company = Company.where(name: params['name']).first || Company.new(params)
+      company = ::Company.where(name: params['name']).first || ::Company.new(params)
       company.tags = fetch_tags(company_tags_params)
       company.save!
       company

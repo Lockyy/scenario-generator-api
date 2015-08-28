@@ -7,7 +7,7 @@ module Omniauth
     end
 
     def authenticate!
-      @user ||= User.find_with_oauth(@result.provider, @result.uid)
+      @user ||= ::User.find_with_oauth(@result.provider, @result.uid)
       @user ||= create_user!
       update_info!
     end
@@ -15,7 +15,7 @@ module Omniauth
     private
 
     def create_user!
-      @user = User.create!(name: @result.name, email: @result.email, password: User.generate_password)
+      @user = ::User.create!(name: @result.name, email: @result.email, password: ::User.generate_password)
       @user
     end
 
