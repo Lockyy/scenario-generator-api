@@ -140,13 +140,9 @@ const NewReviewPage  = React.createClass({
 
   render: function render() {
     let info = (<div className='info'>
-      <div className='instructions'>If you can’t ﬁnd the product
-        you are looking for,
-        <p className='more-instructions'>
-          click<i className='add-symbol'> + </i>to quickly add it
-          to Fletcher and then
-          rate and review.
-        </p>
+      <div className='instructions'>
+        If you can't find a product, please select the Add and Review <i className='add-symbol'> + </i>
+       option to add it to the directory before reviewing.
       </div>
     </div>);
 
