@@ -5,6 +5,7 @@ import timeago from 'timeago';
 import dated from 'dated';
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
+import TextHelper from '../../utils/helpers/TextHelper';
 
 const ReviewBox = React.createClass ({
   displayName: 'ReviewBox',
@@ -31,7 +32,7 @@ const ReviewBox = React.createClass ({
     let boxClass = `box-${boxSize} no-pic-box`;
     let classes = _.compact(['product', 'review-box', boxClass]).join(' ');
 
-    let quality_review = _.trunc(this.props.quality_review, {length: 200, separator: ',? +'});
+    let quality_review = TextHelper.truncate(this.props.quality_review);
     let editable = this.props.editable;
 
     let attachments = this.props.attachments.length;
