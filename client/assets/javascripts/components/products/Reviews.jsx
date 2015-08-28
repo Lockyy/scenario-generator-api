@@ -204,8 +204,8 @@ const Reviews = React.createClass({
           latest: 'Latest',
           highScore: 'Rating: Low to High',
           lowScore: 'Rating: High to Low',
-          helpful: 'Most Helpful: Low to High',
-          unhelpful: 'Most Helpful: High to Low'
+          unhelpful: 'Most Helpful: Low to High',
+          helpful: 'Most Helpful: High to Low'
         }} />
     )
   },
