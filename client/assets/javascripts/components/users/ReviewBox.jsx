@@ -32,7 +32,7 @@ const ReviewBox = React.createClass ({
     let boxClass = `box-${boxSize} no-pic-box`;
     let classes = _.compact(['product', 'review-box', boxClass]).join(' ');
 
-    let quality_review = TextHelper.truncate(this.props.quality_review);
+    let quality_review = TextHelper.truncate(this.props.quality_review, 150);
     let editable = this.props.editable;
 
     let attachments = this.props.attachments.length;

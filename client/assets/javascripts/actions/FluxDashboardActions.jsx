@@ -17,11 +17,12 @@ class FluxDashboardActions {
     );
   }
 
-  loadMoreProducts(paginationParams) {
+  loadMoreProducts(paginationParams, success) {
     this.dispatch();
 
     DashboardAPI.getData(
       paginationParams || {}, (data) => {
+        success(data);
         this.actions.showMoreProducts(data);
       }, (error) => {
         this.actions.registerError(error);

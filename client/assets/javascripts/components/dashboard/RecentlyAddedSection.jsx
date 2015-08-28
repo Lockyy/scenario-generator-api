@@ -15,7 +15,8 @@ class RecentlyAddedSection extends React.Component {
 
     this.state = {
       offset: 0,
-      rows: 2
+      rows: 2,
+      hasPagination: true
     };
   }
 
@@ -90,7 +91,7 @@ class RecentlyAddedSection extends React.Component {
   }
 
   render() {
-    return (<Section {...this.props}>
+    return (<Section hasPagination={this.state.hasPagination} {...this.props}>
       <ReactCSSTransitionGroup transitionName="section-row">
         {this.fetchProducts()}
       </ReactCSSTransitionGroup >
