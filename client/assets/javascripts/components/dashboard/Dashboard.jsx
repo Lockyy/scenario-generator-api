@@ -48,8 +48,7 @@ class Dashboard extends React.Component {
     let sectionsToExclude = [
       DashboardConstants.MOST_POPULAR_SECTION,
       DashboardConstants.RECENTLY_ADDED_SECTION,
-      // TODO
-      // DashboardConstants.BASED_ON_TAGS_SECTION
+      DashboardConstants.BASED_ON_TAGS_SECTION
     ];
 
     let sectionToExclude, products, sectionIDs;

@@ -83,13 +83,17 @@ class BasedOnTagsSection extends React.Component {
     });
 
     this.state.offset = items.length;
-    return this.buildRows(items);
+    return items;
+  }
+
+  fetchRows() {
+    return this.buildRows(this.fetchProducts());
   }
 
   render() {
     return (<Section hasPagination={this.state.hasPagination} {...this.props}>
       <ReactCSSTransitionGroup transitionName="section-row">
-        {this.fetchProducts()}
+        {this.fetchRows()}
       </ReactCSSTransitionGroup >
     </Section>);
   }

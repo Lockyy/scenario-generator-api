@@ -87,7 +87,12 @@ class RecentlyAddedSection extends React.Component {
     } while (hasItems && needsItem);
 
     this.state.offset = currentItem;
-    return this.buildRows(products);
+    return products;
+  }
+
+
+  fetchRows() {
+    return this.buildRows(this.fetchProducts());
   }
 
   render() {
