@@ -2,7 +2,6 @@ import React from 'react/addons';
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 import _ from 'lodash';
 import ReviewConstants from '../../utils/constants/ReviewConstants';
-import EditReviewBox from './EditReviewBox';
 import ReviewBox from './ReviewBox';
 import Section from '../Section';
 import SectionRow from '../SectionRow';
@@ -63,9 +62,7 @@ const RecentActivitySection = React.createClass({
     do {
       review = this.props.items[currentItem++];
 
-      let box = this.props.editable ?
-        <EditReviewBox size={this.getCurrentBoxSize(reviews, review)} {...review} /> :
-        <ReviewBox size={this.getCurrentBoxSize(reviews, review)} {...review} />;
+      let box = <ReviewBox size={this.getCurrentBoxSize(reviews, review)} editable={this.props.editable} {...review} />;
 
       reviews.push(box);
 

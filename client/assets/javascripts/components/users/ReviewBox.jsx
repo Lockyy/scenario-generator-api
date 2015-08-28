@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import timeago from 'timeago';
+import dated from 'dated';
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
 
@@ -15,6 +16,7 @@ const ReviewBox = React.createClass ({
   getDefaultProps: function getDefaultProps() {
     return {
       size: 1,
+      editable: false,
       reviewable: {
         company: {}
       }
@@ -27,6 +29,8 @@ const ReviewBox = React.createClass ({
     let boxClass = `box-${boxSize} no-pic-box`;
     let classes = _.compact(['product', 'review-box', boxClass]).join(' ');
     let company = product.company;
+    let quality_review = _.trunc(this.props.quality_review, {lenght: 250, separator: ',?\. +'});
+    let editable = this.props.editable;
 
     return (<div className={classes}>
       <div className='content'>
@@ -34,7 +38,9 @@ const ReviewBox = React.createClass ({
 
           <div className='details'>
             <div className="header">
-              <span className='activity-type'>Review added</span>
+              <span className='activity-type'>
+                Review added {editable && this.props.created_at ? dated('M d')(new Date(this.props.created_at)) : ''}
+              </span>
               <h3 className='title'><a href={`/app/products/${product.id}`}>{product.name}</a></h3>
               <h4 className='company'><a href={`/app/companies/${company.id}`} >{company.name}</a></h4>
             </div>
@@ -46,12 +52,23 @@ const ReviewBox = React.createClass ({
               </div>
 
               <h3 className='title'>{this.props.title}</h3>
-              <p className='description'>{_.trunc(this.props.quality_review, {lenght: 250, separator: ',?\. +'})}</p>
+              <p className='description'>
+                { editable && _.isEmpty(quality_review) ?
+                  <span className='message'>Click Edit to add a review</span> :
+                  quality_review
+                 }
+              </p>
             </div>
           </div>
 
           <div className='footer'>
-            <span className='created_at'>{timeago(this.props.created_at)}</span>
+            {
+              editable ?
+              <a href={`/app/products/${this.props.reviewable.id}/reviews/${this.props.id}`} className='btn btn-round'>
+                <span className='icon-edit-review'>Edit</span>
+              </a> :
+              <span className='created_at'>{timeago(this.props.created_at)}</span>
+            }
           </div>
         </div>
       </div>

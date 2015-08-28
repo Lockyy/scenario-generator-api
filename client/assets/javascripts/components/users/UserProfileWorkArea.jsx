@@ -1,6 +1,5 @@
 import React from 'react';
 import _ from 'lodash';
-import EditReviewBox from './EditReviewBox';
 import RecentActivitySection from './RecentActivitySection';
 
 const UserProfileWorkArea  = React.createClass({

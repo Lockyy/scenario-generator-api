@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import FluxCurrentUserActions from '../../actions/FluxCurrentUserActions'
 import CurrentUserStore from '../../stores/CurrentUserStore'
-import EditReviewBox from '../users/EditReviewBox'
+import ReviewBox from '../users/ReviewBox'
 
 const MyRecentActivity = React.createClass ({
   mixins: [ Navigation ],
@@ -34,7 +34,7 @@ const MyRecentActivity = React.createClass ({
         <ul className='recent_activity'>
           {_.map(this.state.recent_activity, function(activity) {
             return <li className='activity'>
-              <EditReviewBox size={1} {...activity} />
+              <ReviewBox size={1} {...activity} />
              </li>
           })}
         </ul>
