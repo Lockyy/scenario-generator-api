@@ -34,17 +34,14 @@ const CompanyProfilePage  = React.createClass({
   },
 
   onChange(data) {
-    this.setState(function(oldData) {
-      data: _.merge(oldData, data.data, function(a, b) {
-        if (_.isArray(a)) { return a.concat(b) }
-      })
-    });
+    this.setState(data.data);
   },
 
   defaultProps: function defaultProps() {
     return {
       products: [],
-      tags: []
+      tags: [],
+      freeInput: false
     }
   }
 });
