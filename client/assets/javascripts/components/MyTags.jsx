@@ -17,6 +17,7 @@ const MyTags = React.createClass ({
       title: 'My tags',
       showMessage: false,
       message: 'Adding tags will update your News Feed with the latest news from the ones you follow',
+      freeInput: false,
       store: {listen: function() {}},
       onUpdateTags: function(tags) {}
     }

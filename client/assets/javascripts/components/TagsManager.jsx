@@ -15,28 +15,46 @@ const TagsManager = React.createClass({
     }
   },
 
+  _hideButtonContainer: function _hideButtonContainer() {
+    let $buttonContainer = this._getButtonContainer();
+    $buttonContainer.addClass('hide');
+  },
+
+  _showButtonContainer: function _showButtonContainer() {
+    let $buttonContainer = this._getButtonContainer();
+    $buttonContainer.removeClass('hide');
+  },
+
+  _hideTagsItems: function _hideTagsItems() {
+    let $tagsItems = this._getTagsItems();
+    $tagsItems.addClass('hide');
+  },
+
+  _showTagsItems: function _showTagsItems() {
+    let $tagsItemsContainer = this._getTagsItems();
+    $tagsItemsContainer.removeClass('hide');
+  },
+
   _hideTagsManager: function _hideTagsManager() {
     let $tagsManagerContainer = this._getTagsManagerContainer();
-    let $buttonContainer = this._getButtonContainer();
-
     $tagsManagerContainer.addClass('hide');
-    $buttonContainer.removeClass('hide');
   },
 
   _showTagsManager: function _hideTagsManager() {
     let $tagsManagerContainer = this._getTagsManagerContainer();
-    let $buttonContainer = this._getButtonContainer();
-
     $tagsManagerContainer.removeClass('hide');
-    $buttonContainer.addClass('hide');
+  },
+
+  _getButtonContainer: function _getButtonContainer() {
+    return $(React.findDOMNode(this.refs.button_container));
   },
 
   _getTagsManagerContainer: function _getTagsManagerContainer() {
     return $(React.findDOMNode(this.refs.tags_manager_container));
   },
 
-  _getButtonContainer: function _getButtonContainer() {
-    return $(React.findDOMNode(this.refs.button_container));
+  _getTagsItems: function _getTagsItems() {
+    return $(React.findDOMNode(this.refs.tags));
   },
 
   _getTagsManagerInput: function _getTagsManagerInput() {
@@ -49,10 +67,7 @@ const TagsManager = React.createClass({
     this._hideTagsManager();
   },
 
-  _handleAddTags: function _handleAddTags(e) {
-    e.preventDefault();
-
-    this._hideTagsManager();
+  _handleAddTags: function _handleAddTags() {
     this.props.onSetTags(this._getTagsManagerInput().tagsinput('items'));
   },
 
@@ -105,11 +120,13 @@ const TagsManager = React.createClass({
     let _this = this;
 
     this._showTagsManager();
+    this._hideTagsItems();
+    this._hideButtonContainer();
+
     let $tagsManagerInput = this._getTagsManagerInput();
 
     $tagsManagerInput.tagsinput(this._getTagsinputProperties());
 
-    $tagsManagerInput.tagsinput('removeAll');
     _.each(this.props.tags, function(tag) {
       $tagsManagerInput.tagsinput('add', tag);
     });
@@ -119,22 +136,36 @@ const TagsManager = React.createClass({
         e.cancel = true;
 
         if (_this._getTagsinputProperties().freeInput) {
-          $tagsManagerInput.tagsinput('add', { name: e.item });
+          $tagsManagerInput.tagsinput('add', { name: e.item.toLowerCase() });
           $tagsManagerInput.tagsinput('input').typeahead('close');
           $tagsManagerInput.tagsinput('input').typeahead('val', '');
         }
       }
     });
 
+    $tagsManagerInput.on('itemAdded', function(e) {
+      _this._handleAddTags();
+    });
+
+    $tagsManagerInput.on('itemRemoved', function(e) {
+      _this._handleAddTags();
+    });
+
     $tagsManagerInput.tagsinput('input').keypress(function(e) {
-      if ((e.keyCode === 13 || e.key === 'Enter') || (e.keyCode === 44 || e.key === ',')) {
+      if (e.keyCode === 13 || e.key === 'Enter') {
         e.preventDefault();
         $tagsManagerInput.tagsinput('add', e.target.value);
         $tagsManagerInput.tagsinput('input').typeahead('close');
       }
     });
 
-    $tagsManagerInput.tagsinput('focus')
+    $tagsManagerInput.tagsinput('input').on('blur', function(e) {
+      _this._hideTagsManager();
+      _this._showTagsItems();
+      _this._showButtonContainer();
+    });
+
+    $tagsManagerInput.tagsinput('focus');
   },
 
   render: function render() {
@@ -163,15 +194,6 @@ const TagsManager = React.createClass({
 
           <input type='text' className='form-control tags-manager-input' placeholder={this.props.placeholder}
             required />
-
-          <div className='tag-actions'>
-            <a className="btn btn-round add" type="button" onClick={this._handleAddTags} href="#">
-              Save
-            </a>
-            <a className="btn btn-white btn-round cancel" onClick={this._handleCancelAddTags} type="button" href="#">
-              Cancel
-            </a>
-          </div>
         </div>
       </div>
     );
