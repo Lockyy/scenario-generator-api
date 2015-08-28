@@ -14,6 +14,11 @@ function sumSizeFunc(item) {
 const RecentActivitySection = React.createClass({
   displayName: 'RecentActivitySection',
 
+  contextTypes: {
+    router: React.PropTypes.object,
+    currentUser: React.PropTypes.object
+  },
+
   getCurrentBoxSize: function(reviews, review) {
     return 1;
   },

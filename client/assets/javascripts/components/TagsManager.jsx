@@ -138,8 +138,10 @@ const TagsManager = React.createClass({
   },
 
   render: function render() {
+    let className = this.props.className || '';
+
     return (
-      <div className='tags-manager items-manager'>
+      <div className={`tags-manager items-manager ${className}`}>
         <div className='tags items' ref='tags'>
           {_.map(this.props.tags, function(tag) {
             let id = Math.floor((Math.random() * 1000000) + 1);
