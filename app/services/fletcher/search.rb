@@ -71,7 +71,7 @@ module Fletcher
     end
 
     def data_hash(data)
-      build_data_hash(data, data.count)
+      build_data_hash(data, data.length)
     end
 
     def build_data_hash(data, data_size)
