@@ -67,7 +67,7 @@ class RecentActivitySection extends React.Component {
     do {
       item = this.props.items[currentItem++];
       activity.push(<ReviewBox size={this.getCurrentBoxSize(activity, item)} {...item}
-        onFormatActivityType={this.formatActivityType} />);
+        onFormatActivityType={this.formatActivityType} showReadMore={true} />);
 
       hasItems = this.props.items.length > currentItem;
       sumItems = activity.length;

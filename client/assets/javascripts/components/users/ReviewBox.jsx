@@ -18,7 +18,7 @@ const ReviewBox = React.createClass ({
     return {
       size: 1,
       editable: false,
-      showReadMore: true,
+      showReadMore: false,
       reviewable: {
         company: {}
       }
