@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import  Section from '../Section'
-import  TagsBox from '../TagsBox'
+import  CompanyTags from './CompanyTags'
 import  SectionRow from '../SectionRow'
 import  ProductBox from '../ProductBox'
 import  FluxReviewPageActions from '../../actions/FluxReviewPageActions'
@@ -15,7 +15,9 @@ const CompanyProfileHeader  = React.createClass({
 
   _getMobileVersion: function(){
     let products = this._getFormatedProducts();
-    let tags = this._getTags();
+    let tags = this.props.tags;
+
+    if (_.isUndefined(this.props.id) ) return <div/>;
 
     return(
       <div className='mobile-version'>
@@ -42,7 +44,7 @@ const CompanyProfileHeader  = React.createClass({
         </div>
 
         <Section hasPagination={false} title={"Tags (" + tags.length + ")"}>
-            <TagsBox tags={tags} max={tags.length} rows={1} cols={4}/>
+          <CompanyTags tags={tags} id={this.props.id} />
         </Section>
 
         <Section hasPagination={false} rows={1} cols={4} title={"Products (" + products.length + ")"}>
@@ -55,9 +57,11 @@ const CompanyProfileHeader  = React.createClass({
 
   _getDesktopVersion: function(){
     let products = this._getFormatedProducts();
-    let tags = this._getTags();
+    let tags = this.props.tags;
 
-      return(
+    if (_.isUndefined(this.props.id) ) return <div/>;
+
+    return(
       <div className='desktop-version'>
         <div className='row'>
 
@@ -82,11 +86,8 @@ const CompanyProfileHeader  = React.createClass({
 
           <div className="tag-group">
             <div className="tags-container">
-              <TagsBox tags={tags} max={tags.length} rows={1} cols={4}/>
+              <CompanyTags tags={tags} id={this.props.id} />
             </div>
-
-            <button  className="add-edit-tag-btn btn btn-default btn-round" type="button">ADD / EDIT TAGS</button>
-
           </div>
 
         </div>
@@ -97,12 +98,6 @@ const CompanyProfileHeader  = React.createClass({
 
     </div>
     )
-  },
-
-  _getTags: function(){
-    return _.collect(this.props.tags, function(tag){
-      return tag.name;
-    });
   },
 
   _getFormatedProducts: function(){

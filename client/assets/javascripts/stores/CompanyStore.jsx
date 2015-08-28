@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import alt from '../FluxAlt';
 import FluxCompanyActions from '../actions/FluxCompanyActions'
 
@@ -9,6 +10,7 @@ class CompanyStore {
     this.bindListeners({
       handleFetchData: FluxCompanyActions.FETCH_DATA,
       handleUpdateData: FluxCompanyActions.UPDATE_DATA,
+      handleUpdateCompanyTags: FluxCompanyActions.UPDATE_COMPANY_TAGS,
       handleRegisterError: FluxCompanyActions.REGISTER_ERROR
     });
   }
@@ -20,6 +22,10 @@ class CompanyStore {
   handleUpdateData(data) {
     this.data = data;
     this.error = null;
+  }
+
+  handleUpdateCompanyTags(data) {
+    this.data = data;
   }
 
   handleRegisterError(error) {

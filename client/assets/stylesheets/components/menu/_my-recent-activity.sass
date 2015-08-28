@@ -1,0 +1,71 @@
+@import 'variables'
+
+.my-recent-activity-container
+  .my-recent-activity
+    .recent_activity
+      list-style: none
+      -webkit-padding-start: 0
+
+      .activity
+        @extend .row
+
+        .product.review-box.box-1.no-pic-box
+          width: 100%
+          padding: 0
+
+          .content
+            display: block
+            background: none
+            border: none
+            height: auto
+            margin: 0
+
+            .data
+              padding: 0
+              display: block
+
+              .details
+                .header
+                  margin-bottom: 0
+
+                  .activity-type
+                    color: $color-darkgrey
+                    font-size: 15px
+                    padding-left: 25px
+                    background: no-repeat left center
+                    background-image: img-url('icons/icon-review-grey.svg')
+                    background-size: contain
+                    margin-bottom: 20px
+                    display: block
+
+                  .title, .company
+                    padding-left: 20px
+
+                .review
+                  margin-top: 5px
+                  display: block
+                  height: auto
+                  padding-left: 20px
+
+                  .rating
+                    display: block
+                    width: 100%
+
+                    &::after
+                      content: ' '
+                      clear: both
+
+                    .rating-container.price
+                      display: none
+
+                  .description
+                    height: auto
+
+                    .message
+                      display: none
+
+              .footer
+                display: none
+
+    .link-view-all
+      color: $primary-red

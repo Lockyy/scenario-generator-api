@@ -1,0 +1,83 @@
+@import 'variables'
+@import 'common'
+
+.product.review-box
+  .content
+    display: block
+
+    .data
+      display: block
+
+      .header
+        border: none !important
+        margin-bottom: 10px
+
+        .activity-type
+          color: $color-darkgrey
+          font-size: 15px
+          padding-left: 25px
+          background: no-repeat left center
+          background-image: img-url('icons/icon-review-grey.svg')
+          background-size: contain
+          margin-bottom: 20px
+          display: block
+
+        .title
+          white-space: nowrap
+          overflow: hidden
+          text-overflow: ellipsis
+
+      .review
+        display: block !important
+        color: $blackish-grey
+        margin: 0
+        height: auto
+
+        .rating
+          display: block
+          margin-bottom: 10px
+
+          .rating-container
+            display: inline-block
+
+          .rating-container.price
+            float: right
+
+            &:after
+              content: ' '
+              clear: right
+
+        .description
+          max-height: none
+          height: auto
+
+        .item
+          font-size: 12px
+          margin: 5px 0
+          color: $color-darkgrey
+          padding-left: 25px
+          background: no-repeat left center
+          background-size: contain
+
+          &.attachments
+            margin-left: 5px
+            padding-left: 20px
+            background-image: img-url('icons/attachment-red.svg')
+
+          &.links
+            background-image: img-url('icons/link-red.svg')
+
+          &.tags
+            background-image: img-url('icons/icon-tags-red.svg')
+
+      .footer
+        display: block
+        position: absolute
+        bottom: 0
+        margin: 0 auto
+        width: 90%
+        font-size: 13px
+
+        .created_at
+          display: block
+          text-align: right

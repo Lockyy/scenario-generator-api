@@ -91,9 +91,9 @@ const ProductPage = React.createClass({
 
   reviewButtonText: function() {
     if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
-      return 'Update Review'
+      return 'Edit My Review'
     } else {
-      return 'Add a Review'
+      return 'Review this Product'
     }
   },
 
@@ -169,8 +169,7 @@ const ProductPage = React.createClass({
               {UrlHelper.addProtocol(this.getProductData('url'))}
             </a>
           </div>
-          <div className='description'>
-            {this.getProductData('description')}
+          <div className='description' dangerouslySetInnerHTML={{__html: this.getProductData('formatted_description')}}>
           </div>
         </div>
         <div className='col-xs-3'>

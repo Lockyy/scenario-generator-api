@@ -3,6 +3,7 @@ json.(product,  :id, :name, :description, :image, :rating, :url,
                 :tags, :price, :created_at, :updated_at, :author,
                 :views, :default_image, :short_desc, :links, :slug)
 
+json.formatted_description (product.description.nil? or product.description.empty?) ? "" : simple_format(product.description)
 json.review(product.reviews.find_by(user: current_user), :id) if product.reviews.find_by(user: current_user)
 
 json.attachments product.attachments, :id, :attachable_id, :attachable_type, :url, :name, :content_type, :size, :created_at,

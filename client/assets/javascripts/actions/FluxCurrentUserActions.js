@@ -2,7 +2,7 @@ import alt from '../FluxAlt';
 import _ from 'lodash';
 import UserAPI from '../utils/api/UserAPI';
 
-class FluxUserActions {
+class FluxCurrentUserActions {
   fetchData(id) {
     UserAPI.getUser(id,
       (data) => {
@@ -17,12 +17,16 @@ class FluxUserActions {
   fetchRecentActivity(id, paginationParams) {
     UserAPI.getUserRecentActivity(id, paginationParams,
       (data) => {
-        this.dispatch(_.merge(data, paginationParams));
+        this.dispatch(data);
       },
       (error) => {
         this.actions.registerError(error);
       }
     );
+  }
+
+  setPaginationParams(paginationParams) {
+    this.dispatch(paginationParams);
   }
 
   updateData(data) {
@@ -45,4 +49,4 @@ class FluxUserActions {
   }
 }
 
-export default alt.createActions(FluxUserActions);
+export default alt.createActions(FluxCurrentUserActions);

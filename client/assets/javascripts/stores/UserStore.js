@@ -11,7 +11,6 @@ class UserStore {
       handleUpdateData: FluxUserActions.UPDATE_DATA,
       handleUpdateTags: FluxUserActions.UPDATE_TAGS,
       handleFetchRecentActivity: FluxUserActions.FETCH_RECENT_ACTIVITY,
-      handleSetPaginationParams: FluxUserActions.SET_PAGINATION_PARAMS,
       handleRegisterError: FluxUserActions.REGISTER_ERROR
     });
   }
@@ -31,11 +30,10 @@ class UserStore {
   }
 
   handleFetchRecentActivity(data) {
+    this.data.sort_by = data.sort_by;
+    this.data.page = data.page;
+    this.data.per_page = data.per_page;
     this.data.recent_activity = data.recent_activity;
-  }
-
-  handleSetPaginationParams(paginationParams) {
-    _.merge(this.data, paginationParams);
   }
 
   handleRegisterError(error) {

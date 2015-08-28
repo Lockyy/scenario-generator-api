@@ -47,6 +47,7 @@ class Section extends React.Component {
     let itemClasses = _.compact(['items', this.props.itemsClass]).join(' ');
     let sectionClass = this.props.title.toLowerCase().replace(/\s+/g, '-');
     let sectionClasses = _.compact(['section', sectionClass]).join(' ');
+    sectionClasses = `${sectionClasses} ${this.props.containerClass || ''}`;
 
     return (<div className={sectionClasses}>
       <div className='header'>
@@ -77,6 +78,7 @@ Section.propTypes = {
   cols: React.PropTypes.number.isRequired,
   rows: React.PropTypes.number.isRequired,
   title: React.PropTypes.string.isRequired,
+  containerClass: React.PropTypes.string,
   itemsClass: React.PropTypes.string,
   hasPagination: React.PropTypes.bool,
   onShowMore: React.PropTypes.func

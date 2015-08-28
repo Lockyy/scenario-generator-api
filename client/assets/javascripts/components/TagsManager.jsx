@@ -10,6 +10,7 @@ const TagsManager = React.createClass({
       value: '',
       buttonText: 'Add / Edit Tags',
       itemClass: 'tagSuggestion',
+      tagsinputProperties: {},
       onSetTags: function(tags) {}
     }
   },
@@ -83,20 +84,15 @@ const TagsManager = React.createClass({
     });
   },
 
-  _hideCreateWhenMatch: function _hideCreateWhenMatch(e) {
-    let typeahead = $(e.target);
-    typeahead.on("typeahead:render", function() {
-      if (arguments.length < 2) return;
-
-      let suggestions = _.takeRight(arguments, arguments.length - 1);
-      let isSuggested = _.filter(suggestions, function(suggestion) {
-        return suggestion.name && typeahead.val() && suggestion.name.toLowerCase() == typeahead.val().toLowerCase()
-      }).length > 0
-
-      if (isSuggested) {
-        typeahead.siblings('.tt-menu').find('.tt-empty').hide()
-      }
-    });
+  _getTagsinputProperties: function _getTagsinputProperties() {
+    return _.merge({
+      itemValue: function(item) { return item.name },
+      itemText: function(item) { return item.name },
+      freeInput: true,
+      tagClass: 'item tag',
+      trimValue: true,
+      typeaheadjs: this._getTypeaheadProps()
+    }, this.props.tagsinputProperties);
   },
 
   _onPressEnter: function _onPressEnter(e) {
@@ -106,17 +102,12 @@ const TagsManager = React.createClass({
   _enableTagsManager: function _enableTagsManager(e) {
     e.preventDefault();
 
+    let _this = this;
+
     this._showTagsManager();
     let $tagsManagerInput = this._getTagsManagerInput();
 
-    $tagsManagerInput.tagsinput({
-      freeInput: true,
-      itemValue: function(item) { return item.name },
-      itemText: function(item) { return item.name },
-      tagClass: 'item tag',
-      trimValue: true,
-      typeaheadjs: this._getTypeaheadProps()
-    });
+    $tagsManagerInput.tagsinput(this._getTagsinputProperties());
 
     $tagsManagerInput.tagsinput('removeAll');
     _.each(this.props.tags, function(tag) {
@@ -126,14 +117,17 @@ const TagsManager = React.createClass({
     $tagsManagerInput.on('beforeItemAdd', function(e) {
       if (_.isString(e.item)) {
         e.cancel = true;
-        $tagsManagerInput.tagsinput('add', { name: e.item });
-        $tagsManagerInput.tagsinput('input').typeahead('close');
-        $tagsManagerInput.tagsinput('input').typeahead('val', '');
+
+        if (_this._getTagsinputProperties().freeInput) {
+          $tagsManagerInput.tagsinput('add', { name: e.item });
+          $tagsManagerInput.tagsinput('input').typeahead('close');
+          $tagsManagerInput.tagsinput('input').typeahead('val', '');
+        }
       }
     });
 
     $tagsManagerInput.tagsinput('input').keypress(function(e) {
-      if ((e.keyCode === 13 || e.key === 'Enter') || e.keyCode === 44 || e.key === ',') {
+      if ((e.keyCode === 13 || e.key === 'Enter') || (e.keyCode === 44 || e.key === ',')) {
         e.preventDefault();
         $tagsManagerInput.tagsinput('add', e.target.value);
         $tagsManagerInput.tagsinput('input').typeahead('close');
@@ -144,8 +138,10 @@ const TagsManager = React.createClass({
   },
 
   render: function render() {
+    let className = this.props.className || '';
+
     return (
-      <div className='tags-manager items-manager'>
+      <div className={`tags-manager items-manager ${className}`}>
         <div className='tags items' ref='tags'>
           {_.map(this.props.tags, function(tag) {
             let id = Math.floor((Math.random() * 1000000) + 1);
@@ -170,7 +166,7 @@ const TagsManager = React.createClass({
 
           <div className='tag-actions'>
             <a className="btn btn-round add" type="button" onClick={this._handleAddTags} href="#">
-              Add / Edit
+              Save
             </a>
             <a className="btn btn-white btn-round cancel" onClick={this._handleCancelAddTags} type="button" href="#">
               Cancel

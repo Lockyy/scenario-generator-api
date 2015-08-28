@@ -8,24 +8,19 @@
       "resolved": "https://registry.npmjs.org/Faker/-/Faker-0.7.2.tgz"
     },
     "alt": {
-      "version": "0.16.5",
-      "from": "https://registry.npmjs.org/alt/-/alt-0.16.5.tgz",
-      "resolved": "https://registry.npmjs.org/alt/-/alt-0.16.5.tgz",
+      "version": "0.17.1",
+      "from": "alt@^0.17.1",
+      "resolved": "https://registry.npmjs.org/alt/-/alt-0.17.1.tgz",
       "dependencies": {
-        "es-symbol": {
-          "version": "1.1.2",
-          "from": "https://registry.npmjs.org/es-symbol/-/es-symbol-1.1.2.tgz",
-          "resolved": "https://registry.npmjs.org/es-symbol/-/es-symbol-1.1.2.tgz"
-        },
-        "eventemitter3": {
-          "version": "0.1.6",
-          "from": "https://registry.npmjs.org/eventemitter3/-/eventemitter3-0.1.6.tgz",
-          "resolved": "https://registry.npmjs.org/eventemitter3/-/eventemitter3-0.1.6.tgz"
-        },
         "flux": {
           "version": "2.0.3",
-          "from": "https://registry.npmjs.org/flux/-/flux-2.0.3.tgz",
+          "from": "flux@2.0.3",
           "resolved": "https://registry.npmjs.org/flux/-/flux-2.0.3.tgz"
+        },
+        "transmitter": {
+          "version": "1.0.2",
+          "from": "transmitter@1.0.2",
+          "resolved": "https://registry.npmjs.org/transmitter/-/transmitter-1.0.2.tgz"
         }
       }
     },

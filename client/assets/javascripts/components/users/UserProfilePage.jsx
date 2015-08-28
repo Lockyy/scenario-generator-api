@@ -22,8 +22,7 @@ const UserProfilePage  = React.createClass({
       name: '',
       avatar_url: '',
       job_title: '',
-      sort_by: 'latest',
-      per_page: 4
+      sort_by: 'latest'
     }
   },
 
@@ -35,8 +34,18 @@ const UserProfilePage  = React.createClass({
 
   onChange(data) {
     this.setState(function(oldData) {
-      let newData = _.merge({}, oldData, data.data);
-      newData.recent_activity = data.data.recent_activity
+      let newData = _.merge({}, oldData, data.data, function(a, b) {
+        if (_.isArray(a)) {
+          return _.unique(a.concat(b), function(obj) {
+            return (typeof a[0] === 'object') ? obj.id : obj;
+          })
+        }
+      });
+
+      if (data.data.sort_by && data.data.sort_by != oldData.sort_by ) {
+        newData.recent_activity = data.data.recent_activity
+      }
+
       return newData;
     });
   },
@@ -46,18 +55,16 @@ const UserProfilePage  = React.createClass({
   },
 
   getPaginationParams: function getPaginationParams() {
-    return { sort_by: this.state.sort_by, per_page: this.state.per_page[this.state.sort_by] };
+    return { sort_by: this.state.sort_by, per_page: this.state.per_page };
   },
 
   onChangeReviewsSorting: function onChangeReviewsSorting(sort_by) {
-    let paginationParams = _.merge(this.getPaginationParams(), {sort_by: sort_by});
-    FluxUserActions.setPaginationParams(paginationParams);
+    let paginationParams = _.merge(this.getPaginationParams(), {sort_by: sort_by, page: 1});
     FluxUserActions.fetchRecentActivity(this.context.router.state.params.userId, paginationParams);
   },
 
-  onShowMoreReviews: function onShowMoreReviews(per_page) {
-    let paginationParams = _.merge(this.getPaginationParams(), {per_page: per_page});
-    FluxUserActions.setPaginationParams(paginationParams);
+  onShowMoreReviews: function onShowMoreReviews(page, per_page) {
+    let paginationParams = _.merge(this.getPaginationParams(), {page: page, per_page: per_page});
     FluxUserActions.fetchRecentActivity(this.context.router.state.params.userId, paginationParams);
   },
 

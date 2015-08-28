@@ -25,7 +25,7 @@ const UserProfileRecentActivity  = React.createClass({
 
   render: function render() {
     let cols = 4;
-    let rows = Math.ceil((this.props.recent_activity.length ? this.props.recent_activity.length : cols) / cols);
+    let rows = this.props.page;
 
     return (
       <div id='recent-activity'>

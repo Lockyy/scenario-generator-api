@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import timeago from 'timeago';
+import TextHelper from '../utils/helpers/TextHelper';
 import AutoFitPicture from './AutoFitPicture';
 import Rating from './Rating';
 
@@ -27,6 +28,7 @@ const ProductBox = React.createClass ({
     }
     let classes = _.compact(['product', boxClass]).join(' ');
     let company = this.props.company;
+    let description = TextHelper.truncate(this.props.description);
 
     return (<div className={classes}>
       <div className='content'>
@@ -43,7 +45,7 @@ const ProductBox = React.createClass ({
               <span className='reviews'>{this.props.reviews.length} review(s)</span>
             </div>
 
-            <p className='description'>{this.props.description}</p>
+            <p className='description'>{description}</p>
           </div>
 
           <div className='footer'>

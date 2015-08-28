@@ -4,17 +4,29 @@ import CompanyAPI from '../utils/api/CompanyAPI';
 
 class FluxCompanyActions {
   fetchData(paginationParams) {
-    this.dispatch();
+    let _this = this;
+    _this.dispatch();
 
     CompanyAPI.getData(
       paginationParams || {},
       (data) => {
-        this.actions.updateData(data);
+        _this.actions.updateData(data);
       },
       (error) => {
-        this.actions.registerError(error);
+        _this.actions.registerError(error);
       }
     );
+  }
+
+  updateCompanyTags(id, tags) {
+    let _this = this;
+
+    CompanyAPI.updateTags(id, tags,
+      function(data) {
+        _this.dispatch(data);
+      }, function(error) {
+        _this.actions.registerError(error);
+      });
   }
 
   updateData(data) {

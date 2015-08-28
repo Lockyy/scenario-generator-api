@@ -122,38 +122,6 @@ $color-blackcharcoal: #3c3c3b
           font-size: $default-font-size + 5px
           font-weight: normal
 
-
-
-  .product.review-box
-    .header
-      border: none
-      margin-bottom: 20px
-
-      .activity-type
-        color: $color-darkgrey
-        font-size: 15px
-        padding-left: 25px
-        background: no-repeat left center
-        background-image: img-url('icons/icon-review-grey.svg')
-        background-size: contain
-        margin-bottom: 20px
-        display: block
-
-    .review
-      display: block
-      color: $blackish-grey
-
-      .rating
-        display: flex
-        justify-content: space-between
-        margin-bottom: 20px
-
-    .footer
-      display: block
-      .created_at
-        display: block
-        text-align: right
-
   #work-area
     margin-top: 60px
     border-top: solid 2px $color-darkred
@@ -165,10 +133,15 @@ $color-blackcharcoal: #3c3c3b
       text-transform: uppercase
 
       .sidebar-element
+        display: block
         padding: 20px 0 20px 40px
         border-bottom: 1px solid $grey
         background: no-repeat center left
         background-size: 30px
+        color: $blackish-grey
+
+        &.active, &:hover
+          color: $primary-red
 
         &.reviews
           background-image: img-url('icons/icon-review-grey.svg')
@@ -201,11 +174,24 @@ $color-blackcharcoal: #3c3c3b
       padding: 0
       padding-left: 20px
 
+      .message
+        font-style: italic
+        color: $dark-grey
+        margin-bottom: 20px
+        display: block
+
+
       .product.review-box
         &.box-1
           width: 33%
 
-    .section.recent-activity
+
+    .work-area-section.my-tags-container
+      border-top: 1px solid $grey
+      margin-top: 82px
+      padding-top: 30px
+
+    .work-area-section.recent-activity
       border: none
       margin-top: 0
       border-top: 0
@@ -219,12 +205,6 @@ $color-blackcharcoal: #3c3c3b
           .sort-links-container
             .sort-links-label
               color: $dark-grey
-
-      .message
-        font-style: italic
-        color: $dark-grey
-        margin-bottom: 20px
-        display: block
 
       .product.review-box
         .footer

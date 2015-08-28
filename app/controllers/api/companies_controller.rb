@@ -1,7 +1,7 @@
 module Api
   class CompaniesController < ApplicationController
     respond_to :json
-    before_action :set_company, only: [:show, :update, :destroy]
+    before_action :set_company, only: [:show, :update, :destroy, :tags]
 
     # GET /api/companies
     # GET /api/companies.json
@@ -47,6 +47,19 @@ module Api
         format.json { head :no_content }
       end
     end
+
+    def tags
+      @update_company_tags = Fletcher::Company::UpdateCompanyTags.new(@company, params[:tags])
+
+      respond_to do |format|
+        if @update_company_tags.update!
+          format.json { render :show, status: :ok, location: tags_api_company_url(@company) }
+        else
+          format.json { render json: @update_company_tags.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+
 
     private
     # Use callbacks to share common setup or constraints between actions.
