@@ -1,11 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
-import RecentlyAddedSection from './RecentlyAddedSection';
-import MostPopularSection from './MostPopularSection';
-import RecentActivitySection from './RecentActivitySection';
 import DashboardStore from '../../stores/DashboardStore'
 import DashboardConstants from '../../utils/constants/DashboardConstants'
 import FluxDashboardActions from '../../actions/FluxDashboardActions'
+import RecentlyAddedSection from './RecentlyAddedSection';
+import MostPopularSection from './MostPopularSection';
+import RecentActivitySection from './RecentActivitySection';
+import BasedOnTagsSection from './BasedOnTagsSection';
 
 function sumSizeFunc(item) {
   return item.props.size;
@@ -38,8 +39,19 @@ class Dashboard extends React.Component {
     return recentActivityData ? recentActivityData : {items: []};
   }
 
+  getBasedOnTagsData() {
+    let basedOnTagsData = this.state.data[DashboardConstants.BASED_ON_TAGS_SECTION];
+    return basedOnTagsData ? basedOnTagsData : {items: {}};
+  }
+
   getCurrentIDs(sectionName) {
-    let sectionsToExclude = [DashboardConstants.MOST_POPULAR_SECTION, DashboardConstants.RECENTLY_ADDED_SECTION];
+    let sectionsToExclude = [
+      DashboardConstants.MOST_POPULAR_SECTION,
+      DashboardConstants.RECENTLY_ADDED_SECTION,
+      // TODO
+      // DashboardConstants.BASED_ON_TAGS_SECTION
+    ];
+
     let sectionToExclude, products, sectionIDs;
     let idsToExclude = [];
 
@@ -99,22 +111,34 @@ class Dashboard extends React.Component {
     paginationParams['ids'] = JSON.stringify(this.getCurrentIDs(sectionName))
 
     FluxDashboardActions.loadMoreProducts(paginationParams, function(data) {
-      if (data[sectionName].items.length > 0) {
-        section.setState({rows: section.state.rows + 1});
-      } else {
+      if (_.isEmpty(data[sectionName].items)) {
         section.setState({hasPagination: false});
+      } else {
+        section.setState({rows: section.state.rows + 1});
       }
     })
   }
 
   render() {
+
+    let basedOnTagsData = this.getBasedOnTagsData();
+    let addMoreBasedOnTagsCb = this.showMoreProducts.bind(this, DashboardConstants.BASED_ON_TAGS_SECTION);
+
     let recentlyAddedData = this.getRecentlyAddedData();
     let addMoreRecentlyAddedCb = this.showMoreProducts.bind(this, DashboardConstants.RECENTLY_ADDED_SECTION);
+
     let mostPopularData = this.getMostPopularData();
+
     let recentActivityData = this.getRecentActivityData();
     let addMoreRecentActivityCb = this.showMoreProducts.bind(this, DashboardConstants.RECENT_ACTIVITY_SECTION);
 
     return (<div className='sections'>
+      {_.isUndefined(basedOnTagsData) || _.isEmpty(basedOnTagsData.items) ?
+        <div /> :
+        <BasedOnTagsSection ref={DashboardConstants.BASED_ON_TAGS_SECTION}
+          onShowMore={addMoreBasedOnTagsCb} {...basedOnTagsData}/>
+      }
+
       {_.isUndefined(recentlyAddedData) || !recentlyAddedData.items.length ?
         <div /> :
         <RecentlyAddedSection ref={DashboardConstants.RECENTLY_ADDED_SECTION}
@@ -132,6 +156,7 @@ class Dashboard extends React.Component {
         <RecentActivitySection ref={DashboardConstants.RECENT_ACTIVITY_SECTION}
           onShowMore={addMoreRecentActivityCb} {...recentActivityData}/>
       }
+
     </div>);
   }
 }

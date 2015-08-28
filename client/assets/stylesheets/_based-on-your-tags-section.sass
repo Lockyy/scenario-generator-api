@@ -1,0 +1,38 @@
+@import 'functions'
+@import 'variables'
+
+.section
+  &.based-on-your-tags
+    h2
+      background-image: img-url('icons/popular-tags.svg')
+
+    .product
+      .content
+        border-color: $orange
+
+        .data
+          padding: 10px 15px
+
+          .detail
+            margin-bottom: 5px
+
+            .tag
+              font-size: 14px
+              border: 1px solid $orange
+              background: $white
+              padding: 5px 15px
+              color: $orange
+
+          .details
+            .header
+              .title
+                white-space: nowrap
+                overflow: hidden
+                text-overflow: ellipsis
+
+            .review
+              height: auto
+
+          .footer
+            display: block
+            text-align: right

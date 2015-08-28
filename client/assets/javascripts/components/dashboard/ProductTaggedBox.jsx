@@ -6,8 +6,8 @@ import TextHelper from '../utils/helpers/TextHelper';
 import AutoFitPicture from './AutoFitPicture';
 import Rating from './Rating';
 
-const ProductBox = React.createClass ({
-  displayName: 'ProductBox',
+const ProductTaggedBox = React.createClass ({
+  displayName: 'ProductTaggedBox',
 
   contextTypes: {
     router: React.PropTypes.object
@@ -15,14 +15,6 @@ const ProductBox = React.createClass ({
 
   hasPicture: function() {
     return !(_.isUndefined(this.props.image) || _.isEmpty(this.props.image));
-  },
-
-  getCustomizedDetail: function() {
-    if (_.isFunction(this.props.onCustomizeDetail)) {
-      return this.props.onCustomizeDetail(this.props);
-    } else {
-      return ''
-    }
   },
 
   render: function() {
@@ -36,16 +28,13 @@ const ProductBox = React.createClass ({
     }
     let classes = _.compact(['product', boxClass]).join(' ');
     let company = this.props.company;
-    let description = TextHelper.truncate(this.props.description, this.props.lengthDescription);
+    let description = TextHelper.truncate(this.props.description);
 
     return (<div className={classes}>
       <div className='content'>
         <div className='data'>
 
           <div className='details'>
-            <div className='detail'>
-              {this.getCustomizedDetail()}
-            </div>
             <div className="header">
               <h3 className='title'><Link to={`/app/products/${this.props.slug}`}>{this.props.name}</Link></h3>
               <h4 className='company'><Link to={`/app/companies/${company.slug}`} >{company.name}</Link></h4>
@@ -70,9 +59,9 @@ const ProductBox = React.createClass ({
   }
 })
 
-ProductBox.displayName = 'ProductBox';
+ProductTaggedBox.displayName = 'ProductTaggedBox';
 
-ProductBox.propTypes = {
+ProductTaggedBox.propTypes = {
   id: React.PropTypes.string.isRequired,
   slug: React.PropTypes.string.isRequired,
   author: React.PropTypes.string.isRequired,
@@ -86,4 +75,4 @@ ProductBox.propTypes = {
   reviews: React.PropTypes.array
 };
 
-export default ProductBox;
+export default ProductTaggedBox;
