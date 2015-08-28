@@ -118,13 +118,19 @@ class Dashboard extends React.Component {
       {_.isUndefined(recentlyAddedData) || !recentlyAddedData.items.length ?
         <div /> :
         <RecentlyAddedSection ref={DashboardConstants.RECENTLY_ADDED_SECTION}
-          onShowMore={addMoreRecentlyAddedCb} {...recentlyAddedData}/>}
+          onShowMore={addMoreRecentlyAddedCb} {...recentlyAddedData}/>
+      }
+
       {_.isUndefined(mostPopularData) || !mostPopularData.items.products.length ?
         <div /> :
         <MostPopularSection ref={DashboardConstants.MOST_POPULAR_SECTION}
-          {...mostPopularData}/>}
+          {...mostPopularData}/>
+      }
+
+      {_.isUndefined(recentActivityData) || !recentActivityData.items.products.length ?
         <RecentActivitySection ref={DashboardConstants.RECENT_ACTIVITY_SECTION}
           onShowMore={addMoreRecentActivityCb} {...recentActivityData}/>
+      }
     </div>);
   }
 }
