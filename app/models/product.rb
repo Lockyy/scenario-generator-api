@@ -34,8 +34,8 @@ class Product < ActiveRecord::Base
     where(user: author)
   end
 
-  scope :with_tags, ->(tags) do
-    joins(:tags).where('tags.id in (?)', tags.map(&:id))
+  scope :with_tags, ->(tags_names) do
+    joins(:tags).where('tags.name in (?)', tags_names)
   end
 
   scope :rating, -> rating_order do

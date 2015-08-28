@@ -20,7 +20,7 @@ end
 json.tags do
   json.total @results[:tags][:total]
   json.data  @results[:tags][:data] do |tag|
-    json.(tag, :id, :name)
+    json.(tag, :id, :name, :slug)
   end
 end
 
@@ -28,13 +28,13 @@ end
 json.related_tags do
   json.total @results[:related_tags][:total]
   json.data  @results[:related_tags][:data] do |tag|
-    json.(tag, :id, :name)
+    json.(tag, :id, :name, :slug)
   end
 end
 
 json.filtered_tags do
   json.total @results[:filtered_tags][:total]
   json.data  @results[:filtered_tags][:data] do |tag|
-    json.(tag, :id, :name)
+    json.(tag, :id, :name, :slug)
   end
 end

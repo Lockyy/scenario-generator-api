@@ -27,7 +27,7 @@ const TagResults = React.createClass ({
     let data = this.props.data.data;
     if(data && data.length > 0){
       return <Tags
-        tags={this.getTagNames(data)}
+        tags={data}
         onClick={this.props.onClick}
         selected={this.getTagNames(this.props.selected)} />
     }else{

@@ -41,7 +41,7 @@ module Fletcher
     def based_on_tags
       params = pagination_params(@params[BASED_ON_TAGS_SECTION], DEFAULTS[BASED_ON_TAGS_SECTION])
       tags = @user.tags.most_popular
-      products = Product.where.not(id: @existing_ids).distinct.with_tags(tags).limit(params[:limit]).offset(params[:offset])
+      products = Product.where.not(id: @existing_ids).distinct.with_tags(tags.map(&:name)).limit(params[:limit]).offset(params[:offset])
       @existing_ids += products.map(&:id)
       products.group_by { |product| (product.tags && tags).first.name }
     end

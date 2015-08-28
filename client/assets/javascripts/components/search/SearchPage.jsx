@@ -223,20 +223,21 @@ const SearchPage = React.createClass({
     let self = this;
 
     let tagEvent = function(e){
-      debugger;
       let selectedTags = self.state.data.filtered_tags.data;
       let selectedTag = { 'name': e.target.textContent };
       let tagAlreadySelected = _.findWhere(selectedTags, selectedTag);
-      let newStatus = tagAlreadySelected ? 'unselected': 'selected';
-      if(newStatus == 'unselected') {
+      let className = 'selected';
+
+      if(tagAlreadySelected) {
         _.remove(selectedTags, function(tag) {
           return tag == tagAlreadySelected;
         });
+        $(e.target).removeClass(className );
       } else {
         selectedTags.push({name: e.target.textContent});
+        $(e.target).addClass(className );
       }
 
-      $(e.target).addClass(newStatus);
       let data = self.getSearchParams(_.merge({},self.state.data,{section: self.props.params.section, page: '1'}));
       self.performSearch(data);
     };
