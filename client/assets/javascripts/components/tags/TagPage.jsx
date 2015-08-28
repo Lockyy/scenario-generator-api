@@ -42,7 +42,18 @@ const TagPage = React.createClass({
   },
 
   onChange: function(data) {
-    this.setState(data);
+    this.setState(function(oldState) {
+      let newState = _.merge({}, oldState, data);
+      return newState;
+    });
+  },
+
+  follow: function() {
+    FluxTagPageActions.follow(this.tag());
+  },
+
+  unfollow: function() {
+    FluxTagPageActions.unfollow(this.tag());
   },
 
   changeSort: function(newSortParams) {
@@ -55,6 +66,16 @@ const TagPage = React.createClass({
     FluxTagPageActions.fetchProducts(this.tag(), page, this.sort_by());
   },
 
+  renderFollowButton: function() {
+    if(this.state.data.followed) {
+      return <div className="btn btn-orange btn-round btn-full"
+                  onClick={ () => this.unfollow() }>Unfollow</div>
+    } else  {
+      return <div className="btn btn-orange btn-round btn-full"
+                  onClick={ () => this.follow() }>Follow</div>
+    }
+  },
+
   renderLeftBar: function () {
     return (
       <div className='col-xs-3 right-bar'>
@@ -64,6 +85,7 @@ const TagPage = React.createClass({
         <div className='tag-name'>
           { this.state.data.tag }
         </div>
+        { this.renderFollowButton() }
       </div>
     )
   },

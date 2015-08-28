@@ -13,6 +13,14 @@
       color: $primary-red
       background: white
 
+  &.btn-orange
+    background: $orange
+    border: 2px solid $orange
+    color: white
+    &:hover, &:active, &:focus
+      color: $orange
+      background: white
+
   &.btn-grey
     color: $font-grey
     border: 2px solid $font-grey
@@ -31,3 +39,6 @@
   &.btn-round
     border: 1px solid
     @include round-corners(30px)
+
+  &.btn-full
+    width: 100%
