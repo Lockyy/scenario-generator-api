@@ -144,15 +144,9 @@ const Reviews = React.createClass({
                 {review.user.name}
               </Link>
             </div>
-            <div className='job'>
-              {review.user.job_title}
-            </div>
-            <div className='location'>
-              {review.user.location}
-            </div>
-            <div className='total-reviews'>
-              {review.user.total_reviews} review(s)
-            </div>
+            {_.isEmpty(review.user.job_title) ? '' : <div className='job'>{review.user.job_title}</div>}
+            {_.isEmpty(review.user.location) ? '' : <div className='location'>{review.user.location}</div>}
+            {review.user.total_reviews < 1 ? '' : <div className='total-reviews'>{review.user.total_reviews} review(s)</div>}
           </div>
         </div>
         <div className="col-xs-8 review-content">
