@@ -50,7 +50,7 @@ const MyRecentActivity = React.createClass ({
       this._getRecentActivity();
     return (
       <div className='my-recent-activity'>
-        <h2>My recent activity</h2>
+        <h2>My recent reviews</h2>
 
         { details }
 

@@ -27,7 +27,7 @@ const RecentActivitySection = React.createClass({
     return {
       cols: 3,
       rows: 1,
-      title: 'Recent Activity',
+      title: 'Recent Reviews',
       showMessage: false,
       editable: false,
       onChangeSorting: function(sorting) {}

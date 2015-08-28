@@ -91,7 +91,7 @@ RecentActivitySection.displayName = 'RecentActivitySection';
 
 RecentActivitySection.defaultProps = {
   cols: 4,
-  title: 'Recent Activity'
+  title: 'Recent Reviews'
 };
 
 RecentActivitySection.propTypes = {
