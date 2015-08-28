@@ -133,6 +133,10 @@ const Reviews = React.createClass({
     let userEditAction =   wrotByCurrentUser ? editMyReview
       : itWasHelpful;
 
+    let job_title = _.isEmpty(review.user.job_title) ?
+      (_.isEmpty(review.user.department) ? '' : review.user.department )
+      : review.user.job_title
+
     return (
       <div className="row review">
         <div className="col-xs-4 user">
@@ -144,11 +148,7 @@ const Reviews = React.createClass({
                 {review.user.name}
               </Link>
             </div>
-            let job_title = _.isEmpty(review.user.job_title) ?
-                              (_.isEmpty(review.user.department) ? '' : review.user.department )
-                            : review.user.job_title
-
-            {_.isEmpty(review.user.job_title) ? '' : <div className='job'>{review.user.job_title}</div>}
+            {_.isEmpty(job_title) ? '' : <div className='job'>{job_title}</div>}
             {_.isEmpty(review.user.location) ? '' : <div className='location'>{review.user.location}</div>}
             {review.user.total_reviews < 1 ? '' : <div className='total-reviews'>{review.user.total_reviews} review(s)</div>}
           </div>

@@ -10,5 +10,5 @@ json.formatted_price_review (review.price_review.nil? or review.price_review.emp
 json.formatted_quality_review (review.quality_review.nil? or review.quality_review.empty?) ? "" : simple_format(review.quality_review)
 
 json.user do
-  json.(review.user, :id, :name, :job_title, :avatar_url, :location, :total_reviews)
+  json.(review.user, :id, :name, :job_title, :department, :avatar_url, :location, :total_reviews)
 end unless review.user.nil?
