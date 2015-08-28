@@ -11,7 +11,12 @@ Rails.application.routes.draw do
     end
 
     resources :reviews, except: [:index, :update, :new, :edit], defaults: {format: :json}
-    resources :companies, defaults: {format: 'json'}
+
+    resources :companies, defaults: {format: 'json'} do
+      member do
+        patch 'tags'
+      end
+    end
 
     get 'search', to: 'search#index', as: 'search', defaults: {format: :json}
 
