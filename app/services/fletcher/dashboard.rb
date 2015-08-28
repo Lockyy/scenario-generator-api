@@ -3,9 +3,11 @@ module Fletcher
     RECENTLY_ADDED_SECTION = 'recently_added'
     MOST_POPULAR_SECTION = 'most_popular'
     RECENT_ACTIVITY_SECTION = 'recent_activity'
-    SECTIONS = [RECENTLY_ADDED_SECTION, MOST_POPULAR_SECTION, RECENT_ACTIVITY_SECTION]
+    BASED_ON_TAGS_SECTION = 'based_on_tags'
+    SECTIONS = [RECENTLY_ADDED_SECTION, MOST_POPULAR_SECTION, RECENT_ACTIVITY_SECTION, BASED_ON_TAGS_SECTION]
     DEFAULTS = {
       RECENTLY_ADDED_SECTION => { limit: 8, offset: 0 },
+      BASED_ON_TAGS_SECTION => { limit: 8, offset: 0 },
       MOST_POPULAR_SECTION => {
         products: { limit: 2, offset: 0 },
         tags: { limit: 20, offset: 0 }
@@ -13,7 +15,8 @@ module Fletcher
       RECENT_ACTIVITY_SECTION => { limit: 4, offset: 0 }
     }
 
-    def initialize(existing_ids, params = {})
+    def initialize(user, existing_ids, params = {})
+      @user = user
       @params = params
       @existing_ids = existing_ids || []
     end
@@ -35,7 +38,19 @@ module Fletcher
       Review.sorted('latest').limit(params[:limit]).offset(params[:offset]).compact
     end
 
+    def based_on_tags
+      params = pagination_params(@params[BASED_ON_TAGS_SECTION], DEFAULTS[BASED_ON_TAGS_SECTION])
+      tags = @user.tags.random
+      products = Product.distinct.with_tags(tags).limit(params[:limit]).offset(params[:offset])
+      @existing_ids += products.map(&:id)
+      products.group_by { |product| (product.tags && tags).sample.name }
+    end
+
     private
+
+    def products_by_tags
+
+    end
 
     def recently_added_products
       params = pagination_params(@params[RECENTLY_ADDED_SECTION], DEFAULTS[RECENTLY_ADDED_SECTION])

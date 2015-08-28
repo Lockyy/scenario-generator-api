@@ -10,10 +10,14 @@ class Tag < ActiveRecord::Base
   has_many :companies, through: :reviews
 
   scope :most_popular, ->() do
-    joins('LEFT OUTER JOIN tags_users ON tags.id = tags_users.tag_id')
-      .select('tags.id, tags.name, tags.slug, count(tags_users.user_id) as users_count')
+    joins(:tag_taggables)
+      .select('tags.id, tags.name, tags.slug, count(tag_taggables.taggable_id) as taggables_count')
       .group('tags.id, tags.name')
-      .order('users_count DESC')
+      .order('taggables_count DESC')
+  end
+
+  scope :random, ->() do
+    order('RANDOM()')
   end
 
   before_validation :downcase_name!

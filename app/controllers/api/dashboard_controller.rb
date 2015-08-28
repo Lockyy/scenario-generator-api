@@ -4,7 +4,7 @@ module Api
 
     def index
       ids = JSON.parse(params[:ids]) if params[:ids]
-      @dashboard = Fletcher::Dashboard.new(ids, params)
+      @dashboard = Fletcher::Dashboard.new(current_user, ids, params)
 
       respond_to do |format|
         format.json { render }

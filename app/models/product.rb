@@ -34,6 +34,10 @@ class Product < ActiveRecord::Base
     where(user: author)
   end
 
+  scope :with_tags, ->(tags) do
+    joins(:tags).where('tags.id in (?)', tags.map(&:id))
+  end
+
   scope :rating, -> rating_order do
     joins('LEFT JOIN reviews rev ON products.id = rev.product_id')
         .select('sum(COALESCE(rev.quality_score, 0)) / GREATEST(count(rev.quality_score), 1) as total_quality_score, products.id, products.name, products.description,
