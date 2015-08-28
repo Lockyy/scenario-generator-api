@@ -40,10 +40,10 @@ module Fletcher
 
     def based_on_tags
       params = pagination_params(@params[BASED_ON_TAGS_SECTION], DEFAULTS[BASED_ON_TAGS_SECTION])
-      tags = @user.tags.random
+      tags = @user.tags.most_popular
       products = Product.distinct.with_tags(tags).limit(params[:limit]).offset(params[:offset])
       @existing_ids += products.map(&:id)
-      products.group_by { |product| (product.tags && tags).sample.name }
+      products.group_by { |product| (product.tags && tags).first.name }
     end
 
     private
