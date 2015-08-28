@@ -2,7 +2,7 @@ json.type type
 
 json.items data, :id, :created_at, :user do |recent_activity|
   json.extract! recent_activity, :id, :title, :quality_review, :quality_score, :price_review,
-    :price_score, :attachments, :links, :created_at, :updated_at, :tag_list, :tags, :reviewVotes
+    :price_score, :attachments, :links, :created_at, :updated_at, :tag_list, :tags, :reviewVotes, :user
 
   json.reviewable recent_activity.reviewable, :id, :name, :description, :url, :company, :created_at
 end

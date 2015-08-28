@@ -18,9 +18,22 @@ const ReviewBox = React.createClass ({
     return {
       size: 1,
       editable: false,
+      showReadMore: true,
       reviewable: {
         company: {}
       }
+    }
+  },
+
+  formatActivityType: function() {
+    if (_.isFunction(this.props.onFormatActivityType)) {
+      return this.props.onFormatActivityType(this.props);
+    } else {
+      return (
+        <span>
+          Review added {this.props.created_at ? dated('M d')(new Date(this.props.created_at)) : ''}
+        </span>
+      );
     }
   },
 
@@ -34,6 +47,7 @@ const ReviewBox = React.createClass ({
 
     let quality_review = TextHelper.truncate(this.props.quality_review, 150);
     let editable = this.props.editable;
+    let showReadMore = this.props.showReadMore;
 
     let attachments = this.props.attachments.length;
     let links = this.props.links.length;
@@ -45,9 +59,9 @@ const ReviewBox = React.createClass ({
 
           <div className='details'>
             <div className="header">
-              <span className='activity-type'>
-                Review added {this.props.created_at ? dated('M d')(new Date(this.props.created_at)) : ''}
-              </span>
+              <div className='activity-type'>
+                {this.formatActivityType()}
+              </div>
               <h3 className='title'><a href={`/app/products/${product.id}`}>{product.name}</a></h3>
               <h4 className='company'><a href={`/app/companies/${company.id}`} >{company.name}</a></h4>
             </div>
@@ -70,6 +84,15 @@ const ReviewBox = React.createClass ({
               { links > 0 ? <p className='item links'> {links} link(s) </p> : ''}
               { tags > 0 ? <p className='item tags'> {tags} tag(s) </p> : ''}
             </div>
+          </div>
+
+          <div className='read-more-container'>
+            {
+              showReadMore ?
+              <a href={`/app/products/${this.props.reviewable.id}`} className='link'>
+                <span className='icon-edit-review'>Read more</span>
+              </a> : ''
+            }
           </div>
 
           <div className='footer'>

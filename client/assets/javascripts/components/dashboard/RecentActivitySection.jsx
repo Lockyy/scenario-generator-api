@@ -1,6 +1,7 @@
 import React from 'react/addons';
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 import _ from 'lodash';
+import TextHelper from '../../utils/helpers/TextHelper'
 import ReviewBox from '../users/ReviewBox';
 import SectionRow from '../SectionRow';
 import Section from '../Section';
@@ -47,6 +48,12 @@ class RecentActivitySection extends React.Component {
     });
   }
 
+  formatActivityType(props) {
+    return (
+      <span><b>{TextHelper.truncate(props.user.name, 15)}</b> wrote a review for:</span>
+    );
+  }
+
   fetchActivity() {
     let item;
     let activity = [];
@@ -59,7 +66,8 @@ class RecentActivitySection extends React.Component {
 
     do {
       item = this.props.items[currentItem++];
-      activity.push(<ReviewBox size={this.getCurrentBoxSize(activity, item)} {...item} />);
+      activity.push(<ReviewBox size={this.getCurrentBoxSize(activity, item)} {...item}
+        onFormatActivityType={this.formatActivityType} />);
 
       hasItems = this.props.items.length > currentItem;
       sumItems = activity.length;
