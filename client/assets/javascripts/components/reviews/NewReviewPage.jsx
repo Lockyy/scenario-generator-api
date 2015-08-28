@@ -139,9 +139,16 @@ const NewReviewPage  = React.createClass({
   },
 
   render: function render() {
-    /* TODO
-      //TODO: Implement validation messages
-    */
+    let info = (<div className='info'>
+      <div className='instructions'>If you can’t ﬁnd the product
+        you are looking for,
+        <p className='more-instructions'>
+          click<i className='add-symbol'> + </i>to quickly add it
+          to Fletcher and then
+          rate and review.
+        </p>
+      </div>
+    </div>);
 
     return (
     <div className='product new'>
@@ -158,17 +165,7 @@ const NewReviewPage  = React.createClass({
           {this._getActionsContent()}
         </form>
       </div>
-
-      <div className='info'>
-        <div className='instructions'>If you can’t ﬁnd the product
-          you are looking for,
-          <p className='more-instructions'>
-            click<i className='add-symbol'> + </i>to quickly add it
-            to Fletcher and then
-            rate and review.
-          </p>
-        </div>
-      </div>
+      {this.state.showDetails ? '' : info}
     </div>
     );
   }
