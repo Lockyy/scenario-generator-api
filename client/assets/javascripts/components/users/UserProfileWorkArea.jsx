@@ -1,7 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import RecentActivitySection from './RecentActivitySection';
-import MyTags from './MyTags';
+import UserTags from './UserTags';
 
 const UserProfileWorkArea  = React.createClass({
   displayName: 'UserProfilePage',
@@ -37,7 +37,7 @@ const UserProfileWorkArea  = React.createClass({
   getTagsSection: function getTagsSection() {
     return (
       <div className='my-tags-container work-area-section hide' ref='tags' >
-        <MyTags showMessage='true' tags={[]} />
+        <UserTags showMessage='true' />
       </div>
     );
   },
