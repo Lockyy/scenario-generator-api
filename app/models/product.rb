@@ -84,4 +84,8 @@ products.url, company_id, products.views, products.created_at, products.updated_
   def reviewed_by_user?(user)
     reviews.where(user: user).size > 0
   end
+
+  def should_generate_new_friendly_id?
+    true
+  end
 end

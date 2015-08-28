@@ -13,7 +13,7 @@ const TagPage = React.createClass({
   getInitialState: function() {
     return {
       data: {
-        tag: this.props.params.tag,
+        tag: '',
         page: this.props.params.page,
         sort_by: 'alphabetical_order',
         products: {
@@ -55,14 +55,14 @@ const TagPage = React.createClass({
     FluxTagPageActions.fetchProducts(this.tag(), page, this.sort_by());
   },
 
-  renderRightBar: function () {
+  renderLeftBar: function () {
     return (
       <div className='col-xs-3 right-bar'>
         <div className='tagged-in'>
           Tagged In
         </div>
         <div className='tag-name'>
-          { this.tag() }
+          { this.state.data.tag }
         </div>
       </div>
     )
@@ -100,7 +100,7 @@ const TagPage = React.createClass({
     return (
       <div className='tags-page'>
         <div className='row'>
-          { this.renderRightBar() }
+          { this.renderLeftBar() }
           { this.renderResults() }
         </div>
       </div>

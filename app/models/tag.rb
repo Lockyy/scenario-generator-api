@@ -11,7 +11,7 @@ class Tag < ActiveRecord::Base
 
   scope :most_popular, ->() do
     joins('LEFT OUTER JOIN tags_users ON tags.id = tags_users.tag_id')
-      .select('tags.id, tags.name, count(tags_users.user_id) as users_count')
+      .select('tags.id, tags.name, tags.slug, count(tags_users.user_id) as users_count')
       .group('tags.id, tags.name')
       .order('users_count DESC')
   end
@@ -19,6 +19,10 @@ class Tag < ActiveRecord::Base
   before_validation :downcase_name!
 
   validates :name, presence: true, uniqueness: true
+
+  def should_generate_new_friendly_id?
+    true
+  end
 
   private
 

@@ -1,4 +1,5 @@
 class Api::TagsController < AppController
+
   def show
     @tag = Tag.friendly.find(params[:id])
     params[:sort_by] = params[:sort_by] || 'alphabetical_order'
