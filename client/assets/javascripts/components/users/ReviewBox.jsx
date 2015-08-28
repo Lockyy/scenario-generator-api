@@ -25,12 +25,18 @@ const ReviewBox = React.createClass ({
 
   render: function() {
     let product = this.props.reviewable;
+    let company = product.company;
+
     let boxSize = this.props.size;
     let boxClass = `box-${boxSize} no-pic-box`;
     let classes = _.compact(['product', 'review-box', boxClass]).join(' ');
-    let company = product.company;
-    let quality_review = _.trunc(this.props.quality_review, {lenght: 250, separator: ',?\. +'});
+
+    let quality_review = _.trunc(this.props.quality_review, {length: 200, separator: ',? +'});
     let editable = this.props.editable;
+
+    let attachments = this.props.attachments.length;
+    let links = this.props.links.length;
+    let tags = this.props.tags.length;
 
     return (<div className={classes}>
       <div className='content'>
@@ -39,7 +45,7 @@ const ReviewBox = React.createClass ({
           <div className='details'>
             <div className="header">
               <span className='activity-type'>
-                Review added {editable && this.props.created_at ? dated('M d')(new Date(this.props.created_at)) : ''}
+                Review added {this.props.created_at ? dated('M d')(new Date(this.props.created_at)) : ''}
               </span>
               <h3 className='title'><a href={`/app/products/${product.id}`}>{product.name}</a></h3>
               <h4 className='company'><a href={`/app/companies/${company.id}`} >{company.name}</a></h4>
@@ -58,6 +64,10 @@ const ReviewBox = React.createClass ({
                   quality_review
                  }
               </p>
+
+              { attachments > 0 ? <p className='item attachments'> {attachments} attachment(s) </p> : ''}
+              { links > 0 ? <p className='item links'> {links} link(s) </p> : ''}
+              { tags > 0 ? <p className='item tags'> {tags} tag(s) </p> : ''}
             </div>
           </div>
 
