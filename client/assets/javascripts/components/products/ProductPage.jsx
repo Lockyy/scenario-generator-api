@@ -169,8 +169,7 @@ const ProductPage = React.createClass({
               {UrlHelper.addProtocol(this.getProductData('url'))}
             </a>
           </div>
-          <div className='description'>
-            {this.getProductData('description')}
+          <div className='description' dangerouslySetInnerHTML={{__html: this.getProductData('formatted_description')}}>
           </div>
         </div>
         <div className='col-xs-3'>
