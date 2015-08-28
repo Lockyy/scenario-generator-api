@@ -62,7 +62,7 @@ const EditReviewBox = React.createClass ({
           </div>
 
           <div className='footer'>
-            <a to={`/app/products/${this.props.reviewable.id}/reviews/${this.props.id}`}
+            <a href={`/app/products/${this.props.reviewable.id}/reviews/${this.props.id}`}
               className='btn btn-round'><span className='icon-edit-review'>Edit</span></a>
           </div>
         </div>

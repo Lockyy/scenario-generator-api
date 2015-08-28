@@ -21,7 +21,7 @@ const MyRecentActivity = React.createClass ({
 
   componentDidMount: function() {
     CurrentUserStore.listen(this.onChange)
-    FluxCurrentUserActions.fetchRecentActivity(this.context.currentUser.id)
+    FluxCurrentUserActions.fetchRecentActivity(this.context.currentUser.id, { per_page: 4 })
   },
 
   onChange: function(data) {

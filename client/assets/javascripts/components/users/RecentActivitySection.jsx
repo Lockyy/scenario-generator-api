@@ -22,7 +22,7 @@ const RecentActivitySection = React.createClass({
   getDefaultProps: function(){
     return {
       cols: 3,
-      rows: 2,
+      rows: 1,
       title: 'Recent Activity',
       showMessage: false,
       editable: false,
@@ -92,23 +92,23 @@ const RecentActivitySection = React.createClass({
         active={this.currentSorting()}
         options={{
           latest: 'Latest',
-          highScore: 'Score: Low to High',
-          lowScore: 'Score: High to Low',
-          helpful: 'Most Helpful: Low to High',
-          unhelpful: 'Most Helpful: High to Low'
+          highScore: 'Rating: Low to High',
+          lowScore: 'Rating: High to Low',
+          unhelpful: 'Most Helpful: Low to High',
+          helpful: 'Most Helpful: High to Low'
         }} />
     )
   },
 
   onShowMore: function() {
     if (_.isFunction(this.props.onShowMore)) {
-      this.props.onShowMore(this.props.items.length + this.props.cols);
+      this.props.onShowMore(this.props.rows + 1, this.props.cols);
     }
   },
 
   render: function() {
     return (
-      <Section hasPagination={this.props.items.length >= this.props.cols * this.props.rows}
+      <Section hasPagination={this.props.items.length > 0}
         customHeaderTag={this.renderSortingDropdown()} {...this.props} onShowMore={this.onShowMore}>
         {this.props.showMessage ?
           <span className='message'>You can browse or edit your reviews at any time, even add or delete files and images.</span>

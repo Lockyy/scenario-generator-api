@@ -17,16 +17,12 @@ class FluxUserActions {
   fetchRecentActivity(id, paginationParams) {
     UserAPI.getUserRecentActivity(id, paginationParams,
       (data) => {
-        this.dispatch(data);
+        this.dispatch(_.merge(data, paginationParams));
       },
       (error) => {
         this.actions.registerError(error);
       }
     );
-  }
-
-  setPaginationParams(paginationParams) {
-    this.dispatch(paginationParams);
   }
 
   updateData(data) {
