@@ -75,7 +75,7 @@ const ReviewBox = React.createClass ({
           <div className='footer'>
             {
               editable ?
-              <a href={`/app/products/${this.props.reviewable.id}/reviews/${this.props.id}`} className='btn btn-round'>
+              <a href={`/app/products/${this.props.product.id}/reviews/${this.props.id}`} className='btn btn-round'>
                 <span className='icon-edit-review'>Edit</span>
               </a> :
               <span className='created_at'>{timeago(this.props.created_at)}</span>
