@@ -24,6 +24,18 @@ class Tag < ActiveRecord::Base
     true
   end
 
+  def follow(user)
+    users.append user
+  end
+
+  def unfollow(user)
+    users.delete user
+  end
+
+  def followed?(user)
+    users.include? user
+  end
+
   private
 
   def downcase_name!

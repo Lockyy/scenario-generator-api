@@ -12,6 +12,30 @@ class Api::TagsController < AppController
     end
   end
 
+  def follow
+    @tag = Tag.find_by(slug: params[:id])
+
+    @result = false
+    if @tag
+      @tag.follow(current_user)
+      @result = true
+    end
+
+    respond_to do |format|
+      format.json { render }
+    end
+  end
+
+  def unfollow
+    @tag = Tag.find_by(slug: params[:id])
+
+    @tag.unfollow(current_user) if @tag
+
+    respond_to do |format|
+      format.json { render }
+    end
+  end
+
   private
 
   def sorted_products(sort_by)

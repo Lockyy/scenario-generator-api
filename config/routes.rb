@@ -18,10 +18,16 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :tags, only: [:show]
+    resources :tags, only: [:show] do
+      member do
+        post :follow
+        post :unfollow
+      end
+    end
 
     get 'search', to: 'search#index', as: 'search', defaults: {format: :json}
 
+    get 'user/tags', to: 'users#followed_tags'
     resources 'users', only: [:show], defaults: {format: :json} do
       member do
         get 'recent_activity'

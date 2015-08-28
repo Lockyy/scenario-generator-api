@@ -28,6 +28,14 @@ class Api::UsersController < AppController
     end
   end
 
+  def followed_tags
+    @tags = current_user.tags
+
+    respond_to do |format|
+      format.json { render }
+    end
+  end
+
   private
 
   def set_current_user_id
