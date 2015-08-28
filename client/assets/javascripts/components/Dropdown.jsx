@@ -7,13 +7,13 @@ const Dropdown = React.createClass({
 
   onClick: function(sortKey) {
     this.props.onClick(sortKey)
-    $('.sort-links').removeClass('active')
+    $('.dropdown-links').removeClass('active')
   },
 
   renderSortOption: function(displayString, sortKey) {
     if(sortKey != this.props.active) {
       return (
-        <div  className='sort-link'
+        <div  className='dropdown-link'
               onClick={ () => this.onClick(sortKey) }>
           {displayString}
         </div>
@@ -23,7 +23,7 @@ const Dropdown = React.createClass({
 
   renderActiveOption: function() {
     return (
-      <div className='active-sort-link' onClick={() => $('.sort-links').toggleClass('active')} >
+      <div className='active-dropdown-link' onClick={() => $('.dropdown-links').toggleClass('active')} >
         {this.props.options[this.props.active]}
       </div>
     )
@@ -31,9 +31,9 @@ const Dropdown = React.createClass({
 
   render: function() {
     return (
-      <div className='sort-links-container'>
-        <span className='sort-links-label'>Sort by:</span>
-        <div className={`sort-links ${this.props.containerClass}`}>
+      <div className='dropdown-container'>
+        <span className='dropdown-label'>Sort by:</span>
+        <div className={`dropdown-links ${this.props.containerClass}`}>
           {this.renderActiveOption()}
           <div className='dropdown'>
             {_.map(this.props.options, this.renderSortOption)}
@@ -44,8 +44,8 @@ const Dropdown = React.createClass({
   },
 
   componentDidMount: function() {
-    $('.sort-links').on('clickoutside', function(){
-      $('.sort-links').removeClass('active')
+    $('.dropdown-links').on('clickoutside', function(){
+      $('.dropdown-links').removeClass('active')
     })
   }
 

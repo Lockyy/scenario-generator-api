@@ -151,120 +151,95 @@
           color: $red
           content: '>'
 
-  .reviews
-    .review
-      border-top: 1px solid $light-grey
-      padding-top: 50px
-      margin-bottom: 25px
-      .user
-        img
-          border-radius: 45px
-          margin-top: -175px
-          margin-right: 15px
-          width: 48px
-          height: 48px
-        .details
-          display: inline-block
-          font-size: 12px
-          color: $dark-grey
-          .name
-            font-size: 18px
-            color: initial
-            margin-bottom: 15px
-          .job, .location, .total-reviews
-            margin-top: 5px
-            &::before
-              display: inline-block
-              margin-right: 3px
-              content: ''
-              height: 15px
-              width: 15px
-              background-size: contain
-              background-repeat: no-repeat
-              background-position: center
-              position: relative
-              top: 2px
-          .job::before
-            background-image: img-url('icons/title.svg')
-          .location::before
-            background-image: img-url('icons/location.svg')
-          .total-reviews::before
-            background-image: img-url('icons/reviews.svg')
-      .review-content
-        .helpful-reviews-container
-          background-color: red
+  .review-container
+    .header
+      display: flex
+      justify-content: flex-end
+      padding-bottom: 2px
+    .reviews
+      .review
+        border-top: 1px solid $light-grey
+        padding-top: 50px
+        margin-bottom: 25px
+        .user
+          img
+            border-radius: 45px
+            margin-top: -50px
+            margin-right: 15px
+            width: 48px
+            height: 48px
+          .details
+            display: inline-block
+            font-size: 12px
+            color: $dark-grey
+            .name
+              font-size: 18px
+              color: initial
+              margin-bottom: 15px
+            .job, .location, .total-reviews
+              margin-top: 5px
+              &::before
+                display: inline-block
+                margin-right: 3px
+                content: ''
+                height: 15px
+                width: 15px
+                background-size: contain
+                background-repeat: no-repeat
+                background-position: center
+                position: relative
+                top: 2px
+            .job::before
+              background-image: img-url('icons/title.svg')
+            .location::before
+              background-image: img-url('icons/location.svg')
+            .total-reviews::before
+              background-image: img-url('icons/reviews.svg')
+        .review-content
+          .helpful-reviews-container
+            background-color: red
 
-        .score, .created_at
-          display: inline-block
-        .created_at
-          position: relative
-          top: -3px
-          margin-left: 10px
-        .title
-          font-size: 20px
-          margin-top: 20px
-          margin-bottom: 30px
-        .review-text
-          margin-bottom: 20px
-
-        .price-review
-          margin-top: 15px
-          margin-bottom: 20px
-
-        .edit-review-container
-          .btn
-            margin-top: 30px
-            padding: 5px 30px
-            background: $light-grey
-            border-color: $grey
-
-            &:hover
-              background: $red
-              border-color: $red
-              color: $light-grey
-
-        .helpful-review-container
-          margin-top: 25px
-          padding: 15px 25px
-          color: $dark-grey
-          background-color: $light-grey
-
-          .helpful-reviews-text
-            padding-right: 10px
-            font-size: 13px
-
-          .btn
-            width: 50px
+          .score, .created_at
+            display: inline-block
+          .created_at
+            position: relative
+            top: -3px
             margin-left: 10px
-            text-align: center
-            font-size: 10px
+          .title
+            font-size: 20px
+            margin-top: 20px
+            margin-bottom: 30px
+          .review-text
+            margin-bottom: 20px
 
-.sort-links
-  float: right
-  width: 200px
-  border: 1px solid $light-grey
-  position: relative
-  z-index: 99
-  top: -10px
-  &.red
-    border: 1px solid $primary-red
-    .dropdown
-      border: 1px solid $primary-red
-      border-top: none
-  .dropdown
-    display: none
-    width: 200px
-    position: absolute
-    left: -1px
-    border: 1px solid $light-grey
-    border-top: none
-  .sort-link
-  .active-sort-link
-  .sort-link, .active-sort-link
-    background: white
-    padding: 5px 10px
-    cursor: pointer
-  &.active
-    border-bottom: 1px solid white
-    .dropdown
-      display: block
+          .price-review
+            margin-top: 15px
+            margin-bottom: 20px
+
+          .edit-review-container
+            .btn
+              margin-top: 30px
+              padding: 5px 30px
+              background: $light-grey
+              border-color: $grey
+
+              &:hover
+                background: $red
+                border-color: $red
+                color: $light-grey
+
+          .helpful-review-container
+            margin-top: 25px
+            padding: 15px 25px
+            color: $dark-grey
+            background-color: $light-grey
+
+            .helpful-reviews-text
+              padding-right: 10px
+              font-size: 13px
+
+            .btn
+              width: 50px
+              margin-left: 10px
+              text-align: center
+              font-size: 10px

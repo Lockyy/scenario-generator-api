@@ -1,24 +1,32 @@
-.sort-links-container
-  .sort-links-label
+@import "common/variables"
+
+.dropdown-container
+  color: #333333
+  font-size: 14px
+  .dropdown-label
     margin-right: 20px
 
-  .sort-links
-    float: right
-    width: 250px
+  .dropdown-links
+    width: 200px
     border: 1px solid $light-grey
     position: relative
     z-index: 99
-    top: -10px
+    display: inline-block
+    &.red
+      border: 1px solid $primary-red
+      .dropdown
+        border: 1px solid $primary-red
+        border-top: none
     .dropdown
       display: none
-      width: 250px
+      width: 200px
       position: absolute
       left: -1px
       border: 1px solid $light-grey
       border-top: none
-    .sort-link
-    .active-sort-link
-    .sort-link, .active-sort-link
+    .dropdown-link
+    .active-dropdown-link
+    .dropdown-link, .active-dropdown-link
       background: white
       padding: 5px 10px
       cursor: pointer
@@ -26,3 +34,4 @@
       border-bottom: 1px solid white
       .dropdown
         display: block
+

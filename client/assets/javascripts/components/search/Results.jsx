@@ -172,11 +172,13 @@ const Results = React.createClass ({
       case 'dropdown':
         if(this.props.data.total > 0) {
           return(
-            <Dropdown
-              onClick={this.addSortParam}
-              active={this.props.sort_by}
-              options={this.dropdownOptions()}
-              containerClass={'red'} />
+            <div className='top-right'>
+              <Dropdown
+                onClick={this.addSortParam}
+                active={this.props.sort_by}
+                options={this.dropdownOptions()}
+                containerClass={'red'} />
+              </div>
           )
         }
       case 'count':
@@ -210,10 +212,9 @@ const Results = React.createClass ({
 
   renderTop: function() {
     return (
-      <div className ='title'>
+      <div className='top'>
         { this.renderTopLeft() }
         { this.renderTopRight() }
-        <div className='clear'></div>
       </div>
     )
   },

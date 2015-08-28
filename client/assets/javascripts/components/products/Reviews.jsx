@@ -197,22 +197,24 @@ const Reviews = React.createClass({
 
   renderDropdown: function() {
     return (
-      <Dropdown
-        onClick={this.changeSorting}
-        active={this.currentSorting()}
-        options={{
-          latest: 'Latest',
-          highScore: 'Rating: Low to High',
-          lowScore: 'Rating: High to Low',
-          unhelpful: 'Most Helpful: Low to High',
-          helpful: 'Most Helpful: High to Low'
-        }} />
+      <div className="header">
+        <Dropdown
+          onClick={this.changeSorting}
+          active={this.currentSorting()}
+          options={{
+            latest: 'Latest',
+            highScore: 'Rating: Low to High',
+            lowScore: 'Rating: High to Low',
+            unhelpful: 'Most Helpful: Low to High',
+            helpful: 'Most Helpful: High to Low'
+          }} />
+      </div>
     )
   },
 
   render: function() {
     return (
-      <div>
+      <div className='review-container'>
        { this.renderDropdown() }
         <div className='row reviews'>
           {this.renderReviews()}
