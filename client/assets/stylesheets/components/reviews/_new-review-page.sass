@@ -6,16 +6,17 @@ $default-font-size: 15px
 
 .product.new
   .add-symbol, .review-symbol
-    width: 20px
+    width: 30px
+    padding: 5px
+    color: transparent
+    background: no-repeat center center
+    content: ''
 
   .add-symbol
-    content: image-url('icons/icon-add.svg')
-
-    &.black
-      content: image-url('icons/icon-add-black.svg')
+    background-image: image-url('icons/icon-add.svg')
 
   .review-symbol
-    content: image-url('icons/icon-review.svg')
+    background-image: image-url('icons/icon-review.svg')
 
 
   font-size: $default-font-size
