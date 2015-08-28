@@ -1,9 +1,9 @@
 import React from 'react/addons';
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 import _ from 'lodash';
-import ProductBox from './ProductBox';
-import SectionRow from './SectionRow';
-import Section from './Section';
+import ProductBox from '../ProductBox';
+import SectionRow from '../SectionRow';
+import Section from '../Section';
 
 function sumSizeFunc(item) {
   return item.props.size;
@@ -15,7 +15,8 @@ class RecentlyAddedSection extends React.Component {
 
     this.state = {
       offset: 0,
-      rows: 2
+      rows: 2,
+      hasPagination: true
     };
   }
 
@@ -90,7 +91,7 @@ class RecentlyAddedSection extends React.Component {
   }
 
   render() {
-    return (<Section {...this.props}>
+    return (<Section hasPagination={this.state.hasPagination} {...this.props}>
       <ReactCSSTransitionGroup transitionName="section-row">
         {this.fetchProducts()}
       </ReactCSSTransitionGroup >

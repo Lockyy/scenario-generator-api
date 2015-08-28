@@ -14,18 +14,19 @@
 
         .activity-type
           color: $color-darkgrey
-          font-size: 15px
+          font-size: 13px
           padding-left: 25px
           background: no-repeat left center
           background-image: img-url('icons/icon-review-grey.svg')
           background-size: contain
-          margin-bottom: 20px
+          margin-bottom: 5px
           display: block
 
         .title
           white-space: nowrap
           overflow: hidden
           text-overflow: ellipsis
+          margin-bottom: 5px
 
       .review
         display: block !important
@@ -35,10 +36,14 @@
 
         .rating
           display: block
-          margin-bottom: 10px
 
           .rating-container
             display: inline-block
+
+            .items
+              .rating-group
+                input[type='radio'] + label
+                  padding: 9px
 
           .rating-container.price
             float: right
@@ -69,6 +74,17 @@
 
           &.tags
             background-image: img-url('icons/icon-tags-red.svg')
+
+      .read-more-container
+        text-align: right
+        position: absolute
+        width: 100%
+        bottom: 50px
+        right: 15px
+
+        a.link
+          color: $red
+          font-size: 15px
 
       .footer
         display: block

@@ -15,5 +15,5 @@ json.images product.images, :id, :attachable_id, :attachable_type, :url, :name, 
 json.reviews product.reviews, partial: 'api/reviews/review', as: :review
 
 json.company do
-  json.(product.company, :id, :name, :slug)
+  json.(product.company, :id, :name, :slug) if product.company
 end

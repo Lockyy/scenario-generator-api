@@ -1,11 +1,11 @@
 import React from 'react';
 import _ from 'lodash';
-import Section from './Section';
 import RecentlyAddedSection from './RecentlyAddedSection';
 import MostPopularSection from './MostPopularSection';
-import DashboardStore from '../stores/DashboardStore'
-import DashboardConstants from '../utils/constants/DashboardConstants'
-import FluxDashboardActions from '../actions/FluxDashboardActions'
+import RecentActivitySection from './RecentActivitySection';
+import DashboardStore from '../../stores/DashboardStore'
+import DashboardConstants from '../../utils/constants/DashboardConstants'
+import FluxDashboardActions from '../../actions/FluxDashboardActions'
 
 function sumSizeFunc(item) {
   return item.props.size;
@@ -31,6 +31,11 @@ class Dashboard extends React.Component {
   getMostPopularData() {
     let mostPopularData = this.state.data[DashboardConstants.MOST_POPULAR_SECTION];
     return mostPopularData ? mostPopularData : {items: {products: [], tags: []}};
+  }
+
+  getRecentActivityData() {
+    let recentActivityData = this.state.data[DashboardConstants.RECENT_ACTIVITY_SECTION];
+    return recentActivityData ? recentActivityData : {items: []};
   }
 
   getCurrentIDs(sectionName) {
@@ -65,7 +70,7 @@ class Dashboard extends React.Component {
             // any products that might be in the old and new data.
             return _.unique(a.concat(b), function(obj) {
               // If it's an array of products, check the objects name attribute.
-              if(typeof a[0] === 'object') { return obj.name }
+              if(typeof a[0] === 'object') { return `${obj.name}${obj.id}` }
               // If it's an array of tags, just check the tag directly.
               return obj
             })
@@ -76,7 +81,7 @@ class Dashboard extends React.Component {
   }
 
   getSections() {
-    return {recently_added: this.refs.recently_added}
+    return this.refs;
   }
 
   getSection(name) {
@@ -86,31 +91,47 @@ class Dashboard extends React.Component {
   showMoreProducts(sectionName) {
     let section = this.getSection(sectionName);
     let paginationParams = {};
+
     paginationParams[sectionName] = {
       offset: section.getOffset(),
       limit: section.getMax(),
     };
     paginationParams['ids'] = JSON.stringify(this.getCurrentIDs(sectionName))
 
-    section.setState({rows: section.state.rows + 1});
-    FluxDashboardActions.loadMoreProducts(paginationParams)
+    FluxDashboardActions.loadMoreProducts(paginationParams, function(data) {
+      if (data[sectionName].items.length > 0) {
+        section.setState({rows: section.state.rows + 1});
+      } else {
+        section.setState({hasPagination: false});
+      }
+    })
   }
 
   render() {
     let recentlyAddedData = this.getRecentlyAddedData();
-    let addMoreRecentlyAddedCb = this.showMoreProducts.bind(this,
-      DashboardConstants.RECENTLY_ADDED_SECTION);
-
+    let addMoreRecentlyAddedCb = this.showMoreProducts.bind(this, DashboardConstants.RECENTLY_ADDED_SECTION);
     let mostPopularData = this.getMostPopularData();
+    let recentActivityData = this.getRecentActivityData();
+    let addMoreRecentActivityCb = this.showMoreProducts.bind(this, DashboardConstants.RECENT_ACTIVITY_SECTION);
+
     return (<div className='sections'>
       {_.isUndefined(recentlyAddedData) || !recentlyAddedData.items.length ?
         <div /> :
         <RecentlyAddedSection ref={DashboardConstants.RECENTLY_ADDED_SECTION}
-          onShowMore={addMoreRecentlyAddedCb} {...recentlyAddedData}/>}
+          onShowMore={addMoreRecentlyAddedCb} {...recentlyAddedData}/>
+      }
+
       {_.isUndefined(mostPopularData) || !mostPopularData.items.products.length ?
         <div /> :
         <MostPopularSection ref={DashboardConstants.MOST_POPULAR_SECTION}
-          {...mostPopularData}/>}
+          {...mostPopularData}/>
+      }
+
+      {_.isUndefined(recentActivityData) || !recentActivityData.items.length ?
+        <div /> :
+        <RecentActivitySection ref={DashboardConstants.RECENT_ACTIVITY_SECTION}
+          onShowMore={addMoreRecentActivityCb} {...recentActivityData}/>
+      }
     </div>);
   }
 }

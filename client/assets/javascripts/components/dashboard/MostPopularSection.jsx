@@ -1,10 +1,10 @@
 import React from 'react/addons';
 const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 import _ from 'lodash';
-import Section from './Section';
-import SectionRow from './SectionRow';
-import ProductBox from './ProductBox';
-import TagsBox from './TagsBox';
+import Section from '../Section';
+import SectionRow from '../SectionRow';
+import ProductBox from '../ProductBox';
+import TagsBox from '../TagsBox';
 
 function sumSizeFunc(item) {
   return item.props.size;

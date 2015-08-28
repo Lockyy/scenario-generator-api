@@ -11,6 +11,14 @@ ActiveAdmin.register Product do
   end
 
   controller do
+    def find_resource
+      begin
+        scoped_collection.where(slug: params[:id]).first!
+      rescue ActiveRecord::RecordNotFound
+        scoped_collection.find(params[:id])
+      end
+    end
+
     def update_resource(object, attributes)
       attributes[0].merge!({default_image: @default_image})
       attributes[0].merge!({reviews: @reviews})
