@@ -85,7 +85,7 @@ const CompanyProfileHeader  = React.createClass({
           </div>
 
           <div className="tag-group">
-            <div className="tags-container">
+            <div className="my-tags-container">
               <CompanyTags tags={tags} id={this.props.id} />
             </div>
           </div>
