@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import React from 'react';
+import _ from 'lodash';
 import Dashboard from './components/Dashboard';
 import NewReviewPage from './components/reviews/NewReviewPage';
 import CompanyProfilePage from './components/companies/CompanyProfilePage';
@@ -7,7 +8,7 @@ import UserProfilePage from './components/users/UserProfilePage';
 import ProductPage from './components/products/ProductPage';
 import SearchPage from './components/search/SearchPage';
 import SearchBox from './components/header/SearchBox';
-import MyTags from './components/menu/MyTags';
+import MyTags from './components/users/MyTags';
 import MyRecentActivity from './components/menu/MyRecentActivity';
 import { Router, Route } from 'react-router';
 import { history } from 'react-router/lib/BrowserHistory';
@@ -45,7 +46,9 @@ $(function onLoad() {
                 ), $('.search-container')[0]);
 
                 React.render((
-                    <MyTags router={router} />
+                    <MyTags router={router} showMessage={_.isEmpty(currentUser.tags)} showTitle={true}
+                      message='Adding tags will update your News Feed with the latest news from the ones you follow'
+                      messageClass='no-content'/>
                 ), $('.my-tags-container')[0]);
 
                 React.render((

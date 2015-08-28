@@ -21,6 +21,8 @@ const MyTags = React.createClass ({
 
   getDefaultProps: function() {
     return {
+      showTitle: false,
+      title: 'My tags',
       showMessage: false,
       message: 'Adding tags will update your News Feed with the latest news from the ones you follow'
     }
@@ -39,10 +41,12 @@ const MyTags = React.createClass ({
   },
 
   render: function() {
-    let details = <div className='message'>{this.props.message}</div>;
+    let details = <div className={`message ${this.props.messageClass}`}>{this.props.message}</div>;
 
     return (
       <div className={`my-tags ${this.props.className || ''}`}>
+        {this.props.showTitle ? <h2>{this.props.title}</h2> : ''}
+
         {this.props.showMessage ? details : '' }
         <TagsManager tags={this.state.tags} itemClass='myTagSuggestion' tagsinputProperties={{freeInput: false}}
           onSetTags={this._updateTags} />
