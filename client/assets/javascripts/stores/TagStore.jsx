@@ -9,12 +9,22 @@ class TagStore {
 
     this.bindListeners({
       handleFetchData: FluxTagPageActions.FETCH_PRODUCTS,
+      handleFollow: FluxTagPageActions.FOLLOW,
+      handleUnfollow: FluxTagPageActions.UNFOLLOW,
       handleUpdateData: FluxTagPageActions.UPDATE_DATA,
       handleRegisterError: FluxTagPageActions.REGISTER_ERROR
     });
   }
 
   handleFetchData() {
+    return false;
+  }
+
+  handleFollow() {
+    return false;
+  }
+
+  handleUnfollow() {
     return false;
   }
 

@@ -20,6 +20,34 @@ class FluxTagPageActions {
     );
   }
 
+  follow(tag) {
+    this.dispatch();
+
+    TagAPI.follow(
+      tag,
+      (data) => {
+        this.actions.updateData(data);
+      },
+      (error) => {
+        this.actions.registerError(error);
+      }
+    );
+  }
+
+  unfollow(tag) {
+    this.dispatch();
+
+    TagAPI.unfollow(
+      tag,
+      (data) => {
+        this.actions.updateData(data);
+      },
+      (error) => {
+        this.actions.registerError(error);
+      }
+    );
+  }
+
   updateData(data) {
     this.dispatch(data);
   }
