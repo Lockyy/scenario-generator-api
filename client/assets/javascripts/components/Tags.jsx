@@ -48,7 +48,7 @@ const Tags = React.createClass({
     if(this.props.onClick) {
       this.props.onClick(e)
     } else {
-      this.transitionTo(`/app/tags/${e.target.value}/1`);
+      this.transitionTo(`/app/tags/${e.target.textContent}/1`);
     }
   },
 
