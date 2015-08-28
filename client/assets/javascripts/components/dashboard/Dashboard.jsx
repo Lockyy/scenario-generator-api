@@ -128,6 +128,7 @@ class Dashboard extends React.Component {
       }
 
       {_.isUndefined(recentActivityData) || !recentActivityData.items.products.length ?
+        <div /> :
         <RecentActivitySection ref={DashboardConstants.RECENT_ACTIVITY_SECTION}
           onShowMore={addMoreRecentActivityCb} {...recentActivityData}/>
       }
