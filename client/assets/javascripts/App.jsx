@@ -6,6 +6,7 @@ import NewReviewPage from './components/reviews/NewReviewPage';
 import CompanyProfilePage from './components/companies/CompanyProfilePage';
 import UserProfilePage from './components/users/UserProfilePage';
 import ProductPage from './components/products/ProductPage';
+import TagPage from './components/tags/TagPage';
 import SearchPage from './components/search/SearchPage';
 import SearchBox from './components/header/SearchBox';
 import UserTags from './components/users/UserTags';
@@ -37,6 +38,8 @@ $(function onLoad() {
                         <Route name="search" path="app/search/:section/:search_string/:page" component={SearchPage}>
                         </Route>
                         <Route name="search" path="app/search/:section" component={SearchPage}>
+                        </Route>
+                        <Route path="app/tags/:tag/:page" component={TagPage}>
                         </Route>
                     </Router>
                 ), document.getElementById('content'));

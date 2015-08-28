@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Link } from 'react-router';
 import Rating from '../Rating';
 import SearchConstants from '../../utils/constants/SearchConstants';
+import Dropdown from '../Dropdown';
 
 const Results = React.createClass ({
 
@@ -15,12 +16,12 @@ const Results = React.createClass ({
   getMaxDisplayedData: function() {
     let data = this.props.data.data;
     let dataMax = data ? data.length : 0;
-    return Math.min(dataMax, SearchConstants.PER_PAGE)
+    return Math.min(dataMax, (this.props.per_page || SearchConstants.PER_PAGE))
   },
 
   renderCompany: function(result) {
-    if(this.props.type == 'companies') {
-      return (
+    return (
+      <div className='result'>
         <div className='row'>
           <div className='col-xs-12'>
             <div className='name'>
@@ -33,8 +34,8 @@ const Results = React.createClass ({
             </div>
           </div>
         </div>
-      )
-    }
+      </div>
+    )
   },
 
   renderImage: function(result) {
@@ -50,14 +51,13 @@ const Results = React.createClass ({
   productContentClass: function() {
     if(this.props.showImages) {
       return 'col-xs-8'
-    } else {
-      return 'col-xs-12'
     }
+    return 'col-xs-12'
   },
 
   renderProduct: function(result) {
-    if(this.props.type == 'products') {
-      return (
+    return (
+      <div className='result'>
         <div className='row'>
           { this.renderImage(result) }
           <div className={ this.productContentClass() }>
@@ -72,17 +72,19 @@ const Results = React.createClass ({
             <Rating value={result.rating} name='rating' />
           </div>
         </div>
-      )
-    }
-  },
-
-  renderResult: function(result) {
-    return (
-      <div className='result'>
-        { this.renderCompany(result) }
-        { this.renderProduct(result) }
       </div>
     )
+  },
+
+  getRenderResultFunction: function(result) {
+    switch(this.props.type) {
+      case 'companies':
+        return this.renderCompany
+        break;
+      case 'products':
+        return this.renderProduct
+        break;
+    }
   },
 
   hasData: function(){
@@ -93,49 +95,53 @@ const Results = React.createClass ({
   renderResults: function() {
     if(this.hasData()) {
       let resultTags = [];
+      let renderResult = this.getRenderResultFunction()
+
       for (let i = 0; i < this.getMaxDisplayedData(); i++) {
-        resultTags.push(this.renderResult(this.props.data.data[i]));
+        let result = renderResult(this.props.data.data[i])
+
+        resultTags.push(result);
       }
+
       return <div className={this.props.type}>{resultTags}</div>;
-    }else{
-      return this.props.emptyResults;
     }
   },
 
   renderButton: function() {
-    if(this.props.showButton && this.hasData()) {
-      return (
-        <div className='show-more'>
-          <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='show-more-button'>
-            Show More
-          </a>
-        </div>
-      )
-    }
+    if(!this.hasData()) { return false }
+
+    return (
+      <div className='show-more'>
+        <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='show-more-button'>
+          Show More
+        </a>
+      </div>
+    )
   },
 
   renderPagination: function() {
-    if(this.props.showPagination && this.props.data.pages > 1) {
-      let pageLinks = [];
+    if(this.props.data.pages < 2) { return false }
 
-      for (let i = 1; i <= this.props.data.pages; i++) {
-        let active = '';
+    let pageLinks = [];
 
-        if(this.props.currentPage == i) {
-          active = 'active'
-        }
+    for (let i = 1; i <= this.props.data.pages; i++) {
+      let active = '';
 
-        pageLinks.push(
-          <span className={`pagination-link ${active}`} onClick={ () => this.props.changePage(i)}>{i}</span>
-        );
+      if(this.props.currentPage == i) {
+        active = 'active'
       }
 
-      return (
-        <div className='pagination'>
-          {pageLinks}
-        </div>
-      )
+      pageLinks.push(
+        <span className={`pagination-link ${active}`}
+              onClick={ () => this.props.onChangePage(i)}>{i}</span>
+      );
     }
+
+    return (
+      <div className='pagination'>
+        {pageLinks}
+      </div>
+    )
   },
 
   addSortParam: function(sortDescription) {
@@ -143,62 +149,95 @@ const Results = React.createClass ({
     this.props.onSetQuery({sort_by: sortDescription, match_mode: match_mode})
   },
 
-  renderTopLink: function() {
-    let section = this.props.section;
-    if(this.props.showTopLink) {
-      return (
-        <div className='size'>
-          <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`}>More</a>
-        </div>
-      )
-    } else if(this.getMaxDisplayedData() < this.props.data.total && section == 'all'){
-        return(
-        <div id='results-text-container' className='size'>
-            <span> Showing <span className='value'>{ this.getMaxDisplayedData() }</span> of <span className='value'>{this.props.data.total}</span> results found </span>
-        </div>)
-    } else if(section == 'products'){
-        return(
-            <div id='sort-container'>
-                <div className='form-group'>
-                    <label for="sort"> Sort by: </label>
-                    <select id='sort' name="sort" onChange={ (e) => this.addSortParam(e.target.value)}>
-                        <option value='relevance'>Relevance</option>
-                        <option value='latest'>Latest</option>
-                        <option value='high_to_low'>Rating High to Low</option>
-                        <option value='low_to_high'>Rating Low to High</option>
-                        <option value='alphabetical_order'>Alphabetical order</option>
-                    </select>
-                </div>
-            </div>)
+  dropdownOptions: function() {
+    return this.props.dropdownOptions || {
+      relevance: 'Relevance',
+      latest: 'Latest',
+      high_to_low: 'Rating High to Low',
+      low_to_high: 'Rating Low to High',
+      alphabetical_order: 'Alphabetical order',
     }
-    else {
-      return (
-        <div className='size'>
-          { this.props.data.total } result(s) found
-        </div>
-      )
+  },
+
+  renderTopRight: function() {
+    switch(this.props.topRight) {
+      case 'link':
+        if(this.props.data.total > 0) {
+          return (
+            <div className='top-right'>
+              <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`}>More</a>
+            </div>
+          )
+        }
+      case 'dropdown':
+        if(this.props.data.total > 0) {
+          return(
+            <div className='top-right'>
+              <Dropdown
+                onClick={this.addSortParam}
+                active={this.props.sort_by}
+                options={this.dropdownOptions()}
+                containerClass={'red'} />
+              </div>
+          )
+        }
+      case 'count':
+        if(this.getMaxDisplayedData() < this.props.data.total) {
+          return (
+            <div className='top-right'>
+                <span> Showing <span className='value'>{ this.getMaxDisplayedData() }</span> of <span className='value'>{this.props.data.total}</span> results found </span>
+            </div>
+          )
+        }
+      case 'size':
+        return (
+          <div className='top-right'>
+            { this.props.data.total } result(s) found
+          </div>
+        )
+        break;
+    }
+  },
+
+  renderTopLeft: function() {
+    switch(this.props.topLeft) {
+      case 'count':
+        return <div className='top-left'>{ this.props.data.total } result(s) found</div>
+        break;
+      case 'type':
+        return <div className='top-left'>{ this.props.type }</div>
+        break;
+    }
+  },
+
+  renderTop: function() {
+    return (
+      <div className='top'>
+        { this.renderTopLeft() }
+        { this.renderTopRight() }
+      </div>
+    )
+  },
+
+  renderBottom: function() {
+    switch(this.props.bottom) {
+      case 'pagination':
+        return this.renderPagination()
+        break;
+      case 'button':
+        return this.renderButton()
+        break;
     }
   },
 
   render: function() {
-    if(this.props.hide) {
-      return <div></div>
-    } else {
-      return (
-        <div className={`results ${this.props.containerClass}`}>
-          <div className ='title'>
-            <div className='name'>
-              { this.props.type }
-            </div>
-            { this.renderTopLink() }
-            <div className='clear'></div>
-          </div>
-          { this.renderResults() }
-          { this.renderPagination() }
-          { this.renderButton() }
-        </div>
-      )
-    }
+    return (
+      <div className={`results ${this.props.containerClass}`}>
+        { this.renderTop() }
+        { this.renderResults() }
+        { this.renderBottom() }
+      </div>
+    )
   }
 
 })

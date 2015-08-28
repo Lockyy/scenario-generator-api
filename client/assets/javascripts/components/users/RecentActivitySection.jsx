@@ -5,7 +5,7 @@ import ReviewConstants from '../../utils/constants/ReviewConstants';
 import ReviewBox from './ReviewBox';
 import Section from '../Section';
 import SectionRow from '../SectionRow';
-import SortingDropdown from '../SortingDropdown';
+import Dropdown from '../Dropdown';
 
 function sumSizeFunc(item) {
   return item.props.size;
@@ -87,9 +87,9 @@ const RecentActivitySection = React.createClass({
     return this.props.sorting ? this.props.sorting : ReviewConstants.DEFAULT_SORTING;
   },
 
-  renderSortingDropdown: function() {
+  renderDropdown: function() {
     return (
-      <SortingDropdown
+      <Dropdown
         onClick={this.changeSorting}
         active={this.currentSorting()}
         options={{
@@ -111,7 +111,7 @@ const RecentActivitySection = React.createClass({
   render: function() {
     return (
       <Section hasPagination={this.props.items.length > 0}
-        customHeaderTag={this.renderSortingDropdown()} {...this.props} onShowMore={this.onShowMore}>
+        customHeaderTag={this.renderDropdown()} {...this.props} onShowMore={this.onShowMore}>
         {this.props.showMessage ?
           <span className='message'>You can browse or edit your reviews at any time, even add or delete files and images.</span>
           : ''

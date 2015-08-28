@@ -18,6 +18,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :tags, only: [:show]
+
     get 'search', to: 'search#index', as: 'search', defaults: {format: :json}
 
     resources 'users', only: [:show], defaults: {format: :json} do

@@ -115,7 +115,7 @@ const NewReviewPage  = React.createClass({
 
     FluxReviewPageActions.submitReview(review,
       function(data) {
-        _this.context.router.transitionTo(`/app/products/${data.reviewable.id}`)
+        _this.context.router.transitionTo(`/app/products/${data.product.id}`)
       },
       function(error) {
         console.error(error)

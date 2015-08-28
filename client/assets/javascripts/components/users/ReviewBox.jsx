@@ -18,8 +18,8 @@ const ReviewBox = React.createClass ({
     return {
       size: 1,
       editable: false,
+      product: {
       showReadMore: false,
-      reviewable: {
         company: {}
       }
     }
@@ -38,7 +38,7 @@ const ReviewBox = React.createClass ({
   },
 
   render: function() {
-    let product = this.props.reviewable;
+    let product = this.props.product;
     let company = product.company;
 
     let boxSize = this.props.size;
@@ -89,7 +89,7 @@ const ReviewBox = React.createClass ({
           <div className='read-more-container'>
             {
               showReadMore ?
-              <a href={`/app/products/${this.props.reviewable.id}`} className='link'>
+              <a href={`/app/products/${this.props.product.id}`} className='link'>
                 <span className='icon-edit-review'>Read more</span>
               </a> : ''
             }
@@ -98,7 +98,7 @@ const ReviewBox = React.createClass ({
           <div className='footer'>
             {
               editable ?
-              <a href={`/app/products/${this.props.reviewable.id}/reviews/${this.props.id}`} className='btn btn-round'>
+              <a href={`/app/products/${this.props.product.id}/reviews/${this.props.id}`} className='btn btn-round'>
                 <span className='icon-edit-review'>Edit</span>
               </a> :
               <span className='created_at'>{timeago(this.props.created_at)}</span>

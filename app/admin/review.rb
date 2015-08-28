@@ -1,6 +1,6 @@
 ActiveAdmin.register Review do
-  permit_params :user_id, :title, :quality_review, :quality_score, :price_review, :price_score, :reviewable_type,
-                :tags, :reviewable_id, links_attributes: [:url, :id, :_destroy]
+  permit_params :user_id, :title, :quality_review, :quality_score, :price_review, :price_score,
+                :tags, :product_id, links_attributes: [:url, :id, :_destroy]
 
   actions :index, :show
 
@@ -36,8 +36,7 @@ ActiveAdmin.register Review do
       row :quality_score
       row :price_review
       row :price_score
-      row :reviewable_type
-      row :reviewable_id
+      row :product_id
       row :user
       row 'Tags' do |n|
         ad.tags.map(&:name).join("<br />").html_safe

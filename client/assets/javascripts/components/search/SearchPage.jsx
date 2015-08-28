@@ -55,7 +55,7 @@ const SearchPage = React.createClass({
     this.changePageAndSearch({ section: section });
   },
 
-  changePage: function(page) {
+  onChangePage: function(page) {
     this.changePageAndSearch({ page: page });
   },
 
@@ -63,14 +63,24 @@ const SearchPage = React.createClass({
     return (this.props.params.section == sectionName || this.props.params.section == 'all')
   },
 
-  renderRightBar: function() {
-
+  renderSideLink: function(total, name, displayName) {
     let section = this.props.params.section;
     function build_link_class(name) {
       let active = section == name ? 'active' : '';
       return 'link ' + active;
     }
 
+    if(total || this.name == 'all') {
+      return (
+        <div  className={ build_link_class(name) }
+              onClick={ () => this.changeTab(name) }>
+          { displayName } ({total})
+        </div>
+      )
+    }
+  },
+
+  renderLeftBar: function() {
     let totalProducts = this.state.data.products.total || 0;
     let totalCompanies = this.state.data.companies.total || 0;
     let totalTags = this.state.data.tags.total || 0;
@@ -79,10 +89,10 @@ const SearchPage = React.createClass({
     return (
       <div className='col-xs-3'>
         <div className='links'>
-          <div className={ build_link_class('all') } onClick={ () => this.changeTab('all') }>All ({totalAll})</div>
-          <div className={ build_link_class('products') } onClick={ () => this.changeTab('products') }>Products ({totalProducts})</div>
-          <div className={ build_link_class('companies') } onClick={ () => this.changeTab('companies') }>Companies ({totalCompanies})</div>
-          <div className={ build_link_class('tags') } onClick={ () => this.changeTab('tags') }>Tags ({totalTags})</div>
+          { this.renderSideLink(totalAll, 'all', 'All')}
+          { this.renderSideLink(totalProducts, 'products', 'Products')}
+          { this.renderSideLink(totalCompanies, 'companies', 'Companies')}
+          { this.renderSideLink(totalTags, 'tags', 'Tags')}
         </div>
         <div className='new-product'>
           { "Can't find a product?" }
@@ -111,7 +121,7 @@ const SearchPage = React.createClass({
     return _.merge(_data, this.context.router.state.location.query);
   },
 
-  renderResults: function() {
+  renderAllResults: function() {
     let noResultsTag = <div className='no-results'>We couldn’t find any results for your search.</div>;
     if(this.state.data.total_results == 0 && !this.displaySection('products') &&
       !this.displaySection('companies') &&
@@ -124,42 +134,87 @@ const SearchPage = React.createClass({
         <Results
           type='products'
           data={this.state.data.products}
+          bottom='button'
           searchTerm={this.props.params.search_string}
-          changePage={this.changePage}
-          showButton={this.props.params.section == 'all'}
-          showPagination={this.props.params.section == 'products'}
-          showTopLink={false}
-          showImages={true}
-          hide={!this.displaySection('products')}
-          currentPage={this.props.params.page}
-          section={this.props.params.section}
-          onSetQuery={this.setQuery}
-          emptyResults={noResultsTag}
-            />
+          topLeft='type'
+          topRight='count' />
         <Results
           type='companies'
           data={this.state.data.companies}
+          bottom='button'
           searchTerm={this.props.params.search_string}
-          changePage={this.changePage}
-          showButton={ this.props.params.section == 'all' }
-          showPagination={ this.props.params.section == 'companies' }
-          showTopLink={false}
-          showImages={true}
-          hide={!this.displaySection('companies')}
-          currentPage={this.props.params.page}
-          section={this.props.params.section}
-          emptyResults={noResultsTag}
-            />
+          topLeft='type'
+          topRight='count' />
         <TagResults
           data={this.state.data.tags}
           hide={!this.displaySection('tags')}
           showSize={true}
           searchTerm={this.props.params.search_string}
           section={this.props.params.section}
-          emptyResults={noResultsTag}
-            />
+          emptyResults={noResultsTag} />
       </div>
     )
+  },
+
+  renderProductResults: function() {
+    return (
+      <div className='col-xs-6'>
+        <Results
+          type='products'
+          data={this.state.data.products}
+          bottom='pagination'
+          currentPage={this.props.params.page}
+          topLeft='type'
+          topRight='dropdown'
+          sort_by={this.state.data.sort_by}
+          onChangePage={this.onChangePage}
+          onSetQuery={this.setQuery} />
+      </div>
+    )
+  },
+
+  renderCompanyResults: function() {
+    return (
+      <div className='col-xs-6'>
+        <Results
+          type='companies'
+          data={this.state.data.companies}
+          bottom='pagination'
+          currentPage={this.props.params.page}
+          topLeft='type'
+          topRight='dropdown'
+          sort_by={this.state.data.sort_by}
+          onChangePage={this.onChangePage}
+          onSetQuery={this.setQuery} />
+      </div>
+    )
+  },
+
+  renderTagResults: function() {
+    return (
+      <div className='col-xs-6'>
+        <TagResults
+          data={this.state.data.tags}
+          hide={!this.displaySection('tags')}
+          showSize={true}
+          searchTerm={this.props.params.search_string}
+          section={this.props.params.section}
+          emptyResults={<div className='no-results'>We couldn’t find any results for your search.</div>} />
+      </div>
+    )
+  },
+
+  renderResults: function() {
+    switch(this.props.params.section) {
+      case 'all':
+        return this.renderAllResults()
+      case 'products':
+        return this.renderProductResults()
+      case 'companies':
+        return this.renderCompanyResults()
+      case 'tags':
+        return this.renderTagResults()
+    }
   },
 
   renderFilters: function() {
@@ -168,6 +223,7 @@ const SearchPage = React.createClass({
     let self = this;
 
     let tagEvent = function(e){
+      debugger;
       let selectedTags = self.state.data.filtered_tags.data;
       let selectedTag = { 'name': e.target.textContent };
       let tagAlreadySelected = _.findWhere(selectedTags, selectedTag);
@@ -184,6 +240,7 @@ const SearchPage = React.createClass({
       let data = self.getSearchParams(_.merge({},self.state.data,{section: self.props.params.section, page: '1'}));
       self.performSearch(data);
     };
+
     let filteredTags = this.state.data.filtered_tags.data;
     return (
       <div id='tag-filter-container' className='col-xs-3'>
@@ -212,7 +269,7 @@ const SearchPage = React.createClass({
           </div>
         </div>
         <div className='row'>
-          { this.renderRightBar() }
+          { this.renderLeftBar() }
           { this.renderResults() }
           { this.renderFilters() }
         </div>

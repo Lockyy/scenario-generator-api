@@ -9,104 +9,6 @@
     &:disabled
       background-color: white
 
-  .results
-    .no-results
-      padding: 20px 10px
-      font-weight: bold
-      display: block
-
-    .title
-      border-bottom: 1px solid $grey
-      padding-bottom: 10px
-
-      .name
-        float: left
-        font-size: 14px
-        text-transform: uppercase
-
-      #results-text-container
-        color: $dark-grey
-        font-size: 11px
-
-        .value
-          font-weight: bold
-
-      .size
-        float: right
-
-      #sort-container
-        float: right
-
-        .form-group
-          margin-bottom: 0
-
-          label
-            font-weight: normal
-            color: $dark-grey
-            font-size: 11px
-            margin: 0
-
-          #sort
-            font-size: 11px
-            outline: none
-            margin-left: 10px
-            border: none
-            background-color: white
-            -webkit-appearance: none
-            -moz-appearance: none
-            -ms-appearance: none
-            -o-appearance: none
-            appearance: none
-
-            &::-ms-expand
-              display: none
-
-    .result
-      padding: 0 !important
-      padding-top: 15px !important
-      padding-bottom: 15px !important
-      border-bottom: 1px solid $grey
-      .name
-        font-size: 18px
-      .description
-        margin-top: 5px
-        margin-bottom: 5px
-        &:first-letter
-          text-transform: uppercase
-      .image-container
-        height: 120px
-        overflow: hidden
-
-    .show-more
-      width: 100%
-      text-align: center
-      a
-        font-size: 18px
-        border: 1px solid $dark-grey
-        color: $dark-grey
-        background: white
-        padding: 10px 20px
-        border-radius: 20px
-        display: inline-block
-        margin-top: 15px
-        text-decoration: none
-        &:hover, &:focus, &:active
-          text-decoration: none
-          background: $dark-grey
-          color: white
-    &.tags
-      .title
-        margin-bottom: 15px
-
-    &.header
-      color: black
-      .result
-        border-bottom: 0
-
-  .results
-    &.tags
-      .no-results
-        margin-top: -15px
 
   .links
     .link
@@ -168,3 +70,76 @@
     cursor: pointer
     &.active
       font-weight: bold
+
+.results
+  .no-results
+    padding: 20px 10px
+    font-weight: bold
+    display: block
+
+  .top
+    border-bottom: 1px solid $grey
+    margin-bottom: 10px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    padding-bottom: 5px
+
+    .top-left
+      color: $dark-grey
+      font-size: 13px
+      text-transform: capitalize
+
+    .top-right
+      color: $dark-grey
+      font-size: 11px
+
+      .value
+        font-weight: bold
+
+  .result
+    padding: 0 !important
+    padding-top: 15px !important
+    padding-bottom: 15px !important
+    border-bottom: 1px solid $grey
+    .name
+      font-size: 18px
+    .description
+      margin-top: 5px
+      margin-bottom: 5px
+      &:first-letter
+        text-transform: uppercase
+    .image-container
+      height: 120px
+      overflow: hidden
+
+  .show-more
+    width: 100%
+    text-align: center
+    a
+      font-size: 18px
+      border: 1px solid $dark-grey
+      color: $dark-grey
+      background: white
+      padding: 10px 20px
+      border-radius: 20px
+      display: inline-block
+      margin-top: 15px
+      text-decoration: none
+      &:hover, &:focus, &:active
+        text-decoration: none
+        background: $dark-grey
+        color: white
+  &.tags
+    .top
+      margin-bottom: 15px
+
+  &.header
+    color: black
+    .result
+      border-bottom: 0
+
+.results
+  &.tags
+    .no-results
+      margin-top: -15px

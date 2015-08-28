@@ -7,7 +7,7 @@ import UrlHelper from '../../utils/helpers/UrlHelper'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
 import Tags from '../Tags';
-import SortingDropdown from '../SortingDropdown';
+import Dropdown from '../Dropdown';
 import ReviewConstants from '../../utils/constants/ReviewConstants';
 
 const Reviews = React.createClass({
@@ -71,7 +71,7 @@ const Reviews = React.createClass({
 
 	getEditReviewTag: function(review) {
 		return <div className='edit-review-container'>
-			<Link to={`/app/products/${review.reviewable.id}/reviews/${review.id}`}
+			<Link to={`/app/products/${review.product.id}/reviews/${review.id}`}
 				className='btn btn-white btn-round'>Edit my review</Link>
 		</div>;
 	},
@@ -116,7 +116,7 @@ const Reviews = React.createClass({
     let wrotByCurrentUser = this.context.currentUser.id == review.user.id;
 
     let editMyReview =  <div className='edit-review-container'>
-                          <Link to={`/app/products/${review.reviewable.id}/reviews/${review.id}`}
+                          <Link to={`/app/products/${review.product.id}/reviews/${review.id}`}
                                className='btn btn-white btn-round'>Edit my review</Link>
                         </div>;
 
@@ -195,25 +195,27 @@ const Reviews = React.createClass({
     }
   },
 
-  renderSortingDropdown: function() {
+  renderDropdown: function() {
     return (
-      <SortingDropdown
-        onClick={this.changeSorting}
-        active={this.currentSorting()}
-        options={{
-          latest: 'Latest',
-          highScore: 'Rating: Low to High',
-          lowScore: 'Rating: High to Low',
-          unhelpful: 'Most Helpful: Low to High',
-          helpful: 'Most Helpful: High to Low'
-        }} />
+      <div className="header">
+        <Dropdown
+          onClick={this.changeSorting}
+          active={this.currentSorting()}
+          options={{
+            latest: 'Latest',
+            highScore: 'Rating: Low to High',
+            lowScore: 'Rating: High to Low',
+            unhelpful: 'Most Helpful: Low to High',
+            helpful: 'Most Helpful: High to Low'
+          }} />
+      </div>
     )
   },
 
   render: function() {
     return (
-      <div>
-       { this.renderSortingDropdown() }
+      <div className='review-container'>
+       { this.renderDropdown() }
         <div className='row reviews'>
           {this.renderReviews()}
         </div>

@@ -18,7 +18,7 @@ ActiveAdmin.register_page "Dashboard" do
         panel "Recent Reviews" do
           ul do
             Review.limit(5).order('created_at DESC').map do |review|
-              li link_to("#{review.user.name} wrote a review on #{review.reviewable.name}", admin_review_path(review))
+              li link_to("#{review.user.name} wrote a review on #{review.product.name}", admin_review_path(review))
             end
           end
         end

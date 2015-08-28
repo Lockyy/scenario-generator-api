@@ -1,19 +1,19 @@
-import React from 'react/addons';
+import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 
-const SortingDropdown = React.createClass({
-  displayName: 'SortingDropdown',
+const Dropdown = React.createClass({
+  displayName: 'Dropdown',
 
   onClick: function(sortKey) {
     this.props.onClick(sortKey)
-    $('.sort-links').removeClass('active')
+    $('.dropdown-links').removeClass('active')
   },
 
   renderSortOption: function(displayString, sortKey) {
     if(sortKey != this.props.active) {
       return (
-        <div  className='sort-link'
+        <div  className='dropdown-link'
               onClick={ () => this.onClick(sortKey) }>
           {displayString}
         </div>
@@ -23,7 +23,7 @@ const SortingDropdown = React.createClass({
 
   renderActiveOption: function() {
     return (
-      <div className='active-sort-link' onClick={() => $('.sort-links').toggleClass('active')} >
+      <div className='active-dropdown-link' onClick={() => $('.dropdown-links').toggleClass('active')} >
         {this.props.options[this.props.active]}
       </div>
     )
@@ -31,9 +31,9 @@ const SortingDropdown = React.createClass({
 
   render: function() {
     return (
-      <div className='sort-links-container'>
-        <span className='sort-links-label'>Sort by:</span>
-        <div className='sort-links'>
+      <div className='dropdown-container'>
+        <span className='dropdown-label'>Sort by:</span>
+        <div className={`dropdown-links ${this.props.containerClass}`}>
           {this.renderActiveOption()}
           <div className='dropdown'>
             {_.map(this.props.options, this.renderSortOption)}
@@ -41,9 +41,15 @@ const SortingDropdown = React.createClass({
         </div>
       </div>
     )
+  },
+
+  componentDidMount: function() {
+    $('.dropdown-links').on('clickoutside', function(){
+      $('.dropdown-links').removeClass('active')
+    })
   }
 
 })
 
-export default SortingDropdown;
+export default Dropdown;
 
