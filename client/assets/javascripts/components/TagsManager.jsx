@@ -11,6 +11,7 @@ const TagsManager = React.createClass({
       buttonText: 'Add / Edit Tags',
       itemClass: 'tagSuggestion',
       tagsinputProperties: {},
+      addLink: true,
       onSetTags: function(tags) {}
     }
   },
@@ -176,10 +177,10 @@ const TagsManager = React.createClass({
         <div className='tags items' ref='tags'>
           {_.map(this.props.tags, function(tag) {
             let id = Math.floor((Math.random() * 1000000) + 1);
-
-            return <span className='tag item' key={`tag_${id}`} id={`tag_${id}`} ref={`tag_${id}`}>
-                {tag.name}
-            </span>
+            let url = `/app/tags/${tag.slug}/1`;
+            return <a href={url}>
+              <span className='tag item' key={`tag_${id}`} id={`tag_${id}`} ref={`tag_${id}`}>{tag.name}</span>
+              </a>
           })}
         </div>
 

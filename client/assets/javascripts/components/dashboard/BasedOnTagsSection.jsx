@@ -64,7 +64,9 @@ class BasedOnTagsSection extends React.Component {
 
   getCustomizeProductBoxDetailFn(tag) {
     return function(props) {
-      return <span className='tag'>{tag}</span>
+      return <a className='link-tag' href={`/app/tags/${tag.slug}/1`}>
+        <span className='tag'>{tag.name}</span>
+      </a>
     }
   }
 
@@ -75,8 +77,10 @@ class BasedOnTagsSection extends React.Component {
     let _this = this;
 
     if (_.isEmpty(this.props.items)) return [];
-    _.each(this.props.items, function(products, tag) {
+    _.each(this.props.items, function(products, tagName) {
       _.each(products, function(product) {
+        let tag = _.sample(product.tags);
+
         items.push(<ProductBox size={_this.getCurrentBoxSize(items, product)}
           onCustomizeDetail={_this.getCustomizeProductBoxDetailFn(tag)} {...product} />);
       });

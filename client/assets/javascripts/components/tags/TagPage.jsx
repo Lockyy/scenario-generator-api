@@ -3,6 +3,7 @@ import React from 'react';
 import timeago from 'timeago';
 import { Link, Navigation } from 'react-router';
 import FluxTagPageActions from '../../actions/FluxTagPageActions'
+import FluxCurrentUserActions from '../../actions/FluxCurrentUserActions'
 import TagStore from '../../stores/TagStore'
 import Results from '../search/Results'
 
@@ -50,10 +51,12 @@ const TagPage = React.createClass({
 
   follow: function() {
     FluxTagPageActions.follow(this.tag());
+    FluxCurrentUserActions.addTag({name: this.tag()});
   },
 
   unfollow: function() {
     FluxTagPageActions.unfollow(this.tag());
+     FluxCurrentUserActions.removeTag({name: this.tag()});
   },
 
   changeSort: function(newSortParams) {

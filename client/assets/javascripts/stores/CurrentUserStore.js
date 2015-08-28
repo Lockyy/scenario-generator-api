@@ -10,6 +10,8 @@ class CurrentUserStore {
       handleFetchData: FluxCurrentUserActions.FETCH_DATA,
       handleUpdateData: FluxCurrentUserActions.UPDATE_DATA,
       handleUpdateTags: FluxCurrentUserActions.UPDATE_TAGS,
+      handleAddTag: FluxCurrentUserActions.ADD_TAG,
+      handleRemoveTag: FluxCurrentUserActions.REMOVE_TAG,
       handleFetchRecentActivity: FluxCurrentUserActions.FETCH_RECENT_ACTIVITY,
       handleRegisterError: FluxCurrentUserActions.REGISTER_ERROR
     });
@@ -27,6 +29,24 @@ class CurrentUserStore {
   handleUpdateTags(data) {
     this.data = data;
     this.error = null;
+  }
+
+  handleAddTag(tag) {
+    if (_.isEmpty(this.data.tags)) {
+      this.data.tags = [];
+    }
+
+    this.data.tags.push(tag);
+  }
+
+  handleRemoveTag(tag) {
+    if (_.isEmpty(this.data.tags)) {
+      return;
+    }
+
+    _.remove(this.data.tags, function(t) {
+      return t.name == tag.name;
+    });
   }
 
   handleFetchRecentActivity(data) {

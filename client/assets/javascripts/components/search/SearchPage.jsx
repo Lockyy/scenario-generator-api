@@ -27,9 +27,6 @@ const SearchPage = React.createClass({
 
   onChange: function(data) {
     this.setState(data);
-    // For handling when a user submits a search via the header search input rather than
-    // the search page input whilst on the search page.
-    $(this.refs.inputBox.getDOMNode()).val(data.data.search_string);
   },
 
   changePageAndSearch: function(params) {
@@ -265,7 +262,7 @@ const SearchPage = React.createClass({
             <input
               className='search-box'
               ref='inputBox'
-              defaultValue={ this.props.params.search_string }
+              value={ this.props.params.search_string }
               onChange={ this.onSearchInput } disabled/>
           </div>
         </div>

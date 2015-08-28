@@ -11,6 +11,7 @@ import SearchPage from './components/search/SearchPage';
 import SearchBox from './components/header/SearchBox';
 import UserTags from './components/users/UserTags';
 import MyRecentActivity from './components/menu/MyRecentActivity';
+import FluxCurrentUserActions from './actions/FluxCurrentUserActions';
 import { Router, Route } from 'react-router';
 import { history } from 'react-router/lib/BrowserHistory';
 import UserAPI from './utils/api/UserAPI'
@@ -18,6 +19,9 @@ import UserAPI from './utils/api/UserAPI'
 $(function onLoad() {
     function render() {
         UserAPI.getCurrentUser(function(currentUser) {
+
+            FluxCurrentUserActions.updateData(currentUser);
+
             React.withContext({'currentUser': currentUser}, function() {
                 let router = React.render((
                     <Router history={history}>

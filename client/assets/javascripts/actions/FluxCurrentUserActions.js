@@ -33,6 +33,14 @@ class FluxCurrentUserActions {
     this.dispatch(data);
   }
 
+  addTag(tag) {
+    this.dispatch(tag);
+  }
+
+  removeTag(tag) {
+    this.dispatch(tag);
+  }
+
   updateTags(tags) {
     UserAPI.updateTags(tags,
       (data) => {
