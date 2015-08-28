@@ -141,8 +141,8 @@ const NewReviewPage  = React.createClass({
   render: function render() {
     let info = (<div className='info'>
       <div className='instructions'>
-        If you can't find a product, please select the Add and Review <i className='add-symbol'></i>
-       option to add it to the directory before reviewing.
+        If you can't find a product, please select the Add and Review <i className='add-symbol'></i> option from the drop down.
+        This will add add the product to the directory when you've reviewed it.
       </div>
     </div>);
 
