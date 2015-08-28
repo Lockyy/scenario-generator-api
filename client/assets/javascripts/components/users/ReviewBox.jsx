@@ -89,7 +89,7 @@ const ReviewBox = React.createClass ({
           <div className='read-more-container'>
             {
               showReadMore ?
-              <a href={`/app/products/${this.props.reviewable.id}`} className='link'>
+              <a href={`/app/products/${this.props.product.id}`} className='link'>
                 <span className='icon-edit-review'>Read more</span>
               </a> : ''
             }
