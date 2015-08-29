@@ -60,7 +60,13 @@ class Dashboard extends React.Component {
         continue
       }
 
-      products = this.getSection(sectionToExclude).fetchProducts()
+      let section = this.getSection(sectionToExclude);
+
+      if (_.isEmpty(section)) {
+        return;
+      }
+
+      products = section.fetchProducts()
       sectionIDs = _.map(products, function(obj) { return obj.props.id })
       idsToExclude = _.union(idsToExclude, sectionIDs)
     }
