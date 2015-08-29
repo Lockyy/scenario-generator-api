@@ -60,11 +60,20 @@ class Dashboard extends React.Component {
         continue
       }
 
-      products = this.refs[sectionToExclude].fetchProducts()
+      products = this.getSection(sectionToExclude).fetchProducts()
       sectionIDs = _.map(products, function(obj) { return obj.props.id })
       idsToExclude = _.union(idsToExclude, sectionIDs)
     }
     return idsToExclude
+  }
+
+  getSections() {
+    return {
+      recently_added: this.refs.recently_added,
+      based_on_tags: this.refs.based_on_tags,
+      most_popular: this.refs.most_popular,
+      recent_activity: this.refs.recent_activity
+    }
   }
 
   onChange(data) {
@@ -89,10 +98,6 @@ class Dashboard extends React.Component {
         })
       };
     });
-  }
-
-  getSections() {
-    return this.refs;
   }
 
   getSection(name) {
