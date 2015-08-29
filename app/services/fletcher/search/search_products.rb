@@ -36,6 +36,7 @@ module Fletcher
 
     def build_sort_by
       default_sort_by = super
+      default_sort_by[:relevance] = lambda { |data| data }
       default_sort_by[:latest] = lambda { |data| data.reorder('created_at ASC') }
       default_sort_by[:alphabetical_order] = lambda { |data| data.reorder('name ASC') }
       default_sort_by[:high_to_low] = lambda { |data| data.best_rating }
