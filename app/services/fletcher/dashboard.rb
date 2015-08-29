@@ -4,7 +4,7 @@ module Fletcher
     MOST_POPULAR_SECTION = 'most_popular'
     RECENT_ACTIVITY_SECTION = 'recent_activity'
     BASED_ON_TAGS_SECTION = 'based_on_tags'
-    SECTIONS = [RECENTLY_ADDED_SECTION, MOST_POPULAR_SECTION, RECENT_ACTIVITY_SECTION, BASED_ON_TAGS_SECTION]
+    SECTIONS = [BASED_ON_TAGS_SECTION, RECENTLY_ADDED_SECTION, MOST_POPULAR_SECTION, RECENT_ACTIVITY_SECTION]
     DEFAULTS = {
       RECENTLY_ADDED_SECTION => { limit: 8, offset: 0 },
       BASED_ON_TAGS_SECTION => { limit: 8, offset: 0 },
@@ -41,7 +41,7 @@ module Fletcher
     def based_on_tags
       params = pagination_params(@params[BASED_ON_TAGS_SECTION], DEFAULTS[BASED_ON_TAGS_SECTION])
       tags = @user.tags.most_popular
-      products = Product.where.not(id: @existing_ids).distinct.with_tags(tags.map(&:name)).limit(params[:limit]).offset(params[:offset])
+      products = Product.distinct.with_tags(tags.map(&:name)).limit(params[:limit]).offset(params[:offset])
       @existing_ids += products.map(&:id)
       products.group_by { |product| (product.tags && tags).first.name }
     end
