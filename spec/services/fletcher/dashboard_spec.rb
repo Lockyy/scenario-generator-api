@@ -5,6 +5,10 @@ RSpec.describe Fletcher::Dashboard do
     []
   }
 
+  let(:user) {
+    double(:user).as_null_object
+  }
+
   let(:params) {
       {
         recently_added: { limit: 10, offset: 3 },
@@ -15,7 +19,7 @@ RSpec.describe Fletcher::Dashboard do
       }.with_indifferent_access
     }
 
-  subject { Fletcher::Dashboard.new(existing_ids, params) }
+  subject { Fletcher::Dashboard.new(user, existing_ids, params) }
 
   describe '#recently_added' do
     it 'fetches tags and products' do
@@ -46,7 +50,7 @@ RSpec.describe Fletcher::Dashboard do
     end
 
     context 'without params' do
-      subject { Fletcher::Dashboard.new(existing_ids) }
+      subject { Fletcher::Dashboard.new(user, existing_ids) }
 
       it 'adds default limit 8' do
         mocked_scope = double.as_null_object
@@ -99,7 +103,7 @@ RSpec.describe Fletcher::Dashboard do
       end
 
       context 'without params' do
-        subject { Fletcher::Dashboard.new(existing_ids) }
+        subject { Fletcher::Dashboard.new(user, existing_ids) }
 
         it 'adds default limit 2' do
           mocked_scope = double.as_null_object
@@ -143,7 +147,7 @@ RSpec.describe Fletcher::Dashboard do
       end
 
       context 'without params' do
-        subject { Fletcher::Dashboard.new(existing_ids) }
+        subject { Fletcher::Dashboard.new(user, existing_ids) }
 
         it 'adds default limit 2' do
           mocked_scope = double.as_null_object
