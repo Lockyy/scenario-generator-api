@@ -117,23 +117,35 @@ const TagsManager = React.createClass({
 
   _enableTagsManager: function _enableTagsManager(e) {
     e.preventDefault();
-
     let _this = this;
+
+    _.each(this.props.tags, function(tag) {
+      _this._getTagsManagerInput().tagsinput('add', tag);
+    });
 
     this._showTagsManager();
     this._hideTagsItems();
     this._hideButtonContainer();
 
-    let $tagsManagerInput = this._getTagsManagerInput();
+    this._getTagsManagerContainer().on('clickoutside', _.debounce(this._closeTagsManager));
+    this._getTagsManagerInput().tagsinput('focus');
+  },
 
+  _closeTagsManager: function _closeTagsManager() {
+    this._hideTagsManager();
+    this._showTagsItems();
+    this._showButtonContainer();
+    this._getTagsManagerContainer().off('clickoutside');
+  },
+
+  componentDidMount: function componentDidMount() {
+    let _this = this;
+
+    let $tagsManagerInput = this._getTagsManagerInput();
     $tagsManagerInput.tagsinput(this._getTagsinputProperties());
 
-    _.each(this.props.tags, function(tag) {
-      $tagsManagerInput.tagsinput('add', tag);
-    });
-
-    $tagsManagerInput.on('beforeItemAdd', function(e) {
-      if (_.isString(e.item)) {
+    let customAddTagFn = function customAddTagFn(e) {
+      if (_.isString(e.item) && !_.isEmpty(e.item)) {
         e.cancel = true;
 
         if (_this._getTagsinputProperties().freeInput) {
@@ -142,31 +154,25 @@ const TagsManager = React.createClass({
           $tagsManagerInput.tagsinput('input').typeahead('val', '');
         }
       }
-    });
+    };
 
-    $tagsManagerInput.on('itemAdded', function(e) {
-      _this._handleAddTags();
-    });
-
-    $tagsManagerInput.on('itemRemoved', function(e) {
-      _this._handleAddTags();
-    });
+    $tagsManagerInput.on('beforeItemAdd', _.debounce(customAddTagFn));
+    $tagsManagerInput.on('itemAdded', _.debounce(_this._handleAddTags));
+    $tagsManagerInput.on('itemRemoved', _.debounce(_this._handleAddTags));
 
     $tagsManagerInput.tagsinput('input').keypress(function(e) {
       if (e.keyCode === 13 || e.key === 'Enter') {
         e.preventDefault();
-        $tagsManagerInput.tagsinput('add', e.target.value);
-        $tagsManagerInput.tagsinput('input').typeahead('close');
+        let value = e.target.value
+
+        if (_.isEmpty(value)) {
+          _this._closeTagsManager();
+        } else {
+          e.item = e.target.value;
+          customAddTagFn(e);
+        }
       }
     });
-
-    $tagsManagerInput.tagsinput('input').on('blur', function(e) {
-      _this._hideTagsManager();
-      _this._showTagsItems();
-      _this._showButtonContainer();
-    });
-
-    $tagsManagerInput.tagsinput('focus');
   },
 
   render: function render() {
