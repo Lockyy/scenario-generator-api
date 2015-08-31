@@ -127,7 +127,11 @@ const TagsManager = React.createClass({
     this._hideTagsItems();
     this._hideButtonContainer();
 
-    this._getTagsManagerContainer().on('clickoutside', _.debounce(this._closeTagsManager));
+    this._getTagsManagerContainer().on('clickoutside', _.debounce(function (e) {
+      if (!_.include(e.target.classList, 'myTagSuggestion')) {
+        this._closeTagsManager();
+      }
+    }));
     this._getTagsManagerInput().tagsinput('focus');
   },
 
