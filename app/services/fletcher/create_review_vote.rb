@@ -10,8 +10,9 @@ module Fletcher
     end
 
     def save!
-      @review_vote = ReviewVote.new({review: @review, user: @user, helpful: @is_helpful})
-      @review.reviewVotes << @review_vote
+      @review_vote = ReviewVote.find_or_initialize_by({review: @review, user: @user})
+      @review_vote.helpful = @is_helpful
+      @review_vote.save
       @review.save!
     end
   end
