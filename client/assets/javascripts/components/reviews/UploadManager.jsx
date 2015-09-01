@@ -32,6 +32,12 @@ const UploadManager = React.createClass({
     });
   },
 
+  _handleRemoveAttachment: function _handleRemoveAttachment(e) {
+    this.props.onRemoveFile(e, {
+      success: function(id) { console.log('Attachment Removed') }
+    })
+  },
+
   _addFile: function _addFile(e) {
     React.findDOMNode(this.refs.input_file).click();
   },
@@ -41,15 +47,18 @@ const UploadManager = React.createClass({
   },
 
   render: function render() {
+    let that = this
+
     return (
       <div className='upload-manager items-manager'>
         <ul className='files items' ref='files'>
           {_.map(this.props.attachments, function(file) {
             let id = Math.floor((Math.random() * 1000000) + 1);
 
-            return <li className='file' id={`file_${id}`} ref={`file_${id}`}>
+            return <li className={`file ${file.id}`} id={`file_${id}`} ref={`file_${id}`}>
               <div className=''>
                 <a href={UrlHelper.addProtocol(file.url)} target='_blank'>{file.name}</a>
+                <span className='remove-link' data-id={file.id} onClick={that._handleRemoveAttachment}>(remove)</span>
               </div>
             </li>
           })}

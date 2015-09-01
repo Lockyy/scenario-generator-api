@@ -30,7 +30,8 @@ module Fletcher
       params.delete(:tags)
 
       @review.tags = tags_params.empty? ? [] : tags_params.map { |tag| Tag.where(name: tag[:name]).first_or_create }
-      @review.links.where.not(id: params[:links_attributes].map{|link| link['id']}).destroy_all
+      remove_unlisted!(@review.links, params[:links_attributes])
+      remove_unlisted!(@review.attachments, params[:attachments_attributes])
       @review.update!(params)
     end
 
@@ -48,6 +49,14 @@ module Fletcher
 
     def review_params
       @review_params
+    end
+
+    # Takes in a collection and an array of objects.
+    # Gathers a list of the ids in the array of objects and removes any
+    # records from the collection not in the array.
+    def remove_unlisted!(collection, array_of_objects)
+      ids = array_of_objects.map { |object| object['id'] }
+      collection.where.not(array_of_objects).destroy_all
     end
   end
 end

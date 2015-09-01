@@ -49,6 +49,7 @@ class ReviewPageStore {
       handleUpdateReviewPriceReview: ReviewPageReviewFieldsActions.UPDATE_PRICE_REVIEW,
       handleSubmitReview: FluxReviewPageActions.SUBMIT_REVIEW,
       handleAddFile: ReviewPageReviewFieldsActions.ADD_FILE,
+      handleRemoveFile: ReviewPageReviewFieldsActions.REMOVE_FILE,
       handleAddLink: ReviewPageReviewFieldsActions.ADD_LINK,
       handleRemoveLink: ReviewPageReviewFieldsActions.REMOVE_LINK,
       handleAddTag: ReviewPageReviewFieldsActions.ADD_TAG,
@@ -91,6 +92,12 @@ class ReviewPageStore {
 
   handleAddFile(file) {
     this.review.attachments.push(file);
+  }
+
+  handleRemoveFile(id) {
+    this.review.attachments = this.review.attachments.filter(function( obj ) {
+      return obj.id != id;
+    });
   }
 
   handleAddLink(link) {

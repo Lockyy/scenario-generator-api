@@ -105,6 +105,10 @@ const NewReviewPage  = React.createClass({
         newState.review.links = review.review.links
       }
 
+      if(review.review.attachments != undefined) {
+        newState.review.attachments = review.review.attachments
+      }
+
       return newState;
     });
 
