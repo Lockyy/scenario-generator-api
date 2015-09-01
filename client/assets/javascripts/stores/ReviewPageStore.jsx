@@ -50,6 +50,7 @@ class ReviewPageStore {
       handleSubmitReview: FluxReviewPageActions.SUBMIT_REVIEW,
       handleAddFile: ReviewPageReviewFieldsActions.ADD_FILE,
       handleAddLink: ReviewPageReviewFieldsActions.ADD_LINK,
+      handleRemoveLink: ReviewPageReviewFieldsActions.REMOVE_LINK,
       handleAddTag: ReviewPageReviewFieldsActions.ADD_TAG,
       handleSetTags: ReviewPageReviewFieldsActions.SET_TAGS,
       handleRegisterError: FluxReviewPageActions.REGISTER_ERROR
@@ -94,6 +95,12 @@ class ReviewPageStore {
 
   handleAddLink(link) {
     this.review.links.push(link);
+  }
+
+  handleRemoveLink(link) {
+    this.review.links = this.review.links.filter(function( obj ) {
+      return obj.url !== link.url;
+    });
   }
 
   handleAddTag(tag) {

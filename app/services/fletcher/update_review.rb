@@ -30,6 +30,7 @@ module Fletcher
       params.delete(:tags)
 
       @review.tags = tags_params.empty? ? [] : tags_params.map { |tag| Tag.where(name: tag[:name]).first_or_create }
+      @review.links.where.not(id: params[:links_attributes].map{|link| link['id']}).destroy_all
       @review.update!(params)
     end
 

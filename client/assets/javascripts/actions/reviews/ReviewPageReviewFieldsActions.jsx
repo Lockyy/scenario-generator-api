@@ -33,6 +33,11 @@ class ReviewPageReviewFieldsActions {
     callbacks.success(link)
   }
 
+  removeLink(link, callbacks) {
+    this.dispatch(link);
+    callbacks.success(link);
+  }
+
   addTag(tag, callbacks) {
     callbacks = callbacks || {};
     this.dispatch(tag);
