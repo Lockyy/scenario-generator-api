@@ -6,7 +6,7 @@ class Review < ActiveRecord::Base
   has_many :tag_taggables, as: :taggable
   has_many :tags, through: :tag_taggables
   has_many :links
-  has_many :reviewVotes
+  has_many :review_votes
 
   accepts_nested_attributes_for :product
   accepts_nested_attributes_for :tags
@@ -44,6 +44,14 @@ class Review < ActiveRecord::Base
     (quality_review.nil? or quality_review.empty?) ? "" : ApplicationController.helpers.simple_format(quality_review)
   end
 
+  def helpful_votes
+    review_votes.where(helpful: true).size
+  end
+
+  def total_votes
+    review_votes.size
+  end
+
   validates :quality_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, allow_nil: true
   validates :price_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, allow_nil: true
   validates :user_id, uniqueness: { scope: :product_id }
@@ -57,7 +65,7 @@ class Review < ActiveRecord::Base
 
   def calculate_helpfulness
     helpfulness = 0
-    reviewVotes.each do |vote|
+    review_votes.each do |vote|
       helpfulness -= 1
       helpfulness += 2 if vote.helpful
     end

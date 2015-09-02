@@ -79,7 +79,7 @@ const Reviews = React.createClass({
 	},
 
   alreadyVotedTag: function(review, userId) {
-    let userVote = _.find(review.reviewVotes, function(reviewVote){
+    let userVote = _.find(review.review_votes, function(reviewVote){
       return reviewVote.user_id == userId
     });
 
@@ -102,7 +102,7 @@ const Reviews = React.createClass({
   },
 
 	getVoteOnReviewTag: function(review, userId) {
-		let alreadyVoted = !!_.find(review.reviewVotes, function(reviewVote){
+		let alreadyVoted = !!_.find(review.review_votes, function(reviewVote){
 			return reviewVote.user_id == userId
 		});
 
@@ -140,7 +140,7 @@ const Reviews = React.createClass({
         <a className="link" href={UrlHelper.addProtocol(link.url)} target='_blank'>{UrlHelper.addProtocol(link.url)}</a>
       </li>);
     });
-    let wrotByCurrentUser = this.context.currentUser.id == review.user.id;
+    let wroteByCurrentUser = this.context.currentUser.id == review.user.id;
 
     let editMyReview =  <div className='edit-review-container'>
                           <Link to={`/app/products/${review.product.id}/reviews/${review.id}`}
@@ -157,7 +157,7 @@ const Reviews = React.createClass({
                                   data-helpful='false' onClick={this.voteOnReview}> No </button>
                         </div>;
 
-    let userEditAction =   wrotByCurrentUser ? editMyReview
+    let userEditAction =   wroteByCurrentUser ? editMyReview
       : itWasHelpful;
 
     let job_title = _.isEmpty(review.user.job_title) ?
