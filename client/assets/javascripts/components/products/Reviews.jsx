@@ -181,14 +181,17 @@ const Reviews = React.createClass({
           </div>
         </div>
         <div className="col-xs-12 review-content">
-          <span className="created_at">
+          <span className="score">
+            { review.quality_score ? <Rating value={review.quality_score} name='rating'/> : '' }
+          </span>
+          <div className="created_at">
             {review.display_date}
+          </div>
+          <span className="rating">
+            { review.total_votes > 0 ? `${review.helpful_votes} of ${review.total_votes} people found this review helpful` : ''}
           </span>
           <div className="title">
             {review.title}
-          </div>
-          <div className="score">
-            { review.quality_score ? <Rating value={review.quality_score} name='rating'/> : '' }
           </div>
           <div className="review-text" dangerouslySetInnerHTML={{__html: review.formatted_quality_review}} />
           <ul className="attachments">
