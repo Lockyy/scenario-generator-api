@@ -242,17 +242,28 @@
                 color: $light-grey
 
           .helpful-review-container
-            margin-top: 25px
-            padding: 15px 25px
-            color: $dark-grey
-            background-color: $light-grey
+            @extend .row
+            margin: 0
 
-            .helpful-reviews-text
-              padding-right: 10px
-              font-size: 13px
+            .vote-container, .feedback
+              @extend .col-xs-5
 
-            .btn
-              min-width: 50px
-              margin-left: 10px
-              text-align: center
-              font-size: 10px
+              margin-top: 25px
+              padding: 15px 35px
+              color: $dark-grey
+              background-color: $light-grey
+
+              .helpful-reviews-text
+                padding-right: 10px
+                font-size: 13px
+
+              .btn
+                min-width: 50px
+                margin-left: 10px
+                text-align: center
+                font-size: 10px
+
+            .feedback
+              display: none
+              color: #318eaf
+              background-color: $white

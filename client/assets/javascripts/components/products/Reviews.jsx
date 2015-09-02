@@ -58,6 +58,7 @@ const Reviews = React.createClass({
   },
 
   voteOnReview: function(e){
+    let _this = this;
 		let element = $(e.target);
     let elementData = element.data();
     let prodId = elementData.productId;
@@ -67,10 +68,21 @@ const Reviews = React.createClass({
 
     FluxProductReviewsActions.voteOnReview(prodId, revId, helpful, function() {
       FluxProductReviewsActions.fetchReviews(prodId, currentSorting);
+      element.trigger('blur');
+      _this.showVoteFeedback(element);
     });
   },
 
+  hideVoteFeedback: function(voteButton) {
+    voteButton.parents('.helpful-review-container').find('.feedback').fadeOut('slow');
+  },
+
+  showVoteFeedback: function(voteButton) {
+    voteButton.parents('.helpful-review-container').find('.feedback').fadeIn('slow');
+  },
+
   cancelVote: function(e) {
+    let _this = this;
     let element = $(e.target);
     let elementData = element.data();
     let prodId = elementData.productId;
@@ -79,6 +91,8 @@ const Reviews = React.createClass({
 
     FluxProductReviewsActions.cancelVoteOnReview(prodId, revId, function() {
       FluxProductReviewsActions.fetchReviews(prodId, currentSorting);
+      element.trigger('blur');
+      _this.hideVoteFeedback(element);
     });
   },
 
@@ -89,7 +103,7 @@ const Reviews = React.createClass({
 		</div>;
 	},
 
-  alreadyVotedTag: function(review, userId) {
+	getVoteOnReviewTag: function(review, userId) {
     let userVote = _.find(review.review_votes, function(reviewVote){
       return reviewVote.user_id == userId
     });
@@ -98,46 +112,31 @@ const Reviews = React.createClass({
     let reviewId = review.id;
 
     let string;
-    let yesClass = 'btn btn-grey btn-round'
-    let noClass = 'btn btn-grey btn-round'
+    let voted = !_.isUndefined(userVote);
+    let helpful = voted && userVote.helpful;
+    let unhelpful = voted && !userVote.helpful;
 
-    if(userVote.helpful) { yesClass = yesClass + ' active' }
-    else { noClass = noClass + ' active' }
+    let yesClass = `btn btn-grey btn-round ${ helpful ? 'active' : '' }`;
+    let noClass = `btn btn-grey btn-round ${ unhelpful ? 'active' : '' }`;
 
-    return <div className='helpful-review-container'>
-      <span className='helpful-reviews-text'>Was this review helpful to you?</span>
-      <button className={yesClass} data-product-id={productId}
-              data-review-id={reviewId} data-helpful='true'
-              onClick={userVote.helpful ? this.cancelVote : this.voteOnReview}>
-        Yes
-      </button>
-      <button className={noClass} data-product-id={productId}
-              data-review-id={reviewId} data-helpful='false'
-              onClick={userVote.helpful ? this.voteOnReview : this.cancelVote}>
-        No
-      </button>
-    </div>
-  },
-
-	getVoteOnReviewTag: function(review, userId) {
-		let alreadyVoted = !!_.find(review.review_votes, function(reviewVote){
-			return reviewVote.user_id == userId
-		});
-
-    if(alreadyVoted) {
-      return this.alreadyVotedTag(review, userId)
-    }
-
-    let productId = review.product.id;
-    let reviewId = review.id;
-
-    return <div className='helpful-review-container'>
-      <span className='helpful-reviews-text'> Was this review helpful to you? </span>
-      <button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
-        data-helpful='true' onClick={this.voteOnReview}> Yes </button>
-      <button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
-        data-helpful='false' onClick={this.voteOnReview}> No </button>
-    </div>;
+    return (<div className='helpful-review-container'>
+      <div className='vote-container'>
+        <span className='helpful-reviews-text'>Was this review helpful to you?</span>
+        <button className={yesClass} data-product-id={productId}
+                data-review-id={reviewId} data-helpful='true'
+                onClick={helpful ? this.cancelVote : this.voteOnReview}>
+          Yes
+        </button>
+        <button className={noClass} data-product-id={productId}
+                data-review-id={reviewId} data-helpful='false'
+                onClick={unhelpful ? this.cancelVote : this.voteOnReview}>
+          No
+        </button>
+      </div>
+      <div className='feedback' data-review-id={reviewId} >
+        Thanks for your vote!
+      </div>
+    </div>);
 	},
 
 	getReviewActionTag: function(review) {
@@ -278,11 +277,3 @@ const Reviews = React.createClass({
 })
 
 export default Reviews;
-
-// title: "Nice Product"
-// price_review: "Very cheap"
-// price_score: 5
-// quality_review: "Very good quality"
-// quality_score: 5
-// created_at: "2015-08-05T11:07:04.538Z"
-// updated_at: "2015-08-05T11:07:11.782Z"
