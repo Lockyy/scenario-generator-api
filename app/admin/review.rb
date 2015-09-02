@@ -46,6 +46,4 @@ ActiveAdmin.register Review do
       end
     end
   end
-
 end
-

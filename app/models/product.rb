@@ -6,8 +6,9 @@ class Product < ActiveRecord::Base
 
   belongs_to :company
   has_many :reviews
+  has_many :custom_attachments, as: :attachable, source: :attachments, class_name: 'Attachment'
   has_many :attachments, through: :reviews, source: :attachments
-  has_many :images, -> { with_images }, through: :reviews, source: :attachments
+  has_many :reviews_images, -> { with_images }, through: :reviews, source: :attachments
   has_many :links, through: :reviews
   has_many :tags, through: :reviews
   has_one :default_image, class_name: 'Attachment'
@@ -17,6 +18,7 @@ class Product < ActiveRecord::Base
   include SearchableByTag
 
   accepts_nested_attributes_for :reviews
+  accepts_nested_attributes_for :custom_attachments
 
   validates :name, presence: true, uniqueness: { scope: :company_id, case_sensitive: false }
   validates :description, presence: true
@@ -53,6 +55,10 @@ products.url, company_id, products.views, products.created_at, products.updated_
 
   scope :worst_rating, -> do
     rating('asc')
+  end
+
+  def images
+    custom_attachments.with_images + reviews_images
   end
 
   def image

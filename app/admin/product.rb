@@ -2,6 +2,8 @@ ActiveAdmin.register Product do
   permit_params :name, :description, :url, :company_id, :tags, :reviews,
                 default_image: [:id]
 
+  actions :index, :show, :list, :update, :edit, :delete
+
   before_filter only: [:update, :create] do
     attachment_id = params[:product][:default_image].try(:[], :id)
     @default_image = Attachment.find(attachment_id) if attachment_id
@@ -26,7 +28,7 @@ ActiveAdmin.register Product do
     end
 
     def create_resource(object)
-      object.reviews= @reviews
+      object.reviews = @reviews
       super(object)
     end
   end
@@ -41,7 +43,17 @@ ActiveAdmin.register Product do
       input :company
     end
 
-    f.inputs 'Default Image', :for => [:default_image, f.object.default_image || Attachment.new] do |image_f|
+  f.inputs 'Add custom attachment', class: 'test' do
+      li class: 'input loading hide', value: 'Loading' do
+        span class: 'label' do
+          'Loading'
+        end
+      end
+
+      f.input :custom_attachment, as: :file, input_html: { :class => 'custom_attachment', data: { product_id: f.object.id } }
+    end unless f.object.new_record?
+
+    f.inputs 'Default Image', :for => [:default_image, f.object.default_image || Attachment.new], class: 'inputs default_image' do |image_f|
       image_f.input :id, as: :radio,
         collection: f.object.images,
         label: '',
@@ -68,7 +80,7 @@ ActiveAdmin.register Product do
           l.input :url
         end
       end
-    end
+    end unless f.object.new_record?
 
     f.actions
   end
