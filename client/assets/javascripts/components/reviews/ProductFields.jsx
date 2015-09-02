@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
+import RegexConstants from '../../utils/constants/RegexConstants'
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import ReviewPageProductFieldsPageActions from '../../actions/reviews/ReviewPageProductFieldsActions'
 import CompanyFields from './CompanyFields'
@@ -56,7 +57,7 @@ const ProductFields  = React.createClass({
       <div className='form-group'>
         <label htmlFor='product[url]'>{"Product's website"} <span className='required'>*</span></label>
         <input type='text' className='form-control' placeholder='www.' name='product[url]'
-          pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
+          pattern={RegexConstants.URL_PATTERN}
           title="Include a valid url" ref='product_url' value={this.props.url}
           onChange={this._updateProductUrl} onKeyPress={this._onKeyPress} required/>
         <span className="help-block with-errors"></span>
