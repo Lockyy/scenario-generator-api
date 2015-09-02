@@ -55,6 +55,12 @@ const SearchBox = React.createClass ({
     }
   },
 
+  onTagClick: function(e) {
+    $('.search-container .form-control').val('')
+    $('.search-container .results-holder').hide()
+    this.props.router.transitionTo(`/app/tags/${e.target.dataset.slug}/1`);
+  },
+
   displayResults: function() {
     return this.state.data.total_results > 0
   },
@@ -82,7 +88,8 @@ const SearchBox = React.createClass ({
             data={this.state.data.tags}
             containerClass={'header'}
             hide={this.state.data.tags.total <= 0}
-            searchTerm={this.state.data.search_string} />
+            searchTerm={this.state.data.search_string}
+            onClick={this.onTagClick} />
         </div>
       )
     }
