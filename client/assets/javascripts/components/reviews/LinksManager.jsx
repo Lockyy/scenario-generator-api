@@ -35,9 +35,7 @@ const LinksManager = React.createClass({
     let url = link_to_remove.html();
     let link = { url: url };
 
-    ReviewPageReviewFieldsActions.removeLink(link, {
-      success: function() { console.log('Link Removed') }
-    });
+    ReviewPageReviewFieldsActions.removeLink(link);
   },
 
   getLinks: function getLinks() {
