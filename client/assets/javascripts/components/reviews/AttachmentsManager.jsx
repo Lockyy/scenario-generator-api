@@ -42,11 +42,18 @@ const AttachmentsManager = React.createClass({
     });
   },
 
+  _removeFile: function _removeFile(e, callbacks) {
+    let id = e.target.dataset.id
+    ReviewPageReviewFieldsActions.removeFile(id, callbacks)
+  },
+
   render: function render() {
     return (
       <UploadManager name='product[attachment]'
-        uploadText={this.props.uploadText} buttonText={this.props.buttonText} uploadingText={this.props.uploadingText}
-        attachments={this.props.attachments} onAddFile={this._uploadFile} onValidateFile={this._validate} />
+        uploadText={this.props.uploadText} buttonText={this.props.buttonText}
+        uploadingText={this.props.uploadingText} attachments={this.props.attachments}
+        onAddFile={this._uploadFile} onRemoveFile={this._removeFile}
+        onValidateFile={this._validate} />
     );
   }
 });

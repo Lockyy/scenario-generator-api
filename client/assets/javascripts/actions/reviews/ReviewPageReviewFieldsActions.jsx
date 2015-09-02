@@ -28,9 +28,19 @@ class ReviewPageReviewFieldsActions {
     });
   }
 
+  removeFile(id, callbacks) {
+    this.dispatch(id);
+    callbacks.success(id)
+  }
+
   addLink(link, callbacks) {
     this.dispatch(link);
     callbacks.success(link)
+  }
+
+  removeLink(link, callbacks) {
+    this.dispatch(link);
+    callbacks.success(link);
   }
 
   addTag(tag, callbacks) {

@@ -49,7 +49,9 @@ class ReviewPageStore {
       handleUpdateReviewPriceReview: ReviewPageReviewFieldsActions.UPDATE_PRICE_REVIEW,
       handleSubmitReview: FluxReviewPageActions.SUBMIT_REVIEW,
       handleAddFile: ReviewPageReviewFieldsActions.ADD_FILE,
+      handleRemoveFile: ReviewPageReviewFieldsActions.REMOVE_FILE,
       handleAddLink: ReviewPageReviewFieldsActions.ADD_LINK,
+      handleRemoveLink: ReviewPageReviewFieldsActions.REMOVE_LINK,
       handleAddTag: ReviewPageReviewFieldsActions.ADD_TAG,
       handleSetTags: ReviewPageReviewFieldsActions.SET_TAGS,
       handleRegisterError: FluxReviewPageActions.REGISTER_ERROR
@@ -92,8 +94,20 @@ class ReviewPageStore {
     this.review.attachments.push(file);
   }
 
+  handleRemoveFile(id) {
+    this.review.attachments = this.review.attachments.filter(function( obj ) {
+      return obj.id != id;
+    });
+  }
+
   handleAddLink(link) {
     this.review.links.push(link);
+  }
+
+  handleRemoveLink(link) {
+    this.review.links = this.review.links.filter(function( obj ) {
+      return obj.url !== link.url;
+    });
   }
 
   handleAddTag(tag) {

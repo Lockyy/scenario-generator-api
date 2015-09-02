@@ -28,10 +28,22 @@ const LinksManager = React.createClass({
       }
     });
   },
+
+  _handleRemoveLink: function _handleAddLink(e) {
+    e.preventDefault()
+    let link_to_remove = $($(e.target).siblings('a'))
+    let url = link_to_remove.html();
+    let link = { url: url };
+
+    ReviewPageReviewFieldsActions.removeLink(link, {
+      success: function() { console.log('Link Removed') }
+    });
+  },
+
   getLinks: function getLinks() {
     let linksContainer = $(React.findDOMNode(this.refs.links));
 
-    return _.map(linksContainer.find('.link'), function(link) {
+    return _.map(linksContainer.find('.link:visible'), function(link) {
       let $link = $(link);
 
       return {
@@ -49,6 +61,8 @@ const LinksManager = React.createClass({
   },
 
   render: function render() {
+    let that = this
+
     return (
       <div className='links-manager items-manager'>
         <ul className='links items' ref='links'>
@@ -58,9 +72,10 @@ const LinksManager = React.createClass({
             return <li className='link' id={`link_${id}`} ref={`link_${id}`}>
               <div className=''>
                 <input type='hidden' className='link_url' name={`review[links[${id}][url]]`} value={link.url} />
-                <a href={UrlHelper.addProtocol(link.url)} target='_blank'>
+                <a href={UrlHelper.addProtocol(link.url)} target='_blank' >
                   {UrlHelper.addProtocol(link.url)}
                 </a>
+                <span className='remove-link' onClick={that._handleRemoveLink}>(remove)</span>
               </div>
             </li>
           })}

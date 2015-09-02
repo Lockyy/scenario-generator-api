@@ -101,6 +101,14 @@ const NewReviewPage  = React.createClass({
         newState.review.tags = review.review.tags
       }
 
+      if(review.review.links != undefined) {
+        newState.review.links = review.review.links
+      }
+
+      if(review.review.attachments != undefined) {
+        newState.review.attachments = review.review.attachments
+      }
+
       return newState;
     });
 
