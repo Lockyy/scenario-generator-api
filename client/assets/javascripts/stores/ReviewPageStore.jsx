@@ -3,6 +3,7 @@ import FluxReviewPageActions from '../actions/FluxReviewPageActions'
 import ReviewPageProductFieldsActions from '../actions/reviews/ReviewPageProductFieldsActions'
 import ReviewPageCompanyFieldsActions from '../actions/reviews/ReviewPageCompanyFieldsActions'
 import ReviewPageReviewFieldsActions from '../actions/reviews/ReviewPageReviewFieldsActions'
+import UrlHelper from '../utils/helpers/UrlHelper'
 
 const emptyReview = {
   links: [],
@@ -106,7 +107,7 @@ class ReviewPageStore {
 
   handleRemoveLink(link) {
     this.review.links = this.review.links.filter(function( obj ) {
-      return obj.url !== link.url;
+      return UrlHelper.addProtocol(obj.url) !== UrlHelper.addProtocol(link.url);
     });
   }
 

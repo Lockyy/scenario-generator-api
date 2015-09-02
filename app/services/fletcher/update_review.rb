@@ -55,8 +55,8 @@ module Fletcher
     # Gathers a list of the ids in the array of objects and removes any
     # records from the collection not in the array.
     def remove_unlisted!(collection, array_of_objects)
-      ids = array_of_objects.map { |object| object['id'] }
-      collection.where.not(array_of_objects).destroy_all
+      ids = array_of_objects.map { |object| object['id'] }.compact
+      collection.where.not(id: ids).destroy_all
     end
   end
 end

@@ -5,6 +5,7 @@ import S3API from '../../utils/api/S3API';
 
 class ReviewPageReviewFieldsActions {
   addFile(file, callbacks) {
+    callbacks = _.merge({success: new Function(), error: new Function()}, callbacks)
     let _this = this;
 
     NewReviewPageAPI.getSignedUploadUrl(file)
@@ -29,16 +30,22 @@ class ReviewPageReviewFieldsActions {
   }
 
   removeFile(id, callbacks) {
+    callbacks = _.merge({success: new Function()}, callbacks)
+
     this.dispatch(id);
     callbacks.success(id)
   }
 
   addLink(link, callbacks) {
+    callbacks = _.merge({success: new Function()}, callbacks)
+
     this.dispatch(link);
     callbacks.success(link)
   }
 
   removeLink(link, callbacks) {
+    callbacks = _.merge({success: new Function()}, callbacks)
+
     this.dispatch(link);
     callbacks.success(link);
   }
