@@ -63,10 +63,21 @@ const Reviews = React.createClass({
     let prodId = elementData.productId;
     let revId = elementData.reviewId;
     let helpful = elementData.helpful;
-    element.data('helpful', !helpful)
     let currentSorting = this.currentSorting()
 
     FluxProductReviewsActions.voteOnReview(prodId, revId, helpful, function() {
+      FluxProductReviewsActions.fetchReviews(prodId, currentSorting);
+    });
+  },
+
+  cancelVote: function(e) {
+    let element = $(e.target);
+    let elementData = element.data();
+    let prodId = elementData.productId;
+    let revId = elementData.reviewId;
+    let currentSorting = this.currentSorting()
+
+    FluxProductReviewsActions.cancelVoteOnReview(prodId, revId, function() {
       FluxProductReviewsActions.fetchReviews(prodId, currentSorting);
     });
   },
@@ -85,19 +96,26 @@ const Reviews = React.createClass({
 
     let productId = review.product.id;
     let reviewId = review.id;
-    let string;
 
-    if(userVote.helpful) {
-      string = "You said this review was helpful"
-    } else {
-      string = "You said this review was unhelpful"
-    }
+    let string;
+    let yesClass = 'btn btn-grey btn-round'
+    let noClass = 'btn btn-grey btn-round'
+
+    if(userVote.helpful) { yesClass = yesClass + ' active' }
+    else { noClass = noClass + ' active' }
 
     return <div className='helpful-review-container'>
-      <span className='helpful-reviews-text'> Score: {review.cached_helpfulness} </span>
-      <span className='helpful-reviews-text'> {string} </span>
-      <button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
-        data-helpful={`${!userVote.helpful}`} onClick={this.voteOnReview}> Change </button>
+      <span className='helpful-reviews-text'>Was this review helpful to you?</span>
+      <button className={yesClass} data-product-id={productId}
+              data-review-id={reviewId} data-helpful='true'
+              onClick={userVote.helpful ? this.cancelVote : this.voteOnReview}>
+        Yes
+      </button>
+      <button className={noClass} data-product-id={productId}
+              data-review-id={reviewId} data-helpful='false'
+              onClick={userVote.helpful ? this.voteOnReview : this.cancelVote}>
+        No
+      </button>
     </div>
   },
 
