@@ -63,10 +63,12 @@ const Reviews = React.createClass({
     let prodId = elementData.productId;
     let revId = elementData.reviewId;
     let helpful = elementData.helpful;
+    element.data('helpful', !helpful)
+    let currentSorting = this.currentSorting()
 
     FluxProductReviewsActions.voteOnReview(prodId, revId, helpful, function() {
-			element.parent().fadeOut(1000);
-		});
+      FluxProductReviewsActions.fetchReviews(prodId, currentSorting);
+    });
   },
 
 	getEditReviewTag: function(review) {
@@ -76,23 +78,48 @@ const Reviews = React.createClass({
 		</div>;
 	},
 
+  alreadyVotedTag: function(review, userId) {
+    let userVote = _.find(review.reviewVotes, function(reviewVote){
+      return reviewVote.user_id == userId
+    });
+
+    let productId = review.product.id;
+    let reviewId = review.id;
+    let string;
+
+    if(userVote.helpful) {
+      string = "You said this review was helpful"
+    } else {
+      string = "You said this review was unhelpful"
+    }
+
+    return <div className='helpful-review-container'>
+      <span className='helpful-reviews-text'> Score: {review.cached_helpfulness} </span>
+      <span className='helpful-reviews-text'> {string} </span>
+      <button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
+        data-helpful={`${!userVote.helpful}`} onClick={this.voteOnReview}> Change </button>
+    </div>
+  },
+
 	getVoteOnReviewTag: function(review, userId) {
-		let productId = review.product.id;
-		let reviewId = review.id;
-
-		let voteOnReviewTag =  <div className='helpful-review-container'>
-			<span className='helpful-reviews-text'> Was this review helpful to you? </span>
-			<button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
-				data-helpful='true' onClick={this.voteOnReview}> Yes </button>
-			<button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
-				data-helpful='false' onClick={this.voteOnReview}> No </button>
-		</div>;
-
 		let alreadyVoted = !!_.find(review.reviewVotes, function(reviewVote){
 			return reviewVote.user_id == userId
 		});
 
-		return alreadyVoted ? '': voteOnReviewTag;
+    if(alreadyVoted) {
+      return this.alreadyVotedTag(review, userId)
+    }
+
+    let productId = review.product.id;
+    let reviewId = review.id;
+
+    return <div className='helpful-review-container'>
+      <span className='helpful-reviews-text'> Was this review helpful to you? </span>
+      <button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
+        data-helpful='true' onClick={this.voteOnReview}> Yes </button>
+      <button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
+        data-helpful='false' onClick={this.voteOnReview}> No </button>
+    </div>;
 	},
 
 	getReviewActionTag: function(review) {
@@ -139,7 +166,7 @@ const Reviews = React.createClass({
 
     return (
       <div className="row review">
-        <div className="col-xs-4 user">
+        <div className="col-xs-12 user">
           <img src={review.user.avatar_url} />
           <div className='details'>
             <div className='name'>
@@ -148,20 +175,20 @@ const Reviews = React.createClass({
                 {review.user.name}
               </Link>
             </div>
-            {_.isEmpty(job_title) ? '' : <div className='job'>{job_title}</div>}
-            {_.isEmpty(review.user.location) ? '' : <div className='location'>{review.user.location}</div>}
-            {review.user.total_reviews < 1 ? '' : <div className='total-reviews'>{review.user.total_reviews} review(s)</div>}
+            {_.isEmpty(job_title) ? '' : <span className='job'>{job_title}</span>}
+            {_.isEmpty(review.user.location) ? '' : <span className='location'>{review.user.location}</span>}
+            {review.user.total_reviews < 1 ? '' : <span className='total-reviews'>{review.user.total_reviews} review(s)</span>}
           </div>
         </div>
-        <div className="col-xs-8 review-content">
-          <div className="score">
-            { review.quality_score ? <Rating value={review.quality_score} name='rating'/> : '' }
-          </div>
-          <div className="created_at">
+        <div className="col-xs-12 review-content">
+          <span className="created_at">
             {review.display_date}
-          </div>
+          </span>
           <div className="title">
             {review.title}
+          </div>
+          <div className="score">
+            { review.quality_score ? <Rating value={review.quality_score} name='rating'/> : '' }
           </div>
           <div className="review-text" dangerouslySetInnerHTML={{__html: review.formatted_quality_review}} />
           <ul className="attachments">
