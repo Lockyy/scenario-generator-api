@@ -2,7 +2,7 @@ module Api
   class ReviewVotesController < AppController
     before_action :set_product, only: [:create]
     before_action :set_review, only: [:create]
-    
+
     def create
       review_vote = Fletcher::CreateReviewVote.new(current_user, @review, vote_params)
       respond_to do |format|
@@ -20,6 +20,16 @@ module Api
     def show
     end
 
+    def destroy
+      review_vote = ReviewVote.find_by( review_id: params[:review_id],
+                          user_id: current_user.id)
+      review_vote.destroy if review_vote
+
+      respond_to do |format|
+        format.json { render 'api/reviews/review_votes/destroy' }
+      end
+    end
+
     private
 
     def set_product
@@ -29,7 +39,7 @@ module Api
     def set_review
       @review = Review.find(vote_params[:review_id])
     end
-    
+
     def vote_params
       params.permit(:product_id, :review_id, :helpful)
     end

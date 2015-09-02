@@ -27,5 +27,18 @@ module.exports = {
         });
       });
     }
+  },
+
+  cancelVoteOnReview: function (productID, reviewId, resolve, reject) {
+    if (productID) {
+      let url = `/api/products/${productID}/reviews/${reviewId}/review_votes`;
+      return new Promise(function () {
+        $.ajax({
+          type: 'delete',
+          url: url,
+          success: resolve
+        });
+      });
+    }
   }
 };
