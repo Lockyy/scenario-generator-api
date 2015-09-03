@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import FluxUserActions from '../../actions/FluxUserActions';
+import FluxBookmarkActions from '../../actions/FluxBookmarkActions';
 import UserStore from '../../stores/UserStore';
 import Section from '../Section'
 import SectionRow from '../SectionRow'
@@ -30,6 +31,7 @@ const UserProfilePage  = React.createClass({
     UserStore.listen(this.onChange);
     FluxUserActions.fetchData(this.context.router.state.params.userId);
     FluxUserActions.fetchRecentActivity(this.context.router.state.params.userId);
+    FluxBookmarkActions.fetchBookmarkedProducts();
   },
 
   onChange(data) {
@@ -80,7 +82,7 @@ const UserProfilePage  = React.createClass({
     return (
     <div className='user profile show'>
       <div className='main-content'>
-        <h1 className='title'>{user.name ? user.name.split(' ')[0] : 'User' }'s Profile</h1>
+        <h1 className='title'>{user.name ? user.name.split(' ')[0] : 'User' }{"'s Profile"}</h1>
         <UserProfileHeader {...user}/>
         {page}
       </div>
