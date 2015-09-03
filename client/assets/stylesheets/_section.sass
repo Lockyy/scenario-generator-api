@@ -5,40 +5,50 @@
   padding: 10px 0 0 0
 
   & > .header
-    display: flex
-    flex-direction: row
-    justify-content: space-between
+    @extend .row
+    margin: 0
+    display: block
+    padding: 0 20px
 
     h2
+      @extend .col-xs-8
+      @extend .col-sm-6
+
       background: no-repeat left center
       background-size: 30px
       margin: 0
       color: #3c3c3b
       font-size: 20px
       padding: 20px 0
-      align-self: flex-end
 
       &.section-title
         font-style: italic
         padding-left: 50px
 
-    .hide-section,
-    .show-section
-      display: flex
-      align-items: flex-end
-      color: #3c3c3b
-      text-decoration: none
-      font-weight: bold
-      font-size: 14px
-      padding-top: 20px
-      padding-bottom: 20px
 
-      &:hover
-        text-transform: none
+    .customHeaderTag
+      @extend .col-xs-4
+      @extend .col-sm-6
 
-      i
-        font-weight: 100
-        padding: 5px 10px
+      padding: 20px 0
+      float:right
+      text-align: right
+
+      .hide-section,
+      .show-section
+        color: #3c3c3b
+        text-decoration: none
+        font-weight: bold
+        font-size: 14px
+        padding-top: 20px
+        padding-bottom: 0
+
+        &:hover
+          text-transform: none
+
+        i
+          font-weight: 100
+          padding: 5px 10px
 
   .show-more-container
     margin: 30px 0
@@ -57,13 +67,12 @@
 
 @media only screen and (max-width: $screen-sm-max)
   .section
-    margin: 60px 0 0 0
+    margin: 30px 0 0 0
     padding: 0
 
     & > .header
       h2
         background-size: 30px
-        padding: 10px 0 0
         font-size: 18.75px
 
         &.section-title
