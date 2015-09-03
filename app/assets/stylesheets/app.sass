@@ -1,0 +1,49 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree ./common/
+ *= require_tree ./app/
+ *= require_self
+
+ */
+@import "bootstrap-sprockets"
+@import "bootstrap"
+@import "bootstrap/modals"
+
+$rails: true
+
+@import "common"
+@import "section"
+@import "based-on-your-tags-section"
+@import "recently-added-section"
+@import "recent-activity-section"
+@import "most-popular-section"
+@import "section-row"
+@import "product"
+@import "components/sort-links"
+@import "components/users/review-box"
+@import "components/company/company-profile-page"
+@import "components/products/show-products-page"
+@import "components/reviews/new-review-page"
+@import "components/reviews/items-manager"
+@import "components/reviews/links-manager"
+@import "components/reviews/tags-manager"
+@import "components/reviews/upload-manager"
+@import "components/search/page"
+@import "components/search/search-container"
+@import "components/users/user-profile-page"
+@import "components/menu/my-tags"
+@import "components/menu/my-recent-activity"
+@import "rating"
+@import "tags"
+@import "links"
+@import "type-ahead"
