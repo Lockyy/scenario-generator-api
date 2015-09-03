@@ -99,6 +99,7 @@ const TagPage = React.createClass({
         <Results
           type='products'
           data={this.state.data.products}
+          showImages={true}
 
           bottom='pagination'
           currentPage={this.page()}
