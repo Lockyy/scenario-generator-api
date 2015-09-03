@@ -24,6 +24,10 @@ RSpec.configure do |config|
   config.include WaitForAjax, type: :feature
   config.include Warden::Test::Helpers
 
+  #Use poltergeist as headless
+  Capybara.javascript_driver = :poltergeist
+
+
   class ActiveRecord::Base
     class_attribute :shared_connection
 
