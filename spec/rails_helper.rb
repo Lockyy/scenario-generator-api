@@ -24,11 +24,18 @@ RSpec.configure do |config|
   config.include WaitForAjax, type: :feature
   config.include Warden::Test::Helpers
 
-  #Use poltergeist as headless
+  #Turn off stupid js errors
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, { js_errors: false } )
+  end
+  
+  #User poltergeist headless
   Capybara.javascript_driver = :poltergeist
 
 
   class ActiveRecord::Base
+
+    #ONLY PART of the code found here: https://github.com/railscasts/391-testing-javascript-with-phantomjs/blob/master/checkout-after/spec/support/share_db_connection.rb
     class_attribute :shared_connection
 
     def self.connection
