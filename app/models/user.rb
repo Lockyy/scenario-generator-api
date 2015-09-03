@@ -9,6 +9,8 @@ class User < ActiveRecord::Base
   has_many :tokens, dependent: :destroy
   has_many :reviews
   has_many :attachments, through: :reviews
+  has_many :bookmarks
+  has_many :bookmarked_products, through: :bookmarks, source: :product
   has_many :products
   has_and_belongs_to_many :tags
 
