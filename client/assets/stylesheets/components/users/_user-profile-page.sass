@@ -139,6 +139,7 @@ $color-blackcharcoal: #3c3c3b
         background: no-repeat center left
         background-size: 30px
         color: $blackish-grey
+        font-size: 10px
 
         &.active, &:hover
           color: $primary-red
@@ -160,6 +161,12 @@ $color-blackcharcoal: #3c3c3b
 
           &.active
             background-image: img-url('icons/icon-lists-red.svg')
+
+        &.bookmarks
+          background-image: img-url('icons/icon-bookmarks-grey.svg')
+
+          &.active
+            background-image: img-url('icons/icon-bookmarks-red.svg')
 
         &.active
           font-weight: bold
@@ -186,10 +193,11 @@ $color-blackcharcoal: #3c3c3b
           width: 33%
 
 
-    .work-area-section.my-tags-container
-      border-top: 1px solid $grey
-      margin-top: 82px
-      padding-top: 30px
+    .work-area-section
+      &.my-tags-container, &.my-bookmarks-container
+        border-top: 1px solid $grey
+        margin-top: 75px
+        padding-top: 30px
 
     .work-area-section.recent-activity
       border: none
