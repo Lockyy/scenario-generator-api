@@ -26,32 +26,36 @@ RSpec.configure do |config|
 
   #Turn off stupid js errors
   Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, { js_errors: false } )
+    Capybara::Poltergeist::Driver.new(app, {:debug => false} )
   end
-  
+
   #User poltergeist headless
   Capybara.javascript_driver = :poltergeist
 
 
   class ActiveRecord::Base
-
-    #ONLY PART of the code found here: https://github.com/railscasts/391-testing-javascript-with-phantomjs/blob/master/checkout-after/spec/support/share_db_connection.rb
-    class_attribute :shared_connection
+    mattr_accessor :shared_connection
+    @@shared_connection = nil
 
     def self.connection
-      self.shared_connection || retrieve_connection
+      @@shared_connection || retrieve_connection
     end
   end
 
-  # config taken directly from RSpec example in the DatabaseCleaner README for Capybara
+  # Forces all threads to share the same connection. This works on
+  # Capybara because it starts the web server in a thread.
+  ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
+
+  # config taken directly from RSpec example in the DatabaseCleaner README
   config.before(:suite) do
-    #DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.strategy = :transaction
     DatabaseCleaner.clean_with :truncation
   end
 
-  config.before(:each) do |example|
-    DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
-    DatabaseCleaner.start
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
   end
 
   config.after(:each) do

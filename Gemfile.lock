@@ -158,6 +158,9 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.2.5)
     erubis (2.7.0)
+    es5-shim-rails (4.0.1)
+      actionpack (>= 3.1)
+      railties (>= 3.1)
     execjs (2.5.2)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
@@ -210,6 +213,8 @@ GEM
       activesupport (>= 3.0.0)
     launchy (2.4.3)
       addressable (~> 2.3)
+    lodash-rails (3.10.1)
+      railties (>= 3.1)
     loofah (2.0.2)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -409,6 +414,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   database_cleaner
   devise
+  es5-shim-rails
   factory_girl_rails
   faker
   foreman
@@ -418,6 +424,7 @@ DEPENDENCIES
   jquery-ui-rails
   jwt
   launchy
+  lodash-rails
   omniauth
   omniauth-yammer
   paperclip!
