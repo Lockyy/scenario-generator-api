@@ -19,7 +19,7 @@ $color-blackcharcoal: #3c3c3b
     display: none
 
   .section
-    border-top: solid 2px $color-darkred
+    border-top: none
 
     .header
       border-bottom: solid 1px $grey
@@ -27,12 +27,9 @@ $color-blackcharcoal: #3c3c3b
         display: none
 
       .section-title
+        opacity: 0
         color: $blackish-grey
         background-image: img-url('icons/recently-added.svg')
-
-      .customHeaderTag
-        margin-top: 20px
-        margin-right: 60px
 
     &> .items
       padding-top: 30px
@@ -123,6 +120,7 @@ $color-blackcharcoal: #3c3c3b
           font-weight: normal
 
   #work-area
+    margin: 0
     margin-top: 60px
     border-top: solid 2px $color-darkred
 
@@ -191,14 +189,12 @@ $color-blackcharcoal: #3c3c3b
       margin-top: 82px
       padding-top: 30px
 
-    .work-area-section.recent-activity
+    .section.recent-reviews.work-area-section
       border: none
       margin-top: 0
       border-top: 0
 
       & > .header
-        padding: 5px 0
-
         .section-title
           opacity: 0
 
