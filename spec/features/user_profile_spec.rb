@@ -2,10 +2,10 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-describe "User Profile Page", js: true do
+feature "User Profile Page", js: true do
 
-  describe 'owned by the current user' do
-    describe 'displays user details' do
+  feature 'owned by the current user' do
+    scenario 'displays user details' do
       before do
         @user = login_user
         visit root_path
