@@ -93,8 +93,33 @@
         margin: 0 auto
         padding: 10px
         width: 90%
-        font-size: 13px
 
         .created_at
           display: block
           text-align: right
+
+
+// ==========  Mobile First Method  ==========
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px)
+
+// Extra Small Devices, Phones
+@media only screen and (min-width : 480px)
+
+// Small Devices, Tablets
+@media only screen and (min-width : 768px)
+
+// Medium Devices, Desktop
+@media only screen and (min-width : 992px) and (max-width : 1199px)
+  .product.review-box
+    .content
+      .data
+        .header
+          .activity-type
+            padding-left: 45px
+
+// Large Devices, Wide Screens
+@media only screen and (min-width : 1200px)
+
+// Really Large Devices, Wide Screens
+@media (min-width: 1330px)

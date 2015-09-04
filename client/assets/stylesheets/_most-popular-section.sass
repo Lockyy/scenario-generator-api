@@ -13,9 +13,9 @@ $orange: #e36308
       max-height: none
 
       .tag-box
-        @extend .col-sm-3
+        @extend .col-md-3
         @extend .col-xs-12
-        padding: 20px
+        padding: 0
 
         .tag-holder
           overflow: hidden
@@ -29,16 +29,15 @@ $orange: #e36308
           flex-direction: column
           justify-content: space-between
           overflow: hidden
-          padding: 30px
+          padding: 30px 10px
 
           .header
-            text-align: center
-
             h2
               font-size: 20px
               background: img-url('icons/popular-tags.svg') no-repeat left bottom
               font-style: italic
               margin: 0
+              padding-left: 50px
 
           .items
             padding: 0 30px
@@ -67,9 +66,34 @@ $orange: #e36308
               text-transform: uppercase
               @include border-radius(30px)
 
-@media only screen and (min-width: $screen-sm-min)
+// ==========  Mobile First Method  ==========
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px)
+
+// Extra Small Devices, Phones
+@media only screen and (min-width : 480px)
+
+// Small Devices, Tablets
+@media only screen and (min-width : 768px)
   .section
     &.most-popular
       .section-row
-        display: flex
-        align-items: flex-end
+        .tag-box
+          padding: 10px
+
+// Medium Devices, Desktop
+@media only screen and (min-width : 992px)
+
+// Large Devices, Wide Screens
+@media only screen and (min-width : 1200px)
+
+// Really Large Devices, Wide Screens
+@media (min-width: 1330px)
+  .section
+    &.most-popular
+      .section-row
+        .tag-box
+          padding: 20px
+
+          & > .content
+            padding: 30px

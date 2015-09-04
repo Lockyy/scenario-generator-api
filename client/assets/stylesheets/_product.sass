@@ -2,11 +2,15 @@
 @import 'functions'
 
 .product
+  padding: 0
+
   .content
     height: $box-height
     background: $light-grey
     overflow: hidden
     border-top: 3px solid $red
+    display: flex
+    flex-direction: column-reverse
 
     .data
       padding: 20px 25px 10px
@@ -41,7 +45,7 @@
           justify-content: flex-start
           height: auto
           color: #929497
-          font-size: 0.5555em
+          font-size: 14px
           margin-top: 10px
           margin-bottom: 5px
 
@@ -53,7 +57,7 @@
               margin-right: 10px
 
       .footer
-        font-size: 0.50em
+        font-size: 14px
         border-top: 1px solid $medium-grey
         color: $dark-grey
         padding: 10px 0 0 0
@@ -67,9 +71,10 @@
   &.box-0
     @extend .col-xs-12
     @extend .col-md-3
+    padding: 0
 
     .content
-      height: ($box-height / 2) - 20
+      height: ($box-height / 2) - 10
 
       .data
         .description
@@ -176,22 +181,14 @@
         height: 0
         display: none
 
-@media only screen and (max-width: $screen-sm-max)
-  body.app .container
-    width: 100%
-    overflow-x: hidden
-    padding: 0
-    margin: 0
-
+// ==========  Mobile First Method  ==========
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px)
   .product
-    padding: 10px 0 !important
-
-    &.box-0
-      padding: 20px 0 !important
+    &.box-0, &.box-1, &.box-2, &.box-2-5, &.box-3, &.box-4-5
+      padding: 10px 0
 
     .content
-      display: flex
-      flex-direction: column-reverse
       font-size: 17.5px
 
       .data
@@ -201,31 +198,45 @@
         height: 40%
         padding: 0
 
-@media only screen and (min-width: $screen-md-min)
+// Extra Small Devices, Phones
+@media only screen and (min-width : 480px)
+
+// Small Devices, Tablets
+@media only screen and (min-width : 768px)
   .product
+    &.box-0, &.box-1, &.box-2, &.box-2-5, &.box-3, &.box-4-5
+      padding: 10px
+
     .content
       display: flex
       flex-direction: row
 
-@media only screen and (min-width: $screen-md-min) and (max-width: $screen-md-max)
-  .product
-    padding: 20px !important
+      .picture, .data
+        height: 100%
 
+// Medium Devices, Desktop
+@media only screen and (min-width : 992px)
+  .product
     .content
       font-size: 20px
 
-      .data
-        .description
-          max-height: 255px
-
-@media only screen and (min-width: $screen-lg-min)
+// Large Devices, Wide Screens
+@media only screen and (min-width : 1200px)
   .product
-    padding: 20px !important
-
     .content
       font-size: 25px
-      .data
 
+      .data
         .description
           height: 250px
           max-height: 250px
+
+// Really Large Devices, Wide Screens
+@media (min-width: 1330px)
+  .product
+    &.box-0, &.box-1, &.box-2, &.box-2-5, &.box-3, &.box-4-5
+      padding: 20px
+
+    &.box-0
+      .content
+        height: ($box-height / 2) - 20
