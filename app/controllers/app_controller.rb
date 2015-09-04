@@ -2,10 +2,10 @@ class AppController < ApplicationController
   layout 'app'
 
   if Rails.env.test?
+    before_filter :test_authentication
+  else
     before_filter :authenticate!
     before_filter :authenticate_user!
-  else
-    before_filter :test_authentication
   end
 
   def index
