@@ -45,6 +45,7 @@ const ProductPage = React.createClass({
     let _this = this
     FluxBookmarkActions.createBookmark(this.id(), function() {
       FluxProductPageActions.fetchProduct(_this.id());
+      FluxBookmarkActions.fetchBookmarkedProducts();
     })
   },
 
@@ -52,6 +53,7 @@ const ProductPage = React.createClass({
     let _this = this
     FluxBookmarkActions.deleteBookmark(this.id(), function() {
       FluxProductPageActions.fetchProduct(_this.id());
+      FluxBookmarkActions.fetchBookmarkedProducts();
     })
   },
 
