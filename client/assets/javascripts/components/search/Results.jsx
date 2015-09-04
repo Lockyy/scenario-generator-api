@@ -38,8 +38,12 @@ const Results = React.createClass ({
     )
   },
 
+  showImageForProduct: function(result) {
+    return this.props.showImages && result.image != null
+  },
+
   renderImage: function(result) {
-    if(this.props.showImages) {
+    if(this.showImageForProduct(result)) {
       return (
         <div className='image-container col-xs-4'>
           <img src={result.image} />
@@ -48,8 +52,8 @@ const Results = React.createClass ({
     }
   },
 
-  productContentClass: function() {
-    if(this.props.showImages) {
+  productContentClass: function(result) {
+    if(this.showImageForProduct(result)) {
       return 'col-xs-8'
     }
     return 'col-xs-12'
@@ -60,7 +64,7 @@ const Results = React.createClass ({
       <div className='result'>
         <div className='row'>
           { this.renderImage(result) }
-          <div className={ this.productContentClass() }>
+          <div className={ this.productContentClass(result) }>
             <div className='name'>
               <a href={`/app/${this.props.type}/${result.id}`}>
                 { result.name }
