@@ -9,6 +9,7 @@ require 'capybara/poltergeist'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'shoulda/matchers'
 require 'devise'
+require 'support/db_cleaner_features.rb'
 
 
 # Checks for pending migrations before tests are run.
@@ -22,6 +23,7 @@ Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
   config.include WaitForAjax, type: :feature
+  config.include DatabaseCleanerFeatures, type: :feature
   config.include Warden::Test::Helpers
 
   #Turn off stupid js errors
