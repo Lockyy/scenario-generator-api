@@ -1,7 +1,12 @@
 class AppController < ApplicationController
   layout 'app'
 
-  before_filter :authenticate!
+  if Rails.env.test?
+    before_filter :test_authentication
+  else
+    before_filter :authenticate!
+    before_filter :authenticate_user!
+  end
 
   def index
   end
@@ -9,13 +14,12 @@ class AppController < ApplicationController
   private
 
   def authenticate!
-    return test_authentication if Rails.env.test?
     @auth_token = auth_token
     @user = User.find_with_token(@auth_token)
 
-    redirect_to short_path if @auth_token.nil? || @user.nil?
+    store_location_for(:user, request.env['PATH_INFO'])
 
-    authenticate_user!
+    redirect_to short_path if @auth_token.nil? || @user.nil?
   end
 
   def auth_token
