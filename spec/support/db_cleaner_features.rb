@@ -14,6 +14,8 @@ module DatabaseCleanerFeatures
       config.after(:each) do
         DatabaseCleaner.clean
       end
+
+      config.use_transactional_fixtures = false
     end
   end
 end
