@@ -34,6 +34,8 @@ gem 'jwt'
 gem 'faker'
 gem 'will_paginate'
 gem 'friendly_id', '~> 5.1.0'
+gem 'lodash-rails'
+gem 'es5-shim-rails'
 
 group :development, :test do
   gem 'byebug'
@@ -53,8 +55,6 @@ group :development, :test do
   gem "binding_of_caller"
   gem 'pry-rails'
   gem 'rspec-rails'
-  gem 'lodash-rails'
-  gem 'es5-shim-rails'
 end
 
 group :test  do
