@@ -31,7 +31,6 @@ const UserProfilePage  = React.createClass({
     UserStore.listen(this.onChange);
     FluxUserActions.fetchData(this.context.router.state.params.userId);
     FluxUserActions.fetchRecentActivity(this.context.router.state.params.userId);
-    FluxBookmarkActions.fetchBookmarkedProducts();
   },
 
   onChange(data) {
