@@ -3,6 +3,7 @@ import React from 'react';
 import timeago from 'timeago';
 import { Link, Navigation } from 'react-router';
 import FluxProductPageActions from '../../actions/FluxProductPageActions'
+import FluxBookmarkActions from '../../actions/FluxBookmarkActions'
 import ProductStore from '../../stores/ProductStore'
 import Reviews from './Reviews'
 import Rating from '../Rating';
@@ -38,6 +39,20 @@ const ProductPage = React.createClass({
 
   onChange: function(data) {
     this.setState(data);
+  },
+
+  bookmark: function() {
+    let _this = this
+    FluxBookmarkActions.createBookmark(this.id(), function() {
+      FluxProductPageActions.fetchProduct(_this.id());
+    })
+  },
+
+  unbookmark: function() {
+    let _this = this
+    FluxBookmarkActions.deleteBookmark(this.id(), function() {
+      FluxProductPageActions.fetchProduct(_this.id());
+    })
   },
 
   getProductData: function(name) {
@@ -105,6 +120,22 @@ const ProductPage = React.createClass({
     }
   },
 
+  renderBookmarkLink: function() {
+    if(this.state.data.bookmarked) {
+      return (
+        <div onClick={this.unbookmark} className='btn btn-grey btn-round'>
+          Remove Bookmark
+        </div>
+      )
+    } else {
+      return (
+        <div onClick={this.bookmark} className='btn btn-grey btn-round'>
+          Bookmark
+        </div>
+      )
+    }
+  },
+
   renderTopButtons: function() {
     return (
       <div className='links'>
@@ -116,9 +147,7 @@ const ProductPage = React.createClass({
           className='btn btn-grey btn-round'>
           Share
         </a>
-        <Link to={'#'} className='btn btn-grey btn-round'>
-          Bookmark
-        </Link>
+        {this.renderBookmarkLink()}
       </div>
     )
   },

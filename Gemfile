@@ -35,7 +35,6 @@ gem 'faker'
 gem 'will_paginate'
 gem 'friendly_id', '~> 5.1.0'
 
-
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
@@ -54,6 +53,8 @@ group :development, :test do
   gem "binding_of_caller"
   gem 'pry-rails'
   gem 'rspec-rails'
+  gem 'lodash-rails'
+  gem 'es5-shim-rails'
 end
 
 group :test  do
@@ -63,6 +64,8 @@ group :test  do
   gem 'capybara-webkit'
   gem 'database_cleaner'
   gem 'launchy'
+  gem 'poltergeist'
+  gem 'selenium-webdriver'
 end
 
 group :production do

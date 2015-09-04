@@ -17,7 +17,8 @@ RUN apt-get update \
     && apt-get install -y nodejs \
     && apt-get install -y qt5-default libqt5webkit5-dev \
     && gem install --no-rdoc --no-ri rails-api \
-    && apt-get install imagemagick -y
+    && apt-get install imagemagick -y \
+    && apt-get install -y phantomjs
 EXPOSE 4000
 EXPOSE 3000
 
