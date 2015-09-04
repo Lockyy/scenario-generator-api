@@ -269,6 +269,30 @@ const ProductPage = React.createClass({
     )
   },
 
+   onSelectSection: function onSelectSection(e, section) {
+    e.preventDefault();
+
+    let $el = $(React.findDOMNode(e.target));
+    $el.siblings('.active').removeClass('active')
+    $el.addClass('active');
+
+    let $section = $(React.findDOMNode(this.refs[section]));
+    $section.removeClass('hide')
+    $section.siblings().addClass('hide')
+  },
+
+  onSelectReviewsSection: function onSelectReviewsSection(e) {
+    this.onSelectSection(e, 'reviews')
+  },
+
+  onSelectListsSection: function onSelectListsSection(e) {
+    this.onSelectSection(e, 'lists')
+  },
+
+  onSelectCustomSection: function onSelectCustomSection(e) {
+    this.onSelectSection(e, 'custom')
+  },
+
   render: function() {
     return (
       <div className='product show container'>
@@ -279,12 +303,21 @@ const ProductPage = React.createClass({
         {this.renderInfo()}
         <div className='row'>
           <div className='col-xs-2 reviews-sidebar'>
-            <div className='sidebar-element user-reviews active'>User Reviews</div>
-            <div className='sidebar-element lists'>Lists</div>
-            <div className='sidebar-element custom-data'>Custom Data</div>
+            <div  className='sidebar-element user-reviews active'
+                  onClick={this.onSelectReviewsSection}>User Reviews</div>
+            <div className='sidebar-element lists'
+                  onClick={this.onSelectListsSection}>Lists</div>
+            <div className='sidebar-element custom-data'
+                  onClick={this.onSelectCustomSection}>Custom Data</div>
           </div>
           <div className='col-xs-10'>
-            <Reviews productID={this.id()} />
+            <Reviews productID={this.id()} ref='reviews' />
+            <div className='placeholder-section hide' ref='lists'>
+              Feature Coming Soon
+            </div>
+            <div className='placeholder-section hide' ref='custom'>
+              Feature Coming Soon
+            </div>
           </div>
         </div>
       </div>
