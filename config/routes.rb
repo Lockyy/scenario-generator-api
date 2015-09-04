@@ -7,8 +7,12 @@ Rails.application.routes.draw do
     resources :products, defaults: {format: :json} do
       resources :reviews, only: [:index, :create, :show, :update], defaults: {format: :json} do
         resources :review_votes, only: [:create, :show], defaults: {format: :json}
+        delete 'review_votes', to: 'review_votes#destroy'
       end
+      post 'bookmark', to: 'bookmarks#create'
+      delete 'bookmark', to: 'bookmarks#destroy'
     end
+    resources :bookmarks, only: [:index], defaults: {format: :json}
 
     resources :reviews, except: [:index, :update, :new, :edit], defaults: {format: :json}
 

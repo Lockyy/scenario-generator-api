@@ -11,6 +11,8 @@ class Product < ActiveRecord::Base
   has_many :reviews_images, -> { with_images }, through: :reviews, source: :attachments
   has_many :links, through: :reviews
   has_many :tags, through: :reviews
+  has_many :bookmarks
+
   has_one :default_image, class_name: 'Attachment'
   belongs_to :user
 
@@ -55,6 +57,19 @@ products.url, company_id, products.views, products.created_at, products.updated_
 
   scope :worst_rating, -> do
     rating('asc')
+  end
+
+  def bookmark(user)
+    self.bookmarks.first_or_create(user: user)
+  end
+
+  def unbookmark(user)
+    bookmark = self.bookmarks.find_by(user: user)
+    bookmark.destroy if bookmark
+  end
+
+  def bookmarked?(user)
+    bookmarks.find_by(user: user) ? true : false
   end
 
   def images

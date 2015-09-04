@@ -17,5 +17,8 @@
 //= require bootstrap/modal
 // Important to import jquery_ujs before rails-bundle as that patches jquery xhr to use the authenticity token!
 //= require_tree ./common/
+//= require es5-shim/es5-shim
+//= require es5-shim/es5-sham
 //= require generated/client-bundle
+//= require lodash
 //= require_tree ./app/

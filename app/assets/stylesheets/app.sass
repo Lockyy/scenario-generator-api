@@ -10,8 +10,6 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree ./common/
- *= require_tree ./app/
  *= require_self
 
  */
@@ -20,6 +18,16 @@
 @import "bootstrap/modals"
 
 $rails: true
+
+@import "common/buttons"
+@import "common/common"
+@import "common/variables"
+@import "app/header"
+@import "app/layout"
+@import "app/menu"
+@import "app/welcome_message"
+
+
 
 @import "common"
 @import "section"

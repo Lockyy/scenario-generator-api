@@ -2,9 +2,10 @@ import React from 'react';
 import _ from 'lodash';
 import RecentActivitySection from './RecentActivitySection';
 import UserTags from './UserTags';
+import UserBookmarks from './UserBookmarks';
 
 const UserProfileWorkArea  = React.createClass({
-  displayName: 'UserProfilePage',
+  displayName: 'UserProfileWorkArea',
 
   contextTypes: {
     router: React.PropTypes.object,
@@ -42,6 +43,14 @@ const UserProfileWorkArea  = React.createClass({
     );
   },
 
+  getBookmarksSection: function getBookmarksSection() {
+    return (
+      <div className='my-bookmarks-container work-area-section hide' ref='bookmarks' >
+        <UserBookmarks showMessage='true' />
+      </div>
+    );
+  },
+
   onSelectSection: function onSelectSection(e, section) {
     e.preventDefault();
 
@@ -62,6 +71,10 @@ const UserProfileWorkArea  = React.createClass({
     this.onSelectSection(e, 'tags')
   },
 
+  onSelectBookmarksSection: function onSelectBookmarksSection(e) {
+    this.onSelectSection(e, 'bookmarks')
+  },
+
   render: function render() {
     return (
       <div id='work-area' className='row'>
@@ -72,10 +85,14 @@ const UserProfileWorkArea  = React.createClass({
           <a href='#tags' ref='link_tags' className='sidebar-element tags' onClick={this.onSelectTagsSection}>
             Followed Tags
           </a>
+          <a href='#bookmarks' ref='link_bookmarks' className='sidebar-element bookmarks' onClick={this.onSelectBookmarksSection}>
+            Bookmarks
+          </a>
         </div>
         <div className='work-area-content col-xs-10' ref='work'>
           {this.getRecentActivitySection()}
           {this.getTagsSection()}
+          {this.getBookmarksSection()}
         </div>
       </div>
     );

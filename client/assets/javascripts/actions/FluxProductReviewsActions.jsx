@@ -35,6 +35,10 @@ class FluxProductReviewsActions {
   voteOnReview(productId, reviewId, helpful, resolve, reject) {
     ReviewsAPI.voteOnReview(productId, reviewId, helpful, resolve, reject);
   }
+
+  cancelVoteOnReview(productId, reviewId, resolve, reject) {
+    ReviewsAPI.cancelVoteOnReview(productId, reviewId, resolve, reject);
+  }
 }
 
 export default alt.createActions(FluxProductReviewsActions);
