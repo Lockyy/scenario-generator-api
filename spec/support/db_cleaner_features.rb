@@ -4,6 +4,12 @@ module DatabaseCleanerFeatures
     
       config.before(:suite) do
         DatabaseCleaner.clean_with(:truncation)
+        begin
+          DatabaseCleaner.start
+          FactoryGirl.lint
+        ensure
+          DatabaseCleaner.clean
+        end
       end
 
       config.before(:each) do |example|
