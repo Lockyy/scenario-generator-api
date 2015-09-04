@@ -7,6 +7,7 @@ feature "User Profile Page", js: true do
     @user = login_user
     visit "/app"
     visit "/app/users/current"
+    wait_for_ajax
   end
 
   scenario 'displays user details' do
