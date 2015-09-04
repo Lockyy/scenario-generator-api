@@ -39,7 +39,7 @@ const Results = React.createClass ({
   },
 
   showImageForProduct: function(result) {
-    return this.props.showImages && result.image.length > 0
+    return this.props.showImages && result.image != null
   },
 
   renderImage: function(result) {

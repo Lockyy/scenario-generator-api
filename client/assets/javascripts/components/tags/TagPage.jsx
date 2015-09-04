@@ -39,7 +39,15 @@ const TagPage = React.createClass({
 
   componentDidMount: function() {
     TagStore.listen(this.onChange.bind(this));
-    FluxTagPageActions.fetchProducts(this.tag(), this.page(), this.sort_by());
+    this.fetchProducts(this.tag(), this.page(), this.sort_by())
+  },
+
+  componentWillReceiveProps: function(newProps) {
+    this.fetchProducts(newProps.params.tag, newProps.params.page, this.sort_by())
+  },
+
+  fetchProducts: function(tag, page, sort_by) {
+    FluxTagPageActions.fetchProducts(tag, page, sort_by);
   },
 
   onChange: function(data) {
