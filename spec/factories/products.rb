@@ -15,7 +15,7 @@ FactoryGirl.define do
     end
 
     trait :with_reviews do
-      reviews = FactoryGirl.create_list(:review, 5, product_id: product)
+      reviews = create_list(:review, 5, product_id: product)
     end
   end
 end
