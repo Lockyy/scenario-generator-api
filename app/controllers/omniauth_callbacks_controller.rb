@@ -8,7 +8,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       generate_token!(user, result)
       sign_in user
-      redirect_to app_path
+      redirect_to stored_location_for(:user) || app_path
     end
   end
 
