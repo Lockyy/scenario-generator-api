@@ -10,6 +10,7 @@ import TagPage from './components/tags/TagPage';
 import SearchPage from './components/search/SearchPage';
 import SearchBox from './components/header/SearchBox';
 import UserTags from './components/users/UserTags';
+import UserBookmarks from './components/users/UserBookmarks';
 import MyRecentActivity from './components/menu/MyRecentActivity';
 import FluxCurrentUserActions from './actions/FluxCurrentUserActions';
 import { Router, Route } from 'react-router';
@@ -57,6 +58,10 @@ $(function onLoad() {
                       message='Adding tags will update your News Feed with the latest news from the ones you follow'
                       messageClass='no-content'/>
                 ), $('.my-tags-container')[0]);
+
+                React.render((
+                    <UserBookmarks router={router} showMessage={false} showTitle={true} sidebar={true} />
+                ), $('.my-bookmarks-container')[0]);
 
                 React.render((
                     <MyRecentActivity router={router} />

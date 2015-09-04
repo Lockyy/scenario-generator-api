@@ -114,6 +114,25 @@
       @extend .col-md-6
       padding: 0
 
+  &.box-2-5
+    @extend .col-xs-12
+    @extend .col-md-6
+    padding: 0
+
+    .data
+      @extend .col-xs-12
+      @extend .col-md-6
+
+    .picture
+      @extend .col-xs-12
+      @extend .col-md-6
+      padding: 0
+
+    .content
+      height: 175px
+    .description
+      display: none
+
   &.box-3
     @extend .col-xs-12
     @extend .col-md-9
@@ -126,6 +145,21 @@
     .picture
       @extend .col-xs-12
       @extend .col-md-8
+
+  &.box-4-5
+    padding: 0 !important
+    .content
+      height: 100px
+      background: none
+      border: none
+      .data
+        padding-top: 5px
+        padding-bottom: 5px
+    .description
+      display: none
+    .footer
+      display: none
+
 
   &.no-pic-box
     .content
