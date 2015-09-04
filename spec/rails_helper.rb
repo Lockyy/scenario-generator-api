@@ -23,6 +23,7 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
   config.include WaitForAjax, type: :feature
   config.include DatabaseCleanerFeatures, type: :feature
+  config.include SharedConnection, type: :feature
   config.include Warden::Test::Helpers
 
   #Turn off stupid js errors
@@ -33,15 +34,6 @@ RSpec.configure do |config|
   #User poltergeist headless
   Capybara.javascript_driver = :poltergeist
 
-  #TODO: Check and see if this is only needed for feature tests
-  class ActiveRecord::Base
-    mattr_accessor :shared_connection
-    @@shared_connection = nil
-
-    def self.connection
-      @@shared_connection || retrieve_connection
-    end
-  end
 
   # Forces all threads to share the same connection. This works on
   # Capybara because it starts the web server in a thread.

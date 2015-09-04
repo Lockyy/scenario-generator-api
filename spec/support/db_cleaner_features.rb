@@ -14,8 +14,9 @@ module DatabaseCleanerFeatures
       config.after(:each) do
         DatabaseCleaner.clean
       end
-
-      config.use_transactional_fixtures = false
+      
+      #We should be able to use transactional fictures because of module SharedConnection at support/shared_connection 
+      #which should speed up tests. If there are issues we can use: config.use_transactional_fixtures = false
     end
   end
 end
