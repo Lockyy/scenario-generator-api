@@ -1,6 +1,8 @@
 class SiteController < ApplicationController
   layout 'site'
 
+  before_filter :app_redirect
+
   def long
   end
 
@@ -17,5 +19,11 @@ class SiteController < ApplicationController
     @title = 'Employee Support'
 
     render 'contact'
+  end
+
+  private
+
+  def app_redirect
+    redirect_to app_path if current_user
   end
 end
