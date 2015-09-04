@@ -5,7 +5,7 @@ Warden.test_mode!
 feature "Dashboard page", js: true do
   background do
     @user = login_user
-    @review = create(:review)
+    @review = build(:review, product: build(:product))
     visit "/app"
     wait_for_ajax
   end
@@ -13,6 +13,4 @@ feature "Dashboard page", js: true do
   scenario 'dispays welcome message' do
     expect(page).to have_content 'Welcome to Fletcher'
   end
-
-
 end

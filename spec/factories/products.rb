@@ -1,12 +1,11 @@
 FactoryGirl.define do
   factory :product do
-    @company = create(:company)
     name { Faker::Company.name }
     description { Faker::Lorem.paragraph }
     url { Faker::Internet.url }
     user_id @user
-    company @company
-    
+    company { create(:company) }
+
 
     trait :with_reviews do
       reviews { create_list(:review, 5) }
