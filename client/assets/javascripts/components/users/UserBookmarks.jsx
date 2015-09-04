@@ -26,19 +26,15 @@ const UserBookmarks = React.createClass ({
 
   componentDidMount: function() {
     BookmarkStore.listen(this.onChange);
+    _.debounce((() => FluxBookmarkActions.fetchBookmarkedProducts()), 300)();
   },
 
   onChange: function(data) {
     this.setState(data.data);
   },
 
-  _updateTags: function(tags) {
-    FluxCurrentUserActions.updateTags(tags);
-  },
-
   render: function() {
     return <MyBookmarks products={this.state.products}
-                        onUpdateTags={this._updateTags}
                         {...this.props} />
   }
 })
