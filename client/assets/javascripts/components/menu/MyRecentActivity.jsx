@@ -39,7 +39,7 @@ const MyRecentActivity = React.createClass ({
           })}
         </ul>
 
-        <a className='link-view-all' href="/app/users/current">View all recent activity</a>
+        <a className='link-view-all' href="/app/users/current#reviews">View all recent activity</a>
       </div>
     );
   },

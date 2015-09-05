@@ -20,6 +20,15 @@ const UserProfileWorkArea  = React.createClass({
     }
   },
 
+  getActiveTab: function() {
+    let activeTab = this.props.activeTab;
+    return _.include(['bookmarks', 'tags', 'reviews'], activeTab) ? activeTab : 'reviews';
+  },
+
+  isActiveTab: function(type) {
+    return this.getActiveTab() == type;
+  },
+
   getUserProfileHeader: function getUserProfileHeader() {
     return (<div />);
   },
@@ -29,7 +38,8 @@ const UserProfileWorkArea  = React.createClass({
     let rows = this.props.page;
 
     return (
-      <RecentActivitySection containerClass='work-area-section' sorting={this.props.sorting}
+      <RecentActivitySection containerClass={`work-area-section ${this.isActiveTab('reviews') ? '' : 'hide'}`}
+        sorting={this.props.sorting}
         items={this.props.recent_activity} editable={true} showMessage={true} rows={rows} cols={cols}
         onChangeSorting={this.props.onChangeSorting} onShowMore={this.props.onShowMore} ref='reviews' />
     );
@@ -37,7 +47,7 @@ const UserProfileWorkArea  = React.createClass({
 
   getTagsSection: function getTagsSection() {
     return (
-      <div className='my-tags-container work-area-section hide' ref='tags' >
+      <div className={`my-tags-container work-area-section ${this.isActiveTab('tags') ? '' : 'hide'}`} ref='tags' >
         <UserTags showMessage='true' />
       </div>
     );
@@ -45,15 +55,13 @@ const UserProfileWorkArea  = React.createClass({
 
   getBookmarksSection: function getBookmarksSection() {
     return (
-      <div className='my-bookmarks-container work-area-section hide' ref='bookmarks' >
+      <div className={`my-bookmarks-container work-area-section ${this.isActiveTab('bookmarks') ? '' : 'hide'}`} ref='bookmarks' >
         <UserBookmarks showMessage='true' />
       </div>
     );
   },
 
   onSelectSection: function onSelectSection(e, section) {
-    e.preventDefault();
-
     let $el = $(React.findDOMNode(e.target));
     $el.siblings('.active').removeClass('active')
     $el.addClass('active');
@@ -79,13 +87,16 @@ const UserProfileWorkArea  = React.createClass({
     return (
       <div id='work-area' className='row'>
         <div className='col-xs-2 work-area-sidebar'>
-          <a href='#activity' ref='link_reviews' className='sidebar-element reviews active' onClick={this.onSelectReviewsSection}>
+          <a href='#activity' className={`sidebar-element reviews ${this.isActiveTab('reviews') ? 'active' : ''}`}
+            ref='link_reviews' onClick={this.onSelectReviewsSection}>
             My Reviews
           </a>
-          <a href='#tags' ref='link_tags' className='sidebar-element tags' onClick={this.onSelectTagsSection}>
+          <a href='#tags' ref='link_tags' className={`sidebar-element tags ${this.isActiveTab('tags') ? 'active' : ''}`}
+            onClick={this.onSelectTagsSection}>
             Followed Tags
           </a>
-          <a href='#bookmarks' ref='link_bookmarks' className='sidebar-element bookmarks' onClick={this.onSelectBookmarksSection}>
+          <a href='#bookmarks' className={`sidebar-element bookmarks ${this.isActiveTab('bookmarks') ? 'active' : ''}`}
+            ref='link_bookmarks' onClick={this.onSelectBookmarksSection}>
             Bookmarks
           </a>
         </div>

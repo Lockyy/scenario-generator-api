@@ -3,6 +3,7 @@ import _ from 'lodash';
 import FluxUserActions from '../../actions/FluxUserActions';
 import FluxBookmarkActions from '../../actions/FluxBookmarkActions';
 import UserStore from '../../stores/UserStore';
+import UrlHelper from '../../utils/helpers/UrlHelper'
 import Section from '../Section'
 import SectionRow from '../SectionRow'
 import UserProfileHeader from './UserProfileHeader';
@@ -71,9 +72,10 @@ const UserProfilePage  = React.createClass({
 
   render: function render() {
     let user  = this.state;
+    let activeTab = UrlHelper.getAnchorText();
 
     let page = user.id == this.context.currentUser.id ?
-      <UserProfileWorkArea sorting={this.state.sort_by}
+      <UserProfileWorkArea sorting={this.state.sort_by} activeTab={activeTab}
         onChangeSorting={this.onChangeReviewsSorting} onShowMore={this.onShowMoreReviews} {...user} /> :
       <UserProfileRecentActivity sorting={this.state.sort_by} onShowMore={this.onShowMoreReviews}
         onChangeSorting={this.onChangeReviewsSorting} {...user}/>
