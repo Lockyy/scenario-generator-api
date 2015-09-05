@@ -12,5 +12,18 @@ feature "Product page", js: true do
 
   scenario 'displays product info' do
     expect(page).to have_content @product.name
+    expect(page).to have_content @product.reviews.last.title
+  end
+
+  scenario 'has linked attachments' do
+    @attachments = Attachment.where(product_id: @product.id)
+    expect(page).to have_content "#{@attachments.count} Files Added"
+  end
+
+  scenario 'clicking Review This Product takes you to review form' do
+    click_link "Review this Product"
+    wait_for_ajax
+    expect(page).to have_field("product[name]", with: "#{@product.name}", disabled: true)
+    expect(page).to have_field("product[review[quality_review]]")
   end
 end
