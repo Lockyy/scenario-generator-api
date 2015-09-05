@@ -304,7 +304,7 @@ const ProductPage = React.createClass({
         {this.renderTopButtons()}
         {this.renderInfo()}
         <div className='row'>
-          <div className='col-xs-2 reviews-sidebar'>
+          <div className='col-xs-3 reviews-sidebar'>
             <div  className='sidebar-element user-reviews active'
                   onClick={this.onSelectReviewsSection}>User Reviews</div>
             <div className='sidebar-element lists'
@@ -312,7 +312,7 @@ const ProductPage = React.createClass({
             <div className='sidebar-element custom-data'
                   onClick={this.onSelectCustomSection}>Custom Data</div>
           </div>
-          <div className='col-xs-10'>
+          <div className='col-xs-9'>
             <Reviews productID={this.id()} ref='reviews' />
             <div className='placeholder-section hide' ref='lists'>
               Feature Coming Soon
