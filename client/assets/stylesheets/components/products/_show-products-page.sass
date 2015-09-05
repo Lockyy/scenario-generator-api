@@ -250,8 +250,6 @@
             margin: 0
 
             .vote-container, .feedback
-              @extend .col-xs-5
-
               margin-top: 25px
               padding: 15px 35px
               color: $dark-grey
@@ -267,7 +265,12 @@
                 text-align: center
                 font-size: 10px
 
+            .vote-container
+              @extend .col-xs-7
+
             .feedback
+              @extend .col-xs-4
+
               display: none
               color: #318eaf
               background-color: $white
