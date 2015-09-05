@@ -1,7 +1,7 @@
 class SiteController < ApplicationController
   layout 'site'
 
-  before_filter :app_redirect
+  # before_filter :app_redirect
 
   def long
   end
