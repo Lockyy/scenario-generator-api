@@ -16,7 +16,7 @@ feature "Create reviews", js:true do
     fill_in "product[company[name]]", with: "Ubuntu"
     fill_in "product[url]", with: "http://www.ubuntu.com/phone"
     fill_in "product[description]", with: Faker::Lorem.paragraph 
-    find(:xpath, "//label[@for='product[review[quality_score]]_5_39105']")
+    first('#name_5').click
     fill_in "product[review[title]]", with: "Pretty damn cool phone"
     fill_in "product[review[quality_review]]", with: Faker::Lorem.paragraph
     find("value=create Review").click
