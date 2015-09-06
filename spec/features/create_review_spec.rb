@@ -11,14 +11,12 @@ feature "Create reviews", js:true do
 
   scenario "without previous existing product" do
     click_link "Write a Review"
-    fill_in "product[name]", with: "Ubuntu Phone"
-    expect(page).to have_selector(".tt-no-results")
-    find(".tt-no-results").click
-    wait_for_ajax
+    fill_in_typeahead("product[name]", "Ubuntu Phone")
+    choose_typeahead(".tt-no-results","Ubuntu Phone")
     fill_in "product[company[name]]", with: "Ubuntu"
     fill_in "product[url]", with: "http://www.ubuntu.com/phone"
-    fill_in "product[description", with: Faker::Lorem.paragraph 
-    find("#name_5").click
+    fill_in "product[description]", with: Faker::Lorem.paragraph 
+    find(:xpath, "//label[@for='product[review[quality_score]]_5_39105']")
     fill_in "product[review[title]]", with: "Pretty damn cool phone"
     fill_in "product[review[quality_review]]", with: Faker::Lorem.paragraph
     find("value=create Review").click
