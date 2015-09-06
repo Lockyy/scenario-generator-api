@@ -8,8 +8,8 @@ feature "Create reviews", js:true do
     visit "/app"
     wait_for_ajax
   end
-
-  scenario "without previous existing product" do
+  
+  def new_product_review
     click_link "Write a Review"
     fill_in_typeahead("product[name]", "Ubuntu Phone")
     choose_typeahead(".tt-no-results","Ubuntu Phone")
@@ -19,9 +19,22 @@ feature "Create reviews", js:true do
     first('#name_5').click
     fill_in "product[review[title]]", with: "Pretty damn cool phone"
     fill_in "product[review[quality_review]]", with: Faker::Lorem.paragraph
-    find("value=create Review").click
-    it { should change { Review.count }.by 1 }
-    it { should change { Product.count }.by 1 }
-    it { should chnage { Company.count }.by 1 }
+    find(".btn.btn-default.submit.btn-round").click
+    wait_for_ajax
+  end
+
+  describe "without previous existing product" do
+    
+    scenario "creates new review" do 
+      expect{new_product_review}.to change{Review.count}.by 1
+    end
+    
+    scenario "creates a new product" do 
+      expect{new_product_review}.to change{Product.count}.by 1
+    end
+
+    scenario "creates a new company" do 
+      expect{new_product_review}.to change{Company.count}.by 1
+    end
   end   
 end
