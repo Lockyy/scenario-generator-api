@@ -180,6 +180,11 @@ const SearchPage = React.createClass({
           currentPage={this.props.params.page}
           topLeft='type'
           topRight='dropdown'
+          dropdownOptions={{
+            relevance: 'Relevance',
+            latest: 'Latest',
+            alphabetical_order: 'Alphabetical order',
+          }}
           sort_by={this.state.data.sort_by}
           onChangePage={this.onChangePage}
           onSetQuery={this.setQuery} />
