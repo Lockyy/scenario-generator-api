@@ -23,7 +23,12 @@ module Fletcher
           search_string: @params[:search_string],
           page: @page,
           per_page: @per_page,
-          sort_by: @params[:sort_by],
+          sorting: {
+            companies:  @params[:sorting][:companies],
+            products:   @params[:sorting][:products],
+            tags:       @params[:sorting][:tags],
+            match_mode: @params[:sorting][:match_mode]
+          },
           companies: data_hash(@companies),
           products: data_hash(@products),
           related_tags: {
@@ -49,7 +54,12 @@ module Fletcher
       {
           filter_by: '',
           filter_by_tags: [],
-          match_mode: 'any',
+          sorting: {
+            companies:  :alphabetical_order,
+            products:   :alphabetical_order,
+            tags:       :alphabetical_order,
+            match_mode: 'any'
+          },
           search_string: '',
           page: DEFAULT_PAGE,
           per_page: DEFAULT_PER_PAGE
@@ -92,21 +102,21 @@ module Fletcher
 
     def companies(terms)
       return [] if @params[:search_string].blank?
-      search_companies = SearchCompanies.new(@params[:filter_by], terms, @params[:sort_by], @filter_tags, @params[:match_mode])
+      search_companies = SearchCompanies.new(@params[:filter_by], terms, @params[:sorting][:companies], @filter_tags, @params[:sorting][:match_mode])
       @companies_related_tags = search_companies.related_tags
       search_companies.results
     end
 
     def products(terms)
       return [] if @params[:search_string].blank?
-      search_products = SearchProducts.new(@params[:filter_by], terms, @params[:sort_by], @filter_tags, @params[:match_mode])
+      search_products = SearchProducts.new(@params[:filter_by], terms, @params[:sorting][:products], @filter_tags, @params[:sorting][:match_mode])
       @products_related_tags = search_products.related_tags
       search_products.results
     end
 
     def tags(terms)
       return [] if @params[:search_string].blank?
-      SearchTags.new(@params[:filter_by], terms, @params[:sort_by], @filter_tags, @params[:match_mode]).results
+      SearchTags.new(@params[:filter_by], terms, @params[:sorting][:tags], @filter_tags, @params[:sorting][:match_mode]).results
     end
 
     def related_tags
