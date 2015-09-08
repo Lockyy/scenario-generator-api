@@ -12,7 +12,7 @@ const TagResults = React.createClass ({
 
   addSortParam: function(sortDescription) {
     let match_mode = _.contains(this.SORT_FIELDS_SIMPLE_SEARCH, sortDescription) ? 'any' : 'all';
-    let query = { sorting: { tags: sortDescription, match_mode: match_mode } }
+    let query = { sorting: { tags: sortDescription }, match_mode: { tags: match_mode } }
     this.props.onSetQuery(query)
   },
 

@@ -150,8 +150,9 @@ const Results = React.createClass ({
 
   addSortParam: function(sortDescription) {
     let match_mode = _.contains(this.SORT_FIELDS_SIMPLE_SEARCH, sortDescription) ? 'any' : 'all';
-    let query = { sorting: { match_mode: match_mode } }
+    let query = { sorting: {}, match_mode: {} }
     query.sorting[this.props.type] = sortDescription
+    query.match_mode[this.props.type] = match_mode
     this.props.onSetQuery(query)
   },
 

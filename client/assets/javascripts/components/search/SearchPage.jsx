@@ -20,6 +20,11 @@ const SearchPage = React.createClass({
         tags: [],
         related_tags: [],
         filtered_tags: [],
+        match_mode: {
+          products: 'all',
+          companies: 'all',
+          tags: 'all'
+        },
         sorting: {
           products: 'alphabetical_order',
           companies: 'alphabetical_order',
@@ -127,7 +132,8 @@ const SearchPage = React.createClass({
       filter_by: data.filter_by,
       filtered_tags: data.filtered_tags,
       section: data.section,
-      sorting: data.sorting
+      sorting: data.sorting,
+      match_mode: data.match_mode
     };
     return _.merge(_data, this.context.router.state.location.query);
   },
