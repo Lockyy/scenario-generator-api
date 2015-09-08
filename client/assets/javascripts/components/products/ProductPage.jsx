@@ -1,16 +1,22 @@
-import _ from 'lodash';
-import React from 'react';
-import timeago from 'timeago';
-import { Link, Navigation } from 'react-router';
+import _ from 'lodash'
+import React from 'react'
+import timeago from 'timeago'
+import { Link, Navigation } from 'react-router'
+import Modal from 'react-modal'
 import FluxProductPageActions from '../../actions/FluxProductPageActions'
 import FluxBookmarkActions from '../../actions/FluxBookmarkActions'
 import ProductStore from '../../stores/ProductStore'
 import Reviews from './Reviews'
-import Rating from '../Rating';
-import PriceRating from '../PriceRating';
-import Tags from '../Tags';
+import Rating from '../Rating'
+import PriceRating from '../PriceRating'
+import Tags from '../Tags'
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
+
+var appElement = document.getElementById('content');
+
+Modal.setAppElement(appElement);
+Modal.injectCSS();
 
 const ProductPage = React.createClass({
   displayName: 'ProductPage',
@@ -23,9 +29,18 @@ const ProductPage = React.createClass({
           name: ''
         },
         attachments: [],
-        links: []
-      }
+        links: [],
+      },
+      modalIsOpen: false
     };
+  },
+
+  openModal: function() {
+    this.setState({modalIsOpen: true});
+  },
+
+  closeModal: function() {
+    this.setState({modalIsOpen: false});
   },
 
   id: function() {
@@ -144,11 +159,9 @@ const ProductPage = React.createClass({
         <Link to={this.reviewButtonURL()} className='btn btn-red btn-round'>
           { this.reviewButtonText() }
         </Link>
-        <a
-          href={`mailto:?subject=Check%20out%20this%20product&body=${window.location.href}`}
-          className='btn btn-grey btn-round'>
+        <div onClick={this.openModal} className='btn btn-grey btn-round'>
           Share
-        </a>
+        </div>
         {this.renderBookmarkLink()}
       </div>
     )
@@ -271,7 +284,7 @@ const ProductPage = React.createClass({
     )
   },
 
-   onSelectSection: function onSelectSection(e, section) {
+  onSelectSection: function onSelectSection(e, section) {
     e.preventDefault();
 
     let $el = $(React.findDOMNode(e.target));
@@ -295,6 +308,45 @@ const ProductPage = React.createClass({
     this.onSelectSection(e, 'custom')
   },
 
+  copyLink: function() {
+    let copyTextarea = $(this.refs.locationLink.getDOMNode());
+    let linkCopyButton = $(this.refs.linkCopyButton.getDOMNode())
+    copyTextarea.select();
+
+    try {
+      let successful = document.execCommand('copy');
+      linkCopyButton.html('Copied!')
+      setTimeout(function() { linkCopyButton.html('Copy Link') }, 2000)
+    } catch (err) { console.log('Oops, unable to copy'); }
+    copyTextarea.blur()
+  },
+
+  renderShareModal: function() {
+    return (
+      <Modal
+        isOpen={this.state.modalIsOpen}
+        onRequestClose={this.closeModal} >
+        <div className='header'>
+          <span className='title'>
+            Share this product with other users
+          </span>
+          <span onClick={this.closeModal} className='close'>x</span>
+        </div>
+        <div className="input-group">
+          <input  type="text"
+                  className="form-control"
+                  aria-describedby="basic-addon2"
+                  value={window.location.href}
+                  ref='locationLink' />
+          <span className="input-group-addon copy-link"
+                id="basic-addon2"
+                ref='linkCopyButton'
+                onClick={this.copyLink}>Copy Link</span>
+        </div>
+      </Modal>
+    )
+  },
+
   render: function() {
     return (
       <div className='product show container'>
@@ -303,6 +355,7 @@ const ProductPage = React.createClass({
         {this.renderTitle()}
         {this.renderTopButtons()}
         {this.renderInfo()}
+        {this.renderShareModal()}
         <div className='row'>
           <div className='col-xs-3 reviews-sidebar'>
             <div  className='sidebar-element user-reviews active'
