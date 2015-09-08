@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import Tags from '../Tags'
+import Dropdown from '../Dropdown';
 
 const TagResults = React.createClass ({
 
@@ -9,14 +10,48 @@ const TagResults = React.createClass ({
     return { data: [] }
   },
 
-  renderSize: function() {
-    if(this.props.showSize) {
-      return (
-        <div className='top-right'>
-          { this.props.data.total } result(s) found
-        </div>
-      )
+  addSortParam: function(sortDescription) {
+    let match_mode = _.contains(this.SORT_FIELDS_SIMPLE_SEARCH, sortDescription) ? 'any' : 'all';
+    this.props.onSetQuery({sort_by: sortDescription, match_mode: match_mode})
+  },
+
+  dropdownOptions: function() {
+    return this.props.dropdownOptions || {
+      relevance: 'Relevance',
+      latest: 'Latest',
+      alphabetical_order: 'Alphabetical order',
     }
+  },
+
+  renderTopRight: function() {
+    switch(this.props.topRight) {
+      case 'dropdown':
+        if(this.props.data.total > 0) {
+          return(
+            <div className='top-right'>
+              <Dropdown
+                onClick={this.addSortParam}
+                active={this.props.sort_by}
+                options={this.dropdownOptions()}
+                containerClass={'red'} />
+              </div>
+          )
+        }
+      case 'size':
+        return (
+          <div className='top-right'>
+            { this.props.data.total } result(s) found
+          </div>
+        )
+    }
+  },
+
+  renderTopLeft: function() {
+    return (
+      <div className='top-left'>
+        {this.props.title || 'Tags'}
+      </div>
+    )
   },
 
   getTagNames: function(tags){
@@ -30,7 +65,7 @@ const TagResults = React.createClass ({
         tags={data}
         onClick={this.props.onClick}
         selected={this.getTagNames(this.props.selected)} />
-    }else{
+    } else {
       return this.props.emptyResults
     }
   },
@@ -42,16 +77,13 @@ const TagResults = React.createClass ({
     } else {
       return (
         <div className={`results tags ${this.props.containerClass}`}>
-          <div className ='title'>
-            <div className='top-left'>
-              {this.props.title || 'Tags'}
-            </div>
-            { this.renderSize() }
-            <div className='clear'></div>
+          <div className ='top'>
+            { this.renderTopLeft() }
+            { this.renderTopRight() }
           </div>
           {this.props.noResultsTag}
-            {this.getTags()}
-            {showAllTags}
+          {this.getTags()}
+          {showAllTags}
         </div>
       )
     }

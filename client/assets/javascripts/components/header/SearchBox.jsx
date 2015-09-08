@@ -87,6 +87,7 @@ const SearchBox = React.createClass ({
           <TagResults
             data={this.state.data.tags}
             containerClass={'header'}
+            topRight={'size'}
             hide={this.state.data.tags.total <= 0}
             searchTerm={this.state.data.search_string}
             onClick={this.onTagClick} />

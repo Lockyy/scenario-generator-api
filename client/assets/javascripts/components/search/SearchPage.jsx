@@ -145,7 +145,7 @@ const SearchPage = React.createClass({
         <TagResults
           data={this.state.data.tags}
           hide={!this.displaySection('tags')}
-          showSize={true}
+          topRight={'size'}
           searchTerm={this.props.params.search_string}
           section={this.props.params.section}
           emptyResults={noResultsTag} />
@@ -198,10 +198,12 @@ const SearchPage = React.createClass({
         <TagResults
           data={this.state.data.tags}
           hide={!this.displaySection('tags')}
-          showSize={true}
+          topRight={'dropdown'}
+          sort_by={this.state.data.sort_by}
           searchTerm={this.props.params.search_string}
           section={this.props.params.section}
-          emptyResults={<div className='no-results'>We couldn’t find any results for your search.</div>} />
+          emptyResults={<div className='no-results'>We couldn’t find any results for your search.</div>}
+          onSetQuery={this.setQuery} />
       </div>
     )
   },
