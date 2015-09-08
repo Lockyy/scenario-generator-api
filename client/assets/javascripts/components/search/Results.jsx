@@ -116,7 +116,7 @@ const Results = React.createClass ({
 
     return (
       <div className='show-more'>
-        <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='show-more-button'>
+        <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='btn btn-grey btn-round'>
           Show More
         </a>
       </div>
