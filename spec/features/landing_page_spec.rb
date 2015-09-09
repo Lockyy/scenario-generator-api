@@ -16,8 +16,8 @@ feature "Landing Page", js: true do
           wait_for_ajax
         end
 
-        scenario 'redirects you to the main app' do
-          expect(current_path).to eq '/app'
+        scenario 'does not redirect you to the main app' do
+          expect(current_path).to eq path
         end
       end
     end
