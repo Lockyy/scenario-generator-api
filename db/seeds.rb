@@ -26,10 +26,11 @@ def create_product(users)
 end
 
 def create_tags(reviews)
-  tag = Tag.create(name: Faker::Company.bs)
-
-  reviews.each do |review|
-    TagTaggable.create(tag: tag, taggable: review)
+  2.times do
+    tag = Tag.create(name: Faker::Company.bs)
+    reviews.each do |review|
+      TagTaggable.create(tag: tag, taggable: review)
+    end
   end
 end
 
@@ -39,6 +40,6 @@ users = create_users
   create_product(users.sample(2))
 end
 
-50.times do
+25.times do
   create_tags(Review.all.sample(2))
 end
