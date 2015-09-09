@@ -6,7 +6,6 @@ $color-darkgrey: #929497
 $color-orange: #e36307
 
 .company.profile.show
-
   .desktop-version
     display: inline
 
@@ -19,7 +18,7 @@ $color-orange: #e36307
   .section
     border-top: solid 2px $color-darkred
 
-    .header
+    & > .header
       padding: 10px
       margin-top: 0px
       border-bottom: solid 1px $grey
@@ -43,7 +42,6 @@ $color-orange: #e36307
     margin-bottom: 0
 
   #company-main-info-container
-    font-weight: bold
     padding-top: 25px
 
     .logo-container, .buttons-container
@@ -97,7 +95,6 @@ $color-orange: #e36307
       border-top: solid 1px $grey
       border-bottom: solid 2px $grey
       color: $dark-grey
-      font-weight: bold
       font-size: 14px
 
       a.url-site
@@ -119,7 +116,6 @@ $color-orange: #e36307
         border-color: $color-orange
         margin-top: 20px
         padding: 10px 20px
-        font-weight: bold
 
         &:hover, &:active, &:focus
           background-color: $color-orange
@@ -135,16 +131,7 @@ $color-orange: #e36307
         width: 100%
         padding: 0
 
-@media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max)
-  .company.profile.show
-    .desktop-version
-      .section
-        .header
-          .section-title
-            padding-top: 20px
-
-@media (max-width: $screen-xs-max)
-
+@media (max-width: $screen-sm-max)
   $color-lightgrey: #f6f6f6
   $color-blackcharcoal: #3c3c3b
 
@@ -162,19 +149,17 @@ $color-orange: #e36307
       .mobile-version
         display: block
 
-      .mobile-version
-
         .section
           margin-top: 30px
           border: solid 1px $grey
           border-top: solid 2px $color-darkred
 
-          .header
+          & > .header
             padding: 10px
             margin: 0px
             border-bottom: none
 
-            .section-title
+            .section-title, .customHeaderTag
               background-image: none
               padding: 0
 
@@ -184,7 +169,6 @@ $color-orange: #e36307
               .toggle-section
                 span
                   color: $color-blackcharcoal
-                  font-weight: bold
 
         .logo-container
           flex-direction: column
@@ -197,8 +181,7 @@ $color-orange: #e36307
 
           .company-name
             padding: 0
-            font-size: 35px
-            margin-top: 5px
+            padding-top: 20px
 
         .row
           margin: 0
@@ -209,16 +192,14 @@ $color-orange: #e36307
           border-top: solid 2px $color-darkred
 
           .website-container
-            padding: 0px 30px 10px 30px
+            padding: 15px 20px
 
             .url-site
-              background: no-repeat left bottom
+              background: no-repeat left center
               background-image: img-url('icons/icon-website.svg')
-              font-size: 17.5px
-              padding: 10px 0 0 40px
+              padding: 20px 0 20px 40px
               color: $color-darkred
               text-decoration: underline
-              margin-top: 10px
               min-height: 29px
 
           .actions-container
@@ -236,16 +217,18 @@ $color-orange: #e36307
                 background: no-repeat left bottom
                 padding: 10px 0 10px 30px
                 background-position: 0
+                background-size: 20px
 
             .share-btn
               border-right: none
               .with-icon
                 background-image: img-url('icons/icon-share.svg')
+                background-size: 15px
 
             .bookmark-btn
               border-left: none
               .with-icon
-                background-image: img-url('icons/icon-bookmarks.svg')
+                background-image: img-url('icons/icon-bookmarks-red.svg')
 
           .product.box-1:last-child
             padding-bottom: 0 !important
