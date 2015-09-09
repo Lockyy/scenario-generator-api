@@ -79,7 +79,7 @@ class BasedOnTagsSection extends React.Component {
     if (_.isEmpty(this.props.items)) return [];
     _.each(this.props.items, function(products, tagName) {
       _.each(products, function(product) {
-        let tag = _.sample(product.tags);
+        let tag = _.sample(product.user_tags);
 
         items.push(<ProductBox size={_this.getCurrentBoxSize(items, product)}
           onCustomizeDetail={_this.getCustomizeProductBoxDetailFn(tag)} {...product} />);
