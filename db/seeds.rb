@@ -25,11 +25,11 @@ def create_product(users)
   end
 end
 
-def create_tags(products)
+def create_tags(reviews)
   tag = Tag.create(name: Faker::Company.bs)
 
-  products.each do |product|
-    TagTaggable.create(tag: tag, taggable: product)
+  reviews.each do |review|
+    TagTaggable.create(tag: tag, taggable: review)
   end
 end
 
@@ -40,5 +40,5 @@ users = create_users
 end
 
 50.times do
-  create_tags(Product.all.sample(2))
+  create_tags(Review.all.sample(2))
 end
