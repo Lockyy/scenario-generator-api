@@ -1,3 +1,5 @@
+@import "common/variables"
+
 /* CSS for high-resolution devices */
 @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)
   .image-header
@@ -19,3 +21,18 @@
     margin-bottom: 25px
   .header
     font-size: 35px
+
+@media only screen and (max-width : 768px)
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)
+    .image-header
+      background-image: image_url('backgrounds/header-mobile@2x.jpg')
+
+  .image-header
+    background-image: image_url('backgrounds/header-mobile.jpg')
+    background-position: bottom
+    .text
+      padding-top: 35px
+      padding-bottom: 300px
+      text-align: center
+      .row
+        margin-top: 15px

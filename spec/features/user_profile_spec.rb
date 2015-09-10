@@ -8,6 +8,7 @@ feature "User Profile Page", js: true do
     visit "/app"
     visit "/app/users/current"
     wait_for_ajax
+    @review = create(:review)
   end
 
   scenario 'displays user details' do
@@ -17,6 +18,14 @@ feature "User Profile Page", js: true do
   end
 
   scenario "displays user's reviews/files/products" do
-    #expect(page).to have_content @user.reviews.last
+    expect(page).to have_content @user.reviews.last
+    expect(page).to have_content @user.products.count 
+    expect(page).to have_content @user.reviews.count
+    expect(page).to have_content @user.attachments.count
+  end
+
+  scenario "displays user's followed tags" do
+    click_link "Followed Tags"
+    expect(page).to have_content @user.tags.last
   end
 end
