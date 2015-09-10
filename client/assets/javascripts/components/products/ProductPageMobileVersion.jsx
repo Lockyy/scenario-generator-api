@@ -5,75 +5,37 @@ import { Link, Navigation } from 'react-router';
 import FluxProductPageActions from '../../actions/FluxProductPageActions'
 import FluxBookmarkActions from '../../actions/FluxBookmarkActions'
 import ProductStore from '../../stores/ProductStore'
-import Reviews from './Reviews'
+import Reviews from './ReviewsMobileVersion'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
-import ProductPageDesktopVersion from './ProductPageDesktopVersion';
-import ProductPageMobileVersion from './ProductPageMobileVersion';
 import Tags from '../Tags';
+import Section from '../Section';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 
-const ProductPage = React.createClass({
-  displayName: 'ProductPage',
+const ProductPageMobileVersion = React.createClass({
+  displayName: 'ProductPageMobileVersion',
   mixins: [ Navigation ],
-  getInitialState: function() {
-    return {
-      data: {
-        name: '',
-        company: {
-          name: ''
-        },
-        attachments: [],
-        links: []
-      }
-    };
-  },
 
   id: function() {
-    return this.props.params.id
-  },
-
-  componentDidMount: function() {
-    ProductStore.listen(this.onChange.bind(this));
-    FluxProductPageActions.fetchProduct(this.id());
-  },
-
-  onChange: function(data) {
-    this.setState(data);
-  },
-
-  bookmark: function() {
-    let _this = this
-    FluxBookmarkActions.createBookmark(this.id(), function() {
-      FluxProductPageActions.fetchProduct(_this.id());
-      FluxBookmarkActions.fetchBookmarkedProducts();
-    })
-  },
-
-  unbookmark: function() {
-    let _this = this
-    FluxBookmarkActions.deleteBookmark(this.id(), function() {
-      FluxProductPageActions.fetchProduct(_this.id());
-      FluxBookmarkActions.fetchBookmarkedProducts();
-    })
+    return this.props.data.id
   },
 
   getProductData: function(name) {
-    if(this.state) {
-      return this.state.data[name]
+    if(this.props.data) {
+      return this.props.data[name]
     }
   },
 
   getCompanyData: function(name) {
-    if(this.state) {
-      return this.state.data.company[name]
+    if(this.props.data) {
+      return this.props.data.company[name]
     }
   },
 
   getCurrentUserReview: function() {
-    if(this.state && this.state.data.review) {
-      return this.state.data.review
+    if(this.props && this.props.data.review) {
+      return this.props.data.review
     } else {
       return false
     }
@@ -108,50 +70,40 @@ const ProductPage = React.createClass({
     )
   },
 
-  reviewButtonText: function() {
-    if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
-      return 'Edit My Review'
-    } else {
-      return 'Review this Product'
-    }
-  },
-
-  reviewButtonURL: function() {
-    if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
-      return `/app/products/${this.id()}/reviews/${this.getCurrentUserReview().id}`
-    } else {
-      return `/app/products/${this.id()}/reviews/new`
-    }
-  },
-
   renderBookmarkLink: function() {
-    if(this.state.data.bookmarked) {
-      return (
-        <div onClick={this.unbookmark} className='btn btn-grey btn-round'>
-          Remove Bookmark
-        </div>
-      )
-    } else {
-      return (
-        <div onClick={this.bookmark} className='btn btn-grey btn-round'>
-          Bookmark
-        </div>
-      )
+    let text = this.props.data.bookmarked ? 'Remove Bookmark' : 'Bookmark';
+    let onClick = this.props.data.bookmarked ? this.props.onUnbookmark : this.props.onBookmark;
+    let onClickFn = function(e) {
+      e.preventDefault();
+
+      if (_.isFunction(onClick)) {
+        onClick();
+      }
     }
+
+    return (
+      <a href="#" onClick={onClickFn} className='btn btn-grey btn-bookmark'>
+        <span className='with-icon'>{text}</span>
+      </a>
+    );
   },
 
-  renderTopButtons: function() {
+  renderShareLink: function() {
+    let url = `mailto:?subject=Check%20out%20this%20product&body=${window.location.href}`;
+
+    return (
+      <a href={url} className='btn btn-grey btn-share'>
+        <span className='with-icon'>Share</span>
+      </a>
+    );
+  },
+
+  renderReviewButton: function() {
     return (
       <div className='links'>
-        <Link to={this.reviewButtonURL()} className='btn btn-red btn-round'>
-          { this.reviewButtonText() }
-        </Link>
-        <a
-          href={`mailto:?subject=Check%20out%20this%20product&body=${window.location.href}`}
-          className='btn btn-grey btn-round'>
-          Share
+        <a href={this.props.reviewButtonURL} className='btn btn-red btn-round'>
+          { this.props.reviewButtonText }
         </a>
-        {this.renderBookmarkLink()}
       </div>
     )
   },
@@ -172,14 +124,24 @@ const ProductPage = React.createClass({
     let attachments = this.getProductData('attachments');
     let links = this.getProductData('links');
 
+    let link = _.isEmpty(this.getProductData('url')) ?
+      '' :
+      (<div className='link'>
+        <a href={UrlHelper.addProtocol(this.getProductData('url'))} className='red' target='_blank'>
+          {UrlHelper.addProtocol(this.getProductData('url'))}
+        </a>
+      </div>);
+
+    let description = _.isEmpty(this.getProductData('formatted_description')) ?
+      '' :
+      (<div className='description' dangerouslySetInnerHTML={{__html: this.getProductData('formatted_description')}} />);
+
     return (
       <div className='row info-row'>
-        <div className='col-xs-3 stats'>
+        <div className='col-xs-12 stats'>
           <div className='stars'>
             <Rating value={this.getProductData('rating')} name='rating'/>
-            <div className='total-reviews'>
-              {this.totalReviews()} Review(s)
-            </div>
+            {this.totalReviews()} Review(s)
           </div>
           <PriceRating value={this.getProductData('price')} name='rating'/>
           <div className="files">
@@ -194,22 +156,14 @@ const ProductPage = React.createClass({
               {this.getProductData('links').length} Link{links.length > 1 || links.length == 0 ? 's' : ''} Added
             </a>
           </div>
-        </div>
-        <div className='col-xs-6 information'>
-          <div className='link'>
-            <a href={UrlHelper.addProtocol(this.getProductData('url'))} className='red' target='_blank'>
-              {UrlHelper.addProtocol(this.getProductData('url'))}
-            </a>
+
+          {link}
+          {description}
+
+          <div className='actions'>
+            {this.renderBookmarkLink()}
+            {this.renderShareLink()}
           </div>
-          <div className='description' dangerouslySetInnerHTML={{__html: this.getProductData('formatted_description')}}>
-          </div>
-        </div>
-        <div className='col-xs-3'>
-          <Tags
-            tags={this.getProductData('tags')}
-            name={this.getProductData('name')}
-            link={'#'}
-            max={9} />
         </div>
       </div>
     )
@@ -298,18 +252,41 @@ const ProductPage = React.createClass({
   },
 
   render: function() {
-    return (
-      <div className='product show container'>
-        <ProductPageDesktopVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
-          onBookmark={this.bookmark} onUnbookmark={this.unbookmark}
-          {...this.state} />
+    if (_.isUndefined(this.id())) {
+      return (<div />);
+    }
 
-        <ProductPageMobileVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
-          onBookmark={this.bookmark} onUnbookmark={this.unbookmark}
-          {...this.state} />
+    let tags = this.getProductData('tags');
+
+    return (
+      <div className='mobile-version'>
+        {this.renderFilesModal()}
+        {this.renderLinksModal()}
+        {this.renderTitle()}
+        {this.renderReviewButton()}
+        {this.renderInfo()}
+
+
+        <div className='row'>
+          <div className='col-xs-12 tags'>
+            <Section hasPagination={false} title={"Tags (" + tags.length + ")"}>
+              <Tags
+                tags={tags}
+                name={this.getProductData('name')}
+                link={false}
+                max={tags.length} />
+            </Section>
+          </div>
+
+          <div className='col-xs-12 tags'>
+            <Section hasPagination={false} title={"Reviews"}>
+              <Reviews productID={this.id()} ref='reviews' />
+            </Section>
+          </div>
+        </div>
       </div>
     );
   }
 })
 
-export default ProductPage;
+export default ProductPageMobileVersion;
