@@ -299,7 +299,7 @@ const ProductPage = React.createClass({
 
   render: function() {
     return (
-      <div className='product show container'>
+      <div className='product show'>
         <ProductPageDesktopVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
           onBookmark={this.bookmark} onUnbookmark={this.unbookmark}
           {...this.state} />

@@ -107,6 +107,7 @@ const TagsManager = React.createClass({
       freeInput: true,
       tagClass: 'item tag',
       trimValue: true,
+      keyboardTagDelete: false,
       typeaheadjs: this._getTypeaheadProps()
     }, this.props.tagsinputProperties);
   },
@@ -128,7 +129,8 @@ const TagsManager = React.createClass({
     this._hideButtonContainer();
 
     this._getTagsManagerContainer().on('clickoutside', _.debounce(function (e) {
-      if (!_.include(e.target.classList, 'myTagSuggestion')) {
+      if (!(_.include($(e.target).attr('class'), 'myTagSuggestion') ||
+          _.include($(e.target).data('role'), 'remove'))) {
         _this._closeTagsManager();
       }
     }));
@@ -189,7 +191,8 @@ const TagsManager = React.createClass({
             let id = Math.floor((Math.random() * 1000000) + 1);
             let url = `/app/tags/${tag.slug}/1`;
             return <a href={url}>
-              <span className='tag item' key={`tag_${id}`} id={`tag_${id}`} ref={`tag_${id}`}>{tag.name}</span>
+              <span className='tag item' key={`tag_${id}`}
+                    id={`tag_${id}`} ref={`tag_${id}`}>{tag.name}</span>
               </a>
           })}
         </div>
