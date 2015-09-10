@@ -19,7 +19,7 @@ ready = ->
 
   $('#slideshow').slidesjs({
     width: '100%',
-    height: 530,
+    height: 370,
     navigation: false,
     play:
       auto: true,
@@ -28,7 +28,8 @@ ready = ->
       start: setActiveSlideshowBox
   })
 
-  $('.slide-show-box').height($('.slide-show-box').width())
+  $('.hidden-xs .slide-show-box').height($('.hidden-xs .slide-show-box').width())
+  $('.visible-xs .slide-show-box').height($('.visible-xs .slide-show-box').width())
 
   $('.slide-show-box.discover').on 'click', ->
     $('.slidesjs-pagination-item a')[0].click()
@@ -51,6 +52,10 @@ ready = ->
     height: 380,
     navigation:
       effect: 'carousal'
+
+  $('#team').slidesjs
+    width: '100%',
+    height: 230,
 
 $(document).ready(ready)
 $(document).on('page:load', ready)

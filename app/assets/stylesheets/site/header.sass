@@ -1,20 +1,57 @@
 @import "common/variables"
 
-.navbar.navbar-default
-  background-color: $primary-grey
-  color: $header-font-grey
-  margin-bottom: 0px
-  .brand
-    img
-      height: 60px
-  .navbar-right
-    padding-top: 5px
-  .navbar-brand
+.navbar
+  &.navbar-default
+    background-color: $primary-grey
     color: $header-font-grey
-  .navbar-nav > li > a
-    color: $header-font-grey
-    padding: 0px
-    margin: 15px
-    &:hover, &:active, &:focus, &.login
-      margin-bottom: 13px
-      border-bottom: 2px solid $primary-red
+    margin-bottom: 0px
+    .brand
+      img
+        height: 60px
+    .navbar-right
+      padding-top: 5px
+    .navbar-brand
+      color: $header-font-grey
+    .navbar-nav > li > a
+      color: $header-font-grey
+      padding: 0px
+      margin: 15px
+      &:hover, &:active, &:focus, &.login
+        margin-bottom: 13px
+        border-bottom: 2px solid $primary-red
+
+  &.navbar-dark
+    background-color: $dark-blue
+    color: white
+    .navbar-brand
+      color: white
+    .navbar-nav > li > a
+      color: white
+      &:hover, &:active, &:focus, &.login
+        border-bottom: 2px solid $primary-red
+
+  &.navbar-red
+    background-color: $primary-red
+    color: white
+    .navbar-brand
+      color: white
+    .navbar-nav > li > a
+      color: white
+      &:hover, &:active, &:focus, &.login
+        border-bottom: 2px solid $primary-red
+
+@media only screen and (max-width : 768px)
+  .navbar.navbar-default, .navbar.navbar-dark, .navbar.navbar-red
+    margin-bottom: 0px
+    .navbar-header
+      text-align: center
+      .brand
+        img
+          height: 100px
+    .navbar-right
+      padding-top: 5px
+    .navbar-nav > li > a
+      padding: 0px
+      margin: 15px
+      &:hover, &:active, &:focus, &.login
+        margin-bottom: 13px
