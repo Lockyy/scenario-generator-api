@@ -59,6 +59,12 @@ products.url, company_id, products.views, products.created_at, products.updated_
     rating('asc')
   end
 
+  # Returns any tags for this product that are followed by the given user
+  def user_tags(user)
+    user_tag_ids = user.tags.map(&:id)
+    tags.where(id: user_tag_ids)
+  end
+
   def bookmark(user)
     self.bookmarks.first_or_create(user: user)
   end

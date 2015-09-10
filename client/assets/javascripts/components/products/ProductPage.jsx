@@ -349,7 +349,7 @@ const ProductPage = React.createClass({
 
   render: function() {
     return (
-      <div className='product show container'>
+      <div className='product show'>
         {this.renderFilesModal()}
         {this.renderLinksModal()}
         {this.renderTitle()}

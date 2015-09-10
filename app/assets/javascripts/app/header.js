@@ -13,7 +13,8 @@
       }, 600, function() {
         resizeHamburgerMenu();
         return hamburgerMenu.on('clickoutside', _.throttle(function(outsideE) {
-          if (_.include($(outsideE.target).attr('class'), 'myTagSuggestion')) {
+          if (_.include($(outsideE.target).attr('class'), 'myTagSuggestion') ||
+              _.include($(outsideE.target).data('role'), 'remove')) {
             return;
           }
           return closeHamburgerMenu(e);
