@@ -2,6 +2,7 @@ json.name product.name
 json.(product,  :id, :name, :description, :image, :rating, :url,
                 :tags, :price, :created_at, :updated_at, :author,
                 :views, :default_image, :short_desc, :links, :slug)
+json.user_tags  product.user_tags(current_user)
 json.bookmarked product.bookmarked?(current_user)
 
 json.formatted_description (product.description.nil? or product.description.empty?) ? "" : simple_format(product.description)
