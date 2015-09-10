@@ -247,6 +247,34 @@ $color-blackcharcoal: #3c3c3b
       width: 100%
       border-color: $color-darkred
 
+    .section.recent-reviews
+      border: 1px solid $grey
+      border-top: solid 2px $color-darkred
+
+      & > .header
+        border-bottom: none
+
+        .section-title, .customHeaderTag
+          display: block
+          width: 100%
+          opacity: 1
+
+        .section-title
+          border-bottom: 1px solid $grey
+
+        .customHeaderTag
+          padding: 0
+          margin-top: 20px
+
+          .dropdown-container
+            text-align: left
+            background: $light-grey
+            padding: 5px 15px
+
+            .active-dropdown-link, .dropdown-links
+              background: $light-grey
+              color: $red
+
     #user-main-info-container
       .desktop-version
         display: none
