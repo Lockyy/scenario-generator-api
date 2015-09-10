@@ -230,18 +230,15 @@ $color-blackcharcoal: #3c3c3b
               background: image-url('icons/icon-edit-review.svg') no-repeat center left
               background-size: 12px
 
-@media only screen and (min-width: $screen-sm-min) and (max-width: $screen-sm-max)
-  .user.profile.show
-    .desktop-version
-      .section
-        .header
-          .section-title
-            padding-top: 20px
-
-@media (max-width: $screen-xs-max)
+@media (max-width: $screen-sm-max)
   .user.profile.show
     padding: 0 10px
     font-size: $default-font-size - 3px
+
+
+    .mobile-version
+      display: block
+
 
     h1.title
       width: 100%
@@ -363,3 +360,88 @@ $color-blackcharcoal: #3c3c3b
             td
               font-size: $default-font-size + 5px
               font-weight: normal
+
+    #work-area
+      border-top: none
+      margin-top: 30px
+
+      .work-area-sidebar
+        padding: 0
+
+        .sidebar-element, .sidebar-element.active
+          &.reviews, &.bookmarks, &.tags
+            text-align: center
+            padding-left: 0
+            width: 33%
+            float: left
+            border-top: 2px solid $grey
+            border-bottom: none
+            background-image: none
+            background: none
+
+          &.active
+            font-weight: bold
+            color: $color-darkred
+            border-color: $color-darkred
+
+            &::after
+              content: ''
+
+      .work-area-content
+        padding: 0
+
+        .work-area-section
+          margin-top: 0
+
+          &.my-tags-container, &.my-bookmarks-container
+            border-top: 0
+            margin-top: 0
+            padding-top: 0
+
+          .header
+            .section-title
+              display: none
+
+          .message
+            display: none
+
+          .items
+            .section-row
+              .product.review-box
+                &.box-1
+                  border-bottom: 1px solid $grey
+                  width: 100%
+
+                  .content
+                    background-color: $white
+                    border-top: none
+                    height: auto
+
+                    .data
+                      .footer
+                        position: relative
+                        margin: 0 auto
+                        padding: 0
+                        width: 100%
+
+                        .btn.btn-round
+                          margin: 0 auto
+                          border-radius: 0
+                          width: 100%
+                          text-transform: none
+                          font-size: 12px
+                          font-weight: normal
+                          background: $light-grey
+                          color: $red
+
+          &.my-bookmarks-container
+            .product.box-2-5
+              .content
+                height: auto
+
+                .data
+                  height: 100%
+
+                .picture
+                  display: none
+                  height: 0

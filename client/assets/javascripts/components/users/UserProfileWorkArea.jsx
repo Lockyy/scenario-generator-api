@@ -86,7 +86,7 @@ const UserProfileWorkArea  = React.createClass({
   render: function render() {
     return (
       <div id='work-area' className='row'>
-        <div className='col-xs-2 work-area-sidebar'>
+        <div className='col-xs-12 col-md-2 work-area-sidebar'>
           <a href='#activity' className={`sidebar-element reviews ${this.isActiveTab('reviews') ? 'active' : ''}`}
             ref='link_reviews' onClick={this.onSelectReviewsSection}>
             My Reviews
@@ -100,7 +100,7 @@ const UserProfileWorkArea  = React.createClass({
             Bookmarks
           </a>
         </div>
-        <div className='work-area-content col-xs-10' ref='work'>
+        <div className='work-area-content col-xs-12 col-md-10' ref='work'>
           {this.getRecentActivitySection()}
           {this.getTagsSection()}
           {this.getBookmarksSection()}
