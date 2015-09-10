@@ -8,71 +8,33 @@ import ProductStore from '../../stores/ProductStore'
 import Reviews from './Reviews'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
-import ProductPageDesktopVersion from './ProductPageDesktopVersion';
 import Tags from '../Tags';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 
-const ProductPage = React.createClass({
-  displayName: 'ProductPage',
+const ProductPageDesktopVersion = React.createClass({
+  displayName: 'ProductPageDesktopVersion',
   mixins: [ Navigation ],
-  getInitialState: function() {
-    return {
-      data: {
-        name: '',
-        company: {
-          name: ''
-        },
-        attachments: [],
-        links: []
-      }
-    };
-  },
 
   id: function() {
-    return this.props.params.id
-  },
-
-  componentDidMount: function() {
-    ProductStore.listen(this.onChange.bind(this));
-    FluxProductPageActions.fetchProduct(this.id());
-  },
-
-  onChange: function(data) {
-    this.setState(data);
-  },
-
-  bookmark: function() {
-    let _this = this
-    FluxBookmarkActions.createBookmark(this.id(), function() {
-      FluxProductPageActions.fetchProduct(_this.id());
-      FluxBookmarkActions.fetchBookmarkedProducts();
-    })
-  },
-
-  unbookmark: function() {
-    let _this = this
-    FluxBookmarkActions.deleteBookmark(this.id(), function() {
-      FluxProductPageActions.fetchProduct(_this.id());
-      FluxBookmarkActions.fetchBookmarkedProducts();
-    })
+    return this.props.data.id
   },
 
   getProductData: function(name) {
-    if(this.state) {
-      return this.state.data[name]
+    if(this.props.data) {
+      return this.props.data[name]
     }
   },
 
   getCompanyData: function(name) {
-    if(this.state) {
-      return this.state.data.company[name]
+    if(this.props.data) {
+      return this.props.data.company[name]
     }
   },
 
   getCurrentUserReview: function() {
-    if(this.state && this.state.data.review) {
-      return this.state.data.review
+    if(this.props && this.props.data.review) {
+      return this.props.data.review
     } else {
       return false
     }
@@ -107,32 +69,16 @@ const ProductPage = React.createClass({
     )
   },
 
-  reviewButtonText: function() {
-    if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
-      return 'Edit My Review'
-    } else {
-      return 'Review this Product'
-    }
-  },
-
-  reviewButtonURL: function() {
-    if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
-      return `/app/products/${this.id()}/reviews/${this.getCurrentUserReview().id}`
-    } else {
-      return `/app/products/${this.id()}/reviews/new`
-    }
-  },
-
   renderBookmarkLink: function() {
-    if(this.state.data.bookmarked) {
+    if(this.props.data.bookmarked) {
       return (
-        <div onClick={this.unbookmark} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onUnbookmark} className='btn btn-grey btn-round'>
           Remove Bookmark
         </div>
       )
     } else {
       return (
-        <div onClick={this.bookmark} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onBookmark} className='btn btn-grey btn-round'>
           Bookmark
         </div>
       )
@@ -142,8 +88,8 @@ const ProductPage = React.createClass({
   renderTopButtons: function() {
     return (
       <div className='links'>
-        <Link to={this.reviewButtonURL()} className='btn btn-red btn-round'>
-          { this.reviewButtonText() }
+        <Link to={this.props.reviewButtonURL} className='btn btn-red btn-round'>
+          { this.props.reviewButtonText }
         </Link>
         <a
           href={`mailto:?subject=Check%20out%20this%20product&body=${window.location.href}`}
@@ -297,14 +243,39 @@ const ProductPage = React.createClass({
   },
 
   render: function() {
+    if (_.isUndefined(this.id())) {
+      return (<div />);
+    }
+
     return (
-      <div className='product show container'>
-        <ProductPageDesktopVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
-          onBookmark={this.bookmark} onUnbookmark={this.unbookmark}
-          {...this.state} />
+      <div className='desktop-version'>
+        {this.renderFilesModal()}
+        {this.renderLinksModal()}
+        {this.renderTitle()}
+        {this.renderTopButtons()}
+        {this.renderInfo()}
+        <div className='row'>
+          <div className='col-xs-3 reviews-sidebar'>
+            <div  className='sidebar-element user-reviews active'
+                  onClick={this.onSelectReviewsSection}>User Reviews</div>
+            <div className='sidebar-element lists'
+                  onClick={this.onSelectListsSection}>Lists</div>
+            <div className='sidebar-element custom-data'
+                  onClick={this.onSelectCustomSection}>Custom Data</div>
+          </div>
+          <div className='col-xs-9'>
+            <Reviews productID={this.id()} ref='reviews' />
+            <div className='placeholder-section hide' ref='lists'>
+              Feature Coming Soon
+            </div>
+            <div className='placeholder-section hide' ref='custom'>
+              Feature Coming Soon
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 })
 
-export default ProductPage;
+export default ProductPageDesktopVersion;

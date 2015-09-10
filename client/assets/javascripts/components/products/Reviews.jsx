@@ -238,11 +238,7 @@ const Reviews = React.createClass({
         renderedReviews.push(this.renderReview(reviews[i]));
       }
 
-      return (
-        <div className='col-xs-12'>
-          {renderedReviews}
-        </div>
-      );
+      return renderedReviews;
     }
   },
 
