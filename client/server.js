@@ -3,7 +3,6 @@ var bodyParser = require('body-parser');
 var webpack = require('webpack');
 var WebpackDevServer = require('webpack-dev-server');
 var config = require('./webpack.hot.config');
-var sleep = require('sleep');
 var ip = require( 'os' ).networkInterfaces()['eth0'][0]['address']
 
 var comments = [{author: 'Pete Hunt', text: 'Hey there!'},
