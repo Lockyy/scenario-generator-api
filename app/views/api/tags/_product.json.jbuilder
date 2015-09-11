@@ -1,4 +1,5 @@
 json.id product.id
+json.company product.company
 json.slug product.slug
 json.name product.name
 json.short_desc product.short_desc
