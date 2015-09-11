@@ -24,6 +24,13 @@ const Results = React.createClass ({
       <div className='result'>
         <div className='row'>
           <div className='col-xs-12'>
+            {
+              _.isEmpty(result.image) ? '' : (
+                <div className='picture'>
+                  <img href={result.image} className='picture' />
+                </div>
+              )
+            }
             <div className='name'>
               <a href={`/app/${this.props.type}/${result.id}`}>
                 { result.name }
@@ -68,6 +75,11 @@ const Results = React.createClass ({
             <div className='name'>
               <a href={`/app/${this.props.type}/${result.id}`}>
                 { result.name }
+              </a>
+            </div>
+            <div className='company'>
+              <a href={`/app/company/${result.company.id}`}>
+                { result.company.name }
               </a>
             </div>
             <div className='description'>
@@ -156,6 +168,14 @@ const Results = React.createClass ({
     this.props.onSetQuery(query)
   },
 
+  getCountResultsMessage: function(className) {
+    let total = this.props.data.total;
+    return (
+      <div className={className ? className : ''}>
+        { total ? total : 'No'  } result{total > 1 || total == 0 ? 's' : ''} found
+      </div>);
+  },
+
   dropdownOptions: function() {
     return this.props.dropdownOptions || {
       relevance: 'Relevance',
@@ -209,7 +229,7 @@ const Results = React.createClass ({
   renderTopLeft: function() {
     switch(this.props.topLeft) {
       case 'count':
-        return <div className='top-left'>{ this.props.data.total } result(s) found</div>
+        return this.getCountResultsMessage('top-left');
         break;
       case 'type':
         return <div className='top-left'>{ this.props.type }</div>
@@ -239,7 +259,7 @@ const Results = React.createClass ({
 
   render: function() {
     return (
-      <div className={`results ${this.props.containerClass}`}>
+      <div className={`results ${this.props.containerClass || ''}`}>
         { this.renderTop() }
         { this.renderResults() }
         { this.renderBottom() }

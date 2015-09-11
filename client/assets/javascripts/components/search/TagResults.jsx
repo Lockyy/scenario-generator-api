@@ -24,6 +24,14 @@ const TagResults = React.createClass ({
     }
   },
 
+  getCountResultsMessage: function(className) {
+    let total = this.props.data.total;
+    return (
+      <div className={className ? className : ''}>
+        { total ? total : 'No'  } result{total > 1 || total == 0 ? 's' : ''} found
+      </div>);
+  },
+
   renderTopRight: function() {
     switch(this.props.topRight) {
       case 'dropdown':
@@ -39,20 +47,21 @@ const TagResults = React.createClass ({
           )
         }
       case 'size':
-        return (
-          <div className='top-right'>
-            { this.props.data.total } result(s) found
-          </div>
-        )
+        return this.getCountResultsMessage('top-right');
     }
   },
 
   renderTopLeft: function() {
-    return (
-      <div className='top-left'>
-        {this.props.title || 'Tags'}
-      </div>
-    )
+    switch(this.props.topLeft) {
+      case 'size':
+        return this.getCountResultsMessage('top-left');
+      default:
+        return (
+          <div className='top-left'>
+            {this.props.title || 'Tags'}
+          </div>
+      )
+    }
   },
 
   getTagNames: function(tags){

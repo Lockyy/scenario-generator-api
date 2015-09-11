@@ -1,20 +1,16 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
-import FluxSearchPageActions from '../../actions/FluxSearchPageActions'
-import SearchPageStore from '../../stores/SearchPageStore'
 import Results from './Results'
-import SearchPageDesktopVersion from './SearchPageDesktopVersion'
-import SearchPageMobileVersion from './SearchPageMobileVersion'
 import TagResults from './TagResults'
 import Tags from '../Tags'
 import TagsBox from '../TagsBox'
 
-const SearchPage = React.createClass({
+const SearchPageDesktopVersion = React.createClass({
   mixins: [ Navigation ],
-  displayName: 'SearchPage',
+  displayName: 'SearchPageDesktopVersion',
 
-  getInitialState: function() {
+  getDefaultProps: function() {
     return {
       data: {
         products: [],
@@ -22,6 +18,9 @@ const SearchPage = React.createClass({
         tags: [],
         related_tags: [],
         filtered_tags: [],
+        params: {
+          section: 'all'
+        },
         match_mode: {
           products: 'all',
           companies: 'all',
@@ -33,33 +32,27 @@ const SearchPage = React.createClass({
           tags: 'alphabetical_order'
         }
       },
-      params: {
-        section: 'all',
-        search_string: ''
-      }
+      onPerformSearch: function(data) {}
     }
   },
 
   performSearch: function(data) {
-    FluxSearchPageActions.getSearchResults(data);
+    this.props.onPerformSearch(data);
   },
 
-  componentDidMount: function() {
-    SearchPageStore.listen(this.onChange.bind(this));
-    this.performSearch(this.getSearchParams(this.props.params));
+  getSection: function() {
+    let params = this.props.params || {};
+    return params.section || (_.isEmpty(params) || _.isEmpty(params.section) ? 'all' : params.section);
   },
 
-  onChange: function(data) {
-    this.setState(data);
-  },
-
-  componentWillReceiveProps: function(nextProps) {
-    this.performSearch(this.getSearchParams(nextProps.params));
+  getSearchString: function() {
+    let params = this.props.params || {};
+    return _.isEmpty(params.search_string) ? '' : params.search_string;
   },
 
   changePageAndSearch: function(params) {
-    let search_string = _.isUndefined(params.search_string) ? this.props.params.search_string : params.search_string;
-    let section = params.section || this.props.params.section || 'all';
+    let search_string = params.search_string || this.getSearchString();
+    let section = params.section || this.getSection();
     let page = params.page || 1;
 
     let query = this.context.router.state.location.query;
@@ -85,11 +78,11 @@ const SearchPage = React.createClass({
   },
 
   displaySection: function(sectionName) {
-    return (this.props.params.section == sectionName || this.props.params.section == 'all')
+    return (this.getSection() == sectionName || this.getSection() == 'all')
   },
 
   renderSideLink: function(total, name, displayName) {
-    let section = this.props.params.section;
+    let section = this.getSection();
     function build_link_class(name) {
       let active = section == name ? 'active' : '';
       return 'link ' + active;
@@ -106,9 +99,9 @@ const SearchPage = React.createClass({
   },
 
   renderLeftBar: function() {
-    let totalProducts = this.state.data.products.total || 0;
-    let totalCompanies = this.state.data.companies.total || 0;
-    let totalTags = this.state.data.tags.total || 0;
+    let totalProducts = this.props.data.products.total || 0;
+    let totalCompanies = this.props.data.companies.total || 0;
+    let totalTags = this.props.data.tags.total || 0;
     let totalAll = totalProducts + totalCompanies + totalTags;
 
     return (
@@ -130,12 +123,14 @@ const SearchPage = React.createClass({
   },
 
   setQuery: function(query) {
-    let _data = _.merge(this.getSearchParams(this.state.data), query);
+    let _data = _.merge(this.getSearchParams(this.props.data), query);
     this.transitionTo(this.context.router.state.location.pathname, _data.sorting);
     this.performSearch(_data);
   },
 
   getSearchParams: function(data){
+    data = _.merge({}, data);
+
     let _data = {
       search_string: data.search_string,
       page: data.page,
@@ -150,7 +145,7 @@ const SearchPage = React.createClass({
 
   renderAllResults: function() {
     let noResultsTag = <div className='no-results'>We couldn’t find any results for your search.</div>;
-    if(this.state.data.total_results == 0 && !this.displaySection('products') &&
+    if(this.props.data.total_results == 0 && !this.displaySection('products') &&
       !this.displaySection('companies') &&
       !this.displaySection('tags')) {
       return noResultsTag;
@@ -160,18 +155,18 @@ const SearchPage = React.createClass({
       <div className='col-xs-6'>
         <Results
           type='products'
-          data={this.state.data.products}
+          data={this.props.data.products}
           bottom='button'
-          searchTerm={this.props.params.search_string}
+          searchTerm={this.getSearchString()}
           topLeft='type'
           topRight='dropdown'
-          sorting={this.state.data.sorting.products}
+          sorting={this.props.data.sorting.products}
           onSetQuery={this.setQuery} />
         <Results
           type='companies'
-          data={this.state.data.companies}
+          data={this.props.data.companies}
           bottom='button'
-          searchTerm={this.props.params.search_string}
+          searchTerm={this.getSearchString()}
           topLeft='type'
           topRight='dropdown'
           dropdownOptions={{
@@ -179,15 +174,15 @@ const SearchPage = React.createClass({
             latest: 'Latest',
             alphabetical_order: 'Alphabetical order',
           }}
-          sorting={this.state.data.sorting.companies}
+          sorting={this.props.data.sorting.companies}
           onSetQuery={this.setQuery} />
         <TagResults
-          data={this.state.data.tags}
+          data={this.props.data.tags}
           hide={!this.displaySection('tags')}
           topRight={'dropdown'}
-          sorting={this.state.data.sorting.tags}
-          searchTerm={this.props.params.search_string}
-          section={this.props.params.section}
+          sorting={this.props.data.sorting.tags}
+          searchTerm={this.getSearchString()}
+          section={this.getSection()}
           emptyResults={noResultsTag}
           onSetQuery={this.setQuery} />
       </div>
@@ -199,12 +194,12 @@ const SearchPage = React.createClass({
       <div className='col-xs-6'>
         <Results
           type='products'
-          data={this.state.data.products}
+          data={this.props.data.products}
           bottom='pagination'
           currentPage={this.props.params.page}
           topLeft='type'
           topRight='dropdown'
-          sorting={this.state.data.sorting.products}
+          sorting={this.props.data.sorting.products}
           onChangePage={this.onChangePage}
           onSetQuery={this.setQuery} />
       </div>
@@ -216,7 +211,7 @@ const SearchPage = React.createClass({
       <div className='col-xs-6'>
         <Results
           type='companies'
-          data={this.state.data.companies}
+          data={this.props.data.companies}
           bottom='pagination'
           currentPage={this.props.params.page}
           topLeft='type'
@@ -226,7 +221,7 @@ const SearchPage = React.createClass({
             latest: 'Latest',
             alphabetical_order: 'Alphabetical order',
           }}
-          sorting={this.state.data.sorting.companies}
+          sorting={this.props.data.sorting.companies}
           onChangePage={this.onChangePage}
           onSetQuery={this.setQuery} />
       </div>
@@ -237,11 +232,11 @@ const SearchPage = React.createClass({
     return (
       <div className='col-xs-6'>
         <TagResults
-          data={this.state.data.tags}
+          data={this.props.data.tags}
           hide={!this.displaySection('tags')}
           topRight={'dropdown'}
-          sorting={this.state.data.sorting.tags}
-          searchTerm={this.props.params.search_string}
+          sorting={this.props.data.sorting.tags}
+          searchTerm={this.getSearchString()}
           section={this.props.params.section}
           emptyResults={<div className='no-results'>We couldn’t find any results for your search.</div>}
           onSetQuery={this.setQuery} />
@@ -250,7 +245,7 @@ const SearchPage = React.createClass({
   },
 
   renderResults: function() {
-    switch(this.props.params.section) {
+    switch(this.getSection()) {
       case 'all':
         return this.renderAllResults()
       case 'products':
@@ -263,7 +258,7 @@ const SearchPage = React.createClass({
   },
 
   renderFilters: function() {
-    let relatedTags = this.state.data.related_tags;
+    let relatedTags = this.props.data.related_tags;
     let hide = !relatedTags.total || relatedTags.total <= 0;
     let self = this;
 
@@ -287,7 +282,7 @@ const SearchPage = React.createClass({
       self.performSearch(data);
     };
 
-    let filteredTags = this.state.data.filtered_tags.data;
+    let filteredTags = this.props.data.filtered_tags.data;
     return (
       <div id='tag-filter-container' className='col-xs-3'>
         <TagResults
@@ -297,21 +292,32 @@ const SearchPage = React.createClass({
           showLinkAllTags={true}
           onClick={tagEvent}
           selected={filteredTags}
-          searchTerm={this.props.params.search_string} />
+          searchTerm={this.getSearchString()} />
       </div>
     )
   },
 
   render: function() {
-    let data = _.merge({}, this.state, this.props);
-
+    let search_string = _.isEmpty(this.props.params) ? '' : this.getSearchString();
     return (
-      <div className='search-page'>
-        <SearchPageDesktopVersion onPerformSearch={this.performSearch} {...data} />
-        <SearchPageMobileVersion onPerformSearch={this.performSearch} {...data} />
+      <div className='desktop-version'>
+        <div className='row'>
+          <div className='col-xs-12'>
+            <input
+              className='search-box'
+              ref='inputBox'
+              value={ search_string }
+              onChange={ this.onSearchInput } disabled/>
+          </div>
+        </div>
+        <div className='row'>
+          { this.renderLeftBar() }
+          { this.renderResults() }
+          { this.renderFilters() }
+        </div>
       </div>
     );
   }
 })
 
-export default SearchPage;
+export default SearchPageDesktopVersion;

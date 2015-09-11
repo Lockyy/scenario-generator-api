@@ -44,6 +44,8 @@ $(function onLoad() {
                         </Route>
                         <Route name="search" path="app/search/:section" component={SearchPage}>
                         </Route>
+                        <Route name="search" path="app/search" component={SearchPage}>
+                        </Route>
                         <Route path="app/tags/:tag/:page" component={TagPage}>
                         </Route>
                     </Router>
