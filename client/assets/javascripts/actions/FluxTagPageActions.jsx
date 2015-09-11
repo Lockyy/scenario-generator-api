@@ -4,13 +4,13 @@ import TagAPI from '../utils/api/TagAPI';
 
 class FluxTagPageActions {
 
-  fetchProducts(tag, page, sort_by) {
+  fetchProducts(tag, page, sorting) {
     this.dispatch();
 
     TagAPI.getProducts(
       tag,
       page,
-      sort_by,
+      sorting,
       (data) => {
         this.actions.updateData(data);
       },

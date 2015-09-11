@@ -24,7 +24,7 @@ const UserProfilePage  = React.createClass({
       name: '',
       avatar_url: '',
       job_title: '',
-      sort_by: 'latest'
+      sorting: 'latest'
     }
   },
 
@@ -44,7 +44,7 @@ const UserProfilePage  = React.createClass({
         }
       });
 
-      if (data.data.sort_by && data.data.sort_by != oldData.sort_by ) {
+      if (data.data.sorting && data.data.sorting != oldData.sorting ) {
         newData.recent_activity = data.data.recent_activity
       }
 
@@ -57,11 +57,11 @@ const UserProfilePage  = React.createClass({
   },
 
   getPaginationParams: function getPaginationParams() {
-    return { sort_by: this.state.sort_by, per_page: this.state.per_page };
+    return { sorting: this.state.sorting, per_page: this.state.per_page };
   },
 
-  onChangeReviewsSorting: function onChangeReviewsSorting(sort_by) {
-    let paginationParams = _.merge(this.getPaginationParams(), {sort_by: sort_by, page: 1});
+  onChangeReviewsSorting: function onChangeReviewsSorting(sorting) {
+    let paginationParams = _.merge(this.getPaginationParams(), {sorting: sorting, page: 1});
     FluxUserActions.fetchRecentActivity(this.context.router.state.params.userId, paginationParams);
   },
 
@@ -75,9 +75,9 @@ const UserProfilePage  = React.createClass({
     let activeTab = UrlHelper.getAnchorText();
 
     let page = user.id == this.context.currentUser.id ?
-      <UserProfileWorkArea sorting={this.state.sort_by} activeTab={activeTab}
+      <UserProfileWorkArea sorting={this.state.sorting} activeTab={activeTab}
         onChangeSorting={this.onChangeReviewsSorting} onShowMore={this.onShowMoreReviews} {...user} /> :
-      <UserProfileRecentActivity sorting={this.state.sort_by} onShowMore={this.onShowMoreReviews}
+      <UserProfileRecentActivity sorting={this.state.sorting} onShowMore={this.onShowMoreReviews}
         onChangeSorting={this.onChangeReviewsSorting} {...user}/>
 
     return (

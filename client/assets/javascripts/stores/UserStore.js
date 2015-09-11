@@ -30,7 +30,7 @@ class UserStore {
   }
 
   handleFetchRecentActivity(data) {
-    this.data.sort_by = data.sort_by;
+    this.data.sorting = data.sorting;
     this.data.page = data.page;
     this.data.per_page = data.per_page;
     this.data.recent_activity = data.recent_activity;

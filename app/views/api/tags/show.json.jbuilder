@@ -1,5 +1,5 @@
 json.tag @tag.name
-json.sort_by params[:sort_by]
+json.sorting params[:sorting]
 json.followed @tag.followed? current_user
 
 json.products do
