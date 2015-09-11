@@ -1,94 +1,40 @@
-import _ from 'lodash'
-import React from 'react'
-import timeago from 'timeago'
-import { Link, Navigation } from 'react-router'
-import Modal from 'react-modal'
+import _ from 'lodash';
+import React from 'react';
+import timeago from 'timeago';
+import { Link, Navigation } from 'react-router';
 import FluxProductPageActions from '../../actions/FluxProductPageActions'
 import FluxBookmarkActions from '../../actions/FluxBookmarkActions'
 import ProductStore from '../../stores/ProductStore'
 import Reviews from './Reviews'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
-import ProductPageDesktopVersion from './ProductPageDesktopVersion';
-import ProductPageMobileVersion from './ProductPageMobileVersion';
-import Tags from '../Tags'
+import Tags from '../Tags';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 
-var appElement = document.getElementById('content');
-
-Modal.setAppElement(appElement);
-Modal.injectCSS();
-
-const ProductPage = React.createClass({
-  displayName: 'ProductPage',
+const ProductPageDesktopVersion = React.createClass({
+  displayName: 'ProductPageDesktopVersion',
   mixins: [ Navigation ],
-  getInitialState: function() {
-    return {
-      data: {
-        name: '',
-        company: {
-          name: ''
-        },
-        attachments: [],
-        links: [],
-      },
-      modalIsOpen: false
-    };
-  },
-
-  openModal: function() {
-    this.setState({modalIsOpen: true});
-  },
-
-  closeModal: function() {
-    this.setState({modalIsOpen: false});
-  },
 
   id: function() {
-    return this.props.params.id
-  },
-
-  componentDidMount: function() {
-    ProductStore.listen(this.onChange.bind(this));
-    FluxProductPageActions.fetchProduct(this.id());
-  },
-
-  onChange: function(data) {
-    this.setState(data);
-  },
-
-  bookmark: function() {
-    let _this = this
-    FluxBookmarkActions.createBookmark(this.id(), function() {
-      FluxProductPageActions.fetchProduct(_this.id());
-      FluxBookmarkActions.fetchBookmarkedProducts();
-    })
-  },
-
-  unbookmark: function() {
-    let _this = this
-    FluxBookmarkActions.deleteBookmark(this.id(), function() {
-      FluxProductPageActions.fetchProduct(_this.id());
-      FluxBookmarkActions.fetchBookmarkedProducts();
-    })
+    return this.props.data.id
   },
 
   getProductData: function(name) {
-    if(this.state) {
-      return this.state.data[name]
+    if(this.props.data) {
+      return this.props.data[name]
     }
   },
 
   getCompanyData: function(name) {
-    if(this.state) {
-      return this.state.data.company[name]
+    if(this.props.data) {
+      return this.props.data.company[name]
     }
   },
 
   getCurrentUserReview: function() {
-    if(this.state && this.state.data.review) {
-      return this.state.data.review
+    if(this.props && this.props.data.review) {
+      return this.props.data.review
     } else {
       return false
     }
@@ -123,32 +69,16 @@ const ProductPage = React.createClass({
     )
   },
 
-  reviewButtonText: function() {
-    if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
-      return 'Edit My Review'
-    } else {
-      return 'Review this Product'
-    }
-  },
-
-  reviewButtonURL: function() {
-    if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
-      return `/app/products/${this.id()}/reviews/${this.getCurrentUserReview().id}`
-    } else {
-      return `/app/products/${this.id()}/reviews/new`
-    }
-  },
-
   renderBookmarkLink: function() {
-    if(this.state.data.bookmarked) {
+    if(this.props.data.bookmarked) {
       return (
-        <div onClick={this.unbookmark} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onUnbookmark} className='btn btn-grey btn-round'>
           Remove Bookmark
         </div>
       )
     } else {
       return (
-        <div onClick={this.bookmark} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onBookmark} className='btn btn-grey btn-round'>
           Bookmark
         </div>
       )
@@ -158,12 +88,14 @@ const ProductPage = React.createClass({
   renderTopButtons: function() {
     return (
       <div className='links'>
-        <Link to={this.reviewButtonURL()} className='btn btn-red btn-round'>
-          { this.reviewButtonText() }
+        <Link to={this.props.reviewButtonURL} className='btn btn-red btn-round'>
+          { this.props.reviewButtonText }
         </Link>
-        <div onClick={this.openModal} className='btn btn-grey btn-round'>
+        <a
+          href={`mailto:?subject=Check%20out%20this%20product&body=${window.location.href}`}
+          className='btn btn-grey btn-round'>
           Share
-        </div>
+        </a>
         {this.renderBookmarkLink()}
       </div>
     )
@@ -286,7 +218,7 @@ const ProductPage = React.createClass({
     )
   },
 
-  onSelectSection: function onSelectSection(e, section) {
+   onSelectSection: function onSelectSection(e, section) {
     e.preventDefault();
 
     let $el = $(React.findDOMNode(e.target));
@@ -310,58 +242,40 @@ const ProductPage = React.createClass({
     this.onSelectSection(e, 'custom')
   },
 
-  copyLink: function() {
-    let copyTextarea = $(this.refs.locationLink.getDOMNode());
-    let linkCopyButton = $(this.refs.linkCopyButton.getDOMNode())
-    copyTextarea.select();
-
-    try {
-      let successful = document.execCommand('copy');
-      linkCopyButton.html('Copied!')
-      setTimeout(function() { linkCopyButton.html('Copy Link') }, 2000)
-    } catch (err) { console.log('Oops, unable to copy'); }
-    copyTextarea.blur()
-  },
-
-  renderShareModal: function() {
-    return (
-      <Modal
-        isOpen={this.state.modalIsOpen}
-        onRequestClose={this.closeModal} >
-        <div className='header'>
-          <span className='title'>
-            Share this product with other users
-          </span>
-          <span onClick={this.closeModal} className='close'>x</span>
-        </div>
-        <div className="input-group">
-          <input  type="text"
-                  className="form-control"
-                  aria-describedby="basic-addon2"
-                  value={window.location.href}
-                  ref='locationLink' />
-          <span className="input-group-addon copy-link"
-                id="basic-addon2"
-                ref='linkCopyButton'
-                onClick={this.copyLink}>Copy Link</span>
-        </div>
-      </Modal>
-    )
-  },
-
   render: function() {
-    return (
-      <div className='product show'>
-        <ProductPageDesktopVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
-          onBookmark={this.bookmark} onUnbookmark={this.unbookmark}
-          {...this.state} />
+    if (_.isUndefined(this.id())) {
+      return (<div />);
+    }
 
-        <ProductPageMobileVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
-          onBookmark={this.bookmark} onUnbookmark={this.unbookmark}
-          {...this.state} />
+    return (
+      <div className='desktop-version'>
+        {this.renderFilesModal()}
+        {this.renderLinksModal()}
+        {this.renderTitle()}
+        {this.renderTopButtons()}
+        {this.renderInfo()}
+        <div className='row'>
+          <div className='col-xs-3 reviews-sidebar'>
+            <div  className='sidebar-element user-reviews active'
+                  onClick={this.onSelectReviewsSection}>User Reviews</div>
+            <div className='sidebar-element lists'
+                  onClick={this.onSelectListsSection}>Lists</div>
+            <div className='sidebar-element custom-data'
+                  onClick={this.onSelectCustomSection}>Custom Data</div>
+          </div>
+          <div className='col-xs-9'>
+            <Reviews productID={this.id()} ref='reviews' />
+            <div className='placeholder-section hide' ref='lists'>
+              Feature Coming Soon
+            </div>
+            <div className='placeholder-section hide' ref='custom'>
+              Feature Coming Soon
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 })
 
-export default ProductPage;
+export default ProductPageDesktopVersion;

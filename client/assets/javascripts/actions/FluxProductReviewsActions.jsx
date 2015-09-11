@@ -5,8 +5,6 @@ import ReviewsAPI from '../utils/api/ReviewsAPI';
 class FluxProductReviewsActions {
 
   fetchReviews(productID, sorting) {
-    this.dispatch();
-
     ReviewsAPI.getReviews(
       productID,
       sorting,

@@ -77,7 +77,7 @@ const TagsManager = React.createClass({
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       remote: {
-        url: '/api/search?search_string=%QUERY&filter_by=name&match_mode=all',
+        url: '/api/search?search_string=%QUERY&filter_by=name&match_mode[products]=all',
         wildcard: '%QUERY',
         transform: function(data) { return data.tags.data }
       }

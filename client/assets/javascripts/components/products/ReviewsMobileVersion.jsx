@@ -10,8 +10,8 @@ import Tags from '../Tags';
 import Dropdown from '../Dropdown';
 import ReviewConstants from '../../utils/constants/ReviewConstants';
 
-const Reviews = React.createClass({
-  displayName: 'Reviews',
+const ReviewsMobileVersion = React.createClass({
+  displayName: 'ReviewsMobileVersion',
 
   contextTypes: {
     currentUser: React.PropTypes.object.isRequired
@@ -99,7 +99,7 @@ const Reviews = React.createClass({
 	getEditReviewTag: function(review) {
 		return <div className='edit-review-container'>
 			<Link to={`/app/products/${review.product.id}/reviews/${review.id}`}
-				className='btn btn-white btn-round'>Edit my review</Link>
+				className='btn btn-white'>Edit my review</Link>
 		</div>;
 	},
 
@@ -116,21 +116,20 @@ const Reviews = React.createClass({
     let helpful = voted && userVote.helpful;
     let unhelpful = voted && !userVote.helpful;
 
-    let yesClass = `btn btn-grey btn-round ${ helpful ? 'active' : '' }`;
-    let noClass = `btn btn-grey btn-round ${ unhelpful ? 'active' : '' }`;
+    let yesClass = `btn btn-grey ${ helpful ? 'active' : '' }`;
+    let noClass = `btn btn-grey ${ unhelpful ? 'active' : '' }`;
 
     return (<div className='helpful-review-container'>
       <div className='vote-container'>
-        <span className='helpful-reviews-text'>Was this review helpful to you?</span>
         <button className={yesClass} data-product-id={productId}
                 data-review-id={reviewId} data-helpful='true'
                 onClick={helpful ? this.cancelVote : this.voteOnReview}>
-          Yes
+          Helpful
         </button>
         <button className={noClass} data-product-id={productId}
                 data-review-id={reviewId} data-helpful='false'
                 onClick={unhelpful ? this.cancelVote : this.voteOnReview}>
-          No
+          Not Helpful
         </button>
       </div>
       <div className='feedback' data-review-id={reviewId} >
@@ -151,78 +150,51 @@ const Reviews = React.createClass({
         <a className="link" href={UrlHelper.addProtocol(attachment.url)} target='_blank'>{attachment.name}</a>
       </li>);
     });
-
     let links = _.collect(review.links, function(link) {
       return (<li className='link'>
         <a className="link" href={UrlHelper.addProtocol(link.url)} target='_blank'>{UrlHelper.addProtocol(link.url)}</a>
       </li>);
     });
-    let wroteByCurrentUser = this.context.currentUser.id == review.user.id;
 
-    let editMyReview =  <div className='edit-review-container'>
-                          <Link to={`/app/products/${review.product.id}/reviews/${review.id}`}
-                               className='btn btn-white btn-round'>Edit my review</Link>
-                        </div>;
+    attachments = _.isEmpty(attachments) ? '' : (<ul className='attachments'>{attachments}</ul>);
+    links = _.isEmpty(links) ? '' : (<ul className='links'>{links}</ul>);
+
+    let wroteByCurrentUser = this.context.currentUser.id == review.user.id;
 
     let productId = review.product.id;
     let reviewId = review.id;
-    let itWasHelpful = <div className='helpful-review-container'>
-                          <span className='helpful-reviews-text'> Was this review helpful to you?</span>
-                          <button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
-                                  data-helpful='true' onClick={this.voteOnReview}> Yes </button>
-                          <button className='btn btn-grey btn-round' data-product-id={productId} data-review-id={reviewId}
-                                  data-helpful='false' onClick={this.voteOnReview}> No </button>
-                        </div>;
 
-    let userEditAction =   wroteByCurrentUser ? editMyReview
-      : itWasHelpful;
-
-    let job_title = _.isEmpty(review.user.job_title) ?
-      (_.isEmpty(review.user.department) ? '' : review.user.department )
-      : review.user.job_title
+    let title = _.isEmpty(review.title) ? '' : (<div className="title"> {review.title} </div>);
+    let reviewText = _.isEmpty(review.formatted_quality_review) ?
+      '' :
+      (<div className="review-text" dangerouslySetInnerHTML={{__html: review.formatted_quality_review}} />);
 
     return (
       <div className="row review">
-        <div className="col-xs-12 user">
-          <img src={review.user.avatar_url} />
-          <div className='details'>
-            <div className='name'>
-              <Link
-                to={`/app/users/${review.user.id}`}>
-                {review.user.name}
-              </Link>
-            </div>
-            {_.isEmpty(job_title) ? '' : <span className='job'>{job_title}</span>}
-            {_.isEmpty(review.user.location) ? '' : <span className='location'>{review.user.location}</span>}
-            {review.user.total_reviews < 1 ? '' : <span className='total-reviews'>{review.user.total_reviews} review(s)</span>}
-          </div>
-        </div>
         <div className="col-xs-12 review-content">
-          <span className="score">
-            { review.quality_score ? <Rating value={review.quality_score} name='rating'/> : '' }
-          </span>
-          <div className="created_at">
-            {review.display_date}
+          <div className="score">
+            <Rating value={review.quality_score} name='rating'/>
           </div>
-          <span className="rating">
-            { review.total_votes > 0 ? `${review.helpful_votes} of ${review.total_votes} people found this review helpful` : ''}
-          </span>
-          <div className="title">
-            {review.title}
+          <div className='author'>
+            By <Link to={`/app/users/${review.user.id}`}>{review.user.name}</Link>
+          &nbsp;&#8226;&nbsp;
+            <span className="created_at"> {review.display_date} </span>
           </div>
-          <div className="review-text" dangerouslySetInnerHTML={{__html: review.formatted_quality_review}} />
-          <ul className="attachments">
-            {attachments}
-          </ul>
-          <ul className="links">
-            {links}
-          </ul>
+
+          {reviewText}
+          {attachments}
+          {links}
+
           <div className="price-score">
-            { review.price_score ? <PriceRating value={review.price_score} name='rating'/> : '' }
+            <PriceRating value={review.price_score} name='rating'/>
           </div>
+
           <div className="price-review" dangerouslySetInnerHTML={{__html: review.formatted_price_review}} />
           <Tags tags={review.tags} />
 
+          <div className="rating">
+            { review.total_votes > 0 ? `${review.helpful_votes} of ${review.total_votes} people found this review helpful` : ''}
+          </div>
           {this.getReviewActionTag(review)}
         </div>
       </div>
@@ -272,4 +244,4 @@ const Reviews = React.createClass({
 
 })
 
-export default Reviews;
+export default ReviewsMobileVersion;
