@@ -23,6 +23,11 @@ Modal.injectCSS();
 const ProductPage = React.createClass({
   displayName: 'ProductPage',
   mixins: [ Navigation ],
+
+  id: function() {
+    return this.state.data.id || this.props.params.id;
+  },
+
   getInitialState: function() {
     return {
       data: {
@@ -43,10 +48,6 @@ const ProductPage = React.createClass({
 
   closeModal: function() {
     this.setState({modalIsOpen: false});
-  },
-
-  id: function() {
-    return this.props.params.id
   },
 
   componentDidMount: function() {
@@ -74,16 +75,17 @@ const ProductPage = React.createClass({
     })
   },
 
-  getProductData: function(name) {
-    if(this.state) {
-      return this.state.data[name]
-    }
-  },
+  copyLink: function() {
+    let copyTextarea = $(this.refs.locationLink.getDOMNode());
+    let linkCopyButton = $(this.refs.linkCopyButton.getDOMNode())
+    copyTextarea.select();
 
-  getCompanyData: function(name) {
-    if(this.state) {
-      return this.state.data.company[name]
-    }
+    try {
+      let successful = document.execCommand('copy');
+      linkCopyButton.html('Copied!')
+      setTimeout(function() { linkCopyButton.html('Copy Link') }, 2000)
+    } catch (err) { console.log('Oops, unable to copy'); }
+    copyTextarea.blur()
   },
 
   getCurrentUserReview: function() {
@@ -92,35 +94,6 @@ const ProductPage = React.createClass({
     } else {
       return false
     }
-  },
-
-  totalReviews: function() {
-    let reviews = this.getProductData('reviews')
-    if(reviews) {
-      return reviews.length
-    } else {
-      return 0
-    }
-  },
-
-  renderTitle: function() {
-    return (
-      <div className='row'>
-        <div className='col-xs-12'>
-          <div className='title'>
-            <div className='name'>
-              {this.getProductData('name')}
-            </div>
-            <div className='company'>
-              <Link
-                to={`/app/companies/${this.getCompanyData('slug')}`}>
-                {this.getCompanyData('name')}
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
   },
 
   reviewButtonText: function() {
@@ -137,190 +110,6 @@ const ProductPage = React.createClass({
     } else {
       return `/app/products/${this.id()}/reviews/new`
     }
-  },
-
-  renderBookmarkLink: function() {
-    if(this.state.data.bookmarked) {
-      return (
-        <div onClick={this.unbookmark} className='btn btn-grey btn-round'>
-          Remove Bookmark
-        </div>
-      )
-    } else {
-      return (
-        <div onClick={this.bookmark} className='btn btn-grey btn-round'>
-          Bookmark
-        </div>
-      )
-    }
-  },
-
-  renderTopButtons: function() {
-    return (
-      <div className='links'>
-        <Link to={this.reviewButtonURL()} className='btn btn-red btn-round'>
-          { this.reviewButtonText() }
-        </Link>
-        <div onClick={this.openModal} className='btn btn-grey btn-round'>
-          Share
-        </div>
-        {this.renderBookmarkLink()}
-      </div>
-    )
-  },
-
-  showFiles: function(e) {
-    e.preventDefault();
-
-    $('#files-modal').modal();
-  },
-
-  showLinks: function(e) {
-    e.preventDefault();
-
-    $('#links-modal').modal();
-  },
-
-  renderInfo: function() {
-    let attachments = this.getProductData('attachments');
-    let links = this.getProductData('links');
-
-    return (
-      <div className='row info-row'>
-        <div className='col-xs-3 stats'>
-          <div className='stars'>
-            <Rating value={this.getProductData('rating')} name='rating'/>
-            <div className='total-reviews'>
-              {this.totalReviews()} Review(s)
-            </div>
-          </div>
-          <PriceRating value={this.getProductData('price')} name='rating'/>
-          <div className="files">
-            <a className="files-link" href='#show-attachments' onClick={this.showFiles}
-              data-toggle="modal" data-target="#files-modal" >
-              {this.getProductData('attachments').length} File{attachments.length > 1 || attachments.length == 0 ? 's' : ''} Added
-            </a>
-          </div>
-          <div className="more-links">
-            <a className="links-link" href='#show-links' onClick={this.showLinks}
-              data-toggle="modal" data-target="#links-modal" >
-              {this.getProductData('links').length} Link{links.length > 1 || links.length == 0 ? 's' : ''} Added
-            </a>
-          </div>
-        </div>
-        <div className='col-xs-6 information'>
-          <div className='link'>
-            <a href={UrlHelper.addProtocol(this.getProductData('url'))} className='red' target='_blank'>
-              {UrlHelper.addProtocol(this.getProductData('url'))}
-            </a>
-          </div>
-          <div className='description' dangerouslySetInnerHTML={{__html: this.getProductData('formatted_description')}}>
-          </div>
-        </div>
-        <div className='col-xs-3'>
-          <Tags
-            tags={this.getProductData('tags')}
-            name={this.getProductData('name')}
-            link={'#'}
-            max={9} />
-        </div>
-      </div>
-    )
-  },
-
-  renderLinksModal: function() {
-    let links = _.collect(this.getProductData('links'), function(link) {
-      return (<li className='link'>
-        <div className='link-details'>
-          <a className="link" href={UrlHelper.addProtocol(link.url)} target='_blank'>{link.url}</a>
-        </div>
-      </li>);
-    });
-
-    return (
-      <div className="modal fade" id="links-modal">
-        <div className="modal-content links-modal-content">
-          <div className="modal-header">
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h2 className="modal-title">Links Added</h2>
-          </div>
-          <div className="modal-body">
-            <ul className="links">
-              {links}
-            </ul>
-          </div>
-        </div>
-      </div>
-    )
-  },
-
-  renderFilesModal: function() {
-    let attachments = _.collect(this.getProductData('attachments'), function(attachment) {
-      return (<li className='attachment'>
-        {FileHelper.isImage(attachment.name) ?
-          <img src={UrlHelper.addProtocol(attachment.url)} className='thumbnail' width='50px' />
-          : ''}
-
-        <div className='attachment-details'>
-          <a className="link" href={UrlHelper.addProtocol(attachment.url)} target='_blank'>{attachment.name}</a>
-          <span className='author'>{attachment.author ? `Uploaded by ${attachment.author.name}` : ''}</span>
-          <span className='created_at'>{timeago(attachment.created_at)}</span>
-        </div>
-      </li>);
-    });
-
-    return (
-      <div className="modal fade" id="files-modal">
-        <div className="modal-content files-modal-content">
-          <div className="modal-header">
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h2 className="modal-title">Files Added</h2>
-          </div>
-          <div className="modal-body">
-            <ul className="attachments">
-              {attachments}
-            </ul>
-          </div>
-        </div>
-      </div>
-    )
-  },
-
-  onSelectSection: function onSelectSection(e, section) {
-    e.preventDefault();
-
-    let $el = $(React.findDOMNode(e.target));
-    $el.siblings('.active').removeClass('active')
-    $el.addClass('active');
-
-    let $section = $(React.findDOMNode(this.refs[section]));
-    $section.removeClass('hide')
-    $section.siblings().addClass('hide')
-  },
-
-  onSelectReviewsSection: function onSelectReviewsSection(e) {
-    this.onSelectSection(e, 'reviews')
-  },
-
-  onSelectListsSection: function onSelectListsSection(e) {
-    this.onSelectSection(e, 'lists')
-  },
-
-  onSelectCustomSection: function onSelectCustomSection(e) {
-    this.onSelectSection(e, 'custom')
-  },
-
-  copyLink: function() {
-    let copyTextarea = $(this.refs.locationLink.getDOMNode());
-    let linkCopyButton = $(this.refs.linkCopyButton.getDOMNode())
-    copyTextarea.select();
-
-    try {
-      let successful = document.execCommand('copy');
-      linkCopyButton.html('Copied!')
-      setTimeout(function() { linkCopyButton.html('Copy Link') }, 2000)
-    } catch (err) { console.log('Oops, unable to copy'); }
-    copyTextarea.blur()
   },
 
   renderShareModal: function() {
@@ -352,12 +141,13 @@ const ProductPage = React.createClass({
   render: function() {
     return (
       <div className='product show'>
+        {this.renderShareModal()}
         <ProductPageDesktopVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
-          onBookmark={this.bookmark} onUnbookmark={this.unbookmark}
+          onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.openModal}
           {...this.state} />
 
         <ProductPageMobileVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
-          onBookmark={this.bookmark} onUnbookmark={this.unbookmark}
+          onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.openModal}
           {...this.state} />
       </div>
     );

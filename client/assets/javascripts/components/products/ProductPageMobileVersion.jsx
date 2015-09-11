@@ -89,10 +89,14 @@ const ProductPageMobileVersion = React.createClass({
   },
 
   renderShareLink: function() {
-    let url = `mailto:?subject=Check%20out%20this%20product&body=${window.location.href}`;
+    var _this = this;
+    function share(e) {
+      e.preventDefault();
+      _this.props.onShare();
+    }
 
     return (
-      <a href={url} className='btn btn-grey btn-share'>
+      <a href='#' className='btn btn-grey btn-share' onClick={share}>
         <span className='with-icon'>Share</span>
       </a>
     );
