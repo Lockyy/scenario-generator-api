@@ -19,7 +19,7 @@ feature "Create reviews", js:true do
     first('#name_5').trigger('click')
     fill_in "product[review[title]]", with: "Pretty damn cool phone"
     fill_in "product[review[quality_review]]", with: Faker::Lorem.paragraph
-    find(".btn.btn-default.submit.btn-round").click
+    find(".btn.btn-default.submit.btn-round").trigger('click')
     wait_for_ajax
   end
 
