@@ -1,5 +1,6 @@
 json.tag @tag.name
 json.sorting params[:sorting]
+json.page params[:page]
 json.followed @tag.followed? current_user
 
 json.products do

@@ -12,11 +12,15 @@ const TagPage = React.createClass({
   mixins: [ Navigation ],
 
   getInitialState: function() {
+
+    let location = this.context.router.state.location;
+    let querySorting = _.isEmpty(location.query) ? '' : location.query.sorting;
+
     return {
       data: {
         tag: '',
-        page: this.props.params.page,
-        sorting: 'alphabetical_order',
+        page: this.props.params.page || 1,
+        sorting: querySorting || 'alphabetical_order',
         products: {
           total: 0,
           data: []
@@ -30,11 +34,11 @@ const TagPage = React.createClass({
   },
 
   page: function() {
-    return this.props.params.page
+    return this.state.data.page
   },
 
   sorting: function() {
-    return _.isObject(this.state.data.sorting) ? this.state.data.sorting.products : this.state.data.sorting;
+    return this.state.data.sorting;
   },
 
   componentDidMount: function() {
@@ -43,7 +47,7 @@ const TagPage = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.fetchProducts(newProps.params.tag, newProps.params.page, this.sorting())
+    this.fetchProducts(newProps.params.tag, newProps.params.page, newProps.location.query.sorting)
   },
 
   fetchProducts: function(tag, page, sorting) {
@@ -53,6 +57,9 @@ const TagPage = React.createClass({
   onChange: function(data) {
     this.setState(function(oldState) {
       let newState = _.merge({}, oldState, data);
+      if (!_.isUndefined(data.data.products)) {
+        newState.data.products = data.data.products;
+      }
       return newState;
     });
   },
@@ -64,17 +71,15 @@ const TagPage = React.createClass({
 
   unfollow: function() {
     FluxTagPageActions.unfollow(this.tag());
-     FluxCurrentUserActions.removeTag({name: this.tag()});
+    FluxCurrentUserActions.removeTag({name: this.tag()});
   },
 
   changeSort: function(newSortParams) {
-    this.transitionTo(`/app/tags/${this.tag()}/1`);
-    FluxTagPageActions.fetchProducts(this.tag(), 1, newSortParams.sorting);
+    this.transitionTo(`/app/tags/${this.tag()}/1`, { sorting: newSortParams.sorting.products });
   },
 
   changePage: function(page) {
-    this.transitionTo(`/app/tags/${this.tag()}/${page}`);
-    FluxTagPageActions.fetchProducts(this.tag(), page, this.sorting());
+    this.transitionTo(`/app/tags/${this.tag()}/${page}`, { sorting: this.sorting() });
   },
 
   renderFollowButton: function() {

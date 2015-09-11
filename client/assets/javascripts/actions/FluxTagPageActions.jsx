@@ -5,7 +5,6 @@ import TagAPI from '../utils/api/TagAPI';
 class FluxTagPageActions {
 
   fetchProducts(tag, page, sorting) {
-    this.dispatch();
 
     TagAPI.getProducts(
       tag,
@@ -21,8 +20,6 @@ class FluxTagPageActions {
   }
 
   follow(tag) {
-    this.dispatch();
-
     TagAPI.follow(
       tag,
       (data) => {
@@ -35,8 +32,6 @@ class FluxTagPageActions {
   }
 
   unfollow(tag) {
-    this.dispatch();
-
     TagAPI.unfollow(
       tag,
       (data) => {
