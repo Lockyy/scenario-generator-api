@@ -9,7 +9,6 @@ module Fletcher
       @terms = get_terms
       @page = @params[:page]
       @per_page = calculate_per_page(@params[:per_page].to_i)
-      @params[:sort_by] = @params[:sort_by] || 'relevance'
 
       @filter_tags = filtered_tags(@params[:filtered_tags])
       @products = products(@terms)
@@ -23,7 +22,16 @@ module Fletcher
           search_string: @params[:search_string],
           page: @page,
           per_page: @per_page,
-          sort_by: @params[:sort_by],
+          sorting: {
+            companies:  @params[:sorting][:companies],
+            products:   @params[:sorting][:products],
+            tags:       @params[:sorting][:tags],
+          },
+          match_mode: {
+            companies:  @params[:match_mode][:companies],
+            products:   @params[:match_mode][:products],
+            tags:       @params[:match_mode][:tags],
+          },
           companies: data_hash(@companies),
           products: data_hash(@products),
           related_tags: {
@@ -47,12 +55,21 @@ module Fletcher
 
     def default_params
       {
-          filter_by: '',
-          filter_by_tags: [],
-          match_mode: 'any',
-          search_string: '',
-          page: DEFAULT_PAGE,
-          per_page: DEFAULT_PER_PAGE
+        filter_by: '',
+        filter_by_tags: [],
+        sorting: {
+          companies:  :alphabetical_order,
+          products:   :alphabetical_order,
+          tags:       :alphabetical_order,
+        },
+        match_mode: {
+          companies:  'all',
+          products:   'all',
+          tags:       'all',
+        },
+        search_string: '',
+        page: DEFAULT_PAGE,
+        per_page: DEFAULT_PER_PAGE
       }
     end
 
@@ -92,21 +109,21 @@ module Fletcher
 
     def companies(terms)
       return [] if @params[:search_string].blank?
-      search_companies = SearchCompanies.new(@params[:filter_by], terms, @params[:sort_by], @filter_tags, @params[:match_mode])
+      search_companies = SearchCompanies.new(@params[:filter_by], terms, @params[:sorting][:companies], @filter_tags, @params[:match_mode][:companies])
       @companies_related_tags = search_companies.related_tags
       search_companies.results
     end
 
     def products(terms)
       return [] if @params[:search_string].blank?
-      search_products = SearchProducts.new(@params[:filter_by], terms, @params[:sort_by], @filter_tags, @params[:match_mode])
+      search_products = SearchProducts.new(@params[:filter_by], terms, @params[:sorting][:products], @filter_tags, @params[:match_mode][:products])
       @products_related_tags = search_products.related_tags
       search_products.results
     end
 
     def tags(terms)
       return [] if @params[:search_string].blank?
-      SearchTags.new(@params[:filter_by], terms, @params[:sort_by], @filter_tags, @params[:match_mode]).results
+      SearchTags.new(@params[:filter_by], terms, @params[:sorting][:tags], @filter_tags, @params[:match_mode][:tags]).results
     end
 
     def related_tags

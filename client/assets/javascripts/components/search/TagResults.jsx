@@ -12,7 +12,8 @@ const TagResults = React.createClass ({
 
   addSortParam: function(sortDescription) {
     let match_mode = _.contains(this.SORT_FIELDS_SIMPLE_SEARCH, sortDescription) ? 'any' : 'all';
-    this.props.onSetQuery({sort_by: sortDescription, match_mode: match_mode})
+    let query = { sorting: { tags: sortDescription }, match_mode: { tags: match_mode } }
+    this.props.onSetQuery(query)
   },
 
   dropdownOptions: function() {
@@ -31,7 +32,7 @@ const TagResults = React.createClass ({
             <div className='top-right'>
               <Dropdown
                 onClick={this.addSortParam}
-                active={this.props.sort_by}
+                active={this.props.sorting}
                 options={this.dropdownOptions()}
                 containerClass={'red'} />
               </div>
