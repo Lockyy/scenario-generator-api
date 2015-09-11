@@ -19,13 +19,13 @@ feature "User Profile Page", js: true do
 
   scenario "displays user's reviews/files/products" do
     expect(page).to have_content @user.reviews.last
-    expect(page).to have_content @user.products.count 
+    expect(page).to have_content @user.products.count
     expect(page).to have_content @user.reviews.count
     expect(page).to have_content @user.attachments.count
   end
 
   scenario "displays user's followed tags" do
-    click_link "Followed Tags"
+    first('.sidebar-element.tags').trigger('click')
     expect(page).to have_content @user.tags.last
   end
 end
