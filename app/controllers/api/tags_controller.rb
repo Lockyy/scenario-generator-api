@@ -2,10 +2,10 @@ class Api::TagsController < AppController
 
   def show
     @tag = Tag.friendly.find(params[:id])
-    params[:sort_by] = params[:sort_by] || 'alphabetical_order'
+    params[:sorting] = params[:sorting] || 'alphabetical_order'
 
     @total_products = unique(@tag.products).size
-    @products = sorted_products(params[:sort_by]).paginate(page: params[:page], per_page: 10)
+    @products = sorted_products(params[:sorting]).paginate(page: params[:page], per_page: 10)
 
     respond_to do |format|
       format.json { render }
@@ -38,8 +38,8 @@ class Api::TagsController < AppController
 
   private
 
-  def sorted_products(sort_by)
-    case sort_by
+  def sorted_products(sorting)
+    case sorting
     when 'latest'
       unique(@tag.products).recently_added
     when 'high_to_low'

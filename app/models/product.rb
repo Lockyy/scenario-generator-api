@@ -26,6 +26,10 @@ class Product < ActiveRecord::Base
   validates :description, presence: true
   validates :company, presence: true
 
+  scope :alphabetical, -> do
+    order('name asc')
+  end
+
   scope :recently_added, -> do
     order('created_at desc')
   end

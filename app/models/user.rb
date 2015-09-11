@@ -67,7 +67,7 @@ class User < ActiveRecord::Base
     self.products.size
   end
 
-  def recent_activity(sort_by)
-    reviews.sorted(sort_by)
+  def recent_activity(sorting)
+    reviews.sorted(sorting)
   end
 end
