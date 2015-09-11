@@ -19,7 +19,7 @@ const ProductName  = React.createClass({
   _getBloodhoundProps: function _getBloodhoundProps() {
     return {
       remote: {
-        url: '/api/search?search_string=%QUERY&filter_by=name&match_mode=all',
+        url: '/api/search?search_string=%QUERY&filter_by=name&match_mode[products]=all',
         wildcard: '%QUERY',
         transform: function(data) { return data.products.data }
       }
