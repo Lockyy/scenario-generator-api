@@ -88,9 +88,9 @@ const ProductPageDesktopVersion = React.createClass({
   renderTopButtons: function() {
     return (
       <div className='links'>
-        <Link to={this.props.reviewButtonURL} className='btn btn-red btn-round'>
+        <a href={this.props.reviewButtonURL} className='btn btn-red btn-round review-link'>
           { this.props.reviewButtonText }
-        </Link>
+        </a>
         <div onClick={this.props.onShare} className='btn btn-grey btn-round'>
           Share
         </div>
