@@ -38,6 +38,10 @@ const SearchPage = React.createClass({
     FluxSearchPageActions.getSearchResults(data);
   },
 
+  componentWillReceiveProps: function(newProps) {
+    this.performSearch(this.getSearchParams(this.props.params));
+  },
+
   componentDidMount: function() {
     SearchPageStore.listen(this.onChange.bind(this));
     this.performSearch(this.getSearchParams(this.props.params));
@@ -53,7 +57,10 @@ const SearchPage = React.createClass({
     let page = params.page || 1;
 
     let query = this.context.router.state.location.query;
-    this.performSearch(this.getSearchParams({ search_string: search_string, page: page, section: section}));
+    let searchParams = this.getSearchParams({
+                          search_string: search_string, page: page,
+                          section: section});
+    this.performSearch(searchParams);
 
     if (search_string && section && page) {
       this.transitionTo(`/app/search/${section}/${search_string}/${page}`, query);
@@ -135,7 +142,7 @@ const SearchPage = React.createClass({
       sorting: data.sorting,
       match_mode: data.match_mode
     };
-    return _.merge(_data, this.context.router.state.location.query);
+    return _.merge(_data, { sorting: this.context.router.state.location.query || {} });
   },
 
   renderAllResults: function() {

@@ -91,11 +91,9 @@ const ProductPageDesktopVersion = React.createClass({
         <a href={this.props.reviewButtonURL} className='btn btn-red btn-round review-link'>
           { this.props.reviewButtonText }
         </a>
-        <a
-          href={`mailto:?subject=Check%20out%20this%20product&body=${window.location.href}`}
-          className='btn btn-grey btn-round'>
+        <div onClick={this.props.onShare} className='btn btn-grey btn-round'>
           Share
-        </a>
+        </div>
         {this.renderBookmarkLink()}
       </div>
     )
