@@ -21,7 +21,7 @@ feature "Product page", js: true do
   end
 
   scenario 'clicking Review This Product takes you to review form' do
-    click_link "Review this Product"
+    first('.review-link').trigger('click')
     wait_for_ajax
     expect(page).to have_field("product[name]", with: "#{@product.name}", disabled: true)
     expect(page).to have_field("product[review[quality_review]]")
@@ -29,8 +29,8 @@ feature "Product page", js: true do
 
   scenario 'clicking to vote on a review changes review votes' do
     @review = @product.reviews.last
-    expect{ 
-      click_button "Yes", match: :first
+    expect{
+      first('button.yes-button').trigger('click')
       wait_for_ajax
     }.to change{@review.review_votes.count}.by 1
   end
