@@ -116,7 +116,7 @@ const Results = React.createClass ({
 
     return (
       <div className='show-more'>
-        <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='show-more-button'>
+        <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='btn btn-grey btn-round'>
           Show More
         </a>
       </div>
@@ -150,7 +150,10 @@ const Results = React.createClass ({
 
   addSortParam: function(sortDescription) {
     let match_mode = _.contains(this.SORT_FIELDS_SIMPLE_SEARCH, sortDescription) ? 'any' : 'all';
-    this.props.onSetQuery({sort_by: sortDescription, match_mode: match_mode})
+    let query = { sorting: {}, match_mode: {} }
+    query.sorting[this.props.type] = sortDescription
+    query.match_mode[this.props.type] = match_mode
+    this.props.onSetQuery(query)
   },
 
   dropdownOptions: function() {
@@ -179,7 +182,7 @@ const Results = React.createClass ({
             <div className='top-right'>
               <Dropdown
                 onClick={this.addSortParam}
-                active={this.props.sort_by}
+                active={this.props.sorting}
                 options={this.dropdownOptions()}
                 containerClass={'red'} />
               </div>

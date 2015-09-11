@@ -5,9 +5,27 @@ import { Link } from 'react-router';
 const Dropdown = React.createClass({
   displayName: 'Dropdown',
 
+  getInitialState: function() {
+    return {
+      id: 'dropdown-' + Math.floor(Math.random() * 0xFFFF)
+    }
+  },
+
+  componentDidMount: function() {
+    $('.dropdown-links').on('clickoutside', function(){
+      $('.dropdown-links').removeClass('active')
+    })
+  },
+
   onClick: function(sortKey) {
     this.props.onClick(sortKey)
-    $('.dropdown-links').removeClass('active')
+    this.hideDropdown()
+  },
+
+  getID: function() {
+    if(this.state){
+      return this.state.id
+    }
   },
 
   renderSortOption: function(displayString, sortKey) {
@@ -21,9 +39,20 @@ const Dropdown = React.createClass({
     }
   },
 
+  showDropdown: function() {
+    let node = $(this.refs[this.getID()].getDOMNode())
+    node.toggleClass('active')
+  },
+
+  hideDropdown: function() {
+    let node = $(this.refs[this.getID()].getDOMNode())
+    node.removeClass('active')
+  },
+
   renderActiveOption: function() {
     return (
-      <div className='active-dropdown-link' onClick={() => $('.dropdown-links').toggleClass('active')} >
+      <div  className='active-dropdown-link'
+            onClick={ this.showDropdown } >
         {this.props.options[this.props.active]}
       </div>
     )
@@ -33,7 +62,8 @@ const Dropdown = React.createClass({
     return (
       <div className='dropdown-container'>
         <span className='dropdown-label'>Sort by:</span>
-        <div className={`dropdown-links ${this.props.containerClass}`}>
+        <div  className={`dropdown-links ${this.props.containerClass}`}
+              ref={this.getID()}>
           {this.renderActiveOption()}
           <div className='dropdown'>
             {_.map(this.props.options, this.renderSortOption)}
@@ -42,12 +72,6 @@ const Dropdown = React.createClass({
       </div>
     )
   },
-
-  componentDidMount: function() {
-    $('.dropdown-links').on('clickoutside', function(){
-      $('.dropdown-links').removeClass('active')
-    })
-  }
 
 })
 

@@ -13,7 +13,25 @@ const SearchPage = React.createClass({
   displayName: 'SearchPage',
 
   getInitialState: function() {
-    return { data: { products: [], companies: [], tags: [], related_tags: [], filtered_tags: [] } }
+    return {
+      data: {
+        products: [],
+        companies: [],
+        tags: [],
+        related_tags: [],
+        filtered_tags: [],
+        match_mode: {
+          products: 'all',
+          companies: 'all',
+          tags: 'all'
+        },
+        sorting: {
+          products: 'alphabetical_order',
+          companies: 'alphabetical_order',
+          tags: 'alphabetical_order'
+        }
+      }
+    }
   },
 
   performSearch: function(data) {
@@ -102,8 +120,8 @@ const SearchPage = React.createClass({
   },
 
   setQuery: function(query) {
-    this.transitionTo(this.context.router.state.location.pathname, query);
     let _data = _.merge(this.getSearchParams(this.state.data), query);
+    this.transitionTo(this.context.router.state.location.pathname, _data.sorting);
     this.performSearch(_data);
   },
 
@@ -113,7 +131,9 @@ const SearchPage = React.createClass({
       page: data.page,
       filter_by: data.filter_by,
       filtered_tags: data.filtered_tags,
-      section: data.section
+      section: data.section,
+      sorting: data.sorting,
+      match_mode: data.match_mode
     };
     return _.merge(_data, this.context.router.state.location.query);
   },
@@ -134,21 +154,32 @@ const SearchPage = React.createClass({
           bottom='button'
           searchTerm={this.props.params.search_string}
           topLeft='type'
-          topRight='count' />
+          topRight='dropdown'
+          sorting={this.state.data.sorting.products}
+          onSetQuery={this.setQuery} />
         <Results
           type='companies'
           data={this.state.data.companies}
           bottom='button'
           searchTerm={this.props.params.search_string}
           topLeft='type'
-          topRight='count' />
+          topRight='dropdown'
+          dropdownOptions={{
+            relevance: 'Relevance',
+            latest: 'Latest',
+            alphabetical_order: 'Alphabetical order',
+          }}
+          sorting={this.state.data.sorting.companies}
+          onSetQuery={this.setQuery} />
         <TagResults
           data={this.state.data.tags}
           hide={!this.displaySection('tags')}
-          topRight={'size'}
+          topRight={'dropdown'}
+          sorting={this.state.data.sorting.tags}
           searchTerm={this.props.params.search_string}
           section={this.props.params.section}
-          emptyResults={noResultsTag} />
+          emptyResults={noResultsTag}
+          onSetQuery={this.setQuery} />
       </div>
     )
   },
@@ -163,7 +194,7 @@ const SearchPage = React.createClass({
           currentPage={this.props.params.page}
           topLeft='type'
           topRight='dropdown'
-          sort_by={this.state.data.sort_by}
+          sorting={this.state.data.sorting.products}
           onChangePage={this.onChangePage}
           onSetQuery={this.setQuery} />
       </div>
@@ -185,7 +216,7 @@ const SearchPage = React.createClass({
             latest: 'Latest',
             alphabetical_order: 'Alphabetical order',
           }}
-          sort_by={this.state.data.sort_by}
+          sorting={this.state.data.sorting.companies}
           onChangePage={this.onChangePage}
           onSetQuery={this.setQuery} />
       </div>
@@ -199,7 +230,7 @@ const SearchPage = React.createClass({
           data={this.state.data.tags}
           hide={!this.displaySection('tags')}
           topRight={'dropdown'}
-          sort_by={this.state.data.sort_by}
+          sorting={this.state.data.sorting.tags}
           searchTerm={this.props.params.search_string}
           section={this.props.params.section}
           emptyResults={<div className='no-results'>We couldn’t find any results for your search.</div>}
