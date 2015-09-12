@@ -66,6 +66,10 @@ const ProductCompanyName  = React.createClass({
     this.props.onSetCompany(_.merge({showDetails: false}, company));
   },
 
+  _scrollToInput: function _scrollToInput() {
+    $(window).stop().scrollTo('#product_company_name_label', 'slow');
+  },
+
   _hideCreateWhenMatch: function _hideCreateWhenMatch(e) {
     let typeahead = $(e.target);
     typeahead.on("typeahead:render", function() {
@@ -85,14 +89,17 @@ const ProductCompanyName  = React.createClass({
   render: function render() {
     return (
       <div className='form-group company-name'>
-        <label htmlFor='product[company[name]]'>Company Name <span className='required'>*</span></label>
-          <TypeAhead name='product[company[name]]' value={this.props.value} placeholder='e.g. Microsoft'
-            className='form-control'
-            bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
-            onChange={this._onCompanyNameChange} onRender={this._hideCreateWhenMatch}
-            onSelectOption={this._onSelectCompany} onSelectNoOption={this._onSelectCreateCompany}
-            ref='product_company_name' required/>
-          <span className="help-block with-errors"></span>
+        <label id='product_company_name_label' htmlFor='product[company[name]]'>
+          Company Name <span className='required'>*</span>
+        </label>
+        <TypeAhead name='product[company[name]]' value={this.props.value} placeholder='e.g. Microsoft'
+          id='product_company_name'
+          className='form-control'
+          bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
+          onChange={this._onCompanyNameChange} onRender={this._hideCreateWhenMatch} onFocus={this._scrollToInput}
+          onSelectOption={this._onSelectCompany} onSelectNoOption={this._onSelectCreateCompany}
+          ref='product_company_name' required/>
+        <span className="help-block with-errors"></span>
       </div>
     );
   }

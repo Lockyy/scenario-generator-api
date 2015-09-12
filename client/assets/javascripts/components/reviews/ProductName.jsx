@@ -60,8 +60,13 @@ const ProductName  = React.createClass({
     this.props.onSetProduct(product, true);
   },
 
+  _scrollToInput: function _scrollToInput() {
+    $(window).stop().scrollTo('#product_name_label', 'slow');
+  },
+
   _hideCreateWhenMatch: function _hideCreateWhenMatch(e) {
     let typeahead = $(e.target);
+
     typeahead.on("typeahead:render", function() {
       if (arguments.length < 2) return;
 
@@ -76,15 +81,30 @@ const ProductName  = React.createClass({
     });
   },
 
+  _resizeFormGroup: function _resizeFormGroup(e) {
+    let $el = $(e.target);
+
+    $el.parents('.form-group').css({'minHeight': '800px', 'marginBottom': '-675px'})
+    this._scrollToInput();
+  },
+
+  _resizeFormGroupToNormal: function _resizeFormGroupToNormal(e) {
+    let $el = $(e.target);
+    $(window).stop().scrollTo({top:0, left:0}, 'slow');
+    $el.parents('.form-group').css({'minHeight': '0', 'marginBottom': '50px'})
+  },
+
   render: function render() {
     return (
       <div className='form-group'>
-        <label htmlFor='product[name]'>{"Product's Name"}</label>
+        <label id='product_name_label' htmlFor='product[name]'>{"Product's Name"}</label>
         <TypeAhead name='product[name]' value={this.props.value} className='form-control'
-          placeholder='Type in the name of the product you’re looking to review, e.g. Hololens'
+          id='product_name'
+          placeholder='Type in the name of the product'
           bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
           onSelectOption={this._onSelectProduct} onSelectNoOption={this._onSelectCreateProduct}
-          onChange={this._onNameChange} onRender={this._hideCreateWhenMatch}
+          onChange={this._onNameChange} onRender={this._hideCreateWhenMatch} onFocus={this._resizeFormGroup}
+          onBlur={this._resizeFormGroupToNormal}
           ref='product_name' disabled={this.props.disabled} required/>
         <span className="help-block with-errors"></span>
       </div>

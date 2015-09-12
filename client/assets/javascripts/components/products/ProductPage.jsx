@@ -28,6 +28,12 @@ const ProductPage = React.createClass({
     return this.state.data.id || this.props.params.id;
   },
 
+  getProductData: function(name) {
+    if(this.state.data) {
+      return this.state.data[name]
+    }
+  },
+
   getInitialState: function() {
     return {
       data: {

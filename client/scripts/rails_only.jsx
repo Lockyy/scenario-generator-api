@@ -7,5 +7,6 @@ require('es5-shim/es5-shim');
 require('es5-shim/es5-sham');
 require('h5f');
 require('jquery-outside-events');
+require('jquery.scrollto');
 require('typeahead.js');
 require('bootstrap-tagsinput');
