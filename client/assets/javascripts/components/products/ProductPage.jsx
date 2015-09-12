@@ -144,9 +144,69 @@ const ProductPage = React.createClass({
     )
   },
 
+  renderLinksModal: function() {
+    let links = _.collect(this.getProductData('links'), function(link) {
+      return (<li className='link'>
+        <div className='link-details'>
+          <a className="link" href={UrlHelper.addProtocol(link.url)} target='_blank'>{link.url}</a>
+        </div>
+      </li>);
+    });
+
+    return (
+      <div className="modal fade" id="links-modal">
+        <div className="modal-content links-modal-content">
+          <div className="modal-header">
+            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h2 className="modal-title">Links Added</h2>
+          </div>
+          <div className="modal-body">
+            <ul className="links">
+              {links}
+            </ul>
+          </div>
+        </div>
+      </div>
+    )
+  },
+
+  renderFilesModal: function() {
+    let attachments = _.collect(this.getProductData('attachments'), function(attachment) {
+      return (<li className='attachment'>
+        {FileHelper.isImage(attachment.name) ?
+          <img src={UrlHelper.addProtocol(attachment.url)} className='thumbnail' width='50px' />
+          : ''}
+
+        <div className='attachment-details'>
+          <a className="link" href={UrlHelper.addProtocol(attachment.url)} target='_blank'>{attachment.name}</a>
+          <span className='author'>{attachment.author ? `Uploaded by ${attachment.author.name}` : ''}</span>
+          <span className='created_at'>{timeago(attachment.created_at)}</span>
+        </div>
+      </li>);
+    });
+
+    return (
+      <div className="modal fade" id="files-modal">
+        <div className="modal-content files-modal-content">
+          <div className="modal-header">
+            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h2 className="modal-title">Files Added</h2>
+          </div>
+          <div className="modal-body">
+            <ul className="attachments">
+              {attachments}
+            </ul>
+          </div>
+        </div>
+      </div>
+    )
+  },
+
   render: function() {
     return (
       <div className='product show'>
+        {this.renderFilesModal()}
+        {this.renderLinksModal()}
         {this.renderShareModal()}
         <ProductPageDesktopVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
           onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.openModal}
