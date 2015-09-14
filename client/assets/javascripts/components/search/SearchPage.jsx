@@ -57,10 +57,6 @@ const SearchPage = React.createClass({
     this.setState(data);
   },
 
-  componentWillReceiveProps: function(nextProps) {
-    this.performSearch(this.getSearchParams(nextProps.params));
-  },
-
   changePageAndSearch: function(params) {
     let search_string = _.isUndefined(params.search_string) ? this.props.params.search_string : params.search_string;
     let section = params.section || this.props.params.section || 'all';
