@@ -12,13 +12,18 @@ const Rating = React.createClass({
       containerClass: '',
       id: '',
       value: 0,
-      onChange: function() {}
+      onChange: function() {},
+      textOptions:  [ 'Poor', 'Fair',
+                      'Good', 'Very Good',
+                      'Excellent' ]
     }
   },
 
   //TODO: change implementation to be reactive
   getValue: function getValue() {
-    return $(this.refs.container.getDOMNode()).find(':checked').val();
+    if(this.refs.container) {
+      return $(this.refs.container.getDOMNode()).find(':checked').val();
+    }
   },
 
   _getAllStars: function _getAllStars() {
@@ -63,6 +68,12 @@ const Rating = React.createClass({
     this._getAllStars().find('label').removeClass('hover');
   },
 
+  _onClear: function _onClear(e) {
+    this._getAllStars().find('label').removeClass('marked').removeClass('before-marked')
+    e.target.value = false
+    this.props.onChange(e)
+  },
+
   _onClick: function _onClick(e) {
     if (!this.props.ratingEnabled)
       return
@@ -84,12 +95,22 @@ const Rating = React.createClass({
     let marked = starValue <= value;
 
     return (<div className='rating-group' id={`name_${starValue}`}>
-      <input className='rating-item' type='radio' id={id} name={name} value={starValue}
-             disabled={!ratingEnabled} checked={checked} onChange={this.props.onChange}/>
-       <label htmlFor={id} className={marked ? 'marked' : ''}
-         onMouseOver={this._onMouseOver} onMouseOut={this._onMouseOut}
-         onClick={this._onClick} ></label>
+      <input  className='rating-item' type='radio' id={id} name={name} value={starValue}
+              disabled={!ratingEnabled} checked={checked} onChange={this.props.onChange}/>
+      <label  htmlFor={id} className={marked ? 'marked' : ''}
+              onMouseOver={this._onMouseOver} onMouseOut={this._onMouseOut}
+              onClick={this._onClick} ></label>
     </div>);
+  },
+
+  renderClearButton: function renderClearButton() {
+    if(this.props.ratingEnabled && this.getValue() > 0) {
+      return (
+        <label className='clear-button' onClick={this._onClear}>
+          Clear
+        </label>
+      )
+    }
   },
 
   render: function render() {
@@ -106,6 +127,10 @@ const Rating = React.createClass({
       <div className='items'>
         {rating}
       </div>
+      <div className='score-text'>
+        {this.props.textOptions[this.props.value - 1]}
+      </div>
+      {this.renderClearButton()}
     </div>);
   }
 })
@@ -118,7 +143,8 @@ Rating.propTypes = {
   id: React.PropTypes.string,
   value: React.PropTypes.oneOfType([
     React.PropTypes.string,
-    React.PropTypes.number
+    React.PropTypes.number,
+    React.PropTypes.bool
   ])
 };
 

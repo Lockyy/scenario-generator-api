@@ -29,6 +29,9 @@ module Fletcher
       params.delete(:product)
       params.delete(:tags)
 
+      params[:price_score] = nil unless params[:price_score]
+      params[:quality_score] = nil unless params[:quality_score]
+
       @review.tags = tags_params.empty? ? [] : tags_params.map { |tag| Tag.where(name: tag[:name]).first_or_create }
       remove_unlisted!(@review.links, params[:links_attributes])
       remove_unlisted!(@review.attachments, params[:attachments_attributes])
