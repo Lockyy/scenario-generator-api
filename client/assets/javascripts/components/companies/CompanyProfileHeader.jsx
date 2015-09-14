@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import  Section from '../Section'
 import  CompanyTags from './CompanyTags'
+import Modal from 'react-modal'
 import  SectionRow from '../SectionRow'
 import  ProductBox from '../ProductBox'
 import  FluxReviewPageActions from '../../actions/FluxReviewPageActions'
@@ -38,7 +39,9 @@ const CompanyProfileHeader  = React.createClass({
 
             <div className="actions-container">
               <button className="bookmark-btn btn" type="button"><span className='with-icon'> Bookmark</span></button>
-              <button className="share-btn btn" type="button"><span className='with-icon'> Share</span></button>
+              <button className="share-btn btn" type="button" onClick={this.props.onShare}>
+                <span className='with-icon'>Share</span>
+              </button>
             </div>
           </div>
         </div>
@@ -71,8 +74,8 @@ const CompanyProfileHeader  = React.createClass({
           </div>
 
           <div className="buttons-container">
-            <button className="btn btn-default btn-round" type="button">Share</button>
-            <button className="btn btn-default btn-round" type="button">Bookmark</button>
+            <button className="btn btn-default btn-round share-btn" type="button" onClick={this.props.onShare}>Share</button>
+            <button className="btn btn-default btn-round bookmark-btn" type="button">Bookmark</button>
           </div>
 
         </div>
@@ -106,9 +109,36 @@ const CompanyProfileHeader  = React.createClass({
     });
   },
 
+  renderShareModal: function() {
+    return (
+      <Modal
+        isOpen={this.props.modalIsOpen}
+        onRequestClose={this.props.onCloseShareModal} >
+        <div className='header'>
+          <span className='title'>
+            Share this product with other users
+          </span>
+          <span onClick={this.props.onCloseShareModal} className='close'>x</span>
+        </div>
+        <div className="input-group">
+          <input  type="text"
+                  className="form-control"
+                  aria-describedby="basic-addon2"
+                  value={window.location.href}
+                  ref='locationLink' />
+          <span className="input-group-addon copy-link"
+                id="basic-addon2"
+                ref='linkCopyButton'
+                onClick={this.copyLink}>Copy Link</span>
+        </div>
+      </Modal>
+    )
+  },
+
   render: function render() {
     return (
       <div id='company-main-info-container'>
+        {this.renderShareModal()}
         {this._getMobileVersion()}
         {this._getDesktopVersion()}
       </div>

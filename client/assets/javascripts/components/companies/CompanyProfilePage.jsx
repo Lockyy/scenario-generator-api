@@ -21,13 +21,21 @@ const CompanyProfilePage  = React.createClass({
     FluxCompanyActions.fetchData(params);
   },
 
+  openSharePageModal: function() {
+    this.setState({modalIsOpen: true});
+  },
+
+  closeSharePageModal: function() {
+    this.setState({modalIsOpen: false});
+  },
+
   render: function render() {
     let company  = this.state;
     return (
     <div className='company profile show'>
       <div className='main-content'>
         <h1 className='title'>Company Profile</h1>
-        <CompanyProfileHeader {...company}/>
+        <CompanyProfileHeader onShare={this.openSharePageModal} onCloseShareModal={this.closeSharePageModal} {...company}/>
       </div>
     </div>
     );
