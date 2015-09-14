@@ -8,7 +8,7 @@ const TagsManager = React.createClass({
       tags: [],
       placeholder: 'Start typing to add a tag',
       value: '',
-      buttonText: 'Add / Edit Tags',
+      buttonText: 'Add / Remove Tags',
       itemClass: 'tagSuggestion',
       tagsinputProperties: {},
       addLink: true,
