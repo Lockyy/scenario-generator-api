@@ -90,7 +90,6 @@ const ProductName  = React.createClass({
 
   _resizeFormGroupToNormal: function _resizeFormGroupToNormal(e) {
     let $el = $(e.target);
-    $(window).stop().scrollTo({top:0, left:0}, 'slow');
     $el.parents('.form-group').css({'minHeight': '0', 'marginBottom': '50px'})
   },
 

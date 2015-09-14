@@ -54,7 +54,7 @@ class Review < ActiveRecord::Base
 
   validates :quality_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, allow_nil: true
   validates :price_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, allow_nil: true
-  validates :user_id, uniqueness: { scope: :product_id }
+  validates :user_id, uniqueness: { scope: :product_id }, presence: true
   validate :has_at_least_one_field
 
   private
