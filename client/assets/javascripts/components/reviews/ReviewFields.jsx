@@ -43,20 +43,20 @@ const ReviewFields  = React.createClass({
           <div className='form-group inline rating'>
             <label htmlFor='product[review[quality_score]]'>Rating</label>
             <Rating name='product[review[quality_score]]' ratingEnabled={true} ref='product_review_quality_score'
-              value={this.props.quality_score} onChange={this.updateQualityScore} />
+              value={this.props.quality_score} onChange={this.updateQualityScore} containerClass='quality_score' />
           </div>
 
           <QualityReview ref='quality_review' title={this.props.title} onChangeTitle={this.updateTitle}
             quality_review={this.props.quality_review} onChangeQualityReview={this.updateQualityReview} />
 
           <div className='form-group attachments'>
-            <label htmlFor='product[attachment]' className='sr-only'>Review's attachments</label>
+            <label htmlFor='product[attachment]' className='sr-only'>{"Review's attachments"}</label>
 
             <AttachmentsManager ref='upload_manager' attachments={this.props.attachments} />
           </div>
 
           <div className='form-group links'>
-            <label htmlFor='product[attachment]' className='sr-only'>Review's links</label>
+            <label htmlFor='product[attachment]' className='sr-only'>{"Review's links"}</label>
 
             <LinksManager ref='links_manager' links={this.props.links} />
           </div>
@@ -64,7 +64,7 @@ const ReviewFields  = React.createClass({
           <div className='form-group inline rating'>
             <label htmlFor='product[review[price_score]]'>Pricing</label>
             <PriceRating name='product[review[price_score]]' ratingEnabled={true} ref='product_review_price_score'
-              value={this.props.price_score} onChange={this.updatePriceScore} />
+              value={this.props.price_score} onChange={this.updatePriceScore} containerClass='price_score'/>
           </div>
 
           <div className='form-group'>
