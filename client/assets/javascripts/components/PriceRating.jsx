@@ -40,10 +40,10 @@ PriceRating.defaultProps = {
   max: 5,
   name: 'rating',
   ratingEnabled: false,
-  containerClass: '',
+  containerClass: 'price',
   id: '',
   value: 0,
-  textOptions: [  '', 'Free', 'Inexpensive', 'Moderate',
+  textOptions: [ 'Free', 'Inexpensive', 'Moderate',
                   'Expensive', 'Very Expensive' ]
 };
 

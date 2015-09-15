@@ -218,7 +218,7 @@ const Reviews = React.createClass({
             {links}
           </ul>
           <div className="price-score">
-            { review.price_score ? <PriceRating value={review.price_score} name='rating'/> : '' }
+            { review.price_score ? <PriceRating value={review.price_score} showScoreText={true} name='rating'/> : '' }
           </div>
           <div className="price-review" dangerouslySetInnerHTML={{__html: review.formatted_price_review}} />
           <Tags tags={review.tags} />

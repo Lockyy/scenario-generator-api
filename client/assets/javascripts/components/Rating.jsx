@@ -13,6 +13,7 @@ const Rating = React.createClass({
       id: '',
       value: 0,
       onChange: function() {},
+      showScoreText: false,
       textOptions:  [ 'Poor', 'Fair',
                       'Good', 'Very Good',
                       'Excellent' ]
@@ -122,14 +123,15 @@ const Rating = React.createClass({
     let rating = _.times(max, function buildStars(n) {
       return _this.buildStar(n + 1);
     });
+    let scoreText = <div className='score-text'>
+      {this.props.textOptions[this.props.value - 1]}
+    </div>;
 
     return (<div className={containerClasses} ref='container'>
       <div className='items'>
         {rating}
       </div>
-      <div className='score-text'>
-        {this.props.textOptions[this.props.value - 1]}
-      </div>
+      { this.props.showScoreText ? scoreText : '' }
       {this.renderClearButton()}
     </div>);
   }
