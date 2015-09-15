@@ -58,7 +58,7 @@ const SearchBox = React.createClass ({
   onTagClick: function(e) {
     $('.search-container .form-control').val('')
     $('.search-container .results-holder').hide()
-    this.props.router.transitionTo(`/app/tags/${e.target.dataset.slug}/1`);
+    this.props.router.transitionTo(`/app/tag/${e.target.dataset.slug}/products/1`);
   },
 
   displayResults: function() {

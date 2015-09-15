@@ -75,11 +75,11 @@ const TagPage = React.createClass({
   },
 
   changeSort: function(newSortParams) {
-    this.transitionTo(`/app/tags/${this.tag()}/1`, { sorting: newSortParams.sorting.products });
+    this.transitionTo(`/app/tag/${this.tag()}/products/1`, { sorting: newSortParams.sorting.products });
   },
 
   changePage: function(page) {
-    this.transitionTo(`/app/tags/${this.tag()}/${page}`, { sorting: this.sorting() });
+    this.transitionTo(`/app/tag/${this.tag()}/products/${page}`, { sorting: this.sorting() });
   },
 
   renderFollowButton: function() {
