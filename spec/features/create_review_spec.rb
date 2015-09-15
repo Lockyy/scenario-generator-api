@@ -16,10 +16,10 @@ feature "Create reviews", js:true do
     fill_in "product[company[name]]", with: "Ubuntu"
     fill_in "product[url]", with: "http://www.ubuntu.com/phone"
     fill_in "product[description]", with: Faker::Lorem.paragraph
-    first('#name_5').click
+    first('#name_5').trigger('click')
     fill_in "product[review[title]]", with: "Pretty damn cool phone"
     fill_in "product[review[quality_review]]", with: Faker::Lorem.paragraph
-    find(".btn.btn-default.submit.btn-round").click
+    find(".btn.btn-default.submit.btn-round").trigger('click')
     wait_for_ajax
   end
 

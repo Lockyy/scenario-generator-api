@@ -116,8 +116,8 @@ const Reviews = React.createClass({
     let helpful = voted && userVote.helpful;
     let unhelpful = voted && !userVote.helpful;
 
-    let yesClass = `btn btn-grey btn-round ${ helpful ? 'active' : '' }`;
-    let noClass = `btn btn-grey btn-round ${ unhelpful ? 'active' : '' }`;
+    let yesClass = `btn btn-grey btn-round yes-button ${ helpful ? 'active' : '' }`;
+    let noClass = `btn btn-grey btn-round no-button ${ unhelpful ? 'active' : '' }`;
 
     return (<div className='helpful-review-container'>
       <div className='vote-container'>

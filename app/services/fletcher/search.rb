@@ -58,8 +58,8 @@ module Fletcher
         filter_by: '',
         filter_by_tags: [],
         sorting: {
-          companies:  :alphabetical_order,
-          products:   :alphabetical_order,
+          companies:  :relevance,
+          products:   :relevance,
           tags:       :alphabetical_order,
         },
         match_mode: {

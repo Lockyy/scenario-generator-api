@@ -26,8 +26,8 @@ const SearchPage = React.createClass({
           tags: 'all'
         },
         sorting: {
-          products: 'alphabetical_order',
-          companies: 'alphabetical_order',
+          products: 'relevance',
+          companies: 'relevance',
           tags: 'alphabetical_order'
         }
       }

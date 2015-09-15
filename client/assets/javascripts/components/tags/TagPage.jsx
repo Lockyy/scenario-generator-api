@@ -12,11 +12,15 @@ const TagPage = React.createClass({
   mixins: [ Navigation ],
 
   getInitialState: function() {
+
+    let location = this.context.router.state.location;
+    let querySorting = _.isEmpty(location.query) ? '' : location.query.sorting;
+
     return {
       data: {
         tag: '',
-        page: this.props.params.page,
-        sort_by: 'alphabetical_order',
+        page: this.props.params.page || 1,
+        sorting: querySorting || 'alphabetical_order',
         products: {
           total: 0,
           data: []
@@ -30,29 +34,32 @@ const TagPage = React.createClass({
   },
 
   page: function() {
-    return this.props.params.page
+    return this.state.data.page
   },
 
-  sort_by: function() {
-    return this.state.data.sort_by
+  sorting: function() {
+    return this.state.data.sorting;
   },
 
   componentDidMount: function() {
     TagStore.listen(this.onChange.bind(this));
-    this.fetchProducts(this.tag(), this.page(), this.sort_by())
+    this.fetchProducts(this.tag(), this.page(), this.sorting())
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.fetchProducts(newProps.params.tag, newProps.params.page, this.sort_by())
+    this.fetchProducts(newProps.params.tag, newProps.params.page, newProps.location.query.sorting)
   },
 
-  fetchProducts: function(tag, page, sort_by) {
-    FluxTagPageActions.fetchProducts(tag, page, sort_by);
+  fetchProducts: function(tag, page, sorting) {
+    FluxTagPageActions.fetchProducts(tag, page, sorting);
   },
 
   onChange: function(data) {
     this.setState(function(oldState) {
       let newState = _.merge({}, oldState, data);
+      if (!_.isUndefined(data.data.products)) {
+        newState.data.products = data.data.products;
+      }
       return newState;
     });
   },
@@ -64,17 +71,15 @@ const TagPage = React.createClass({
 
   unfollow: function() {
     FluxTagPageActions.unfollow(this.tag());
-     FluxCurrentUserActions.removeTag({name: this.tag()});
+    FluxCurrentUserActions.removeTag({name: this.tag()});
   },
 
   changeSort: function(newSortParams) {
-    this.transitionTo(`/app/tags/${this.tag()}/1`);
-    FluxTagPageActions.fetchProducts(this.tag(), 1, newSortParams.sort_by);
+    this.transitionTo(`/app/tags/${this.tag()}/1`, { sorting: newSortParams.sorting.products });
   },
 
   changePage: function(page) {
-    this.transitionTo(`/app/tags/${this.tag()}/${page}`);
-    FluxTagPageActions.fetchProducts(this.tag(), page, this.sort_by());
+    this.transitionTo(`/app/tags/${this.tag()}/${page}`, { sorting: this.sorting() });
   },
 
   renderFollowButton: function() {
@@ -122,7 +127,7 @@ const TagPage = React.createClass({
             low_to_high: 'Rating Low to High',
             alphabetical_order: 'Alphabetical order',
           }}
-          sort_by={this.sort_by()}
+          sorting={this.sorting()}
 
           onChangePage={this.changePage}
           onSetQuery={this.changeSort} />
