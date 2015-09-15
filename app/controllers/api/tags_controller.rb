@@ -1,6 +1,14 @@
 class Api::TagsController < AppController
 
-  def show
+  def index
+    @tags = Tag.all.sort_by{|tag| tag.name[0]}.group_by{|u| u.name[0]}
+
+    respond_to do |format|
+      format.json { render }
+    end
+  end
+
+  def products
     @tag = Tag.friendly.find(params[:id])
     params[:sorting] = params[:sorting] || 'alphabetical_order'
 

@@ -26,6 +26,6 @@ feature "User Profile Page", js: true do
 
   scenario "displays user's followed tags" do
     first('.sidebar-element.tags').trigger('click')
-    expect(page).to have_content @user.tags.last
+    expect(page).to have_content @user.tags.last.name
   end
 end

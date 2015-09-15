@@ -8,7 +8,7 @@ class TagStore {
     this.error = null;
 
     this.bindListeners({
-      handleFetchData: FluxTagPageActions.FETCH_PRODUCTS,
+      handleFetchProducts: FluxTagPageActions.FETCH_PRODUCTS,
       handleFollow: FluxTagPageActions.FOLLOW,
       handleUnfollow: FluxTagPageActions.UNFOLLOW,
       handleUpdateData: FluxTagPageActions.UPDATE_DATA,
@@ -16,7 +16,7 @@ class TagStore {
     });
   }
 
-  handleFetchData() {
+  handleFetchProducts() {
     return false;
   }
 

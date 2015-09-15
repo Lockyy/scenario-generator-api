@@ -47,7 +47,15 @@ const TagPage = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.fetchProducts(newProps.params.tag, newProps.params.page, newProps.location.query.sorting)
+    if(!newProps.isTransitioning) {
+      let sorting
+      if(newProps.location.query) {
+        sorting = newProps.location.query.sorting
+      } else {
+        sorting = this.props.sorting
+      }
+      this.fetchProducts(newProps.params.tag, newProps.params.page, sorting)
+    }
   },
 
   fetchProducts: function(tag, page, sorting) {
@@ -75,11 +83,11 @@ const TagPage = React.createClass({
   },
 
   changeSort: function(newSortParams) {
-    this.transitionTo(`/app/tags/${this.tag()}/1`, { sorting: newSortParams.sorting.products });
+    this.transitionTo(`/app/tag/${this.tag()}/products/1`, { sorting: newSortParams.sorting.products });
   },
 
   changePage: function(page) {
-    this.transitionTo(`/app/tags/${this.tag()}/${page}`, { sorting: this.sorting() });
+    this.transitionTo(`/app/tag/${this.tag()}/products/${page}`, { sorting: this.sorting() });
   },
 
   renderFollowButton: function() {
@@ -94,7 +102,7 @@ const TagPage = React.createClass({
 
   renderLeftBar: function () {
     return (
-      <div className='col-xs-3 right-bar'>
+      <div className='col-xs-3 left-bar'>
         <div className='tagged-in'>
           Tagged In
         </div>
