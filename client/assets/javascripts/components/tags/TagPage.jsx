@@ -48,7 +48,13 @@ const TagPage = React.createClass({
 
   componentWillReceiveProps: function(newProps) {
     if(!newProps.isTransitioning) {
-      this.fetchProducts(newProps.params.tag, newProps.params.page, newProps.location.query.sorting)
+      let sorting
+      if(newProps.location.query) {
+        sorting = newProps.location.query.sorting
+      } else {
+        sorting = this.props.sorting
+      }
+      this.fetchProducts(newProps.params.tag, newProps.params.page, sorting)
     }
   },
 
