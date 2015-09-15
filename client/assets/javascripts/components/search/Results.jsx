@@ -52,7 +52,7 @@ const Results = React.createClass ({
   renderImage: function(result) {
     if(this.showImageForProduct(result)) {
       return (
-        <div className='image-container col-xs-4'>
+        <div className='image-container col-xs-5'>
           <img src={result.image} />
         </div>
       )
@@ -61,7 +61,7 @@ const Results = React.createClass ({
 
   productContentClass: function(result) {
     if(this.showImageForProduct(result)) {
-      return 'col-xs-8'
+      return 'col-xs-7'
     }
     return 'col-xs-12'
   },
