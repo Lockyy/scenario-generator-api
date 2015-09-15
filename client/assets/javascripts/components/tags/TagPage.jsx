@@ -102,7 +102,7 @@ const TagPage = React.createClass({
 
   renderLeftBar: function () {
     return (
-      <div className='col-xs-3 right-bar'>
+      <div className='col-xs-3 left-bar'>
         <div className='tagged-in'>
           Tagged In
         </div>

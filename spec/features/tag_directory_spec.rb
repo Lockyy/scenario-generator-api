@@ -14,7 +14,7 @@ describe "Tag Directory", js: true do
   describe "sidebar" do
     it 'has links to the sections of the directory' do
       ('a'..'z').to_a.each do |letter|
-        expect(find('.right-bar')).to have_link letter
+        expect(find('.left-bar')).to have_link letter
       end
     end
   end
@@ -29,7 +29,7 @@ describe "Tag Directory", js: true do
 
   it "has links to the sections of the directory in the header for each section" do
     ('a'..'z').to_a.each do |letter|
-      expect(find('.right-bar')).to have_link letter
+      expect(find('.left-bar')).to have_link letter
     end
   end
 

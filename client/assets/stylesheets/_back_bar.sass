@@ -1,0 +1,17 @@
+@import "variables"
+
+.back-bar
+  position: absolute
+  top: 70px
+  background: $grey
+  color: $blackish-grey
+  width: 100%
+  a
+    display: block
+    width: 100%
+    padding: 10px
+    color: $blackish-grey
+    &.active, &:active
+      color: $blackish-grey
+    &:focus, &:hover
+      color: darken($blackish-grey, 10)
