@@ -45,7 +45,7 @@ const SearchPage = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.performSearch(newProps.params);
+    this.performSearch(this.getSearchParams(newProps.params));
   },
 
   componentDidMount: function() {
