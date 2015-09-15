@@ -138,24 +138,67 @@ const Results = React.createClass ({
   renderPagination: function() {
     if(this.props.data.pages < 2) { return false }
 
+    let _this = this;
+    let pages = this.props.data.pages;
+    let currentPage = parseInt(this.props.currentPage);
+
+    let changePageFn = function(page) {
+      return function() {
+        _this.props.onChangePage(page)
+      }
+    }
+
+    let createPageLink = function(page) {
+      if (isNaN(parseInt(page))) { return <span className='pagination-link'>...</span> }
+
+      let active =  (currentPage == page) ? 'active' : '';
+      return <span className={`pagination-link ${active}`} onClick={ changePageFn(page)}>{page}</span>;
+    }
+
     let pageLinks = [];
 
-    for (let i = 1; i <= this.props.data.pages; i++) {
-      let active = '';
+    if (pages > 10) {
+      let somePages = [];
+      somePages.push(_.range(1, 3));
+      somePages.push([currentPage -1, currentPage, currentPage + 1])
+      somePages.push(_.range(pages - 1, pages + 1))
+      somePages = _.sortBy(_.uniq(_.flattenDeep(somePages)));
 
-      if(this.props.currentPage == i) {
-        active = 'active'
+
+      for (var i = 0; i < somePages.length; i++ ) {
+        let page = somePages[i];
+
+        if (page > 0 && page <= pages)
+        pageLinks.push(createPageLink(page));
+
+        if (i < somePages.length && somePages[i + 1] - page > 1) { pageLinks.push(createPageLink('...')) }
       }
-
-      pageLinks.push(
-        <span className={`pagination-link ${active}`}
-              onClick={ () => this.props.onChangePage(i)}>{i}</span>
-      );
+    } else {
+      for (let i = 1; i <= pages; i++) {
+        pageLinks.push(createPageLink(i));
+      }
     }
 
     return (
       <div className='pagination'>
+        {(this.props.currentPage > 1) ?
+          <span>
+            <span className="pagination-link" onClick={changePageFn(1)}> {'<<'} </span>
+            <span className="pagination-link" onClick={changePageFn(this.props.currentPage - 1)}> {'Prev'} </span>
+          </span>:
+          ''
+        }
+
         {pageLinks}
+
+
+        {(this.props.currentPage < this.props.data.pages) ?
+          <span>
+            <span className="pagination-link" onClick={changePageFn(currentPage + 1)}> {'Next'} </span>
+            <span className="pagination-link" onClick={changePageFn(pages)}> {'>>'} </span>
+          </span>:
+          ''
+        }
       </div>
     )
   },
