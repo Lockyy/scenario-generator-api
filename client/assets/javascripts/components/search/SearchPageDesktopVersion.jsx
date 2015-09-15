@@ -65,10 +65,6 @@ const SearchPageDesktopVersion = React.createClass({
     }
   },
 
-  onSearchInput: function(event) {
-    this.changePageAndSearch({ search_string: event.target.value });
-  },
-
   changeTab: function(section) {
     this.changePageAndSearch({ section: section });
   },
@@ -298,7 +294,8 @@ const SearchPageDesktopVersion = React.createClass({
   },
 
   render: function() {
-    let search_string = _.isEmpty(this.props.params) ? '' : this.getSearchString();
+    let search_string = this.props.data.search_string;
+
     return (
       <div className='desktop-version'>
         <div className='row'>
@@ -307,7 +304,7 @@ const SearchPageDesktopVersion = React.createClass({
               className='search-box'
               ref='inputBox'
               value={ search_string }
-              onChange={ this.onSearchInput } disabled/>
+              onChange={ this.props.onSearchInput } disabled/>
           </div>
         </div>
         <div className='row'>

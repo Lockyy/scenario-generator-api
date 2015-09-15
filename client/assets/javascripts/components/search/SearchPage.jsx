@@ -45,7 +45,7 @@ const SearchPage = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.performSearch(this.getSearchParams(this.props.params));
+    this.performSearch(newProps.params);
   },
 
   componentDidMount: function() {
@@ -66,6 +66,7 @@ const SearchPage = React.createClass({
     let searchParams = this.getSearchParams({
                           search_string: search_string, page: page,
                           section: section});
+
     this.performSearch(searchParams);
 
     if (search_string && section && page) {
@@ -76,7 +77,14 @@ const SearchPage = React.createClass({
   },
 
   onSearchInput: function(event) {
-    this.changePageAndSearch({ search_string: event.target.value });
+    let newData = _.merge({}, this.state, {data: { search_string: event.target.value }});
+    this.onChange(newData);
+  },
+
+  onSubmit: function(e) {
+    e.preventDefault();
+
+    this.changePageAndSearch(this.state.data);
   },
 
   changeTab: function(section) {
@@ -151,167 +159,17 @@ const SearchPage = React.createClass({
     return _.merge(_data, { sorting: this.context.router.state.location.query || {} });
   },
 
-  renderAllResults: function() {
-    let noResultsTag = <div className='no-results'>We couldn’t find any results for your search.</div>;
-    if(this.state.data.total_results == 0 && !this.displaySection('products') &&
-      !this.displaySection('companies') &&
-      !this.displaySection('tags')) {
-      return noResultsTag;
-    }
-
-    return (
-      <div className='col-xs-6'>
-        <Results
-          type='products'
-          data={this.state.data.products}
-          bottom='button'
-          searchTerm={this.props.params.search_string}
-          topLeft='type'
-          topRight='dropdown'
-          sorting={this.state.data.sorting.products}
-          onSetQuery={this.setQuery} />
-        <Results
-          type='companies'
-          data={this.state.data.companies}
-          bottom='button'
-          searchTerm={this.props.params.search_string}
-          topLeft='type'
-          topRight='dropdown'
-          dropdownOptions={{
-            relevance: 'Relevance',
-            latest: 'Latest',
-            alphabetical_order: 'Alphabetical order',
-          }}
-          sorting={this.state.data.sorting.companies}
-          onSetQuery={this.setQuery} />
-        <TagResults
-          data={this.state.data.tags}
-          hide={!this.displaySection('tags')}
-          topRight={'dropdown'}
-          sorting={this.state.data.sorting.tags}
-          searchTerm={this.props.params.search_string}
-          section={this.props.params.section}
-          emptyResults={noResultsTag}
-          onSetQuery={this.setQuery} />
-      </div>
-    )
-  },
-
-  renderProductResults: function() {
-    return (
-      <div className='col-xs-6'>
-        <Results
-          type='products'
-          data={this.state.data.products}
-          bottom='pagination'
-          currentPage={this.props.params.page}
-          topLeft='type'
-          topRight='dropdown'
-          sorting={this.state.data.sorting.products}
-          onChangePage={this.onChangePage}
-          onSetQuery={this.setQuery} />
-      </div>
-    )
-  },
-
-  renderCompanyResults: function() {
-    return (
-      <div className='col-xs-6'>
-        <Results
-          type='companies'
-          data={this.state.data.companies}
-          bottom='pagination'
-          currentPage={this.props.params.page}
-          topLeft='type'
-          topRight='dropdown'
-          dropdownOptions={{
-            relevance: 'Relevance',
-            latest: 'Latest',
-            alphabetical_order: 'Alphabetical order',
-          }}
-          sorting={this.state.data.sorting.companies}
-          onChangePage={this.onChangePage}
-          onSetQuery={this.setQuery} />
-      </div>
-    )
-  },
-
-  renderTagResults: function() {
-    return (
-      <div className='col-xs-6'>
-        <TagResults
-          data={this.state.data.tags}
-          hide={!this.displaySection('tags')}
-          topRight={'dropdown'}
-          sorting={this.state.data.sorting.tags}
-          searchTerm={this.props.params.search_string}
-          section={this.props.params.section}
-          emptyResults={<div className='no-results'>We couldn’t find any results for your search.</div>}
-          onSetQuery={this.setQuery} />
-      </div>
-    )
-  },
-
-  renderResults: function() {
-    switch(this.props.params.section) {
-      case 'all':
-        return this.renderAllResults()
-      case 'products':
-        return this.renderProductResults()
-      case 'companies':
-        return this.renderCompanyResults()
-      case 'tags':
-        return this.renderTagResults()
-    }
-  },
-
-  renderFilters: function() {
-    let relatedTags = this.state.data.related_tags;
-    let hide = !relatedTags.total || relatedTags.total <= 0;
-    let self = this;
-
-    let tagEvent = function(e){
-      let selectedTags = self.props.data.filtered_tags.data;
-      let selectedTag = { 'name': e.target.textContent };
-      let tagAlreadySelected = _.findWhere(selectedTags, selectedTag);
-      let className = 'selected';
-
-      if(tagAlreadySelected) {
-        _.remove(selectedTags, function(tag) {
-          return tag == tagAlreadySelected;
-        });
-        $(e.target).removeClass(className );
-      } else {
-        selectedTags.push({name: e.target.textContent});
-        $(e.target).addClass(className );
-      }
-
-      let data = self.getSearchParams(_.merge({},self.props.data,{section: self.props.params.section, page: '1'}));
-      self.performSearch(data);
-    };
-
-    let filteredTags = this.state.data.filtered_tags.data;
-    return (
-      <div id='tag-filter-container' className='col-xs-3'>
-        <TagResults
-          title={'FILTER BY'}
-          data={relatedTags}
-          hide={hide}
-          showLinkAllTags={true}
-          onClick={tagEvent}
-          selected={filteredTags}
-          searchTerm={this.props.params.search_string} />
-      </div>
-    )
-  },
-
   render: function() {
     let data = _.merge({}, this.state, this.props);
 
     return (
       <div className='search-page'>
-        <SearchPageDesktopVersion onPerformSearch={this.performSearch} {...data} />
-        <SearchPageMobileVersion onPerformSearch={this.performSearch} {...data} />
+        <form onSubmit={this.onSubmit}>
+          <SearchPageDesktopVersion {...data}
+            onSearchInput={this.onSearchInput} onSubmit={this.onSubmit} onPerformSearch={this.performSearch} />
+          <SearchPageMobileVersion {...data}
+            onSearchInput={this.onSearchInput} onSubmit={this.onSubmit} onPerformSearch={this.performSearch} />
+        </form>
       </div>
     );
   }

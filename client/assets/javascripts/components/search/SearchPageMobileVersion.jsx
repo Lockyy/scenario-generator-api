@@ -72,10 +72,6 @@ const SearchPageMobileVersion = React.createClass({
     }
   },
 
-  onSearchInput: function(event) {
-    this.changePageAndSearch({ search_string: event.target.value });
-  },
-
   changeTab: function(section) {
     this.changePageAndSearch({ section: section });
   },
@@ -247,8 +243,17 @@ const SearchPageMobileVersion = React.createClass({
     )
   },
 
+  onKeyPress: function(event) {
+    if (event.which == 13 || event.keyCode == 13) {
+      if (_.isFunction(this.props.onSubmit)) {
+        this.props.onSubmit(event)
+      }
+    }
+  },
+
   render: function() {
-    let search_string = _.isEmpty(this.props.params) ? '' : this.getSearchString();
+    let search_string = this.props.data.search_string;
+
     let searchResultsContainer = (
       <div className='search-results-container'>
         <div className='row'>
@@ -274,7 +279,8 @@ const SearchPageMobileVersion = React.createClass({
               ref='inputBox'
               value={ search_string }
               placeholder='Type here to search'
-              onChange={ this.onSearchInput } />
+              onKeyPress={ this.onKeyPress }
+              onChange={ this.props.onSearchInput } />
           </div>
         </div>
 
