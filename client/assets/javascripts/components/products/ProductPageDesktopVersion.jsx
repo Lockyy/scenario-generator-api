@@ -11,6 +11,7 @@ import PriceRating from '../PriceRating';
 import Tags from '../Tags';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
+import RelatedProducts from './RelatedProducts'
 
 const ProductPageDesktopVersion = React.createClass({
   displayName: 'ProductPageDesktopVersion',
@@ -182,6 +183,15 @@ const ProductPageDesktopVersion = React.createClass({
     this.onSelectSection(e, 'custom')
   },
 
+  renderRelatedProducts: function() {
+    if(this.getProductData('related_products').length > 0) {
+      return <RelatedProducts
+                customHeaderTag={function(){}}
+                size={1}
+                items={this.getProductData('related_products')} />
+    }
+  },
+
   render: function() {
     if (_.isUndefined(this.id())) {
       return (<div />);
@@ -211,6 +221,7 @@ const ProductPageDesktopVersion = React.createClass({
             </div>
           </div>
         </div>
+        {this.renderRelatedProducts()}
       </div>
     );
   }

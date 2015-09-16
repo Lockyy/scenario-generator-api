@@ -12,6 +12,7 @@ import Tags from '../Tags';
 import Section from '../Section';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
+import RelatedProducts from './RelatedProducts'
 
 const ProductPageMobileVersion = React.createClass({
   displayName: 'ProductPageMobileVersion',
@@ -254,6 +255,14 @@ const ProductPageMobileVersion = React.createClass({
     this.onSelectSection(e, 'custom')
   },
 
+  renderRelatedProducts: function() {
+    if(this.getProductData('related_products').length > 0) {
+      return <RelatedProducts
+                size={0.5}
+                items={this.getProductData('related_products')} />
+    }
+  },
+
   render: function() {
     if (_.isUndefined(this.id())) {
       return (<div />);
@@ -285,6 +294,10 @@ const ProductPageMobileVersion = React.createClass({
             <Section hasPagination={false} title={"Reviews"}>
               <Reviews productID={this.id()} ref='reviews' />
             </Section>
+          </div>
+
+          <div className='col-xs-12 tags'>
+            {this.renderRelatedProducts()}
           </div>
         </div>
       </div>
