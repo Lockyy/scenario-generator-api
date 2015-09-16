@@ -1,6 +1,13 @@
 @import "variables"
 
-.search-page, .search-container
+.search-page, .search-container, .tags-page
+
+  .mobile-version
+    display: none
+
+  .desktop-version
+    display: block
+
   .search-box
     border: 0
     font-size: 50px
@@ -61,76 +68,173 @@
         font-size: 11px
         text-decoration: underline
 
-.pagination
-  text-align: center
-  width: 100%
-  .pagination-link
-    color: $dark-grey
-    padding: 5px
-    cursor: pointer
-    &.active
-      font-weight: bold
+  .pagination
+    text-align: center
+    width: 100%
+    font-size: 13px
 
-.results
-  .no-results
-    padding: 20px 10px
-    font-weight: bold
-    display: block
-
-  .top
-    border-bottom: 1px solid $grey
-    margin-bottom: 10px
-    display: flex
-    justify-content: space-between
-    align-items: center
-    padding-bottom: 5px
-
-    .top-left
+    .pagination-link
       color: $dark-grey
-      font-size: 13px
-      text-transform: capitalize
-
-    .top-right
-      color: $dark-grey
-      font-size: 11px
-
-      .value
+      padding: 5px
+      cursor: pointer
+      &.active
         font-weight: bold
 
-  .result
-    padding: 0 !important
-    padding-top: 15px !important
-    padding-bottom: 15px !important
-    border-bottom: 1px solid $grey
-    .name
-      font-size: 18px
-    .description
-      margin-top: 5px
-      margin-bottom: 5px
-      &:first-letter
-        text-transform: uppercase
-    .image-container
-      height: 120px
-      overflow: hidden
-
-  .show-more
-    width: 100%
-    text-align: center
-    a
-      margin-top: 15px
-      margin-bottom: 15px
-
-  &.tags
-    margin-bottom: 25px
-    .top
-      margin-bottom: 15px
-
-  &.header
-    color: black
-    .result
-      border-bottom: 0
-
-.results
-  &.tags
+  .results
     .no-results
-      margin-top: -15px
+      padding: 20px 10px
+      font-weight: bold
+      display: block
+
+    .top
+      border-bottom: 1px solid $grey
+      margin-bottom: 10px
+      display: flex
+      justify-content: space-between
+      align-items: center
+      padding-bottom: 5px
+
+      .top-left
+        color: $dark-grey
+        font-size: 13px
+        text-transform: capitalize
+
+      .top-right
+        color: $dark-grey
+        font-size: 11px
+
+        .value
+          font-weight: bold
+
+    .result
+      padding: 0 !important
+      padding-top: 15px !important
+      padding-bottom: 15px !important
+      border-bottom: 1px solid $grey
+      .name
+        font-size: 18px
+      .description
+        margin-top: 5px
+        margin-bottom: 5px
+        &:first-letter
+          text-transform: uppercase
+      .image-container
+        height: 120px
+        overflow: hidden
+
+    .show-more
+      width: 100%
+      text-align: center
+      a
+        margin-top: 15px
+        margin-bottom: 15px
+
+    &.tags
+      margin-bottom: 25px
+      .top
+        margin-bottom: 15px
+
+    &.header
+      color: black
+      .result
+        border-bottom: 0
+
+  .results
+    &.tags
+      .no-results
+        margin-top: -15px
+
+/*==========  Non-Mobile First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px)
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px)
+  .search-page, .search-container
+    .mobile-version
+      display: block
+
+      .row
+        margin: 0
+
+      .title
+        margin: 15px
+        margin-bottom: 20px
+        color: $red
+        border-bottom: 2px solid $red
+        min-width: 250px
+
+      .search-box
+        font-size: 35px
+        margin-bottom: 30px
+        border-bottom: 1px solid $grey
+        width: 100%
+
+      .links
+        margin-top: 20px
+        .link
+          width: 33.33%
+          float: left
+          border-bottom: none
+          border-top: 3px solid $grey
+          text-transform: uppercase
+          text-align: center
+
+          &.active
+            font-weight: normal
+            border-top-color: $red
+
+        &::after
+          content: ''
+          clear: both
+          display: table
+
+      .results
+        .top
+          margin-top: 25px
+          margin-bottom: 10px
+          border: none
+
+          .top-left, .top-right
+            width: 50%
+            overflow: hidden
+            text-transform: none
+
+          .top-left
+            font-weight: bold
+
+          .top-right
+            display: none
+
+        .result
+          margin: 0 -15px
+          padding-top: 10px !important
+          padding-bottom: 10px !important
+
+
+          .description
+            display: none
+
+          .image-container
+            margin: -10px -15px
+
+            img
+              width: 100%
+              height: 100%
+
+          &:first-child
+            border-top: 1px solid $grey
+
+    .desktop-version
+      display: none
+
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px)
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px)
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px)

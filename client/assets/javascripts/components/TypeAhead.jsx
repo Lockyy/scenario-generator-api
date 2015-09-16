@@ -13,7 +13,9 @@ const TypeAhead  = React.createClass({
       onChange: function() {},
       onSelectOption: function() {},
       onSelectNoOption: function() {},
-      onPressEnter: function() {}
+      onPressEnter: function() {},
+      onFocus: function() {},
+      onBlur: function() {}
     }
   },
 
@@ -86,8 +88,9 @@ const TypeAhead  = React.createClass({
 
   render: function render() {
     return (
-      <input type='text' className={this.props.className} placeholder={this.props.placeholder} name={this.props.name}
-        ref='typeahead_input' value={this.props.value} onChange={this._onChange}
+      <input type='text' id={this.props.id} className={this.props.className} name={this.props.name}
+        placeholder={this.props.placeholder} ref='typeahead_input' value={this.props.value}
+        onChange={this._onChange} onFocus={this.props.onFocus} onBlur={this.props.onBlur}
         required={this.props.required} disabled={this.props.disabled} onKeyPress={this._onKeyPress} />
     );
   }

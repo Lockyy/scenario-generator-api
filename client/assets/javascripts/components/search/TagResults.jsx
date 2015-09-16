@@ -24,6 +24,14 @@ const TagResults = React.createClass ({
     }
   },
 
+  getCountResultsMessage: function(className) {
+    let total = this.props.data.total;
+    return (
+      <div className={className ? className : ''}>
+        { total ? total : 'No'  } result{total > 1 || total == 0 ? 's' : ''} found
+      </div>);
+  },
+
   toggleSection: function(e) {
     let component = $(React.findDOMNode(this));
     let hiddenLink = component.find('.toggle-section:hidden');
@@ -54,12 +62,7 @@ const TagResults = React.createClass ({
           )
         }
       case 'size':
-        return (
-          <div className='top-right'>
-            { this.props.data.total } result(s) found
-          </div>
-        )
-        break
+        return this.getCountResultsMessage('top-right');
       case 'hide':
         if(this.props.data.data.length > 0) {
           return (
@@ -79,6 +82,8 @@ const TagResults = React.createClass ({
 
   renderTopLeft: function() {
     switch(this.props.topLeft) {
+      case 'size':
+        return this.getCountResultsMessage('top-left');
       case 'link':
         return (
           <Link className='top-left' to={this.props.link}>

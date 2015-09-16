@@ -24,6 +24,13 @@ const Results = React.createClass ({
       <div className='result'>
         <div className='row'>
           <div className='col-xs-12'>
+            {
+              _.isEmpty(result.image) ? '' : (
+                <div className='picture'>
+                  <img href={result.image} className='picture' />
+                </div>
+              )
+            }
             <div className='name'>
               <a href={`/app/${this.props.type}/${result.id}`}>
                 { result.name }
@@ -45,7 +52,7 @@ const Results = React.createClass ({
   renderImage: function(result) {
     if(this.showImageForProduct(result)) {
       return (
-        <div className='image-container col-xs-4'>
+        <div className='image-container col-xs-5'>
           <img src={result.image} />
         </div>
       )
@@ -54,7 +61,7 @@ const Results = React.createClass ({
 
   productContentClass: function(result) {
     if(this.showImageForProduct(result)) {
-      return 'col-xs-8'
+      return 'col-xs-7'
     }
     return 'col-xs-12'
   },
@@ -68,6 +75,11 @@ const Results = React.createClass ({
             <div className='name'>
               <a href={`/app/${this.props.type}/${result.id}`}>
                 { result.name }
+              </a>
+            </div>
+            <div className='company'>
+              <a href={`/app/company/${result.company.id}`}>
+                { result.company.name }
               </a>
             </div>
             <div className='description'>
@@ -126,24 +138,67 @@ const Results = React.createClass ({
   renderPagination: function() {
     if(this.props.data.pages < 2) { return false }
 
+    let _this = this;
+    let pages = this.props.data.pages;
+    let currentPage = parseInt(this.props.currentPage);
+
+    let changePageFn = function(page) {
+      return function() {
+        _this.props.onChangePage(page)
+      }
+    }
+
+    let createPageLink = function(page) {
+      if (isNaN(parseInt(page))) { return <span className='pagination-link'>...</span> }
+
+      let active =  (currentPage == page) ? 'active' : '';
+      return <span className={`pagination-link ${active}`} onClick={ changePageFn(page)}>{page}</span>;
+    }
+
     let pageLinks = [];
 
-    for (let i = 1; i <= this.props.data.pages; i++) {
-      let active = '';
+    if (pages > 10) {
+      let somePages = [];
+      somePages.push(_.range(1, 3));
+      somePages.push([currentPage -1, currentPage, currentPage + 1])
+      somePages.push(_.range(pages - 1, pages + 1))
+      somePages = _.sortBy(_.uniq(_.flattenDeep(somePages)));
 
-      if(this.props.currentPage == i) {
-        active = 'active'
+
+      for (var i = 0; i < somePages.length; i++ ) {
+        let page = somePages[i];
+
+        if (page > 0 && page <= pages)
+        pageLinks.push(createPageLink(page));
+
+        if (i < somePages.length && somePages[i + 1] - page > 1) { pageLinks.push(createPageLink('...')) }
       }
-
-      pageLinks.push(
-        <span className={`pagination-link ${active}`}
-              onClick={ () => this.props.onChangePage(i)}>{i}</span>
-      );
+    } else {
+      for (let i = 1; i <= pages; i++) {
+        pageLinks.push(createPageLink(i));
+      }
     }
 
     return (
       <div className='pagination'>
+        {(this.props.currentPage > 1) ?
+          <span>
+            <span className="pagination-link" onClick={changePageFn(1)}> {'<<'} </span>
+            <span className="pagination-link" onClick={changePageFn(this.props.currentPage - 1)}> {'Prev'} </span>
+          </span>:
+          ''
+        }
+
         {pageLinks}
+
+
+        {(this.props.currentPage < this.props.data.pages) ?
+          <span>
+            <span className="pagination-link" onClick={changePageFn(currentPage + 1)}> {'Next'} </span>
+            <span className="pagination-link" onClick={changePageFn(pages)}> {'>>'} </span>
+          </span>:
+          ''
+        }
       </div>
     )
   },
@@ -154,6 +209,14 @@ const Results = React.createClass ({
     query.sorting[this.props.type] = sortDescription
     query.match_mode[this.props.type] = match_mode
     this.props.onSetQuery(query)
+  },
+
+  getCountResultsMessage: function(className) {
+    let total = this.props.data.total;
+    return (
+      <div className={className ? className : ''}>
+        { total ? total : 'No'  } result{total > 1 || total == 0 ? 's' : ''} found
+      </div>);
   },
 
   dropdownOptions: function() {
@@ -209,7 +272,7 @@ const Results = React.createClass ({
   renderTopLeft: function() {
     switch(this.props.topLeft) {
       case 'count':
-        return <div className='top-left'>{ this.props.data.total } result(s) found</div>
+        return this.getCountResultsMessage('top-left');
         break;
       case 'type':
         return <div className='top-left'>{ this.props.type }</div>
@@ -239,7 +302,7 @@ const Results = React.createClass ({
 
   render: function() {
     return (
-      <div className={`results ${this.props.containerClass}`}>
+      <div className={`results ${this.props.containerClass || ''}`}>
         { this.renderTop() }
         { this.renderResults() }
         { this.renderBottom() }

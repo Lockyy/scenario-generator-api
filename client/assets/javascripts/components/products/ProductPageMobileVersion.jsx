@@ -72,18 +72,17 @@ const ProductPageMobileVersion = React.createClass({
 
   renderBookmarkLink: function() {
     let text = this.props.data.bookmarked ? 'Remove Bookmark' : 'Bookmark';
+    let className = this.props.data.bookmarked ? '' : 'with-icon'
     let onClick = this.props.data.bookmarked ? this.props.onUnbookmark : this.props.onBookmark;
     let onClickFn = function(e) {
       e.preventDefault();
 
-      if (_.isFunction(onClick)) {
-        onClick();
-      }
+      if (_.isFunction(onClick)) { onClick() }
     }
 
     return (
       <a href="#" onClick={onClickFn} className='btn btn-grey btn-bookmark'>
-        <span className='with-icon'>{text}</span>
+        <span className={className}>{text}</span>
       </a>
     );
   },

@@ -130,11 +130,12 @@ const TagsManager = React.createClass({
 
     this._getTagsManagerContainer().on('clickoutside', _.debounce(function (e) {
       if (!(_.include($(e.target).attr('class'), 'myTagSuggestion') ||
-          _.include($(e.target).data('role'), 'remove'))) {
+          _.include($(e.target).data('role'), 'remove') || _.include($(e.target).attr('class'), 'tt-suggestion'))) {
         _this._closeTagsManager();
       }
     }));
     this._getTagsManagerInput().tagsinput('focus');
+    this._scrollToTagsManager();
   },
 
   _closeTagsManager: function _closeTagsManager() {
@@ -181,6 +182,10 @@ const TagsManager = React.createClass({
     });
   },
 
+  _scrollToTagsManager: function _scrollToTagsManager() {
+    $(window).stop().scrollTo(this._getTagsManagerContainer(), 'slow');
+  },
+
   render: function render() {
     let className = this.props.className || '';
 
@@ -207,7 +212,7 @@ const TagsManager = React.createClass({
           <span className='title'>Add Tags</span>
 
           <input type='text' className='form-control tags-manager-input' placeholder={this.props.placeholder}
-            required />
+            onFocus={this.props.onFocus} required />
         </div>
       </div>
     );

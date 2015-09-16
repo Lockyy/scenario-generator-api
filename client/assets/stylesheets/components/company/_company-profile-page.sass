@@ -86,6 +86,10 @@ $color-orange: #e36307
           background: $color-darkgrey
           color: $white
 
+        &.bookmark-btn
+          display: none
+
+
   .company-secondary-info-container
     height: 100%
     margin: 0
@@ -219,19 +223,24 @@ $color-orange: #e36307
               color: $color-darkred
               font-size: 10px
               text-transform: none
-              span
+              text-align: center
+
+              .with-icon
                 background: no-repeat left bottom
                 padding: 10px 0 10px 30px
                 background-position: 0
                 background-size: 20px
 
             .share-btn
+              width: 100%
+              border-left: none
               border-right: none
               .with-icon
                 background-image: img-url('icons/icon-share.svg')
                 background-size: 15px
 
             .bookmark-btn
+              display: none
               border-left: none
               .with-icon
                 background-image: img-url('icons/icon-bookmarks-red.svg')

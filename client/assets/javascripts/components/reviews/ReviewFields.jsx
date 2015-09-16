@@ -88,9 +88,6 @@ const ReviewFields  = React.createClass({
   },
 
   render: function render() {
-/* TODO
-  //TODO: Fix add-tags component style
-*/
     return this._getContent();
   }
 })
