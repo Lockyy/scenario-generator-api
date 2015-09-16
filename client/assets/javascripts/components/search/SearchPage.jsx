@@ -34,6 +34,7 @@ const SearchPage = React.createClass({
         }
       },
       params: {
+        filter_by: 'name',
         section: 'all',
         search_string: ''
       }
@@ -147,6 +148,7 @@ const SearchPage = React.createClass({
   },
 
   getSearchParams: function(data){
+    data = _.merge({}, this.state.params, this.props.params, data)
     let _data = {
       search_string: data.search_string,
       page: data.page,
