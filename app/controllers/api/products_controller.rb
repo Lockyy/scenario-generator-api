@@ -5,6 +5,7 @@ module Api
     def show
       @product = Product.friendly.find(params[:id])
       @product.increment_views!
+      @related_products = @product.related(4)
 
       respond_to do |format|
         format.json { render }

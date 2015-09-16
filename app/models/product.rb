@@ -123,4 +123,9 @@ products.url, company_id, products.views, products.created_at, products.updated_
   def should_generate_new_friendly_id?
     true
   end
+
+  def related(quantity)
+    product_ids = tags.map(&:products).flatten.map(&:id).uniq - [self.id]
+    Product.where(id: product_ids).sample(quantity)
+  end
 end
