@@ -1,0 +1,15 @@
+@import 'functions'
+@import 'variables'
+
+.section.related-products
+  & > .header
+    border-top: 1px solid $primary-red
+    border-bottom: 1px solid $dark-grey
+    margin-bottom: 25px
+  h2
+    background-image: img-url('icons/related.svg')
+
+@media only screen and (max-width: $screen-sm-max)
+  .section.related-products
+    .product
+      float: none

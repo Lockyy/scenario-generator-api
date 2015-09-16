@@ -17,7 +17,7 @@ class AppController < ApplicationController
     @auth_token = auth_token
     @user = User.find_with_token(@auth_token)
 
-    store_location_for(:user, request.env['PATH_INFO'])
+    store_location_for(:user, request.env['PATH_INFO']) if request.env['PATH_INFO'].match('/app')
 
     redirect_to short_path if @auth_token.nil? || @user.nil?
   end

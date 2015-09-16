@@ -116,7 +116,7 @@ const TagResults = React.createClass ({
   },
 
   render: function() {
-    let showAllTags = this.props.showLinkAllTags ? <span className='all-tags-link'> Browse all tags</span> : '';
+    let showAllTags = this.props.showLinkAllTags ? <a href='/app/tags' className='all-tags-link'> Browse all tags</a> : '';
     if(this.props.hide) {
       return <div></div>
     } else {
