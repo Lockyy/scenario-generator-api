@@ -26,6 +26,7 @@
 
 .tags-page
   margin-top: 50px
+  overflow: hidden
 
   a
     text-decoration: none
@@ -40,6 +41,9 @@
     display: inline-block
 
   .tagged-in
+    @extend .col-xs-4
+    @extend .col-md-12
+
     color: $dark-grey
     border-bottom: 1px solid $grey
     font-size: 13px
@@ -57,3 +61,73 @@
     white-space: nowrap
     overflow: hidden
     text-overflow: ellipsis
+
+
+/*==========  Non-Mobile First Method  ==========*/
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px)
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px)
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px)
+  .tags-page
+    margin-top: 10px
+
+    .left-bar
+      margin: 0
+
+    .tagged-in, .tag-name, .follow-button-container, .results .top
+      padding: 15px
+
+      .btn.btn-orange.btn-round.btn-full
+        width: auto
+        padding: 5px 40px
+
+    .tagged-in
+      margin-top: 10px
+      color: $primary-red
+      border-bottom: 2px solid $primary-red
+      min-width: 250px
+      display: block
+      float: left
+      font-family: 'Open Sans', sans-serif
+      font-size: 14px
+      font-weight: bold
+      letter-spacing: 1.75px
+      line-height: 15.4px
+      margin-bottom: 20px
+      margin: 10px
+      min-width: 250px
+      padding: 10px 0px
+      position: relative
+      text-transform: uppercase
+      width: 250px
+
+    .tag-name
+      margin: 0
+
+    .results
+      .top
+        .dropdown-container
+          font-size: 12px
+
+          .dropdown-label
+            display: none
+
+      .products
+        .result
+          .description
+            display: none
+
+          .image-container
+            img
+              min-width: 100%
+              min-height: 100%
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px)
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px)
