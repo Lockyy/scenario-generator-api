@@ -19,7 +19,3 @@ json.reviews product.reviews, partial: 'api/reviews/review', as: :review
 json.company do
   json.(product.company, :id, :name, :slug) if product.company
 end
-
-if @related_products
-  json.related_products @related_products, partial: 'api/products/related_product', as: :product
-end
