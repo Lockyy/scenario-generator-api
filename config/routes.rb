@@ -22,8 +22,10 @@ Rails.application.routes.draw do
       end
     end
 
-    resources :tags, only: [:show] do
+    resources :tags, only: [:index], defaults: {format: 'json'}
+    resources :tag, controller: 'tags', defaults: {format: 'json'} do
       member do
+        get :products
         post :follow
         post :unfollow
       end

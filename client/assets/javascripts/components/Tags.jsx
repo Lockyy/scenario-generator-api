@@ -48,7 +48,7 @@ const Tags = React.createClass({
     if(this.props.onClick) {
       this.props.onClick(e)
     } else {
-      this.transitionTo(`/app/tags/${e.target.dataset.slug}/1`);
+      this.transitionTo(`/app/tag/${e.target.dataset.slug}/products/1`);
     }
   },
 

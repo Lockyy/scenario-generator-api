@@ -32,6 +32,21 @@ const TagResults = React.createClass ({
       </div>);
   },
 
+  toggleSection: function(e) {
+    let component = $(React.findDOMNode(this));
+    let hiddenLink = component.find('.toggle-section:hidden');
+    let visibleLink = component.find('.toggle-section:visible');
+    let tagContainer = component.find('.tags-container')
+
+    visibleLink.stop().fadeToggle('fast', function() {
+      tagContainer.stop().slideToggle('slow', function() {
+        hiddenLink.stop().fadeToggle('fast');
+      });
+    });
+
+    e.preventDefault();
+  },
+
   renderTopRight: function() {
     switch(this.props.topRight) {
       case 'dropdown':
@@ -48,6 +63,20 @@ const TagResults = React.createClass ({
         }
       case 'size':
         return this.getCountResultsMessage('top-right');
+      case 'hide':
+        if(this.props.data.data.length > 0) {
+          return (
+            <div className='toggle-section-container' onClick={this.toggleSection}>
+              <a href='#' className='toggle-section show-section' style={{display: 'none'}}>
+                <i className='glyphicon glyphicon-chevron-down'></i>SHOW
+              </a>
+              <a href='#' className='toggle-section hide-section'>
+                <i className='glyphicon glyphicon-chevron-up'></i>HIDE
+              </a>
+            </div>
+          )
+        }
+        break
     }
   },
 
@@ -55,12 +84,18 @@ const TagResults = React.createClass ({
     switch(this.props.topLeft) {
       case 'size':
         return this.getCountResultsMessage('top-left');
+      case 'link':
+        return (
+          <Link className='top-left' to={this.props.link}>
+            {this.props.title || 'Tags'}
+          </Link>
+        )
       default:
         return (
           <div className='top-left'>
             {this.props.title || 'Tags'}
           </div>
-      )
+        )
     }
   },
 
@@ -86,14 +121,16 @@ const TagResults = React.createClass ({
       return <div></div>
     } else {
       return (
-        <div className={`results tags ${this.props.containerClass}`}>
+        <div className={`results tags ${this.props.containerClass || ''}`}>
           <div className ='top'>
             { this.renderTopLeft() }
             { this.renderTopRight() }
           </div>
-          {this.props.noResultsTag}
-          {this.getTags()}
-          {showAllTags}
+          <div className='tags-container'>
+            {this.props.noResultsTag}
+            {this.getTags()}
+            {showAllTags}
+          </div>
         </div>
       )
     }

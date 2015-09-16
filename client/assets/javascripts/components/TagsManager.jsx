@@ -194,7 +194,7 @@ const TagsManager = React.createClass({
         <div className='tags items' ref='tags'>
           {_.map(this.props.tags, function(tag) {
             let id = Math.floor((Math.random() * 1000000) + 1);
-            let url = `/app/tags/${tag.slug}/1`;
+            let url = `/app/tag/${tag.slug}/products/1`;
             return <a href={url}>
               <span className='tag item' key={`tag_${id}`}
                     id={`tag_${id}`} ref={`tag_${id}`}>{tag.name}</span>

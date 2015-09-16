@@ -1,10 +1,20 @@
-import ProductConstants from '../constants/ProductConstants';
 import { Promise } from 'es6-promise';
 
 module.exports = {
 
+  getTags: function(resolve, reject) {
+    let url = `/api/tags`
+    return new Promise(function() {
+      $.ajax({
+        url: url,
+        success: resolve,
+        error: reject
+      });
+    });
+  },
+
   getProducts: function(tag, page, sorting, resolve, reject) {
-    let url = `/api/tags/${tag}`
+    let url = `/api/tag/${tag}/products`
     return new Promise(function() {
       $.ajax({
         url: url,
@@ -16,7 +26,7 @@ module.exports = {
   },
 
   follow: function(tag, resolve, reject) {
-    let url = `/api/tags/${tag}/follow`
+    let url = `/api/tag/${tag}/follow`
     return new Promise(function() {
       $.ajax({
         method: 'post',
@@ -28,7 +38,7 @@ module.exports = {
   },
 
   unfollow: function(tag, resolve, reject) {
-    let url = `/api/tags/${tag}/unfollow`
+    let url = `/api/tag/${tag}/unfollow`
     return new Promise(function() {
       $.ajax({
         method: 'post',

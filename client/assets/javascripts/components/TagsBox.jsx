@@ -16,7 +16,7 @@ class TagsBox extends React.Component {
           containerClass='white'
           max={max} />
         <div className='see-all-tags-container'>
-          <a href='#' className='btn all-tags'>See all tags</a>
+          <a href='/app/tags' className='btn all-tags'>See all tags</a>
         </div>
       </div>
     </div>);

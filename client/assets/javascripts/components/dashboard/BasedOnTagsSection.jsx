@@ -64,7 +64,7 @@ class BasedOnTagsSection extends React.Component {
 
   getCustomizeProductBoxDetailFn(tag) {
     return function(props) {
-      return <a className='link-tag' href={`/app/tags/${tag.slug}/1`}>
+      return <a className='link-tag' href={`/app/tag/${tag.slug}/products/1`}>
         <span className='tag'>{tag.name}</span>
       </a>
     }

@@ -21,8 +21,23 @@
   .product-name
     font-weight: bold
 
+.left-bar
+  margin-bottom: 15px
+
 .tags-page
   margin-top: 50px
+
+  a
+    text-decoration: none
+    &.active, &:active, &:focus, &:hover
+      color: $primary-red
+      text-decoration: none
+
+  .tag-page-link
+    padding: 2px
+    text-transform: uppercase
+    color: $dark-grey
+    display: inline-block
 
   .tagged-in
     color: $dark-grey
@@ -30,6 +45,8 @@
     font-size: 13px
     padding-bottom: 7px
     padding-top: 7px
+    margin-bottom: 5px
+    display: block
 
   .tag-name
     margin-top: 10px

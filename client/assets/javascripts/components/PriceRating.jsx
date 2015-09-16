@@ -7,9 +7,16 @@ class PriceRating extends React.Component {
     return this.refs.rating.getValue();
   }
 
+  containerClass() {
+    return `price ${this.props.containerClass}`;
+  }
+
   render() {
     return (
-      <Rating ref='rating' {... this.props} />
+      <Rating containerClass={this.containerClass()}
+              textOptions={this.props.textOptions}
+              ref='rating'
+              {... this.props} />
     );
   }
 }
@@ -24,7 +31,8 @@ PriceRating.propTypes = {
   id: React.PropTypes.string,
   value: React.PropTypes.oneOfType([
     React.PropTypes.string,
-    React.PropTypes.number
+    React.PropTypes.number,
+    React.PropTypes.bool
   ])
 };
 
@@ -34,7 +42,9 @@ PriceRating.defaultProps = {
   ratingEnabled: false,
   containerClass: 'price',
   id: '',
-  value: 0
+  value: 0,
+  textOptions: [ 'Free', 'Inexpensive', 'Moderate',
+                  'Expensive', 'Very Expensive' ]
 };
 
 export default PriceRating;
