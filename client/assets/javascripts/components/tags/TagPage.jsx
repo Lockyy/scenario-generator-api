@@ -93,7 +93,7 @@ const TagPage = React.createClass({
   renderFollowButton: function() {
     if(this.state.data.followed) {
       return <div className="btn btn-orange btn-round btn-full"
-                  onClick={ () => this.unfollow() }>Unfollow</div>
+                  onClick={ () => this.unfollow() }>Following</div>
     } else  {
       return <div className="btn btn-orange btn-round btn-full"
                   onClick={ () => this.follow() }>Follow</div>
@@ -102,21 +102,23 @@ const TagPage = React.createClass({
 
   renderLeftBar: function () {
     return (
-      <div className='col-xs-3 left-bar'>
+      <div className='col-xs-12 col-md-4 left-bar'>
         <div className='tagged-in'>
           Tagged In
         </div>
         <div className='tag-name'>
           { this.state.data.tag }
         </div>
-        { this.renderFollowButton() }
+        <div className='follow-button-container'>
+          { this.renderFollowButton() }
+        </div>
       </div>
     )
   },
 
   renderResults: function() {
     return (
-      <div className='col-xs-6'>
+      <div className='col-xs-12 col-md-6'>
         <Results
           type='products'
           data={this.state.data.products}
@@ -146,6 +148,7 @@ const TagPage = React.createClass({
   render: function() {
     return (
       <div className='tags-page'>
+
         <div className='row'>
           { this.renderLeftBar() }
           { this.renderResults() }
