@@ -50,18 +50,6 @@
         color: $primary-red
         background: $shadow-grey
 
-@media only screen and (max-width : 768px)
-  .slideshow
-    .slidesjs-container
-      height: 300px !important
-    .slide-show-boxes
-      margin-top: 25px
-      margin-bottom: 25px
-      .slide-show-box
-        border: 0px !important
-        &.active
-          background: none !important
-
 #slideshow.row.bullets.slides
   margin-top: 25px
 
@@ -161,3 +149,32 @@ $y-offset: 0px
     text-align: center
     .caption
       position: initial
+
+
+@media only screen and (max-width : 768px)
+  .slideshow
+    .slidesjs-container
+      display: none
+      height: 300px !important
+
+    .slide-show-boxes
+      cursor: default
+      margin-top: 25px
+      margin-bottom: 25px
+
+      .slide-show-box
+        cursor: default
+        border: 0px !important
+        color: $primary-red !important
+
+        &.inactive, &.active
+          background: none !important
+
+        img.active
+          display: inline !important
+
+        img.inactive
+          display: none !important
+
+    .bullets.slides
+      display: none !important
