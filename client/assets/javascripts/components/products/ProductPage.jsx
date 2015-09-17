@@ -146,9 +146,11 @@ const ProductPage = React.createClass({
 
   renderLinksModal: function() {
     let links = _.collect(this.getProductData('links'), function(link) {
-      return (<li className='link'>
+      return (<li className='link-item'>
         <div className='link-details'>
           <a className="link" href={UrlHelper.addProtocol(link.url)} target='_blank'>{link.url}</a>
+          <span className='author'>{link.author ? `Uploaded by ${link.author.name}` : ''}</span>
+          <span className='created_at'>{timeago(link.created_at)}</span>
         </div>
       </li>);
     });
@@ -178,7 +180,7 @@ const ProductPage = React.createClass({
           : ''}
 
         <div className='attachment-details'>
-          <a className="link" href={UrlHelper.addProtocol(attachment.url)} target='_blank'>{attachment.name}</a>
+          <a className="attachment-link" href={UrlHelper.addProtocol(attachment.url)} target='_blank'>{attachment.name}</a>
           <span className='author'>{attachment.author ? `Uploaded by ${attachment.author.name}` : ''}</span>
           <span className='created_at'>{timeago(attachment.created_at)}</span>
         </div>

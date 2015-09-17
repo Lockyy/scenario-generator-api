@@ -88,7 +88,7 @@
               max-height: 50px
               overflow: hidden
 
-            .link
+            .attachment-link
               padding: 0
               display: block
               color: $blackish-grey
@@ -107,6 +107,28 @@
           background: image-url('icons/link-red.svg') no-repeat center left
           background-size: contain
           padding-left: 75px
+
+      .modal-body
+        .links
+          .link-item
+            padding: 10px 0
+            text-align: left
+            border-bottom: 1px solid $grey
+
+            .link-details
+              color: $dark-grey
+
+              .link
+                display: block
+                text-decoration: underline
+                margin-bottom: 10px
+
+              .author, .created_at
+                width: 50%
+                display: inline-block
+
+              .created_at
+                text-align: right
 
   .info-row
     display: flex
