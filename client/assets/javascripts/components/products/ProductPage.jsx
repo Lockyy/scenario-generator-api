@@ -163,9 +163,8 @@ const ProductPage = React.createClass({
             <h2 className="modal-title">Links Added</h2>
           </div>
           <div className="modal-body">
-            <ul className="links">
-              {links}
-            </ul>
+            {_.isEmpty(this.getProductData('links')) ? (<span className='message'>No links have been added</span>) :
+              <ul className="links">{links}</ul>}
           </div>
         </div>
       </div>
@@ -195,9 +194,8 @@ const ProductPage = React.createClass({
             <h2 className="modal-title">Files Added</h2>
           </div>
           <div className="modal-body">
-            <ul className="attachments">
-              {attachments}
-            </ul>
+            {_.isEmpty(this.getProductData('attachments')) ? (<span className='message'>No files have been added</span>) :
+              <ul className="attachments">{attachments}</ul>}
           </div>
         </div>
       </div>
