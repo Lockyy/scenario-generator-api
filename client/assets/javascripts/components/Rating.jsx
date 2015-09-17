@@ -20,13 +20,6 @@ const Rating = React.createClass({
     }
   },
 
-  //TODO: change implementation to be reactive
-  getValue: function getValue() {
-    if(this.refs.container) {
-      return $(this.refs.container.getDOMNode()).find(':checked').val();
-    }
-  },
-
   _getAllStars: function _getAllStars() {
     return $(React.findDOMNode(this.refs.container)).find('.rating-group');
   },
@@ -105,10 +98,10 @@ const Rating = React.createClass({
   },
 
   renderClearButton: function renderClearButton() {
-    if(this.props.ratingEnabled && this.getValue() > 0) {
+    if(this.props.ratingEnabled && this.props.value > 0) {
       return (
         <label className='clear-button' onClick={this._onClear}>
-          Clear
+          (Clear)
         </label>
       )
     }
