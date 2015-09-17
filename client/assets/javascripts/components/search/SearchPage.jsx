@@ -22,6 +22,7 @@ const SearchPage = React.createClass({
         tags: [],
         related_tags: [],
         filtered_tags: [],
+        displayResults: false,
         match_mode: {
           products: 'all',
           companies: 'all',
@@ -42,7 +43,11 @@ const SearchPage = React.createClass({
   },
 
   performSearch: function(data) {
-    FluxSearchPageActions.getSearchResults(data);
+    let _this = this;
+
+    FluxSearchPageActions.getSearchResults(data, function(data) {
+      _this.setState(_.merge({}, _this.state, {data: {displayResults: !_.isEmpty(data.search_string)}}))
+    });
   },
 
   componentWillReceiveProps: function(newProps) {

@@ -269,6 +269,8 @@ const SearchPageMobileVersion = React.createClass({
       </div>
     );
 
+    let displayResults = this.props.data.displayResults;
+
     return (
       <div className='mobile-version'>
         <div className='row'>
@@ -278,13 +280,13 @@ const SearchPageMobileVersion = React.createClass({
               className='search-box'
               ref='inputBox'
               value={ search_string }
-              placeholder='Type here to search'
+              placeholder='Type to search'
               onKeyPress={ this.onKeyPress }
               onChange={ this.props.onSearchInput } />
           </div>
         </div>
 
-        {_.isEmpty(search_string) ? '' : searchResultsContainer}
+        { !displayResults  ? '' : searchResultsContainer}
       </div>
     );
   }
