@@ -8,10 +8,11 @@ class PriceRating extends React.Component {
   }
 
   containerClass() {
-    return `price ${this.props.containerClass}`;
+    return `${this.props.containerClass} price`;
   }
 
   render() {
+    console.log(this.containerClass())
     return (
       <Rating containerClass={this.containerClass()}
               textOptions={this.props.textOptions}

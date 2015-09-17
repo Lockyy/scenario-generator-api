@@ -65,7 +65,7 @@ const ReviewFields  = React.createClass({
           <div className='form-group inline rating'>
             <label htmlFor='product[review[price_score]]'>Pricing</label>
             <PriceRating name='product[review[price_score]]' ratingEnabled={true} ref='product_review_price_score'
-              value={this.props.price_score} onChange={this.updatePriceScore} containerClass='price_score'
+              value={this.props.price_score} onChange={this.updatePriceScore} containerClass='price price_score'
               showScoreText={true} />
           </div>
 
