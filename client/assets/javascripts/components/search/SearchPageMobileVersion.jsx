@@ -39,6 +39,11 @@ const SearchPageMobileVersion = React.createClass({
     }
   },
 
+  componentDidMount: function() {
+    let $inputBox = React.findDOMNode(this.refs.inputBox);
+    $inputBox.focus();
+  },
+
   performSearch: function(data) {
     this.props.onPerformSearch(data);
   },
@@ -246,7 +251,8 @@ const SearchPageMobileVersion = React.createClass({
   onKeyPress: function(event) {
     if (event.which == 13 || event.keyCode == 13) {
       if (_.isFunction(this.props.onSubmit)) {
-        this.props.onSubmit(event)
+        this.props.onSubmit(event);
+        $(event.target).trigger('blur');
       }
     }
   },
