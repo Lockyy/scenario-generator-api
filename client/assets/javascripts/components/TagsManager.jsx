@@ -1,6 +1,7 @@
 import React from 'react'
 import TagsInput from 'bootstrap-tagsinput'
 import Bloodhound from 'typeahead.js/dist/bloodhound';
+import ResponsivenessHelper from '../utils/helpers/ResponsivenessHelper'
 
 const TagsManager = React.createClass({
   getDefaultProps: function getDefaultProps() {
@@ -170,7 +171,7 @@ const TagsManager = React.createClass({
     $tagsManagerInput.tagsinput('input').keypress(function(e) {
       if (e.keyCode === 13 || e.key === 'Enter') {
         e.preventDefault();
-        let value = e.target.value
+        let value = e.target.value;
 
         if (_.isEmpty(value)) {
           _this._closeTagsManager();
@@ -183,7 +184,9 @@ const TagsManager = React.createClass({
   },
 
   _scrollToTagsManager: function _scrollToTagsManager() {
-    $(window).stop().scrollTo(this._getTagsManagerContainer(), 'slow');
+    if (ResponsivenessHelper.isMobile()) {
+      $(window).stop().scrollTo(this._getTagsManagerContainer(), 'slow');
+    }
   },
 
   render: function render() {

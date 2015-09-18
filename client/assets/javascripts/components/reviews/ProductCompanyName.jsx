@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
+import ResponsivenessHelper from '../../utils/helpers/ResponsivenessHelper'
 import ProductName from './ProductName'
 import TypeAhead from '../TypeAhead'
 
@@ -58,7 +59,7 @@ const ProductCompanyName  = React.createClass({
   },
 
   _onSelectCreateCompany: function _onSelectCreateCompany(name) {
-    let company = { name: name, showDetails: true }
+    let company = { name: name, showDetails: true };
     this.props.onSetCompany(company);
   },
 
@@ -67,7 +68,9 @@ const ProductCompanyName  = React.createClass({
   },
 
   _scrollToInput: function _scrollToInput() {
-    $(window).stop().scrollTo('#product_company_name_label', 'slow');
+    if (ResponsivenessHelper.isMobile()) {
+      $(window).stop().scrollTo('#product_company_name_label', 'slow');
+    }
   },
 
   _hideCreateWhenMatch: function _hideCreateWhenMatch(e) {
@@ -78,7 +81,7 @@ const ProductCompanyName  = React.createClass({
       let suggestions = _.takeRight(arguments, arguments.length - 1);
       let isSuggested = _.filter(suggestions, function(suggestion) {
         return suggestion.name && typeahead.val() && suggestion.name.toLowerCase() == typeahead.val().toLowerCase()
-      }).length > 0
+      }).length > 0;
 
       if (isSuggested) {
         typeahead.siblings('.tt-menu').find('.tt-empty').hide()
@@ -103,6 +106,6 @@ const ProductCompanyName  = React.createClass({
       </div>
     );
   }
-})
+});
 
 export default ProductCompanyName;

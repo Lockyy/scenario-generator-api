@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import TypeAhead from '../TypeAhead'
+import ResponsivenessHelper from '../../utils/helpers/ResponsivenessHelper.js'
 
 const ProductName  = React.createClass({
   displayName: 'ProductName',
@@ -43,7 +44,7 @@ const ProductName  = React.createClass({
           let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
           return `<p>${name}<span class='tt-help'>Review <i class="review-symbol"> -> </i></span></p>`
         }
-      },
+      }
     }
   },
 
@@ -56,7 +57,7 @@ const ProductName  = React.createClass({
   },
 
   _onSelectCreateProduct: function _onSelectCreateProduct(name) {
-    let product = { name: name }
+    let product = { name: name };
     this.props.onSetProduct(product, true);
   },
 
@@ -73,7 +74,7 @@ const ProductName  = React.createClass({
       let suggestions = _.takeRight(arguments, arguments.length - 1);
       let isSuggested = _.filter(suggestions, function(suggestion) {
         return suggestion.name && typeahead.val() && suggestion.name.toLowerCase() == typeahead.val().toLowerCase()
-      }).length > 0
+      }).length > 0;
 
       if (isSuggested) {
         typeahead.siblings('.tt-menu').find('.tt-empty').hide()
@@ -82,15 +83,19 @@ const ProductName  = React.createClass({
   },
 
   _resizeFormGroup: function _resizeFormGroup(e) {
-    let $el = $(e.target);
+    if (ResponsivenessHelper.isMobile()) {
+      let $el = $(e.target);
 
-    $el.parents('.form-group').css({'minHeight': '800px', 'marginBottom': '-675px'})
-    this._scrollToInput();
+      $el.parents('.form-group').css({'minHeight': '800px', 'marginBottom': '-675px'});
+      this._scrollToInput();
+    }
   },
 
   _resizeFormGroupToNormal: function _resizeFormGroupToNormal(e) {
-    let $el = $(e.target);
-    $el.parents('.form-group').css({'minHeight': '0', 'marginBottom': '50px'})
+    if (ResponsivenessHelper.isMobile()) {
+      let $el = $(e.target);
+      $el.parents('.form-group').css({'minHeight': '0', 'marginBottom': '50px'})
+    }
   },
 
   render: function render() {
@@ -98,8 +103,7 @@ const ProductName  = React.createClass({
       <div className='form-group'>
         <label id='product_name_label' htmlFor='product[name]'>{"Product's Name"}</label>
         <TypeAhead name='product[name]' value={this.props.value} className='form-control'
-          id='product_name'
-          placeholder='Type in the name of the product'
+          id='product_name' placeholder='Type in the name of the product'
           bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
           onSelectOption={this._onSelectProduct} onSelectNoOption={this._onSelectCreateProduct}
           onChange={this._onNameChange} onRender={this._hideCreateWhenMatch} onFocus={this._resizeFormGroup}
@@ -109,6 +113,6 @@ const ProductName  = React.createClass({
       </div>
     );
   }
-})
+});
 
 export default ProductName;
