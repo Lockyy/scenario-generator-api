@@ -2,7 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import timeago from 'timeago';
-import dated from 'dated';
+import dateutil from 'date-util';
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
 
@@ -41,7 +41,7 @@ const EditReviewBox = React.createClass ({
           <div className='details'>
             <div className="header">
               <span className='activity-type'>
-                Review added {this.props.created_at ? dated('M d')(new Date(this.props.created_at)) : ''}
+                Review added {this.props.created_at ? new Date(this.props.created_at).format('MMM dd') : ''}
               </span>
               <h3 className='title'><Link to={`/app/products/${product.id}`}>{product.name}</Link></h3>
               <h4 className='company'><Link to={`/app/companies/${company.id}`} >{company.name}</Link></h4>
