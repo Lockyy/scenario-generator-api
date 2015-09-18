@@ -21,8 +21,8 @@
   .product-name
     font-weight: bold
 
-.left-bar
-  margin-bottom: 15px
+.tag-header
+  margin: 10px 0 60px 0
 
 .tags-page
   margin-top: 50px
@@ -44,13 +44,30 @@
     @extend .col-xs-4
     @extend .col-md-12
 
+    font-size: 15px
     color: $dark-grey
     border-bottom: 1px solid $grey
-    font-size: 13px
+    padding: 0
     padding-bottom: 7px
     padding-top: 7px
     margin-bottom: 5px
     display: block
+    text-transform: uppercase
+
+  .btn.btn-white.btn-round
+    border-color: $orange
+    color: $orange
+    width: auto
+    padding: 5px 40px
+
+    &:hover
+      color: $white
+      background-color: $orange
+      border-color: $orange
+
+  .results
+    .top
+      padding-bottom: 20px
 
   .tag-name
     margin-top: 10px
@@ -75,13 +92,16 @@
   .tags-page
     margin-top: 10px
 
-    .left-bar
+    .tag-header
       margin: 0
 
     .tagged-in, .tag-name, .follow-button-container, .results .top
       padding: 15px
 
-      .btn.btn-orange.btn-round.btn-full
+      .btn.btn-white.btn-round
+        background-color: $orange
+        color: $white
+        border-color: $orange
         width: auto
         padding: 5px 40px
 

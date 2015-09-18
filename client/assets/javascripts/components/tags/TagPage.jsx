@@ -91,21 +91,15 @@ const TagPage = React.createClass({
   },
 
   renderFollowButton: function() {
-    if(this.state.data.followed) {
-      return <div className="btn btn-orange btn-round btn-full"
-                  onClick={ () => this.unfollow() }>Following</div>
-    } else  {
-      return <div className="btn btn-orange btn-round btn-full"
-                  onClick={ () => this.follow() }>Follow</div>
-    }
+    let followed = this.state.data.followed;
+      return (<div className="btn btn-white btn-round" onClick={ () => followed ? this.unfollow() : this.follow() }>
+        { followed ? 'Following' : 'Follow'}
+      </div>);
   },
 
-  renderLeftBar: function () {
+  renderTagInfo: function () {
     return (
-      <div className='col-xs-12 col-md-4 left-bar'>
-        <div className='tagged-in'>
-          Tagged In
-        </div>
+      <div className='col-xs-12 tag-header'>
         <div className='tag-name'>
           { this.state.data.tag }
         </div>
@@ -118,7 +112,7 @@ const TagPage = React.createClass({
 
   renderResults: function() {
     return (
-      <div className='col-xs-12 col-md-6'>
+      <div className='col-xs-12 results-container'>
         <Results
           type='products'
           data={this.state.data.products}
@@ -148,9 +142,12 @@ const TagPage = React.createClass({
   render: function() {
     return (
       <div className='tags-page'>
+        <h1 className='tagged-in'>
+          Tagged In
+        </h1>
 
         <div className='row'>
-          { this.renderLeftBar() }
+          { this.renderTagInfo() }
           { this.renderResults() }
         </div>
       </div>
