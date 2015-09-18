@@ -39,7 +39,7 @@ const TagsPage = React.createClass({
 
   renderLeftBar: function () {
     if(this.state.data.tags) {
-      let containerClass = 'col-xs-10 col-xs-offset-1 col-sm-3 col-sm-offset-0 left-bar'
+      let containerClass = 'col-xs-12 col-sm-3 left-bar';
       if(this.getLetter()) {
         containerClass = `${containerClass} hidden-xs`
       }
@@ -58,17 +58,17 @@ const TagsPage = React.createClass({
   },
 
   renderTagSection: function(letter) {
-    let topRight
-    let tags
-    let containerClass
+    let topRight;
+    let tags;
+    let containerClass;
 
     if(this.getLetter()) {
-      topRight = 'size'
-      tags = this.state.data.tags[letter].tags
+      topRight = 'size';
+      tags = this.state.data.tags[letter].tags;
       containerClass = `${letter}`
     } else {
-      topRight = 'hide'
-      tags = this.state.data.tags[letter].tags.slice(0, 12)
+      topRight = 'hide';
+      tags = this.state.data.tags[letter].tags.slice(0, 12);
       containerClass = `${letter} hidden-xs`
     }
 
@@ -90,7 +90,7 @@ const TagsPage = React.createClass({
   renderTags: function() {
     if(this.state.data.tags) {
       return (
-        <div className='col-xs-10 col-xs-offset-1 col-sm-6 col-sm-offset-0'>
+        <div className='col-xs-12 col-md-6'>
           { _.map(Object.keys(this.state.data.tags), this.renderTagSection) }
         </div>
       )

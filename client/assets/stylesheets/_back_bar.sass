@@ -1,12 +1,13 @@
 @import "variables"
 
 .back-bar
-  position: absolute
-  top: 70px
-  background: $grey
+  background: $light-grey
   color: $blackish-grey
   width: 100%
+  border-bottom: 1px solid $grey
+
   a
+    font-weight: bold
     display: block
     width: 100%
     padding: 10px
@@ -15,3 +16,7 @@
       color: $blackish-grey
     &:focus, &:hover
       color: darken($blackish-grey, 10)
+
+    &::before
+      content: "<"
+      margin-right: 10px

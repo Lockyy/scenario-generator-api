@@ -51,7 +51,7 @@
         $('.navbar').animate({'marginTop': '0'})
       }
 
-        lastScrollTop = $(window).scrollTop();
+      lastScrollTop = $(window).scrollTop();
     }, 300, {leading: true, trailling: false}))
   }
 
