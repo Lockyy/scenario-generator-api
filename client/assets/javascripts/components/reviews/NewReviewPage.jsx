@@ -76,11 +76,11 @@ const NewReviewPage  = React.createClass({
   },
 
   _checkForRedirect: function _checkForRedirect() {
-    let params = this.context.router.state.params
-    let reviewID = this._getCurrentUserReviewId()
+    let params = this.context.router.state.params;
+    let reviewID = this._getCurrentUserReviewId();
 
     if(reviewID && params.reviewId != reviewID) {
-      this.context.router.transitionTo(`/app/products/${this._getProductId()}/reviews/${reviewID}`)
+      this.context.router.transitionTo(`/app/products/${this._getProductId()}/reviews/${reviewID}`);
       this._fetchReview(this._getProductId(), reviewID);
     }
   },
@@ -131,12 +131,18 @@ const NewReviewPage  = React.createClass({
     );
   },
 
+  _onCancel: function _onCancel(e) {
+    if (!window.confirm('Are you sure you want to cancel?')) {
+      e.preventDefault()
+    }
+  },
+
   _getActionsContent: function _getActionsContent() {
     let submitText = `${this.state.mode} Review`;
 
     if (this.state.showDetails) {
       return (<div className='actions'>
-        <Link to={'/app'} >
+        <Link to={'/app'} onClick={this._onCancel}>
           <button type='button' className='btn btn-default btn-round'>Cancel</button>
         </Link>
         <input type='submit' className='btn btn-default submit btn-round' value={submitText} />
@@ -173,6 +179,6 @@ const NewReviewPage  = React.createClass({
     </div>
     );
   }
-})
+});
 
 export default NewReviewPage;
