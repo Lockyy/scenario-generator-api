@@ -212,11 +212,13 @@ const Results = React.createClass ({
   },
 
   getCountResultsMessage: function(className) {
-    let total = this.props.data.total;
-    return (
-      <div className={className ? className : ''}>
-        { total ? total : 'No'  } result{total > 1 || total == 0 ? 's' : ''} found
-      </div>);
+    if(this.props.data) {
+      let total = this.props.data.total;
+      return (
+        <div className={className ? className : ''}>
+          { total ? total : 'No'  } result{total > 1 || total == 0 ? 's' : ''} found
+        </div>);
+    }
   },
 
   dropdownOptions: function() {
