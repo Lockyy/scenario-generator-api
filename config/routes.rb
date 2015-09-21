@@ -14,6 +14,10 @@ Rails.application.routes.draw do
     end
     resources :bookmarks, only: [:index], defaults: {format: :json}
 
+    resources :collections, only: [ :user, :create, :show,
+                                    :update, :destroy],
+                            defaults: {format: 'json'}
+
     resources :reviews, except: [:index, :update, :new, :edit], defaults: {format: :json}
 
     resources :companies, defaults: {format: 'json'} do
