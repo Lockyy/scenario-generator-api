@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe List, type: :model do
+RSpec.describe Collection, type: :model do
 
   it { should have_many :products }
   it { should belong_to :user }
@@ -12,13 +12,13 @@ RSpec.describe List, type: :model do
 
   describe 'default values' do
     before do
-      @list = create(:list)
+      @collection = create(:collection)
     end
 
     describe 'privacy' do
       it 'is hidden' do
-        expect(@list.hidden?).to eq true
-        expect(@list.visible?).to eq false
+        expect(@collection.hidden?).to eq true
+        expect(@collection.visible?).to eq false
       end
     end
   end
