@@ -4,8 +4,8 @@ FactoryGirl.define do
     description { Faker::Lorem.sentence }
     user { create(:user) }
 
-    trait :public do
-      privacy 'public'
+    trait :visible do
+      privacy 'visible'
     end
   end
 end
