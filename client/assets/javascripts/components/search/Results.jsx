@@ -92,6 +92,24 @@ const Results = React.createClass ({
     )
   },
 
+  renderCollectionProduct: function(result) {
+    return (
+      <div className='result collection-product'>
+        <div className='row'>
+          <div className={ this.productContentClass(result) }>
+            <div className='name'>
+              { result.name }
+            </div>
+            <Rating value={result.rating} name='rating' />
+            <div className='remove' onClick={() => this.props.onRemove(result.id)}>
+              Remove
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+
   getRenderResultFunction: function(result) {
     switch(this.props.type) {
       case 'companies':
@@ -99,6 +117,9 @@ const Results = React.createClass ({
         break;
       case 'products':
         return this.renderProduct
+        break;
+      case 'collection-product':
+        return this.renderCollectionProduct
         break;
     }
   },

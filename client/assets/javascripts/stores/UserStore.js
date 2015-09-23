@@ -8,6 +8,7 @@ class UserStore {
     this.resetData();
 
     this.bindListeners({
+      handleAddCollection: FluxCollectionActions.ADD_COLLECTION,
       handleUpdateCollection: FluxCollectionActions.UPDATE_DATA,
       handleFetchData: FluxUserActions.FETCH_DATA,
       handleUpdateData: FluxUserActions.UPDATE_DATA,
@@ -24,6 +25,10 @@ class UserStore {
   handleUpdateData(data) {
     this.data = data;
     this.error = null;
+  }
+
+  handleAddCollection(newCollection) {
+    this.data.collections.push(newCollection);
   }
 
   handleUpdateCollection(newCollection) {

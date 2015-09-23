@@ -4,9 +4,11 @@ import RecentActivitySection from './RecentActivitySection';
 import UserTags from './UserTags';
 import UserBookmarks from './UserBookmarks';
 import CollectionsCollection from '../collections/CollectionsCollection';
+import { CollectionMixin } from '../collections/CollectionModal'
 
 const UserProfileWorkArea  = React.createClass({
   displayName: 'UserProfileWorkArea',
+  mixins: [ CollectionMixin ],
 
   contextTypes: {
     router: React.PropTypes.object,
@@ -128,6 +130,8 @@ const UserProfileWorkArea  = React.createClass({
           {this.getBookmarksSection()}
           {this.getCollectionsSection()}
         </div>
+
+        {this.renderCollectionModal()}
       </div>
     );
   },
