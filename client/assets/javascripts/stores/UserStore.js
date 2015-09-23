@@ -1,12 +1,14 @@
 import _ from 'lodash';
 import alt from '../FluxAlt';
 import FluxUserActions from '../actions/FluxUserActions'
+import FluxCollectionActions from '../actions/FluxCollectionActions'
 
 class UserStore {
   constructor() {
     this.resetData();
 
     this.bindListeners({
+      handleUpdateCollection: FluxCollectionActions.UPDATE_DATA,
       handleFetchData: FluxUserActions.FETCH_DATA,
       handleUpdateData: FluxUserActions.UPDATE_DATA,
       handleUpdateTags: FluxUserActions.UPDATE_TAGS,
@@ -22,6 +24,12 @@ class UserStore {
   handleUpdateData(data) {
     this.data = data;
     this.error = null;
+  }
+
+  handleUpdateCollection(newCollection) {
+    let oldCollection = _.find(this.data.collections, function(e) { return e.id == newCollection.id; });
+    let index = _.indexOf(this.data.collections, oldCollection);
+    this.data.collections[index] = newCollection;
   }
 
   handleUpdateTags(data) {

@@ -1,0 +1,79 @@
+@import 'variables'
+
+.collections-container
+  .header
+    border-bottom: 1px solid $light-grey
+    height: 35px
+    padding-bottom: 2px
+
+.form.collection
+  .attached-fields
+    textarea
+      height: 100px
+  .tt-no-results
+    display: none
+
+.results
+  .result.collection-product
+    padding-top: 20px
+    padding-bottom: 20px
+    border-bottom: 1px solid $grey
+    &:first-child
+      padding-top: 5px
+    &:last-child
+      border-bottom: 0px
+    .remove
+      position: absolute
+      top: 0px
+      right: 15px
+      font-size: 12px
+      color: $primary-red
+      cursor: pointer
+
+
+.collection.form
+  .attached-fields
+    input.form-control:focus, textarea.form-control:focus
+      box-shadow: none
+      color: $blackish-grey
+
+    input.form-control, input.form-control:focus
+      border-bottom: none !important
+      outline: 0px none transparent
+      font-size: $default-font-size + 5px
+      border-bottom-left-radius: 0
+      border-bottom-right-radius: 0
+
+    textarea.form-control
+      border-top-left-radius: 0!important
+      border-top-right-radius: 0 !important
+      border-top: 0px none transparent !important
+      outline: 0px none transparent
+      border-box: none
+
+    &.focus
+      textarea:focus, input:focus
+        box-shadow: none
+        border-color: $red
+        animation: none
+
+      textarea, input
+        border-color: $red
+
+  .form-group
+    .help-block.with-errors
+      font-weight: bolder
+
+    input
+      font-style: italic
+      font-size: $default-font-size
+      border-color: $grey
+      box-shadow: none !important
+      color: $blackish-grey
+
+    input
+      height: 45px
+
+    input:focus, textarea:focus
+      box-shadow: none !important
+      border: 1px solid $red

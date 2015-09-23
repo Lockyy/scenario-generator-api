@@ -12,6 +12,7 @@ import Tags from '../Tags';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
+import CollectionsCollection from '../collections/CollectionsCollection'
 
 const ProductPageDesktopVersion = React.createClass({
   displayName: 'ProductPageDesktopVersion',
@@ -175,8 +176,8 @@ const ProductPageDesktopVersion = React.createClass({
     this.onSelectSection(e, 'reviews')
   },
 
-  onSelectListsSection: function onSelectListsSection(e) {
-    this.onSelectSection(e, 'lists')
+  onSelectCollectionsSection: function onSelectCollectionsSection(e) {
+    this.onSelectSection(e, 'collections')
   },
 
   onSelectCustomSection: function onSelectCustomSection(e) {
@@ -206,15 +207,19 @@ const ProductPageDesktopVersion = React.createClass({
           <div className='col-xs-3 reviews-sidebar'>
             <div  className='sidebar-element user-reviews active'
                   onClick={this.onSelectReviewsSection}>User Reviews</div>
-            <div className='sidebar-element lists'
-                  onClick={this.onSelectListsSection}>Lists</div>
+            <div className='sidebar-element collections'
+                  onClick={this.onSelectCollectionsSection}>Collections</div>
             <div className='sidebar-element custom-data'
                   onClick={this.onSelectCustomSection}>Custom Data</div>
           </div>
           <div className='col-xs-9'>
             <Reviews productID={this.id()} ref='reviews' />
-            <div className='placeholder-section hide' ref='lists'>
-              Feature Coming Soon
+            <div className='collections-container' ref='collections'>
+              <div className='header'>
+              </div>
+              <CollectionsCollection
+                className='hide'
+                collections={this.props.data.collections}/>
             </div>
             <div className='placeholder-section hide' ref='custom'>
               Feature Coming Soon

@@ -38,7 +38,7 @@ const UserProfilePage  = React.createClass({
     this.setState(function(oldData) {
       let newData = _.merge({}, oldData, data.data, function(a, b) {
         if (_.isArray(a)) {
-          return _.unique(a.concat(b), function(obj) {
+          return _.unique(b.concat(a), function(obj) {
             return (typeof a[0] === 'object') ? obj.id : obj;
           })
         }
@@ -81,13 +81,13 @@ const UserProfilePage  = React.createClass({
         onChangeSorting={this.onChangeReviewsSorting} {...user}/>
 
     return (
-    <div className='user profile show'>
-      <div className='main-content'>
-        <h1 className='title'>{user.name ? user.name.split(' ')[0] : 'User' }{"'s Profile"}</h1>
-        <UserProfileHeader {...user}/>
-        {page}
+      <div className='user profile show'>
+        <div className='main-content'>
+          <h1 className='title'>{user.name ? user.name.split(' ')[0] : 'User' }{"'s Profile"}</h1>
+          <UserProfileHeader {...user}/>
+          {page}
+        </div>
       </div>
-    </div>
     );
   },
 });

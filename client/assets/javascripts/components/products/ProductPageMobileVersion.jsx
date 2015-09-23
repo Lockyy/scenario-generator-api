@@ -13,6 +13,7 @@ import Section from '../Section';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
+import CollectionsCollection from '../collections/CollectionsCollection'
 
 const ProductPageMobileVersion = React.createClass({
   displayName: 'ProductPageMobileVersion',
@@ -231,30 +232,6 @@ const ProductPageMobileVersion = React.createClass({
     )
   },
 
-   onSelectSection: function onSelectSection(e, section) {
-    e.preventDefault();
-
-    let $el = $(React.findDOMNode(e.target));
-    $el.siblings('.active').removeClass('active')
-    $el.addClass('active');
-
-    let $section = $(React.findDOMNode(this.refs[section]));
-    $section.removeClass('hide')
-    $section.siblings().addClass('hide')
-  },
-
-  onSelectReviewsSection: function onSelectReviewsSection(e) {
-    this.onSelectSection(e, 'reviews')
-  },
-
-  onSelectListsSection: function onSelectListsSection(e) {
-    this.onSelectSection(e, 'lists')
-  },
-
-  onSelectCustomSection: function onSelectCustomSection(e) {
-    this.onSelectSection(e, 'custom')
-  },
-
   renderRelatedProducts: function() {
     if(this.getProductData('related_products').length > 0) {
       return <RelatedProducts
@@ -293,6 +270,14 @@ const ProductPageMobileVersion = React.createClass({
           <div className='col-xs-12 tags'>
             <Section hasPagination={false} title={"Reviews"}>
               <Reviews productID={this.id()} ref='reviews' />
+            </Section>
+          </div>
+
+          <div className='col-xs-12 tags'>
+            <Section hasPagination={false} title={"Collections"}>
+               <CollectionsCollection
+                  ref='collections'
+                  collections={this.props.data.collections}/>
             </Section>
           </div>
 
