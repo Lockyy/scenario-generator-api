@@ -19,7 +19,9 @@ const Dropdown = React.createClass({
 
   onClick: function(sortKey) {
     this.props.onClick(sortKey)
-    this.hideDropdown()
+    this.props.active = sortKey
+    this.forceUpdate()
+    this.props.preventDropdown = true
   },
 
   getID: function() {
@@ -40,6 +42,10 @@ const Dropdown = React.createClass({
   },
 
   showDropdown: function() {
+    if(this.props.preventDropdown) {
+      return false;
+    }
+
     let node = $(this.refs[this.getID()].getDOMNode())
     node.toggleClass('active')
   },
@@ -61,7 +67,7 @@ const Dropdown = React.createClass({
   render: function() {
     return (
       <div className='dropdown-container'>
-        <span className='dropdown-label'>Sort by:</span>
+        { this.props.showText ? (<span className='dropdown-label'>{this.props.text || 'Sort by:'}</span>) : null }
         <div  className={`dropdown-links ${this.props.containerClass}`}
               ref={this.getID()}>
           {this.renderActiveOption()}
