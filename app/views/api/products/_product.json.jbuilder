@@ -26,4 +26,4 @@ if @related_products
   json.related_products @related_products, partial: 'api/products/related_product', as: :product
 end
 
-json.collections product.collections, partial: 'api/collections/small_collection', as: :collection
+json.collections product.collections.visible(current_user), partial: 'api/collections/small_collection', as: :collection

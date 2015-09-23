@@ -11,6 +11,10 @@ class Collection < ActiveRecord::Base
   validates :user, presence: true
   validates :privacy, presence: true
 
+  def self.visible(user)
+    where { (user_id == user.id) | (privacy == 1) }
+  end
+
   def self.create_with_params(params, user)
     collection = self.new(user: user)
     collection.update_with_params(params)
@@ -30,6 +34,7 @@ class Collection < ActiveRecord::Base
     end
 
     self.save
+    self
   end
 
   # A collection is visible if privacy is 'visible' (1)
