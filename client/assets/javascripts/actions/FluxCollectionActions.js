@@ -4,6 +4,17 @@ import CollectionAPI from '../utils/api/CollectionAPI';
 
 class FluxCollectionActions {
 
+  fetchCollection(id) {
+    CollectionAPI.fetchCollection(id,
+      (data) => {
+        this.actions.fetchedCollection(data);
+      },
+      (error) => {
+        this.actions.registerError(error);
+      }
+    );
+  }
+
   updateCollection(id, data, resolve) {
     CollectionAPI.updateCollection(id, data,
       (data) => {
@@ -41,6 +52,10 @@ class FluxCollectionActions {
         this.actions.registerError(error);
       }
     );
+  }
+
+  fetchedCollection(data) {
+    this.dispatch(data)
   }
 
   updateData(data) {
