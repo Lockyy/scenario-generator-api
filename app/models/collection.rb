@@ -26,7 +26,7 @@ class Collection < ActiveRecord::Base
     self.privacy     = params[:privacy] if params[:privacy]
 
     if(params[:products])
-      self.collection_products.destroy
+      self.products.delete_all
       params[:products].each do |product_id|
         product = Product.find_by(id: product_id)
         self.products.append(product) if product

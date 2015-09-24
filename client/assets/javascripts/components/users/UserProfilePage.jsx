@@ -36,11 +36,19 @@ const UserProfilePage  = React.createClass({
 
   onChange(data) {
     this.setState(function(oldData) {
-      let newData = _.merge({}, oldData, data.data, function(a, b) {
+      let newData = _.merge({}, oldData, data.data, function(a, b, property) {
         if (_.isArray(a)) {
-          return _.unique(b.concat(a), function(obj) {
-            return (typeof a[0] === 'object') ? obj.id : obj;
-          })
+          // If the property being merged is recent activity we need
+          // to concatinate the arrays and remove non-unique elements.
+          // This is so that the show more button properly appends them.
+          if(property == 'recent_activity') {
+            return _.unique(a.concat(b), function(obj) {
+              return (typeof a[0] === 'object') ? obj.id : obj;
+            })
+          // Everything else is entirely new data and should just return the new array.
+          } else {
+            return b
+          }
         }
       });
 

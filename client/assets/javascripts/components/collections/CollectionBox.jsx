@@ -18,6 +18,10 @@ const CollectionBox = React.createClass ({
     FluxCollectionActions.updateCollection(this.props.id, { privacy: newSetting})
   },
 
+  deleteCollection: function() {
+    FluxCollectionActions.deleteCollection(this.props.id)
+  },
+
   renderProductsList: function() {
     let products = _.map(this.props.products.slice(0,3), function(product) {
       return  <span className='product-link'>
@@ -53,6 +57,10 @@ const CollectionBox = React.createClass ({
   renderUserFooter: function() {
     return (
       <div className='footer'>
+        <div  className='btn btn-red btn-round'
+              onClick={this.deleteCollection}>
+          Delete
+        </div>
       </div>
     )
   },

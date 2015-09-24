@@ -9,7 +9,9 @@ class UserStore {
 
     this.bindListeners({
       handleAddCollection: FluxCollectionActions.ADD_COLLECTION,
+      handleRemoveCollection: FluxCollectionActions.REMOVE_COLLECTION,
       handleUpdateCollection: FluxCollectionActions.UPDATE_DATA,
+
       handleFetchData: FluxUserActions.FETCH_DATA,
       handleUpdateData: FluxUserActions.UPDATE_DATA,
       handleUpdateTags: FluxUserActions.UPDATE_TAGS,
@@ -29,6 +31,12 @@ class UserStore {
 
   handleAddCollection(newCollection) {
     this.data.collections.push(newCollection);
+  }
+
+  handleRemoveCollection(id) {
+    this.data.collections = this.data.collections.filter(function(collection){
+      collection.id !== id
+    });
   }
 
   handleUpdateCollection(newCollection) {

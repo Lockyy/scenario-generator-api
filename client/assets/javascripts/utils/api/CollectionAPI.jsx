@@ -17,7 +17,7 @@ module.exports = {
     return this.hitAPI(url, 'patch', {collection: data}, resolve, reject);
   },
 
-  destroyCollection: function(id, resolve, reject) {
+  deleteCollection: function(id, resolve, reject) {
     let url = `/api/collections/${id}`;
     return this.hitAPI(url, 'delete', {}, resolve, reject);
   },

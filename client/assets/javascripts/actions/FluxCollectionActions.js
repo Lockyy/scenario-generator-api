@@ -8,7 +8,9 @@ class FluxCollectionActions {
     CollectionAPI.updateCollection(id, data,
       (data) => {
         this.actions.updateData(data);
-        resolve();
+        if(resolve) {
+          resolve();
+        }
       },
       (error) => {
         this.actions.registerError(error);
@@ -20,7 +22,20 @@ class FluxCollectionActions {
     CollectionAPI.createCollection(data,
       (data) => {
         this.actions.addCollection(data);
-        resolve();
+        if(resolve) {
+          resolve();
+        }
+      },
+      (error) => {
+        this.actions.registerError(error);
+      }
+    );
+  }
+
+  deleteCollection(id) {
+    CollectionAPI.deleteCollection(id,
+      (data) => {
+        this.actions.removeCollection(id);
       },
       (error) => {
         this.actions.registerError(error);
@@ -34,6 +49,10 @@ class FluxCollectionActions {
 
   addCollection(data) {
     this.dispatch(data);
+  }
+
+  removeCollection(id) {
+    this.dispatch(id);
   }
 
   registerError(error) {
