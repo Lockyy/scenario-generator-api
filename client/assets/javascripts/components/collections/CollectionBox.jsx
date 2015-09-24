@@ -58,6 +58,10 @@ const CollectionBox = React.createClass ({
     return (
       <div className='footer'>
         <div  className='btn btn-red btn-round'
+              onClick={() => this.props.onEdit(this.props)}>
+          Edit
+        </div>
+        <div  className='btn btn-red btn-round'
               onClick={this.deleteCollection}>
           Delete
         </div>
@@ -104,33 +108,35 @@ const CollectionBox = React.createClass ({
   render: function() {
     let description = TextHelper.truncate(this.props.description, 280);
 
-    return (<div className='col-xs-12 box-2 no-pic-box product collection'>
-      <div className='content'>
-        <div className='data'>
+    return (
+      <div className='col-xs-12 box-2 no-pic-box product collection'>
+        <div className='content'>
+          <div className='data'>
 
-          <div className='details'>
-            { this.renderTop() }
+            <div className='details'>
+              { this.renderTop() }
 
-            <div className="header">
+              <div className="header">
 
-              <h3 className='title'>
-                <a href={`/app/collections/${this.props.id}`}>
-                  {this.props.title}
-                </a>
-              </h3>
+                <h3 className='title'>
+                  <a href={`/app/collections/${this.props.id}`}>
+                    {this.props.title}
+                  </a>
+                </h3>
+              </div>
+
+              <p className='description'>
+                {description}
+              </p>
+
+              { this.renderProductsList() }
             </div>
 
-            <p className='description'>
-              {description}
-            </p>
-
-            { this.renderProductsList() }
+            { this.renderFooter() }
           </div>
-
-          { this.renderFooter() }
         </div>
       </div>
-    </div>);
+    );
   }
 })
 

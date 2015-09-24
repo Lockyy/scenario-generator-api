@@ -44,7 +44,9 @@ const UserProfileWorkArea  = React.createClass({
         <div className='btn btn-round btn-red' onClick={this.showCollectionModal}>
           Create Collection
         </div>
-        <CollectionsCollection collections={this.props.collections}/>
+        <CollectionsCollection
+          collections={this.props.collections}
+          onEdit={this.showCollectionModalForEditing} />
       </div>
     );
   },

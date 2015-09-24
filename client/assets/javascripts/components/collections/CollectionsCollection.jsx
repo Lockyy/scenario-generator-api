@@ -8,10 +8,13 @@ const CollectionsCollection = React.createClass ({
   displayName: 'CollectionsCollection',
 
   renderCollections: function() {
+    let _this = this
     return (
       <div className='collections row'>
         {_.map(this.props.collections, function(collection) {
-          return <CollectionBox {...collection} />
+          return <CollectionBox
+                    onEdit={_this.props.onEdit}
+                    {...collection} />
         })}
       </div>
     )

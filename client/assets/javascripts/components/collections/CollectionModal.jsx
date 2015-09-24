@@ -38,6 +38,7 @@ const CollectionMixin = {
 
   showCollectionModalForEditing: function(collection) {
     this.refs.collectionModal.setCollection(collection)
+    this.showCollectionModal()
   },
 
   onSaveCollection: function(collection, resolve) {
@@ -61,6 +62,16 @@ const CollectionModal = React.createClass ({
     }
   },
 
+  setCollection: function(collection) {
+    this.setState({
+      id: collection.id,
+      title: collection.title,
+      description: collection.description,
+      privacy: collection.privacy,
+      products: collection.products
+    })
+  },
+
   close: function() {
     this.setState(this.getInitialState());
     this.props.close()
@@ -81,7 +92,6 @@ const CollectionModal = React.createClass ({
   },
 
   removeProduct: function(product_id) {
-    debugger
     let products = this.state.products.filter(function(product) {
         return product.id !== product_id;
     });
@@ -104,6 +114,7 @@ const CollectionModal = React.createClass ({
     let _this = this
 
     let collection = {
+      id: this.state.id,
       title: this.state.title,
       description: this.state.description,
       privacy: e.currentTarget.dataset.privacy,
@@ -172,20 +183,35 @@ const CollectionModal = React.createClass ({
              this.state.products.length > 0)
   },
 
+  updating: function() {
+    return !!this.state.id
+  },
+
   renderSubmissionButtons: function() {
     let disabled = this.buttonsDisabled()
-    return (
-      <div className='buttons'>
-        <button className='btn btn-red btn-round'
-                onClick={this.submitForm}
-                data-privacy='hidden'
-                disabled={disabled}>Create as Private</button>
-        <button className='btn btn-red btn-round'
-                onClick={this.submitForm}
-                data-privacy='visible'
-                disabled={disabled}>Create as Public</button>
-      </div>
-    )
+    if(this.updating()) {
+      return (
+        <div className='buttons'>
+          <button className='btn btn-red btn-round'
+                  onClick={this.submitForm}
+                  data-privacy='hidden'
+                  disabled={disabled}>Update</button>
+        </div>
+      )
+    } else {
+      return (
+        <div className='buttons'>
+          <button className='btn btn-red btn-round'
+                  onClick={this.submitForm}
+                  data-privacy='hidden'
+                  disabled={disabled}>Create as Private</button>
+          <button className='btn btn-red btn-round'
+                  onClick={this.submitForm}
+                  data-privacy='visible'
+                  disabled={disabled}>Create as Public</button>
+        </div>
+      )
+    }
   },
 
   renderCollectionForm: function() {
@@ -208,9 +234,9 @@ const CollectionModal = React.createClass ({
         isOpen={this.props.visible}>
         <div className='header'>
           <span className='title'>
-            { this.props.collection && this.props.collection.id ? 'Update Collection' : 'Create Collection'}
+            {this.updating() ? 'Update' : 'Create'} Collection
           </span>
-          <span onClick={this.props.close} className='close'>x</span>
+          <span onClick={this.close} className='close'>x</span>
         </div>
         {this.renderCollectionForm()}
       </Modal>
