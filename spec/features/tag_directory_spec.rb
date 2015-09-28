@@ -70,7 +70,7 @@ describe "Tag Directory", js: true do
     end
 
     it 'redirects you to the tags page' do
-      expect(page).to have_content 'Tagged In'
+      expect(page).to have_content 'TAGGED IN'
     end
   end
 
@@ -81,7 +81,8 @@ describe "Tag Directory", js: true do
     end
 
     it 'should not show a results total' do
-      expect(page).to_not have_content 'result(s) found'
+      expect(page).to_not have_content 'result found'
+      expect(page).to_not have_content 'results found'
     end
   end
 
@@ -101,7 +102,7 @@ describe "Tag Directory", js: true do
     end
 
     it 'shows the total results for that section' do
-      expect(page).to have_content '1 result(s) found'
+      expect(page).to have_content '1 result found'
     end
   end
 end

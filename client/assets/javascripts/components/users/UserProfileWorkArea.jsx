@@ -3,9 +3,12 @@ import _ from 'lodash';
 import RecentActivitySection from './RecentActivitySection';
 import UserTags from './UserTags';
 import UserBookmarks from './UserBookmarks';
+import CollectionsCollection from '../collections/CollectionsCollection';
+import { CollectionMixin } from '../collections/CollectionModal'
 
 const UserProfileWorkArea  = React.createClass({
   displayName: 'UserProfileWorkArea',
+  mixins: [ CollectionMixin ],
 
   contextTypes: {
     router: React.PropTypes.object,
@@ -22,7 +25,7 @@ const UserProfileWorkArea  = React.createClass({
 
   getActiveTab: function() {
     let activeTab = this.props.activeTab;
-    return _.include(['bookmarks', 'tags', 'reviews'], activeTab) ? activeTab : 'reviews';
+    return _.include(['bookmarks', 'tags', 'reviews', 'collections'], activeTab) ? activeTab : 'reviews';
   },
 
   isActiveTab: function(type) {
@@ -31,6 +34,21 @@ const UserProfileWorkArea  = React.createClass({
 
   getUserProfileHeader: function getUserProfileHeader() {
     return (<div />);
+  },
+
+  getCollectionsSection: function getRecentActivitySection() {
+    return (
+      <div
+        className={`my-collections-container work-area-section ${this.isActiveTab('collections') ? '' : 'hide'}`}
+        ref='collections' >
+        <div className='btn btn-round btn-red' onClick={this.showCollectionModal}>
+          Create Collection
+        </div>
+        <CollectionsCollection
+          collections={this.props.collections}
+          onEdit={this.showCollectionModalForEditing} />
+      </div>
+    );
   },
 
   getRecentActivitySection: function getRecentActivitySection() {
@@ -83,6 +101,10 @@ const UserProfileWorkArea  = React.createClass({
     this.onSelectSection(e, 'bookmarks')
   },
 
+  onSelectCollectionsSection: function onSelectCollectionsSection(e) {
+    this.onSelectSection(e, 'collections')
+  },
+
   render: function render() {
     return (
       <div id='work-area' className='row'>
@@ -99,12 +121,19 @@ const UserProfileWorkArea  = React.createClass({
             ref='link_bookmarks' onClick={this.onSelectBookmarksSection}>
             Bookmarks
           </a>
+          <a href='#collections' className={`sidebar-element collections ${this.isActiveTab('collections') ? 'active' : ''}`}
+            ref='link_collections' onClick={this.onSelectCollectionsSection}>
+            Collections
+          </a>
         </div>
         <div className='work-area-content col-xs-12 col-md-10' ref='work'>
           {this.getRecentActivitySection()}
           {this.getTagsSection()}
           {this.getBookmarksSection()}
+          {this.getCollectionsSection()}
         </div>
+
+        {this.renderCollectionModal()}
       </div>
     );
   },

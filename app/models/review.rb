@@ -36,10 +36,6 @@ class Review < ActiveRecord::Base
     created_at.strftime('%b %e, %Y')
   end
 
-  def tag_list
-    self.tags.map(&:name)
-  end
-
   def formatted_quality_review
     (quality_review.nil? or quality_review.empty?) ? "" : ApplicationController.helpers.simple_format(quality_review)
   end

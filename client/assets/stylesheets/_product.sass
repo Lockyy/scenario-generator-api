@@ -4,6 +4,10 @@
 .product
   padding: 0
 
+  &.collection
+    .content
+      height: 300px
+
   .content
     height: $box-height
     background: $light-grey
@@ -11,6 +15,23 @@
     border-top: 3px solid $red
     display: flex
     flex-direction: column-reverse
+
+    .top
+      display: flex
+      justify-content: space-between
+      align-items: center
+    .top, .product-link
+      font-size: 11px
+    .includes
+      font-size: 10px
+
+    .product-link, .product-link > *
+      display: inline
+    .product-link
+      a
+        text-decoration: underline
+      &.see-all a
+        color: $primary-red
 
     .data
       padding: 20px 25px 10px

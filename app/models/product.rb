@@ -12,6 +12,8 @@ class Product < ActiveRecord::Base
   has_many :links, through: :reviews
   has_many :tags, through: :reviews
   has_many :bookmarks
+  has_many :collection_products, dependent: :destroy
+  has_many :collections, through: :collection_products
 
   has_one :default_image, class_name: 'Attachment'
   belongs_to :user

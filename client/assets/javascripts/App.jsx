@@ -6,6 +6,7 @@ import NewReviewPage from './components/reviews/NewReviewPage';
 import CompanyProfilePage from './components/companies/CompanyProfilePage';
 import UserProfilePage from './components/users/UserProfilePage';
 import ProductPage from './components/products/ProductPage';
+import CollectionPage from './components/collections/CollectionPage';
 import TagPage from './components/tags/TagPage';
 import TagsPage from './components/tags/TagsPage';
 import SearchPage from './components/search/SearchPage';
@@ -52,6 +53,8 @@ $(function onLoad() {
                         <Route path="app/tags" component={TagsPage}>
                         </Route>
                         <Route path="app/tags/:letter" component={TagsPage}>
+                        </Route>
+                        <Route path="app/collections/:id" component={CollectionPage}>
                         </Route>
                     </Router>
                 ), document.getElementById('content'));

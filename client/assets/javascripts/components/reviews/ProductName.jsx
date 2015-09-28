@@ -28,6 +28,7 @@ const ProductName  = React.createClass({
   },
 
   _getTypeaheadProps: function _getTypeaheadProps() {
+    let _this = this
     return {
       name: 'products',
       displayKey: 'name',
@@ -42,7 +43,7 @@ const ProductName  = React.createClass({
         },
         suggestion: function(data) {
           let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
-          return `<p>${name}<span class='tt-help'>Review <i class="review-symbol"> -> </i></span></p>`
+          return `<p>${name}<span class='tt-help'>${_this.props.helpMessage || Review} <i class="review-symbol"> -> </i></span></p>`
         }
       }
     }
@@ -101,7 +102,7 @@ const ProductName  = React.createClass({
   render: function render() {
     return (
       <div className='form-group'>
-        <label id='product_name_label' htmlFor='product[name]'>{"Product's Name"}</label>
+        {this.props.hideLabel ? null : (<label id='product_name_label' htmlFor='product[name]'>{"Product's Name"}</label>)}
         <TypeAhead name='product[name]' value={this.props.value} className='form-control'
           id='product_name' placeholder='Type in the name of the product'
           bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
