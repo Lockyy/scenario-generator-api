@@ -85,7 +85,8 @@ Section.propTypes = {
 };
 
 Section.defaultProps = {
-  hasPagination: true
+  hasPagination: true,
+  rows: 2
 };
 
 export default Section;

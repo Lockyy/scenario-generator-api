@@ -113,7 +113,7 @@ BasedOnTagsSection.defaultProps = {
 
 BasedOnTagsSection.propTypes = {
   cols: React.PropTypes.number.isRequired,
-  items: React.PropTypes.array.isRequired,
+  items: React.PropTypes.object.isRequired,
   title: React.PropTypes.string.isRequired,
   itemsClass: React.PropTypes.string
 };
