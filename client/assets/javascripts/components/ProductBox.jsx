@@ -47,8 +47,8 @@ const ProductBox = React.createClass ({
               {this.getCustomizedDetail()}
             </div>
             <div className="header">
-              <h3 className='title'><a href={`/app/products/${this.props.slug}`}>{this.props.name}</a></h3>
-              <h4 className='company'><a href={`/app/companies/${company.slug}`} >{company.name}</a></h4>
+              <h3 className='title'><Link to={`/app/products/${this.props.slug}`}>{this.props.name}</Link></h3>
+              <h4 className='company'><Link to={`/app/companies/${company.slug}`} >{company.name}</Link></h4>
             </div>
 
             <div className='review'>
