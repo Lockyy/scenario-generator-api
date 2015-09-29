@@ -61,8 +61,8 @@ class RecentlyAddedSection extends React.Component {
       row.push(products.shift());
     }
 
-    return sectionRows.map(function mapRows(sectionRow) {
-      return (<SectionRow items={sectionRow}/>);
+    return sectionRows.map(function mapRows(sectionRow, index) {
+      return (<SectionRow key={`recently_added_section_row_${index}`} items={sectionRow}/>);
     });
   }
 
@@ -79,7 +79,10 @@ class RecentlyAddedSection extends React.Component {
     do {
       product = this.props.items[currentItem++];
 
-      products.push(<ProductBox size={this.getCurrentBoxSize(products, product)} {...product} />);
+      products.push(<ProductBox
+                      size={this.getCurrentBoxSize(products, product)}
+                      key={`recently_added_tags_product_box_${product.id}`}
+                      {...product} />);
 
       hasItems = this.props.items.length > currentItem;
       sumItems = _.sum(products, sumSizeFunc);

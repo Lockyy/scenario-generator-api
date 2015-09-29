@@ -62,8 +62,8 @@ class MostPopularSection extends React.Component {
       row.push(products.shift());
     }
 
-    return sectionRows.map(function mapRows(sectionRow) {
-      return (<SectionRow items={sectionRow}/>);
+    return sectionRows.map(function mapRows(sectionRow, index) {
+      return (<SectionRow key={`most_popular_row_${index}`} items={sectionRow}/>);
     });
   }
 
@@ -81,7 +81,10 @@ class MostPopularSection extends React.Component {
     do {
       product = this.props.items.products[currentItem++];
 
-      products.push(<ProductBox size={this.getCurrentBoxSize(products, product)} {...product} />);
+      products.push(<ProductBox
+                      key={`most_popular_product_box_${product.id}`}
+                      size={this.getCurrentBoxSize(products, product)}
+                      {...product} />);
 
       hasItems = this.props.items.products.length > currentItem;
       sumItems = _.sum(products, sumSizeFunc);
@@ -95,7 +98,7 @@ class MostPopularSection extends React.Component {
   fetchTags() {
     if (!this.props.items || !this.props.items.tags) return '';
 
-    return (<TagsBox title={'Popular tags'} tags={this.props.items.tags} />);
+    return (<TagsBox key={`most_popular_tags_box`} title={'Popular tags'} tags={this.props.items.tags} />);
   }
 
   fetchItems() {
