@@ -55,8 +55,11 @@ Rails.application.routes.draw do
 
   get 'long', to: 'site#long'
   get 'short', to: 'site#short'
-  get 'contact', to: 'site#contact'
-  get 'support', to: 'site#support'
+
+  get 'contact', to: 'support#contact'
+  get 'support', to: 'support#support'
+  post 'support', to: 'support#submit'
+  get 'submitted', to: 'support#submitted'
 
   get 'app', to: 'app#index'
   scope :app do
