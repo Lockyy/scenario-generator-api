@@ -43,7 +43,7 @@ const ProductName  = React.createClass({
         },
         suggestion: function(data) {
           let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
-          return `<p>${name}<span class='tt-help'>${_this.props.helpMessage || Review} <i class="review-symbol"> -> </i></span></p>`
+          return `<p>${name}<span class='tt-help'>${_this.props.helpMessage || 'Review'} <i class="review-symbol"> -> </i></span></p>`
         }
       }
     }
