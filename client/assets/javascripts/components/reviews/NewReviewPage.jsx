@@ -5,6 +5,7 @@ import  ProductFields from './ProductFields'
 import  ReviewFields from './ReviewFields'
 import  FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import  ReviewPageStore from '../../stores/ReviewPageStore'
+import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 
 const NewReviewPage  = React.createClass({
   displayName: 'NewReviewPage',
@@ -124,6 +125,9 @@ const NewReviewPage  = React.createClass({
     FluxReviewPageActions.submitReview(review,
       function(data) {
         _this.context.router.transitionTo(`/app/products/${data.product.id}`)
+        FluxNotificationsActions.showNotification({
+          type: 'review', subject: data.product
+        })
       },
       function(error) {
         console.error(error)
