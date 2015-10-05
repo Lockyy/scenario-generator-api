@@ -5,7 +5,7 @@
     <div class="col-xs-12">
       <div class="title"><%= @title %></div>
       <span class="text">Your message has been sent to</span>
-      <span class="email"><%= link_to 'fletcher@am.jll.com', 'mailto:fletcher@am.jll.com' %></span>
+      <div class="email"><%= link_to SUPPORT_EMAIL, "mailto:#{SUPPORT_EMAIL}" %></div>
       <div>You will be redirected in <span id='sec'>3</span> seconds.</div>
     </div>
   </div>
