@@ -21,6 +21,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 - Landing page now displays correct testimonials.
 - Add correct favicons.
 - Ensure all required fields on reviews page have error messages when left blank.
+- Hide welcome message on dashboard when a user starts a search.
 
 ####Bugfixes
 - Fix a number of issues that were generating console warnings related to interated components not having unique IDs.
