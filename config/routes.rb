@@ -116,5 +116,4 @@ Rails.application.routes.draw do
     get '*route', to: 'app#index'
   end
 
-  root 'site#long'
 end
