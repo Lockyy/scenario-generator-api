@@ -18,6 +18,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
   - Uses https://github.com/igorprado/react-notification-system module for displaying notifications.
 - Support/Contact form now correctly sends emails to Americas.TechnologyInnovation@am.jll.com
   - We now have a mandrill subaccount set up for sending emails. Can use this for sharing products later.
+- Logins now expire after 8 hours.
 
 ####Changes
 - Images on the dashboard are no longer stretched to their container, they now maintain their original aspect ratio and the rest of the container is filled with a blurred, expanded version of the image.
