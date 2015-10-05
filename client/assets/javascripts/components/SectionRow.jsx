@@ -15,7 +15,6 @@ SectionRow.defaultProps = {
 };
 
 SectionRow.propTypes = {
-  cols: React.PropTypes.number.isRequired,
   items: React.PropTypes.array
 };
 

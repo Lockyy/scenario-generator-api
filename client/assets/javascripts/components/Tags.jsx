@@ -61,7 +61,7 @@ const Tags = React.createClass({
       let tag = tags[i];
       let isSelected = _.includes(selectedTags, tag) ;
       let classes = "tag " + ( isSelected ? 'selected': '');
-      tagTags.push(<span className={classes} data-slug={tag.slug} onClick={ (e) => this.onClick(e) }>{tag.name}</span>);
+      tagTags.push(<span key={`tag_${i}`} className={classes} data-slug={tag.slug} onClick={ (e) => this.onClick(e) }>{tag.name}</span>);
     }
 
     return <div className={`tags ${this.getContainerName()}`}>{tagTags}</div>;

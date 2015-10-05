@@ -47,8 +47,8 @@ const ProductBox = React.createClass ({
               {this.getCustomizedDetail()}
             </div>
             <div className="header">
-              <h3 className='title'><a href={`/app/products/${this.props.slug}`}>{this.props.name}</a></h3>
-              <h4 className='company'><a href={`/app/companies/${company.slug}`} >{company.name}</a></h4>
+              <h3 className='title'><Link to={`/app/products/${this.props.slug}`}>{this.props.name}</Link></h3>
+              <h4 className='company'><Link to={`/app/companies/${company.slug}`} >{company.name}</Link></h4>
             </div>
 
             <div className='review'>
@@ -73,15 +73,13 @@ const ProductBox = React.createClass ({
 ProductBox.displayName = 'ProductBox';
 
 ProductBox.propTypes = {
-  id: React.PropTypes.string.isRequired,
+  id: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
   slug: React.PropTypes.string.isRequired,
-  author: React.PropTypes.string.isRequired,
   company: React.PropTypes.object.isRequired,
   created_at: React.PropTypes.string.isRequired,
   description: React.PropTypes.string.isRequired,
-  rating: React.PropTypes.string.isRequired,
+  rating: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
   size: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
-  title: React.PropTypes.string.isRequired,
   image: React.PropTypes.string,
   reviews: React.PropTypes.array
 };

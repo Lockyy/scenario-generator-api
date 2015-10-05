@@ -4,6 +4,7 @@ import { Link, Navigation } from 'react-router';
 import CollectionBox from './CollectionBox';
 import Modal from 'react-modal';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
+import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import ProductName from '../reviews/ProductName'
 import Results from '../search/Results'
 
@@ -123,6 +124,15 @@ const CollectionModal = React.createClass ({
 
     this.props.onSaveCollection(collection, function() {
       _this.close(_this)
+
+      FluxNotificationsActions.showNotification({
+        type: 'collection',
+        subject: {
+          id: collection.id,
+          type: 'Collection',
+          name: collection.title
+        }
+      })
     })
   },
 

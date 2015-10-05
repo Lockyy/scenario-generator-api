@@ -19,7 +19,10 @@ const CollectionBox = React.createClass ({
   },
 
   deleteCollection: function() {
-    FluxCollectionActions.deleteCollection(this.props.id)
+    FluxCollectionActions.deleteCollection({
+      id: this.props.id,
+      name: this.props.title
+    })
   },
 
   renderProductsList: function() {
