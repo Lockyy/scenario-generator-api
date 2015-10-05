@@ -3,16 +3,20 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
-### v1.1.0 [Unreleased]
+### v1.1.0 [QA]
 
 ####Features
+- Add collections. A user can create a group of products with a name and description.
+  - Collections appear on the user page collections tab.
+  - Collections can be private or public.
+  - If public, collections appear on the product's collections tab.
 - Add notifications system.
   - Notifications can be generated on either the frontend or backend.
     - Frontend notifications are not stored in the database and are purely alerts to tell the user that a save succeeded etc.
     - Notifications generated on the front end are created via FluxNotificationsActions.showNotification
     - Notifications generated on the back end are automatically fetched by the front end and displayed 3 at a time every 10 seconds.
   - Uses https://github.com/igorprado/react-notification-system module for displaying notifications.
-- Support/Contact form now correctly sends emails to fletcher@am.jll.com.
+- Support/Contact form now correctly sends emails to Americas.TechnologyInnovation@am.jll.com
   - We now have a mandrill subaccount set up for sending emails. Can use this for sharing products later.
 
 ####Changes
@@ -25,14 +29,6 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 ####Bugfixes
 - Fix a number of issues that were generating console warnings related to interated components not having unique IDs.
 - Ensure welcome message is hidden when the user leaves the dashboard.
-
-### v1.1.0 [QA]
-
-####Features
-- Add collections. A user can create a group of products with a name and description.
-  - Collections appear on the user page collections tab.
-  - Collections can be private or public.
-  - If public, collections appear on the product's collections tab.
 
 ### v1.0.0 [Live]
 
