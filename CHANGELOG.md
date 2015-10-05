@@ -12,6 +12,8 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
     - Notifications generated on the front end are created via FluxNotificationsActions.showNotification
     - Notifications generated on the back end are automatically fetched by the front end and displayed 3 at a time every 10 seconds.
   - Uses https://github.com/igorprado/react-notification-system module for displaying notifications.
+- Support/Contact form now correctly sends emails to fletcher@am.jll.com.
+  - We now have a mandrill subaccount set up for sending emails. Can use this for sharing products later.
 
 ####Changes
 - Images on the dashboard are no longer stretched to their container, they now maintain their original aspect ratio and the rest of the container is filled with a blurred, expanded version of the image.
