@@ -12,6 +12,7 @@ import TagsPage from './components/tags/TagsPage';
 import SearchPage from './components/search/SearchPage';
 import SearchBox from './components/header/SearchBox';
 import UserTags from './components/users/UserTags';
+import Notifications from './components/notifications/Notifications';
 import UserBookmarks from './components/users/UserBookmarks';
 import MyRecentActivity from './components/menu/MyRecentActivity';
 import FluxCurrentUserActions from './actions/FluxCurrentUserActions';
@@ -76,6 +77,10 @@ $(function onLoad() {
                 React.render((
                     <MyRecentActivity router={router} />
                 ), $('.my-recent-activity-container')[0]);
+
+                React.render((
+                    <Notifications router={router} />
+                ), $('#notifications')[0]);
             });
         })
     };

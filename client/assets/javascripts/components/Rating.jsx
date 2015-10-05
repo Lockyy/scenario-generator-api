@@ -88,13 +88,15 @@ const Rating = React.createClass({
     let checked = starValue == value;
     let marked = starValue <= value;
 
-    return (<div className='rating-group' id={`name_${starValue}`}>
-      <input  className='rating-item' type='radio' id={id} name={name} value={starValue}
-              disabled={!ratingEnabled} checked={checked} onChange={this.props.onChange}/>
-      <label  htmlFor={id} className={marked ? 'marked' : ''}
-              onMouseOver={this._onMouseOver} onMouseOut={this._onMouseOut}
-              onClick={this._onClick} ></label>
-    </div>);
+    return (
+      <div className='rating-group' key={`name_${starValue}`} id={`name_${starValue}`}>
+        <input  className='rating-item' type='radio' id={id} name={name} value={starValue}
+                disabled={!ratingEnabled} checked={checked} onChange={this.props.onChange}/>
+        <label  htmlFor={id} className={marked ? 'marked' : ''}
+                onMouseOver={this._onMouseOver} onMouseOut={this._onMouseOut}
+                onClick={this._onClick} ></label>
+      </div>
+    );
   },
 
   renderClearButton: function renderClearButton() {

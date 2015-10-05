@@ -5,6 +5,8 @@ class Product < ActiveRecord::Base
   friendly_id :name, use: :slugged
 
   belongs_to :company
+
+  has_one :notification, as: :notification_subject
   has_many :reviews
   has_many :custom_attachments, as: :attachable, source: :attachments, class_name: 'Attachment'
   has_many :attachments, through: :reviews, source: :attachments

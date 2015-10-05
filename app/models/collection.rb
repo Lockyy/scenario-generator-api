@@ -3,6 +3,8 @@ class Collection < ActiveRecord::Base
   enum privacy: [:hidden, :visible]
 
   belongs_to :user
+
+  has_one :notification, as: :notification_subject
   has_many :collection_products, dependent: :destroy
   has_many :products, through: :collection_products
 
@@ -41,6 +43,10 @@ class Collection < ActiveRecord::Base
   # or is owned by the given user
   def visible_to?(user)
     user == self.user || self.visible?
+  end
+
+  def name
+    title
   end
 
 end

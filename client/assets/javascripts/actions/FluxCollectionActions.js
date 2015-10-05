@@ -1,6 +1,7 @@
 import alt from '../FluxAlt';
 import _ from 'lodash';
 import CollectionAPI from '../utils/api/CollectionAPI';
+import FluxNotificationsActions from './FluxNotificationsActions'
 
 class FluxCollectionActions {
 
@@ -43,10 +44,18 @@ class FluxCollectionActions {
     );
   }
 
-  deleteCollection(id) {
-    CollectionAPI.deleteCollection(id,
+  deleteCollection(collection) {
+    CollectionAPI.deleteCollection(collection.id,
       (data) => {
-        this.actions.removeCollection(id);
+        this.actions.removeCollection(collection.id);
+        FluxNotificationsActions.showNotification({
+          type: 'delete',
+          subject: {
+            id: collection.id,
+            type: 'Collection',
+            name: collection.name
+          }
+        })
       },
       (error) => {
         this.actions.registerError(error);

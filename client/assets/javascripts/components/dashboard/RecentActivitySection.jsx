@@ -43,8 +43,8 @@ class RecentActivitySection extends React.Component {
       rowItems.push(activity.shift());
     }
 
-    return sectionRows.map(function mapRows(sectionRow) {
-      return (<SectionRow items={sectionRow}/>);
+    return sectionRows.map(function mapRows(sectionRow, index) {
+      return (<SectionRow key={`recent_activity_row_${index}`} items={sectionRow}/>);
     });
   }
 
@@ -66,8 +66,12 @@ class RecentActivitySection extends React.Component {
 
     do {
       item = this.props.items[currentItem++];
-      activity.push(<ReviewBox size={this.getCurrentBoxSize(activity, item)} {...item}
-        onFormatActivityType={this.formatActivityType} showReadMore={true} />);
+      activity.push(<ReviewBox
+                      size={this.getCurrentBoxSize(activity, item)}
+                      {...item}
+                      key={`recent_activity_review_box_${item.id}`}
+                      onFormatActivityType={this.formatActivityType}
+                      showReadMore={true} />);
 
       hasItems = this.props.items.length > currentItem;
       sumItems = activity.length;
