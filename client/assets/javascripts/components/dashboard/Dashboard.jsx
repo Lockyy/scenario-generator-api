@@ -35,6 +35,11 @@ const Dashboard = React.createClass({
     FluxDashboardActions.fetchData();
   },
 
+  componentWillUnmount: function() {
+    let welcomeMessage = $('#welcome-message');
+    welcomeMessage.stop().slideUp('slow');
+  },
+
   getRecentlyAddedData: function() {
     let recentlyAddedData = this.state.data[DashboardConstants.RECENTLY_ADDED_SECTION];
     return recentlyAddedData ? recentlyAddedData : {items: []};
