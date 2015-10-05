@@ -6,10 +6,6 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 ### v1.2.0 [Unreleased]
 
 ####Features
-- Add collections. A user can create a group of products with a name and description.
-  - Collections appear on the user page collections tab.
-  - Collections can be private or public.
-  - If public, collections appear on the product's collections tab.
 - Add notifications system.
   - Notifications can be generated on either the frontend or backend.
     - Frontend notifications are not stored in the database and are purely alerts to tell the user that a save succeeded etc.
@@ -35,7 +31,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
   - Collections can be private or public.
   - If public, collections appear on the product's collections tab.
 
-### v1.0.0
+### v1.0.0 [Live]
 
 ####Features
 - User login via Yammer
