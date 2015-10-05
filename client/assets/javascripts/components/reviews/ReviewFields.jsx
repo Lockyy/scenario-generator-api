@@ -38,7 +38,7 @@ const ReviewFields  = React.createClass({
       return (
         <fieldset className='review-fields'>
           <h1 className='title'>Your Review</h1>
-          <span className='description'>Rate, review or tag this product. You can even upload files or an image.</span>
+          <span className='description'>You must at least rate, review or tag this product. You can also upload files or an image.</span>
 
           <div className='form-group inline rating'>
             <label htmlFor='product[review[quality_score]]'>Rating</label>
@@ -70,11 +70,12 @@ const ReviewFields  = React.createClass({
           </div>
 
           <div className='form-group'>
-            <label htmlFor='product[review[price_review]]' className='sr-only'>Price Review</label>
+            <label htmlFor='product[review[price_review]]'>Price Review <span className='required'>*</span></label>
 
             <textarea type='text' className='form-control' placeholder='Add a brief description of the product’s pricing'
               name='product[review[price_review]]' rows='10' ref='product_review_price_review'
-              value={this.props.price_review} onChange={this.updatePriceReview} />
+              value={this.props.price_review} onChange={this.updatePriceReview} required={true} />
+            <span className="help-block with-errors"></span>
           </div>
 
           <div className='form-group review-tags'>
