@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Fletcher</title>
-  <%= stylesheet_link_tag    'site', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'site', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700' rel='stylesheet' type='text/css'>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body class="site <%= params[:action] %>">
+  <head>
+    <title>Fletcher</title>
+    <%= stylesheet_link_tag    'site', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'site', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <%= render 'layouts/favicon' %>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700' rel='stylesheet' type='text/css'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  </head>
 
-<%= render 'site/header' %>
+    <body class="site <%= params[:action] %>">
 
-<%= yield %>
+    <%= render 'site/header' %>
 
-</body>
+    <%= yield %>
+
+  </body>
 </html>
