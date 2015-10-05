@@ -10,13 +10,15 @@
   </div>
   <div class="row">
     <div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4">
-      <%= form_tag url: '#' do %>
-        <%= label_tag 'Full name' %>
-        <%= text_field 'contact', 'name', class: 'form-control' %>
-        <%= label_tag 'Department' %>
-        <%= text_field 'contact', 'department', class: 'form-control' %>
-        <%= label_tag 'Enquiry' %>
-        <%= text_area 'contact', 'enquiry', class: 'form-control' %>
+      <%= form_tag support_path do %>
+        <%= label_tag 'Full name*' %>
+        <%= text_field 'contact', 'name', class: 'form-control', required: true %>
+        <%= label_tag 'Department*' %>
+        <%= text_field 'contact', 'department', class: 'form-control', required: true %>
+        <%= label_tag 'Email Address*' %>
+        <%= text_field 'contact', 'email', class: 'form-control', required: true %>
+        <%= label_tag 'Enquiry*' %>
+        <%= text_area 'contact', 'enquiry', class: 'form-control', required: true %>
         <div class="row">
           <div class="col-xs-6 col-xs-offset-3">
             <%= button_tag 'Send', class: 'btn btn-red' %>
@@ -27,4 +29,4 @@
   </div>
 </div>
 
-<%= render 'footer' %>
+<%= render 'site/footer' %>

@@ -9,18 +9,6 @@ class SiteController < ApplicationController
   def short
   end
 
-  def contact
-    @title = 'Contact us'
-
-    render 'contact'
-  end
-
-  def support
-    @title = 'Employee Support'
-
-    render 'contact'
-  end
-
   private
 
   def app_redirect
