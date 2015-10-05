@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import { Lifecycle } from 'react-router'
 import DashboardStore from '../../stores/DashboardStore'
 import DashboardConstants from '../../utils/constants/DashboardConstants'
 import FluxDashboardActions from '../../actions/FluxDashboardActions'
@@ -12,39 +13,54 @@ function sumSizeFunc(item) {
   return item.props.size;
 }
 
-class Dashboard extends React.Component {
-  constructor() {
-    super();
+const Dashboard = React.createClass({
+  displayName: 'Dashboard',
 
-    this.state = {data: {}};
-  }
+  getDefaultProps: function() {
+    return {
+      data: {
+        items: []
+      }
+    }
+  },
 
-  componentDidMount() {
+  getInitialState: function() {
+    return {
+      data: {}
+    };
+  },
+
+  componentDidMount: function() {
     DashboardStore.listen(this.onChange.bind(this));
     FluxDashboardActions.fetchData();
-  }
+  },
 
-  getRecentlyAddedData() {
+  componentWillUnmount: function() {
+    let welcomeMessage = $('#welcome-message');
+    welcomeMessage.stop().slideUp('slow');
+  },
+
+  getRecentlyAddedData: function() {
     let recentlyAddedData = this.state.data[DashboardConstants.RECENTLY_ADDED_SECTION];
     return recentlyAddedData ? recentlyAddedData : {items: []};
-  }
+  },
 
-  getMostPopularData() {
+  getMostPopularData: function() {
     let mostPopularData = this.state.data[DashboardConstants.MOST_POPULAR_SECTION];
     return mostPopularData ? mostPopularData : {items: {products: [], tags: []}};
-  }
+  },
 
-  getRecentActivityData() {
+  getRecentActivityData: function() {
     let recentActivityData = this.state.data[DashboardConstants.RECENT_ACTIVITY_SECTION];
     return recentActivityData ? recentActivityData : {items: []};
-  }
+  },
 
-  getBasedOnTagsData() {
+  getBasedOnTagsData: function() {
     let basedOnTagsData = this.state.data[DashboardConstants.BASED_ON_TAGS_SECTION];
     return basedOnTagsData ? basedOnTagsData : {items: {}};
-  }
+  },
 
-  getCurrentIDs(sectionName) {
+  getCurrentIDs: function(sectionName) {
     let sectionsToExclude = [
       DashboardConstants.MOST_POPULAR_SECTION,
       DashboardConstants.RECENTLY_ADDED_SECTION,
@@ -71,18 +87,18 @@ class Dashboard extends React.Component {
       idsToExclude = _.union(idsToExclude, sectionIDs)
     }
     return idsToExclude
-  }
+  },
 
-  getSections() {
+  getSections: function() {
     return {
       recently_added: this.refs.recently_added,
       based_on_tags: this.refs.based_on_tags,
       most_popular: this.refs.most_popular,
       recent_activity: this.refs.recent_activity
     }
-  }
+  },
 
-  onChange(data) {
+  onChange: function(data) {
     this.setState(function(oldData) {
       return {
         // Merge the old data with the new data
@@ -104,13 +120,13 @@ class Dashboard extends React.Component {
         })
       };
     });
-  }
+  },
 
-  getSection(name) {
+  getSection: function(name) {
     return this.getSections()[name];
-  }
+  },
 
-  showMoreProducts(sectionName) {
+  showMoreProducts: function(sectionName) {
     let section = this.getSection(sectionName);
     let paginationParams = {};
 
@@ -127,9 +143,9 @@ class Dashboard extends React.Component {
         section.setState({rows: section.state.rows + 1});
       }
     })
-  }
+  },
 
-  render() {
+  render: function() {
 
     let basedOnTagsData = this.getBasedOnTagsData();
     let addMoreBasedOnTagsCb = this.showMoreProducts.bind(this, DashboardConstants.BASED_ON_TAGS_SECTION);
@@ -169,18 +185,6 @@ class Dashboard extends React.Component {
 
     </div>);
   }
-}
-
-Dashboard.displayName = 'Dashboard';
-
-Dashboard.defaultProps = {
-  data: {
-    items: []
-  }
-};
-
-Dashboard.propTypes = {
-  data: React.PropTypes.object.isRequired
-};
+});
 
 export default Dashboard;
