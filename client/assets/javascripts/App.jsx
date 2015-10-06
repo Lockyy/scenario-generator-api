@@ -31,7 +31,6 @@ $(function onLoad() {
 
             ga('create', 'UA-52961131-2', 'auto');
             let onRouterTransition = function() {
-                debugger
                 ga('send', 'pageview')
             }
             onRouterTransition()
