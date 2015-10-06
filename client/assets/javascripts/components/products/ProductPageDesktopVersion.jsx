@@ -74,15 +74,15 @@ const ProductPageDesktopVersion = React.createClass({
   renderBookmarkLink: function() {
     if(this.props.data.bookmarked) {
       return (
-        <a href="#unbookmark" onClick={this.props.onUnbookmark} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onUnbookmark} className='btn btn-grey btn-round'>
           Remove Bookmark
-        </a>
+        </div>
       )
     } else {
       return (
-        <a href="#bookmark" onClick={this.props.onBookmark} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onBookmark} className='btn btn-grey btn-round'>
           Bookmark
-        </a>
+        </div>
       )
     }
   },
@@ -90,12 +90,12 @@ const ProductPageDesktopVersion = React.createClass({
   renderTopButtons: function() {
     return (
       <div className='links'>
-        <a href={this.props.reviewButtonURL} className='btn btn-red btn-round review-link'>
+        <Link to={this.props.reviewButtonURL} className='btn btn-red btn-round review-link'>
           { this.props.reviewButtonText }
-        </a>
-        <a href='#share' onClick={this.props.onShare} className='btn btn-grey btn-round'>
+        </Link>
+        <div onClick={this.props.onShare} className='btn btn-grey btn-round'>
           Share
-        </a>
+        </div>
         {this.renderBookmarkLink()}
       </div>
     )

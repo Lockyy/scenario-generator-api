@@ -1,6 +1,7 @@
 import $ from 'jquery';
 import React from 'react';
 import _ from 'lodash';
+import ga from 'react-google-analytics';
 import Dashboard from './components/dashboard/Dashboard';
 import NewReviewPage from './components/reviews/NewReviewPage';
 import CompanyProfilePage from './components/companies/CompanyProfilePage';
@@ -20,15 +21,24 @@ import { Router, Route } from 'react-router';
 import { history } from 'react-router/lib/BrowserHistory';
 import UserAPI from './utils/api/UserAPI'
 
+let GAInitiailizer = ga.Initializer;
+
 $(function onLoad() {
     function render() {
         UserAPI.getCurrentUser(function(currentUser) {
 
             FluxCurrentUserActions.updateData(currentUser);
 
+            ga('create', 'UA-52961131-2', 'auto');
+            let onRouterTransition = function() {
+                debugger
+                ga('send', 'pageview')
+            }
+            onRouterTransition()
+
             React.withContext({'currentUser': currentUser}, function() {
                 let router = React.render((
-                    <Router history={history}>
+                    <Router history={history} onUpdate={onRouterTransition}>
                         <Route path="app" component={Dashboard}>
                         </Route>
                         <Route path="app/reviews/new" component={NewReviewPage}>
@@ -77,6 +87,10 @@ $(function onLoad() {
                 React.render((
                     <MyRecentActivity router={router} />
                 ), $('.my-recent-activity-container')[0]);
+
+                React.render((
+                    <GAInitiailizer/>
+                ), $('#analytics')[0]);
 
                 React.render((
                     <Notifications router={router} />
