@@ -18,6 +18,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
   - Uses https://github.com/igorprado/react-notification-system module for displaying notifications.
 - Support/Contact form now correctly sends emails to Americas.TechnologyInnovation@am.jll.com
   - We now have a mandrill subaccount set up for sending emails. Can use this for sharing products later.
+- Add google analytics to site and app
 - Logins now expire after 8 hours.
 
 ####Changes
