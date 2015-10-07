@@ -5,7 +5,8 @@ import  ProductFields from './ProductFields'
 import  ReviewFields from './ReviewFields'
 import  FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import  ReviewPageStore from '../../stores/ReviewPageStore'
-import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
+import  FluxNotificationsActions from '../../actions/FluxNotificationsActions'
+import  FluxAlertActions from '../../actions/FluxAlertActions'
 
 const NewReviewPage  = React.createClass({
   displayName: 'NewReviewPage',
@@ -136,9 +137,14 @@ const NewReviewPage  = React.createClass({
   },
 
   _onCancel: function _onCancel(e) {
-    if (!window.confirm('Are you sure you want to cancel?')) {
-      e.preventDefault()
-    }
+    let _this = this
+    FluxAlertActions.showAlert({
+      message: 'Cancel review?',
+      success: 'Yes, Cancel Review',
+      cancel:  'No, Continue Review',
+      successCallback: function() {_this.context.router.transitionTo('/app')},
+      cancelCallback: function() {},
+    })
   },
 
   _getActionsContent: function _getActionsContent() {
@@ -146,9 +152,7 @@ const NewReviewPage  = React.createClass({
 
     if (this.state.showDetails) {
       return (<div className='actions'>
-        <Link to={'/app'} onClick={this._onCancel}>
-          <button type='button' className='btn btn-default btn-round'>Cancel</button>
-        </Link>
+        <button type='button' className='btn btn-default btn-round' onClick={this._onCancel}>Cancel</button>
         <input type='submit' className='btn btn-default submit btn-round' value={submitText} />
       </div>);
     } else {
