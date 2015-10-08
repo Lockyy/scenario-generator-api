@@ -134,6 +134,7 @@ const UserProfileWorkArea  = React.createClass({
         </div>
 
         {this.renderCollectionModal()}
+        {this.renderCollectionShareModal()}
       </div>
     );
   },
