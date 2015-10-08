@@ -7,6 +7,8 @@ class Collection < ActiveRecord::Base
   has_one :notification, as: :notification_subject
   has_many :collection_products, dependent: :destroy
   has_many :products, through: :collection_products
+  has_many :collection_users, dependent: :destroy
+  has_many :sharees, through: :collection_users
 
   validates :title, presence: true
   validates :description, presence: true
@@ -20,6 +22,23 @@ class Collection < ActiveRecord::Base
   def self.create_with_params(params, user)
     collection = self.new(user: user)
     collection.update_with_params(params)
+  end
+
+  # This will remove any IDs that are not in the user_ids array.
+  def share(user_ids)
+    existing_user_ids = sharees.map(&:id)
+    new_ids = user_ids - existing_user_ids
+    removed_ids = existing_user_ids - user_ids
+    byebug
+    collection_users.where(user_id: removed_ids).destroy_all
+
+    new_ids.each do |id|
+      collection_users.create(user_id: id, shared_collection: self)
+      Notification.create(sender: user,
+                          user_id: user_id,
+                          notification_type: 'share',
+                          notification_subject: self)
+    end
   end
 
   def update_with_params(params)

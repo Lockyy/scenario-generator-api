@@ -44,4 +44,12 @@ class Api::CollectionsController < AppController
       format.json { render }
     end
   end
+
+  def share
+    Collection.find_by(id: params[:id], user: current_user).share(params[:users])
+
+    respond_to do |format|
+      format.json { render }
+    end
+  end
 end
