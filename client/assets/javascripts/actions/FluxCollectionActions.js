@@ -18,7 +18,12 @@ class FluxCollectionActions {
 
   shareCollection(id, users, resolve) {
     CollectionAPI.shareCollection(id, users,
-      resolve,
+      (data) => {
+        this.actions.updateData(data);
+        if(resolve) {
+          resolve();
+        }
+      },
       (error) => {
         this.actions.registerError(error);
       }

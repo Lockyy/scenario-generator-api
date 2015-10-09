@@ -42,7 +42,7 @@ Rails.application.routes.draw do
                                     :update, :destroy],
                             defaults: {format: 'json'} do
       member do
-        get 'share'
+        post 'share'
       end
     end
 

@@ -13,9 +13,8 @@ module.exports = {
   },
 
   shareCollection: function(id, users, resolve, reject) {
-    debugger
     let url = `/api/collections/${id}/share`;
-    return this.hitAPI(url, 'get', {users: users}, resolve, reject);
+    return this.hitAPI(url, 'post', {users: users}, resolve, reject);
   },
 
   updateCollection: function(id, data, resolve, reject) {
