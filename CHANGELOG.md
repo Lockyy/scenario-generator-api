@@ -10,6 +10,10 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
   - Collections appear on the user page collections tab.
   - Collections can be private or public.
   - If public, collections appear on the product's collections tab.
+    - Collection visibility can be changed via dropdown on collection box.
+  - After creation user is asked to share collection with other users.
+  - Shared, public, and owned collections visible on product/user/collection pages.
+- Add user search API endpoint for use with collection sharing. Will also be used for product sharing.
 - Add notifications system.
   - Notifications can be generated on either the frontend or backend.
     - Frontend notifications are not stored in the database and are purely alerts to tell the user that a save succeeded etc.
@@ -31,6 +35,8 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 ####Bugfixes
 - Fix a number of issues that were generating console warnings related to interated components not having unique IDs.
 - Ensure welcome message is hidden when the user leaves the dashboard.
+- Add icon for collections to sidebar on product and user page.
+- Remove horizontal scrollbar from collection creation window.
 
 ### v1.0.0 [Live]
 
