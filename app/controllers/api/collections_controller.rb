@@ -46,10 +46,15 @@ class Api::CollectionsController < AppController
   end
 
   def share
-    Collection.find_by(id: params[:id], user: current_user).share(params[:users])
+    @collection = Collection.find_by(id: params[:id], user: current_user)
 
-    respond_to do |format|
-      format.json { render }
+    if @collection && @collection.share(params[:users])
+      @collection.reload
+      respond_to do |format|
+        format.json { render }
+      end
+    else
+      render :status => :error
     end
   end
 end
