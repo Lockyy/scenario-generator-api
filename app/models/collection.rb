@@ -26,18 +26,16 @@ class Collection < ActiveRecord::Base
 
   # This will remove any IDs that are not in the user_ids array.
   def share(user_ids)
+    user_ids = [] if user_ids == nil
+
     existing_user_ids = sharees.map(&:id)
     new_ids = user_ids - existing_user_ids
     removed_ids = existing_user_ids - user_ids
-    byebug
+
     collection_users.where(user_id: removed_ids).destroy_all
 
     new_ids.each do |id|
       collection_users.create(user_id: id, shared_collection: self)
-      Notification.create(sender: user,
-                          user_id: user_id,
-                          notification_type: 'share',
-                          notification_subject: self)
     end
   end
 
