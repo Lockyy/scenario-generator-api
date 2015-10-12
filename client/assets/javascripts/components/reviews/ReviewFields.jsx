@@ -14,23 +14,47 @@ const ReviewFields  = React.createClass({
   displayName: 'ReviewFields',
 
   updateQualityScore: function updateQualityScore(e) {
-    ReviewPageReviewFieldsActions.updateQualityScore(e.target.value);
+    ReviewPageReviewFieldsActions.updateQualityScore(e.target.value,
+      { success: (() => this.triggerValidation(e)) } );
   },
 
   updateTitle: function updateTitle(e) {
-    ReviewPageReviewFieldsActions.updateTitle(e.target.value);
+    ReviewPageReviewFieldsActions.updateTitle(e.target.value,
+      { success: (() => this.triggerValidation(e)) } );
   },
 
   updateQualityReview: function updateQualityReview(e) {
-    ReviewPageReviewFieldsActions.updateQualityReview(e.target.value);
+    ReviewPageReviewFieldsActions.updateQualityReview(e.target.value,
+      { success: (() => this.triggerValidation(e)) } );
   },
 
   updatePriceScore: function updatePriceScore(e) {
-    ReviewPageReviewFieldsActions.updatePriceScore(e.target.value);
+    ReviewPageReviewFieldsActions.updatePriceScore(e.target.value,
+      { success: (() => this.triggerValidation(e)) } );
   },
 
   updatePriceReview: function updatePriceReview(e) {
-    ReviewPageReviewFieldsActions.updatePriceReview(e.target.value);
+    ReviewPageReviewFieldsActions.updatePriceReview(e.target.value,
+      { success: (() => this.triggerValidation(e)) } );
+  },
+
+  triggerValidation: function triggerValidation(e) {
+    let target = $(e.target)
+    // Set timeout so validation runs after react.js refresh.
+    setTimeout(function() {
+      // Run validation
+      let validator = target.parents('.form.review.new').validator('validate');
+      // Clear errors from fields after the current one since validation should only
+      // appear on fields above the one clicked.
+      target.parents('.form-group').nextAll().children('.help-block.with-errors').empty();
+      let hasErrors = validator.has('.has-error').length;
+      // If there are any errors tell the user to go fill out the correct fields.
+      if (hasErrors) {
+        validator.find('.button-errors').html('Please fill out required fields.')
+      } else {
+        validator.find('.button-errors').html('')
+      }
+    }, 100);
   },
 
   _getContent: function _getContent() {
@@ -44,7 +68,7 @@ const ReviewFields  = React.createClass({
             <label htmlFor='product[review[quality_score]]'>Rating</label>
             <Rating name='product[review[quality_score]]' ratingEnabled={true} ref='product_review_quality_score'
               value={this.props.quality_score} onChange={this.updateQualityScore} containerClass='quality_score'
-              showScoreText={true} />
+              showScoreText={true} onBlur={this.triggerValidation} />
           </div>
 
           <QualityReview ref='quality_review' title={this.props.title} onChangeTitle={this.updateTitle}
@@ -74,7 +98,7 @@ const ReviewFields  = React.createClass({
 
             <textarea type='text' className='form-control' placeholder='Add a brief description of the product’s pricing'
               name='product[review[price_review]]' rows='10' ref='product_review_price_review'
-              value={this.props.price_review} onChange={this.updatePriceReview} required={true} />
+              value={this.props.price_review} onChange={this.updatePriceReview} required={true} onBlur={this.triggerValidation} />
             <span className="help-block with-errors"></span>
           </div>
 

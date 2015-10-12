@@ -151,10 +151,16 @@ const NewReviewPage  = React.createClass({
     let submitText = `${this.state.mode} Review`;
 
     if (this.state.showDetails) {
-      return (<div className='actions'>
-        <button type='button' className='btn btn-default btn-round' onClick={this._onCancel}>Cancel</button>
-        <input type='submit' className='btn btn-default submit btn-round' value={submitText} />
-      </div>);
+      return (
+        <div>
+          <div className='button-errors help-block'>
+          </div>
+          <div className='actions'>
+            <button type='button' className='btn btn-default btn-round' onClick={this._onCancel}>Cancel</button>
+            <input type='submit' className='btn btn-default submit btn-round' value={submitText} />
+          </div>
+        </div>
+      );
     } else {
       return (<div />);
     }
