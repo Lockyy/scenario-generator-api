@@ -27,6 +27,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 - Landing page now displays correct testimonials.
 - Add correct favicons.
 - Ensure all required fields on reviews page have error messages when left blank.
+- Field validation now occurs on new review page for fields preceeding the one clicked by the user. Errors also now appear at the end of the form.
 
 ####Bugfixes
 - Fix a number of issues that were generating console warnings related to interated components not having unique IDs.
