@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import Rating from '../Rating';
 import SearchConstants from '../../utils/constants/SearchConstants';
 import Dropdown from '../Dropdown';
+import AutoFitPicture from '../AutoFitPicture';
 
 const Results = React.createClass ({
 
@@ -26,9 +27,7 @@ const Results = React.createClass ({
           <div className='col-xs-12'>
             {
               _.isEmpty(result.image) ? '' : (
-                <div className='picture'>
-                  <img href={result.image} className='picture' />
-                </div>
+                <AutoFitPicture src={result.image} containerClass='picture'/>
               )
             }
             <div className='name'>
@@ -52,9 +51,7 @@ const Results = React.createClass ({
   renderImage: function(result) {
     if(this.showImageForProduct(result)) {
       return (
-        <div className='image-container col-xs-5'>
-          <img src={result.image} />
-        </div>
+        <AutoFitPicture src={result.image} containerClass='image-container col-xs-5'/>
       )
     }
   },
