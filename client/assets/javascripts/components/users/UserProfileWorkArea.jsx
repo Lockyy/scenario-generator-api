@@ -46,7 +46,8 @@ const UserProfileWorkArea  = React.createClass({
         </div>
         <CollectionsCollection
           collections={this.props.collections}
-          onEdit={this.showCollectionModalForEditing} />
+          onEdit={this.showCollectionModalForEditing}
+          onShare={this.showCollectionShareModalForEditing} />
       </div>
     );
   },
@@ -134,6 +135,7 @@ const UserProfileWorkArea  = React.createClass({
         </div>
 
         {this.renderCollectionModal()}
+        {this.renderCollectionShareModal()}
       </div>
     );
   },

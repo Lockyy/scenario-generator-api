@@ -3,10 +3,12 @@ import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import CollectionBox from './CollectionBox';
 import Modal from 'react-modal';
+import FluxAlertActions from '../../actions/FluxAlertActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import ProductName from '../reviews/ProductName'
 import Results from '../search/Results'
+import { CollectionShareMixin } from './CollectionShareModal'
 
 var appElement = document.getElementById('content');
 
@@ -14,6 +16,8 @@ Modal.setAppElement(appElement);
 Modal.injectCSS();
 
 const CollectionMixin = {
+  mixins: [ CollectionShareMixin ],
+
   renderCollectionModal: function() {
     return (
       <CollectionModal
@@ -43,10 +47,23 @@ const CollectionMixin = {
   },
 
   onSaveCollection: function(collection, resolve) {
+    let _this = this;
     if(collection.id) {
       FluxCollectionActions.updateCollection(collection.id, collection, resolve)
     } else {
-      FluxCollectionActions.createCollection(collection, resolve)
+      FluxCollectionActions.createCollection(collection, function(collection) {
+        resolve();
+
+        FluxAlertActions.showAlert({
+          title: 'Your list was successfully created!',
+          message: 'You can privately share this List with other users in Fletcher, or make it available to everyone by making it public.',
+          success: 'Share',
+          cancel: 'Not now',
+          successCallback: function() {
+            _this.showCollectionShareModalForEditing(collection)
+          }
+        })
+      })
     }
   }
 };
@@ -204,7 +221,7 @@ const CollectionModal = React.createClass ({
         <div className='buttons'>
           <button className='btn btn-red btn-round'
                   onClick={this.submitForm}
-                  data-privacy='hidden'
+                  data-privacy={this.state.privacy}
                   disabled={disabled}>Update</button>
         </div>
       )
@@ -214,11 +231,7 @@ const CollectionModal = React.createClass ({
           <button className='btn btn-red btn-round'
                   onClick={this.submitForm}
                   data-privacy='hidden'
-                  disabled={disabled}>Create as Private</button>
-          <button className='btn btn-red btn-round'
-                  onClick={this.submitForm}
-                  data-privacy='visible'
-                  disabled={disabled}>Create as Public</button>
+                  disabled={disabled}>Create list</button>
         </div>
       )
     }

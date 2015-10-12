@@ -14,6 +14,9 @@ class User < ActiveRecord::Base
   has_many :products
   has_many :collections, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  has_many :collection_users, dependent: :destroy
+  has_many :shared_collections, through: :collection_users
+
   has_and_belongs_to_many :tags
 
   scope :with_oauth, ->(provider, uid) do

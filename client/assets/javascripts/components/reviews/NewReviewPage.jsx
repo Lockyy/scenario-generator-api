@@ -139,7 +139,7 @@ const NewReviewPage  = React.createClass({
   _onCancel: function _onCancel(e) {
     let _this = this
     FluxAlertActions.showAlert({
-      message: 'Cancel review?',
+      title: 'Cancel review?',
       success: 'Yes, Cancel Review',
       cancel:  'No, Continue Review',
       successCallback: function() {_this.context.router.transitionTo('/app')},
@@ -151,10 +151,16 @@ const NewReviewPage  = React.createClass({
     let submitText = `${this.state.mode} Review`;
 
     if (this.state.showDetails) {
-      return (<div className='actions'>
-        <button type='button' className='btn btn-default btn-round' onClick={this._onCancel}>Cancel</button>
-        <input type='submit' className='btn btn-default submit btn-round' value={submitText} />
-      </div>);
+      return (
+        <div>
+          <div className='button-errors help-block'>
+          </div>
+          <div className='actions'>
+            <button type='button' className='btn btn-default btn-round' onClick={this._onCancel}>Cancel</button>
+            <input type='submit' className='btn btn-default submit btn-round' value={submitText} />
+          </div>
+        </div>
+      );
     } else {
       return (<div />);
     }

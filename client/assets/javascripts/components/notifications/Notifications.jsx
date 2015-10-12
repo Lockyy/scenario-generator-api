@@ -77,6 +77,9 @@ const Notifications = React.createClass({
       case 'share':
         return `${notification.sender.name} has shared a ${notification.subject.type} with you`
         break;
+      case 'sent-share':
+        return `You have shared ${notification.subject.name}`
+        break;
       case 'review':
         return `Your review for ${notification.subject.name} has been saved`
         break;

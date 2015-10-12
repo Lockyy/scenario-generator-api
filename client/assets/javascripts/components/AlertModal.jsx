@@ -14,7 +14,7 @@ Modal.injectCSS();
 // Use it like this:
 //
 //  FluxAlertActions.showAlert({
-//    message: 'Cancel review?',
+//    title: 'Cancel review?',
 //    success: 'Yes, Cancel Review',
 //    cancel:  'No, Continue Review',
 //    successCallback: function() {_this.context.router.transitionTo('/app')},
@@ -28,7 +28,7 @@ const AlertModal = React.createClass({
   getInitialState: function() {
     return {
       data: {
-        message: 'This is an alert',
+        title: 'This is an alert',
         success: 'Success',
         cancel: 'Cancel'
       },
@@ -59,16 +59,26 @@ const AlertModal = React.createClass({
   },
 
   cancelButton: function() {
-    this.state.data.cancelCallback();
+    if(this.state.data.cancelCallback) {
+      this.state.data.cancelCallback();
+    }
+
     this.setState(this.getInitialState())
+  },
+
+  showCancelButton: function() {
+    if(this.state.data.cancelCallback || this.state.data.cancel) {
+      return true
+    }
+    return false
   },
 
   renderButtons: function() {
     return (
       <div className='alertButtons'>
-        {this.state.data.cancelCallback  ? (<button onClick={this.cancelButton} className='btn btn-round btn-grey'>
-                                              {this.state.data.cancel}
-                                            </button> ) : null }
+        {this.showCancelButton() ? (<button onClick={this.cancelButton} className='btn btn-round btn-grey'>
+                                      {this.state.data.cancel}
+                                    </button> ) : null }
         <button onClick={this.successButton} className='btn btn-round btn-red'>
           {this.state.data.success}
         </button>
@@ -81,8 +91,11 @@ const AlertModal = React.createClass({
       <Modal isOpen={this.state.modalIsOpen}>
         <div className='header'>
           <span className='title'>
-            {this.state.data.message}
+            {this.state.data.title}
           </span>
+        </div>
+        <div className='message'>
+          {this.state.data.message}
         </div>
         {this.renderButtons()}
       </Modal>

@@ -12,6 +12,11 @@ module.exports = {
     return this.hitAPI(url, 'get', {}, resolve, reject);
   },
 
+  shareCollection: function(id, users, resolve, reject) {
+    let url = `/api/collections/${id}/share`;
+    return this.hitAPI(url, 'post', {users: users}, resolve, reject);
+  },
+
   updateCollection: function(id, data, resolve, reject) {
     let url = `/api/collections/${id}`;
     return this.hitAPI(url, 'patch', {collection: data}, resolve, reject);

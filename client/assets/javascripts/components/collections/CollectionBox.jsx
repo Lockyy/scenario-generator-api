@@ -38,7 +38,7 @@ const CollectionBox = React.createClass ({
       <p className='includes'>
         INCLUDES: { products }
         <span className='product-link see-all'>
-          <Link to={`/app/collection/${this.props.id}`}>
+          <Link to={`/app/collections/${this.props.id}`}>
             see all
           </Link>
         </span>
@@ -60,11 +60,15 @@ const CollectionBox = React.createClass ({
   renderUserFooter: function() {
     return (
       <div className='footer'>
-        <div  className='btn btn-red btn-round'
+        <div  className='btn btn-red-inverted btn-round'
               onClick={() => this.props.onEdit(this.props)}>
           Edit
         </div>
-        <div  className='btn btn-red btn-round'
+        <div  className='btn btn-red-inverted btn-round'
+              onClick={() => this.props.onShare(this.props)}>
+          Share
+        </div>
+        <div  className='btn btn-red-inverted btn-round'
               onClick={this.deleteCollection}>
           Delete
         </div>
@@ -73,7 +77,7 @@ const CollectionBox = React.createClass ({
   },
 
   renderFooter: function() {
-    if(this.ownedByUser()) {
+    if(this.ownedByUser() && this.props.onEdit && this.props.onShare) {
       return this.renderUserFooter()
     } else {
       return this.renderOtherFooter()
@@ -110,7 +114,6 @@ const CollectionBox = React.createClass ({
 
   render: function() {
     let description = TextHelper.truncate(this.props.description, 280);
-
     return (
       <div className='col-xs-12 box-2 no-pic-box product collection'>
         <div className='content'>
