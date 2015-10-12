@@ -19,6 +19,13 @@ class AppController < ApplicationController
 
     store_location_for(:user, request.env['PATH_INFO']) if request.env['PATH_INFO'].match('/app')
 
+    puts "DEBUGGING OUTPUT"
+    puts "authenticate!"
+    puts "@auth_token"
+    puts @auth_token
+    puts "@user"
+    puts @user
+
     redirect_to short_path if @auth_token.nil? || @user.nil?
   end
 
