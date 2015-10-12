@@ -92,6 +92,29 @@ const Results = React.createClass ({
     )
   },
 
+  renderUser: function(result) {
+    if(result) {
+      return (
+        <div className='result user row'>
+          <div className='image-container col-xs-2'>
+            <div className='image' style={{backgroundImage: `url(${result.avatar_url})`}}>
+            </div>
+          </div>
+          <div className='col-xs-7'>
+            <div className='name'>
+              { result.name }
+            </div>
+          </div>
+          <div className='col-xs-2'>
+            <div className='remove-button' onClick={() => this.props.onRemove(result.id)}>
+              Remove
+            </div>
+          </div>
+        </div>
+      )
+    }
+  },
+
   renderCollectionProduct: function(result) {
     return (
       <div className='result collection-product'>
@@ -120,6 +143,9 @@ const Results = React.createClass ({
         break;
       case 'collection-product':
         return this.renderCollectionProduct
+        break;
+      case 'users':
+        return this.renderUser
         break;
     }
   },

@@ -16,6 +16,20 @@ class FluxCollectionActions {
     );
   }
 
+  shareCollection(id, users, resolve) {
+    CollectionAPI.shareCollection(id, users,
+      (data) => {
+        this.actions.updateData(data);
+        if(resolve) {
+          resolve();
+        }
+      },
+      (error) => {
+        this.actions.registerError(error);
+      }
+    );
+  }
+
   updateCollection(id, data, resolve) {
     CollectionAPI.updateCollection(id, data,
       (data) => {
@@ -35,7 +49,7 @@ class FluxCollectionActions {
       (data) => {
         this.actions.addCollection(data);
         if(resolve) {
-          resolve();
+          resolve(data);
         }
       },
       (error) => {

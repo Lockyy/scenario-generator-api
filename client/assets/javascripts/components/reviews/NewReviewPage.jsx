@@ -139,7 +139,7 @@ const NewReviewPage  = React.createClass({
   _onCancel: function _onCancel(e) {
     let _this = this
     FluxAlertActions.showAlert({
-      message: 'Cancel review?',
+      title: 'Cancel review?',
       success: 'Yes, Cancel Review',
       cancel:  'No, Continue Review',
       successCallback: function() {_this.context.router.transitionTo('/app')},

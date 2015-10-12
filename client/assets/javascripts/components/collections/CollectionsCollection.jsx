@@ -14,6 +14,7 @@ const CollectionsCollection = React.createClass ({
         {_.map(this.props.collections, function(collection) {
           return <CollectionBox
                     onEdit={_this.props.onEdit}
+                    onShare={_this.props.onShare}
                     {...collection} />
         })}
       </div>

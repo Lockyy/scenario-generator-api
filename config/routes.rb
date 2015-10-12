@@ -40,7 +40,11 @@ Rails.application.routes.draw do
     ###############
     resources :collections, only: [ :user, :create, :show,
                                     :update, :destroy],
-                            defaults: {format: 'json'}
+                            defaults: {format: 'json'} do
+      member do
+        post 'share'
+      end
+    end
 
     ###########
     # Reviews #
@@ -73,6 +77,7 @@ Rails.application.routes.draw do
     # Search #
     ##########
     get 'search', to: 'search#index', as: 'search', defaults: {format: :json}
+    get 'search/users', to: 'search#users', as: 'user_search', defaults: {format: 'json'}
 
     ########
     # User #

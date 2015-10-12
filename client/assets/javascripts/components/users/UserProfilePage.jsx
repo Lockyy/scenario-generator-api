@@ -85,8 +85,8 @@ const UserProfilePage  = React.createClass({
     let page = user.id == this.context.currentUser.id ?
       <UserProfileWorkArea sorting={this.state.sorting} activeTab={activeTab}
         onChangeSorting={this.onChangeReviewsSorting} onShowMore={this.onShowMoreReviews} {...user} /> :
-      <UserProfileRecentActivity sorting={this.state.sorting} onShowMore={this.onShowMoreReviews}
-        onChangeSorting={this.onChangeReviewsSorting} {...user}/>
+      <UserProfileRecentActivity sorting={this.state.sorting} activeTab={activeTab}
+        onShowMore={this.onShowMoreReviews} onChangeSorting={this.onChangeReviewsSorting} {...user}/>
 
     return (
       <div className='user profile show'>
