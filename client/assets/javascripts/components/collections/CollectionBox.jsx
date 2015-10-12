@@ -38,7 +38,7 @@ const CollectionBox = React.createClass ({
       <p className='includes'>
         INCLUDES: { products }
         <span className='product-link see-all'>
-          <Link to={`/app/collection/${this.props.id}`}>
+          <Link to={`/app/collections/${this.props.id}`}>
             see all
           </Link>
         </span>

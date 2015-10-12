@@ -41,14 +41,14 @@ AutoFitPicture.displayName = 'AutoFitPicture';
 AutoFitPicture.defaultProps = {
   backgroundContainerStyle: {
     overflow: 'hidden',
-    backgroundSize: '200%',
+    backgroundSize: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
-    '-webkit-filter': 'blur(5px)',
-    '-moz-filter': 'blur(5px)',
-    '-o-filter': 'blur(5px)',
-    '-ms-filter': 'blur(5px)',
-    'filter': 'blur(5px)',
+    '-webkit-filter': 'blur(7px)',
+    '-moz-filter': 'blur(7px)',
+    '-o-filter': 'blur(7px)',
+    '-ms-filter': 'blur(7px)',
+    'filter': 'blur(7px)',
     width: '100%',
     height: '100%'
   },
