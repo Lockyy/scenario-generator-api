@@ -68,24 +68,49 @@ class ReviewPageReviewFieldsActions {
     }
   }
 
-  updateQualityScore(score) {
+  updateQualityScore(score, callbacks) {
+    callbacks = callbacks || {};
     this.dispatch(score);
+
+    if (_.isFunction(callbacks.success)) {
+      callbacks.success(score)
+    }
   }
 
-  updatePriceScore(score) {
+  updatePriceScore(score, callbacks) {
+    callbacks = callbacks || {};
     this.dispatch(score);
+
+    if (_.isFunction(callbacks.success)) {
+      callbacks.success(score)
+    }
   }
 
-  updateTitle(title) {
+  updateTitle(title, callbacks) {
+    callbacks = callbacks || {};
     this.dispatch(title);
+
+    if (_.isFunction(callbacks.success)) {
+      callbacks.success(title)
+    }
   }
 
-  updateQualityReview(qualityReview) {
+  updateQualityReview(qualityReview, callbacks) {
+    callbacks = callbacks || {};
     this.dispatch(qualityReview);
+
+    if (_.isFunction(callbacks.success)) {
+      callbacks.success(qualityReview)
+    }
   }
 
-  updatePriceReview(priceReview) {
+  updatePriceReview(priceReview, callbacks) {
+    callbacks = callbacks || {};
     this.dispatch(priceReview);
+
+    if (_.isFunction(callbacks.success)) {
+      callbacks.success(priceReview)
+    }
   }
 }
 

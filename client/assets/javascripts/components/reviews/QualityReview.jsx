@@ -46,13 +46,18 @@ const QualityReview  = React.createClass({
         <label htmlFor='product[review[quality_review]]'>Review <span className='required'>*</span></label>
 
         <div className='fields_container' ref='fields_container'>
-          <input type='text' className='form-control' placeholder='Title' name='product[review[title]]'
-            ref='product_review_title' value={this.props.title} required={true}
-            onFocus={this._onFocus} onBlur={this._onBlur} onChange={this._onChangeTitle} />
-          <textarea type='text' className='form-control required' placeholder='Say something' name='product[review[quality_review]]'
-            rows='10' ref='product_review_quality_review' value={this.props.quality_review} required={true}
-            onFocus={this._onFocus} onBlur={this._onBlur} onChange={this._onChangeReview} />
-          <span className="help-block with-errors"></span>
+          <div className='form-group'>
+            <span className="help-block with-errors"></span>
+            <input type='text' className='form-control' placeholder='Title' name='product[review[title]]'
+              ref='product_review_title' value={this.props.title} required={true}
+              onFocus={this._onFocus} onBlur={this._onBlur} onChange={this._onChangeTitle} />
+          </div>
+          <div className='form-group'>
+            <textarea type='text' className='form-control required' placeholder='Say something' name='product[review[quality_review]]'
+              rows='10' ref='product_review_quality_review' value={this.props.quality_review} required={true}
+              onFocus={this._onFocus} onBlur={this._onBlur} onChange={this._onChangeReview} />
+            <span className="help-block with-errors"></span>
+          </div>
         </div>
       </div>
     );
