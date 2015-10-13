@@ -6,6 +6,8 @@ class CollectionUser < ActiveRecord::Base
   after_create :create_notification
   after_create :send_email
 
+  validates_uniqueness_of :collection_id, :scope => :user_id
+
   def create_notification
     Notification.create(sender: shared_collection.user,
                         user: sharee,
