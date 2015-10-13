@@ -50,7 +50,8 @@ AutoFitPicture.defaultProps = {
     '-ms-filter': 'blur(7px)',
     'filter': 'blur(7px)',
     width: '100%',
-    height: '100%'
+    height: '100%',
+    opacity: '0.5'
   },
 
   containerStyle: {
