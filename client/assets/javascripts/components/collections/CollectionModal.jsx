@@ -56,8 +56,8 @@ const CollectionMixin = {
         resolve();
 
         FluxAlertActions.showAlert({
-          title: 'Your list was successfully created!',
-          message: 'You can privately share this List with other users in Fletcher, or make it available to everyone by making it public.',
+          title: 'Your Collection was successfully created!',
+          message: 'You can privately share this Collection with other users in Fletcher, or make it available to everyone by making it public.',
           success: 'Share',
           cancel: 'Not now',
           successCallback: function() {
@@ -239,7 +239,7 @@ const CollectionModal = React.createClass ({
           <button className='btn btn-red btn-round'
                   onClick={this.submitForm}
                   data-privacy='hidden'
-                  disabled={disabled}>Create list</button>
+                  disabled={disabled}>Create Collection</button>
         </div>
       )
     }

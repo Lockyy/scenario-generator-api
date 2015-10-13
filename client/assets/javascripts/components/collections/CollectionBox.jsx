@@ -99,7 +99,7 @@ const CollectionBox = React.createClass ({
       return (
         <div className='top'>
           <span className='created_at'>
-            My List, {timeago(this.props.created_at)}
+            My Collection, {timeago(this.props.created_at)}
           </span>
           <Dropdown
             onClick={this.changePrivacySetting}
