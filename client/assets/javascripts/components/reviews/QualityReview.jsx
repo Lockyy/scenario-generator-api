@@ -43,20 +43,18 @@ const QualityReview  = React.createClass({
     return (
       <div className='form-group quality-review'>
         <label htmlFor='product[review[title]]' className='sr-only'>Title</label>
-        <label htmlFor='product[review[quality_review]]'>Review <span className='required'>*</span></label>
+        <label htmlFor='product[review[quality_review]]'>Review</label>
 
         <div className='fields_container' ref='fields_container'>
           <div className='form-group'>
-            <span className="help-block with-errors"></span>
             <input type='text' className='form-control' placeholder='Title' name='product[review[title]]'
-              ref='product_review_title' value={this.props.title} required={true}
+              ref='product_review_title' value={this.props.title}
               onFocus={this._onFocus} onBlur={this._onBlur} onChange={this._onChangeTitle} />
           </div>
           <div className='form-group'>
             <textarea type='text' className='form-control required' placeholder='Say something' name='product[review[quality_review]]'
-              rows='10' ref='product_review_quality_review' value={this.props.quality_review} required={true}
+              rows='10' ref='product_review_quality_review' value={this.props.quality_review}
               onFocus={this._onFocus} onBlur={this._onBlur} onChange={this._onChangeReview} />
-            <span className="help-block with-errors"></span>
           </div>
         </div>
       </div>
