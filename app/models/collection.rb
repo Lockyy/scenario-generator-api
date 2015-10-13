@@ -20,7 +20,7 @@ class Collection < ActiveRecord::Base
     owned_collections = user.collections
     shared_collections = user.shared_collections
 
-    public_collections + owned_collections + shared_collections
+    (public_collections + owned_collections + shared_collections).uniq
   end
 
   def self.create_with_params(params, user)
