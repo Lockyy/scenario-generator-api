@@ -35,6 +35,7 @@ const CollectionMixin = {
 
   closeCollectionModal: function() {
     this.setState({showCollectionModal: false})
+    this.refs.collectionModal.clearCollection()
   },
 
   showCollectionModal: function() {
@@ -73,25 +74,32 @@ const CollectionModal = React.createClass ({
 
   getInitialState: function() {
     return {
-      title: '',
-      description: '',
-      privacy: 'hidden',
-      products: []
+      collection: {
+        title: '',
+        description: '',
+        privacy: 'hidden',
+        products: []
+      }
     }
   },
 
   setCollection: function(collection) {
     this.setState({
-      id: collection.id,
-      title: collection.title,
-      description: collection.description,
-      privacy: collection.privacy,
-      products: collection.products
+      collection: {
+        id: collection.id,
+        title: collection.title,
+        description: collection.description,
+        privacy: collection.privacy,
+        products: collection.products
+      }
     })
   },
 
-  close: function() {
+  clearCollection: function() {
     this.setState(this.getInitialState());
+  },
+
+  close: function() {
     this.props.close()
   },
 
@@ -104,24 +112,24 @@ const CollectionModal = React.createClass ({
   },
 
   getProductIDs: function() {
-    return _.map(this.state.products, function(product) {
+    return _.map(this.state.collection.products, function(product) {
       return product.id
     })
   },
 
   removeProduct: function(product_id) {
-    let products = this.state.products.filter(function(product) {
+    let products = this.state.collection.products.filter(function(product) {
         return product.id !== product_id;
     });
 
-    this.setState({product_name: null, products: products})
+    this.setState({product_name: null, collection: {products: products}})
   },
 
   addProduct: function(product, selected) {
     if(selected) {
-      let newProducts = this.state.products
+      let newProducts = this.state.collection.products
       newProducts.push(product)
-      this.setState({product_name: null, products: newProducts})
+      this.setState({product_name: null, collection: {products: newProducts}})
     } else {
       this.setState({product_name: product.name})
     }
@@ -132,9 +140,9 @@ const CollectionModal = React.createClass ({
     let _this = this
 
     let collection = {
-      id: this.state.id,
-      title: this.state.title,
-      description: this.state.description,
+      id: this.state.collection.id,
+      title: this.state.collection.title,
+      description: this.state.collection.description,
       privacy: e.currentTarget.dataset.privacy,
       products: this.getProductIDs()
     }
@@ -167,7 +175,7 @@ const CollectionModal = React.createClass ({
                 placeholder='Title'
                 name='collection[title]'
                 ref='collection_title'
-                value={this.state.title}
+                value={this.state.collection.title}
                 onFocus={this.onFocus}
                 onBlur={this.onBlur}
                 onChange={(e) => this.onChangeField('title', e)} />
@@ -177,7 +185,7 @@ const CollectionModal = React.createClass ({
                   name='collection[description]'
                   rows='10'
                   ref='collection_description'
-                  value={this.state.description}
+                  value={this.state.collection.description}
                   onFocus={this.onFocus}
                   onBlur={this.onBlur}
                   onChange={(e) => this.onChangeField('description', e)} />
@@ -200,18 +208,18 @@ const CollectionModal = React.createClass ({
       <Results
         type='collection-product'
         onRemove={this.removeProduct}
-        data={{data: this.state.products}} />
+        data={{data: this.state.collection.products}} />
     )
   },
 
   buttonsDisabled: function() {
-    return !(this.state.title.length > 0 &&
-             this.state.description.length > 0 &&
-             this.state.products.length > 0)
+    return !(this.state.collection.title.length > 0 &&
+             this.state.collection.description.length > 0 &&
+             this.state.collection.products.length > 0)
   },
 
   updating: function() {
-    return !!this.state.id
+    return !!this.state.collection.id
   },
 
   renderSubmissionButtons: function() {
@@ -221,7 +229,7 @@ const CollectionModal = React.createClass ({
         <div className='buttons'>
           <button className='btn btn-red btn-round'
                   onClick={this.submitForm}
-                  data-privacy={this.state.privacy}
+                  data-privacy={this.state.collection.privacy}
                   disabled={disabled}>Update</button>
         </div>
       )
