@@ -26,7 +26,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 - Logins now expire after 8 hours.
 
 ####Changes
-- Images on the dashboard are no longer stretched to their container, they now maintain their original aspect ratio and the rest of the container is filled with a blurred, expanded version of the image.
+- Images on the dashboard are no longer stretched to their container, they now maintain their original aspect ratio and the rest of the container is filled with a blurred, expanded version of the image. Background image is semi-transparent.
 - ActiveAdmin header title now links to the main app.
 - Landing page now displays correct testimonials.
 - Add correct favicons.
