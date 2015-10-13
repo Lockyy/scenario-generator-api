@@ -13,6 +13,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
     - Collection visibility can be changed via dropdown on collection box.
   - After creation user is asked to share collection with other users.
   - Shared, public, and owned collections visible on product/user/collection pages.
+  - Emails are sent to the user who has a collection shared with them.
 - Add user search API endpoint for use with collection sharing. Will also be used for product sharing.
 - Add notifications system.
   - Notifications can be generated on either the frontend or backend.
