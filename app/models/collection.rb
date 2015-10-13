@@ -32,6 +32,7 @@ class Collection < ActiveRecord::Base
   def share(user_ids)
     user_ids = [] if user_ids == nil
 
+    user_ids = user_ids.map(&:to_i)
     existing_user_ids = sharees.map(&:id)
     new_ids = user_ids - existing_user_ids
     removed_ids = existing_user_ids - user_ids
