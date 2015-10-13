@@ -5,6 +5,7 @@ import timeago from 'timeago';
 import TextHelper from '../../utils/helpers/TextHelper';
 import Dropdown from '../Dropdown';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
+import FluxAlertActions from '../../actions/FluxAlertActions';
 
 const CollectionBox = React.createClass ({
   displayName: 'CollectionBox',
@@ -19,9 +20,18 @@ const CollectionBox = React.createClass ({
   },
 
   deleteCollection: function() {
-    FluxCollectionActions.deleteCollection({
-      id: this.props.id,
-      name: this.props.title
+    let _this = this;
+
+    FluxAlertActions.showAlert({
+      title: `Are you sure you want to delete ${this.props.title}`,
+      success: 'Yes, delete it',
+      cancel: "No, don't delete it",
+      successCallback: function() {
+        FluxCollectionActions.deleteCollection({
+          id: _this.props.id,
+          name: _this.props.title
+        })
+      }
     })
   },
 
