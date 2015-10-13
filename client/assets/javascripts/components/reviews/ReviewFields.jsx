@@ -94,12 +94,11 @@ const ReviewFields  = React.createClass({
           </div>
 
           <div className='form-group'>
-            <label htmlFor='product[review[price_review]]'>Price Review <span className='required'>*</span></label>
+            <label htmlFor='product[review[price_review]]'>Price Review</label>
 
             <textarea type='text' className='form-control' placeholder='Add a brief description of the product’s pricing'
               name='product[review[price_review]]' rows='10' ref='product_review_price_review'
-              value={this.props.price_review} onChange={this.updatePriceReview} required={true} onBlur={this.triggerValidation} />
-            <span className="help-block with-errors"></span>
+              value={this.props.price_review} onChange={this.updatePriceReview} onBlur={this.triggerValidation} />
           </div>
 
           <div className='form-group review-tags'>
