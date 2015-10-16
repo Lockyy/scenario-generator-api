@@ -46,13 +46,19 @@ class FluxReviewPageActions {
     this.dispatch(review);
   }
 
-  submitReview(review, success, error) {
+  submitReview(review, success, failure) {
     let _this = this;
     NewReviewPageAPI.submit(review,
       function(data) {
         _this.dispatch();
         success(data);
-      }, error);
+      },
+      function(error) {
+        if(failure) {
+          failure(error);
+        }
+        _this.actions.registerError(error);
+      });
   }
 
   registerError(error) {
