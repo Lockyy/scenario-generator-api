@@ -3,7 +3,12 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
-### v1.1.0 [QA]
+### v1.1.1
+
+####Bugfixes
+- Hamburger menu now scrolls independently of the main page
+
+### v1.1.0
 
 ####Features
 - Add collections. A user can create a group of products with a name and description.
@@ -41,7 +46,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 - Add icon for collections to sidebar on product and user page.
 - Remove horizontal scrollbar from collection creation window.
 
-### v1.0.0 [Live]
+### v1.0.0
 
 ####Features
 - User login via Yammer
