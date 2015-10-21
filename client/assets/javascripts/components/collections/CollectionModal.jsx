@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import CollectionBox from './CollectionBox';
 import Modal from 'react-modal';
+import CollectionStore from '../../stores/CollectionStore';
 import FluxAlertActions from '../../actions/FluxAlertActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
@@ -35,15 +36,24 @@ const CollectionMixin = {
 
   closeCollectionModal: function() {
     this.setState({showCollectionModal: false})
-    this.refs.collectionModal.clearCollection()
+    if(!(this.props.route && this.props.route.name == "CollectionPage")) {
+      FluxCollectionActions.clearCollection();
+    }
   },
 
   showCollectionModal: function() {
     this.setState({showCollectionModal: true})
   },
 
+  showCollectionModalWithProduct: function(product) {
+    FluxCollectionActions.fetchedCollection({
+      title: '', description: '', products: [product]
+    });
+    this.showCollectionModal()
+  },
+
   showCollectionModalForEditing: function(collection) {
-    this.refs.collectionModal.setCollection(collection)
+    FluxCollectionActions.fetchedCollection(collection);
     this.showCollectionModal()
   },
 
@@ -74,25 +84,22 @@ const CollectionModal = React.createClass ({
 
   getInitialState: function() {
     return {
-      collection: {
-        title: '',
-        description: '',
-        privacy: 'hidden',
-        products: []
+      data: {
+        collection: {
+          title: '',
+          description: '',
+          products: []
+        }
       }
     }
   },
 
-  setCollection: function(collection) {
-    this.setState({
-      collection: {
-        id: collection.id,
-        title: collection.title,
-        description: collection.description,
-        privacy: collection.privacy,
-        products: collection.products
-      }
-    })
+  componentDidMount: function() {
+    CollectionStore.listen(this.onChange);
+  },
+
+  onChange: function(data) {
+    this.setState(data);
   },
 
   clearCollection: function() {
@@ -112,22 +119,25 @@ const CollectionModal = React.createClass ({
   },
 
   getProductIDs: function() {
-    return _.map(this.state.collection.products, function(product) {
+    return _.map(this.state.data.collection.products, function(product) {
       return product.id
     })
   },
 
   removeProduct: function(product_id) {
-    let products = this.state.collection.products.filter(function(product) {
-        return product.id !== product_id;
+    let products = this.state.data.collection.products.filter(function(product) {
+      return product.id !== product_id;
     });
 
-    this.setState({product_name: null, collection: {products: products}})
+    let data = this.state.data
+    data.collection.products = products
+
+    this.setState({product_name: null, data: data})
   },
 
   addProduct: function(product, selected) {
     if(selected) {
-      let newProducts = this.state.collection.products
+      let newProducts = this.state.data.collection.products
       newProducts.push(product)
       this.setState({product_name: null, collection: {products: newProducts}})
     } else {
@@ -140,9 +150,9 @@ const CollectionModal = React.createClass ({
     let _this = this
 
     let collection = {
-      id: this.state.collection.id,
-      title: this.state.collection.title,
-      description: this.state.collection.description,
+      id: this.state.data.collection.id,
+      title: this.state.data.collection.title,
+      description: this.state.data.collection.description,
       privacy: e.currentTarget.dataset.privacy,
       products: this.getProductIDs()
     }
@@ -162,9 +172,13 @@ const CollectionModal = React.createClass ({
   },
 
   onChangeField: function(name, e) {
-    let hash = {}
+    let hash = this.state.data.collection;
     hash[name] = e.currentTarget.value
-    this.setState(hash)
+    this.setState({
+      data: {
+        collection: hash
+      }
+    })
   },
 
   renderTextFields: function() {
@@ -175,7 +189,7 @@ const CollectionModal = React.createClass ({
                 placeholder='Title'
                 name='collection[title]'
                 ref='collection_title'
-                value={this.state.collection.title}
+                value={this.state.data.collection.title}
                 onFocus={this.onFocus}
                 onBlur={this.onBlur}
                 onChange={(e) => this.onChangeField('title', e)} />
@@ -185,7 +199,7 @@ const CollectionModal = React.createClass ({
                   name='collection[description]'
                   rows='10'
                   ref='collection_description'
-                  value={this.state.collection.description}
+                  value={this.state.data.collection.description}
                   onFocus={this.onFocus}
                   onBlur={this.onBlur}
                   onChange={(e) => this.onChangeField('description', e)} />
@@ -208,18 +222,18 @@ const CollectionModal = React.createClass ({
       <Results
         type='collection-product'
         onRemove={this.removeProduct}
-        data={{data: this.state.collection.products}} />
+        data={{data: this.state.data.collection.products}} />
     )
   },
 
   buttonsDisabled: function() {
-    return !(this.state.collection.title.length > 0 &&
-             this.state.collection.description.length > 0 &&
-             this.state.collection.products.length > 0)
+    return !(this.state.data.collection.title.length > 0 &&
+             this.state.data.collection.description.length > 0 &&
+             this.state.data.collection.products.length > 0)
   },
 
   updating: function() {
-    return !!this.state.collection.id
+    return !!this.state.data.collection.id
   },
 
   renderSubmissionButtons: function() {
@@ -229,7 +243,7 @@ const CollectionModal = React.createClass ({
         <div className='buttons'>
           <button className='btn btn-red btn-round'
                   onClick={this.submitForm}
-                  data-privacy={this.state.collection.privacy}
+                  data-privacy={this.state.data.collection.privacy}
                   disabled={disabled}>Update</button>
         </div>
       )

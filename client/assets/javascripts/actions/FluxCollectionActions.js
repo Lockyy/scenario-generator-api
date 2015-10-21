@@ -77,8 +77,16 @@ class FluxCollectionActions {
     );
   }
 
+  fetchedCollections(data) {
+    this.dispatch(data)
+  }
+
   fetchedCollection(data) {
     this.dispatch(data)
+  }
+
+  clearCollection() {
+    this.dispatch()
   }
 
   updateData(data) {

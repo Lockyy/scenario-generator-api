@@ -12,11 +12,12 @@ import Tags from '../Tags';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
-import CollectionsCollection from '../collections/CollectionsCollection'
+import CollectionsCollection from '../collections/CollectionsCollection';
+import { CollectionMixin } from '../collections/CollectionModal';
 
 const ProductPageDesktopVersion = React.createClass({
   displayName: 'ProductPageDesktopVersion',
-  mixins: [ Navigation ],
+  mixins: [ Navigation, CollectionMixin ],
 
   id: function() {
     return this.props.data.id
@@ -217,9 +218,13 @@ const ProductPageDesktopVersion = React.createClass({
             <div className='collections-container' ref='collections'>
               <div className='header'>
               </div>
+              <div className='btn btn-round btn-red' onClick={() => this.showCollectionModalWithProduct(this.props.data)}>
+                Create Collection
+              </div>
               <CollectionsCollection
                 className='hide'
-                collections={this.props.data.collections}/>
+                onEdit={this.showCollectionModalForEditing}
+                onShare={this.showCollectionShareModalForEditing} />
             </div>
             <div className='placeholder-section hide' ref='custom'>
               Feature Coming Soon
@@ -227,6 +232,9 @@ const ProductPageDesktopVersion = React.createClass({
           </div>
         </div>
         {this.renderRelatedProducts()}
+
+        {this.renderCollectionModal()}
+        {this.renderCollectionShareModal()}
       </div>
     );
   }
