@@ -7,6 +7,11 @@ module.exports = {
     return this.hitAPI(url, 'post', {collection: data}, resolve, reject);
   },
 
+  addProductToCollection: function(product_id, collection_id, resolve, reject) {
+    let url = `/api/collections/${collection_id}/add_product`;
+    return this.hitAPI(url, 'post', {product: product_id}, resolve, reject);
+  },
+
   fetchCollection: function(id, resolve, reject) {
     let url = `/api/collections/${id}`;
     return this.hitAPI(url, 'get', {}, resolve, reject);

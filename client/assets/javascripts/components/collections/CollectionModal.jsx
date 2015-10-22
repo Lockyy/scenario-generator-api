@@ -60,10 +60,32 @@ const CollectionMixin = {
     this.showCollectionModal()
   },
 
+  // TODO: Refactor this function, it's way too complex.
   onSaveCollection: function(collection, resolve) {
     let _this = this;
+
+    // Checks whether we're on a page and whether the collection that was just updated
+    // contains the passed in collection. If it doesn't, remove it.
+    let checkAndRemoveCollectionFromStore = function(collection) {
+      // Check whether we're on the product page
+      if(_this.context.router.state.components[0].displayName == 'ProductPage') {
+        // Get a list of products still in the collection
+        let productIDs = _.map(collection.products, function(product) {return product.id})
+        // If this product isn't one of them, remove the collection from the collections store.
+        if(productIDs.indexOf(_this.props.data.id) == -1) {
+          FluxCollectionActions.removeCollection(collection.id);
+        }
+      }
+    }
+
+    // If we have a collection id, then the collection is persisted on the backend and just needs updating.
     if(collection.id) {
-      FluxCollectionActions.updateCollection(collection.id, collection, resolve)
+      FluxCollectionActions.updateCollection(collection.id, collection, function(data) {
+        resolve();
+
+        checkAndRemoveCollectionFromStore(data);
+      })
+    // Otherwise it's a new collection and we just need to save.
     } else {
       FluxCollectionActions.createCollection(collection, function(collection) {
         resolve();
