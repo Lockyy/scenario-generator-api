@@ -44,6 +44,11 @@ class Collection < ActiveRecord::Base
     end
   end
 
+  def add_product(product_id)
+    product = Product.find_by(id: product_id)
+    self.products.append(product) if product
+  end
+
   def update_with_params(params)
     self.title       = params[:title] if params[:title]
     self.description = params[:description] if params[:description]
