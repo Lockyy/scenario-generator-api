@@ -21,12 +21,15 @@ const CollectionMixin = {
 
   renderCollectionModal: function() {
     return (
-      <CollectionModal
-        ref='collectionModal'
-        visible={this.collectionModalVisible()}
-        show={this.showCollectionModal}
-        close={this.closeCollectionModal}
-        onSaveCollection={this.onSaveCollection} />
+      <div>
+        <CollectionModal
+          ref='collectionModal'
+          visible={this.collectionModalVisible()}
+          show={this.showCollectionModal}
+          close={this.closeCollectionModal}
+          onSaveCollection={this.onSaveCollection} />
+        {this.renderCollectionShareModal()}
+      </div>
     )
   },
 
@@ -65,13 +68,14 @@ const CollectionMixin = {
       FluxCollectionActions.createCollection(collection, function(collection) {
         resolve();
 
+        // Show an alert after saving that asks the user whether they want to share the collection or not.
         FluxAlertActions.showAlert({
           title: 'Your Collection was successfully created!',
           message: 'You can privately share this Collection with other users in Fletcher, or make it available to everyone by making it public.',
           success: 'Share',
           cancel: 'Not now',
           successCallback: function() {
-            _this.showCollectionShareModalForEditing(collection)
+            _this.showCollectionShareModal(collection)
           }
         })
       })

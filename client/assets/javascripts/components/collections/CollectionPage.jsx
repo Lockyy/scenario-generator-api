@@ -86,7 +86,7 @@ const CollectionPage = React.createClass({
             Edit
           </div>
           <div  className='btn btn-red-inverted btn-round'
-                onClick={() => this.showCollectionShareModalForEditing(this.state.data.collection)}>
+                onClick={() => this.showCollectionShareModal(this.state.data.collection)}>
             Share
           </div>
           <div  className='btn btn-red-inverted btn-round'

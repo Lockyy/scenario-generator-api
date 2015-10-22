@@ -224,7 +224,7 @@ const ProductPageDesktopVersion = React.createClass({
               <CollectionsCollection
                 className='hide'
                 onEdit={this.showCollectionModalForEditing}
-                onShare={this.showCollectionShareModalForEditing} />
+                onShare={this.showCollectionShareModal} />
             </div>
             <div className='placeholder-section hide' ref='custom'>
               Feature Coming Soon
@@ -234,7 +234,6 @@ const ProductPageDesktopVersion = React.createClass({
         {this.renderRelatedProducts()}
 
         {this.renderCollectionModal()}
-        {this.renderCollectionShareModal()}
       </div>
     );
   }
