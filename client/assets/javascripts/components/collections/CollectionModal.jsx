@@ -38,6 +38,7 @@ const CollectionMixin = {
   },
 
   closeCollectionModal: function() {
+    $('body').removeClass('no-scroll');
     this.setState({showCollectionModal: false})
     if(!(this.props.route && this.props.route.name == "CollectionPage")) {
       FluxCollectionActions.clearCollection();
@@ -45,6 +46,8 @@ const CollectionMixin = {
   },
 
   showCollectionModal: function() {
+    $(window).scrollTop(0);
+    $('body').addClass('no-scroll');
     this.setState({showCollectionModal: true})
   },
 
@@ -288,7 +291,7 @@ const CollectionModal = React.createClass ({
   renderCollectionForm: function() {
     return (
       <div className='row'>
-        <form className='col-xs-10 col-xs-offset-1 form collection'
+        <form className='col-xs-12 col-sm-10 col-sm-offset-1 form collection'
               ref='collection_form'>
           {this.renderTextFields()}
           {this.renderProductTypeahead()}
@@ -303,6 +306,7 @@ const CollectionModal = React.createClass ({
     return (
       <Modal
         isOpen={this.props.visible}>
+        <div className='back-button' onClick={this.close}>{"< Close"}</div>
         <div className='header'>
           <span className='title'>
             {this.updating() ? 'Update' : 'Create'} Collection

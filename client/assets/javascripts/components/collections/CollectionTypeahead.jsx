@@ -96,7 +96,7 @@ const CollectionTypeahead  = React.createClass({
 
   render: function render() {
     return (
-      <div className='form-group'>
+      <div className='form-group typeahead'>
         {this.props.hideLabel ? null : (<label id='collection_title_label' htmlFor='collection[title]'>{"Collection's Title"}</label>)}
         <TypeAhead name='collection[title]' value={this.props.value} className='form-control'
           id='collection_title' placeholder='Type in the title of the collection'

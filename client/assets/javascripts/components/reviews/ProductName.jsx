@@ -101,7 +101,7 @@ const ProductName  = React.createClass({
 
   render: function render() {
     return (
-      <div className='form-group'>
+      <div className='form-group typeahead'>
         {this.props.hideLabel ? null : (<label id='product_name_label' htmlFor='product[name]'>{"Product's Name"}</label>)}
         <TypeAhead name='product[name]' value={this.props.value} className='form-control'
           id='product_name' placeholder='Type in the name of the product'

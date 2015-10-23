@@ -96,7 +96,7 @@ const UserTypeahead  = React.createClass({
 
   render: function render() {
     return (
-      <div className='form-group'>
+      <div className='form-group typeahead'>
         {this.props.hideLabel ? null : (<label id='product_name_label' htmlFor='user[name]'>{"User's Name"}</label>)}
         <TypeAhead name='user[name]' value={this.props.value} className='form-control'
           id='user_name' placeholder='Type in the name of the user'

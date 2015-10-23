@@ -30,6 +30,7 @@ const CollectionShareMixin = {
   },
 
   closeCollectionShareModal: function() {
+    $('body').removeClass('no-scroll');
     this.setState({showCollectionShareModal: false})
     if(!(this.props.route && this.props.route.name == "CollectionPage")) {
       FluxCollectionActions.clearCollection();
@@ -37,6 +38,8 @@ const CollectionShareMixin = {
   },
 
   showCollectionShareModal: function(collection) {
+    $(window).scrollTop(0);
+    $('body').addClass('no-scroll');
     FluxCollectionActions.fetchedCollection(collection);
     this.setState({showCollectionShareModal: true});
   },
@@ -181,6 +184,7 @@ const CollectionShareModal = React.createClass ({
     return (
       <Modal
         isOpen={this.props.visible}>
+        <div className='back-button' onClick={this.close}>{"< Close"}</div>
         <div className='header'>
           <span className='title'>
             Share {this.state.data.collection.title} with others

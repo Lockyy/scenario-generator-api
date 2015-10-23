@@ -39,15 +39,18 @@ const AddToCollectionMixin = {
   },
 
   addToCollectionModalVisible: function() {
-    return this.state && this.state.showAddToCollectionModal
+    return this.state && this.state.addToCollectionModalVisible
   },
 
   closeAddToCollectionModal: function() {
-    this.setState({showAddToCollectionModal: false})
+    $('body').removeClass('no-scroll');
+    this.setState({addToCollectionModalVisible: false})
   },
 
   showAddToCollectionModal: function() {
-    this.setState({showAddToCollectionModal: true})
+    $(window).scrollTop(0);
+    $('body').addClass('no-scroll');
+    this.setState({addToCollectionModalVisible: true})
   },
 
   onAddToCollection: function(product_id, collection_id, resolve) {
@@ -65,7 +68,9 @@ const AddToCollectionModal = React.createClass ({
           title: '',
           description: '',
           products: [],
-          owner: this.context.currentUser
+          user: {
+            name: ""
+          }
         }
       }
     }
@@ -152,15 +157,38 @@ const AddToCollectionModal = React.createClass ({
     )
   },
 
+  renderCurrentCollection: function() {
+    if(this.state.data.collection.title != "") {
+      return (
+        <div className='collection-details'>
+          <div className="owner">
+            Collection created by {this.state.data.collection.user.name}
+          </div>
+          <div className='header'>
+            <div className="title">
+              {this.state.data.collection.title}
+            </div>
+          </div>
+          <div className='collection-description'>
+            {this.state.data.collection.description}
+          </div>
+          <div className='collection-products'>
+            Includes: {_.map(this.state.data.collection.products, function(product) {
+              return `${product.name}, `;
+            })}
+          </div>
+        </div>
+      )
+    }
+  },
+
   renderAddToCollectionForm: function() {
     return (
       <div className='row'>
         <form className='col-xs-10 col-xs-offset-1 form collection'
               ref='collection_form'>
           {this.renderCollectionTypeahead()}
-          <div className='collection-description'>
-            {this.state.data.collection.description}
-          </div>
+          {this.renderCurrentCollection()}
           {this.renderSubmissionButtons()}
           {this.renderNewCollectionLink()}
         </form>
@@ -172,6 +200,7 @@ const AddToCollectionModal = React.createClass ({
     return (
       <Modal
         isOpen={this.props.visible}>
+        <div className='back-button' onClick={this.close}>{"< Close"}</div>
         <div className='header'>
           <span className='title'>
             Add this product to an existing collection

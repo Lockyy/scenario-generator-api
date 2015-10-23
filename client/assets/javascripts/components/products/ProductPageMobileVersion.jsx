@@ -246,7 +246,6 @@ const ProductPageMobileVersion = React.createClass({
     }
 
     let tags = this.getProductData('tags');
-
     return (
       <div className='mobile-version'>
         {this.renderFilesModal()}
@@ -275,9 +274,13 @@ const ProductPageMobileVersion = React.createClass({
 
           <div className='col-xs-12 tags'>
             <Section hasPagination={false} title={"Collections"}>
-               <CollectionsCollection
-                  ref='collections'
-                  collections={this.props.data.collections}/>
+              <div className='btn btn-round btn-red' onClick={() => this.props.showAddToCollectionModal(this.props.data)}>
+                Add to a Collection
+              </div>
+              <CollectionsCollection
+                ref='collections'
+                onEdit={this.props.onCollectionEdit}
+                onShare={this.props.onCollectionShare} />
             </Section>
           </div>
 

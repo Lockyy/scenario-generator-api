@@ -14,6 +14,7 @@ import ProductPageMobileVersion from './ProductPageMobileVersion';
 import Tags from '../Tags'
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
+import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
 
 var appElement = document.getElementById('content');
 
@@ -22,7 +23,7 @@ Modal.injectCSS();
 
 const ProductPage = React.createClass({
   displayName: 'ProductPage',
-  mixins: [ Navigation ],
+  mixins: [ Navigation, AddToCollectionMixin ],
 
   id: function() {
     return this.state.data.id || this.props.params.id;
@@ -210,11 +211,15 @@ const ProductPage = React.createClass({
         {this.renderShareModal()}
         <ProductPageDesktopVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
           onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.openModal}
-          {...this.state} />
+          showAddToCollectionModal={this.showAddToCollectionModal} onCollectionEdit={this.showCollectionModalForEditing}
+          onCollectionShare={this.showCollectionShareModal} {...this.state} />
 
         <ProductPageMobileVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
           onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.openModal}
-          {...this.state} />
+          showAddToCollectionModal={this.showAddToCollectionModal} onCollectionEdit={this.showCollectionModalForEditing}
+          onCollectionShare={this.showCollectionShareModal} {...this.state} />
+
+        {this.renderAddToCollectionModal(this.state.data)}
       </div>
     );
   }

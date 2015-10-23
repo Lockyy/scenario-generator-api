@@ -13,11 +13,10 @@ import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
 import CollectionsCollection from '../collections/CollectionsCollection';
-import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
 
 const ProductPageDesktopVersion = React.createClass({
   displayName: 'ProductPageDesktopVersion',
-  mixins: [ Navigation, AddToCollectionMixin ],
+  mixins: [ Navigation ],
 
   id: function() {
     return this.props.data.id
@@ -218,13 +217,13 @@ const ProductPageDesktopVersion = React.createClass({
             <div className='collections-container' ref='collections'>
               <div className='header'>
               </div>
-              <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal(this.props.data)}>
+              <div className='btn btn-round btn-red' onClick={() => this.props.showAddToCollectionModal(this.props.data)}>
                 Add this product to a Collection
               </div>
               <CollectionsCollection
                 className='hide'
-                onEdit={this.showCollectionModalForEditing}
-                onShare={this.showCollectionShareModal} />
+                onEdit={this.props.onCollectionEdit}
+                onShare={this.props.onCollectionShare} />
             </div>
             <div className='placeholder-section hide' ref='custom'>
               Feature Coming Soon
@@ -232,8 +231,6 @@ const ProductPageDesktopVersion = React.createClass({
           </div>
         </div>
         {this.renderRelatedProducts()}
-
-        {this.renderAddToCollectionModal(this.props.data)}
       </div>
     );
   }
