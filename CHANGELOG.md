@@ -8,6 +8,8 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 ###Features
 
 ### Changes
+- Files uploaded to reviews are now checked against a whitelist. Only docs and mediafiles will now be accepted.
+  - File mimetypes that are allowed can be viewed in app/models/attachment.rb
 
 ### Bugfix
 
