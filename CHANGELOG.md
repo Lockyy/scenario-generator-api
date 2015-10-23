@@ -3,6 +3,14 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
+### v1.2
+
+###Features
+
+### Changes
+
+### Bugfix
+
 ### v1.1.1
 
 ####Bugfixes
