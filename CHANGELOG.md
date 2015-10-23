@@ -5,9 +5,14 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 
 ### v1.2
 
-###Features
+### Features
 
 ### Changes
+- Collection changes:
+  - Add collection adding/creating/editing/sharing to product page and dedicated collection page.
+  - Improve Collection Modals and Alert Modals on mobile.
+  - Collections displayed on the page and specific Collections being edited/shared are now stored
+    in an independent CollectionStore.
 
 ### Bugfix
 
@@ -20,8 +25,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 
 ####Features
 - Add collections. A user can create a group of products with a name and description.
-  - Collections appear on the profile of the user who created them as well as on the profile of products in the list.
-  - Collections can be edited from the user profile, the product page, or the dedicated collection page.
+  - Collections appear on the user page collections tab.
   - Collections can be private or public.
   - If public, collections appear on the product's collections tab.
     - Collection visibility can be changed via dropdown on collection box.
