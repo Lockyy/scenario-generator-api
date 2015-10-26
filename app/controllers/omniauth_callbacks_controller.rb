@@ -6,7 +6,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if user.nil?
       redirect_to root_url
     else
-      generate_token!(user, result)
       sign_in user
       redirect_to stored_location_for(:user) || app_path
     end
@@ -29,12 +28,5 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     user_auth.user
-  end
-
-  def generate_token!(user, result)
-    secret = Rails.application.secrets.secret_key_base
-    token = Fletcher::AuthToken.new(user, result.token, secret).create!
-    cookies['auth_token'] = { value: token.try(:encode!), expires: 24.hours.from_now }
-    token
   end
 end
