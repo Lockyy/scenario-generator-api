@@ -147,6 +147,18 @@ const NewReviewPage  = React.createClass({
     })
   },
 
+  renderErrors: function renderErrors() {
+    if(this.state.error && this.state.error.responseJSON) {
+      return (
+        <ul>
+          {_.map(this.state.error.responseJSON.product, function(value, key) {
+            return <li>{value}</li>
+          })}
+        </ul>
+      )
+    }
+  },
+
   _getActionsContent: function _getActionsContent() {
     let submitText = `${this.state.mode} Review`;
 
@@ -154,6 +166,9 @@ const NewReviewPage  = React.createClass({
       return (
         <div>
           <div className='button-errors help-block'>
+          </div>
+          <div className='submission-errors help-block'>
+            {this.renderErrors()}
           </div>
           <div className='actions'>
             <button type='button' className='btn btn-default btn-round' onClick={this._onCancel}>Cancel</button>
