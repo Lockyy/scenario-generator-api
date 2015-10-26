@@ -242,7 +242,8 @@ const CollectionModal = React.createClass ({
                     value={this.state.product_name}
                     helpMessage={'Add Product'}
                     hideLabel={true}
-                    onSetProduct={this.addProduct} />
+                    onSetProduct={this.addProduct}
+                    placeholder={'Search products and add them'} />
     )
   },
 
