@@ -23,6 +23,17 @@ class Api::CollectionsController < AppController
     end
   end
 
+  def add_product
+    @collection = Collection.find_by( id: params[:id],
+                                      user: current_user)
+
+    @collection.add_product(params[:product]) if @collection
+
+    respond_to do |format|
+      format.json { render 'create'}
+    end
+  end
+
   def update
     @collection = Collection.find_by( id: params[:id],
                                       user: current_user)

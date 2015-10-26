@@ -43,6 +43,7 @@ Rails.application.routes.draw do
                             defaults: {format: 'json'} do
       member do
         post 'share'
+        post 'add_product'
       end
     end
 
@@ -78,6 +79,7 @@ Rails.application.routes.draw do
     ##########
     get 'search', to: 'search#index', as: 'search', defaults: {format: :json}
     get 'search/users', to: 'search#users', as: 'user_search', defaults: {format: 'json'}
+    get 'search/collections', to: 'search#collections', as: 'collections_search', defaults: {format: 'json'}
 
     ########
     # User #

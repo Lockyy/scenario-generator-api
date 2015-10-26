@@ -1,6 +1,7 @@
 import alt from '../FluxAlt';
 import _ from 'lodash';
 import ProductAPI from '../utils/api/ProductAPI';
+import FluxCollectionActions from './FluxCollectionActions';
 
 class FluxProductPageActions {
 
@@ -11,6 +12,7 @@ class FluxProductPageActions {
       id,
       (data) => {
         this.actions.updateData(data);
+        FluxCollectionActions.fetchedCollections(data.collections);
       },
       (error) => {
         this.actions.registerError(error);

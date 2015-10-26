@@ -65,7 +65,7 @@ $(function onLoad() {
                         </Route>
                         <Route path="app/tags/:letter" component={TagsPage}>
                         </Route>
-                        <Route path="app/collections/:id" component={CollectionPage}>
+                        <Route name='CollectionPage' path="app/collections/:id" component={CollectionPage}>
                         </Route>
                     </Router>
                 ), document.getElementById('content'));

@@ -18,5 +18,14 @@ module Api
         format.json { render }
       end
     end
+
+    def collections
+      @q = Collection.ransack({title_cont: params[:search_string]})
+      @collections = @q.result.where(user: current_user)
+
+      respond_to do |format|
+        format.json { render }
+      end
+    end
   end
 end

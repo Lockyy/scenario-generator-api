@@ -42,7 +42,7 @@ const Notifications = React.createClass({
   },
 
   getAction: function(notification) {
-    if(notification.subject && notification.type !== 'delete') {
+    if(notification.subject && notification.type !== 'delete' && notification.show_button !== false) {
       let label, action, link;
       let _this = this;
 
