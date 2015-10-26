@@ -8,6 +8,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 ###Features
 
 ### Changes
+- Add footer to App
 
 ### Bugfix
 
