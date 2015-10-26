@@ -27,20 +27,39 @@ const ProductName  = React.createClass({
     }
   },
 
+  _getEmptyTemplate: function _getEmptyTemplate() {
+    if(this.props.noEmptySubmit) {
+      return function(data) {
+        let query = data.query;
+        return `<p class='tt-no-results' data-query='${query}'>No Results for “${query}”</p>`
+      }
+    } else {
+      return function(data) {
+        let query = data.query;
+        return `<p class='tt-no-results' data-query='${query}'>“${query}”<span class='tt-help'>Add and Review <i class="add-symbol"> + </i></span></p>`
+      }
+    }
+  },
+
+  _getHeaderTemplate: function _getEmptyTemplate() {
+    if(this.props.noEmptySubmit) {
+      return
+    } else {
+      return function(data) {
+        let query = data.query;
+        return `<p class='tt-no-results tt-empty' data-query='${query}'>“${query}”<span class='tt-help'>Add and Review <i class="add-symbol"> + </i></span></p>`
+      }
+    }
+  },
+
   _getTypeaheadProps: function _getTypeaheadProps() {
     let _this = this
     return {
       name: 'products',
       displayKey: 'name',
       templates: {
-        header: function(data) {
-          let query = data.query;
-          return `<p class='tt-no-results tt-empty' data-query='${query}'>“${query}”<span class='tt-help'>Add and Review <i class="add-symbol"> + </i></span></p>`
-        },
-        empty: function(data) {
-          let query = data.query;
-          return `<p class='tt-no-results' data-query='${query}'>“${query}”<span class='tt-help'>Add and Review <i class="add-symbol"> + </i></span></p>`
-        },
+        header: _this._getHeaderTemplate(),
+        empty: _this._getEmptyTemplate(),
         suggestion: function(data) {
           let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
           return `<p>${name}<span class='tt-help'>${_this.props.helpMessage || 'Review'} <i class="review-symbol"> -> </i></span></p>`
@@ -58,6 +77,9 @@ const ProductName  = React.createClass({
   },
 
   _onSelectCreateProduct: function _onSelectCreateProduct(name) {
+    if(this.props.noEmptySubmit) {
+      return
+    }
     let product = { name: name };
     this.props.onSetProduct(product, true);
   },
