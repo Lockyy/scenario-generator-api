@@ -16,7 +16,15 @@ const CollectionBox = React.createClass ({
   },
 
   changePrivacySetting: function(newSetting) {
-    FluxCollectionActions.updateCollection(this.props.id, { privacy: newSetting})
+    let _this = this;
+    FluxAlertActions.showAlert({
+      title: `Are you sure you want to make ${_this.props.title} ${newSetting}?`,
+      success: `Yes, make it ${newSetting}`,
+      cancel: "No, don't change it",
+      successCallback: function() {
+        FluxCollectionActions.updateCollection(_this.props.id, { privacy: newSetting})
+      }
+    })
   },
 
   deleteCollection: function() {
