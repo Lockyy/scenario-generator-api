@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import CollectionBox from './CollectionBox';
 import Modal from 'react-modal';
+import CollectionStore from '../../stores/CollectionStore';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import UserTypeahead from '../UserTypeahead'
@@ -29,16 +30,18 @@ const CollectionShareMixin = {
   },
 
   closeCollectionShareModal: function() {
+    $('body').removeClass('no-scroll');
     this.setState({showCollectionShareModal: false})
+    if(!(this.props.route && this.props.route.name == "CollectionPage")) {
+      FluxCollectionActions.clearCollection();
+    }
   },
 
-  showCollectionShareModal: function() {
-    this.setState({showCollectionShareModal: true})
-  },
-
-  showCollectionShareModalForEditing: function(collection) {
-    this.refs.collectionShareModal.setCollection(collection)
-    this.showCollectionShareModal()
+  showCollectionShareModal: function(collection) {
+    $(window).scrollTop(0);
+    $('body').addClass('no-scroll');
+    FluxCollectionActions.fetchedCollection(collection);
+    this.setState({showCollectionShareModal: true});
   },
 
   onShareCollection: function(data, resolve) {
@@ -51,22 +54,26 @@ const CollectionShareModal = React.createClass ({
 
   getInitialState: function() {
     return {
-      id: '',
-      title: '',
-      owner: this.context.currentUser
+      data: {
+        collection: {
+          title: '',
+          description: '',
+          products: [],
+          owner: this.context.currentUser
+        }
+      }
     }
   },
 
-  setCollection: function(collection) {
-    this.setState({
-      id: collection.id,
-      title: collection.title,
-      users: collection.users || []
-    })
+  componentDidMount: function() {
+    CollectionStore.listen(this.onChange);
+  },
+
+  onChange: function(collection) {
+    this.setState(collection)
   },
 
   close: function() {
-    this.setState(this.getInitialState());
     this.props.close()
   },
 
@@ -79,24 +86,30 @@ const CollectionShareModal = React.createClass ({
   },
 
   getUserIDs: function() {
-    return _.map(this.state.users, function(user) {
+    return _.map(this.state.data.collection.users, function(user) {
       return user.id
     })
   },
 
+  updateUsers: function(users, user_name) {
+    let collection = this.state.data.collection
+    collection.users = users
+    this.setState({ user_name: user_name, data: { collection: collection }})
+  },
+
   removeUser: function(user_id) {
-    let users = this.state.users.filter(function(user) {
+    let users = this.state.data.collection.users.filter(function(user) {
       return user.id !== user_id;
     });
 
-    this.setState({user_name: null, users: users})
+    this.updateUsers(users, null);
   },
 
   addUser: function(user, selected) {
     if(selected) {
-      let newUsers = this.state.users
+      let newUsers = this.state.data.collection.users
       newUsers.push(user)
-      this.setState({user_name: null, users: newUsers})
+      this.updateUsers(newUsers, null);
     } else {
       this.setState({user_name: user.name})
     }
@@ -107,8 +120,8 @@ const CollectionShareModal = React.createClass ({
     let _this = this
 
     let data = {
-      id: this.state.id,
-      title: this.state.title,
+      id: this.state.data.collection.id,
+      title: this.state.data.collection.title,
       users: this.getUserIDs()
     }
 
@@ -126,12 +139,6 @@ const CollectionShareModal = React.createClass ({
     })
   },
 
-  onChangeField: function(name, e) {
-    let hash = {}
-    hash[name] = e.currentTarget.value
-    this.setState(hash)
-  },
-
   renderUserTypeahead: function() {
     return (
       <UserTypeahead  ref='user_typeahead'
@@ -147,7 +154,7 @@ const CollectionShareModal = React.createClass ({
       <Results
         type='users'
         onRemove={this.removeUser}
-        data={{data: this.state.users}} />
+        data={{data: this.state.data.collection.users}} />
     )
   },
 
@@ -177,9 +184,10 @@ const CollectionShareModal = React.createClass ({
     return (
       <Modal
         isOpen={this.props.visible}>
+        <div className='back-button' onClick={this.close}>{"< Close"}</div>
         <div className='header'>
           <span className='title'>
-            Share {this.state.title} with others
+            Share {this.state.data.collection.title} with others
           </span>
           <span onClick={this.close} className='close'>x</span>
         </div>

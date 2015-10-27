@@ -35,7 +35,7 @@ class FluxCollectionActions {
       (data) => {
         this.actions.updateData(data);
         if(resolve) {
-          resolve();
+          resolve(data);
         }
       },
       (error) => {
@@ -46,6 +46,20 @@ class FluxCollectionActions {
 
   createCollection(data, resolve) {
     CollectionAPI.createCollection(data,
+      (data) => {
+        this.actions.addCollection(data);
+        if(resolve) {
+          resolve(data);
+        }
+      },
+      (error) => {
+        this.actions.registerError(error);
+      }
+    );
+  }
+
+  addProductToCollection(product_id, collection_id, resolve) {
+    CollectionAPI.addProductToCollection(product_id, collection_id,
       (data) => {
         this.actions.addCollection(data);
         if(resolve) {
@@ -77,8 +91,16 @@ class FluxCollectionActions {
     );
   }
 
+  fetchedCollections(data) {
+    this.dispatch(data)
+  }
+
   fetchedCollection(data) {
     this.dispatch(data)
+  }
+
+  clearCollection() {
+    this.dispatch()
   }
 
   updateData(data) {

@@ -7,13 +7,52 @@ class CollectionStore {
     this.resetData();
 
     this.bindListeners({
-      handleFetchedCollection: FluxCollectionActions.FETCHED_COLLECTION,
-      handleRegisterError:    FluxCollectionActions.REGISTER_ERROR
+      handleFetchedCollections: FluxCollectionActions.FETCHED_COLLECTIONS,
+      handleFetchedCollection:  FluxCollectionActions.FETCHED_COLLECTION,
+      handleClearCollection:    FluxCollectionActions.CLEAR_COLLECTION,
+      handleRegisterError:      FluxCollectionActions.REGISTER_ERROR,
+      handleAddCollection:      FluxCollectionActions.ADD_COLLECTION,
+      handleRemoveCollection:   FluxCollectionActions.REMOVE_COLLECTION,
+      handleUpdateCollection:   FluxCollectionActions.UPDATE_DATA
+    })
+  }
+
+  handleAddCollection(newCollection) {
+    this.data.collections.push(newCollection);
+    this.data.collection = newCollection;
+  }
+
+  handleRemoveCollection(id) {
+    this.data.collections = this.data.collections.filter(function(collection){
+      return collection.id !== id;
     });
   }
 
-  handleFetchedCollection(data) {
-    this.data = data;
+  handleUpdateCollection(newCollection) {
+    let oldCollection = _.find(this.data.collections, function(e) { return e.id == newCollection.id; });
+    let index = _.indexOf(this.data.collections, oldCollection);
+    this.data.collections[index] = newCollection;
+  }
+
+  handleFetchedCollections(newCollections) {
+    this.data.collections = newCollections;
+    this.error = null;
+  }
+
+  handleFetchedCollection(newCollection) {
+    this.data.collection = newCollection;
+    this.error = null;
+  }
+
+  handleClearCollection() {
+    this.data.collection = {
+      title: '',
+      description: '',
+      products: [],
+      user: {
+        name: ''
+      }
+    };
     this.error = null;
   }
 
@@ -23,7 +62,16 @@ class CollectionStore {
 
   resetData() {
     this.data = {
-      user: {}
+      user: {},
+      collections: [],
+      collection: {
+        title: '',
+        description: '',
+        products: [],
+        user: {
+          name: ''
+        }
+      },
     };
 
     this.error = null;

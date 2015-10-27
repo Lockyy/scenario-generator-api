@@ -1,10 +1,10 @@
 import React from 'react';
 import _ from 'lodash';
-import TypeAhead from './TypeAhead'
-import ResponsivenessHelper from '../utils/helpers/ResponsivenessHelper.js'
+import TypeAhead from '../TypeAhead'
+import ResponsivenessHelper from '../../utils/helpers/ResponsivenessHelper.js'
 
-const UserTypeahead  = React.createClass({
-  displayName: 'UserTypeahead',
+const CollectionTypeahead  = React.createClass({
+  displayName: 'CollectionTypeahead',
 
   getDefaultProps: function getDefaultProps() {
     return {
@@ -14,15 +14,15 @@ const UserTypeahead  = React.createClass({
   },
 
   getValue: function getValue() {
-    return React.findDOMNode(this.refs.product_name).value
+    return React.findDOMNode(this.refs.collection_title).value
   },
 
   _getBloodhoundProps: function _getBloodhoundProps() {
     return {
       remote: {
-        url: '/api/search/users?search_string=%QUERY',
+        url: '/api/search/collections?search_string=%QUERY',
         wildcard: '%QUERY',
-        transform: function(data) { return data.users.data }
+        transform: function(data) { return data.collections.data }
       }
     }
   },
@@ -30,33 +30,33 @@ const UserTypeahead  = React.createClass({
   _getTypeaheadProps: function _getTypeaheadProps() {
     let _this = this
     return {
-      name: 'users',
-      displayKey: 'name',
+      name: 'collections',
+      displayKey: 'title',
       templates: {
         empty: function(data) {
           let query = data.query;
           return `<p class='tt-no-results' data-query='${query}'>No Results for “${query}”</p>`
         },
         suggestion: function(data) {
-          let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
-          return `<p>${name}<span class='tt-help'>${_this.props.helpMessage || 'Add User'} <i class="review-symbol"> -> </i></span></p>`
+          let title = data.title.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+          return `<p>${title}<span class='tt-help'>${_this.props.helpMessage || 'Add to Collection'} <i class="review-symbol"> -> </i></span></p>`
         }
       }
     }
   },
 
-  _onNameChange: function _onNameChange(user_name) {
-    this.props.onSetUser({ name: user_name }, false)
+  _onNameChange: function _onNameChange(collection_title) {
+    this.props._onSelectCollection({ title: collection_title }, false)
   },
 
-  _onSelectUser: function _onSelectUser(user) {
-    if(user.id) {
-      this.props.onSetUser(user, true);
+  _onSelectCollection: function _onSelectCollection(collection) {
+    if(collection.id) {
+      this.props._onSelectCollection(collection, true);
     }
   },
 
   _scrollToInput: function _scrollToInput() {
-    $(window).stop().scrollTo('#product_name_label', 'slow');
+    $(window).stop().scrollTo('#collection_title_label', 'slow');
   },
 
   _hideCreateWhenMatch: function _hideCreateWhenMatch(e) {
@@ -95,18 +95,18 @@ const UserTypeahead  = React.createClass({
   render: function render() {
     return (
       <div className='form-group typeahead'>
-        {this.props.hideLabel ? null : (<label id='product_name_label' htmlFor='user[name]'>{"User's Name"}</label>)}
-        <TypeAhead name='user[name]' value={this.props.value} className='form-control'
-          id='user_name' placeholder='Search users and add them'
+        {this.props.hideLabel ? null : (<label id='collection_title_label' htmlFor='collection[title]'>{"Collection's Title"}</label>)}
+        <TypeAhead name='collection[title]' value={this.props.value} className='form-control'
+          id='collection_title' placeholder='Search collections and add to them'
           bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
-          onSelectOption={this._onSelectUser} onChange={this._onNameChange}
+          onSelectOption={this._onSelectCollection} onChange={this._onNameChange}
           onRender={this._hideCreateWhenMatch} onFocus={this._resizeFormGroup}
           onBlur={this._resizeFormGroupToNormal}
-          ref='user_name' disabled={this.props.disabled} required/>
+          ref='collection_title' disabled={this.props.disabled} required/>
         <span className="help-block with-errors"></span>
       </div>
     );
   }
 });
 
-export default UserTypeahead;
+export default CollectionTypeahead;

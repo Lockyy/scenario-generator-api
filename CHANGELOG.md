@@ -23,6 +23,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 
 ####Features
 - Add collections. A user can create a group of products with a name and description.
+  - Collections can be added, edited, and created on a user's profile, a product's page, or the collection's dedicated page.
   - Collections appear on the user page collections tab.
   - Collections can be private or public.
   - If public, collections appear on the product's collections tab.
