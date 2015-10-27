@@ -210,16 +210,9 @@ const ProductPage = React.createClass({
         {this.renderLinksModal()}
         {this.renderShareModal()}
         <ProductPageDesktopVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
-          onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.openModal}
-          showAddToCollectionModal={this.showAddToCollectionModal} onCollectionEdit={this.showCollectionModalForEditing}
-          onCollectionShare={this.showCollectionShareModal} {...this.state} />
-
+          onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.openModal} {...this.state} />
         <ProductPageMobileVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
-          onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.openModal}
-          showAddToCollectionModal={this.showAddToCollectionModal} onCollectionEdit={this.showCollectionModalForEditing}
-          onCollectionShare={this.showCollectionShareModal} {...this.state} />
-
-        {this.renderAddToCollectionModal(this.state.data)}
+          onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.openModal} {...this.state} />
       </div>
     );
   }
