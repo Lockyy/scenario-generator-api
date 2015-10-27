@@ -33,13 +33,9 @@ const CollectionTypeahead  = React.createClass({
       name: 'collections',
       displayKey: 'title',
       templates: {
-        header: function(data) {
-          let query = data.query;
-          return `<p class='tt-no-results tt-empty' data-query='${query}'>“${query}”<span class='tt-help'>Add User <i class="add-symbol"> + </i></span></p>`
-        },
         empty: function(data) {
           let query = data.query;
-          return `<p class='tt-no-results' data-query='${query}'>“${query}”<span class='tt-help'>Add User <i class="add-symbol"> + </i></span></p>`
+          return `<p class='tt-no-results' data-query='${query}'>No Results for “${query}”</p>`
         },
         suggestion: function(data) {
           let title = data.title.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
@@ -53,8 +49,10 @@ const CollectionTypeahead  = React.createClass({
     this.props._onSelectCollection({ title: collection_title }, false)
   },
 
-  _onSelectCollection: function _onSelectUser(collection) {
-    this.props._onSelectCollection(collection, true);
+  _onSelectCollection: function _onSelectCollection(collection) {
+    if(collection.id) {
+      this.props._onSelectCollection(collection, true);
+    }
   },
 
   _scrollToInput: function _scrollToInput() {

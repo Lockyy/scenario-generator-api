@@ -19,6 +19,7 @@ class CollectionStore {
 
   handleAddCollection(newCollection) {
     this.data.collections.push(newCollection);
+    this.data.collection = newCollection;
   }
 
   handleRemoveCollection(id) {
@@ -44,10 +45,13 @@ class CollectionStore {
   }
 
   handleClearCollection() {
-    this.data.collection ={
+    this.data.collection = {
       title: '',
       description: '',
-      products: []
+      products: [],
+      user: {
+        name: ''
+      }
     };
     this.error = null;
   }

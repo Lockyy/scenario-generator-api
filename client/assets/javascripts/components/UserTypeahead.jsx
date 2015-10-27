@@ -33,13 +33,9 @@ const UserTypeahead  = React.createClass({
       name: 'users',
       displayKey: 'name',
       templates: {
-        header: function(data) {
-          let query = data.query;
-          return `<p class='tt-no-results tt-empty' data-query='${query}'>“${query}”<span class='tt-help'>Add User <i class="add-symbol"> + </i></span></p>`
-        },
         empty: function(data) {
           let query = data.query;
-          return `<p class='tt-no-results' data-query='${query}'>“${query}”<span class='tt-help'>Add User <i class="add-symbol"> + </i></span></p>`
+          return `<p class='tt-no-results' data-query='${query}'>No Results for “${query}”</p>`
         },
         suggestion: function(data) {
           let name = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
@@ -54,7 +50,9 @@ const UserTypeahead  = React.createClass({
   },
 
   _onSelectUser: function _onSelectUser(user) {
-    this.props.onSetUser(user, true);
+    if(user.id) {
+      this.props.onSetUser(user, true);
+    }
   },
 
   _scrollToInput: function _scrollToInput() {
