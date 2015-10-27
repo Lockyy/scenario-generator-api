@@ -40,7 +40,7 @@ const UserProfileRecentActivity  = React.createClass({
         className={`my-collections-container work-area-section ${this.isActiveTab('collections') ? '' : 'hide'}`}
         ref='collections' >
         <div className='placeholder-section message'>
-          Collections are create by users to group products they are interested.
+          Collections are created by users to group products they are interested.
         </div>
         <CollectionsCollection
           collections={this.props.collections}

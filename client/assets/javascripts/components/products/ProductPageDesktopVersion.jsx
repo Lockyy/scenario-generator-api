@@ -218,7 +218,7 @@ const ProductPageDesktopVersion = React.createClass({
               <div className='header'>
               </div>
               <div className='placeholder-section message'>
-                Collections are create by users to group products they are interested. They can even be shared or made public. Create one yourself!
+                Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!
               </div>
               <div className='btn btn-round btn-red' onClick={() => this.props.showAddToCollectionModal(this.props.data)}>
                 Add product to a Collection
