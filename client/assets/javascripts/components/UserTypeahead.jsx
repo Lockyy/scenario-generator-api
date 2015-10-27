@@ -97,7 +97,7 @@ const UserTypeahead  = React.createClass({
       <div className='form-group typeahead'>
         {this.props.hideLabel ? null : (<label id='product_name_label' htmlFor='user[name]'>{"User's Name"}</label>)}
         <TypeAhead name='user[name]' value={this.props.value} className='form-control'
-          id='user_name' placeholder='Type in the name of the user'
+          id='user_name' placeholder='Search users and add them'
           bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
           onSelectOption={this._onSelectUser} onChange={this._onNameChange}
           onRender={this._hideCreateWhenMatch} onFocus={this._resizeFormGroup}

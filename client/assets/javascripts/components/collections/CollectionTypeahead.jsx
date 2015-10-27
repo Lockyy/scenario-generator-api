@@ -97,7 +97,7 @@ const CollectionTypeahead  = React.createClass({
       <div className='form-group typeahead'>
         {this.props.hideLabel ? null : (<label id='collection_title_label' htmlFor='collection[title]'>{"Collection's Title"}</label>)}
         <TypeAhead name='collection[title]' value={this.props.value} className='form-control'
-          id='collection_title' placeholder='Type in the title of the collection'
+          id='collection_title' placeholder='Search collections and add to them'
           bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
           onSelectOption={this._onSelectCollection} onChange={this._onNameChange}
           onRender={this._hideCreateWhenMatch} onFocus={this._resizeFormGroup}
