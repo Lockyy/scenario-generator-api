@@ -15,7 +15,7 @@ import UserTags from './components/users/UserTags';
 import Notifications from './components/notifications/Notifications';
 import UserBookmarks from './components/users/UserBookmarks';
 import MyRecentActivity from './components/menu/MyRecentActivity';
-import AlertModal from './components/AlertModal';
+import ModalManager from './components/ModalManager';
 import FluxCurrentUserActions from './actions/FluxCurrentUserActions';
 import { Router, Route } from 'react-router';
 import { history } from 'react-router/lib/BrowserHistory';
@@ -94,8 +94,8 @@ $(function onLoad() {
                 ), $('#notifications')[0]);
 
                 React.render((
-                    <AlertModal router={router} />
-                ), $('#alert')[0]);
+                    <ModalManager router={router} />
+                ), $('#modals')[0]);
             });
         })
     };
