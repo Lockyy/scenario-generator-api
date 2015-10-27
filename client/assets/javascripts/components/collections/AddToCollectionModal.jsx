@@ -54,7 +54,9 @@ const AddToCollectionMixin = {
   },
 
   onAddToCollection: function(product_id, collection_id, resolve) {
-    FluxCollectionActions.addProductToCollection(product_id, collection_id, resolve)
+    if(product_id && collection_id) {
+      FluxCollectionActions.addProductToCollection(product_id, collection_id, resolve)
+    }
   }
 };
 
