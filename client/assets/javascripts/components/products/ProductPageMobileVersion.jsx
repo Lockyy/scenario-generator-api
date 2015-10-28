@@ -13,11 +13,12 @@ import Section from '../Section';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
-import CollectionsCollection from '../collections/CollectionsCollection'
+import CollectionsCollection from '../collections/CollectionsCollection';
+import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
 
 const ProductPageMobileVersion = React.createClass({
   displayName: 'ProductPageMobileVersion',
-  mixins: [ Navigation ],
+  mixins: [ Navigation, AddToCollectionMixin ],
 
   id: function() {
     return this.props.data.id
@@ -274,7 +275,7 @@ const ProductPageMobileVersion = React.createClass({
 
           <div className='col-xs-12 tags'>
             <Section hasPagination={false} title={"Collections"}>
-              <div className='btn btn-round btn-red'>
+              <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal(this.props.data)}>
                 Add to a Collection
               </div>
               <CollectionsCollection />

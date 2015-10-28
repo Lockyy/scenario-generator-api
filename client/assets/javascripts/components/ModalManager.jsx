@@ -5,6 +5,7 @@ import Modal from 'react-modal';
 import AlertModal from './AlertModal';
 import { CreateCollectionMixin } from './collections/CreateCollectionModal'
 import { ShareCollectionMixin } from './collections/ShareCollectionModal'
+import { AddToCollectionMixin } from './collections/AddToCollectionModal'
 
 var appElement = document.getElementById('content');
 
@@ -16,6 +17,7 @@ const ModalManager = React.createClass ({
   mixins: [
     CreateCollectionMixin,
     ShareCollectionMixin,
+    AddToCollectionMixin,
   ],
 
   render: function() {
@@ -24,6 +26,7 @@ const ModalManager = React.createClass ({
         <AlertModal router={this.props.router} />
         { this.renderCreateCollectionModal() }
         { this.renderShareCollectionModal() }
+        { this.renderAddToCollectionModal() }
       </div>
     )
   }
