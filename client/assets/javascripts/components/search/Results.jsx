@@ -102,11 +102,15 @@ const Results = React.createClass ({
               { result.name }
             </div>
           </div>
-          <div className='col-xs-2'>
-            <div className='remove-button' onClick={() => this.props.onRemove(result.id)}>
-              Remove
-            </div>
-          </div>
+          {
+            this.props.onRemove ? (
+              <div className='col-xs-2'>
+                <div className='remove-button' onClick={() => this.props.onRemove(result.id)}>
+                  Remove
+                </div>
+              </div>
+            ) : null
+          }
         </div>
       )
     }
@@ -121,9 +125,13 @@ const Results = React.createClass ({
               { result.name }
             </div>
             <Rating value={result.rating} name='rating' />
-            <div className='remove' onClick={() => this.props.onRemove(result.id)}>
-              Remove
-            </div>
+            {
+              this.props.onRemove ? (
+                <div className='remove' onClick={() => this.props.onRemove(result.id)}>
+                  Remove
+                </div>
+              ) : null
+            }
           </div>
         </div>
       </div>

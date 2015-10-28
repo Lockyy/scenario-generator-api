@@ -12,11 +12,6 @@ import ProductName from '../reviews/ProductName'
 import Results from '../search/Results'
 import { ShareCollectionMixin } from './ShareCollectionModal'
 
-var appElement = document.getElementById('content');
-
-Modal.setAppElement(appElement);
-Modal.injectCSS();
-
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
 const CreateCollectionMixin = {
@@ -27,7 +22,8 @@ const CreateCollectionMixin = {
 
   closeCreateCollectionModal: function() {
     $('body').removeClass('no-scroll');
-    FluxModalActions.closeModal()
+    FluxModalActions.closeModal();
+    FluxCollectionActions.clearCollection();
   },
 
   showCreateCollectionModal: function() {
@@ -244,12 +240,15 @@ const CreateCollectionModal = React.createClass ({
   renderCollectionForm: function() {
     return (
       <div className='row'>
-        <form className='col-xs-12 col-sm-10 col-sm-offset-1 form collection'
+        <form className='col-xs-12 form collection'
               ref='collection_form'>
           {this.renderTextFields()}
           {this.renderProductTypeahead()}
-          {this.renderProducts()}
-          {this.renderSubmissionButtons()}
+
+          <div className='grey'>
+            {this.renderProducts()}
+            {this.renderSubmissionButtons()}
+          </div>
         </form>
       </div>
     )
@@ -261,19 +260,17 @@ const CreateCollectionModal = React.createClass ({
         <span className='title'>
           Create Collection
         </span>
-        <span onClick={this.close} className='close'>x</span>
+        <span onClick={this.props.close} className='close'>x</span>
       </div>
     )
   },
 
-  modalVisible: function() {
-    return this.state.visible
-  },
-
   render: function() {
     return (
-      <Modal isOpen={this.modalVisible()}>
-        <div className='back-button' onClick={this.close}>{"< Close"}</div>
+      <Modal
+        isOpen={this.state.visible}
+        onRequestClose={this.props.close}>
+        <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
         {this.renderheader()}
         {this.renderCollectionForm()}
       </Modal>

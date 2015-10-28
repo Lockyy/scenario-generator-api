@@ -24,7 +24,8 @@ const ShareCollectionMixin = {
 
   closeShareCollectionModal: function() {
     $('body').removeClass('no-scroll');
-    FluxModalActions.closeModal()
+    FluxModalActions.closeModal();
+    FluxCollectionActions.clearCollection();
   },
 
   showShareCollectionModal: function(collection) {
@@ -40,13 +41,12 @@ const ShareCollectionModal = React.createClass ({
 
   getInitialState: function() {
     return {
-      data: {
-        collection: {
-          title: '',
-          description: '',
-          products: [],
-          owner: this.context.currentUser
-        }
+      collection: {
+        title: '',
+        description: '',
+        products: [],
+        owner: this.context.currentUser,
+        users: []
       }
     }
   },
@@ -54,11 +54,11 @@ const ShareCollectionModal = React.createClass ({
   // Flux Methods
   // Keep track of changes that are made to the store
   componentDidMount: function() {
-    CollectionStore.listen(this.onChange);
+    CollectionStore.listen(this.onChangeCollection);
     ModalStore.listen(this.onChangeModal);
   },
-  onChange: function(data) {
-    this.setState({data: data.data});
+  onChangeCollection: function(data) {
+    this.setState({collection: data.data.collection});
   },
   onChangeModal: function(data) {
     let visible = data.visibleModal == this.constructor.displayName;
@@ -67,19 +67,19 @@ const ShareCollectionModal = React.createClass ({
 
   // Gather the IDs for the users currently being shared to.
   getUserIDs: function() {
-    return _.map(this.state.data.collection.users, function(user) {
+    return _.map(this.state.collection.users, function(user) {
       return user.id
     })
   },
 
   updateUsers: function(users) {
-    let collection = this.state.data.collection
+    let collection = this.state.collection
     collection.users = users
-    this.setState({ user_name: null, data: { collection: collection }})
+    this.setState({ user_name: null, collection: collection })
   },
 
   removeUser: function(user_id) {
-    let updatedUsers = this.state.data.collection.users.filter(function(user) {
+    let updatedUsers = this.state.collection.users.filter(function(user) {
       return user.id !== user_id;
     });
 
@@ -87,7 +87,7 @@ const ShareCollectionModal = React.createClass ({
   },
 
   addUser: function(user) {
-    let users = this.state.data.collection.users;
+    let users = this.state.collection.users;
     users.push(user)
     this.updateUsers(users);
   },
@@ -104,8 +104,8 @@ const ShareCollectionModal = React.createClass ({
     e.preventDefault()
 
     let _this = this
-    let id    = this.state.data.collection.id
-    let title = this.state.data.collection.title
+    let id    = this.state.collection.id
+    let title = this.state.collection.title
     let users = this.getUserIDs()
 
     FluxCollectionActions.shareCollection(id, users, function() {
@@ -133,12 +133,14 @@ const ShareCollectionModal = React.createClass ({
   },
 
   renderUsers: function() {
-    return (
-      <Results
-        type='users'
-        onRemove={this.removeUser}
-        data={{data: this.state.data.collection.users}} />
-    )
+    if(this.state.collection.users.length > 0) {
+      return (
+        <Results
+          type='users'
+          onRemove={this.removeUser}
+          data={{data: this.state.collection.users}} />
+      )
+    }
   },
 
   renderSubmissionButtons: function() {
@@ -153,11 +155,14 @@ const ShareCollectionModal = React.createClass ({
   renderShareForm: function() {
     return (
       <div className='row'>
-        <form className='col-xs-10 col-xs-offset-1 form collection'
+        <form className='col-xs-12 form collection'
               ref='collection_form'>
           {this.renderUserTypeahead()}
-          {this.renderUsers()}
-          {this.renderSubmissionButtons()}
+
+          <div className='grey'>
+            {this.renderUsers()}
+            {this.renderSubmissionButtons()}
+          </div>
         </form>
       </div>
     )
@@ -167,17 +172,19 @@ const ShareCollectionModal = React.createClass ({
     return (
       <div className='header'>
         <span className='title'>
-          Share {this.state.data.collection.title} with others
+          Share {this.state.collection.title} with others
         </span>
-        <span onClick={this.close} className='close'>x</span>
+        <span onClick={this.props.close} className='close'>x</span>
       </div>
     )
   },
 
   render: function() {
     return (
-      <Modal isOpen={this.state.visible}>
-        <div className='back-button' onClick={this.close}>{"< Close"}</div>
+      <Modal
+        isOpen={this.state.visible}
+        onRequestClose={this.props.close}>
+        <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
         {this.renderheader()}
         {this.renderShareForm()}
       </Modal>

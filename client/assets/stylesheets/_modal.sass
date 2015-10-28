@@ -1,5 +1,7 @@
 @import 'variables'
 
+$modal-padding: 25px
+
 .app
   .ReactModal__Overlay
     z-index: 999999
@@ -12,7 +14,7 @@
       border-radius: 4px
       border: 0px
       top: 200px
-      padding-bottom: 35px
+      padding: $modal-padding $modal-padding $modal-padding
       overflow: visible
       .collection-details
         .owner
@@ -21,15 +23,32 @@
           span:last-child
             color: $primary-red
         .header
-          border-bottom-color: $grey
+          border-bottom: none
+          margin-bottom: 0px
           .title
             font-size: 20px
         .collection-description
-          margin-bottom: 15px
+          margin-bottom: 25px
           max-height: 200px
           overflow-y: auto
         .collection-products
           margin-bottom: 20px
+      .grey
+        background: $light-grey
+        margin-left: (0px - $modal-padding)
+        margin-right: (0px - $modal-padding)
+        margin-bottom: (0px - $modal-padding)
+        padding: $modal-padding $modal-padding $modal-padding
+        .buttons
+          border-top: 1px solid $grey
+          border-bottom: 1px solid $grey
+          padding: 15px
+          &:first-child
+            border-top: 0px
+            padding-top: 0px
+          &:last-child
+            border-bottom: 0px
+            padding-bottom: 0px
       .results
         max-height: 190px
         overflow-y: auto
@@ -39,7 +58,7 @@
         justify-content: space-around
       .new-collection-link
         color: $primary-red
-        margin-top: 10px
+        margin-top: 15px
         cursor: pointer
         text-decoration: underline
       .header
