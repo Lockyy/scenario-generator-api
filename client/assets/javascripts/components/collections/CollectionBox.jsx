@@ -6,9 +6,13 @@ import TextHelper from '../../utils/helpers/TextHelper';
 import Dropdown from '../Dropdown';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxAlertActions from '../../actions/FluxAlertActions';
+import { ViewCollectionMixin } from '../collections/ViewCollectionModal';
 
 const CollectionBox = React.createClass ({
   displayName: 'CollectionBox',
+  mixins: [
+    ViewCollectionMixin,
+  ],
 
   contextTypes: {
     router: React.PropTypes.object,
@@ -141,7 +145,9 @@ const CollectionBox = React.createClass ({
               { this.renderTop() }
 
               <div className="header">
-                {this.props.collection.title}
+                <h3 className='title'
+                    onClick={() => this.showViewCollectionModal(this.props.collection)}>
+                  {this.props.collection.title}
                 </h3>
               </div>
 
