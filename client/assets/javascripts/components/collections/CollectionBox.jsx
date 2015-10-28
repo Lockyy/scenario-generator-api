@@ -7,11 +7,13 @@ import Dropdown from '../Dropdown';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxAlertActions from '../../actions/FluxAlertActions';
 import { ViewCollectionMixin } from '../collections/ViewCollectionModal';
+import { ShareCollectionMixin } from '../collections/ShareCollectionModal';
 
 const CollectionBox = React.createClass ({
   displayName: 'CollectionBox',
   mixins: [
     ViewCollectionMixin,
+    ShareCollectionMixin
   ],
 
   contextTypes: {
@@ -87,7 +89,8 @@ const CollectionBox = React.createClass ({
         <div  className='btn btn-red-inverted btn-round'>
           Edit
         </div>
-        <div  className='btn btn-red-inverted btn-round'>
+        <div  className='btn btn-red-inverted btn-round'
+              onClick={() => this.showShareCollectionModal(this.props.collection)}>
           Share
         </div>
         <div  className='btn btn-red-inverted btn-round'
