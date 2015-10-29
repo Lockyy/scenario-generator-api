@@ -4,6 +4,7 @@ import { Link, Navigation } from 'react-router';
 import Modal from 'react-modal';
 import CollectionStore from '../../stores/CollectionStore';
 import ModalStore from '../../stores/ModalStore';
+import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
 import FluxAlertActions from '../../actions/FluxAlertActions';
 import FluxModalActions from '../../actions/FluxModalActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
@@ -269,7 +270,8 @@ const CreateCollectionModal = React.createClass ({
     return (
       <Modal
         isOpen={this.state.visible}
-        onRequestClose={this.props.close}>
+        onRequestClose={this.props.close}
+        style={DefaultModalStyles}>
         <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
         {this.renderheader()}
         {this.renderCollectionForm()}

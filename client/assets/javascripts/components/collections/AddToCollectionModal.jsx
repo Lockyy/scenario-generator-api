@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import Modal from 'react-modal';
+import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
 import ProductStore from '../../stores/ProductStore';
 import CollectionStore from '../../stores/CollectionStore';
 import ModalStore from '../../stores/ModalStore';
@@ -198,7 +199,8 @@ const AddToCollectionModal = React.createClass ({
     return (
       <Modal
         isOpen={this.state.visible}
-        onRequestClose={this.props.close}>
+        onRequestClose={this.props.close}
+        style={DefaultModalStyles}>
         <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
         <div className='header'>
           <span className='title'>

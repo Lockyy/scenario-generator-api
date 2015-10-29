@@ -2,6 +2,7 @@ import _ from 'lodash'
 import React from 'react'
 import timeago from 'timeago'
 import { Link, Navigation } from 'react-router'
+import DefaultModalStyles from '../utils/constants/DefaultModalStyles';
 import Modal from 'react-modal'
 import AlertStore from '../stores/AlertStore'
 
@@ -88,7 +89,9 @@ const AlertModal = React.createClass({
 
   render: function() {
     return (
-      <Modal isOpen={this.state.modalIsOpen}>
+      <Modal  isOpen={this.state.modalIsOpen}
+              style={DefaultModalStyles}
+              overlayClassName={'alert-modal'}>
         <div className='header'>
           <span className='title'>
             {this.state.data.title}
