@@ -8,12 +8,14 @@ import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxAlertActions from '../../actions/FluxAlertActions';
 import { ViewCollectionMixin } from '../collections/ViewCollectionModal';
 import { ShareCollectionMixin } from '../collections/ShareCollectionModal';
+import { EditCollectionMixin } from '../collections/EditCollectionModal';
 
 const CollectionBox = React.createClass ({
   displayName: 'CollectionBox',
   mixins: [
     ViewCollectionMixin,
-    ShareCollectionMixin
+    ShareCollectionMixin,
+    EditCollectionMixin
   ],
 
   contextTypes: {
@@ -86,7 +88,8 @@ const CollectionBox = React.createClass ({
   renderUserFooter: function() {
     return (
       <div className='footer'>
-        <div  className='btn btn-red-inverted btn-round'>
+        <div  className='btn btn-red-inverted btn-round'
+              onClick={() => this.showEditCollectionModal(this.props.collection)}>
           Edit
         </div>
         <div  className='btn btn-red-inverted btn-round'
