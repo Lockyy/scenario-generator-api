@@ -15,6 +15,7 @@ import Tags from '../Tags'
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
+import { ShareProductMixin } from './ShareProductModal';
 
 var appElement = document.getElementById('content');
 
@@ -23,7 +24,7 @@ Modal.injectCSS();
 
 const ProductPage = React.createClass({
   displayName: 'ProductPage',
-  mixins: [ Navigation, AddToCollectionMixin ],
+  mixins: [ Navigation, AddToCollectionMixin, ShareProductMixin ],
 
   id: function() {
     return this.state.data.id || this.props.params.id;
@@ -82,19 +83,6 @@ const ProductPage = React.createClass({
     })
   },
 
-  copyLink: function() {
-    let copyTextarea = $(this.refs.locationLink.getDOMNode());
-    let linkCopyButton = $(this.refs.linkCopyButton.getDOMNode())
-    copyTextarea.select();
-
-    try {
-      let successful = document.execCommand('copy');
-      linkCopyButton.html('Copied!')
-      setTimeout(function() { linkCopyButton.html('Copy Link') }, 2000)
-    } catch (err) { console.log('Oops, unable to copy'); }
-    copyTextarea.blur()
-  },
-
   getCurrentUserReview: function() {
     if(this.state && this.state.data.review) {
       return this.state.data.review
@@ -117,32 +105,6 @@ const ProductPage = React.createClass({
     } else {
       return `/app/products/${this.id()}/reviews/new`
     }
-  },
-
-  renderShareModal: function() {
-    return (
-      <Modal
-        isOpen={this.state.modalIsOpen}
-        onRequestClose={this.closeModal} >
-        <div className='header'>
-          <span className='title'>
-            Share this product with other users
-          </span>
-          <span onClick={this.closeModal} className='close'>x</span>
-        </div>
-        <div className="input-group">
-          <input  type="text"
-                  className="form-control"
-                  aria-describedby="basic-addon2"
-                  value={window.location.href}
-                  ref='locationLink' />
-          <span className="input-group-addon copy-link"
-                id="basic-addon2"
-                ref='linkCopyButton'
-                onClick={this.copyLink}>Copy Link</span>
-        </div>
-      </Modal>
-    )
   },
 
   renderLinksModal: function() {
@@ -208,11 +170,10 @@ const ProductPage = React.createClass({
       <div className='product show'>
         {this.renderFilesModal()}
         {this.renderLinksModal()}
-        {this.renderShareModal()}
         <ProductPageDesktopVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
-          onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.openModal} {...this.state} />
+          onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.showShareProductModal} {...this.state} />
         <ProductPageMobileVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
-          onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.openModal} {...this.state} />
+          onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.showShareProductModal} {...this.state} />
       </div>
     );
   }

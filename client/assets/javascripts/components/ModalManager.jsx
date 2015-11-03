@@ -8,6 +8,7 @@ import { ShareCollectionMixin } from './collections/ShareCollectionModal'
 import { AddToCollectionMixin } from './collections/AddToCollectionModal'
 import { ViewCollectionMixin } from './collections/ViewCollectionModal'
 import { EditCollectionMixin } from './collections/EditCollectionModal'
+import { ShareProductMixin } from './products/ShareProductModal';
 
 var appElement = document.getElementById('content');
 
@@ -22,6 +23,7 @@ const ModalManager = React.createClass ({
     AddToCollectionMixin,
     ViewCollectionMixin,
     EditCollectionMixin,
+    ShareProductMixin
   ],
 
   render: function() {
@@ -33,6 +35,7 @@ const ModalManager = React.createClass ({
         { this.renderAddToCollectionModal() }
         { this.renderViewCollectionModal() }
         { this.renderEditCollectionModal() }
+        { this.renderShareProductModal() }
       </div>
     )
   }
