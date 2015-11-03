@@ -20,6 +20,10 @@ class Tag < ActiveRecord::Base
     order('RANDOM()')
   end
 
+  scope :with_products, ->() do
+    where{tag_taggables_count > 0}
+  end
+
   before_validation :downcase_name!
 
   validates :name, presence: true, uniqueness: true

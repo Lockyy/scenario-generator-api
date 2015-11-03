@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150903153335) do
+ActiveRecord::Schema.define(version: 20151103160006) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,29 @@ ActiveRecord::Schema.define(version: 20150903153335) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "collection_products", force: :cascade do |t|
+    t.integer  "product_id"
+    t.integer  "collection_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "collection_users", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "collection_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "collections", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.string   "description"
+    t.integer  "privacy",     default: 0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
   create_table "companies", force: :cascade do |t|
     t.string   "name"
     t.string   "url"
@@ -89,6 +112,18 @@ ActiveRecord::Schema.define(version: 20150903153335) do
     t.integer  "review_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.string   "text"
+    t.string   "notification_subject_type"
+    t.integer  "notification_subject_id"
+    t.integer  "user_id"
+    t.integer  "sender_id"
+    t.integer  "notification_type"
+    t.boolean  "viewed",                    default: false
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -137,9 +172,10 @@ ActiveRecord::Schema.define(version: 20150903153335) do
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.string   "slug"
+    t.integer  "tag_taggables_count"
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", using: :btree
