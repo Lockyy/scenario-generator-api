@@ -5,11 +5,13 @@ import FluxNotificationsActions from './FluxNotificationsActions'
 
 class FluxModalActions {
   setVisibleModal(modal) {
+    $('body').addClass('no-scroll');
     this.dispatch(modal);
   }
 
   closeModal() {
     this.dispatch(null);
+    $('body').removeClass('no-scroll');
   }
 }
 

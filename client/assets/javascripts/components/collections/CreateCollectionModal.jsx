@@ -22,14 +22,11 @@ const CreateCollectionMixin = {
   },
 
   closeCreateCollectionModal: function() {
-    $('body').removeClass('no-scroll');
     FluxModalActions.closeModal();
     FluxCollectionActions.clearCollection();
   },
 
   showCreateCollectionModal: function() {
-    $(window).scrollTop(0);
-    $('body').addClass('no-scroll');
     FluxModalActions.setVisibleModal('CreateCollectionModal')
   },
 

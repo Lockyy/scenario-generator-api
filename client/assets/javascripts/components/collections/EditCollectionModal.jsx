@@ -22,14 +22,11 @@ const EditCollectionMixin = {
   },
 
   closeEditCollectionModal: function() {
-    $('body').removeClass('no-scroll');
     FluxModalActions.closeModal();
     FluxCollectionActions.clearCollection();
   },
 
   showEditCollectionModal: function(collection) {
-    $(window).scrollTop(0);
-    $('body').addClass('no-scroll');
     FluxCollectionActions.fetchedCollection(collection);
     FluxModalActions.setVisibleModal('EditCollectionModal');
   }

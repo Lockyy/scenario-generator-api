@@ -24,14 +24,11 @@ const ShareCollectionMixin = {
   },
 
   closeShareCollectionModal: function() {
-    $('body').removeClass('no-scroll');
     FluxModalActions.closeModal();
     FluxCollectionActions.clearCollection();
   },
 
   showShareCollectionModal: function(collection) {
-    $(window).scrollTop(0);
-    $('body').addClass('no-scroll');
     FluxModalActions.setVisibleModal('ShareCollectionModal');
     FluxCollectionActions.fetchedCollection(collection);
   }
