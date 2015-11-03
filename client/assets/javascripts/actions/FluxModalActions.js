@@ -5,6 +5,7 @@ import FluxNotificationsActions from './FluxNotificationsActions'
 
 class FluxModalActions {
   setVisibleModal(modal) {
+    $(window).scrollTop(0);
     $('body').addClass('no-scroll');
     this.dispatch(modal);
   }
