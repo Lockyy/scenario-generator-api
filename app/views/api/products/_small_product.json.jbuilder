@@ -7,3 +7,5 @@ json.bookmarked product.bookmarked?(current_user)
 json.company do
   json.(product.company, :id, :name, :slug) if product.company
 end
+
+json.reviews product.reviews, partial: 'api/reviews/review', as: :review

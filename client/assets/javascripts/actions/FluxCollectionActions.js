@@ -5,10 +5,13 @@ import FluxNotificationsActions from './FluxNotificationsActions'
 
 class FluxCollectionActions {
 
-  fetchCollection(id) {
+  fetchCollection(id, resolve) {
     CollectionAPI.fetchCollection(id,
       (data) => {
         this.actions.fetchedCollection(data);
+        if(resolve) {
+          resolve();
+        }
       },
       (error) => {
         this.actions.registerError(error);
@@ -77,7 +80,7 @@ class FluxCollectionActions {
       (data) => {
         this.actions.removeCollection(collection.id);
         FluxNotificationsActions.showNotification({
-          type: 'delete',
+          type: 'deleted',
           subject: {
             id: collection.id,
             type: 'Collection',

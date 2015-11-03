@@ -60,6 +60,7 @@ $modal-padding: 25px
           border-top: 1px solid $grey
           border-bottom: 1px solid $grey
           padding-top: 15px
+          padding-bottom: 15px
           &:first-child
             border-top: 0px
             padding-top: 0px
@@ -69,10 +70,12 @@ $modal-padding: 25px
       .results
         max-height: 190px
         overflow-y: auto
-        margin-bottom: 15px
+        .review
+          display: flex
+          align-items: center
       .buttons
         display: flex
-        justify-content: space-between
+        justify-content: space-around
       .new-collection-link
         color: $primary-red
         margin-top: 15px

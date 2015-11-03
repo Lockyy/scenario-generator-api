@@ -37,7 +37,7 @@ const CreateCollectionMixin = {
   // 'Create New Collection'
   showCreateCollectionModalWithProduct: function(product) {
     FluxCollectionActions.fetchedCollection({
-      title: '', description: '', products: [product]
+      title: '', description: '', products: [product], users: []
     });
     this.showCreateCollectionModal()
   }
@@ -62,10 +62,10 @@ const CreateCollectionModal = React.createClass ({
   // Flux Methods
   // Keep track of changes that are made to the store
   componentDidMount: function() {
-    CollectionStore.listen(this.onChange);
+    CollectionStore.listen(this.onChangeCollection);
     ModalStore.listen(this.onChangeModal);
   },
-  onChange: function(data) {
+  onChangeCollection: function(data) {
     this.setState({data: data.data});
   },
   onChangeModal: function(data) {
