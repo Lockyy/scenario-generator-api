@@ -110,7 +110,7 @@ const EditCollectionModal = React.createClass ({
 
   sendNotificationOnUpdate: function(collection) {
     FluxNotificationsActions.showNotification({
-      type: 'collection',
+      type: 'saved',
       subject: {
         id: collection.id,
         type: 'Collection',

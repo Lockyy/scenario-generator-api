@@ -113,10 +113,10 @@ const ShareCollectionModal = React.createClass ({
       _this.props.close()
 
       FluxNotificationsActions.showNotification({
-        type: 'sent-share',
+        type: 'shared',
         subject: {
           id: id,
-          type: 'share',
+          type: 'Collection',
           name: title
         }
       })

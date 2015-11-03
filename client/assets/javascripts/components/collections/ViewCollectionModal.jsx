@@ -26,8 +26,14 @@ const ViewCollectionMixin = {
   showViewCollectionModal: function(collection) {
     $(window).scrollTop(0);
     $('body').addClass('no-scroll');
-    FluxCollectionActions.fetchedCollection(collection);
-    FluxModalActions.setVisibleModal('ViewCollectionModal')
+    if(!collection.products) {
+      FluxCollectionActions.fetchCollection(collection.id, function() {
+        FluxModalActions.setVisibleModal('ViewCollectionModal');
+      })
+    } else {
+      FluxCollectionActions.fetchedCollection(collection);
+      FluxModalActions.setVisibleModal('ViewCollectionModal');
+    }
   }
 };
 
