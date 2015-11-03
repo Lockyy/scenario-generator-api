@@ -5,8 +5,8 @@ Warden.test_mode!
 describe "Tag Directory", js: true do
   before do
     @user = login_user
-    @tag_a = create(:tag, name: 'asd')
-    @tag_b = create(:tag, name: 'bsd')
+    @tags_a = create_list(:tag, 12, :name_a)
+    @tags_b = create_list(:tag, 13, :name_b)
     visit "/app/tags"
     wait_for_ajax
   end
@@ -35,12 +35,12 @@ describe "Tag Directory", js: true do
 
   describe 'clicking HIDE on a section' do
     before do
-      @section = first(".results.tags.#{@tag_a.name[0]}")
+      @section = first(".results.tags.#{@tags_a.first.name[0]}")
       @section.find_link('HIDE').trigger('click')
     end
 
     it 'hides the tags' do
-      expect(@section).to_not have_content @tag_a.name
+      expect(@section).to_not have_content @tags_a.first.name
     end
 
     it 'toggles the links to SHOW links' do
@@ -54,7 +54,7 @@ describe "Tag Directory", js: true do
       end
 
       it 'shows the tags' do
-        expect(@section).to have_content @tag_a.name
+        expect(@section).to have_content @tags_a.first.name
       end
 
       it 'toggles the links to HIDE links' do
@@ -70,30 +70,34 @@ describe "Tag Directory", js: true do
     end
 
     it 'redirects you to the tags page' do
-      expect(page).to have_content 'Tagged In'
+      expect(page).to have_content 'TAGGED IN'
     end
   end
 
+
   describe 'When displaying all tags' do
     it 'shows all tags' do
-      expect(page).to have_content @tag_a.name
-      expect(page).to have_content @tag_b.name
+      [@tags_a, @tags_b].each do |tag_collection|
+        tag_collection.each do |tag|
+          expect(page).to have_content tag.name
+        end
+      end
     end
 
     it 'should not show a results total' do
-      expect(page).to_not have_content 'result(s) found'
+      expect(page).to_not have_content 'results found'
     end
   end
 
   describe 'When displaying just one section' do
     before do
-      visit "/app/tags/#{@tag_a.name[0]}"
+      visit "/app/tags/#{@tags_a.first.name[0]}"
       wait_for_ajax
     end
 
     it 'shows only tags for that section tags' do
-      expect(page).to have_content @tag_a.name
-      expect(page).to_not have_content @tag_b.name
+      expect(page).to have_content @tags_a.first.name
+      expect(page).to_not have_content @tags_b.first.name
     end
 
     it 'does not show the hide buttons' do
@@ -101,7 +105,7 @@ describe "Tag Directory", js: true do
     end
 
     it 'shows the total results for that section' do
-      expect(page).to have_content '1 result(s) found'
+      expect(page).to have_content "#{@tags_a.length} results found"
     end
   end
 end
