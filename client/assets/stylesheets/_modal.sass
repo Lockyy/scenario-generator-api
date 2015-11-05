@@ -97,6 +97,50 @@ $modal-padding: 25px
       .copy-link
         cursor: pointer
 
+      .attachments, .links
+        list-style: none
+
+      .attachments
+        list-style: none
+        padding: 0
+        margin-top: 0
+        .attachment
+          color: $dark-grey
+          padding: 15px 0
+          border-bottom: 1px solid $grey
+          .thumbnail
+            float: left
+            margin-right: 20px
+            max-height: 50px
+            overflow: hidden
+          .attachment-link
+            padding: 0
+            display: block
+            color: $blackish-grey
+            margin-bottom: 10px
+          .author, .created_at
+            font-size: 13px
+          .created_at
+            float: right
+
+      .links
+        padding-left: 0px
+        .link-item
+          padding: 10px 0
+          text-align: left
+          border-bottom: 1px solid $grey
+          .link-details
+            color: $dark-grey
+            .link
+              display: block
+              text-decoration: underline
+              margin-bottom: 10px
+            .author, .created_at
+              width: 50%
+              display: inline-block
+            .created_at
+              text-align: right
+
 @media (max-width:480px)
   .app
     .ReactModal__Overlay

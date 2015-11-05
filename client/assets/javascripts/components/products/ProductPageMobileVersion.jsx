@@ -114,18 +114,6 @@ const ProductPageMobileVersion = React.createClass({
     )
   },
 
-  showFiles: function(e) {
-    e.preventDefault();
-
-    $('#files-modal').modal();
-  },
-
-  showLinks: function(e) {
-    e.preventDefault();
-
-    $('#links-modal').modal();
-  },
-
   renderInfo: function() {
     let attachments = this.getProductData('attachments');
     let links = this.getProductData('links');
@@ -151,13 +139,13 @@ const ProductPageMobileVersion = React.createClass({
           </div>
           <PriceRating value={this.getProductData('price')} name='rating'/>
           <div className="files">
-            <a className="files-link" href='#show-attachments' onClick={this.showFiles}
+            <a className="files-link" href='#show-attachments' onClick={this.props.showFiles}
               data-toggle="modal" data-target="#files-modal" >
               {this.getProductData('attachments').length} File{attachments.length > 1 || attachments.length == 0 ? 's' : ''} Added
             </a>
           </div>
           <div className="more-links">
-            <a className="links-link" href='#show-links' onClick={this.showLinks}
+            <a className="links-link" href='#show-links' onClick={this.props.showLinks}
               data-toggle="modal" data-target="#links-modal" >
               {this.getProductData('links').length} Link{links.length > 1 || links.length == 0 ? 's' : ''} Added
             </a>

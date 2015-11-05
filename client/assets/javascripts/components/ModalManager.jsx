@@ -3,12 +3,14 @@ import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import Modal from 'react-modal';
 import AlertModal from './AlertModal';
-import { CreateCollectionMixin } from './collections/CreateCollectionModal'
-import { ShareCollectionMixin } from './collections/ShareCollectionModal'
-import { AddToCollectionMixin } from './collections/AddToCollectionModal'
-import { ViewCollectionMixin } from './collections/ViewCollectionModal'
-import { EditCollectionMixin } from './collections/EditCollectionModal'
+import { CreateCollectionMixin } from './collections/CreateCollectionModal';
+import { ShareCollectionMixin } from './collections/ShareCollectionModal';
+import { AddToCollectionMixin } from './collections/AddToCollectionModal';
+import { ViewCollectionMixin } from './collections/ViewCollectionModal';
+import { EditCollectionMixin } from './collections/EditCollectionModal';
 import { ShareProductMixin } from './products/ShareProductModal';
+import { ProductFilesMixin } from './products/ProductFilesModal';
+import { ProductLinksMixin } from './products/ProductLinksModal';
 
 var appElement = document.getElementById('content');
 
@@ -23,7 +25,9 @@ const ModalManager = React.createClass ({
     AddToCollectionMixin,
     ViewCollectionMixin,
     EditCollectionMixin,
-    ShareProductMixin
+    ShareProductMixin,
+    ProductFilesMixin,
+    ProductLinksMixin
   ],
 
   render: function() {
@@ -36,6 +40,8 @@ const ModalManager = React.createClass ({
         { this.renderViewCollectionModal() }
         { this.renderEditCollectionModal() }
         { this.renderShareProductModal() }
+        { this.renderProductFilesModal() }
+        { this.renderProductLinksModal() }
       </div>
     )
   }
