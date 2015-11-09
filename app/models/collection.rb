@@ -16,9 +16,13 @@ class Collection < ActiveRecord::Base
   validates :privacy, presence: true
 
   def self.visible(user)
+    # An collections that are public.
     public_collections = where { (privacy == 1) }
-    owned_collections = user.collections
-    shared_collections = user.shared_collections
+    # Any collections that are owned by the user.
+    owned_collections = where(user: user)
+    # Any collections shared with the user.
+    collection_users = CollectionUser.where(id: all.map(&:collection_users).flatten.map(&:id))
+    shared_collections = collection_users.where(sharee: user).map(&:shared_collection)
 
     (public_collections + owned_collections + shared_collections).uniq
   end
