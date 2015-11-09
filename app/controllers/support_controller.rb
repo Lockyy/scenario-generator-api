@@ -12,7 +12,7 @@ class SupportController < ApplicationController
   end
 
   def submit
-    SupportMailer.submission(email_params).deliver
+    SupportMailer.submission(email_params).deliver_now
 
     redirect_to submitted_path
   end

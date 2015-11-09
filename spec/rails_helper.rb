@@ -34,8 +34,6 @@ RSpec.configure do |config|
   #User poltergeist headless
   Capybara.javascript_driver = :poltergeist
 
-
-
   # config taken directly from RSpec example in the DatabaseCleaner README
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
@@ -50,6 +48,10 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
+  end
+
+  config.after(:suite) do
+    ActiveRecord::Base.connection.execute("DEALLOCATE ALL")
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

@@ -19,7 +19,7 @@ describe "Edit review page", js:true do
       it 'sets the reviews price_score to nil' do
         expect(@review.price_score).to_not eq nil
         find('.price_score.rating-container .clear-button').trigger('click')
-        find(".btn.btn-default.submit.btn-round").trigger('click')
+        find(".form.review.new .btn.btn-default.submit.btn-round").trigger('click')
         wait_for_ajax
         expect(@review.price_score).to eq nil
       end
@@ -29,9 +29,8 @@ describe "Edit review page", js:true do
       it 'sets the reviews quality_score to nil' do
         expect(@review.quality_score).to_not eq nil
         find('.quality_score.rating-container .clear-button').trigger('click')
-        find(".btn.btn-default.submit.btn-round").trigger('click')
+        find(".form.review.new .btn.btn-default.submit.btn-round").trigger('click')
         wait_for_ajax
-        sleep(5000)
         expect(@review.quality_score).to eq nil
       end
     end

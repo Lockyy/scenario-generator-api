@@ -8,5 +8,5 @@ RSpec.describe Product, type: :model do
 
   it { expect(subject).to belong_to :company }
   it { expect(subject).to have_many :reviews }
-  it { should have_many :lists }
+  it { should have_many :collections }
 end
