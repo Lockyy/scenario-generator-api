@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151008202843) do
+ActiveRecord::Schema.define(version: 20151008202844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -185,15 +185,6 @@ ActiveRecord::Schema.define(version: 20151008202843) do
     t.integer "tag_id"
   end
 
-  create_table "tokens", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "tokens", ["user_id"], name: "index_tokens_on_user_id", using: :btree
-
   create_table "user_oauths", force: :cascade do |t|
     t.integer  "user_id"
     t.json     "last_login_hash"
@@ -237,6 +228,5 @@ ActiveRecord::Schema.define(version: 20151008202843) do
   add_foreign_key "products", "users"
   add_foreign_key "review_votes", "reviews"
   add_foreign_key "review_votes", "users"
-  add_foreign_key "tokens", "users"
   add_foreign_key "user_oauths", "users"
 end

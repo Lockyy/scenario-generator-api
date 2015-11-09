@@ -25,7 +25,7 @@ module Api
     # POST /reviews
     # POST /reviews.json
     def create
-      review = Fletcher::NewReview.new(@user, @product, create_params)
+      review = Fletcher::NewReview.new(current_user, @product, create_params)
 
       respond_to do |format|
         if (review.save!)
@@ -40,7 +40,7 @@ module Api
     # PATCH/PUT /reviews/1
     # PATCH/PUT /reviews/1.json
     def update
-      @review = @user.reviews.find(params[:id])
+      @review = current_user.reviews.find(params[:id])
       review = Fletcher::UpdateReview.new(@review, review_params)
 
       respond_to do |format|

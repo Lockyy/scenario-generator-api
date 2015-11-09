@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
          :omniauthable, omniauth_providers: [:yammer]
 
   has_many :user_oauths, dependent: :destroy
-  has_many :tokens, dependent: :destroy
   has_many :reviews
   has_many :attachments, through: :reviews
   has_many :bookmarks
@@ -23,8 +22,6 @@ class User < ActiveRecord::Base
     joins(:user_oauths).where(user_oauths: { provider: provider, uid: uid })
   end
 
-  scope :with_token, ->(token) { joins(:tokens).where(tokens: { token: token }) }
-
   validates :name, presence: true
 
   def total_attachments
@@ -33,10 +30,6 @@ class User < ActiveRecord::Base
 
   def self.generate_password
     Devise.friendly_token
-  end
-
-  def self.find_with_token(token)
-    with_token(token).first
   end
 
   def self.find_with_oauth(provider, uid)
@@ -48,10 +41,6 @@ class User < ActiveRecord::Base
     oauth.last_login_hash = login_hash || {}
     oauth.save
     oauth
-  end
-
-  def create_token!(value)
-    tokens.create!(token: value)
   end
 
   def first_login?
