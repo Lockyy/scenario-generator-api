@@ -3,27 +3,11 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
-### v1.2
-
-###Features
-
-### Changes
-- Files uploaded to reviews are now checked against a whitelist. Only docs and mediafiles will now be accepted.
-  - File mimetypes that are allowed can be viewed in app/models/attachment.rb
-- Add footer to App
-
-### Bugfix
-
-### v1.1.1
-
-####Bugfixes
-- Hamburger menu now scrolls independently of the main page
-
 ### v1.1.0
 
 ####Features
 - Add collections. A user can create a group of products with a name and description.
-  - Collections can be added, edited, and created on a user's profile, a product's page, or the collection's dedicated page.
+  - Collections can be added, edited, and created on a user's profile, a product's page.
   - Collections appear on the user page collections tab.
   - Collections can be private or public.
   - If public, collections appear on the product's collections tab.
@@ -42,8 +26,13 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
   - We now have a mandrill subaccount set up for sending emails. Can use this for sharing products later.
 - Add google analytics to site and app
 - Logins now expire after 8 hours.
+- Add independent ModalManager system for rendering and displaying the various modals around the app. This
+is currently primarily used for the Collections system but is also used for various product page modals.
 
 ####Changes
+- Files uploaded to reviews are now checked against a whitelist. Only docs and mediafiles will now be accepted.
+  - File mimetypes that are allowed can be viewed in app/models/attachment.rb
+- Add footer to App
 - Images on the dashboard are no longer stretched to their container, they now maintain their original aspect ratio and the rest of the container is filled with a blurred, expanded version of the image. Background image is semi-transparent.
 - ActiveAdmin header title now links to the main app.
 - Landing page now displays correct testimonials.
@@ -51,12 +40,13 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 - Ensure all required fields on reviews page have error messages when left blank.
 - Hitting the landing page whilst logged in automatically redirects the user to /app.
 - Field validation now occurs on new review page for fields preceeding the one clicked by the user. Errors also now appear at the end of the form.
+- Remove old Auth Token based authentication. The site now relies solely on Devise authentication.
 
 ####Bugfixes
 - Fix a number of issues that were generating console warnings related to interated components not having unique IDs.
 - Ensure welcome message is hidden when the user leaves the dashboard.
 - Add icon for collections to sidebar on product and user page.
-- Remove horizontal scrollbar from collection creation window.
+- Hamburger menu now scrolls independently of the main page
 
 ### v1.0.0
 
