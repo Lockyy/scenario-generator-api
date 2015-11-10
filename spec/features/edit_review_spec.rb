@@ -10,7 +10,7 @@ describe "Edit review page", js:true do
 
   describe 'with a review that exists' do
     before do
-      @review = create(:review)
+      @review = create(:review, user: @user)
       visit "/app/products/#{@review.product.id}/reviews/#{@review.id}"
       wait_for_ajax
     end
@@ -21,7 +21,7 @@ describe "Edit review page", js:true do
         find('.price_score.rating-container .clear-button').trigger('click')
         find(".form.review.new .btn.btn-default.submit.btn-round").trigger('click')
         wait_for_ajax
-        expect(@review.price_score).to eq nil
+        expect(@review.reload.price_score).to eq nil
       end
     end
 
@@ -31,7 +31,7 @@ describe "Edit review page", js:true do
         find('.quality_score.rating-container .clear-button').trigger('click')
         find(".form.review.new .btn.btn-default.submit.btn-round").trigger('click')
         wait_for_ajax
-        expect(@review.quality_score).to eq nil
+        expect(@review.reload.quality_score).to eq nil
       end
     end
   end
