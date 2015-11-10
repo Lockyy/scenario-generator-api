@@ -28,7 +28,7 @@ RSpec.configure do |config|
 
   #Turn off stupid js errors
   Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, {:debug => false} )
+    Capybara::Poltergeist::Driver.new(app, {:debug => false, :inspector => true} )
   end
 
   #User poltergeist headless
