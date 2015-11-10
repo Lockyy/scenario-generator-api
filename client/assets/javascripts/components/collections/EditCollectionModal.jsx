@@ -210,6 +210,7 @@ const EditCollectionModal = React.createClass ({
           id: _this.state.collection.id,
           name: _this.state.collection.title
         })
+        FluxModalActions.closeModal();
       }
     })
   },
