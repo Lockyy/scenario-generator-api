@@ -4,6 +4,7 @@ import timeago from 'timeago';
 import { Link, Navigation } from 'react-router';
 import FluxProductPageActions from '../../actions/FluxProductPageActions'
 import FluxBookmarkActions from '../../actions/FluxBookmarkActions'
+import TabbedArea from '../TabbedArea'
 import ProductStore from '../../stores/ProductStore'
 import Reviews from './Reviews'
 import Rating from '../Rating';
@@ -147,30 +148,6 @@ const ProductPageDesktopVersion = React.createClass({
     )
   },
 
-   onSelectSection: function onSelectSection(e, section) {
-    e.preventDefault();
-
-    let $el = $(React.findDOMNode(e.target));
-    $el.siblings('.active').removeClass('active')
-    $el.addClass('active');
-
-    let $section = $(React.findDOMNode(this.refs[section]));
-    $section.removeClass('hide')
-    $section.siblings().addClass('hide')
-  },
-
-  onSelectReviewsSection: function onSelectReviewsSection(e) {
-    this.onSelectSection(e, 'reviews')
-  },
-
-  onSelectCollectionsSection: function onSelectCollectionsSection(e) {
-    this.onSelectSection(e, 'collections')
-  },
-
-  onSelectCustomSection: function onSelectCustomSection(e) {
-    this.onSelectSection(e, 'custom')
-  },
-
   renderRelatedProducts: function() {
     if(this.getProductData('related_products').length > 0) {
       return <RelatedProducts
@@ -190,33 +167,29 @@ const ProductPageDesktopVersion = React.createClass({
         {this.renderTitle()}
         {this.renderTopButtons()}
         {this.renderInfo()}
-        <div className='row'>
-          <div className='col-xs-3 work-area-sidebar'>
-            <div  className='sidebar-element reviews active'
-                  onClick={this.onSelectReviewsSection}>User Reviews</div>
-            <div className='sidebar-element collections'
-                  onClick={this.onSelectCollectionsSection}>Collections</div>
-            <div className='sidebar-element custom-data'
-                  onClick={this.onSelectCustomSection}>Custom Data</div>
-          </div>
-          <div className='col-xs-9'>
-            <Reviews productID={this.id()} ref='reviews' />
-            <div className='collections-container hide' ref='collections'>
-              <div className='header'>
-              </div>
-              <div className='placeholder-section message'>
-                Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!
-              </div>
-              <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal(this.props.data)}>
-                Add product to a Collection
-              </div>
-              <CollectionsCollection />
+        <TabbedArea>
+          <Reviews productID={this.id()} tabTitle='User Reviews' ref='reviews' />
+          <div
+            tabTitle='Collections'
+            className='collections-container'
+            ref='collections'>
+            <div className='header'>
             </div>
-            <div className='placeholder-section hide' ref='custom'>
-              Feature Coming Soon
+            <div className='placeholder-section message'>
+              Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!
             </div>
+            <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal(this.props.data)}>
+              Add product to a Collection
+            </div>
+            <CollectionsCollection />
           </div>
-        </div>
+          <div
+            tabTitle='Custom Data'
+            className='placeholder-section'
+            ref='custom'>
+            Feature Coming Soon
+          </div>
+        </TabbedArea>
         {this.renderRelatedProducts()}
       </div>
     );

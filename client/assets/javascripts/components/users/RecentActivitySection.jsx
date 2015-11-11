@@ -92,6 +92,7 @@ const RecentActivitySection = React.createClass({
       <Dropdown
         onClick={this.changeSorting}
         active={this.currentSorting()}
+        showText={true}
         options={{
           latest: 'Latest',
           highScore: 'Rating: Low to High',

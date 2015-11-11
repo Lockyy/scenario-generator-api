@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import ReviewBox from './ReviewBox';
+import TabbedArea from '../TabbedArea';
 import CollectionsCollection from '../collections/CollectionsCollection';
 import RecentActivitySection from './RecentActivitySection';
 
@@ -25,20 +26,12 @@ const UserProfileRecentActivity  = React.createClass({
     return (<div />);
   },
 
-  getActiveTab: function() {
-    let activeTab = this.props.activeTab;
-    return _.include(['bookmarks', 'tags', 'reviews', 'collections'], activeTab) ? activeTab : 'reviews';
-  },
-
-  isActiveTab: function(type) {
-    return this.getActiveTab() == type;
-  },
-
   getCollectionsSection: function getRecentActivitySection() {
     return (
       <div
-        className={`my-collections-container work-area-section ${this.isActiveTab('collections') ? '' : 'hide'}`}
-        ref='collections' >
+        className={`my-collections-container work-area-section`}
+        ref='collections'
+        tabTitle='Collections' >
         <div className='placeholder-section message'>
           Collections are created by users to group products they are interested.
         </div>
@@ -53,8 +46,9 @@ const UserProfileRecentActivity  = React.createClass({
     let rows = this.props.page;
 
     return (
-      <div className={`work-area-section ${this.isActiveTab('reviews') ? '' : 'hide'}`}
-        ref='recent_activity' >
+      <div className={`work-area-section`}
+        ref='recent_activity'
+        tabTitle='Recent Activity' >
         <RecentActivitySection sorting={this.props.sorting} items={this.props.recent_activity}
           rows={rows} cols={cols} onChangeSorting={this.props.onChangeSorting}
           onShowMore={this.props.onShowMore} />
@@ -62,42 +56,12 @@ const UserProfileRecentActivity  = React.createClass({
     );
   },
 
-  onSelectSection: function onSelectSection(e, section) {
-    let $el = $(React.findDOMNode(e.target));
-    $el.siblings('.active').removeClass('active')
-    $el.addClass('active');
-
-    let $section = $(React.findDOMNode(this.refs[section]));
-    $section.removeClass('hide')
-    $section.siblings('.work-area-section').addClass('hide')
-  },
-
-  onSelectActivitySection: function onSelectActivitySection(e) {
-    this.onSelectSection(e, 'activity')
-  },
-
-  onSelectCollectionsSection: function onSelectCollectionsSection(e) {
-    this.onSelectSection(e, 'collections')
-  },
-
   render: function render() {
     return (
-      <div id='work-area' className='row'>
-        <div className='col-xs-12 col-md-2 work-area-sidebar'>
-          <a href='#activity' className={`sidebar-element reviews ${this.isActiveTab('activity') ? 'active' : ''}`}
-            onClick={this.onSelectActivitySection}>
-            Recent Activity
-          </a>
-          <a href='#collections' className={`sidebar-element collections ${this.isActiveTab('collections') ? 'active' : ''}`}
-            ref='link_collections' onClick={this.onSelectCollectionsSection}>
-            Collections
-          </a>
-        </div>
-        <div className='work-area-content col-xs-12 col-md-10' ref='work'>
-          {this.getRecentActivitySection()}
-          {this.getCollectionsSection()}
-        </div>
-      </div>
+      <TabbedArea>
+        {this.getRecentActivitySection()}
+        {this.getCollectionsSection()}
+      </TabbedArea>
     );
   },
 

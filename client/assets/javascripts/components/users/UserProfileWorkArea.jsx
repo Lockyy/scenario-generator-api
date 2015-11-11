@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import RecentActivitySection from './RecentActivitySection';
+import TabbedArea from '../TabbedArea';
 import UserTags from './UserTags';
 import UserBookmarks from './UserBookmarks';
 import CollectionsCollection from '../collections/CollectionsCollection';
@@ -39,8 +40,9 @@ const UserProfileWorkArea  = React.createClass({
   getCollectionsSection: function getRecentActivitySection() {
     return (
       <div
-        className={`my-collections-container work-area-section ${this.isActiveTab('collections') ? '' : 'hide'}`}
-        ref='collections' >
+        className='my-collections-container work-area-section'
+        ref='collections'
+        tabTitle='Collections' >
         <div className='placeholder-section message'>
           Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!
         </div>
@@ -57,16 +59,17 @@ const UserProfileWorkArea  = React.createClass({
     let rows = this.props.page;
 
     return (
-      <RecentActivitySection containerClass={`work-area-section ${this.isActiveTab('reviews') ? '' : 'hide'}`}
+      <RecentActivitySection containerClass='work-area-section'
         sorting={this.props.sorting}
         items={this.props.recent_activity} editable={true} showMessage={true} rows={rows} cols={cols}
-        onChangeSorting={this.props.onChangeSorting} onShowMore={this.props.onShowMore} ref='reviews' />
+        onChangeSorting={this.props.onChangeSorting} onShowMore={this.props.onShowMore} ref='reviews'
+        tabTitle='My Reviews' />
     );
   },
 
   getTagsSection: function getTagsSection() {
     return (
-      <div className={`my-tags-container work-area-section ${this.isActiveTab('tags') ? '' : 'hide'}`} ref='tags' >
+      <div className='my-tags-container work-area-section' ref='tags' tabTitle='Followed Tags' >
         <UserTags showMessage='true' />
       </div>
     );
@@ -74,66 +77,20 @@ const UserProfileWorkArea  = React.createClass({
 
   getBookmarksSection: function getBookmarksSection() {
     return (
-      <div className={`my-bookmarks-container work-area-section ${this.isActiveTab('bookmarks') ? '' : 'hide'}`} ref='bookmarks' >
+      <div className='my-bookmarks-container work-area-section' ref='bookmarks' tabTitle='Bookmarks' >
         <UserBookmarks showMessage='true' />
       </div>
     );
   },
 
-  onSelectSection: function onSelectSection(e, section) {
-    let $el = $(React.findDOMNode(e.target));
-    $el.siblings('.active').removeClass('active')
-    $el.addClass('active');
-
-    let $section = $(React.findDOMNode(this.refs[section]));
-    $section.removeClass('hide')
-    $section.siblings('.work-area-section').addClass('hide')
-  },
-
-  onSelectReviewsSection: function onSelectReviewsSection(e) {
-    this.onSelectSection(e, 'reviews')
-  },
-
-  onSelectTagsSection: function onSelectTagsSection(e) {
-    this.onSelectSection(e, 'tags')
-  },
-
-  onSelectBookmarksSection: function onSelectBookmarksSection(e) {
-    this.onSelectSection(e, 'bookmarks')
-  },
-
-  onSelectCollectionsSection: function onSelectCollectionsSection(e) {
-    this.onSelectSection(e, 'collections')
-  },
-
   render: function render() {
     return (
-      <div id='work-area' className='row'>
-        <div className='col-xs-12 col-md-2 work-area-sidebar'>
-          <a href='#activity' className={`sidebar-element reviews ${this.isActiveTab('reviews') ? 'active' : ''}`}
-            ref='link_reviews' onClick={this.onSelectReviewsSection}>
-            My Reviews
-          </a>
-          <a href='#tags' ref='link_tags' className={`sidebar-element tags ${this.isActiveTab('tags') ? 'active' : ''}`}
-            onClick={this.onSelectTagsSection}>
-            Followed Tags
-          </a>
-          <a href='#bookmarks' className={`sidebar-element bookmarks ${this.isActiveTab('bookmarks') ? 'active' : ''}`}
-            ref='link_bookmarks' onClick={this.onSelectBookmarksSection}>
-            Bookmarks
-          </a>
-          <a href='#collections' className={`sidebar-element collections ${this.isActiveTab('collections') ? 'active' : ''}`}
-            ref='link_collections' onClick={this.onSelectCollectionsSection}>
-            Collections
-          </a>
-        </div>
-        <div className='work-area-content col-xs-12 col-md-10' ref='work'>
-          {this.getRecentActivitySection()}
-          {this.getTagsSection()}
-          {this.getBookmarksSection()}
-          {this.getCollectionsSection()}
-        </div>
-      </div>
+      <TabbedArea>
+        {this.getRecentActivitySection()}
+        {this.getTagsSection()}
+        {this.getBookmarksSection()}
+        {this.getCollectionsSection()}
+      </TabbedArea>
     );
   },
 });

@@ -54,9 +54,6 @@
   .info-row
     display: flex
     flex: 1
-    padding-bottom: 50px
-    border-bottom: 1px solid $red
-    margin-bottom: 25px
 
     & > div
       display: flex
@@ -119,11 +116,11 @@
   .review-container
     .header
       display: flex
-      justify-content: flex-end
+      justify-content: flex-start
 
   .review-container, .collections-container
     .header
-      padding-bottom: 2px
+      padding: 6px 0px
     .reviews
       .review
         border-top: 1px solid $light-grey
@@ -181,6 +178,9 @@
           .created_at
             position: relative
             top: -3px
+            font-size: 14px
+            color: $dark-grey
+          .score + .created_at
             margin-left: 10px
           .title
             font-size: 20px
