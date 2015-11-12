@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Link, Navigation } from 'react-router';
+import { Navigation } from 'react-router';
 import MyBookmarks from '../MyBookmarks'
 import FluxBookmarkActions from '../../actions/FluxBookmarkActions'
 import BookmarkStore from '../../stores/BookmarkStore'

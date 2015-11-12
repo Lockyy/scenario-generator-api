@@ -3,7 +3,7 @@ include Warden::Test::Helpers
 Warden.test_mode!
 
 describe "Tag Directory", js: true do
-  before do
+  before :each do
     @user = login_user
     @tag_a = create(:tag, name: 'asd')
     @tag_b = create(:tag, name: 'bsd')

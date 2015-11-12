@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import React from 'react'
 import timeago from 'timeago'
-import { Link, Navigation } from 'react-router'
+import { Navigation } from 'react-router'
 import DefaultModalStyles from '../utils/constants/DefaultModalStyles';
 import Modal from 'react-modal'
 import AlertStore from '../stores/AlertStore'

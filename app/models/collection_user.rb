@@ -16,7 +16,7 @@ class CollectionUser < ActiveRecord::Base
   end
 
   def send_email
-    ShareMailer.collection(shared_collection.user, sharee, shared_collection).deliver
+    ShareMailer.collection(shared_collection.user, sharee, shared_collection).deliver_now
   end
 
 end

@@ -1,11 +1,19 @@
 import React from 'react';
 import _ from 'lodash';
-import { Link, Navigation } from 'react-router';
+import { Navigation } from 'react-router';
 import ProductBox from './ProductBox'
 
 const MyBookmarks = React.createClass ({
   mixins: [ Navigation ],
   displayName: 'MyBookmarks',
+
+  childContextTypes: {
+    router: React.PropTypes.object
+  },
+
+  getChildContext: function() {
+    return {router: this.props.router};
+  },
 
   getDefaultProps: function() {
     return {

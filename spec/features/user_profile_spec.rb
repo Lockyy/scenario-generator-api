@@ -5,11 +5,11 @@ Warden.test_mode!
 feature "User Profile Page", js: true do
   background do
     @user = login_user
+    @review = create(:review)
+    @user.tags.append create(:tag)
     visit "/app"
     visit "/app/users/current"
     wait_for_ajax
-    @review = create(:review)
-    @user.tags.append create(:tag)
   end
 
   scenario 'displays user details' do

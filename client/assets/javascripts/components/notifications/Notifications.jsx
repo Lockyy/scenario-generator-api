@@ -1,7 +1,7 @@
 import                        _ from 'lodash'
 import                    React from 'react'
 import                  timeago from 'timeago'
-import     { Link, Navigation } from 'react-router'
+import           { Navigation } from 'react-router'
 import       NotificationSystem from 'react-notification-system';
 import       NotificationsStore from '../../stores/NotificationsStore'
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'

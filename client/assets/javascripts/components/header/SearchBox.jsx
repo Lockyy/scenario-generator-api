@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Link, Navigation } from 'react-router';
+import { Navigation } from 'react-router';
 import timeago from 'timeago';
 import FluxSearchHeaderActions from '../../actions/FluxSearchHeaderActions'
 import FluxSearchPageActions from '../../actions/FluxSearchPageActions'

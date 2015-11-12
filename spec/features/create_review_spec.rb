@@ -2,7 +2,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-feature "Create reviews", js:true do
+feature "Create reviews", js: true do
   background do
     @user = login_user
     visit "/app"
