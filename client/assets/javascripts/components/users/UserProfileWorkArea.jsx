@@ -4,11 +4,11 @@ import RecentActivitySection from './RecentActivitySection';
 import UserTags from './UserTags';
 import UserBookmarks from './UserBookmarks';
 import CollectionsCollection from '../collections/CollectionsCollection';
-import { CollectionMixin } from '../collections/CollectionModal'
+import { CreateCollectionMixin } from '../collections/CreateCollectionModal'
 
 const UserProfileWorkArea  = React.createClass({
   displayName: 'UserProfileWorkArea',
-  mixins: [ CollectionMixin ],
+  mixins: [CreateCollectionMixin],
 
   contextTypes: {
     router: React.PropTypes.object,
@@ -44,12 +44,10 @@ const UserProfileWorkArea  = React.createClass({
         <div className='placeholder-section message'>
           Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!
         </div>
-        <div className='btn btn-round btn-red' onClick={this.showCollectionModal}>
+        <div className='btn btn-round btn-red' onClick={this.showCreateCollectionModal}>
           Create Collection
         </div>
-        <CollectionsCollection
-          onEdit={this.showCollectionModalForEditing}
-          onShare={this.showCollectionShareModal} />
+        <CollectionsCollection />
       </div>
     );
   },
@@ -135,9 +133,6 @@ const UserProfileWorkArea  = React.createClass({
           {this.getBookmarksSection()}
           {this.getCollectionsSection()}
         </div>
-
-        {this.renderCollectionModal()}
-        {this.renderCollectionShareModal()}
       </div>
     );
   },

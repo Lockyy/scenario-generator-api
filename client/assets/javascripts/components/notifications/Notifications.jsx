@@ -6,11 +6,12 @@ import       NotificationSystem from 'react-notification-system';
 import       NotificationsStore from '../../stores/NotificationsStore'
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import       NotificationStyles from './NotificationStyles'
+import  { ViewCollectionMixin } from '../collections/ViewCollectionModal'
 
 
 const Notifications = React.createClass({
   displayName: 'Notifications',
-  mixins: [ Navigation ],
+  mixins: [ Navigation, ViewCollectionMixin ],
 
   _notificationSystem: null,
 
@@ -51,47 +52,34 @@ const Notifications = React.createClass({
       switch(notification.subject.type) {
         case 'Product':
           link = `/app/products/${notification.subject.id}`
-          break;
-        case 'Collection':
-          link = `/app/collections/${notification.subject.id}`
-          break;
-      }
-
-      if(label && link) {
-        return {
-          label: label,
-          callback: function() {
-            _this.props.router.transitionTo(link);
+          return {
+            label: label,
+            callback: function() {
+              _this.props.router.transitionTo(link);
+            }
           }
-        }
+        case 'Collection':
+          return {
+            label: label,
+            callback: function() {
+              _this.showViewCollectionModal(notification.subject);
+            }
+          }
+          break;
       }
     }
   },
 
   getMessage: function(notification) {
     if(notification.text) {
-      return notification.text
+      return notification.text;
     }
 
     switch(notification.type) {
       case 'share':
-        return `${notification.sender.name} has shared a ${notification.subject.type} with you`
-        break;
-      case 'sent-share':
-        return `You have shared ${notification.subject.name}`
-        break;
-      case 'review':
-        return `Your review for ${notification.subject.name} has been saved`
-        break;
-      case 'collection':
-        return `Your collection has been saved`
-        break;
-      case 'delete':
-        return `You have deleted the ${notification.subject.type} ${notification.subject.name}`
-        break;
-      case 'leave-collection':
-        return `You have left the collection ${notification.subject.name}`
-        break;
+        return `${notification.sender.name} has shared a ${notification.subject.type} with you`;
+      default:
+        return `${notification.subject.type} ${notification.type}`;
     }
   },
 

@@ -45,15 +45,7 @@ class CollectionStore {
   }
 
   handleClearCollection() {
-    this.data.collection = {
-      title: '',
-      description: '',
-      products: [],
-      user: {
-        name: ''
-      }
-    };
-    this.error = null;
+    this.data.collection = this.getDefaultCollection();
   }
 
   handleRegisterError(error) {
@@ -64,17 +56,22 @@ class CollectionStore {
     this.data = {
       user: {},
       collections: [],
-      collection: {
-        title: '',
-        description: '',
-        products: [],
-        user: {
-          name: ''
-        }
-      },
+      collection: this.getDefaultCollection()
     };
 
     this.error = null;
+  }
+
+  getDefaultCollection() {
+    return {
+      title: '',
+      description: '',
+      products: [],
+      users: [],
+      user: {
+        name: ''
+      }
+    }
   }
 }
 

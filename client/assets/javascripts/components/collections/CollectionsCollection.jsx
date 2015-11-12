@@ -5,8 +5,8 @@ import CollectionBox from './CollectionBox';
 import CollectionStore from '../../stores/CollectionStore';
 
 const CollectionsCollection = React.createClass ({
-  mixins: [ Navigation ],
   displayName: 'CollectionsCollection',
+  mixins: [ Navigation ],
 
   getInitialState: function() {
     return {
@@ -31,9 +31,7 @@ const CollectionsCollection = React.createClass ({
       <div className='collections row'>
         {_.map(this.state.data.collections, function(collection) {
           return <CollectionBox
-                    onEdit={_this.props.onEdit}
-                    onShare={_this.props.onShare}
-                    {...collection} />
+                    collection={collection} />
         })}
       </div>
     )

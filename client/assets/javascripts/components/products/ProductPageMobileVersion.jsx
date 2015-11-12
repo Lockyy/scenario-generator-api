@@ -13,11 +13,12 @@ import Section from '../Section';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
-import CollectionsCollection from '../collections/CollectionsCollection'
+import CollectionsCollection from '../collections/CollectionsCollection';
+import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
 
 const ProductPageMobileVersion = React.createClass({
   displayName: 'ProductPageMobileVersion',
-  mixins: [ Navigation ],
+  mixins: [ Navigation, AddToCollectionMixin ],
 
   id: function() {
     return this.props.data.id
@@ -113,18 +114,6 @@ const ProductPageMobileVersion = React.createClass({
     )
   },
 
-  showFiles: function(e) {
-    e.preventDefault();
-
-    $('#files-modal').modal();
-  },
-
-  showLinks: function(e) {
-    e.preventDefault();
-
-    $('#links-modal').modal();
-  },
-
   renderInfo: function() {
     let attachments = this.getProductData('attachments');
     let links = this.getProductData('links');
@@ -150,13 +139,13 @@ const ProductPageMobileVersion = React.createClass({
           </div>
           <PriceRating value={this.getProductData('price')} name='rating'/>
           <div className="files">
-            <a className="files-link" href='#show-attachments' onClick={this.showFiles}
+            <a className="files-link" href='#show-attachments' onClick={this.props.showFiles}
               data-toggle="modal" data-target="#files-modal" >
               {this.getProductData('attachments').length} File{attachments.length > 1 || attachments.length == 0 ? 's' : ''} Added
             </a>
           </div>
           <div className="more-links">
-            <a className="links-link" href='#show-links' onClick={this.showLinks}
+            <a className="links-link" href='#show-links' onClick={this.props.showLinks}
               data-toggle="modal" data-target="#links-modal" >
               {this.getProductData('links').length} Link{links.length > 1 || links.length == 0 ? 's' : ''} Added
             </a>
@@ -274,13 +263,10 @@ const ProductPageMobileVersion = React.createClass({
 
           <div className='col-xs-12 tags'>
             <Section hasPagination={false} title={"Collections"}>
-              <div className='btn btn-round btn-red' onClick={() => this.props.showAddToCollectionModal(this.props.data)}>
+              <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal(this.props.data)}>
                 Add to a Collection
               </div>
-              <CollectionsCollection
-                ref='collections'
-                onEdit={this.props.onCollectionEdit}
-                onShare={this.props.onCollectionShare} />
+              <CollectionsCollection />
             </Section>
           </div>
 

@@ -1,89 +1,75 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
-import CollectionBox from './CollectionBox';
 import Modal from 'react-modal';
+import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
+import ProductStore from '../../stores/ProductStore';
 import CollectionStore from '../../stores/CollectionStore';
+import ModalStore from '../../stores/ModalStore';
+import FluxModalActions from '../../actions/FluxModalActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import CollectionTypeahead from './CollectionTypeahead'
 import Results from '../search/Results'
-import { CollectionMixin } from './CollectionModal'
-
-var appElement = document.getElementById('content');
-
-Modal.setAppElement(appElement);
-Modal.injectCSS();
+import { CreateCollectionMixin } from './CreateCollectionModal'
 
 const AddToCollectionMixin = {
-  mixins: [ CollectionMixin ],
 
   renderAddToCollectionModal: function(product) {
     return (
-      <div>
-        <AddToCollectionModal
-          ref='collectionShareModal'
-          product={product}
-          visible={this.addToCollectionModalVisible()}
-          close={this.closeAddToCollectionModal}
-          onAddToCollection={this.onAddToCollection}
-          onCreateNewCollection={this.closeAddToCollectionAndShowCreateCollection} />
-        {this.renderCollectionModal(true)}
-      </div>
+      <AddToCollectionModal
+        ref='collectionShareModal'
+        product={product}
+        close={this.closeAddToCollectionModal}
+        onAddToCollection={this.onAddToCollection} />
     )
   },
 
-  closeAddToCollectionAndShowCreateCollection: function(product) {
-    this.closeAddToCollectionModal();
-    this.showCollectionModalWithProduct(product);
-  },
-
-  addToCollectionModalVisible: function() {
-    return this.state && this.state.addToCollectionModalVisible
-  },
-
   closeAddToCollectionModal: function() {
-    $('body').removeClass('no-scroll');
-    this.setState({addToCollectionModalVisible: false})
+    FluxModalActions.closeModal()
   },
 
   showAddToCollectionModal: function() {
-    $(window).scrollTop(0);
-    $('body').addClass('no-scroll');
-    this.setState({addToCollectionModalVisible: true})
-  },
-
-  onAddToCollection: function(product_id, collection_id, resolve) {
-    if(product_id && collection_id) {
-      FluxCollectionActions.addProductToCollection(product_id, collection_id, resolve)
-    }
+    FluxModalActions.setVisibleModal('AddToCollectionModal')
   }
 };
 
 const AddToCollectionModal = React.createClass ({
-  displayName: 'CollectionShareModal',
+  displayName: 'AddToCollectionModal',
+  mixins: [ CreateCollectionMixin ],
 
   getInitialState: function() {
     return {
-      data: {
-        collection: {
-          title: '',
-          description: '',
-          products: [],
-          user: {
-            name: ""
-          }
+      collection: {
+        title: '',
+        description: '',
+        products: [],
+        user: {
+          name: ""
         }
+      },
+      product: {
+        name: ''
       }
     }
   },
 
+  // Flux Methods
+  // Keep track of changes that are made to the store
   componentDidMount: function() {
-    CollectionStore.listen(this.onChange);
+    CollectionStore.listen(this.onChangeCollection);
+    ProductStore.listen(this.onChangeProduct);
+    ModalStore.listen(this.onChangeModal);
   },
-
-  onChange: function(collection) {
-    this.setState(collection)
+  onChangeCollection: function(data) {
+    this.setState({collection: data.data.collection});
+  },
+  onChangeModal: function(data) {
+    let visible = data.visibleModal == this.constructor.displayName;
+    this.setState({ visible: visible });
+  },
+  onChangeProduct: function(data) {
+    this.setState({ product: data.data });
   },
 
   close: function() {
@@ -102,13 +88,15 @@ const AddToCollectionModal = React.createClass ({
   submitForm: function(e) {
     e.preventDefault()
     let _this = this
-    let collection = _this.state.data.collection;
+    let collection = _this.state.collection;
+    let product = this.state.product;
 
     let sendNotification = function() {
       _this.close(_this)
 
       FluxNotificationsActions.showNotification({
-        type: 'collection',
+        type: 'saved',
+        text: `${product.name} added to ${collection.title}`,
         subject: {
           id: collection.id,
           type: 'Collection',
@@ -117,9 +105,9 @@ const AddToCollectionModal = React.createClass ({
       })
     }
 
-    this.props.onAddToCollection( this.props.product.id,
-                                  collection.id,
-                                  sendNotification)
+    if(product.id && collection.id) {
+      FluxCollectionActions.addProductToCollection(product.id, collection.id, sendNotification)
+    }
   },
 
   setCollection: function(collection, selected) {
@@ -149,10 +137,15 @@ const AddToCollectionModal = React.createClass ({
     )
   },
 
+  addToNewCollection: function(product) {
+    this.props.close();
+    this.showCreateCollectionModalWithProduct(product);
+  },
+
   renderNewCollectionLink: function() {
     return (
       <div className='new-collection-link'>
-        <div onClick={() => this.props.onCreateNewCollection(this.props.product)}>
+        <div onClick={() => this.addToNewCollection(this.state.product)}>
           Add product to a new collection
         </div>
       </div>
@@ -160,22 +153,22 @@ const AddToCollectionModal = React.createClass ({
   },
 
   renderCurrentCollection: function() {
-    if(this.state.data.collection.title != "") {
+    if(this.state.collection.title != "") {
       return (
         <div className='collection-details'>
           <div className="owner">
-            Collection created by {this.state.data.collection.user.name}
+            Collection created by {this.state.collection.user.name}
           </div>
           <div className='header'>
             <div className="title">
-              {this.state.data.collection.title}
+              {this.state.collection.title}
             </div>
           </div>
           <div className='collection-description'>
-            {this.state.data.collection.description}
+            {this.state.collection.description}
           </div>
           <div className='collection-products'>
-            Includes: {_.map(this.state.data.collection.products, function(product) {
+            Includes: {_.map(this.state.collection.products, function(product) {
               return `${product.name}, `;
             })}
           </div>
@@ -187,12 +180,14 @@ const AddToCollectionModal = React.createClass ({
   renderAddToCollectionForm: function() {
     return (
       <div className='row'>
-        <form className='col-xs-10 col-xs-offset-1 form collection'
+        <form className='col-xs-12 form collection'
               ref='collection_form'>
           {this.renderCollectionTypeahead()}
-          {this.renderCurrentCollection()}
-          {this.renderSubmissionButtons()}
-          {this.renderNewCollectionLink()}
+          <div className='grey'>
+            {this.renderCurrentCollection()}
+            {this.renderSubmissionButtons()}
+            {this.renderNewCollectionLink()}
+          </div>
         </form>
       </div>
     )
@@ -201,13 +196,15 @@ const AddToCollectionModal = React.createClass ({
   render: function() {
     return (
       <Modal
-        isOpen={this.props.visible}>
-        <div className='back-button' onClick={this.close}>{"< Close"}</div>
+        isOpen={this.state.visible}
+        onRequestClose={this.props.close}
+        style={DefaultModalStyles}>
+        <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
         <div className='header'>
           <span className='title'>
             Add this product to an existing collection
           </span>
-          <span onClick={this.close} className='close'>x</span>
+          <span onClick={this.props.close} className='close'>x</span>
         </div>
         {this.renderAddToCollectionForm()}
       </Modal>

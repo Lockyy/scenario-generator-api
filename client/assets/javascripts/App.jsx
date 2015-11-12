@@ -7,7 +7,6 @@ import NewReviewPage from './components/reviews/NewReviewPage';
 import CompanyProfilePage from './components/companies/CompanyProfilePage';
 import UserProfilePage from './components/users/UserProfilePage';
 import ProductPage from './components/products/ProductPage';
-import CollectionPage from './components/collections/CollectionPage';
 import TagPage from './components/tags/TagPage';
 import TagsPage from './components/tags/TagsPage';
 import SearchPage from './components/search/SearchPage';
@@ -16,7 +15,7 @@ import UserTags from './components/users/UserTags';
 import Notifications from './components/notifications/Notifications';
 import UserBookmarks from './components/users/UserBookmarks';
 import MyRecentActivity from './components/menu/MyRecentActivity';
-import AlertModal from './components/AlertModal';
+import ModalManager from './components/ModalManager';
 import FluxCurrentUserActions from './actions/FluxCurrentUserActions';
 import { Router, Route } from 'react-router';
 import { history } from 'react-router/lib/BrowserHistory';
@@ -65,8 +64,6 @@ $(function onLoad() {
                         </Route>
                         <Route path="app/tags/:letter" component={TagsPage}>
                         </Route>
-                        <Route name='CollectionPage' path="app/collections/:id" component={CollectionPage}>
-                        </Route>
                     </Router>
                 ), document.getElementById('content'));
 
@@ -97,8 +94,8 @@ $(function onLoad() {
                 ), $('#notifications')[0]);
 
                 React.render((
-                    <AlertModal router={router} />
-                ), $('#alert')[0]);
+                    <ModalManager router={router} />
+                ), $('#modals')[0]);
             });
         })
     };

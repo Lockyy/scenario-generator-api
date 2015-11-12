@@ -127,7 +127,8 @@ const NewReviewPage  = React.createClass({
       function(data) {
         _this.context.router.transitionTo(`/app/products/${data.product.id}`)
         FluxNotificationsActions.showNotification({
-          type: 'review', subject: data.product
+          type: 'saved',
+          subject: _.merge(data.product, {type: 'review'})
         })
       },
       function(error) {

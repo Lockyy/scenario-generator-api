@@ -12,9 +12,10 @@ import PriceRating from '../PriceRating';
 import ProductPageDesktopVersion from './ProductPageDesktopVersion';
 import ProductPageMobileVersion from './ProductPageMobileVersion';
 import Tags from '../Tags'
-import UrlHelper from '../../utils/helpers/UrlHelper'
-import FileHelper from '../../utils/helpers/FileHelper'
 import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
+import { ShareProductMixin } from './ShareProductModal';
+import { ProductFilesMixin } from './ProductFilesModal';
+import { ProductLinksMixin } from './ProductLinksModal';
 
 var appElement = document.getElementById('content');
 
@@ -23,7 +24,7 @@ Modal.injectCSS();
 
 const ProductPage = React.createClass({
   displayName: 'ProductPage',
-  mixins: [ Navigation, AddToCollectionMixin ],
+  mixins: [ Navigation, AddToCollectionMixin, ShareProductMixin, ProductFilesMixin, ProductLinksMixin ],
 
   id: function() {
     return this.state.data.id || this.props.params.id;
@@ -82,19 +83,6 @@ const ProductPage = React.createClass({
     })
   },
 
-  copyLink: function() {
-    let copyTextarea = $(this.refs.locationLink.getDOMNode());
-    let linkCopyButton = $(this.refs.linkCopyButton.getDOMNode())
-    copyTextarea.select();
-
-    try {
-      let successful = document.execCommand('copy');
-      linkCopyButton.html('Copied!')
-      setTimeout(function() { linkCopyButton.html('Copy Link') }, 2000)
-    } catch (err) { console.log('Oops, unable to copy'); }
-    copyTextarea.blur()
-  },
-
   getCurrentUserReview: function() {
     if(this.state && this.state.data.review) {
       return this.state.data.review
@@ -119,107 +107,27 @@ const ProductPage = React.createClass({
     }
   },
 
-  renderShareModal: function() {
-    return (
-      <Modal
-        isOpen={this.state.modalIsOpen}
-        onRequestClose={this.closeModal} >
-        <div className='header'>
-          <span className='title'>
-            Share this product with other users
-          </span>
-          <span onClick={this.closeModal} className='close'>x</span>
-        </div>
-        <div className="input-group">
-          <input  type="text"
-                  className="form-control"
-                  aria-describedby="basic-addon2"
-                  value={window.location.href}
-                  ref='locationLink' />
-          <span className="input-group-addon copy-link"
-                id="basic-addon2"
-                ref='linkCopyButton'
-                onClick={this.copyLink}>Copy Link</span>
-        </div>
-      </Modal>
-    )
-  },
-
-  renderLinksModal: function() {
-    let links = _.collect(this.getProductData('links'), function(link) {
-      return (<li className='link-item'>
-        <div className='link-details'>
-          <a className="link" href={UrlHelper.addProtocol(link.url)} target='_blank'>{link.url}</a>
-          <span className='author'>{link.author ? `Uploaded by ${link.author.name}` : ''}</span>
-          <span className='created_at'>{timeago(link.created_at)}</span>
-        </div>
-      </li>);
-    });
-
-    return (
-      <div className="modal fade" id="links-modal">
-        <div className="modal-content links-modal-content">
-          <div className="modal-header">
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h2 className="modal-title">Links Added</h2>
-          </div>
-          <div className="modal-body">
-            {_.isEmpty(this.getProductData('links')) ? (<span className='message'>No links have been added</span>) :
-              <ul className="links">{links}</ul>}
-          </div>
-        </div>
-      </div>
-    )
-  },
-
-  renderFilesModal: function() {
-    let attachments = _.collect(this.getProductData('attachments'), function(attachment) {
-      return (<li className='attachment'>
-        {FileHelper.isImage(attachment.name) ?
-          <img src={UrlHelper.addProtocol(attachment.url)} className='thumbnail' width='50px' />
-          : ''}
-
-        <div className='attachment-details'>
-          <a className="attachment-link" href={UrlHelper.addProtocol(attachment.url)} target='_blank'>{attachment.name}</a>
-          <span className='author'>{attachment.author ? `Uploaded by ${attachment.author.name}` : ''}</span>
-          <span className='created_at'>{timeago(attachment.created_at)}</span>
-        </div>
-      </li>);
-    });
-
-    return (
-      <div className="modal fade" id="files-modal">
-        <div className="modal-content files-modal-content">
-          <div className="modal-header">
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h2 className="modal-title">Files Added</h2>
-          </div>
-          <div className="modal-body">
-            {_.isEmpty(this.getProductData('attachments')) ? (<span className='message'>No files have been added</span>) :
-              <ul className="attachments">{attachments}</ul>}
-          </div>
-        </div>
-      </div>
-    )
-  },
-
   render: function() {
     return (
       <div className='product show'>
-        {this.renderFilesModal()}
-        {this.renderLinksModal()}
-        {this.renderShareModal()}
-        <ProductPageDesktopVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
-          onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.openModal}
-          showAddToCollectionModal={this.showAddToCollectionModal} onCollectionEdit={this.showCollectionModalForEditing}
-          onCollectionShare={this.showCollectionShareModal} {...this.state} />
-
-        <ProductPageMobileVersion reviewButtonURL={this.reviewButtonURL()} reviewButtonText={this.reviewButtonText()}
-          onBookmark={this.bookmark} onUnbookmark={this.unbookmark} onShare={this.openModal}
-          showAddToCollectionModal={this.showAddToCollectionModal} onCollectionEdit={this.showCollectionModalForEditing}
-          onCollectionShare={this.showCollectionShareModal} {...this.state} />
-
-        {this.renderAddToCollectionModal(this.state.data)}
+        <ProductPageDesktopVersion
+          reviewButtonURL={this.reviewButtonURL()}
+          reviewButtonText={this.reviewButtonText()}
+          onBookmark={this.bookmark}
+          onUnbookmark={this.unbookmark}
+          onShare={this.showShareProductModal}
+          showFiles={this.showProductFilesModal}
+          showLinks={this.showProductLinksModal}
+          {...this.state} />
+        <ProductPageMobileVersion
+          reviewButtonURL={this.reviewButtonURL()}
+          reviewButtonText={this.reviewButtonText()}
+          onBookmark={this.bookmark}
+          onUnbookmark={this.unbookmark}
+          onShare={this.showShareProductModal}
+          showFiles={this.showProductFilesModal}
+          showLinks={this.showProductLinksModal}
+          {...this.state} />
       </div>
     );
   }

@@ -43,8 +43,7 @@ const UserProfileRecentActivity  = React.createClass({
           Collections are created by users to group products they are interested.
         </div>
         <CollectionsCollection
-          collections={this.props.collections}
-          onEdit={this.showCollectionModalForEditing} />
+          collections={this.props.collections} />
       </div>
     );
   },
