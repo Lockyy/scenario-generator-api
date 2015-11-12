@@ -66,9 +66,9 @@ const CollectionBox = React.createClass ({
       <p className='includes'>
         INCLUDES: { products }
         <span className='product-link see-all'>
-          <Link to={`/app/collections/${this.props.collection.id}`}>
+          <a onClick={() => this.showViewCollectionModal(this.props.collection)}>
             see all
-          </Link>
+          </a>
         </span>
       </p>
     )

@@ -11,8 +11,7 @@ const CollectionsCollection = React.createClass ({
   getInitialState: function() {
     return {
       data: {
-        collections: [],
-        collection: {}
+        collections: CollectionStore.state.data.collections
       }
     }
   },
