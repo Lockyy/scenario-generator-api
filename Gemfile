@@ -37,6 +37,12 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'lodash-rails'
 gem 'es5-shim-rails'
 
+group :development do
+
+  gem "better_errors"
+  gem "binding_of_caller"
+end
+
 group :development, :test do
   gem 'byebug'
   gem 'web-console', '~> 2.0'
@@ -51,8 +57,6 @@ group :development, :test do
   gem 'bundler-audit', require: false
   gem 'rainbow'
   gem 'quiet_assets'
-  gem "better_errors"
-  gem "binding_of_caller"
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'letter_opener'
