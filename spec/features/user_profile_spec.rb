@@ -7,7 +7,7 @@ describe "User Profile Page", js: true do
     @user = login_user
     @review = create(:review)
     @bookmark = create(:bookmark)
-    @public_collection = create(:collection, privacy: :visible)
+    @public_collection = create(:collection, :visible)
     @private_collection = create(:collection)
     @tag = create(:tag)
     @user.reviews.append @review
@@ -176,7 +176,7 @@ describe "User Profile Page", js: true do
           expect(page).to have_content @public_collection.description
         end
 
-        it "doesn't displays user's private collections" do
+        it "doesn't display user's private collections" do
           expect(page).to_not have_content @private_collection.title
           expect(page).to_not have_content @private_collection.description
         end
