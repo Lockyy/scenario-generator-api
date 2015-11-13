@@ -7,8 +7,8 @@ describe "User Profile Page", js: true do
     @user = login_user
     @review = create(:review)
     @bookmark = create(:bookmark)
-    @public_collection = create(:collection, :visible)
-    @private_collection = create(:collection)
+    @public_collection = create(:collection, :visible, title: 'Public Collection')
+    @private_collection = create(:collection, title: 'Private Collection')
     @tag = create(:tag)
     @user.reviews.append @review
     @user.tags.append @tag
@@ -136,7 +136,7 @@ describe "User Profile Page", js: true do
     describe "on someone else's page" do
       before do
         @user_2 = login_user
-        @shared_collection = create(:collection)
+        @shared_collection = create(:collection, title: 'Shared Collection')
         @user.collections.append @shared_collection
         @shared_collection.share([@user_2.id])
         visit "/app/users/#{@user.id}"
