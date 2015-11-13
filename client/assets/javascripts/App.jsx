@@ -11,10 +11,8 @@ import TagPage from './components/tags/TagPage';
 import TagsPage from './components/tags/TagsPage';
 import SearchPage from './components/search/SearchPage';
 import SearchBox from './components/header/SearchBox';
-import UserTags from './components/users/UserTags';
+import Sidebar from './components/Sidebar';
 import Notifications from './components/notifications/Notifications';
-import UserBookmarks from './components/users/UserBookmarks';
-import MyRecentActivity from './components/menu/MyRecentActivity';
 import ModalManager from './components/ModalManager';
 import FluxCurrentUserActions from './actions/FluxCurrentUserActions';
 import { Router, Route } from 'react-router';
@@ -72,18 +70,8 @@ $(function onLoad() {
                 ), $('.search-container')[0]);
 
                 React.render((
-                    <UserTags router={router} showMessage={_.isEmpty(currentUser.tags)} showTitle={true}
-                      message='Adding tags will update your News Feed with the latest news from the ones you follow'
-                      messageClass='no-content'/>
-                ), $('.my-tags-container')[0]);
-
-                React.render((
-                    <UserBookmarks router={router} showMessage={false} showTitle={true} sidebar={true} />
-                ), $('.my-bookmarks-container')[0]);
-
-                React.render((
-                    <MyRecentActivity router={router} />
-                ), $('.my-recent-activity-container')[0]);
+                    <Sidebar router={router} />
+                ), $('#hamburger-menu')[0]);
 
                 React.render((
                     <GAInitiailizer/>
