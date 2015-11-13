@@ -52,7 +52,7 @@ const Sidebar = React.createClass ({
     return (
       <ul className='menu-nav'>
         <li className='logout'>
-          <Link to="/sign_out">Log out</Link>
+          <a href="/sign_out">Log out</a>
         </li>
         <li className='close-hamburger-menu text-hide'>
           <div onClick={this.closeHambugerMenu}><a>Close Menu</a></div>
@@ -117,7 +117,7 @@ const Sidebar = React.createClass ({
     return (
       <div className='my-collections-container'>
         <h2>
-          Collections
+          My Collections
         </h2>
         {
           _.map(this.context.currentUser.collections.slice(0, 2), function(collection) {
