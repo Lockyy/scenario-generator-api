@@ -47,6 +47,8 @@ is currently primarily used for the Collections system but is also used for vari
 - Ensure welcome message is hidden when the user leaves the dashboard.
 - Add icon for collections to sidebar on product and user page.
 - Hamburger menu now scrolls independently of the main page
+- Fix issue where only 4 stars showed on small/medium product boxes on dashboard.
+- Fix issue with text overflow caused by long review titles.
 
 ### v1.0.0
 
