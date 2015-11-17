@@ -10,7 +10,8 @@ const MyRecentActivity = React.createClass ({
   displayName: 'MyRecentActivity',
 
   contextTypes: {
-    currentUser: React.PropTypes.object
+    currentUser: React.PropTypes.object,
+    router: React.PropTypes.object
   },
 
   getInitialState: function() {
@@ -29,12 +30,13 @@ const MyRecentActivity = React.createClass ({
   },
 
   _getRecentActivity: function _getRecentActivity() {
+    let _this = this
     return (
       <div className='recent_activity_container'>
         <ul className='recent_activity'>
           {_.map(this.state.recent_activity, function(activity) {
             return <li className='activity'>
-              <ReviewBox size={1} {...activity} />
+              <ReviewBox size={1} small={_this.props.small} {...activity} />
              </li>
           })}
         </ul>

@@ -10,7 +10,8 @@ const UserTags = React.createClass ({
   displayName: 'UserTags',
 
   contextTypes: {
-    currentUser: React.PropTypes.object
+    currentUser: React.PropTypes.object,
+    router: React.PropTypes.object
   },
 
   getInitialState: function() {
