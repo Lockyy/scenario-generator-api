@@ -9,6 +9,10 @@ const UserBookmarks = React.createClass ({
   mixins: [ Navigation ],
   displayName: 'UserBookmarks',
 
+  contextTypes: {
+    router: React.PropTypes.object
+  },
+
   getInitialState: function() {
     return {
       products: []

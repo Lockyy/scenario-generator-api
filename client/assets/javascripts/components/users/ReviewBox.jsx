@@ -31,7 +31,7 @@ const ReviewBox = React.createClass ({
     } else {
       return (
         <span>
-          Review added {this.props.created_at ? new Date(this.props.created_at).format('MMM dd') : ''}
+          Review added {this.props.created_at ? new Date(this.props.created_at).format('mmm dd') : ''}
         </span>
       );
     }
@@ -69,41 +69,49 @@ const ReviewBox = React.createClass ({
             <div className='review'>
               <div className='rating'>
                 <Rating value={this.props.quality_score} name='rating'/>
-                <PriceRating value={this.props.price_score} name='rating'/>
+                { this.props.small ? '' : <PriceRating value={this.props.price_score} name='rating'/> }
               </div>
 
-              <h3 className='title'>{this.props.title}</h3>
-              <p className='description'>
-                { editable && _.isEmpty(quality_review) ?
-                  <span className='message'>Click Edit to add a review</span> :
-                  quality_review
-                 }
-              </p>
+              { this.props.small ? '' :
+                <div>
+                  <h3 className='title'>{this.props.title}</h3>
+                  <p className='description'>
+                    { editable && _.isEmpty(quality_review) ?
+                      <span className='message'>Click Edit to add a review</span> :
+                      quality_review
+                     }
+                  </p>
 
-              { attachments > 0 ? <p className='item attachments'> {attachments} attachment(s) </p> : ''}
-              { links > 0 ? <p className='item links'> {links} link(s) </p> : ''}
-              { tags > 0 ? <p className='item tags'> {tags} tag(s) </p> : ''}
+                  { attachments > 0 ? <p className='item attachments'> {attachments} attachment(s) </p> : ''}
+                  { links > 0 ? <p className='item links'> {links} link(s) </p> : ''}
+                  { tags > 0 ? <p className='item tags'> {tags} tag(s) </p> : ''}
+                </div>
+              }
             </div>
           </div>
 
-          <div className='read-more-container'>
-            {
-              showReadMore ?
-              <a href={`/app/products/${this.props.product.id}`} className='link'>
-                <span className='icon-edit-review'>Read more</span>
-              </a> : ''
-            }
-          </div>
+          { this.props.small ? '' :
+            <div>
+              <div className='read-more-container'>
+                {
+                  showReadMore ?
+                  <a href={`/app/products/${this.props.product.id}`} className='link'>
+                    <span className='icon-edit-review'>Read more</span>
+                  </a> : ''
+                }
+              </div>
 
-          <div className='footer'>
-            {
-              editable ?
-              <a href={`/app/products/${this.props.product.id}/reviews/${this.props.id}`} className='btn btn-round'>
-                <span className='icon-edit-review'>Edit</span>
-              </a> :
-              <span className='created_at'>{timeago(this.props.created_at)}</span>
-            }
-          </div>
+              <div className='footer'>
+                {
+                  editable ?
+                  <a href={`/app/products/${this.props.product.id}/reviews/${this.props.id}`} className='btn btn-round'>
+                    <span className='icon-edit-review'>Edit</span>
+                  </a> :
+                  <span className='created_at'>{timeago(this.props.created_at)}</span>
+                }
+              </div>
+            </div>
+          }
         </div>
       </div>
     </div>);
