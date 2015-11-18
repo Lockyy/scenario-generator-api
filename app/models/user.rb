@@ -24,10 +24,6 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
 
-  def total_attachments
-    attachments.size
-  end
-
   def self.generate_password
     Devise.friendly_token
   end
@@ -51,14 +47,6 @@ class User < ActiveRecord::Base
     diff_seconds = (Time.now - current_sign_in_at).round
     diff_minutes = diff_seconds / 60
     return diff_minutes
-  end
-
-  def total_reviews
-    self.reviews.size
-  end
-
-  def total_products
-    self.products.size
   end
 
   def recent_activity(sorting)

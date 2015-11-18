@@ -36,10 +36,12 @@ gem 'will_paginate'
 gem 'friendly_id', '~> 5.1.0'
 gem 'lodash-rails'
 gem 'es5-shim-rails'
+gem 'counter_culture', '~> 0.1.33'
 
 group :development do
-  gem "better_errors"
-  gem "binding_of_caller"
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'rack-mini-profiler'
 end
 
 group :development, :test do

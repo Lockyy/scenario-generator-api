@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151008202844) do
+ActiveRecord::Schema.define(version: 20151118194959) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20151008202844) do
   end
 
   create_table "collection_users", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "sharee_id"
     t.integer  "collection_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
@@ -73,9 +73,10 @@ ActiveRecord::Schema.define(version: 20151008202844) do
     t.integer  "user_id"
     t.string   "title"
     t.string   "description"
-    t.integer  "privacy",     default: 0
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "privacy",                default: 0
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.integer  "cached_products_length", default: 0, null: false
   end
 
   create_table "companies", force: :cascade do |t|
@@ -131,11 +132,14 @@ ActiveRecord::Schema.define(version: 20151008202844) do
     t.text     "description"
     t.string   "url"
     t.integer  "company_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "views",       default: 0
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "views",               default: 0
     t.string   "slug"
     t.integer  "user_id"
+    t.float    "quality_score_cache"
+    t.float    "price_score_cache"
+    t.integer  "total_reviews",       default: 0, null: false
   end
 
   add_index "products", ["slug"], name: "index_products_on_slug", using: :btree
@@ -144,7 +148,7 @@ ActiveRecord::Schema.define(version: 20151008202844) do
   create_table "review_votes", force: :cascade do |t|
     t.integer  "review_id"
     t.integer  "user_id"
-    t.boolean  "helpful"
+    t.integer  "helpful"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -160,6 +164,8 @@ ActiveRecord::Schema.define(version: 20151008202844) do
     t.datetime "updated_at",         null: false
     t.integer  "user_id"
     t.integer  "cached_helpfulness"
+    t.integer  "helpful_votes"
+    t.integer  "total_votes"
   end
 
   create_table "tag_taggables", force: :cascade do |t|
@@ -220,6 +226,9 @@ ActiveRecord::Schema.define(version: 20151008202844) do
     t.datetime "avatar_updated_at"
     t.string   "avatar_uuid"
     t.string   "department"
+    t.integer  "total_reviews",          default: 0,  null: false
+    t.integer  "total_products",         default: 0,  null: false
+    t.integer  "total_attachments",      default: 0,  null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

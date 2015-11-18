@@ -29,11 +29,6 @@ describe 'Collection#visible' do
     @visible_collection = create(:collection, user: @user_2,
                                               products: [@product_1, @product_2],
                                               privacy: :visible)
-    # This collection is owned by @user_3 and has products 1 and 2 in it.
-    # Visible to @user_2, @user_3, and @primary_user.
-    @visible_collection = create(:collection, user: @user_2,
-                                              products: [@product_1, @product_2],
-                                              privacy: :visible)
   end
 
 
@@ -52,11 +47,11 @@ describe 'Collection#visible' do
 
     describe 'when shared' do
       before do
-        @hidden_collection.share([@primary_user.id])
+        @visible_collection.share([@primary_user.id])
       end
 
       it 'are still visible to that user' do
-        expect(Collection.all.visible(@primary_user).map(&:id)).to include @hidden_collection.id
+        expect(Collection.all.visible(@primary_user).map(&:id)).to include @visible_collection.id
       end
     end
   end

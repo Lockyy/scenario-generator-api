@@ -9,6 +9,7 @@ class Collection < ActiveRecord::Base
   has_many :products, through: :collection_products
   has_many :collection_users, dependent: :destroy
   has_many :sharees, through: :collection_users
+  has_many :tags, through: :products
 
   validates :title, presence: true
   validates :description, presence: true
@@ -16,15 +17,11 @@ class Collection < ActiveRecord::Base
   validates :privacy, presence: true
 
   def self.visible(user)
-    # An collections that are public.
-    public_collections = where { (privacy == 1) }
-    # Any collections that are owned by the user.
-    owned_collections = where(user: user)
-    # Any collections shared with the user.
-    collection_users = CollectionUser.where(id: all.map(&:collection_users).flatten.map(&:id))
-    shared_collections = collection_users.where(sharee: user).map(&:shared_collection)
+    return  joins{collection_users.outer}.
+            where{(user_id.eq user.id) |
+                  (collection_users.sharee.eq user) |
+                  (privacy.eq 1)}
 
-    (public_collections + owned_collections + shared_collections).uniq
   end
 
   def self.create_with_params(params, user)
@@ -32,19 +29,19 @@ class Collection < ActiveRecord::Base
     collection.update_with_params(params)
   end
 
-  # This will remove any IDs that are not in the user_ids array.
-  def share(user_ids)
-    user_ids = [] if user_ids == nil
+  # This will remove any IDs that are not in the sharee_ids array.
+  def share(sharee_ids)
+    sharee_ids = [] if sharee_ids == nil
 
-    user_ids = user_ids.map(&:to_i)
-    existing_user_ids = sharees.map(&:id)
-    new_ids = user_ids - existing_user_ids
-    removed_ids = existing_user_ids - user_ids
+    sharee_ids = sharee_ids.map(&:to_i)
+    existing_sharee_ids = sharees.map(&:id)
+    new_ids = sharee_ids - existing_sharee_ids
+    removed_ids = existing_sharee_ids - sharee_ids
 
-    collection_users.where(user_id: removed_ids).destroy_all
+    collection_users.where(sharee_id: removed_ids).destroy_all
 
     new_ids.each do |id|
-      collection_users.create(user_id: id, shared_collection: self)
+      collection_users.create(sharee_id: id, shared_collection: self)
     end
   end
 
@@ -78,6 +75,10 @@ class Collection < ActiveRecord::Base
 
   def name
     title
+  end
+
+  def display_date
+    created_at.strftime('%b %e, %Y')
   end
 
 end

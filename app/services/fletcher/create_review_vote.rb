@@ -11,7 +11,7 @@ module Fletcher
 
     def save!
       @review_vote = ReviewVote.find_or_initialize_by({review: @review, user: @user})
-      @review_vote.helpful = @is_helpful
+      @review_vote.helpful = @is_helpful == "true"
       @review_vote.save
       @review.save!
     end
