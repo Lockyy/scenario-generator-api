@@ -209,7 +209,7 @@ const Reviews = React.createClass({
           </div>
           { review.total_votes > 0 ?
             <span className="rating">
-              `${review.helpful_votes} of ${review.total_votes} people found this review helpful`
+              {review.helpful_votes} of {review.total_votes} people found this review helpful
             </span>
             : ''
           }

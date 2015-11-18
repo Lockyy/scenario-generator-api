@@ -72,7 +72,7 @@ const ViewCollectionModal = React.createClass ({
   },
 
   renderButtons: function() {
-    if(this.context.currentUser.id == this.state.collection.user.id)
+    if(this.state.collection && this.context.currentUser.id == this.state.collection.user.id)
     {
       return (
         <div className='buttons'>

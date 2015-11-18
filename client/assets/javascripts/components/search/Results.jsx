@@ -145,7 +145,7 @@ const Results = React.createClass ({
     )
   },
 
-  getRenderResultFunction: function(result) {
+  getRenderResultFunction: function() {
     switch(this.props.type) {
       case 'companies':
         return this.renderCompany

@@ -7,6 +7,7 @@ class CollectionStore {
     this.resetData();
 
     this.bindListeners({
+      handleSearchedCollections: FluxCollectionActions.SEARCHED_COLLECTIONS,
       handleFetchedCollections: FluxCollectionActions.FETCHED_COLLECTIONS,
       handleFetchedCollection:  FluxCollectionActions.FETCHED_COLLECTION,
       handleClearCollection:    FluxCollectionActions.CLEAR_COLLECTION,
@@ -34,6 +35,11 @@ class CollectionStore {
     this.data.collections[index] = newCollection;
   }
 
+  handleSearchedCollections(newCollections) {
+    this.data.searchedCollections = newCollections;
+    this.error = null;
+  }
+
   handleFetchedCollections(newCollections) {
     this.data.collections = newCollections;
     this.error = null;
@@ -56,6 +62,7 @@ class CollectionStore {
     this.data = {
       user: {},
       collections: [],
+      searchedCollections: [],
       collection: this.getDefaultCollection()
     };
 

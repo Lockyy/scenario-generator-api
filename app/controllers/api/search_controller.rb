@@ -21,7 +21,14 @@ module Api
 
     def collections
       @q = Collection.ransack({title_cont: params[:search_string]})
-      @collections = @q.result.where(user: current_user)
+      @owned_collections = @q.result.editable(current_user)
+
+      if(params[:search_string].blank?)
+        @tag_collections = []
+      else
+        @q = Collection.ransack({tags_name_cont: params[:search_string]})
+        @tag_collections = @q.result.editable(current_user) - @owned_collections
+      end
 
       respond_to do |format|
         format.json { render }

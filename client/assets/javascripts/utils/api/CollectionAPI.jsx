@@ -17,6 +17,11 @@ module.exports = {
     return this.hitAPI(url, 'get', {}, resolve, reject);
   },
 
+  performSearch: function(searchTerm, resolve, reject) {
+    let url = `/api/search/collections`;
+    return this.hitAPI(url, 'get', {search_string: searchTerm}, resolve, reject);
+  },
+
   shareCollection: function(id, users, resolve, reject) {
     let url = `/api/collections/${id}/share`;
     return this.hitAPI(url, 'post', {users: users}, resolve, reject);

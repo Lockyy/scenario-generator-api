@@ -21,7 +21,11 @@ class Collection < ActiveRecord::Base
             where{(user_id.eq user.id) |
                   (collection_users.sharee.eq user) |
                   (privacy.eq 1)}
+  end
 
+  def self.editable(user)
+    owned_collections = where(user: user)
+    (owned_collections).uniq
   end
 
   def self.create_with_params(params, user)

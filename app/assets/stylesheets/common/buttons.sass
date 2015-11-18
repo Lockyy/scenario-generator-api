@@ -4,6 +4,7 @@
   letter-spacing: 0.125em
   text-transform: uppercase
   outline: none !important
+  font-size: 12px
 
   &.btn-red
     background: $primary-red
@@ -20,6 +21,22 @@
     &:hover, &:active, &:focus
       color: white
       background: $primary-red
+
+  &.btn-blue
+    background: $highlight-blue
+    border: 2px solid $highlight-blue
+    color: white
+    &:hover, &:active, &:focus
+      color: $highlight-blue
+      background: white
+
+  &.btn-blue-inverted
+    background: transparent
+    border: 2px solid $highlight-blue
+    color: $highlight-blue
+    &:hover, &:active, &:focus
+      color: white
+      background: $highlight-blue
 
   &.btn-orange
     background: $orange

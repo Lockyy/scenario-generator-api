@@ -94,6 +94,21 @@ class FluxCollectionActions {
     );
   }
 
+  performSearch(searchTerm) {
+    CollectionAPI.performSearch(searchTerm,
+      (data) => {
+        this.actions.searchedCollections(data.collections);
+      },
+      (error) => {
+        this.actions.registerError(error);
+      }
+    );
+  }
+
+  searchedCollections(data) {
+    this.dispatch(data)
+  }
+
   fetchedCollections(data) {
     this.dispatch(data)
   }
@@ -112,6 +127,7 @@ class FluxCollectionActions {
 
   addCollection(data) {
     this.dispatch(data);
+    this.actions.performSearch('');
   }
 
   removeCollection(id) {

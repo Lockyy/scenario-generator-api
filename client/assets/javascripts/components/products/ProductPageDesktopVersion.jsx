@@ -15,10 +15,11 @@ import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
 import CollectionsCollection from '../collections/CollectionsCollection';
 import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
+import { CreateCollectionMixin } from '../collections/CreateCollectionModal';
 
 const ProductPageDesktopVersion = React.createClass({
   displayName: 'ProductPageDesktopVersion',
-  mixins: [ Navigation, AddToCollectionMixin ],
+  mixins: [ Navigation, AddToCollectionMixin, CreateCollectionMixin ],
 
   id: function() {
     return this.props.data.id
@@ -178,8 +179,11 @@ const ProductPageDesktopVersion = React.createClass({
             <div className='placeholder-section message'>
               Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!
             </div>
-            <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal(this.props.data)}>
-              Add product to a Collection
+            <div className='btn btn-round btn-grey' onClick={() => this.showCreateCollectionModal({products: [this.props.data]})}>
+              Create Collection
+            </div>
+            <div className='btn btn-round btn-grey' onClick={() => this.showAddToCollectionModal(this.props.data)}>
+              Add to existing collection
             </div>
             <CollectionsCollection />
           </div>

@@ -26,18 +26,16 @@ const CreateCollectionMixin = {
     FluxCollectionActions.clearCollection();
   },
 
-  showCreateCollectionModal: function() {
+  showCreateCollectionModal: function(details) {
+    FluxCollectionActions.fetchedCollection({
+      title: (details.title || ''),
+      products: (details.products || []),
+      description: '',
+      users: [],
+      user: {}
+    });
     FluxModalActions.setVisibleModal('CreateCollectionModal')
   },
-
-  // This is used in AddProductToCollectionModal when the user hits
-  // 'Create New Collection'
-  showCreateCollectionModalWithProduct: function(product) {
-    FluxCollectionActions.fetchedCollection({
-      title: '', description: '', products: [product], users: []
-    });
-    this.showCreateCollectionModal()
-  }
 };
 
 const CreateCollectionModal = React.createClass ({
@@ -50,7 +48,10 @@ const CreateCollectionModal = React.createClass ({
         collection: {
           title: '',
           description: '',
-          products: []
+          products: [],
+          user: {
+            name: ''
+          }
         }
       }
     }

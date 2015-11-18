@@ -67,6 +67,51 @@ $modal-padding: 25px
           &:last-child
             border-bottom: 0px
             padding-bottom: 0px
+        &.collections-sets
+          padding-top: 0px
+          padding-bottom: 0px
+          margin-top: 35px
+          max-height: 400px
+          overflow: scroll
+          .collection-set
+            .title-bar
+              padding: 5px 25px
+              background: $shadow-grey
+              margin: 0px -25px
+              font-size: 11px
+              color: $dark-grey
+            .collection
+              display: flex
+              justify-content: space-between
+              align-items: center
+              margin: 0px -25px
+              padding: 15px 25px
+              &.create-collection-link
+                cursor: pointer
+              &:hover
+                .right-buttons
+                  display: flex
+                  align-items: center
+              .collection-info
+                display: inline-block
+                .title
+                  white-space: nowrap
+                  overflow: hidden
+                  text-overflow: ellipsis
+                  max-width: 300px
+                .collection-details
+                  font-size: 12px
+                  color: $dark-grey
+              .right-buttons
+                display: none
+                .already-in-collection
+                  display: inline-block
+                  width: 100px
+                  font-size: 9px
+                  line-height: 10px
+                  margin-left: 5px
+                  color: $primary-red
+
       .results
         max-height: 190px
         overflow-y: auto
