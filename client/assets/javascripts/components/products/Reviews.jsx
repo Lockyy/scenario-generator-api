@@ -8,6 +8,7 @@ import Rating from '../Rating';
 import PriceRating from '../PriceRating';
 import Tags from '../Tags';
 import Dropdown from '../Dropdown';
+import Avatar from '../Avatar';
 import ReviewConstants from '../../utils/constants/ReviewConstants';
 
 const Reviews = React.createClass({
@@ -184,7 +185,7 @@ const Reviews = React.createClass({
     return (
       <div className="row review">
         <div className="col-xs-12 user">
-          <img src={review.user.avatar_url} />
+          <Avatar url={review.user.avatar_url} />
           <div className='details'>
             <div className='name'>
               <Link

@@ -1,12 +1,13 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
-import  Section from '../Section'
-import  TagsBox from '../TagsBox'
-import  SectionRow from '../SectionRow'
-import  ProductBox from '../ProductBox'
-import  FluxReviewPageActions from '../../actions/FluxReviewPageActions'
-import  ReviewPageStore from '../../stores/ReviewPageStore'
+import Section from '../Section'
+import TagsBox from '../TagsBox'
+import Avatar from '../Avatar';
+import SectionRow from '../SectionRow'
+import ProductBox from '../ProductBox'
+import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
+import ReviewPageStore from '../../stores/ReviewPageStore'
 import UrlHelper from '../../utils/helpers/UrlHelper'
 
 const UserProfileHeader  = React.createClass({
@@ -29,7 +30,7 @@ const UserProfileHeader  = React.createClass({
   getAvatarContainer: function getAvatarContainer() {
     return(
       <div className='avatar-container row'>
-        <img className='user-avatar img-circle' src={this.props.avatar_url}/>
+        <Avatar size={150} url={this.props.avatar_url} />
         <span className='user-name'>{this.props.name}</span>
       </div>
     );

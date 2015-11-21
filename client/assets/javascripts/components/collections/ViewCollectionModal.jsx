@@ -8,6 +8,7 @@ import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
 import FluxModalActions from '../../actions/FluxModalActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import { EditCollectionMixin } from './EditCollectionModal';
+import Avatar from '../Avatar';
 import Results from '../search/Results';
 
 // This mixin is included wherever we want this modal.
@@ -18,7 +19,7 @@ const ViewCollectionMixin = {
   },
 
   closeViewCollectionModal: function() {
-    FluxModalActions.closeModal();
+    FluxModalActions.setVisibleModal('AddToCollectionModal')
     FluxCollectionActions.clearCollection();
   },
 
@@ -76,8 +77,21 @@ const ViewCollectionModal = React.createClass ({
     {
       return (
         <div className='buttons'>
-          <button className='btn btn-red btn-round'
-                  onClick={() => this.showEditCollectionModal(this.state.collection)}>Edit</button>
+          <button className='btn btn-red-inverted btn-round' onClick={this.props.close}>Back</button>
+        </div>
+      )
+    }
+  },
+
+  renderSharees: function() {
+    if(this.state.collection.users) {
+      let totalUsers = this.state.collection.users.length
+      return (
+        <div className='collection-sharees'>
+          {_.map(this.state.collection.users.slice(0,6), function(sharee) {
+            return <Avatar url={sharee.avatar_url} />
+          })}
+          { totalUsers > 7 ? <Avatar number={totalUsers - 7} />: '' }
         </div>
       )
     }
@@ -99,6 +113,10 @@ const ViewCollectionModal = React.createClass ({
         </div>
 
         <div className='collection-details'>
+          <div className='author-and-date'>
+            Created by <span className='author'>"{this.state.collection.user.name}"</span>, {this.state.collection.display_date}
+          </div>
+          { this.renderSharees() }
           <div className='collection-description'>
             {this.state.collection.description}
           </div>

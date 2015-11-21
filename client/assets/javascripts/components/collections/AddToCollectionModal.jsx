@@ -13,6 +13,7 @@ import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import CollectionTypeahead from './CollectionTypeahead'
 import Results from '../search/Results'
 import { CreateCollectionMixin } from './CreateCollectionModal'
+import { ViewCollectionMixin } from './ViewCollectionModal'
 
 const AddToCollectionMixin = {
 
@@ -38,7 +39,7 @@ const AddToCollectionMixin = {
 
 const AddToCollectionModal = React.createClass ({
   displayName: 'AddToCollectionModal',
-  mixins: [ CreateCollectionMixin ],
+  mixins: [ CreateCollectionMixin, ViewCollectionMixin ],
 
   getInitialState: function() {
     return {
@@ -95,9 +96,8 @@ const AddToCollectionModal = React.createClass ({
     FluxCollectionActions.performSearch(searchTerm);
   },
 
-  // TODO
-  previewCollection: function() {
-
+  previewCollection: function(collection) {
+    this.showViewCollectionModal(collection)
   },
 
   addToCollection: function(e, collection) {

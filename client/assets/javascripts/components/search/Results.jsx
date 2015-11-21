@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import Rating from '../Rating';
 import SearchConstants from '../../utils/constants/SearchConstants';
 import Dropdown from '../Dropdown';
+import Avatar from '../Avatar';
 import AutoFitPicture from '../AutoFitPicture';
 
 const Results = React.createClass ({
@@ -94,8 +95,7 @@ const Results = React.createClass ({
       return (
         <div className='result user row'>
           <div className='image-container col-xs-2'>
-            <div className='image' style={{backgroundImage: `url(${result.avatar_url})`}}>
-            </div>
+            <Avatar url={result.avatar_url} styles={{backgroundColor: 'white'}}/>
           </div>
           <div className='col-xs-7'>
             <div className='name'>
