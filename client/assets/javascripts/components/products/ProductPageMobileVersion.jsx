@@ -263,7 +263,7 @@ const ProductPageMobileVersion = React.createClass({
 
           <div className='col-xs-12 tags'>
             <Section hasPagination={false} title={"Collections"}>
-              <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal(this.props.data)}>
+              <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal()}>
                 Add to a Collection
               </div>
               <CollectionsCollection />

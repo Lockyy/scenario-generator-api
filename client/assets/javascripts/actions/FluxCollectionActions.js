@@ -95,6 +95,8 @@ class FluxCollectionActions {
   }
 
   performSearch(searchTerm) {
+    this.actions.setSearchTerm(searchTerm)
+
     CollectionAPI.performSearch(searchTerm,
       (data) => {
         this.actions.searchedCollections(data.collections);
@@ -103,6 +105,10 @@ class FluxCollectionActions {
         this.actions.registerError(error);
       }
     );
+  }
+
+  setSearchTerm(searchTerm) {
+    this.dispatch(searchTerm)
   }
 
   searchedCollections(data) {
@@ -127,7 +133,6 @@ class FluxCollectionActions {
 
   addCollection(data) {
     this.dispatch(data);
-    this.actions.performSearch('');
   }
 
   removeCollection(id) {

@@ -30,7 +30,8 @@ const AddToCollectionMixin = {
     FluxModalActions.closeModal()
   },
 
-  showAddToCollectionModal: function() {
+  showAddToCollectionModal: function(searchTerm) {
+    FluxCollectionActions.performSearch(searchTerm)
     FluxModalActions.setVisibleModal('AddToCollectionModal')
   }
 };
@@ -44,21 +45,24 @@ const AddToCollectionModal = React.createClass ({
       product: {
         name: ''
       },
-      collections: []
+      collections: [],
+      searchTerm: ''
     }
   },
 
   // Flux Methods
   // Keep track of changes that are made to the store
   componentDidMount: function() {
-    CollectionStore.listen(this.onChangeCollection);
+    CollectionStore.listen(this.onChangeCollections);
     ProductStore.listen(this.onChangeProduct);
     ModalStore.listen(this.onChangeModal);
-    this.performSearch = _.debounce(this.performSearch, 300);
-    FluxCollectionActions.performSearch('');
+    FluxCollectionActions.performSearch('')
   },
-  onChangeCollection: function(data) {
-    this.setState({searchedCollections: data.data.searchedCollections});
+  onChangeCollections: function(data) {
+    this.setState({
+      searchedCollections: data.data.searchedCollections,
+      searchTerm: data.data.searchTerm
+    });
   },
   onChangeModal: function(data) {
     let visible = data.visibleModal == this.constructor.displayName;
@@ -70,7 +74,6 @@ const AddToCollectionModal = React.createClass ({
 
   close: function() {
     FluxCollectionActions.clearCollection();
-    this.setState({searchTerm: ''});
     FluxCollectionActions.performSearch('');
     this.props.close()
   },
@@ -85,7 +88,6 @@ const AddToCollectionModal = React.createClass ({
 
   performSearchHandler: function(e) {
     let newSearchTerm = $(e.target).val()
-    this.setState({searchTerm: newSearchTerm})
     this.performSearch(newSearchTerm)
   },
 
@@ -133,7 +135,8 @@ const AddToCollectionModal = React.createClass ({
     return (
       <input  onChange={this.performSearchHandler}
               placeholder='Search collections, products, and tags'
-              className='form-control' />
+              className='form-control'
+              value={this.state.searchTerm} />
     )
   },
 

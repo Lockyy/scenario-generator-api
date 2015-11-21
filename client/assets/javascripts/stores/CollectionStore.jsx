@@ -8,13 +8,14 @@ class CollectionStore {
 
     this.bindListeners({
       handleSearchedCollections: FluxCollectionActions.SEARCHED_COLLECTIONS,
-      handleFetchedCollections: FluxCollectionActions.FETCHED_COLLECTIONS,
-      handleFetchedCollection:  FluxCollectionActions.FETCHED_COLLECTION,
-      handleClearCollection:    FluxCollectionActions.CLEAR_COLLECTION,
-      handleRegisterError:      FluxCollectionActions.REGISTER_ERROR,
-      handleAddCollection:      FluxCollectionActions.ADD_COLLECTION,
-      handleRemoveCollection:   FluxCollectionActions.REMOVE_COLLECTION,
-      handleUpdateCollection:   FluxCollectionActions.UPDATE_DATA
+      handleFetchedCollections:  FluxCollectionActions.FETCHED_COLLECTIONS,
+      handleFetchedCollection:   FluxCollectionActions.FETCHED_COLLECTION,
+      handleSearchTerm:          FluxCollectionActions.SET_SEARCH_TERM,
+      handleClearCollection:     FluxCollectionActions.CLEAR_COLLECTION,
+      handleRegisterError:       FluxCollectionActions.REGISTER_ERROR,
+      handleAddCollection:       FluxCollectionActions.ADD_COLLECTION,
+      handleRemoveCollection:    FluxCollectionActions.REMOVE_COLLECTION,
+      handleUpdateCollection:    FluxCollectionActions.UPDATE_DATA
     })
   }
 
@@ -33,6 +34,11 @@ class CollectionStore {
     let oldCollection = _.find(this.data.collections, function(e) { return e.id == newCollection.id; });
     let index = _.indexOf(this.data.collections, oldCollection);
     this.data.collections[index] = newCollection;
+  }
+
+  handleSearchTerm(searchTerm) {
+    this.data.searchTerm = searchTerm
+    this.error = null
   }
 
   handleSearchedCollections(newCollections) {
