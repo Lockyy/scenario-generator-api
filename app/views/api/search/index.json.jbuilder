@@ -8,7 +8,7 @@ json.match_mode    @results[:match_mode]
 json.products do
   json.total @results[:products][:total]
   json.pages @results[:products][:pages]
-  json.data  @results[:products][:data], partial: 'api/products/product', as: :product
+  json.data  @results[:products][:data], partial: 'api/products/small_product', as: :product
 end
 
 json.companies do

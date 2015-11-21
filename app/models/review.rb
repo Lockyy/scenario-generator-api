@@ -21,8 +21,6 @@ class Review < ActiveRecord::Base
     product.save
   end
 
-  default_scope { includes(:review_votes).includes(:links).includes(:attachments) }
-
   def self.sorted(sort_string)
     case sort_string
     when 'highScore'

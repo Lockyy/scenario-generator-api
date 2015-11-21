@@ -8,3 +8,7 @@ json.user do
 end
 
 json.products collection.products, partial: 'api/products/small_product', as: :product
+
+if(collection.user == current_user)
+  json.users collection.sharees, partial: 'api/users/search_user', as: :user
+end
