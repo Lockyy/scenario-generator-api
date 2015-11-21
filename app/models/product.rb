@@ -28,6 +28,8 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :reviews
   accepts_nested_attributes_for :custom_attachments
 
+  default_scope { includes(:reviews) }
+
   validates :name, presence: true, uniqueness: { scope: :company_id, case_sensitive: false }
   validates :description, presence: true
   validates :company, presence: true

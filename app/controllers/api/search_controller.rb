@@ -10,6 +10,14 @@ module Api
       end
     end
 
+    def products
+      @products = Product.ransack({name_cont: params[:search_string]}).result
+
+      respond_to do |format|
+        format.json { render }
+      end
+    end
+
     def users
       @q = User.ransack({name_cont: params[:search_string]})
       @users = @q.result.where.not(id: current_user.id)
