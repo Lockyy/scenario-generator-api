@@ -87,9 +87,9 @@ const EditCollectionModal = React.createClass ({
   // these changes are unsaved at this stage.
   addProduct: function(product, selected) {
     if(selected) {
-      let newProducts = this.state.collection.products
-      newProducts.push(product)
-      this.setState({product_name: null, collection: {products: newProducts}})
+      let updatedCollection = this.state.collection
+      updatedCollection.products.push(product)
+      this.setState({product_name: null, collection: updatedCollection})
     } else {
       this.setState({product_name: product.name})
     }
