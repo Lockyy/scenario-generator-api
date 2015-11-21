@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
+import TextHelper from '../../utils/helpers/TextHelper';
 import Modal from 'react-modal';
 import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
 import ProductStore from '../../stores/ProductStore';
@@ -97,9 +98,13 @@ const AddToCollectionModal = React.createClass ({
 
   },
 
-  addToCollection: function(collection) {
+  addToCollection: function(e, collection) {
     let _this = this
     let product = this.state.product;
+    // Set the button to ticked
+    $(e.target).addClass('btn-tick')
+    // Remove onClick event
+    $(e.target).prop('onclick',null).off('click')
 
     let sendNotification = function() {
       FluxNotificationsActions.showNotification({
@@ -134,13 +139,20 @@ const AddToCollectionModal = React.createClass ({
 
   renderCollectionLists: function() {
     return _.map(this.state.searchedCollections, function(collectionSet, setKey) {
-      if(collectionSet.total > 0) {
-        return this.renderCollectionList(collectionSet, setKey)
-      }
+      return (
+        <div>
+          { this.renderCollectionList(collectionSet, setKey) }
+          { setKey == 'owned' ? this.renderCreateCollectionLink() : '' }
+        </div>
+      )
     }.bind(this))
   },
 
   renderCollectionList: function(collectionSet, setKey) {
+    if(collectionSet.total <= 0) {
+      return false;
+    }
+
     let collectionDOMs = _.map(collectionSet.data, function(collection) {
       return this.renderCollectionListItem(collection)
     }.bind(this))
@@ -152,7 +164,6 @@ const AddToCollectionModal = React.createClass ({
         </div>
         <div className='collections'>
           {collectionDOMs}
-          {setKey == 'owned' ? this.renderCreateCollectionLink() : ''}
         </div>
       </div>
     )
@@ -165,14 +176,15 @@ const AddToCollectionModal = React.createClass ({
 
     let onClick = function() {
       this.close()
-      this.showCreateCollectionModal({title: this.state.searchTerm})
+      this.showCreateCollectionModal({title: this.state.searchTerm, products: [this.state.product]})
     }.bind(this)
 
     return (
       <div className='collection create-collection-link' onClick={onClick}>
         <div className='collection-info'>
           <div className='title'>
-            Create a new collection called: {this.state.searchTerm}
+            <div className='add-collection-icon' />
+            Create a new collection called: <div className='collection-name'>"{TextHelper.truncate(this.state.searchTerm, 30)}"</div>
           </div>
         </div>
       </div>
@@ -183,7 +195,7 @@ const AddToCollectionModal = React.createClass ({
     if(this.productInCollection(collection)) {
       return <div className='already-in-collection'>The product you are trying to add is already a part of this collection</div>
     } else {
-      return <div className='btn btn-round btn-red-inverted' onClick={() => this.addToCollection(collection)}>Add</div>
+      return <div className='btn btn-round btn-red-inverted btn-add' onClick={(e) => this.addToCollection(e, collection)}>Add</div>
     }
   },
 
@@ -195,11 +207,11 @@ const AddToCollectionModal = React.createClass ({
             {collection.title}
           </div>
           <div className='collection-details'>
-            Created by {collection.user.name}, {collection.display_date}
+            Created by <span className='author'>"{collection.user.name}"</span>, {collection.display_date}
           </div>
         </div>
         <div className='right-buttons'>
-          <div className='btn btn-round btn-blue-inverted btn-view' onClick={this.previewCollection}>Preview</div>
+          <div className='btn btn-round btn-blue-inverted btn-view' onClick={() => this.previewCollection(collection)} />
           {this.renderAddButton(collection)}
         </div>
       </div>

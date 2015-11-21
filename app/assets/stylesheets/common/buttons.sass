@@ -5,6 +5,7 @@
   text-transform: uppercase
   outline: none !important
   font-size: 12px
+  transition: 0.5s
 
   &.btn-red
     background: $primary-red
@@ -21,6 +22,7 @@
     &:hover, &:active, &:focus
       color: white
       background: $primary-red
+      border: 2px solid transparent
 
   &.btn-blue
     background: $highlight-blue
@@ -37,6 +39,7 @@
     &:hover, &:active, &:focus
       color: white
       background: $highlight-blue
+      border-color: transparent
 
   &.btn-orange
     background: $orange
@@ -67,6 +70,25 @@
     &:hover, &:active, &:focus
       border-width: 1px
 
+  &.btn-tick
+    background-color: $primary-red
+    border: 2px solid $primary-red
+    color: transparent
+    background-image: url('icons/collection-added.svg')
+    background-position: center
+    background-repeat: no-repeat
+    padding: 5px 15px
+    cursor: initial
+    &:hover, &:active, &:focus
+      color: transparent
+      background-color: $primary-red
+      background-image: url('icons/collection-added.svg')
+      background-position: center
+      background-repeat: no-repeat
+      border: 2px solid $primary-red
+
+  &.btn-add
+    width: 56px
 
   &.btn-full
     width: 100%

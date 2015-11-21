@@ -22,11 +22,13 @@ $modal-padding: 25px
       padding: $modal-padding $modal-padding $modal-padding
       overflow: visible
       .collection-details
-        .owner
-          font-size: 12px
+        .author-and-date
+          font-size: 11px
           color: $dark-grey
-          span:last-child
+          .author
             color: $primary-red
+        .collection-sharees
+          display: flex
         .header
           border-bottom: none
           margin-bottom: 0px
@@ -80,37 +82,73 @@ $modal-padding: 25px
               margin: 0px -25px
               font-size: 11px
               color: $dark-grey
-            .collection
-              display: flex
-              justify-content: space-between
-              align-items: center
-              margin: 0px -25px
-              padding: 15px 25px
-              &.create-collection-link
-                cursor: pointer
-              &:hover
-                .right-buttons
-                  display: flex
-                  align-items: center
-              .collection-info
-                display: inline-block
-                .title
-                  white-space: nowrap
-                  overflow: hidden
-                  text-overflow: ellipsis
-                  max-width: 300px
-                .collection-details
-                  font-size: 12px
-                  color: $dark-grey
-              .right-buttons
-                display: none
-                .already-in-collection
-                  display: inline-block
-                  width: 100px
-                  font-size: 9px
-                  line-height: 10px
-                  margin-left: 5px
+          .collection
+            display: flex
+            justify-content: space-between
+            align-items: center
+            margin: 0px -25px
+            padding: 15px 25px
+            &:hover
+              background: $medium-grey
+            .collection-info
+              display: inline-block
+              .title
+                white-space: nowrap
+                overflow: hidden
+                text-overflow: ellipsis
+                max-width: 300px
+              .collection-details
+                font-size: 11px
+                color: $dark-grey
+                .author
                   color: $primary-red
+            &.create-collection-link
+              cursor: pointer
+              .title
+                display: flex
+                align-items: center
+                max-width: initial
+                .add-collection-icon
+                  background-image: url('icons/icon-collections-new-red.svg')
+                  width: 25px
+                  height: 25px
+                  margin-right: 10px
+                  background-size: 100%
+                  background-position: center
+                  background-repeat: no-repeat
+                .collection-name
+                  color: $primary-red
+                  margin-left: 5px
+              &:hover
+                .add-collection-icon
+                  background-image: url('icons/icon-collections-new-white.svg')
+            &:hover
+              .right-buttons
+                display: flex
+                align-items: center
+            .right-buttons
+              display: none
+              .already-in-collection
+                display: inline-block
+                width: 100px
+                font-size: 9px
+                line-height: 10px
+                margin-left: 5px
+                color: $primary-red
+              .btn-view
+                width: 50px
+                &::after
+                  content: '.'
+                  display: block
+                  background-image: url('icons/icon-collection-preview-blue.svg')
+                  width: 100%
+                  height: 100%
+                  color: transparent
+                  background-position: center
+                  background-repeat: no-repeat
+                &:hover
+                  &::after
+                    background-image: url('icons/icon-collection-preview-white.svg')
 
       .results
         max-height: 190px
