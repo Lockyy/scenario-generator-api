@@ -36,10 +36,10 @@ const TabbedArea = React.createClass({
   render: function() {
     return (
       <div className='tabbed-area row'>
-        <div className='col-xs-3 tabbed-area-sidebar'>
+        <div className='col-xs-12 col-sm-3 tabbed-area-sidebar'>
           {this.renderSidebar()}
         </div>
-        <div className={`col-xs-9 child-tabbed-area ${this.state.activeTab}`}>
+        <div className={`col-xs-12 col-sm-9 child-tabbed-area ${this.state.activeTab}`}>
           {this.renderTabbedArea()}
         </div>
       </div>
