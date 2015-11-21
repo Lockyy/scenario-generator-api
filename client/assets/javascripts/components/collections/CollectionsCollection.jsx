@@ -8,6 +8,10 @@ const CollectionsCollection = React.createClass ({
   displayName: 'CollectionsCollection',
   mixins: [ Navigation ],
 
+  contextTypes: {
+    currentUser: React.PropTypes.object
+  },
+
   getInitialState: function() {
     return {
       data: {
@@ -24,14 +28,43 @@ const CollectionsCollection = React.createClass ({
     this.setState(data);
   },
 
+  renderHeader: function() {
+    return (
+      <div className='collections-collection-row header'>
+        <span className='name'>
+          Name
+        </span>
+        <span className='owner'>
+          Owner
+        </span>
+        <span className='date'>
+          Last Modified
+        </span>
+      </div>
+    )
+  },
+
   renderCollections: function() {
     let _this = this
     return (
-      <div className='collections row'>
+      <div>
         {_.map(this.state.data.collections, function(collection) {
-          return <CollectionBox
-                    collection={collection} />
-        })}
+          return (
+            <div className='collections-collection-row'>
+              <span className='name'>
+                <Link to={`/app/collections/${collection.id}`}>{collection.title}</Link>
+              </span>
+              <span className='owner'>
+                <Link to={`/app/users/${collection.user.id}`}>
+                  {collection.user.id == this.context.currentUser.id ? 'Me' : collection.user.name}
+                </Link>
+              </span>
+              <span className='date'>
+                {collection.display_date}
+              </span>
+            </div>
+          )
+        }.bind(this))}
       </div>
     )
   },
@@ -40,7 +73,8 @@ const CollectionsCollection = React.createClass ({
     let _this = this
 
     return (
-      <div className={`${this.props.containerClass || ''}`}>
+      <div className={`collections-collection ${this.props.containerClass || ''}`}>
+        {this.renderHeader()}
         {this.renderCollections()}
       </div>
     )
