@@ -2,7 +2,8 @@ module.exports = {
 
   Containers: {
     DefaultStyle: {
-      top: '75px'
+      top: '75px',
+      zIndex: 9999999
     },
   },
 
