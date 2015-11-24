@@ -42,6 +42,7 @@ is currently primarily used for the Collections system but is also used for vari
 - Hitting the landing page whilst logged in automatically redirects the user to /app.
 - Field validation now occurs on new review page for fields preceeding the one clicked by the user. Errors also now appear at the end of the form.
 - Remove old Auth Token based authentication. The site now relies solely on Devise authentication.
+- Spin the common tabbed area that is on the product and user profiles into its own react component. This now makes it easy to add these tabs to a number of elements.
 - Move hamburger menu into its own dedicated react component which renders all the sub-components, rather than rendering them each separately in app.jsx
 
 ####Bugfixes

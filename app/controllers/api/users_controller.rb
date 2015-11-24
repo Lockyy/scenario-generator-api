@@ -8,7 +8,7 @@ class Api::UsersController < AppController
   end
 
   def recent_activity
-    @recent_activity = current_user.recent_activity(params[:sorting])
+    @recent_activity = @user.recent_activity(params[:sorting])
       .paginate(:page => params[:page] || 1 , :per_page => params[:per_page] || 4)
 
     respond_to do |format|

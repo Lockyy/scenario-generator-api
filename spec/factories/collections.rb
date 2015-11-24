@@ -3,6 +3,7 @@ FactoryGirl.define do
     title { Faker::Lorem.word }
     description { Faker::Lorem.sentence }
     user { create(:user) }
+    privacy 'hidden'
 
     trait :visible do
       privacy 'visible'

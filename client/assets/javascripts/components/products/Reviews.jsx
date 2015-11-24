@@ -198,28 +198,43 @@ const Reviews = React.createClass({
           </div>
         </div>
         <div className="col-xs-12 review-content">
-          <span className="score">
-            { review.quality_score ? <Rating value={review.quality_score} name='rating'/> : '' }
-          </span>
+          { review.quality_score ?
+            <span className="score">
+              <Rating value={review.quality_score} name='rating'/>
+            </span>
+            : ''
+          }
           <div className="created_at">
             {review.display_date}
           </div>
-          <span className="rating">
-            { review.total_votes > 0 ? `${review.helpful_votes} of ${review.total_votes} people found this review helpful` : ''}
-          </span>
+          { review.total_votes > 0 ?
+            <span className="rating">
+              `${review.helpful_votes} of ${review.total_votes} people found this review helpful`
+            </span>
+            : ''
+          }
           <div className="title">
             {review.title}
           </div>
           <div className="review-text" dangerouslySetInnerHTML={{__html: review.formatted_quality_review}} />
-          <ul className="attachments">
-            {attachments}
-          </ul>
-          <ul className="links">
-            {links}
-          </ul>
-          <div className="price-score">
-            { review.price_score ? <PriceRating value={review.price_score} showScoreText={true} name='rating'/> : '' }
-          </div>
+          { attachments.length > 0 ?
+            <ul className="attachments">
+              {attachments}
+            </ul>
+            : ''
+          }
+          { links.length > 0 ?
+            <ul className="links">
+              {links}
+            </ul>
+            : ''
+          }
+          { review.price_score ?
+            <div className="price-score">
+              <PriceRating value={review.price_score} showScoreText={true} name='rating'/>
+            </div>
+            : ''
+          }
           <div className="price-review" dangerouslySetInnerHTML={{__html: review.formatted_price_review}} />
           <Tags tags={review.tags} />
 
@@ -246,6 +261,7 @@ const Reviews = React.createClass({
     return (
       <div className="header">
         <Dropdown
+          showText={true}
           onClick={this.changeSorting}
           active={this.currentSorting()}
           options={{

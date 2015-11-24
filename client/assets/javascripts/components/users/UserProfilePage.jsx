@@ -80,12 +80,11 @@ const UserProfilePage  = React.createClass({
 
   render: function render() {
     let user  = this.state;
-    let activeTab = UrlHelper.getAnchorText();
 
     let page = user.id == this.context.currentUser.id ?
-      <UserProfileWorkArea sorting={this.state.sorting} activeTab={activeTab}
+      <UserProfileWorkArea sorting={this.state.sorting}
         onChangeSorting={this.onChangeReviewsSorting} onShowMore={this.onShowMoreReviews} {...user} /> :
-      <UserProfileRecentActivity sorting={this.state.sorting} activeTab={activeTab}
+      <UserProfileRecentActivity sorting={this.state.sorting}
         onShowMore={this.onShowMoreReviews} onChangeSorting={this.onChangeReviewsSorting} {...user}/>
 
     return (

@@ -39,6 +39,7 @@ const UserBookmarks = React.createClass ({
 
   render: function() {
     return <MyBookmarks products={this.state.products}
+                        router={this.context.router}
                         {...this.props} />
   }
 })
