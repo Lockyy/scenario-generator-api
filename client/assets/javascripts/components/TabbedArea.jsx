@@ -7,8 +7,26 @@ const TabbedArea = React.createClass({
 
   getInitialState: function () {
     return {
-      activeTab: this.props.children[0].ref
+      activeTab: this.getActiveTab()
     }
+  },
+
+  validTab: function(tabRef) {
+    let refs = _.map(this.props.children, function(child) { return child.ref })
+    return _.indexOf(refs, tabRef) > -1
+  },
+
+  getActiveTab: function() {
+    if(location.hash) {
+      let hashTabName = location.hash.slice(1);
+      if(this.validTab(hashTabName)) { return hashTabName }
+    }
+    return this.props.children[0].ref
+  },
+
+  setActiveTab: function(tabRef) {
+    this.setState({activeTab: tabRef})
+    location.hash = tabRef
   },
 
   renderSidebar: function() {
@@ -18,7 +36,7 @@ const TabbedArea = React.createClass({
       return (
         <div
           className={`sidebar-element ${child.ref} ${child.ref == this.state.activeTab ? 'active' : ''}`}
-          onClick={() => this.setState({activeTab: child.ref})}>
+          onClick={() => _this.setActiveTab(child.ref)}>
           {child.props.tabTitle}
         </div>
       )
