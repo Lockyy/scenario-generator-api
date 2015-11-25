@@ -43,10 +43,10 @@ const UserProfileWorkArea  = React.createClass({
         className='my-collections-container work-area-section'
         ref='collections'
         tabTitle='Collections' >
-        <div className='placeholder-section message'>
-          Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!
+        <div className='placeholder-message'>
+          Create and share lists of products you are comparing or interested in.
         </div>
-        <div className='btn btn-round btn-red' onClick={this.showCreateCollectionModal}>
+        <div className='btn btn-round btn-grey' onClick={this.showCreateCollectionModal}>
           Create Collection
         </div>
         <CollectionsCollection />

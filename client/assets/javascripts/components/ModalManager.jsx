@@ -20,6 +20,7 @@ Modal.injectCSS();
 const ModalManager = React.createClass ({
   displayName: 'ModalManager',
   mixins: [
+    Navigation,
     CreateCollectionMixin,
     ShareCollectionMixin,
     AddToCollectionMixin,
@@ -27,7 +28,7 @@ const ModalManager = React.createClass ({
     EditCollectionMixin,
     ShareProductMixin,
     ProductFilesMixin,
-    ProductLinksMixin
+    ProductLinksMixin,
   ],
 
   render: function() {

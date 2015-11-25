@@ -21,6 +21,27 @@ $modal-padding: 25px
       top: 100px
       padding: $modal-padding $modal-padding $modal-padding
       overflow: visible
+      .collection
+        .privacy-radios
+          font-size: 13px
+          color: $dark-grey
+          label
+            font-weight: normal
+            display: block
+      .field-messages
+        display: flex
+        justify-content: space-between
+        flex-direction: row-reverse
+        .errors
+          display: none
+          color: $primary-red
+          &.active
+            display: inline-block
+        .required
+          display: inline-block
+          text-align: right
+          color: $dark-grey
+          font-weight: bold
       .collection-details
         .author-and-date
           font-size: 11px
