@@ -16,65 +16,60 @@ class Collection < ActiveRecord::Base
   validates :user, presence: true
   validates :privacy, presence: true
 
-  def self.visible(user)
-    return  joins{collection_users.outer}.
-            where{(user_id.eq user.id) |
-                  (collection_users.sharee.eq user) |
-                  (privacy.eq 1)}
+  scope :visible, -> (user) {
+    joins{collection_users.outer}.
+          where{(user_id.eq user.id) |
+                (collection_users.sharee.eq user) |
+                (privacy.eq 1)}
+  }
+
+  scope :editable, -> (user) {
+    joins{collection_users.outer}.
+          where{(user_id.eq user.id) |
+                (collection_users.sharee.eq(user) & collection_users.rank.gteq(1))}
+  }
+
+  scope :owned, -> (user) {
+    joins{collection_users.outer}.
+          where{(user_id.eq user.id) |
+                (collection_users.sharee.eq(user) & collection_users.rank.gteq(2))}
+  }
+
+  def visible?(user)
+    Collection.where(id: id).visible(user).length > 0
   end
 
-  def self.editable(user)
-    owned_collections = where(user: user)
-    (owned_collections).uniq
+  def editable?(user)
+    Collection.where(id: id).editable(user).length > 0
   end
 
-  def self.create_with_params(params, user)
-    collection = self.new(user: user)
-    collection.update_with_params(params)
+  def owned?(user)
+    Collection.where(id: id).owned(user).length > 0
+  end
+
+  def remove_sharees(ids)
+    collection_users.where(sharee_id: ids).destroy_all
   end
 
   # This will remove any IDs that are not in the sharee_ids array.
-  def share(sharee_ids)
-    sharee_ids = [] if sharee_ids == nil
-
-    sharee_ids = sharee_ids.map(&:to_i)
+  def share(new_sharees)
+    new_sharees = [] if new_sharees == nil
+    # Remove any sharees not passed in from the front end
+    sharee_ids = new_sharees.map { |sharee| sharee['id'].to_i }
     existing_sharee_ids = sharees.map(&:id)
-    new_ids = sharee_ids - existing_sharee_ids
-    removed_ids = existing_sharee_ids - sharee_ids
+    self.remove_sharees(existing_sharee_ids - sharee_ids)
 
-    collection_users.where(sharee_id: removed_ids).destroy_all
-
-    new_ids.each do |id|
-      collection_users.create(sharee_id: id, shared_collection: self)
+    # Create new sharees or update existing ones with new info.
+    new_sharees.each do |sharee_hash|
+      sharee = self.collection_users.find_or_create_by(sharee_id: sharee_hash['id']) do |collection_user|
+        collection_user.rank = sharee_hash['rank']
+      end
     end
   end
 
   def add_product(product_id)
     product = Product.find_by(id: product_id)
     self.products.append(product) if product
-  end
-
-  def update_with_params(params)
-    self.title       = params[:title] if params[:title]
-    self.description = params[:description] if params[:description]
-    self.privacy     = params[:privacy] if params[:privacy]
-
-    if(params[:products])
-      self.products.delete_all
-      params[:products].each do |product_id|
-        product = Product.find_by(id: product_id)
-        self.products.append(product) if product
-      end
-    end
-
-    self.save
-    self
-  end
-
-  # A collection is visible if privacy is 'visible' (1)
-  # or is owned by the given user
-  def visible_to?(user)
-    user == self.user || self.visible? || user.shared_collections.where(id: self.id).length > 0
   end
 
   def name

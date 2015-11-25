@@ -8,6 +8,8 @@ class CollectionUser < ActiveRecord::Base
 
   validates_uniqueness_of :collection_id, :scope => :sharee_id
 
+  enum privacy: [:viewer, :collaborator, :owner]
+
   def create_notification
     Notification.create(sender: shared_collection.user,
                         user: sharee,

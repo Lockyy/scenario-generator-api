@@ -1,71 +1,85 @@
 class Api::CollectionsController < AppController
+  before_action :setup_collection, only: [:show, :add_product, :update, :destroy, :share]
+  before_action :require_editor, only: [:add_product]
+  before_action :require_owner, only: [:update, :destroy, :share]
 
   def show
-    @collection = Collection.find_by(id: params[:id])
+  end
+
+  def create
+    products = Product.where(id: params[:products])
+    @collection = current_user.collections.create(collection_params.merge(products: products))
 
     respond_to do |format|
       format.json do
-        if @collection && @collection.visible_to?(current_user)
-          render
+        if @collection
+          render 'show'
         else
-          render :json => {collection: {}}, :status => 404
+          render json: {}, status: 400
         end
       end
     end
   end
 
-  def create
-    @collection = Collection.create_with_params(params[:collection],
-                                                current_user)
-
-    respond_to do |format|
-      format.json { render }
-    end
-  end
-
   def add_product
-    @collection = Collection.find_by( id: params[:id],
-                                      user: current_user)
+    @collection.add_product(params[:product])
 
-    @collection.add_product(params[:product]) if @collection
-
-    respond_to do |format|
-      format.json { render 'create'}
-    end
+    respond_to { |format| format.json { render 'show'} }
   end
 
   def update
-    @collection = Collection.find_by( id: params[:id],
-                                      user: current_user)
+    products = Product.where(id: params[:products])
+    @collection.update_attributes(collection_params.merge(products: products))
 
-    @collection.update_with_params(params[:collection]) if @collection
-
-    respond_to do |format|
-      format.json { render }
-    end
+    respond_to { |format| format.json { render 'show'} }
   end
 
   def destroy
-    @collection = Collection.find_by( id: params[:id],
-                                      user: current_user)
-
-    @collection.destroy
-
-    respond_to do |format|
-      format.json { render }
+    if @collection.destroy
+      returnJSON = render json: {success: true}
+    else
+      returnJSON = render 'show', status: 400
     end
+
+    respond_to { |format| format.json { returnJSON } }
   end
 
   def share
-    @collection = Collection.find_by(id: params[:id], user: current_user)
-
-    if @collection && @collection.share(params[:users])
+    if @collection.share(params[:users])
       @collection.reload
-      respond_to do |format|
-        format.json { render }
-      end
+      returnJSON = render 'show'
     else
-      render :status => :error
+      returnJSON = render 'show', status: 400
+    end
+
+    respond_to { |format| format.json { returnJSON } }
+  end
+
+  private
+
+  def collection_params
+    params.permit(:title, :description, :privacy)
+  end
+
+  def setup_collection
+    @collection = Collection.find_by(id: params[:id])
+    unless @collection && @collection.visible?(current_user)
+      render :json => { collection: {} }, :status => 404
+      false
+    end
+  end
+
+  def require_editor
+    unless @collection && @collection.editable?(current_user)
+      render :json => { collection: {} }, :status => 401
+      false
+    end
+  end
+
+  def require_owner
+    unless @collection && @collection.owned?(current_user)
+      render :json => { collection: {} }, :status => 401
+      false
     end
   end
 end

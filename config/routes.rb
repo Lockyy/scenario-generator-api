@@ -38,9 +38,9 @@ Rails.application.routes.draw do
     ###############
     # Collections #
     ###############
-    resources :collections, only: [ :user, :create, :show,
-                                    :update, :destroy],
-                            defaults: {format: 'json'} do
+    resources :collections,
+              only: [ :user, :create, :show, :update, :destroy],
+              defaults: {format: 'json'} do
       member do
         post 'share'
         post 'add_product'
