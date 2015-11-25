@@ -221,17 +221,21 @@ const EditCollectionModal = React.createClass ({
 
   deleteCollection: function() {
     let _this = this;
+    let collection_name = this.state.collection.title;
 
     FluxAlertActions.showAlert({
-      title: `Are you sure you want to delete ${this.state.collection.title}`,
-      success: 'Yes, delete it',
-      cancel: "No, don't delete it",
+      title: 'Delete this collection?',
+      blue: true,
+      success: 'Delete',
+      cancel: 'Cancel',
+      message: 'Deleting this collection will delete it for all the users in it. This action can’t be undone. Confirm you action below.',
+      checkbox: 'I confirm that I want to delete this collection.',
       successCallback: function() {
         FluxCollectionActions.deleteCollection({
-          id: _this.state.collection.id,
-          name: _this.state.collection.title
+          id: _this.props.params.id,
+          name: collection_name
         })
-        FluxModalActions.closeModal();
+        _this.context.router.transitionTo('/app')
       }
     })
   },
