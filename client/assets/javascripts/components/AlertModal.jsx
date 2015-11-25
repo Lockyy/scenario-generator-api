@@ -33,7 +33,8 @@ const AlertModal = React.createClass({
         success: 'Success',
         cancel: 'Cancel'
       },
-      modalIsOpen: false
+      modalIsOpen: false,
+      checked: false
     };
   },
 
@@ -74,17 +75,55 @@ const AlertModal = React.createClass({
     return false
   },
 
+  buttonDisabled: function() {
+    if(this.state.data.checkbox) {
+      return !this.state.checked
+    }
+    return false
+  },
+
   renderButtons: function() {
     return (
       <div className='alertButtons'>
+        { this.state.data.blue ? (
+            <button onClick={this.successButton}
+                    className='btn btn-round btn-blue-inverted'
+                    disabled={this.buttonDisabled()}>
+              {this.state.data.success}
+            </button>
+          ) : (
+            <button onClick={this.successButton}
+                    className='btn btn-round btn-red'
+                    disabled={this.buttonDisabled()}>
+              {this.state.data.success}
+            </button>
+          )
+        }
         {this.showCancelButton() ? (<button onClick={this.cancelButton} className='btn btn-round btn-grey'>
                                       {this.state.data.cancel}
                                     </button> ) : null }
-        <button onClick={this.successButton} className='btn btn-round btn-red'>
-          {this.state.data.success}
-        </button>
       </div>
     )
+  },
+
+  checkboxUpdate: function(e) {
+    this.setState({
+      checked: $(e.target).is(":checked")
+    })
+  },
+
+  renderCheckbox: function() {
+    if(this.state.data.checkbox) {
+      return (
+        <div className='checkbox'>
+          <label>
+            <input  type="checkbox"
+                    onChange={this.checkboxUpdate} />
+            {this.state.data.checkbox}
+          </label>
+        </div>
+      )
+    }
   },
 
   render: function() {
@@ -100,7 +139,10 @@ const AlertModal = React.createClass({
         <div className='message'>
           {this.state.data.message}
         </div>
-        {this.renderButtons()}
+        <div className='grey'>
+          {this.renderCheckbox()}
+          {this.renderButtons()}
+        </div>
       </Modal>
     )
   },

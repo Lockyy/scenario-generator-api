@@ -1,0 +1,22 @@
+@import 'variables'
+
+input[type='radio']
+  display: none
+  & + span
+    display: flex
+    align-items: center
+    &::before
+      display: inline-block
+      margin-right: 5px
+      width: 10px
+      height: 10px
+      content: '.'
+      color: transparent
+      background: white
+      box-shadow: 0px 0px 0px 2px #B2141A
+      border: 2px solid white
+      border-radius: 45px
+      position: relative
+      top: -1px
+  &:checked + span::before
+    background: $primary-red
