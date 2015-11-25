@@ -136,6 +136,18 @@ const EditCollectionModal = React.createClass ({
     this.setState({ collection: hash })
   },
 
+  // Runs validation on text fields.
+  // Returns false if there are errors.
+  validation: function() {
+    let errorDom = $(this.refs.errors.getDOMNode())
+    let titleDOM = $(this.refs.collection_title.getDOMNode())
+    let descriptionDOM = $(this.refs.collection_description.getDOMNode())
+    let errors = titleDOM.val() == '' || descriptionDOM.val() == ''
+    errorDom.toggleClass('active', errors)
+
+    return !errors
+  },
+
   renderTextFields: function() {
     let _this = this;
     let onFocus = function(e) {
@@ -144,29 +156,40 @@ const EditCollectionModal = React.createClass ({
 
     let onBlur = function(e) {
       $(React.findDOMNode(_this.refs.fields_container)).removeClass('focus')
+      _this.validation()
     }
 
     return (
-      <div className='form-group attached-fields' ref='fields_container'>
-        <input  type='text'
-                className='form-control'
-                placeholder='Title'
-                name='collection[title]'
-                ref='collection_title'
-                value={this.state.collection.title}
-                onFocus={onFocus}
-                onBlur={onBlur}
-                onChange={(e) => this.onChangeField('title', e.currentTarget.value)} />
-        <textarea type='text'
+      <div>
+        <div className='field-messages'>
+          <div className='required'>
+            * Required Fields
+          </div>
+          <div className='errors' ref='errors'>
+            Please complete this field
+          </div>
+        </div>
+        <div className='form-group attached-fields' ref='fields_container'>
+          <input  type='text'
                   className='form-control'
-                  placeholder='Say something'
-                  name='collection[description]'
-                  rows='10'
-                  ref='collection_description'
-                  value={this.state.collection.description}
+                  placeholder='Title'
+                  name='collection[title]'
+                  ref='collection_title'
+                  value={this.state.collection.title}
                   onFocus={onFocus}
                   onBlur={onBlur}
-                  onChange={(e) => this.onChangeField('description', e.currentTarget.value)} />
+                  onChange={(e) => this.onChangeField('title', e.currentTarget.value)} />
+          <textarea type='text'
+                    className='form-control'
+                    placeholder='Say something'
+                    name='collection[description]'
+                    rows='10'
+                    ref='collection_description'
+                    value={this.state.collection.description}
+                    onFocus={onFocus}
+                    onBlur={onBlur}
+                    onChange={(e) => this.onChangeField('description', e.currentTarget.value)} />
+        </div>
       </div>
     )
   },
@@ -193,9 +216,7 @@ const EditCollectionModal = React.createClass ({
   },
 
   formCompleted: function() {
-    return (this.state.collection.title.length > 0 &&
-             this.state.collection.description.length > 0 &&
-             this.state.collection.products.length > 0)
+    return (this.validation() && this.state.collection.products.length > 0)
   },
 
   deleteCollection: function() {
@@ -216,15 +237,12 @@ const EditCollectionModal = React.createClass ({
   },
 
   renderSubmissionButtons: function() {
-    let disabled = !this.formCompleted()
     return (
       <div className='buttons'>
         <button className='btn btn-red btn-round'
-                onClick={this.deleteCollection}
-                disabled={disabled}>Delete Collection</button>
+                onClick={this.deleteCollection}>Delete Collection</button>
         <button className='btn btn-grey btn-round'
-                onClick={this.submitForm}
-                disabled={disabled}>Save</button>
+                onClick={this.submitForm} >Save</button>
       </div>
     )
   },
