@@ -27,4 +27,9 @@ if(collection.editable_by?(current_user))
     json.name collection_user.sharee.name
     json.avatar_url collection_user.sharee.avatar_url
   end
+
+  json.invites collection.invited_sharees do |invited_sharee|
+    json.email invited_sharee.email
+    json.rank invited_sharee.rank
+  end
 end

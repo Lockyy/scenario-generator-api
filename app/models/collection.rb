@@ -7,8 +7,9 @@ class Collection < ActiveRecord::Base
   has_one :notification, as: :notification_subject
   has_many :collection_products, dependent: :destroy
   has_many :products, through: :collection_products
-  has_many :collection_users, dependent: :destroy
+  has_many :collection_users, -> { where(email: nil) }, dependent: :destroy
   has_many :sharees, through: :collection_users
+  has_many :invited_sharees, -> { invites }, class_name: 'CollectionUser'
   has_many :tags, through: :products
 
   validates :title, presence: true
@@ -51,7 +52,15 @@ class Collection < ActiveRecord::Base
     collection_users.where(sharee_id: ids).destroy_all
   end
 
-  # This will remove any IDs that are not in the sharee_ids array.
+  def remove_invitations(emails)
+    invited_sharees.where(email: emails).destroy_all
+  end
+
+  def share_and_invite(users, emails)
+    self.share(users) && self.invite(emails)
+  end
+
+  # This will remove any IDs that are not in the new_sharees array.
   def share(new_sharees)
     new_sharees = [] if new_sharees == nil
     # Remove any sharees not passed in from the front end
@@ -64,6 +73,23 @@ class Collection < ActiveRecord::Base
       sharee_hash = sharee_hash.with_indifferent_access
       sharee = self.collection_users.find_or_create_by(sharee_id: sharee_hash['id']) do |collection_user|
         collection_user.rank = sharee_hash['rank']
+      end
+    end
+  end
+
+  # This will remove any emails that are not in the new_invitations array
+  def invite(new_invitations)
+    new_invitations = [] if new_invitations == nil
+
+    emails = new_invitations.map { |sharee| sharee.with_indifferent_access['email'] }
+    existing_invitations = invited_sharees.map(&:email)
+    self.remove_invitations(existing_invitations - emails)
+
+    # Create new invitations or update existing ones with new info.
+    new_invitations.each do |invitation_hash|
+      invitation_hash = invitation_hash.with_indifferent_access
+      sharee = self.invited_sharees.find_or_create_by(email: invitation_hash['email']) do |invited_sharee|
+        invited_sharee.rank = invitation_hash['rank']
       end
     end
   end

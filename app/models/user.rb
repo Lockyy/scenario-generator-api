@@ -13,8 +13,8 @@ class User < ActiveRecord::Base
   has_many :products
   has_many :collections, dependent: :destroy
   has_many :notifications, dependent: :destroy
-  has_many :collection_users, dependent: :destroy
-  has_many :shared_collections, through: :collection_users
+  has_many :collection_users, dependent: :destroy, foreign_key: :sharee_id
+  has_many :shared_collections, through: :collection_users, foreign_key: :sharee_id
 
   has_and_belongs_to_many :tags
 
@@ -23,6 +23,8 @@ class User < ActiveRecord::Base
   end
 
   validates :name, presence: true
+
+  after_save :check_for_invitations
 
   def self.generate_password
     Devise.friendly_token
@@ -51,5 +53,12 @@ class User < ActiveRecord::Base
 
   def recent_activity(sorting)
     reviews.sorted(sorting)
+  end
+
+  def check_for_invitations
+    invites = CollectionUser.invites.where(email: self.email)
+    invites.each do |invite|
+      invite.update_attributes(email: nil, sharee: self)
+    end
   end
 end

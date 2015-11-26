@@ -45,7 +45,7 @@ class Api::CollectionsController < AppController
   end
 
   def share
-    if @collection.share(params[:users])
+    if @collection.share_and_invite(params[:users], params[:emails])
       @collection.reload
       returnJSON = render 'show'
     else

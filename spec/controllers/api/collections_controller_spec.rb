@@ -171,10 +171,16 @@ describe Api::CollectionsController do
         before do
           CollectionUser.all.destroy_all
           expect(@collection.sharees.length).to eq 0
+          @email_1 = Faker::Internet.safe_email
+          @email_2 = Faker::Internet.safe_email
           post(:share,  id: @collection.id,
                         users: [
                           { id: @user_editor.id, rank: 1 },
                           { id: @user_viewer.id, rank: 0 },
+                        ],
+                        emails: [
+                          { email: @email_1, rank: 1 },
+                          { email: @email_2, rank: 0 },
                         ], format: :json)
           @body = JSON.parse(response.body)
         end
@@ -185,10 +191,18 @@ describe Api::CollectionsController do
           expect(@collection.reload.sharees.length).to eq 2
         end
 
+        it 'now has two invites' do
+          expect(@collection.reload.invited_sharees.length).to eq 2
+        end
+
         it 'has the new ranks in the api response' do
           expect(@body['users'].map {|u| {id: u['id'], rank: u['rank']}}).to eq [
             { id: @user_editor.id, rank: 1 },
             { id: @user_viewer.id, rank: 0 },
+          ]
+          expect(@body['invites'].map {|u| {email: u['email'], rank: u['rank']}}).to eq [
+            { email: @email_1, rank: 1 },
+            { email: @email_2, rank: 0 },
           ]
         end
       end
