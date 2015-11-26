@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151124185519) do
+ActiveRecord::Schema.define(version: 20151126123911) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -157,16 +157,16 @@ ActiveRecord::Schema.define(version: 20151124185519) do
   create_table "reviews", force: :cascade do |t|
     t.string   "title"
     t.text     "quality_review"
-    t.integer  "quality_score"
+    t.integer  "quality_score",      default: 0
     t.text     "price_review"
-    t.integer  "price_score"
+    t.integer  "price_score",        default: 0
     t.integer  "product_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "user_id"
     t.integer  "cached_helpfulness"
-    t.integer  "helpful_votes"
-    t.integer  "total_votes"
+    t.integer  "helpful_votes",      default: 0
+    t.integer  "total_votes",        default: 0
   end
 
   create_table "tag_taggables", force: :cascade do |t|

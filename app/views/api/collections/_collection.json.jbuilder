@@ -20,7 +20,7 @@ json.products collection.products do |product|
   end
 end
 
-if(collection.editable?(current_user))
+if(collection.editable_by?(current_user))
   json.users collection.collection_users do |collection_user|
     json.id collection_user.sharee_id
     json.rank collection_user.rank

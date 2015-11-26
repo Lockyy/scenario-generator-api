@@ -83,17 +83,20 @@ describe "Product page", js: true do
 
       it "displays public collections" do
         expect(page).to have_content @public_collection.title
-        expect(page).to have_content @public_collection.description
+        expect(page).to have_content @public_collection.display_date
+        expect(page).to have_content @public_collection.user.name
       end
 
       it 'displays owned collections' do
         expect(page).to have_content @owned_collection.title
-        expect(page).to have_content @owned_collection.description
+        expect(page).to have_content @owned_collection.display_date
+        expect(page).to have_content 'Me'
       end
 
       it "doesn't display private collections" do
         expect(page).to_not have_content @private_collection.title
-        expect(page).to_not have_content @private_collection.description
+        expect(page).to_not have_content @private_collection.display_date
+        expect(page).to_not have_content @private_collection.user.name
       end
 
       it "doesn't display the other tabs" do

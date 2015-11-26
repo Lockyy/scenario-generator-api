@@ -63,21 +63,21 @@ class Api::CollectionsController < AppController
 
   def setup_collection
     @collection = Collection.find_by(id: params[:id])
-    unless @collection && @collection.visible?(current_user)
+    unless @collection && @collection.visible_to?(current_user)
       render :json => { collection: {} }, :status => 404
       false
     end
   end
 
   def require_editor
-    unless @collection && @collection.editable?(current_user)
+    unless @collection && @collection.editable_by?(current_user)
       render :json => { collection: {} }, :status => 401
       false
     end
   end
 
   def require_owner
-    unless @collection && @collection.owned?(current_user)
+    unless @collection && @collection.owned_by?(current_user)
       render :json => { collection: {} }, :status => 401
       false
     end

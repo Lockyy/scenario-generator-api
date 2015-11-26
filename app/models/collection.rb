@@ -35,15 +35,15 @@ class Collection < ActiveRecord::Base
                 (collection_users.sharee.eq(user) & collection_users.rank.gteq(2))}
   }
 
-  def visible?(user)
+  def visible_to?(user)
     Collection.where(id: id).visible(user).length > 0
   end
 
-  def editable?(user)
+  def editable_by?(user)
     Collection.where(id: id).editable(user).length > 0
   end
 
-  def owned?(user)
+  def owned_by?(user)
     Collection.where(id: id).owned(user).length > 0
   end
 
@@ -55,12 +55,13 @@ class Collection < ActiveRecord::Base
   def share(new_sharees)
     new_sharees = [] if new_sharees == nil
     # Remove any sharees not passed in from the front end
-    sharee_ids = new_sharees.map { |sharee| sharee['id'].to_i }
+    sharee_ids = new_sharees.map { |sharee| sharee.with_indifferent_access['id'].to_i }
     existing_sharee_ids = sharees.map(&:id)
     self.remove_sharees(existing_sharee_ids - sharee_ids)
 
     # Create new sharees or update existing ones with new info.
     new_sharees.each do |sharee_hash|
+      sharee_hash = sharee_hash.with_indifferent_access
       sharee = self.collection_users.find_or_create_by(sharee_id: sharee_hash['id']) do |collection_user|
         collection_user.rank = sharee_hash['rank']
       end

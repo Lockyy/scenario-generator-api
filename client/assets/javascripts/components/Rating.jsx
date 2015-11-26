@@ -64,7 +64,7 @@ const Rating = React.createClass({
 
   _onClear: function _onClear(e) {
     this._getAllStars().find('label').removeClass('marked').removeClass('before-marked')
-    e.target.value = false
+    e.target.value = 0
     this.props.onChange(e)
   },
 

@@ -18,7 +18,7 @@ class Review < ActiveRecord::Base
 
   before_save :cache_helpfulness
   after_save do
-    product.save
+    product.save if product
   end
 
   def self.sorted(sort_string)
@@ -46,8 +46,8 @@ class Review < ActiveRecord::Base
     (quality_review.nil? or quality_review.empty?) ? "" : ApplicationController.helpers.simple_format(quality_review)
   end
 
-  validates :quality_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, allow_nil: true
-  validates :price_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, allow_nil: true
+  validates :quality_score, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }, allow_nil: true
+  validates :price_score, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }, allow_nil: true
   validates :user_id, uniqueness: { scope: :product_id }, presence: true
   validate :has_at_least_one_field
 
