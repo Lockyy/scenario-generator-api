@@ -200,7 +200,7 @@ describe Api::CollectionsController do
             { id: @user_editor.id, rank: 1 },
             { id: @user_viewer.id, rank: 0 },
           ]
-          expect(@body['invites'].map {|u| {email: u['email'], rank: u['rank']}}).to eq [
+          expect(@body['emails'].map {|u| {email: u['email'], rank: u['rank']}}).to eq [
             { email: @email_1, rank: 1 },
             { email: @email_2, rank: 0 },
           ]

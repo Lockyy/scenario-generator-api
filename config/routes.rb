@@ -43,7 +43,9 @@ Rails.application.routes.draw do
               defaults: {format: 'json'} do
       member do
         post 'share'
-        post 'add_product'
+        post 'products', to: 'collections#add_product'
+        delete 'products/:product_id', to: 'collections#delete_product'
+        delete 'leave'
       end
     end
 

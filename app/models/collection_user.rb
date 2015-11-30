@@ -12,8 +12,9 @@ class CollectionUser < ActiveRecord::Base
     unless: Proc.new { |a| a.email.blank? }
 
   scope :invites, -> { where.not(email: nil) }
+  scope :with_registered_user, -> { where.not(sharee_id: nil) }
 
-  enum privacy: [:viewer, :collaborator, :owner]
+  enum rank: [:viewer, :collaborator, :owner]
 
   def create_notification
     Notification.create(sender: shared_collection.user,
@@ -23,6 +24,7 @@ class CollectionUser < ActiveRecord::Base
   end
 
   def send_email
+    return unless shared_collection.send_email_invites
     if email
       ShareMailer.invitation(shared_collection.user, email, shared_collection).deliver_now
     else

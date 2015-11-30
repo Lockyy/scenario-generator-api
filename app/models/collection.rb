@@ -71,9 +71,9 @@ class Collection < ActiveRecord::Base
     # Create new sharees or update existing ones with new info.
     new_sharees.each do |sharee_hash|
       sharee_hash = sharee_hash.with_indifferent_access
-      sharee = self.collection_users.find_or_create_by(sharee_id: sharee_hash['id']) do |collection_user|
-        collection_user.rank = sharee_hash['rank']
-      end
+      sharee = self.collection_users.find_or_initialize_by(sharee_id: sharee_hash['id'])
+      sharee.rank = sharee_hash['rank']
+      sharee.save
     end
   end
 
@@ -88,15 +88,17 @@ class Collection < ActiveRecord::Base
     # Create new invitations or update existing ones with new info.
     new_invitations.each do |invitation_hash|
       invitation_hash = invitation_hash.with_indifferent_access
-      sharee = self.invited_sharees.find_or_create_by(email: invitation_hash['email']) do |invited_sharee|
-        invited_sharee.rank = invitation_hash['rank']
-      end
+      sharee = self.invited_sharees.find_or_initialize_by(email: invitation_hash['email'])
+      sharee.rank = invitation_hash['rank']
+      sharee.save
     end
   end
 
-  def add_product(product_id)
-    product = Product.find_by(id: product_id)
-    self.products.append(product) if product
+  def update_products(products, user)
+    new_products = products - self.products
+    self.update_attributes(products: products)
+    new_collection_products = self.collection_products.where(product: new_products)
+    new_collection_products.update_all(user_id: user.id)
   end
 
   def name

@@ -19,10 +19,10 @@ class FluxCollectionActions {
     );
   }
 
-  shareCollection(id, users, resolve) {
-    CollectionAPI.shareCollection(id, users,
+  shareCollection(id, data, resolve) {
+    CollectionAPI.shareCollection(id, data,
       (data) => {
-        this.actions.updateData(data);
+        this.actions.fetchedCollection(data);
         if(resolve) {
           resolve();
         }
@@ -36,7 +36,21 @@ class FluxCollectionActions {
   updateCollection(id, data, resolve) {
     CollectionAPI.updateCollection(id, data,
       (data) => {
-        this.actions.updateData(data);
+        this.actions.fetchedCollection(data);
+        if(resolve) {
+          resolve(data);
+        }
+      },
+      (error) => {
+        this.actions.registerError(error);
+      }
+    );
+  }
+
+  deleteProduct(id, product_id, resolve) {
+    CollectionAPI.deleteProduct(id, product_id,
+      (data) => {
+        this.actions.fetchedCollection(data);
         if(resolve) {
           resolve(data);
         }
@@ -81,6 +95,25 @@ class FluxCollectionActions {
         this.actions.removeCollection(collection.id);
         FluxNotificationsActions.showNotification({
           type: 'deleted',
+          subject: {
+            id: collection.id,
+            type: 'Collection',
+            name: collection.name
+          }
+        })
+      },
+      (error) => {
+        this.actions.registerError(error);
+      }
+    );
+  }
+
+  leaveCollection(collection) {
+    CollectionAPI.leaveCollection(collection.id,
+      (data) => {
+        this.actions.removeCollection(collection.id);
+        FluxNotificationsActions.showNotification({
+          type: 'left',
           subject: {
             id: collection.id,
             type: 'Collection',
