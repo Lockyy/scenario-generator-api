@@ -66,20 +66,19 @@ ActiveRecord::Schema.define(version: 20151130123245) do
   create_table "collection_users", force: :cascade do |t|
     t.integer  "sharee_id"
     t.integer  "collection_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
     t.integer  "rank"
-    t.string   "email"
+    t.string   "email",         default: "f"
   end
 
   create_table "collections", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
     t.string   "description"
-    t.integer  "privacy",                default: 0
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-    t.integer  "cached_products_length", default: 0, null: false
+    t.integer  "privacy",            default: 0
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.boolean  "send_email_invites"
   end
 
