@@ -10,9 +10,8 @@
   .dropdown-links
     width: 200px
     border: 1px solid $light-grey
-    position: relative
-    z-index: 99
     display: inline-block
+    position: relative
     &.red
       border: 1px solid $primary-red
       .dropdown
@@ -26,8 +25,11 @@
       border: 1px solid $light-grey
       border-top: none
     .dropdown-link
+      z-index: 100
     .active-dropdown-link
+      z-index: 99
     .dropdown-link, .active-dropdown-link
+      position: relative
       background: white
       padding: 5px 10px
       cursor: pointer

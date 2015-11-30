@@ -211,6 +211,7 @@ const EditCollectionModal = React.createClass ({
       <Results
         type='collection-product'
         onRemove={this.removeProduct}
+        showRemove={this.state.collection.owned && this.state.collection.products.length > 1}
         data={{data: this.state.collection.products}} />
     )
   },

@@ -81,6 +81,7 @@ class CollectionStore {
       description: '',
       products: [],
       users: [],
+      emails: [],
       user: {
         name: ''
       }

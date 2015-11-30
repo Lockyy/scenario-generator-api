@@ -56,7 +56,6 @@ const AvatarStyles = {
     height: '48px',
     display: 'inline-block',
     marginRight: '10px',
-    marginBottom: '10px',
     border: '1px solid #f6f6f6'
   },
   numbers: {
@@ -70,7 +69,6 @@ const AvatarStyles = {
     fontSize: '18px',
     display: 'inline-flex',
     justifyContent: 'center',
-    marginBottom: '10px',
     alignItems: 'center'
   }
 }

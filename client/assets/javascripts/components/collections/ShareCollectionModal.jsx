@@ -44,7 +44,8 @@ const ShareCollectionModal = React.createClass ({
         description: '',
         products: [],
         owner: this.context.currentUser,
-        users: []
+        users: [],
+        emails: []
       }
     }
   },
@@ -63,10 +64,23 @@ const ShareCollectionModal = React.createClass ({
     this.setState({ visible: visible });
   },
 
-  // Gather the IDs for the users currently being shared to.
-  getUserIDs: function() {
+  // Gather users currently associated with the collection
+  gatherUsers: function() {
     return _.map(this.state.collection.users, function(user) {
-      return user.id
+      return {
+        id: user.id,
+        rank: user.rank
+      }
+    })
+  },
+
+  // Gather the emails currently having this collection shared with them
+  gatherEmails: function() {
+    return _.map(this.state.collection.emails, function(email) {
+      return {
+        email: email.email,
+        rank: email.rank
+      }
     })
   },
 
@@ -74,6 +88,42 @@ const ShareCollectionModal = React.createClass ({
     let collection = this.state.collection
     collection.users = users
     this.setState({ user_name: null, collection: collection })
+  },
+
+  updateEmails: function(emails) {
+    let collection = this.state.collection
+    collection.emails = emails
+    this.setState({ user_name: null, collection: collection })
+  },
+
+  addUser: function(user) {
+    let users = this.state.collection.users;
+    users.push(_.merge(user, {rank: 'viewer'}))
+    this.updateUsers(users);
+  },
+
+  addEmail: function(email) {
+    let emails = this.state.collection.emails;
+    emails.push({email: email, rank: 'viewer'})
+    this.updateEmails(emails);
+  },
+
+  updateUser: function(id, rank) {
+    let users = this.state.collection.users;
+    let index = _.findIndex(users, function(user) { return user.id == id })
+    if(index > -1) {
+      users[index] = _.merge(users[index], {rank: rank})
+      this.updateUsers(users)
+    }
+  },
+
+  updateEmail: function(email, rank) {
+    let emails = this.state.collection.emails;
+    let index = _.findIndex(emails, function(email_obj) { return email_obj.email == email })
+    if(index > -1) {
+      emails[index] = _.merge(emails[index], {rank: rank})
+      this.updateEmails(emails)
+    }
   },
 
   removeUser: function(user_id) {
@@ -84,10 +134,11 @@ const ShareCollectionModal = React.createClass ({
     this.updateUsers(updatedUsers);
   },
 
-  addUser: function(user) {
-    let users = this.state.collection.users;
-    users.push(user)
-    this.updateUsers(users);
+  removeEmails: function(email) {
+    let updatedEmails = this.state.collection.emails.filter(function(email_obj) {
+      return email_obj.email !== email;
+    });
+    this.updateEmails(updatedEmails);
   },
 
   userTypeaheadUpdate: function(user, selected) {
@@ -104,9 +155,16 @@ const ShareCollectionModal = React.createClass ({
     let _this = this
     let id    = this.state.collection.id
     let title = this.state.collection.title
-    let users = this.getUserIDs()
+    let total = this.state.collection.users.length + this.state.collection.emails.length
 
-    FluxCollectionActions.shareCollection(id, users, function() {
+    let data = {
+      users: this.gatherUsers(),
+      emails: this.gatherEmails(),
+      privacy: this.state.collection.privacy,
+      send_email_invites: this.state.collection.send_email_invites
+    }
+
+    FluxCollectionActions.shareCollection(id, data, function() {
       _this.props.close()
 
       FluxNotificationsActions.showNotification({
@@ -114,7 +172,8 @@ const ShareCollectionModal = React.createClass ({
         subject: {
           id: id,
           type: 'Collection',
-          name: title
+          name: title,
+          text: `Collection shared with ${total} users`
         }
       })
     })
@@ -126,26 +185,82 @@ const ShareCollectionModal = React.createClass ({
                       value={this.state.user_name}
                       helpMessage={'Add User'}
                       hideLabel={true}
-                      onSetUser={this.userTypeaheadUpdate} />
+                      onSetUser={this.userTypeaheadUpdate}
+                      onSetEmail={this.addEmail} />
     )
   },
 
   renderUsers: function() {
-    if(this.state.collection.users.length > 0) {
+    if(this.state.collection.users && this.state.collection.users.length > 0) {
       return (
         <Results
-          type='users'
+          type='sharee-users'
+          containerClass='sharee'
           onRemove={this.removeUser}
+          onUpdate={this.updateUser}
           data={{data: this.state.collection.users}} />
       )
     }
+  },
+
+  renderEmails: function() {
+    if(this.state.collection.emails && this.state.collection.emails.length > 0) {
+      return (
+        <Results
+          type='sharee-emails'
+          containerClass='sharee'
+          onRemove={this.removeEmails}
+          onUpdate={this.updateEmail}
+          data={{data: this.state.collection.emails}} />
+      )
+    }
+  },
+
+  renderSendEmailsCheckbox: function() {
+    return (
+      <label className='results-list-padding'>
+        <input  type='checkbox' name='emails' onClick={this.setSendEmailInvites}
+                checked={this.state.collection.send_email_invites} />
+￼       Notify users via email
+      </label>
+    )
   },
 
   renderSubmissionButtons: function() {
     return (
       <div className='buttons'>
         <button className='btn btn-red btn-round'
-                onClick={this.submitForm}>Share</button>
+                onClick={this.submitForm}>Save</button>
+      </div>
+    )
+  },
+
+  setSendEmailInvites: function(e) {
+    let newValue = $(e.target).is(":checked")
+    let updatedCollection = _.merge(this.state.collection, {send_email_invites: newValue})
+    this.setState({collection: updatedCollection})
+  },
+
+  setPrivacy: function(e) {
+    let newValue = $(e.target).val()
+    let updatedCollection = _.merge(this.state.collection, {privacy: newValue})
+    this.setState({collection: updatedCollection})
+  },
+
+  renderPrivacyToggle: function() {
+    return (
+      <div className='privacy-radios'>
+        Who can view this collection?
+        <label>
+          <input  type='radio' name='privacy' value='hidden' onClick={this.setPrivacy}
+                  checked={this.state.collection.privacy == 'hidden'} />
+￼         Just me and people I specify below (Private)
+        </label>
+        <label>
+          <input  type='radio' name='privacy' value='visible' onClick={this.setPrivacy}
+                  checked={this.state.collection.privacy == 'visible'} />
+￼         Everyone in Fletcher (Public). You can still add collaborators.
+        </label>
       </div>
     )
   },
@@ -155,10 +270,20 @@ const ShareCollectionModal = React.createClass ({
       <div className='row'>
         <form className='col-xs-12 form collection'
               ref='collection_form'>
-          {this.renderUserTypeahead()}
-
+          {this.renderPrivacyToggle()}
           <div className='grey'>
-            {this.renderUsers()}
+            <div className='grey-title'>
+              Add collaborators to your collection
+            </div>
+            <div className='grey-description'>
+              Add collaborators and manage their access level accordingly. You can add more people from the collection’s page once the collection is created.
+            </div>
+            {this.renderUserTypeahead()}
+            <div className='scrollable'>
+              {this.renderEmails()}
+              {this.renderUsers()}
+            </div>
+            {this.renderSendEmailsCheckbox()}
             {this.renderSubmissionButtons()}
           </div>
         </form>
@@ -170,7 +295,7 @@ const ShareCollectionModal = React.createClass ({
     return (
       <div className='header'>
         <span className='title'>
-          Share {this.state.collection.title} with others
+          Privacy & Sharing
         </span>
         <span onClick={this.props.close} className='close'>x</span>
       </div>

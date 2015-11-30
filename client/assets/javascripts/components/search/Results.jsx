@@ -94,7 +94,7 @@ const Results = React.createClass ({
     if(result) {
       return (
         <div className='result user row'>
-          <div className='image-container col-xs-2'>
+          <div className='col-xs-2'>
             <Avatar url={result.avatar_url} styles={{backgroundColor: 'white'}}/>
           </div>
           <div className='col-xs-7'>
@@ -111,6 +111,57 @@ const Results = React.createClass ({
               </div>
             ) : null
           }
+        </div>
+      )
+    }
+  },
+
+  renderShareeUser: function(result) {
+    if(result) {
+      return (
+        <div className='result user sharee'>
+          <div className='info'>
+            <Avatar url={result.avatar_url} styles={{backgroundColor: 'white'}}/>
+            <span>
+              <div className='name'>
+                { result.name }
+              </div>
+              {
+                this.props.onRemove ? (
+                  <div className='remove-button' onClick={() => this.props.onRemove(result.id)}>
+                    Remove
+                  </div>
+                ) : null
+              }
+            </span>
+          </div>
+          <Dropdown
+            onClick={(rank) => this.props.onUpdate(result.id, rank)}
+            active={result.rank}
+            showText={false}
+            native={true}
+            options={{ viewer: 'Can View', collaborator: 'Can add products', owner: 'Is owner' }} />
+        </div>
+      )
+    }
+  },
+
+  renderShareeEmail: function(result) {
+    if(result) {
+      return (
+        <div className='result email sharee'>
+          <div className='name'>
+            { result.email }
+            { this.props.onRemove ? (
+                <span className='remove-button' onClick={() => this.props.onRemove(result.email)}>x</span>
+              ) : null }
+          </div>
+          <Dropdown
+            onClick={(rank) => this.props.onUpdate(result.email, rank)}
+            active={result.rank}
+            showText={false}
+            native={true}
+            options={{ viewer: 'Can View', collaborator: 'Can add products' }} />
         </div>
       )
     }
@@ -133,7 +184,7 @@ const Results = React.createClass ({
             </div>
 
             {
-              this.props.onRemove ? (
+              this.props.onRemove && this.props.showRemove ? (
                 <div className='remove' onClick={() => this.props.onRemove(result.id)}>
                   Remove
                 </div>
@@ -158,6 +209,12 @@ const Results = React.createClass ({
         break;
       case 'users':
         return this.renderUser
+        break;
+      case 'sharee-users':
+        return this.renderShareeUser
+        break;
+      case 'sharee-emails':
+        return this.renderShareeEmail
         break;
     }
   },

@@ -48,18 +48,70 @@ const Dropdown = React.createClass({
 
     let node = $(this.refs[this.getID()].getDOMNode())
     node.toggleClass('active')
+    this.setState({open: true})
   },
 
   hideDropdown: function() {
     let node = $(this.refs[this.getID()].getDOMNode())
     node.removeClass('active')
+    this.setState({open: false})
+  },
+
+  activeClicked: function() {
+    if(this.state.open) {
+      this.hideDropdown()
+    } else {
+      this.showDropdown()
+    }
   },
 
   renderActiveOption: function() {
     return (
       <div  className='active-dropdown-link'
-            onClick={ this.showDropdown } >
+            onClick={ this.activeClicked } >
         {this.props.options[this.props.active]}
+      </div>
+    )
+  },
+
+  nativeClick: function(e) {
+    this.onClick($(e.target).val())
+  },
+
+  renderNativeDropdown: function() {
+    return (
+      <select style={SelectStyles} onChange={this.nativeClick}>
+        {this.renderOptions()}
+      </select>
+    )
+  },
+
+
+  renderDropdown: function() {
+    if(this.props.native) {
+      return this.renderNativeDropdown()
+    } else {
+      return this.renderCustomDropdown()
+    }
+  },
+
+  renderOptions: function() {
+    let _this = this
+    return _.map(this.props.options, function(displayString, sortKey) {
+      return (
+        <option value={sortKey} selected={sortKey == _this.props.active}>{displayString}</option>
+      )
+    })
+  },
+
+  renderCustomDropdown: function() {
+    return (
+      <div  className={`dropdown-links ${this.props.containerClass}`}
+            ref={this.getID()}>
+        {this.renderActiveOption()}
+        <div className='dropdown'>
+          {_.map(this.props.options, this.renderSortOption)}
+        </div>
       </div>
     )
   },
@@ -68,18 +120,25 @@ const Dropdown = React.createClass({
     return (
       <div className='dropdown-container'>
         { this.props.showText ? (<span className='dropdown-label'>{this.props.text || 'Sort by:'}</span>) : null }
-        <div  className={`dropdown-links ${this.props.containerClass}`}
-              ref={this.getID()}>
-          {this.renderActiveOption()}
-          <div className='dropdown'>
-            {_.map(this.props.options, this.renderSortOption)}
-          </div>
-        </div>
+        { this.renderDropdown() }
       </div>
     )
   },
 
 })
+
+const SelectStyles = {
+  background: 'white',
+  borderRadius: 1,
+  border: '1px solid #f6f6f6',
+  '-webkit-appearance': 'none',
+  '-webkit-border-radius': 0,
+  padding: 5,
+  width: '100%',
+  display: 'block',
+  'font-size': 13,
+  padding: '5px 15px'
+}
 
 export default Dropdown;
 

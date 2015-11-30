@@ -1,3 +1,5 @@
+@import 'common/variables'
+
 img
   max-width: 100%
 
@@ -10,3 +12,51 @@ html body
 form
   .form-control
     box-shadow: none
+
+.link
+  color: $primary-red
+  cursor: pointer
+  &.underlined
+    text-decoration: underline
+
+.grey-bottom-border
+  @include grey-bottom-border
+
+.red-bottom-border
+  @include red-bottom-border
+
+.vertical-padding
+  @include vertical-padding
+.vertical-padding-2
+  @include vertical-padding(2)
+.vertical-padding-3
+  @include vertical-padding(3)
+
+.left-margin-2-5
+  margin-left: 25px
+
+.bottom-margin
+  margin-bottom: 10px
+.bottom-margin-2
+  margin-bottom: 20px
+
+.color-grey
+  color: $grey
+
+.color-dark-grey
+  color: $grey
+
+.color-red
+  color: $primary-red
+
+.color-dark-grey
+  color: $dark-grey
+
+.uppercase
+  text-transform: uppercase
+
+.small-text
+  font-size: 12px
+
+.large-text
+  font-size: 20px
