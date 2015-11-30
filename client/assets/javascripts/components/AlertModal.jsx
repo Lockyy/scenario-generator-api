@@ -115,13 +115,11 @@ const AlertModal = React.createClass({
   renderCheckbox: function() {
     if(this.state.data.checkbox) {
       return (
-        <div className='checkbox'>
-          <label>
-            <input  type="checkbox"
-                    onChange={this.checkboxUpdate} />
-            {this.state.data.checkbox}
-          </label>
-        </div>
+        <label className='blue'>
+          <input  type="checkbox"
+                  onChange={this.checkboxUpdate} />
+          {this.state.data.checkbox}
+        </label>
       )
     }
   },
