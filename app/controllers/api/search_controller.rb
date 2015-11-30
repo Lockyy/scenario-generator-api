@@ -33,9 +33,12 @@ module Api
 
       if(params[:search_string].blank?)
         @tag_collections = []
+        @product_collections = []
       else
+        @q = Collection.ransack({products_name_cont: params[:search_string]})
+        @product_collections = @q.result.editable(current_user) - @owned_collections
         @q = Collection.ransack({tags_name_cont: params[:search_string]})
-        @tag_collections = @q.result.editable(current_user) - @owned_collections
+        @tag_collections = @q.result.editable(current_user) - @owned_collections - @product_collections
       end
 
       respond_to do |format|
