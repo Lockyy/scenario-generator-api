@@ -23,11 +23,15 @@ const EditCollectionMixin = {
 
   closeEditCollectionModal: function() {
     FluxModalActions.closeModal();
-    FluxCollectionActions.clearCollection();
+    if(this.props.router.state.components[0].displayName != 'CollectionPage') {
+      FluxCollectionActions.clearCollection();
+    }
   },
 
   showEditCollectionModal: function(collection) {
-    FluxCollectionActions.fetchedCollection(collection);
+    if(collection) {
+      FluxCollectionActions.fetchedCollection(collection);
+    }
     FluxModalActions.setVisibleModal('EditCollectionModal');
   }
 };

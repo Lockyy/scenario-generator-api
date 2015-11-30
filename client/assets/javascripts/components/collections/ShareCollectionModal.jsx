@@ -25,7 +25,9 @@ const ShareCollectionMixin = {
 
   closeShareCollectionModal: function() {
     FluxModalActions.closeModal();
-    FluxCollectionActions.clearCollection();
+    if(this.props.router.state.components[0].displayName != 'CollectionPage') {
+      FluxCollectionActions.clearCollection();
+    }
   },
 
   showShareCollectionModal: function(collection) {

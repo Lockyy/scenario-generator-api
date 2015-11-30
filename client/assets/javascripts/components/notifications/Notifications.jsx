@@ -43,7 +43,7 @@ const Notifications = React.createClass({
   },
 
   getAction: function(notification) {
-    if(notification.subject && notification.type !== 'delete' && notification.show_button !== false) {
+    if(notification.subject && notification.type !== 'deleted' && notification.show_button !== false) {
       let label, action, link;
       let _this = this;
 
@@ -58,11 +58,13 @@ const Notifications = React.createClass({
               _this.props.router.transitionTo(link);
             }
           }
+          break;
         case 'Collection':
+          link = `/app/collections/${notification.subject.id}`
           return {
             label: label,
             callback: function() {
-              _this.showViewCollectionModal(notification.subject);
+              _this.props.router.transitionTo(link);
             }
           }
           break;

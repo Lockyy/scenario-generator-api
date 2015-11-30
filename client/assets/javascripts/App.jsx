@@ -10,6 +10,7 @@ import ProductPage from './components/products/ProductPage';
 import TagPage from './components/tags/TagPage';
 import TagsPage from './components/tags/TagsPage';
 import SearchPage from './components/search/SearchPage';
+import CollectionPage from './components/collections/CollectionPage';
 import SearchBox from './components/header/SearchBox';
 import UserTags from './components/users/UserTags';
 import Notifications from './components/notifications/Notifications';
@@ -63,6 +64,8 @@ $(function onLoad() {
                         <Route path="app/tags" component={TagsPage}>
                         </Route>
                         <Route path="app/tags/:letter" component={TagsPage}>
+                        </Route>
+                        <Route name='CollectionPage' path="app/collections/:id" component={CollectionPage}>
                         </Route>
                     </Router>
                 ), document.getElementById('content'));

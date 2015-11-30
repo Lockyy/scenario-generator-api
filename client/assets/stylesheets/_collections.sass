@@ -4,6 +4,20 @@
   .btn
     margin-top: 10px
 
+.right-arrow-after
+  display: inline-flex
+  align-items: center
+  &::after
+    display: inline-block
+    content: '.'
+    color: transparent
+    background-image: url('icons/grey-arrow.svg')
+    background-repeat: no-repeat
+    background-size: contain
+    width: 15px
+    margin-left: 10px
+    margin-right: 10px
+
 .collections-collection
   margin-top: 25px
   .header
@@ -69,6 +83,25 @@
         color: $primary-red
         cursor: pointer
 
+.table-header
+  border-bottom: 1px solid $dark-grey
+  background: $light-grey
+  color: $dark-grey
+  padding: 10px
+
+.collection-products-table
+  .collection-product-row
+    @include vertical-padding
+    @include grey-bottom-border
+    display: flex
+    align-items: center
+  .add-product-link
+    display: inline-flex
+    align-items: center
+    margin-top: 25px
+    &::before
+      content: url('icons/icon-collections-new-red.svg')
+      margin-right: 5px
 
 .collection.form
   .attached-fields

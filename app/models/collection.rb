@@ -21,19 +21,19 @@ class Collection < ActiveRecord::Base
     joins{collection_users.outer}.
           where{(user_id.eq user.id) |
                 (collection_users.sharee.eq user) |
-                (privacy.eq 1)}
+                (privacy.eq 1)}.uniq
   }
 
   scope :editable, -> (user) {
     joins{collection_users.outer}.
           where{(user_id.eq user.id) |
-                (collection_users.sharee.eq(user) & collection_users.rank.gteq(1))}
+                (collection_users.sharee.eq(user) & collection_users.rank.gteq(1))}.uniq
   }
 
   scope :owned, -> (user) {
     joins{collection_users.outer}.
           where{(user_id.eq user.id) |
-                (collection_users.sharee.eq(user) & collection_users.rank.gteq(2))}
+                (collection_users.sharee.eq(user) & collection_users.rank.gteq(2))}.uniq
   }
 
   def visible_to?(user)
