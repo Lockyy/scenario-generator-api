@@ -13,7 +13,7 @@ class Api::CollectionsController < AppController
     respond_to do |format|
       format.json do
         if @collection
-          render 'show'
+          render_success
         else
           render json: {}, status: 400
         end
@@ -23,24 +23,17 @@ class Api::CollectionsController < AppController
 
   def add_product
     product = Product.find_by(id: params[:product])
-    CollectionProduct.create({
-      collection: @collection,
-      product: product,
-      user: current_user
-    }) if product
+    @collection.collection_products.create({product: product, user: current_user}) if product
 
-    respond_to { |format| format.json { render 'show'} }
+    respond_to { |format| format.json { render_success } }
   end
 
   def delete_product
-    collection_product = CollectionProduct.find_by({
-                          product_id: params[:product_id],
-                          collection: @collection
-                        })
+    collection_product = @collection.collection_products.find_by({product_id: params[:product_id]})
 
     collection_product.destroy if collection_product
 
-    respond_to { |format| format.json { render 'show'} }
+    respond_to { |format| format.json { render_success } }
   end
 
   def update
@@ -48,29 +41,26 @@ class Api::CollectionsController < AppController
     @collection.update_attributes(collection_params) if @collection && @collection.owned_by?(current_user)
     @collection.update_products(products, current_user) if params[:products]
 
-    respond_to { |format| format.json { render 'show'} }
+    respond_to { |format| format.json { render_success } }
   end
 
   def destroy
     if @collection.destroy
       returnJSON = render json: {success: true}
     else
-      returnJSON = render 'show', status: 400
+      returnJSON = render_error
     end
 
     respond_to { |format| format.json { returnJSON } }
   end
 
   def leave
-    collection_user = CollectionUser.find_by({
-                      sharee: current_user,
-                      shared_collection: @collection
-                    })
+    collection_user = @collection.collection_products.find_by({sharee: current_user})
 
     if collection_user.destroy
       returnJSON = render json: {success: true}
     else
-      returnJSON = render 'show', status: 400
+      returnJSON = render_error
     end
   end
 
@@ -82,15 +72,23 @@ class Api::CollectionsController < AppController
 
     if @collection.share_and_invite(params[:users], params[:emails])
       @collection.reload
-      returnJSON = render 'show'
+      returnJSON = render_success
     else
-      returnJSON = render 'show', status: 400
+      returnJSON = render_error
     end
 
     respond_to { |format| format.json { returnJSON } }
   end
 
   private
+
+  def render_success
+    render 'show'
+  end
+
+  def render_error
+    render 'show', status: 400
+  end
 
   def collection_params
     params.permit(:title, :description, :privacy)
