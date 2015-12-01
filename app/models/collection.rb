@@ -36,6 +36,8 @@ class Collection < ActiveRecord::Base
                 (collection_users.sharee.eq(user) & collection_users.rank.gteq(2))}.uniq
   }
 
+  before_create :assign_user_to_products
+
   def visible_to?(user)
     Collection.where(id: id).visible(user).length > 0
   end
@@ -99,6 +101,10 @@ class Collection < ActiveRecord::Base
     self.update_attributes(products: products)
     new_collection_products = self.collection_products.where(product: new_products)
     new_collection_products.update_all(user_id: user.id)
+  end
+
+  def assign_user_to_products
+    self.collection_products.each { |c_p| c_p.user_id = self.user.id }
   end
 
   def name
