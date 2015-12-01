@@ -1,7 +1,7 @@
 class Api::CollectionsController < AppController
   before_action :setup_collection, only: [:show, :add_product, :update, :destroy, :share, :leave, :delete_product]
-  before_action :require_editor, only: [:add_product]
-  before_action :require_owner, only: [:update, :destroy, :share, :delete_product]
+  before_action :require_editor, only: [:add_product, :update]
+  before_action :require_owner, only: [:destroy, :share, :delete_product]
 
   def show
   end
@@ -45,7 +45,7 @@ class Api::CollectionsController < AppController
 
   def update
     products = Product.where(id: params[:products])
-    @collection.update_attributes(collection_params)
+    @collection.update_attributes(collection_params) if @collection && @collection.owned_by?(current_user)
     @collection.update_products(products, current_user) if params[:products]
 
     respond_to { |format| format.json { render 'show'} }

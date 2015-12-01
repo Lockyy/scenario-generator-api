@@ -182,7 +182,8 @@ const EditCollectionModal = React.createClass ({
                   value={this.state.collection.title}
                   onFocus={onFocus}
                   onBlur={onBlur}
-                  onChange={(e) => this.onChangeField('title', e.currentTarget.value)} />
+                  onChange={(e) => this.onChangeField('title', e.currentTarget.value)}
+                  disabled={!this.state.collection.owned} />
           <textarea type='text'
                     className='form-control'
                     placeholder='Say something'
@@ -192,7 +193,8 @@ const EditCollectionModal = React.createClass ({
                     value={this.state.collection.description}
                     onFocus={onFocus}
                     onBlur={onBlur}
-                    onChange={(e) => this.onChangeField('description', e.currentTarget.value)} />
+                    onChange={(e) => this.onChangeField('description', e.currentTarget.value)}
+                    disabled={!this.state.collection.owned} />
         </div>
       </div>
     )
