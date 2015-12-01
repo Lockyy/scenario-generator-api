@@ -19,18 +19,18 @@ const ViewCollectionMixin = {
   },
 
   closeViewCollectionModal: function() {
-    FluxModalActions.setVisibleModal('AddToCollectionModal')
+    FluxModalActions.closeModal()
     FluxCollectionActions.clearCollection();
   },
 
   showViewCollectionModal: function(collection) {
     if(!collection.products) {
       FluxCollectionActions.fetchCollection(collection.id, function() {
-        FluxModalActions.setVisibleModal('ViewCollectionModal');
+        FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop);
       })
     } else {
       FluxCollectionActions.fetchedCollection(collection);
-      FluxModalActions.setVisibleModal('ViewCollectionModal');
+      FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop);
     }
   }
 };

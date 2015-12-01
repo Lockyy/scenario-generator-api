@@ -8,16 +8,26 @@ class ModalStore {
 
     this.bindListeners({
       handleSetVisibleModal: FluxModalActions.SET_VISIBLE_MODAL,
-      resetData:             FluxModalActions.CLOSE_MODAL
+      handleCloseModal: FluxModalActions.CLOSE_MODAL
     })
   }
 
-  handleSetVisibleModal(modal) {
-    this.visibleModal = modal;
+  handleSetVisibleModal(data) {
+    this.previousModal = this.visibleModal;
+    this.visibleModal = data.modal;
+    this.previousHeight = data.height;
+  }
+
+  handleCloseModal() {
+    this.visibleModal = this.previousModal;
+    this.previousModal = null;
+    document.body.scrollTop = this.previousHeight;
+    this.previousHeight = null;
   }
 
   resetData() {
-    this.visibleModal= null;
+    this.visibleModal = null;
+    this.previousModal = null;
     this.error = null;
   }
 }

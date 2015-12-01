@@ -17,6 +17,8 @@ class Collection < ActiveRecord::Base
   validates :user, presence: true
   validates :privacy, presence: true
 
+  scope :latest, -> { order(created_at: :desc) }
+
   scope :visible, -> (user) {
     joins{collection_users.outer}.
           where{(user_id.eq user.id) |

@@ -4,7 +4,8 @@ module Fletcher
     MOST_POPULAR_SECTION = 'most_popular'
     RECENT_ACTIVITY_SECTION = 'recent_activity'
     BASED_ON_TAGS_SECTION = 'based_on_tags'
-    SECTIONS = [BASED_ON_TAGS_SECTION, RECENTLY_ADDED_SECTION, MOST_POPULAR_SECTION, RECENT_ACTIVITY_SECTION]
+    COLLECTIONS_SECTION = 'collections'
+    SECTIONS = [BASED_ON_TAGS_SECTION, RECENTLY_ADDED_SECTION, MOST_POPULAR_SECTION, RECENT_ACTIVITY_SECTION, COLLECTIONS_SECTION]
     DEFAULTS = {
       RECENTLY_ADDED_SECTION => { limit: 8, offset: 0 },
       BASED_ON_TAGS_SECTION => { limit: 8, offset: 0 },
@@ -12,7 +13,8 @@ module Fletcher
         products: { limit: 2, offset: 0 },
         tags: { limit: 20, offset: 0 }
       },
-      RECENT_ACTIVITY_SECTION => { limit: 4, offset: 0 }
+      RECENT_ACTIVITY_SECTION => { limit: 4, offset: 0 },
+      COLLECTIONS_SECTION => { limit: 4, offset: 0 }
     }
 
     def initialize(user, existing_ids, params = {})
@@ -44,6 +46,11 @@ module Fletcher
       products = Product.distinct.with_tags(tags.map(&:name)).limit(params[:limit]).offset(params[:offset])
       @existing_ids += products.map(&:id)
       products.group_by { |product| (product.tags && tags).first.name }
+    end
+
+    def collections
+      params = pagination_params(@params[COLLECTIONS_SECTION], DEFAULTS[COLLECTIONS_SECTION])
+      Collection.all.visible(@user).limit(params[:limit]).offset(params[:offset])
     end
 
     private
