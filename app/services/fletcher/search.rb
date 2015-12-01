@@ -13,6 +13,7 @@ module Fletcher
       @filter_tags = filtered_tags(@params[:filtered_tags])
       @products = products(@terms)
       @companies = companies(@terms)
+      @collections = collections(@terms)
       @tags = tags(@terms)
       @related_tags = related_tags
     end
@@ -23,17 +24,20 @@ module Fletcher
           page: @page,
           per_page: @per_page,
           sorting: {
-            companies:  @params[:sorting][:companies],
-            products:   @params[:sorting][:products],
-            tags:       @params[:sorting][:tags],
+            companies: @params[:sorting][:companies],
+            products: @params[:sorting][:products],
+            tags: @params[:sorting][:tags],
+            collections: @params[:sorting][:collections],
           },
           match_mode: {
-            companies:  @params[:match_mode][:companies],
-            products:   @params[:match_mode][:products],
-            tags:       @params[:match_mode][:tags],
+            companies: @params[:match_mode][:companies],
+            products: @params[:match_mode][:products],
+            tags: @params[:match_mode][:tags],
+            collections: @params[:match_mode][:collections],
           },
           companies: data_hash(@companies),
           products: data_hash(@products),
+          collections: data_hash(@collections),
           related_tags: {
               total: @related_tags.size,
               data: @related_tags
@@ -58,14 +62,16 @@ module Fletcher
         filter_by: '',
         filter_by_tags: [],
         sorting: {
-          companies:  :relevance,
-          products:   :relevance,
-          tags:       :alphabetical_order,
+          companies: :relevance,
+          products: :relevance,
+          collections: :relevance,
+          tags: :alphabetical_order,
         },
         match_mode: {
-          companies:  'all',
-          products:   'all',
-          tags:       'all',
+          companies: 'all',
+          products: 'all',
+          collections: 'all',
+          tags: 'all',
         },
         search_string: '',
         page: DEFAULT_PAGE,
@@ -85,8 +91,7 @@ module Fletcher
     end
 
     def total_results results
-      return 0 if @params[:search_string].blank?
-      [:companies, :tags, :products].inject(0) { |sum, type| sum + results[type][:total] }
+      [:companies, :tags, :products, :collections].inject(0) { |sum, type| sum + results[type][:total] }
     end
 
     def data_hash(data)
@@ -94,7 +99,7 @@ module Fletcher
     end
 
     def build_data_hash(data, data_size)
-      return default_data_hash if @params[:search_string].blank?
+      return default_data_hash if data.size == 0
       paginated_data = paginate(data)
       {
           total: data_size,
@@ -119,6 +124,11 @@ module Fletcher
       search_products = SearchProducts.new(@params[:filter_by], terms, @params[:sorting][:products], @filter_tags, @params[:match_mode][:products])
       @products_related_tags = search_products.related_tags
       search_products.results
+    end
+
+    def collections(terms)
+      search_collections = SearchCollections.new(@params[:filter_by], terms, @params[:sorting][:collections], @filter_tags, @params[:match_mode][:collections])
+      search_collections.results
     end
 
     def tags(terms)

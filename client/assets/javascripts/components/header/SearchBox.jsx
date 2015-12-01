@@ -15,6 +15,14 @@ const SearchBox = React.createClass ({
     router: React.PropTypes.object
   },
 
+  childContextTypes: {
+    router: React.PropTypes.object
+  },
+
+  getChildContext: function() {
+    return {router: this.props.router};
+  },
+
   getInitialState: function() {
     return {
       data: {
@@ -75,6 +83,7 @@ const SearchBox = React.createClass ({
             data={this.state.data.products}
             topLeft='type'
             topRight='link'
+            topClass='table-header full-width'
             containerClass={'header'}
             searchTerm={this.state.data.search_string} />
           <Results
@@ -82,12 +91,23 @@ const SearchBox = React.createClass ({
             data={this.state.data.companies}
             topLeft='type'
             topRight='link'
+            topClass='table-header full-width'
+            containerClass={'header'}
+            searchTerm={this.state.data.search_string} />
+          <Results
+            type='collections'
+            data={this.state.data.collections}
+            topLeft='type'
+            topRight='link'
+            topClass='table-header full-width'
             containerClass={'header'}
             searchTerm={this.state.data.search_string} />
           <TagResults
             data={this.state.data.tags}
             containerClass={'header'}
-            topRight={'size'}
+            topRight={'link'}
+            topClass='table-header full-width'
+            max={10}
             hide={this.state.data.tags.total <= 0}
             searchTerm={this.state.data.search_string}
             onClick={this.onTagClick} />

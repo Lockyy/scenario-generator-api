@@ -7,6 +7,7 @@
 
   .desktop-version
     display: block
+    margin-top: 50px
 
   .search-box
     border: 0
@@ -88,7 +89,6 @@
 
     .top
       border-bottom: 1px solid $grey
-      margin-bottom: 10px
       display: flex
       justify-content: space-between
       align-items: center
@@ -108,13 +108,15 @@
 
     .result
       padding: 0 !important
-      padding-top: 15px !important
-      padding-bottom: 15px !important
+      padding-top: 10px !important
+      padding-bottom: 10px !important
       border-bottom: 1px solid $grey
       & > .row
         @include flexbox-centered-children
       .name
-        font-size: 18px
+        font-size: 15px
+      .company
+        font-size: 12px
       .description
         margin-top: 5px
         margin-bottom: 5px
@@ -200,7 +202,6 @@
 
           .top-left, .top-right
             width: 50%
-            text-transform: none
 
           .top-left
             font-weight: bold

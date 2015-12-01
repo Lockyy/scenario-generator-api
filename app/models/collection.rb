@@ -1,4 +1,5 @@
 class Collection < ActiveRecord::Base
+  include SearchableByNameAndDescription
 
   enum privacy: [:hidden, :visible]
 
@@ -37,6 +38,14 @@ class Collection < ActiveRecord::Base
           where{(user_id.eq user.id) |
                 (collection_users.sharee.eq(user) & collection_users.rank.gteq(2))}.uniq
   }
+
+  scope :alphabetical, -> do
+    order('name asc')
+  end
+
+  scope :recently_added, -> do
+    order('created_at desc')
+  end
 
   before_create :assign_user_to_products
 

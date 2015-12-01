@@ -15,6 +15,7 @@ const SearchPageDesktopVersion = React.createClass({
       data: {
         products: [],
         companies: [],
+        collections: [],
         tags: [],
         related_tags: [],
         filtered_tags: [],
@@ -24,12 +25,14 @@ const SearchPageDesktopVersion = React.createClass({
         match_mode: {
           products: 'all',
           companies: 'all',
-          tags: 'all'
+          tags: 'all',
+          collections: 'all'
         },
         sorting: {
           products: 'alphabetical_order',
           companies: 'alphabetical_order',
-          tags: 'alphabetical_order'
+          tags: 'alphabetical_order',
+          collections: 'alphabetical_order'
         }
       },
       onPerformSearch: function(data) {}
@@ -98,6 +101,7 @@ const SearchPageDesktopVersion = React.createClass({
     let totalProducts = this.props.data.products.total || 0;
     let totalCompanies = this.props.data.companies.total || 0;
     let totalTags = this.props.data.tags.total || 0;
+    let totalCollections = this.props.data.collections.total || 0;
     let totalAll = totalProducts + totalCompanies + totalTags;
 
     return (
@@ -107,6 +111,7 @@ const SearchPageDesktopVersion = React.createClass({
           { this.renderSideLink(totalProducts, 'products', 'Products')}
           { this.renderSideLink(totalCompanies, 'companies', 'Companies')}
           { this.renderSideLink(totalTags, 'tags', 'Tags')}
+          { this.renderSideLink(totalCollections, 'collections', 'Collections')}
         </div>
         <div className='new-product'>
           { "Can't find a product?" }
@@ -183,6 +188,21 @@ const SearchPageDesktopVersion = React.createClass({
           section={this.getSection()}
           emptyResults={noResultsTag}
           onSetQuery={this.setQuery} />
+        <Results
+          type='collections'
+          data={this.props.data.collections}
+          bottom='button'
+          showImages={true}
+          searchTerm={this.getSearchString()}
+          topLeft='type'
+          topRight='dropdown'
+          dropdownOptions={{
+            relevance: 'Relevance',
+            latest: 'Latest',
+            alphabetical_order: 'Alphabetical order',
+          }}
+          sorting={this.props.data.sorting.collections}
+          onSetQuery={this.setQuery} />
       </div>
     )
   },
@@ -228,6 +248,31 @@ const SearchPageDesktopVersion = React.createClass({
     )
   },
 
+  renderCollectionResults: function() {
+    return (
+      <div className='col-xs-6'>
+        <Results
+          type='collections'
+          data={this.props.data.collections}
+          showImages={true}
+          bottom='pagination'
+          currentPage={this.props.params.page}
+          topLeft='type'
+          topRight='dropdown'
+          dropdownOptions={{
+            relevance: 'Relevance',
+            latest: 'Latest',
+            alphabetical_order: 'Alphabetical order',
+          }}
+          bottomLink={'/app/directory/collections'}
+          linkText={'Browse all public collections'}
+          sorting={this.props.data.sorting.collections}
+          onChangePage={this.onChangePage}
+          onSetQuery={this.setQuery} />
+      </div>
+    )
+  },
+
   renderTagResults: function() {
     return (
       <div className='col-xs-6'>
@@ -252,6 +297,8 @@ const SearchPageDesktopVersion = React.createClass({
         return this.renderProductResults()
       case 'companies':
         return this.renderCompanyResults()
+      case 'collections':
+        return this.renderCollectionResults()
       case 'tags':
         return this.renderTagResults()
     }

@@ -15,6 +15,10 @@ const Results = React.createClass ({
     return { data: [] }
   },
 
+  contextTypes: {
+    router: React.PropTypes.object
+  },
+
   getMaxDisplayedData: function() {
     let data = this.props.data.data;
     let dataMax = data ? data.length : 0;
@@ -38,6 +42,26 @@ const Results = React.createClass ({
             </div>
             <div className='description'>
               { result.short_desc }
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+
+  renderCollection: function(result) {
+    return (
+      <div className='result'>
+        <div className='row'>
+          <div className='col-xs-12'>
+            <div className='name'>
+              <Link to={`/app/collections/${result.id}`}>
+                { result.name }
+              </Link>
+            </div>
+            <div className='small-text'>
+              Created by <Link  className='link'
+                                to={`/app/users/${result.user.id}`}>{result.user.name}</Link> {result.display_date}
             </div>
           </div>
         </div>
@@ -207,6 +231,9 @@ const Results = React.createClass ({
       case 'collection-product':
         return this.renderCollectionProduct
         break;
+      case 'collections':
+        return this.renderCollection
+        break;
       case 'users':
         return this.renderUser
         break;
@@ -352,10 +379,10 @@ const Results = React.createClass ({
       case 'link':
         if(this.props.data.total > 0) {
           return (
-            <div className='top-right'>
-              <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`}>More</a>
-            </div>
-          )
+            <Link className='top-right' to={`/app/search/${this.props.type}/${this.props.searchTerm}/1`}>
+              See all {this.props.data.total}
+            </Link>
+          );
         }
       case 'dropdown':
         if(this.props.data.total > 0) {
@@ -364,8 +391,7 @@ const Results = React.createClass ({
               <Dropdown
                 onClick={this.addSortParam}
                 active={this.props.sorting}
-                options={this.dropdownOptions()}
-                containerClass={'red'} />
+                options={this.dropdownOptions()} />
               </div>
           )
         }
@@ -393,14 +419,14 @@ const Results = React.createClass ({
         return this.getCountResultsMessage('top-left');
         break;
       case 'type':
-        return <div className='top-left'>{ this.props.type }</div>
+        return <div className='top-left titlecase'>{ this.props.type }</div>
         break;
     }
   },
 
   renderTop: function() {
     return (
-      <div className='top'>
+      <div className={`top ${this.props.topClass}`}>
         { this.renderTopLeft() }
         { this.renderTopRight() }
       </div>
@@ -418,12 +444,23 @@ const Results = React.createClass ({
     }
   },
 
+  renderBottomLink: function() {
+    if(this.props.bottomLink && this.props.linkText) {
+      return (
+        <Link to={this.props.bottomLink} className='small-text right vertical-padding'>
+          {this.props.linkText}
+        </Link>
+      )
+    }
+  },
+
   render: function() {
     return (
       <div className={`results ${this.props.containerClass || ''}`}>
         { this.renderTop() }
         { this.renderResults() }
         { this.renderBottom() }
+        { this.renderBottomLink() }
       </div>
     )
   }

@@ -10,6 +10,16 @@ const TagResults = React.createClass ({
     return { data: [] }
   },
 
+  contextTypes: {
+    router: React.PropTypes.object
+  },
+
+  getMaxDisplayedData: function() {
+    let data = this.props.data.data;
+    let dataMax = data ? data.length : 0;
+    return Math.min(dataMax, this.props.max) || dataMax
+  },
+
   addSortParam: function(sortDescription) {
     let match_mode = _.contains(this.SORT_FIELDS_SIMPLE_SEARCH, sortDescription) ? 'any' : 'all';
     let query = { sorting: { tags: sortDescription }, match_mode: { tags: match_mode } }
@@ -63,6 +73,12 @@ const TagResults = React.createClass ({
         }
       case 'size':
         return this.getCountResultsMessage('top-right');
+      case 'link':
+        return (
+          <Link className='top-right' to={`/app/search/tags/${this.props.searchTerm}/1`}>
+            See all {this.props.data.total}
+          </Link>
+        );
       case 'hide':
         if(this.props.data.data.length > 0) {
           return (
@@ -104,7 +120,13 @@ const TagResults = React.createClass ({
   },
 
   getTags: function() {
-    let data = this.props.data.data;
+    if(this.props.data.data) {
+      return this.props.data.data.slice(0, this.getMaxDisplayedData())
+    }
+  },
+
+  renderTags: function() {
+    let data = this.getTags()
     if(data && data.length > 0){
       return <Tags
         tags={data}
@@ -121,14 +143,14 @@ const TagResults = React.createClass ({
       return <div></div>
     } else {
       return (
-        <div className={`results tags ${this.props.containerClass || ''}`}>
-          <div className ='top'>
+        <div className={`results tags ${this.props.containerClass}`}>
+          <div className={`top ${this.props.topClass}`}>
             { this.renderTopLeft() }
             { this.renderTopRight() }
           </div>
           <div className='tags-container'>
             {this.props.noResultsTag}
-            {this.getTags()}
+            {this.renderTags()}
             {showAllTags}
           </div>
         </div>

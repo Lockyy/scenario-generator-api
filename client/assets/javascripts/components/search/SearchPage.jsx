@@ -19,6 +19,7 @@ const SearchPage = React.createClass({
       data: {
         products: [],
         companies: [],
+        collections: [],
         tags: [],
         related_tags: [],
         filtered_tags: [],
@@ -26,12 +27,14 @@ const SearchPage = React.createClass({
         match_mode: {
           products: 'all',
           companies: 'all',
-          tags: 'all'
+          tags: 'all',
+          collections: 'all'
         },
         sorting: {
-          products: 'relevance',
-          companies: 'relevance',
-          tags: 'alphabetical_order'
+          products: 'alphabetical_order',
+          companies: 'alphabetical_order',
+          tags: 'alphabetical_order',
+          collections: 'alphabetical_order'
         }
       },
       params: {

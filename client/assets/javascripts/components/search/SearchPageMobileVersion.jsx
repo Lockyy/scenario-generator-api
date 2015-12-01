@@ -18,6 +18,7 @@ const SearchPageMobileVersion = React.createClass({
         products: [],
         companies: [],
         tags: [],
+        collections: [],
         related_tags: [],
         filtered_tags: [],
         params: {
@@ -26,12 +27,14 @@ const SearchPageMobileVersion = React.createClass({
         match_mode: {
           products: 'all',
           companies: 'all',
-          tags: 'all'
+          tags: 'all',
+          collections: 'all'
         },
         sorting: {
           products: 'alphabetical_order',
           companies: 'alphabetical_order',
-          tags: 'alphabetical_order'
+          tags: 'alphabetical_order',
+          collections: 'alphabetical_order'
         }
       },
       onPerformSearch: function(data) {},
@@ -107,12 +110,14 @@ const SearchPageMobileVersion = React.createClass({
     let totalProducts = this.props.data.products.total || 0;
     let totalCompanies = this.props.data.companies.total || 0;
     let totalTags = this.props.data.tags.total || 0;
+    let totalCollections = this.props.data.collections.total || 0;
 
     return (
       <div className='links col-xs-12'>
         { this.renderSideLink(totalProducts, 'products', 'Products')}
         { this.renderSideLink(totalCompanies, 'companies', 'Companies')}
         { this.renderSideLink(totalTags, 'tags', 'Tags')}
+        { this.renderSideLink(totalCollections, 'collections', 'Collections')}
       </div>
     )
   },
@@ -136,6 +141,29 @@ const SearchPageMobileVersion = React.createClass({
       match_mode: data.match_mode
     };
     return _.merge(_data, this.context.router.state.location.query);
+  },
+
+  renderCollectionResults: function() {
+    return (
+      <div className='col-xs-6'>
+        <Results
+          type='collections'
+          data={this.props.data.collections}
+          bottom='pagination'
+          currentPage={this.props.params.page}
+          topLeft='type'
+          topRight='dropdown'
+          dropdownOptions={{
+            relevance: 'Relevance',
+            latest: 'Latest',
+            alphabetical_order: 'Alphabetical order',
+          }}
+          sorting={this.props.data.sorting.collections}
+          emptyResults={<div className='no-results'>We couldn’t find any results for your search.</div>}
+          onChangePage={this.onChangePage}
+          onSetQuery={this.setQuery} />
+      </div>
+    )
   },
 
   renderProductResults: function() {
