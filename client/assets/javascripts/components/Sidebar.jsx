@@ -40,7 +40,7 @@ const Sidebar = React.createClass ({
     }.bind(this));
   },
 
-  closeHambugerMenu: function() {
+  closeHamburgerMenu: function() {
     return this.getHamburgerMenuDom().stop().toggle("slide", {
       direction: 'right'
     }, 'slow', function() {
@@ -55,7 +55,7 @@ const Sidebar = React.createClass ({
           <a href="/sign_out">Log out</a>
         </li>
         <li className='close-hamburger-menu text-hide'>
-          <div onClick={this.closeHambugerMenu}><a>Close Menu</a></div>
+          <div onClick={this.closeHamburgerMenu}><a>Close Menu</a></div>
         </li>
       </ul>
     )
@@ -65,7 +65,7 @@ const Sidebar = React.createClass ({
     return (
       <div className='profile-container'>
         <img src={this.context.currentUser.avatar_url} className='avatar' />
-        <Link to="/app/users/current">My Profile</Link>
+        <Link to="/app/users/current" onClick={this.closeHamburgerMenu}>My Profile</Link>
 
         {
           this.context.currentUser.admin ?
@@ -108,8 +108,8 @@ const Sidebar = React.createClass ({
   },
 
   showCollection: function(collection) {
-    this.closeHambugerMenu()
-    this.showViewCollectionModal(collection)
+    this.closeHamburgerMenu()
+    this.context.router.transitionTo(`/app/collections/${collection.id}`)
   },
 
   renderCollections: function() {
