@@ -15,6 +15,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
   - After creation user is asked to share collection with other users.
   - Shared, public, and owned collections visible on product/user/collection pages.
   - Emails are sent to the user who has a collection shared with them.
+  - Collections are also listed in the Hamburger Menu
 - Add user search API endpoint for use with collection sharing. Will also be used for product sharing.
 - Add notifications system.
   - Notifications can be generated on either the frontend or backend.
@@ -42,12 +43,15 @@ is currently primarily used for the Collections system but is also used for vari
 - Field validation now occurs on new review page for fields preceeding the one clicked by the user. Errors also now appear at the end of the form.
 - Remove old Auth Token based authentication. The site now relies solely on Devise authentication.
 - Spin the common tabbed area that is on the product and user profiles into its own react component. This now makes it easy to add these tabs to a number of elements.
+- Move hamburger menu into its own dedicated react component which renders all the sub-components, rather than rendering them each separately in app.jsx
 
 ####Bugfixes
 - Fix a number of issues that were generating console warnings related to interated components not having unique IDs.
 - Ensure welcome message is hidden when the user leaves the dashboard.
 - Add icon for collections to sidebar on product and user page.
 - Hamburger menu now scrolls independently of the main page
+- Fix issue where only 4 stars showed on small/medium product boxes on dashboard.
+- Fix issue with text overflow caused by long review titles.
 
 ### v1.0.0
 

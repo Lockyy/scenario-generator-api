@@ -7,14 +7,6 @@ const MyBookmarks = React.createClass ({
   mixins: [ Navigation ],
   displayName: 'MyBookmarks',
 
-  childContextTypes: {
-    router: React.PropTypes.object
-  },
-
-  getChildContext: function() {
-    return {router: this.props.router};
-  },
-
   getDefaultProps: function() {
     return {
       showTitle: false,
