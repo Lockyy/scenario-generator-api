@@ -52,7 +52,7 @@ const CollectionsCollection = React.createClass ({
           return (
             <div className='collections-collection-row'>
               <span className='name'>
-                <Link to={`/app/collections/${collection.id}`}>{collection.title}</Link>
+                <Link to={`/app/collections/${collection.id}`}>{collection.name}</Link>
               </span>
               <span className='owner'>
                 <Link to={`/app/users/${collection.user.id}`}>

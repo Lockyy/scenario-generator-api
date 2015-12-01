@@ -9,7 +9,7 @@ describe "Product page", js: true do
     @product = create(:product, :with_reviews)
     @public_collection = create(:collection, :visible, products: [@product])
     @owned_collection = create(:collection, user: @user, products: [@product])
-    @private_collection = create(:collection, title: 'Private Collcetion', products: [@product])
+    @private_collection = create(:collection, name: 'Private Collcetion', products: [@product])
     visit "/app/products/#{@product.id}"
     wait_for_ajax
   end
@@ -82,19 +82,19 @@ describe "Product page", js: true do
       end
 
       it "displays public collections" do
-        expect(page).to have_content @public_collection.title
+        expect(page).to have_content @public_collection.name
         expect(page).to have_content @public_collection.display_date
         expect(page).to have_content @public_collection.user.name
       end
 
       it 'displays owned collections' do
-        expect(page).to have_content @owned_collection.title
+        expect(page).to have_content @owned_collection.name
         expect(page).to have_content @owned_collection.display_date
         expect(page).to have_content 'Me'
       end
 
       it "doesn't display private collections" do
-        expect(page).to_not have_content @private_collection.title
+        expect(page).to_not have_content @private_collection.name
         expect(page).to_not have_content @private_collection.display_date
         expect(page).to_not have_content @private_collection.user.name
       end

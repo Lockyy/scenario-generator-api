@@ -124,7 +124,7 @@ const Sidebar = React.createClass ({
             return (
               <div className='collection'>
                 <h3 className='title' onClick={() => _this.showCollection(collection)}>
-                  { collection.title }
+                  { collection.name }
                 </h3>
                 <div className='products'>
                   Includes: {

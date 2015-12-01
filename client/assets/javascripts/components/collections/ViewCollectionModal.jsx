@@ -48,7 +48,7 @@ const ViewCollectionModal = React.createClass ({
   getInitialState: function() {
     return {
       collection: {
-        title: '',
+        name: '',
         description: '',
         products: [],
         user: {
@@ -107,7 +107,7 @@ const ViewCollectionModal = React.createClass ({
 
         <div className='header'>
           <span className='title'>
-            {this.state.collection.title}
+            {this.state.collection.name}
           </span>
           <span onClick={this.props.close} className='close'>x</span>
         </div>

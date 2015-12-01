@@ -24,7 +24,7 @@ const CollectionPage = React.createClass({
     return {
       data: {
         collection: {
-          title: '',
+          name: '',
           description: '',
           user: {
             name: ''
@@ -66,7 +66,7 @@ const CollectionPage = React.createClass({
 
   deleteCollection: function() {
     let _this = this;
-    let collection_name = this.state.data.collection.title;
+    let collection_name = this.state.data.collection.name;
 
     FluxAlertActions.showAlert({
       title: 'Delete this collection?',
@@ -87,7 +87,7 @@ const CollectionPage = React.createClass({
 
   leaveCollection: function() {
     let _this = this;
-    let collection_name = this.state.data.collection.title;
+    let collection_name = this.state.data.collection.name;
 
     FluxAlertActions.showAlert({
       title: 'Leave this collection?',
@@ -358,7 +358,7 @@ const CollectionPage = React.createClass({
       <div className='vertical-padding red-bottom-border bottom-margin color-dark-grey'>
         <span className='right-arrow-after grey-color'>{this.firstProductName()}</span>
         <span className='right-arrow-after grey-color'>Collections</span>
-        <span className='color-red'>{this.state.data.collection.title}</span>
+        <span className='color-red'>{this.state.data.collection.name}</span>
       </div>
     )
   },
@@ -368,7 +368,7 @@ const CollectionPage = React.createClass({
       <div className='tags-page'>
         {this.renderFilePath()}
         <div className='large-text vertical-padding bottom-margin-2'>
-          { this.state.data.collection.title }
+          { this.state.data.collection.name }
         </div>
         <div className='row'>
           { this.renderCollaboratorSidebar() }

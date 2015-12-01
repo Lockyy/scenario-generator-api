@@ -26,7 +26,7 @@ const CollectionBox = React.createClass ({
   changePrivacySetting: function(newSetting) {
     let _this = this;
     FluxAlertActions.showAlert({
-      title: `Are you sure you want to make ${_this.props.collection.title} ${newSetting}?`,
+      title: `Are you sure you want to make ${_this.props.collection.name} ${newSetting}?`,
       success: `Yes, make it ${newSetting}`,
       cancel: "No, don't change it",
       successCallback: function() {
@@ -39,13 +39,13 @@ const CollectionBox = React.createClass ({
     let _this = this;
 
     FluxAlertActions.showAlert({
-      title: `Are you sure you want to delete ${this.props.collection.title}`,
+      title: `Are you sure you want to delete ${this.props.collection.name}`,
       success: 'Yes, delete it',
       cancel: "No, don't delete it",
       successCallback: function() {
         FluxCollectionActions.deleteCollection({
           id: _this.props.collection.id,
-          name: _this.props.collection.title
+          name: _this.props.collection.name
         })
       }
     })
@@ -104,7 +104,7 @@ const CollectionBox = React.createClass ({
 
               <div className="header">
                 <h3 className='title'>
-                  <Link to={`/app/collections/${this.props.collection.id}`}>{this.props.collection.title}</Link>
+                  <Link to={`/app/collections/${this.props.collection.id}`}>{this.props.collection.name}</Link>
                 </h3>
               </div>
 

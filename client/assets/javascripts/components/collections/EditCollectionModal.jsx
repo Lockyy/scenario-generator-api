@@ -42,7 +42,7 @@ const EditCollectionModal = React.createClass ({
   getInitialState: function() {
     return {
       collection: {
-        title: '',
+        name: '',
         description: '',
         products: [],
         users: []
@@ -102,7 +102,7 @@ const EditCollectionModal = React.createClass ({
   getCollection: function(e) {
     return {
       id: this.state.collection.id,
-      title: this.state.collection.title,
+      name: this.state.collection.name,
       description: this.state.collection.description,
       products: this.getProductIDs(),
       privacy: this.state.collection.privacy
@@ -115,7 +115,7 @@ const EditCollectionModal = React.createClass ({
       subject: {
         id: collection.id,
         type: 'Collection',
-        name: collection.title
+        name: collection.name
       }
     })
   },
@@ -178,12 +178,12 @@ const EditCollectionModal = React.createClass ({
           <input  type='text'
                   className='form-control'
                   placeholder='Title'
-                  name='collection[title]'
-                  ref='collection_title'
-                  value={this.state.collection.title}
+                  name='collection[name]'
+                  ref='collection_name'
+                  value={this.state.collection.name}
                   onFocus={onFocus}
                   onBlur={onBlur}
-                  onChange={(e) => this.onChangeField('title', e.currentTarget.value)}/>
+                  onChange={(e) => this.onChangeField('name', e.currentTarget.value)}/>
           <textarea type='text'
                     className='form-control'
                     placeholder='Say something'
@@ -227,7 +227,7 @@ const EditCollectionModal = React.createClass ({
 
   deleteCollection: function() {
     let _this = this;
-    let collection_name = this.state.collection.title;
+    let collection_name = this.state.collection.name;
 
     FluxAlertActions.showAlert({
       title: 'Delete this collection?',

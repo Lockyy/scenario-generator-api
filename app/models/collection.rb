@@ -12,7 +12,7 @@ class Collection < ActiveRecord::Base
   has_many :invited_sharees, -> { invites }, class_name: 'CollectionUser'
   has_many :tags, through: :products
 
-  validates :title, presence: true
+  validates :name, presence: true
   validates :description, presence: true
   validates :user, presence: true
   validates :privacy, presence: true
@@ -107,10 +107,6 @@ class Collection < ActiveRecord::Base
 
   def assign_user_to_products
     self.collection_products.each { |c_p| c_p.user_id = self.user.id }
-  end
-
-  def name
-    title
   end
 
   def display_date

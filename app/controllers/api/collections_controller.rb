@@ -91,7 +91,7 @@ class Api::CollectionsController < AppController
   end
 
   def collection_params
-    params.permit(:title, :description, :privacy)
+    params.permit(:name, :description, :privacy)
   end
 
   def setup_collection

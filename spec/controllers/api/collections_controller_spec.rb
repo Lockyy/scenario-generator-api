@@ -4,7 +4,7 @@ describe Api::CollectionsController do
   render_views
 
   before do
-    @user_owner = create(:user) # Owns the collection, allowed to add products, change title/desc, update viewers/editors, and delete the collection.
+    @user_owner = create(:user) # Owns the collection, allowed to add products, change name/desc, update viewers/editors, and delete the collection.
     @user_editor = create(:user) # Is allowed to add products and view the collection when private
     @user_viewer = create(:user) # Is allowed to view the collection when private
     @user_bystander = create(:user) # Cannot view the collection when private
@@ -24,7 +24,7 @@ describe Api::CollectionsController do
 
     it 'returns correct collection information' do
       expect(@body['id']).to eq @collection.reload.id
-      expect(@body['title']).to eq @collection.reload.title
+      expect(@body['name']).to eq @collection.reload.name
       expect(@body['description']).to eq @collection.reload.description
       expect(@body['privacy']).to eq @collection.reload.privacy
       expect(@body['display_date']).to eq @collection.reload.display_date
@@ -126,7 +126,7 @@ describe Api::CollectionsController do
           patch(:update,
                 id: @collection.id,
                 products: [@new_product.id],
-                title: 'New Title',
+                name: 'New Title',
                 description: 'New Description',
                 privacy: 'visible',
                 format: :json)
@@ -140,7 +140,7 @@ describe Api::CollectionsController do
         end
 
         it 'updates the collection title' do
-          expect(@collection.reload.title).to eq('New Title')
+          expect(@collection.reload.name).to eq('New Title')
         end
 
         it 'updates the collection description' do
@@ -247,7 +247,7 @@ describe Api::CollectionsController do
           patch(:update,
                 id: @collection.id,
                 products: [@new_product.id],
-                title: 'New Title',
+                name: 'New Title',
                 description: 'New Description',
                 privacy: 'visible',
                 format: :json)
@@ -313,7 +313,7 @@ describe Api::CollectionsController do
           patch(:update,
                 id: @collection.id,
                 products: [@new_product.id],
-                title: 'New Title',
+                name: 'New Title',
                 description: 'New Description',
                 privacy: 'visible',
                 format: :json)
@@ -379,7 +379,7 @@ describe Api::CollectionsController do
           patch(:update,
                 id: @collection.id,
                 products: [@new_product.id],
-                title: 'New Title',
+                name: 'New Title',
                 description: 'New Description',
                 privacy: 'visible',
                 format: :json)
@@ -460,7 +460,7 @@ describe Api::CollectionsController do
           patch(:update,
                 id: @collection.id,
                 products: [@new_product.id],
-                title: 'New Title',
+                name: 'New Title',
                 description: 'New Description',
                 privacy: 'visible',
                 format: :json)
@@ -473,8 +473,8 @@ describe Api::CollectionsController do
           expect(@collection.reload.products).to eq([@new_product])
         end
 
-        it 'updates the collection title' do
-          expect(@collection.reload.title).to eq('New Title')
+        it 'updates the collection name' do
+          expect(@collection.reload.name).to eq('New Title')
         end
 
         it 'updates the collection description' do
@@ -567,7 +567,7 @@ describe Api::CollectionsController do
           patch(:update,
                 id: @collection.id,
                 products: [@new_product.id],
-                title: 'New Title',
+                name: 'New Title',
                 description: 'New Description',
                 privacy: 'visible',
                 format: :json)
@@ -633,7 +633,7 @@ describe Api::CollectionsController do
           patch(:update,
                 id: @collection.id,
                 products: [@new_product.id],
-                title: 'New Title',
+                name: 'New Title',
                 description: 'New Description',
                 privacy: 'visible',
                 format: :json)
@@ -699,7 +699,7 @@ describe Api::CollectionsController do
           patch(:update,
                 id: @collection.id,
                 products: [@new_product.id],
-                title: 'New Title',
+                name: 'New Title',
                 description: 'New Description',
                 privacy: 'visible',
                 format: :json)

@@ -111,11 +111,11 @@ const AddToCollectionModal = React.createClass ({
     let sendNotification = function() {
       FluxNotificationsActions.showNotification({
         type: 'saved',
-        text: `${product.name} added to ${collection.title}`,
+        text: `${product.name} added to ${collection.name}`,
         subject: {
           id: collection.id,
           type: 'Collection',
-          name: collection.title
+          name: collection.name
         }
       })
     }
@@ -179,7 +179,7 @@ const AddToCollectionModal = React.createClass ({
 
     let onClick = function() {
       this.close()
-      this.showCreateCollectionModal({title: this.state.searchTerm, products: [this.state.product]})
+      this.showCreateCollectionModal({name: this.state.searchTerm, products: [this.state.product]})
     }.bind(this)
 
     return (
@@ -207,7 +207,7 @@ const AddToCollectionModal = React.createClass ({
       <div className='collection'>
         <div className='collection-info'>
           <div className='title'>
-            {collection.title}
+            {collection.name}
           </div>
           <div className='collection-details'>
             Created by <span className='author'>"{collection.user.name}"</span>, {collection.display_date}

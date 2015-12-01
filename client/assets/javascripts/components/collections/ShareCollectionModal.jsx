@@ -42,7 +42,7 @@ const ShareCollectionModal = React.createClass ({
   getInitialState: function() {
     return {
       collection: {
-        title: '',
+        name: '',
         description: '',
         products: [],
         owner: this.context.currentUser,
@@ -156,7 +156,7 @@ const ShareCollectionModal = React.createClass ({
 
     let _this = this
     let id    = this.state.collection.id
-    let title = this.state.collection.title
+    let name = this.state.collection.name
     let total = this.state.collection.users.length + this.state.collection.emails.length
 
     let data = {
@@ -174,7 +174,7 @@ const ShareCollectionModal = React.createClass ({
         subject: {
           id: id,
           type: 'Collection',
-          name: title,
+          name: name,
           text: `Collection shared with ${total} users`
         }
       })

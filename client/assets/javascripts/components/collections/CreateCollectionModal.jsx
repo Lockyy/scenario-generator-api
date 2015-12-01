@@ -28,7 +28,7 @@ const CreateCollectionMixin = {
 
   showCreateCollectionModal: function(details) {
     FluxCollectionActions.fetchedCollection({
-      title: (details.title || ''),
+      name: (details.name || ''),
       products: (details.products || []),
       description: '',
       users: [],
@@ -46,7 +46,7 @@ const CreateCollectionModal = React.createClass ({
     return {
       data: {
         collection: {
-          title: '',
+          name: '',
           description: '',
           products: [],
           user: {
@@ -109,7 +109,7 @@ const CreateCollectionModal = React.createClass ({
   getCollection: function(e) {
     return {
       id: this.state.data.collection.id,
-      title: this.state.data.collection.title,
+      name: this.state.data.collection.name,
       description: this.state.data.collection.description,
       privacy: e.currentTarget.dataset.privacy,
       products: this.getProductIDs()
@@ -122,7 +122,7 @@ const CreateCollectionModal = React.createClass ({
       subject: {
         id: collection.id,
         type: 'Collection',
-        name: collection.title
+        name: collection.name
       }
     })
   },
@@ -199,12 +199,12 @@ const CreateCollectionModal = React.createClass ({
           <input  type='text'
                   className='form-control'
                   placeholder='Title *'
-                  name='collection[title]'
-                  ref='collection_title'
-                  value={this.state.data.collection.title}
+                  name='collection[name]'
+                  ref='collection_name'
+                  value={this.state.data.collection.name}
                   onFocus={onFocus}
                   onBlur={onBlur}
-                  onChange={(e) => this.onChangeField('title', e)} />
+                  onChange={(e) => this.onChangeField('name', e)} />
           <textarea type='text'
                     className='form-control'
                     placeholder='Say something *'

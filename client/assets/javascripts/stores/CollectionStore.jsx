@@ -77,7 +77,7 @@ class CollectionStore {
 
   getDefaultCollection() {
     return {
-      title: '',
+      name: '',
       description: '',
       products: [],
       users: [],
