@@ -135,6 +135,7 @@ const EditCollectionModal = React.createClass ({
   },
 
   onChangeField: function(name, value) {
+    if(!this.state.collection.owned) { return }
     let hash = this.state.collection;
     hash[name] = value
     this.setState({ collection: hash })
@@ -182,8 +183,7 @@ const EditCollectionModal = React.createClass ({
                   value={this.state.collection.title}
                   onFocus={onFocus}
                   onBlur={onBlur}
-                  onChange={(e) => this.onChangeField('title', e.currentTarget.value)}
-                  disabled={!this.state.collection.owned} />
+                  onChange={(e) => this.onChangeField('title', e.currentTarget.value)}/>
           <textarea type='text'
                     className='form-control'
                     placeholder='Say something'
@@ -193,8 +193,7 @@ const EditCollectionModal = React.createClass ({
                     value={this.state.collection.description}
                     onFocus={onFocus}
                     onBlur={onBlur}
-                    onChange={(e) => this.onChangeField('description', e.currentTarget.value)}
-                    disabled={!this.state.collection.owned} />
+                    onChange={(e) => this.onChangeField('description', e.currentTarget.value)}/>
         </div>
       </div>
     )
@@ -247,13 +246,22 @@ const EditCollectionModal = React.createClass ({
     })
   },
 
+  renderDeleteButton: function () {
+    if(this.state.collection.owned) {
+      return (
+        <button className='btn btn-red btn-round'
+          onClick={this.deleteCollection}>Delete Collection</button>
+      )
+    }
+  },
+
   renderSubmissionButtons: function() {
     return (
       <div className='buttons'>
-        <button className='btn btn-red btn-round'
-                onClick={this.deleteCollection}>Delete Collection</button>
-        <button className='btn btn-grey btn-round'
-                onClick={this.submitForm} >Save</button>
+        {this.renderDeleteButton()}
+        <button
+          className='btn btn-grey btn-round'
+          onClick={this.submitForm}>Save</button>
       </div>
     )
   },
@@ -283,12 +291,13 @@ const EditCollectionModal = React.createClass ({
     return (
       <div className='header grey'>
         <div className='left'>
-          <Dropdown
-            onClick={this.changePrivacySetting}
-            active={this.state.collection.privacy}
-            showText={false}
-            options={{ visible: 'Public', hidden: 'Private' }}
-            containerClass={'small'} />
+          { this.state.collection.owned ?
+              <Dropdown
+                onClick={this.changePrivacySetting}
+                active={this.state.collection.privacy}
+                showText={false}
+                options={{ visible: 'Public', hidden: 'Private' }}
+                containerClass={'small'} /> : '' }
           <span className='user-share'>
             Shared with {this.state.collection.users.length} user(s).
           </span>
