@@ -88,6 +88,7 @@ const ViewCollectionModal = React.createClass ({
       let totalUsers = this.state.collection.users.length
       return (
         <div className='collection-sharees'>
+          <Avatar url={this.state.collection.user.avatar_url} />
           {_.map(this.state.collection.users.slice(0,6), function(sharee) {
             return <Avatar url={sharee.avatar_url} />
           })}
