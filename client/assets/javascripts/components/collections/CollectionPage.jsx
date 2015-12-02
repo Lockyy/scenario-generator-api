@@ -8,6 +8,7 @@ import FluxNotificationsActions from '../../actions/FluxNotificationsActions';
 import CollectionStore from '../../stores/CollectionStore'
 import Rating from '../Rating'
 import Avatar from '../Avatar'
+import TabbedArea from '../TabbedArea'
 import { EditCollectionMixin } from './EditCollectionModal'
 import { ShareCollectionMixin } from './ShareCollectionModal'
 import { CollaboratorCollectionMixin } from './CollaboratorCollectionModal'
@@ -194,7 +195,7 @@ const CollectionPage = React.createClass({
 
   renderProductsTable: function(products) {
     return (
-      <div className='col-xs-8 collection-products-table'>
+      <div className='collection-products-table' tabTitle='Products' ref='products'>
         <div className='row table-header'>
           <div className='col-xs-8'>Product</div>
           <div className='col-xs-3'>Date Added</div>
@@ -215,10 +216,7 @@ const CollectionPage = React.createClass({
 
   renderCollaboratorSidebar: function() {
     return (
-      <div className='col-xs-4'>
-        <div className='table-header'>
-          Collaborators
-        </div>
+      <div tabTitle='Collaborators' ref='collaborators' >
         {this.renderEditButtons()}
         {this.renderOwnerView()}
         {this.renderCollaboratorView()}
@@ -324,9 +322,11 @@ const CollectionPage = React.createClass({
           </div>
         </label>
 
-        {_.map(this.viewers(), function(viewer) {
-          return <Avatar url={viewer.avatar_url} link={`/app/users/${viewer.id}`}/>
-        })}
+        <div>
+          {_.map(this.viewers(), function(viewer) {
+            return <Avatar url={viewer.avatar_url} link={`/app/users/${viewer.id}`}/>
+          })}
+        </div>
 
         <label>
           <input  type='radio' name='privacy' value='visible' onClick={this.setPrivacy}
@@ -404,10 +404,11 @@ const CollectionPage = React.createClass({
         <div className='large-text vertical-padding bottom-margin-2'>
           { this.state.data.collection.name }
         </div>
-        <div className='row'>
-          { this.renderCollaboratorSidebar() }
+        <TabbedArea
+          containerClass={'no-border no-margin no-child-padding'}>
           { this.renderProductsTable(this.state.data.collection.products) }
-        </div>
+          { this.renderCollaboratorSidebar() }
+        </TabbedArea>
       </div>
     );
   }
