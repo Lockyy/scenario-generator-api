@@ -27,3 +27,7 @@ vendor/ruby
 
 # Ignore config files
 config/database.yml
+
+# Ignore Vim swap files
+*.swp
+*.swo

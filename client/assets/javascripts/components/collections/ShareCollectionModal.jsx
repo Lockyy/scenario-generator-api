@@ -319,7 +319,7 @@ const ShareCollectionModal = React.createClass ({
         <span className='title'>
           Privacy & Sharing
         </span>
-        <span onClick={this.props.close} className='close'>x</span>
+        <span onClick={this.props.close} className='close'></span>
       </div>
     )
   },
