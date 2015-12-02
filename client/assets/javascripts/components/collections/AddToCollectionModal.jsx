@@ -196,7 +196,7 @@ const AddToCollectionModal = React.createClass ({
 
   renderAddButton: function(collection) {
     if(this.productInCollection(collection)) {
-      return <div className='already-in-collection'>The product you are trying to add is already a part of this collection</div>
+      return <div className='already-in-collection'>Product already added to Collection</div>
     } else {
       return <div className='btn btn-round btn-red-inverted btn-add btn-small' onClick={(e) => this.addToCollection(e, collection)}>Add</div>
     }
@@ -205,13 +205,16 @@ const AddToCollectionModal = React.createClass ({
   renderCollectionListItem: function(collection) {
     return (
       <div className='collection'>
-        <div className='collection-info'>
-          <div className='title'>
-            {collection.name}
-          </div>
-          <div className='collection-details'>
-            Created by <span className='author'>"{collection.user.name}"</span>, {collection.display_date}
-          </div>
+        <div className='collection-details'>
+          <span className='collection-icon'/>
+          <span className='collection-info'>
+            <div className='title'>
+              {collection.name}
+            </div>
+            <div className='collection-details'>
+              Created by <span className='author'>"{collection.user.name}"</span>, {collection.display_date}
+            </div>
+          </span>
         </div>
         <div className='right-buttons'>
           <div className='btn btn-round btn-blue-inverted btn-view btn-small' onClick={() => this.previewCollection(collection)} />
@@ -242,7 +245,7 @@ const AddToCollectionModal = React.createClass ({
         onRequestClose={this.close}
         style={DefaultModalStyles}>
         <div className='back-button' onClick={this.close}>{"< Close"}</div>
-        <div className='header'>
+        <div className='header collections'>
           <span className='title'>
             Add product to an existing collection
           </span>

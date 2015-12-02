@@ -4,7 +4,8 @@ import { Link, Navigation } from 'react-router';
 import Modal from 'react-modal';
 import CollectionStore from '../../stores/CollectionStore';
 import ModalStore from '../../stores/ModalStore';
-import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
+import DefaultModalStyles from '../../utils/constants/DefaultModalStyles'
+import FluxAlertActions from '../../actions/FluxAlertActions';
 import FluxModalActions from '../../actions/FluxModalActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
@@ -265,8 +266,26 @@ const ShareCollectionModal = React.createClass ({
 
   setPrivacy: function(e) {
     let newValue = $(e.target).val()
-    let updatedCollection = _.merge(this.state.collection, {privacy: newValue})
-    this.setState({collection: updatedCollection})
+    let message, button;
+    let _this = this;
+
+    if(newValue) {
+      message = 'Are you sure you want to make this collection private? Only Fletcher users you share it with will be able to see it.'
+    } else {
+      message = 'Are you sure you want to make this collection public? All Fletcher users will be able to view it.'
+    }
+
+    FluxAlertActions.showAlert({
+      title: 'Make this collection public?',
+      blue: true,
+      success: 'Continue',
+      cancel: 'Cancel',
+      message: message,
+      successCallback: function() {
+        let updatedCollection = _.merge(_this.state.collection, {privacy: newValue})
+        _this.setState({collection: updatedCollection})
+      }
+    })
   },
 
   renderPrivacyToggle: function() {
@@ -315,7 +334,7 @@ const ShareCollectionModal = React.createClass ({
 
   renderheader: function() {
     return (
-      <div className='header'>
+      <div className='header collection'>
         <span className='title'>
           Privacy & Sharing
         </span>

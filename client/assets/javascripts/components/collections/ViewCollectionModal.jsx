@@ -88,6 +88,7 @@ const ViewCollectionModal = React.createClass ({
       let totalUsers = this.state.collection.users.length
       return (
         <div className='collection-sharees'>
+          <Avatar url={this.state.collection.user.avatar_url} />
           {_.map(this.state.collection.users.slice(0,6), function(sharee) {
             return <Avatar url={sharee.avatar_url} />
           })}
@@ -105,7 +106,7 @@ const ViewCollectionModal = React.createClass ({
         style={DefaultModalStyles}>
         <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
 
-        <div className='header'>
+        <div className='header collection'>
           <span className='title'>
             {this.state.collection.name}
           </span>
