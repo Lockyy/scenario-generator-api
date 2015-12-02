@@ -160,7 +160,7 @@ const CollectionPage = React.createClass({
             Leave Collection
           </div>
           <div className='bottom-margin'>
-            Leaving this collection will remove it from your profile and from the Collections tab of the included products for you only.
+            If you leave this collection you will no longer be able to view it or collaborate
           </div>
           <div  className='btn btn-blue-inverted btn-round'
                 onClick={this.leaveCollection}>
