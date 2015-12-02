@@ -236,7 +236,7 @@ const CollaboratorCollectionModal = React.createClass ({
 
   renderheader: function() {
     return (
-      <div className='header'>
+      <div className='header collection'>
         <span className='title'>
           Manage collaborators access
         </span>

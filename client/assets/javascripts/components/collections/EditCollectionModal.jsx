@@ -297,7 +297,7 @@ const EditCollectionModal = React.createClass ({
 
   renderheader: function() {
     return (
-      <div className='header grey'>
+      <div className='header grey collections'>
         <div className='left'>
           { this.state.collection.owned ?
               <Dropdown

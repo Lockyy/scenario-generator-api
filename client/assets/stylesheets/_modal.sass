@@ -26,6 +26,23 @@ $modal-padding: 25px
       border-radius: 4px
       border: 0px
       padding: $modal-padding $modal-padding $modal-padding
+      .header
+        &.collections
+          .title::before
+            background-image: url('icons/icon-collections-red.svg')
+        &.share
+          .title::before
+            background-image: url('icons/icon-share.svg')
+        .title::before
+          content: '.'
+          color: transparent
+          width: 25px
+          height: 25px
+          background-repeat: no-repeat
+          background-position: center
+          background-size: contain
+          display: inline-block
+          margin-right: 10px
       .results-list-padding
         padding: 10px 0px
         border-top: 1px solid $grey
@@ -133,18 +150,28 @@ $modal-padding: 25px
             padding: 15px 25px
             &:hover
               background: $medium-grey
-            .collection-info
-              display: inline-block
-              .title
-                white-space: nowrap
-                overflow: hidden
-                text-overflow: ellipsis
-                max-width: 300px
-              .collection-details
-                font-size: 11px
-                color: $dark-grey
-                .author
-                  color: $primary-red
+            .collection-details
+              display: flex
+              .collection-icon
+                background-image: url('icons/icon-collections-red.svg')
+                width: 15px
+                height: 15px
+                background-repeat: no-repeat
+                background-position: center
+                background-size: cover
+                display: inline-block
+              .collection-info
+                margin-left: 10px
+                .title
+                  white-space: nowrap
+                  overflow: hidden
+                  text-overflow: ellipsis
+                  max-width: 300px
+                .collection-details
+                  font-size: 11px
+                  color: $dark-grey
+                  .author
+                    color: $primary-red
             &.create-collection-link
               cursor: pointer
               .title

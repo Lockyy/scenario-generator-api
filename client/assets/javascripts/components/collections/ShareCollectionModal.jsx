@@ -315,7 +315,7 @@ const ShareCollectionModal = React.createClass ({
 
   renderheader: function() {
     return (
-      <div className='header'>
+      <div className='header collection'>
         <span className='title'>
           Privacy & Sharing
         </span>
