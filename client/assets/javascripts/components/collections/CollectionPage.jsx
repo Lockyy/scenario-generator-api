@@ -342,8 +342,28 @@ const CollectionPage = React.createClass({
 
   setPrivacy: function(e) {
     let newValue = $(e.target).val()
-    this.setState({privacy: newValue})
-    FluxCollectionActions.updateCollection(this.state.data.collection.id, {privacy: newValue})
+    let message, button;
+    let _this = this;
+
+    if(newValue == 'hidden') {
+      message = 'Are you sure you want to make this collection private? Only Fletcher users you share it with will be able to see it.'
+      button = 'Make Private'
+    } else {
+      message = 'Are you sure you want to make this collection public? All Fletcher users will be able to view it.'
+      button = 'Make Public'
+    }
+
+    FluxAlertActions.showAlert({
+      title: 'Make this collection public?',
+      blue: true,
+      success: button,
+      cancel: 'Cancel',
+      message: message,
+      successCallback: function() {
+        _this.setState({privacy: newValue})
+        FluxCollectionActions.updateCollection(_this.state.data.collection.id, {privacy: newValue})
+      }
+    })
   },
 
   firstProductName: function() {

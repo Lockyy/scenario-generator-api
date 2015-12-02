@@ -277,7 +277,7 @@ const CreateCollectionModal = React.createClass ({
 
   renderheader: function() {
     return (
-      <div className='header'>
+      <div className='header collections'>
         <span className='title'>
           Create a new Collection
         </span>
