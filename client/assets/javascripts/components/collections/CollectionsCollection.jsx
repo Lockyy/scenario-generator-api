@@ -48,13 +48,17 @@ const CollectionsCollection = React.createClass ({
 
   renderCollections: function() {
     let _this = this
+    let params = '';
+    if(this.context.router.state.components[0].displayName == 'ProductPage') {
+      params = `?name=${this.props.product.name}&link=${window.location.pathname}`
+    }
     return (
       <div>
         {_.map(this.state.data.collections, function(collection) {
           return (
             <div className='collections-collection-row'>
               <span className='name'>
-                <Link to={`/app/collections/${collection.id}`}>{collection.name}</Link>
+                <Link to={`/app/collections/${collection.id}${params}`}>{collection.name}</Link>
               </span>
               <span className='owner'>
                 <Link to={`/app/users/${collection.user.id}`}>

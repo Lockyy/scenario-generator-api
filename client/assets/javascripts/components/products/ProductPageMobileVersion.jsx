@@ -242,7 +242,8 @@ const ProductPageMobileVersion = React.createClass({
                   Add to existing
                 </div>
               </div>
-              <CollectionsCollection />
+              <CollectionsCollection
+                product={this.props.data} />
             </Section>
           </div>
 

@@ -373,11 +373,25 @@ const CollectionPage = React.createClass({
     }
   },
 
+  renderFilePathLink: function(name, url) {
+    return <a href={url} className='right-arrow-after grey-color'>{name}</a>
+  },
+
+  getParameterByName: function(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  },
+
   renderFilePath: function() {
+    let name = this.getParameterByName('name') || this.state.data.collection.user.name
+    let link = this.getParameterByName('link') || `/app/users/${this.state.data.collection.user.id}`
+
     return (
       <div className='vertical-padding red-bottom-border bottom-margin color-dark-grey'>
-        <span className='right-arrow-after grey-color'>{this.firstProductName()}</span>
-        <span className='right-arrow-after grey-color'>Collections</span>
+        {this.renderFilePathLink(name, link)}
+        {this.renderFilePathLink('Collections', link + '#collections')}
         <span className='color-red'>{this.state.data.collection.name}</span>
       </div>
     )

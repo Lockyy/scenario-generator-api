@@ -185,7 +185,8 @@ const ProductPageDesktopVersion = React.createClass({
             <div className='btn btn-round btn-grey' onClick={() => this.showAddToCollectionModal()}>
               Add to existing collection
             </div>
-            <CollectionsCollection />
+            <CollectionsCollection
+              product={this.props.data} />
           </div>
           <div
             tabTitle='Custom Data'
