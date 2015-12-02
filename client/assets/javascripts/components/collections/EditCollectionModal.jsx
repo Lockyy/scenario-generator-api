@@ -92,7 +92,7 @@ const EditCollectionModal = React.createClass ({
   addProduct: function(product, selected) {
     if(selected) {
       let updatedCollection = this.state.collection
-      updatedCollection.products.push(product)
+      updatedCollection.products.push(_.merge(product, {unsaved: true}))
       this.setState({product_name: null, collection: updatedCollection})
     } else {
       this.setState({product_name: product.name})
@@ -176,9 +176,6 @@ const EditCollectionModal = React.createClass ({
     return (
       <div>
         <div className='field-messages'>
-          <div className='required'>
-            * Required Fields
-          </div>
           <div className='errors' ref='errors'>
             Please complete this field
           </div>
@@ -220,12 +217,18 @@ const EditCollectionModal = React.createClass ({
     )
   },
 
+  unsavedProducts: function() {
+    return _.filter(this.state.collection.products, function(product) {
+      return product.unsaved
+    })
+  },
+
   renderProducts: function() {
     return (
       <Results
         type='collection-product'
         onRemove={this.removeProduct}
-        data={{data: this.state.collection.products}} />
+        data={{data: this.unsavedProducts()}} />
     )
   },
 
@@ -233,40 +236,9 @@ const EditCollectionModal = React.createClass ({
     return (this.validation(false))
   },
 
-  deleteCollection: function() {
-    let _this = this;
-    let collection_name = this.state.collection.name;
-
-    FluxAlertActions.showAlert({
-      title: 'Delete this collection?',
-      blue: true,
-      success: 'Delete',
-      cancel: 'Cancel',
-      message: 'Deleting this collection will delete it for all the users in it. This action can’t be undone. Confirm you action below.',
-      checkbox: 'I confirm that I want to delete this collection.',
-      successCallback: function() {
-        FluxCollectionActions.deleteCollection({
-          id: _this.props.params.id,
-          name: collection_name
-        })
-        _this.context.router.transitionTo('/app')
-      }
-    })
-  },
-
-  renderDeleteButton: function () {
-    if(this.state.collection.owned) {
-      return (
-        <button className='btn btn-red btn-round'
-          onClick={this.deleteCollection}>Delete Collection</button>
-      )
-    }
-  },
-
   renderSubmissionButtons: function() {
     return (
       <div className='buttons'>
-        {this.renderDeleteButton()}
         <button
           className='btn btn-grey btn-round'
           onClick={this.submitForm}>Save</button>
@@ -297,19 +269,10 @@ const EditCollectionModal = React.createClass ({
 
   renderheader: function() {
     return (
-      <div className='header grey collections'>
-        <div className='left'>
-          { this.state.collection.owned ?
-              <Dropdown
-                onClick={this.changePrivacySetting}
-                active={this.state.collection.privacy}
-                showText={false}
-                options={{ visible: 'Public', hidden: 'Private' }}
-                containerClass={'small'} /> : '' }
-          <span className='user-share'>
-            Shared with {this.state.collection.users.length} user(s).
-          </span>
-        </div>
+      <div className='header collections'>
+        <span className='title'>
+          Edit Collection
+        </span>
         <span onClick={this.props.close} className='close'>x</span>
       </div>
     )
