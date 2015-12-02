@@ -109,7 +109,7 @@ const ViewCollectionModal = React.createClass ({
           <span className='title'>
             {this.state.collection.name}
           </span>
-          <span onClick={this.props.close} className='close'>x</span>
+          <span onClick={this.props.close} className='close'></span>
         </div>
 
         <div className='collection-details'>
