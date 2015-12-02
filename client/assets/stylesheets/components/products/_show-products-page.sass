@@ -260,10 +260,27 @@
     .mobile-version
       display: block
 
+      .more-options-dropdown
+        display: none
+
       & > .links
-        text-align: center
+        display: flex
+        align-items: center
+        justify-content: center
         margin-top: 50px
         margin-bottom: 20px
+        .more-options-button
+          position: relative
+          left: 20px
+          display: inline-block
+          background-image: url('icons/more.svg')
+          width: 30px
+          height: 30px
+          background-repeat: no-repeat
+          background-position: center
+          background-color: $light-grey
+          border-radius: 45px
+          background-size: 20px 20px
 
       .info-row
         display: block
@@ -356,6 +373,7 @@
         border: solid 1px $grey
         border-top: solid 2px $color-darkred
 
+
         & > .header
           padding: 10px
           margin: 0px
@@ -384,6 +402,16 @@
               .dropdown-links, .active-dropdown-link
                 background-color: $light-grey
                 color: red
+
+        &.collections
+          .collections-collection
+            .collections-collection-row:last-child
+              border-bottom: 0px
+          .collection-buttons
+            display: flex
+            justify-content: space-between
+          & > .items
+            padding-bottom: 0px
 
         .reviews
           .review

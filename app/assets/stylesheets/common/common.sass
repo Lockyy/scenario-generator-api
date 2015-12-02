@@ -21,10 +21,15 @@ form
 
 .grey-bottom-border
   @include grey-bottom-border
+.dark-grey-bottom-border
+  @include dark-grey-bottom-border
 
 .red-bottom-border
   @include red-bottom-border
 
+.horizontal-padding
+  padding-left: 15px
+  padding-right: 15px
 .vertical-padding
   @include vertical-padding
 .vertical-padding-2
@@ -46,6 +51,12 @@ form
 .color-dark-grey
   color: $grey
 
+.background-light-grey
+  background: $light-grey
+
+.background-grey
+  background: $grey
+
 .color-red
   color: $primary-red
 
@@ -63,8 +74,11 @@ form
 .right
   float: right
 
+.centered
+  text-align: center
+
 .large-text
   font-size: 20px
 
-.border-bottom-grey
-  border-bottom: 1px solid $grey
+.shadow
+  box-shadow: 0px 2px 4px $grey

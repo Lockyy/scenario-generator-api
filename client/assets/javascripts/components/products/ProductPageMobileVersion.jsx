@@ -15,10 +15,11 @@ import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
 import CollectionsCollection from '../collections/CollectionsCollection';
 import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
+import { CreateCollectionMixin } from '../collections/CreateCollectionModal';
 
 const ProductPageMobileVersion = React.createClass({
   displayName: 'ProductPageMobileVersion',
-  mixins: [ Navigation, AddToCollectionMixin ],
+  mixins: [ Navigation, AddToCollectionMixin, CreateCollectionMixin ],
 
   id: function() {
     return this.props.data.id
@@ -104,12 +105,41 @@ const ProductPageMobileVersion = React.createClass({
     );
   },
 
+  toggleMoreOptionsDropdown: function() {
+    $(this.refs.moreOptionsDropdown.getDOMNode()).slideToggle()
+  },
+
+  renderMoreOptionsButton: function() {
+    return (
+      <div className='more-options-button' onClick={this.toggleMoreOptionsDropdown}/>
+    )
+  },
+
+  showCreateModal: function() {
+    debugger
+    this.showCreateCollectionModal({products: [this.props.data]})
+  },
+
+  renderMoreOptions: function() {
+    return (
+      <div ref='moreOptionsDropdown' className='more-options-dropdown background-grey bottom-margin shadow'>
+        <div className='vertical-padding dark-grey-bottom-border horizontal-padding centered' onClick={() => this.showAddToCollectionModal('')}>
+          Add to an existing collection
+        </div>
+        <div className='vertical-padding horizontal-padding centered' onClick={this.showCreateModal}>
+          Create new collection
+        </div>
+      </div>
+    )
+  },
+
   renderReviewButton: function() {
     return (
       <div className='links'>
         <a href={this.props.reviewButtonURL} className='btn btn-red btn-round'>
           { this.props.reviewButtonText }
         </a>
+        {this.renderMoreOptionsButton()}
       </div>
     )
   },
@@ -163,64 +193,6 @@ const ProductPageMobileVersion = React.createClass({
     )
   },
 
-  renderLinksModal: function() {
-    let links = _.collect(this.getProductData('links'), function(link) {
-      return (<li className='link'>
-        <div className='link-details'>
-          <a className="link" href={UrlHelper.addProtocol(link.url)} target='_blank'>{link.url}</a>
-        </div>
-      </li>);
-    });
-
-    return (
-      <div className="modal fade" id="links-modal">
-        <div className="modal-content links-modal-content">
-          <div className="modal-header">
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h2 className="modal-title">Links Added</h2>
-          </div>
-          <div className="modal-body">
-            <ul className="links">
-              {links}
-            </ul>
-          </div>
-        </div>
-      </div>
-    )
-  },
-
-  renderFilesModal: function() {
-    let attachments = _.collect(this.getProductData('attachments'), function(attachment) {
-      return (<li className='attachment'>
-        {FileHelper.isImage(attachment.name) ?
-          <img src={UrlHelper.addProtocol(attachment.url)} className='thumbnail' width='50px' />
-          : ''}
-
-        <div className='attachment-details'>
-          <a className="link" href={UrlHelper.addProtocol(attachment.url)} target='_blank'>{attachment.name}</a>
-          <span className='author'>{attachment.author ? `Uploaded by ${attachment.author.name}` : ''}</span>
-          <span className='created_at'>{timeago(attachment.created_at)}</span>
-        </div>
-      </li>);
-    });
-
-    return (
-      <div className="modal fade" id="files-modal">
-        <div className="modal-content files-modal-content">
-          <div className="modal-header">
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h2 className="modal-title">Files Added</h2>
-          </div>
-          <div className="modal-body">
-            <ul className="attachments">
-              {attachments}
-            </ul>
-          </div>
-        </div>
-      </div>
-    )
-  },
-
   renderRelatedProducts: function() {
     if(this.getProductData('related_products').length > 0) {
       return <RelatedProducts
@@ -237,10 +209,9 @@ const ProductPageMobileVersion = React.createClass({
     let tags = this.getProductData('tags');
     return (
       <div className='mobile-version'>
-        {this.renderFilesModal()}
-        {this.renderLinksModal()}
         {this.renderTitle()}
         {this.renderReviewButton()}
+        {this.renderMoreOptions()}
         {this.renderInfo()}
 
 
@@ -263,8 +234,13 @@ const ProductPageMobileVersion = React.createClass({
 
           <div className='col-xs-12 tags'>
             <Section hasPagination={false} title={"Collections"}>
-              <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal()}>
-                Add to a Collection
+              <div className='collection-buttons'>
+                <div className='btn btn-round btn-red' onClick={this.showCreateModal}>
+                  Create New
+                </div>
+                <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal('')}>
+                  Add to existing
+                </div>
               </div>
               <CollectionsCollection />
             </Section>

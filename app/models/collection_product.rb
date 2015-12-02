@@ -5,7 +5,6 @@ class CollectionProduct < ActiveRecord::Base
   belongs_to :user
 
   validates :collection_id, uniqueness: { scope: :product_id }
-  validates :user, presence: true
   validates :collection, presence: true
   validates :product, presence: true
 

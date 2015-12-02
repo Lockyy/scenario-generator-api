@@ -111,7 +111,7 @@ const CollectionPage = React.createClass({
   },
 
   shareCollection: function() {
-    this.showShareCollectionModal(this.state.data.collection)
+    this.showShareCollectionModal(this.state.data.collection, {confirm: 'Save', cancel: 'Cancel'})
   },
 
   manageCollaborators: function() {
@@ -122,10 +122,10 @@ const CollectionPage = React.createClass({
     if(this.ownedByUser()) {
       return (
         <div className='user-buttons vertical-padding grey-bottom-border'>
-          <div className='btn btn-red-inverted btn-round' onClick={this.shareCollection}>
+          <div className='btn btn-red-inverted btn-round btn-small' onClick={this.shareCollection}>
             Share
           </div>
-          <div className='btn btn-grey-inverted btn-round' onClick={this.manageCollaborators}>
+          <div className='btn btn-grey btn-round btn-small' onClick={this.manageCollaborators}>
             Manage Collaborators
           </div>
         </div>

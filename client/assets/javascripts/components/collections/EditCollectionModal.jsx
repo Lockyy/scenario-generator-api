@@ -143,14 +143,23 @@ const EditCollectionModal = React.createClass ({
 
   // Runs validation on text fields.
   // Returns false if there are errors.
-  validation: function() {
+  validation: function(skipDescription) {
     let errorDom = $(this.refs.errors.getDOMNode())
-    let titleDOM = $(this.refs.collection_title.getDOMNode())
+    let titleDOM = $(this.refs.collection_name.getDOMNode())
     let descriptionDOM = $(this.refs.collection_description.getDOMNode())
-    let errors = titleDOM.val() == '' || descriptionDOM.val() == ''
+    let errors;
+    if(skipDescription) {
+      errors = titleDOM.val() == ''
+    } else {
+      errors = titleDOM.val() == '' || descriptionDOM.val() == ''
+    }
     errorDom.toggleClass('active', errors)
 
     return !errors
+  },
+
+  skipDescriptionValidation: function(e) {
+    return $(e.target).prop("tagName") == 'INPUT' && $(e.relatedTarget).prop("tagName") == 'TEXTAREA'
   },
 
   renderTextFields: function() {
@@ -161,7 +170,7 @@ const EditCollectionModal = React.createClass ({
 
     let onBlur = function(e) {
       $(React.findDOMNode(_this.refs.fields_container)).removeClass('focus')
-      _this.validation()
+      _this.validation(_this.skipDescriptionValidation(e))
     }
 
     return (
@@ -216,13 +225,12 @@ const EditCollectionModal = React.createClass ({
       <Results
         type='collection-product'
         onRemove={this.removeProduct}
-        showRemove={this.state.collection.owned && this.state.collection.products.length > 1}
         data={{data: this.state.collection.products}} />
     )
   },
 
   formCompleted: function() {
-    return (this.validation() && this.state.collection.products.length > 0)
+    return (this.validation(false))
   },
 
   deleteCollection: function() {

@@ -34,11 +34,14 @@
       background: $light-grey
       padding: 10px 0px
     .name
-      @include make-xs-column(6)
+      @include make-xs-column(8)
+      @include make-sm-column(6)
     .owner
-      @include make-xs-column(3)
+      @include make-xs-column(4)
+      @include make-sm-column(3)
     .date
-      @include make-xs-column(3)
+      @extend .hidden-xs
+      @include make-sm-column(3)
 
 .form.collection
   .attached-fields

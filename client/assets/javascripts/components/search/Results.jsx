@@ -164,7 +164,7 @@ const Results = React.createClass ({
             active={result.rank}
             showText={false}
             native={true}
-            options={{ viewer: 'Can View', collaborator: 'Can add products', owner: 'Is owner' }} />
+            options={{ viewer: 'Can View', collaborator: 'Can add products', owner: 'Co-owner' }} />
         </div>
       )
     }
@@ -208,7 +208,7 @@ const Results = React.createClass ({
             </div>
 
             {
-              this.props.onRemove && this.props.showRemove ? (
+              this.props.onRemove ? (
                 <div className='remove' onClick={() => this.props.onRemove(result.id)}>
                   Remove
                 </div>

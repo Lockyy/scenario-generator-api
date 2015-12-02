@@ -206,7 +206,7 @@ const TagsManager = React.createClass({
         </div>
 
         <div className='button-container' ref='button_container'>
-          <a className="btn btn-white btn-round" type="button" onClick={this._enableTagsManager} href="#">
+          <a className="btn btn-orange-inverted btn-round" type="button" onClick={this._enableTagsManager} href="#">
             {this.props.buttonText}
           </a>
         </div>

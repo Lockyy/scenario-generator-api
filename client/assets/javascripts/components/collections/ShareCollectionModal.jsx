@@ -30,8 +30,8 @@ const ShareCollectionMixin = {
     }
   },
 
-  showShareCollectionModal: function(collection) {
-    FluxModalActions.setVisibleModal('ShareCollectionModal');
+  showShareCollectionModal: function(collection, config) {
+    FluxModalActions.setVisibleModal('ShareCollectionModal', 0, config);
     FluxCollectionActions.fetchedCollection(collection);
   }
 };
@@ -48,7 +48,8 @@ const ShareCollectionModal = React.createClass ({
         owner: this.context.currentUser,
         users: [],
         emails: []
-      }
+      },
+      config: {}
     }
   },
 
@@ -63,7 +64,7 @@ const ShareCollectionModal = React.createClass ({
   },
   onChangeModal: function(data) {
     let visible = data.visibleModal == this.constructor.displayName;
-    this.setState({ visible: visible });
+    this.setState({ visible: visible, config: data.config });
   },
 
   // Gather users currently associated with the collection
@@ -100,13 +101,13 @@ const ShareCollectionModal = React.createClass ({
 
   addUser: function(user) {
     let users = this.state.collection.users;
-    users.push(_.merge(user, {rank: 'viewer'}))
+    users.push(_.merge(user, {rank: 'viewer', unsaved: true}))
     this.updateUsers(users);
   },
 
   addEmail: function(email) {
     let emails = this.state.collection.emails;
-    emails.push({email: email, rank: 'viewer'})
+    emails.push({email: email, rank: 'viewer', unsaved: true})
     this.updateEmails(emails);
   },
 
@@ -192,47 +193,66 @@ const ShareCollectionModal = React.createClass ({
     )
   },
 
+  unsavedUsers: function() {
+    return _.filter(this.state.collection.users, function(user) {
+      return user.unsaved
+    })
+  },
+
+  unsavedEmails: function() {
+    return _.filter(this.state.collection.emails, function(email) {
+      return email.unsaved
+    })
+  },
+
   renderUsers: function() {
-    if(this.state.collection.users && this.state.collection.users.length > 0) {
+    let unsavedUsers = this.unsavedUsers()
+    if(this.state.collection.users && unsavedUsers.length > 0) {
       return (
         <Results
           type='sharee-users'
           containerClass='sharee'
           onRemove={this.removeUser}
           onUpdate={this.updateUser}
-          data={{data: this.state.collection.users}} />
+          data={{data: unsavedUsers}} />
       )
     }
   },
 
   renderEmails: function() {
-    if(this.state.collection.emails && this.state.collection.emails.length > 0) {
+    let unsavedEmails = this.unsavedEmails()
+    if(this.state.collection.emails && unsavedEmails.length > 0) {
       return (
         <Results
           type='sharee-emails'
           containerClass='sharee'
           onRemove={this.removeEmails}
           onUpdate={this.updateEmail}
-          data={{data: this.state.collection.emails}} />
+          data={{data: unsavedEmails}} />
       )
     }
   },
 
   renderSendEmailsCheckbox: function() {
-    return (
-      <label className='results-list-padding'>
-        <input  type='checkbox' name='emails' onClick={this.setSendEmailInvites}
-                checked={this.state.collection.send_email_invites} />
-￼       Notify users via email
-      </label>
-    )
+    if(this.unsavedEmails().length + this.unsavedUsers().length > 0) {
+      return (
+        <label className='results-list-padding'>
+          <input  type='checkbox' name='emails' onClick={this.setSendEmailInvites}
+                  checked={this.state.collection.send_email_invites} />
+  ￼       Notify users via email
+        </label>
+      )
+    }
   },
 
   renderSubmissionButtons: function() {
     return (
       <div className='buttons'>
+        { this.state.config.cancel ?
+            <button className='btn btn-grey btn-round'
+              onClick={this.props.close}>{this.state.config.cancel}</button> : null }
         <button className='btn btn-red btn-round'
-                onClick={this.submitForm}>Save</button>
+          onClick={this.submitForm}>{this.state.config.confirm || 'Finish'}</button>
       </div>
     )
   },

@@ -29,6 +29,8 @@ const CollectionsCollection = React.createClass ({
   },
 
   renderHeader: function() {
+    if(this.state.data.collections.length == 0) { return }
+
     return (
       <div className='collections-collection-row header'>
         <span className='name'>
@@ -38,7 +40,7 @@ const CollectionsCollection = React.createClass ({
           Owner
         </span>
         <span className='date'>
-          Last Modified
+          Modified
         </span>
       </div>
     )

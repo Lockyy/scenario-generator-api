@@ -134,6 +134,7 @@ const SelectStyles = {
   '-webkit-appearance': 'none',
   '-webkit-border-radius': 0,
   padding: 5,
+  paddingLeft: 25,
   width: '100%',
   display: 'block',
   'font-size': 13,

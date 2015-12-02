@@ -8,11 +8,12 @@ class Api::CollectionsController < AppController
 
   def create
     products = Product.where(id: params[:products])
-    @collection = current_user.collections.create(collection_params.merge(products: products))
+    @collection = current_user.collections.create(collection_params)
+    @collection.update_products(products, current_user)
 
     respond_to do |format|
       format.json do
-        if @collection
+        if @collection.persisted?
           render_success
         else
           render json: {}, status: 400

@@ -4,10 +4,10 @@ import CollectionAPI from '../utils/api/CollectionAPI';
 import FluxNotificationsActions from './FluxNotificationsActions'
 
 class FluxModalActions {
-  setVisibleModal(modal, currentPosition) {
+  setVisibleModal(modal, currentPosition, config) {
     $(window).scrollTop(0);
     $('body').addClass('no-scroll');
-    this.dispatch({modal: modal, height: currentPosition});
+    this.dispatch({modal: modal, height: currentPosition, config: config});
   }
 
   closeModal() {

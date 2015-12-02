@@ -128,15 +128,7 @@ const CreateCollectionModal = React.createClass ({
   },
 
   transitionToShare: function(collection, _this) {
-    FluxAlertActions.showAlert({
-      title: 'Your Collection was successfully created!',
-      message: 'You can privately share this Collection with other users on Fletcher, or make it available to everyone by making it public.',
-      success: 'Share',
-      cancel: 'Not now',
-      successCallback: function() {
-        _this.showShareCollectionModal(collection)
-      }
-    })
+    _this.showShareCollectionModal(collection)
   },
 
   submitForm: function(e) {
@@ -164,14 +156,23 @@ const CreateCollectionModal = React.createClass ({
 
   // Runs validation on text fields.
   // Returns false if there are errors.
-  validation: function() {
+  validation: function(skipDescription) {
     let errorDom = $(this.refs.errors.getDOMNode())
-    let titleDOM = $(this.refs.collection_title.getDOMNode())
+    let titleDOM = $(this.refs.collection_name.getDOMNode())
     let descriptionDOM = $(this.refs.collection_description.getDOMNode())
-    let errors = titleDOM.val() == '' || descriptionDOM.val() == ''
+    let errors;
+    if(skipDescription) {
+      errors = titleDOM.val() == ''
+    } else {
+      errors = titleDOM.val() == '' || descriptionDOM.val() == ''
+    }
     errorDom.toggleClass('active', errors)
 
     return !errors
+  },
+
+  skipDescriptionValidation: function(e) {
+    return $(e.target).prop("tagName") == 'INPUT' && $(e.relatedTarget).prop("tagName") == 'TEXTAREA'
   },
 
   renderTextFields: function() {
@@ -182,7 +183,7 @@ const CreateCollectionModal = React.createClass ({
 
     let onBlur = function(e) {
       $(React.findDOMNode(_this.refs.fields_container)).removeClass('focus')
-      _this.validation()
+      _this.validation(_this.skipDescriptionValidation(e))
     }
 
     return (
@@ -207,7 +208,7 @@ const CreateCollectionModal = React.createClass ({
                   onChange={(e) => this.onChangeField('name', e)} />
           <textarea type='text'
                     className='form-control'
-                    placeholder='Say something *'
+                    placeholder='Describe your collection *'
                     name='collection[description]'
                     rows='10'
                     ref='collection_description'
@@ -227,7 +228,7 @@ const CreateCollectionModal = React.createClass ({
                     helpMessage={'Add Product'}
                     hideLabel={true}
                     onSetProduct={this.addProduct}
-                    placeholder={'Search products and add them'}
+                    placeholder={'Add products to your collection'}
                     noEmptySubmit={true} />
     )
   },
@@ -242,15 +243,17 @@ const CreateCollectionModal = React.createClass ({
   },
 
   formCompleted: function() {
-    return (this.validation() && this.state.data.collection.products.length > 0)
+    return (this.validation(false))
   },
 
   renderSubmissionButtons: function() {
     return (
       <div className='buttons'>
-        <button className='btn btn-red btn-round'
+        <button className='btn btn-red-inverted btn-round'
                 onClick={this.submitForm}
                 data-privacy='hidden'>Create Collection</button>
+        <button className='btn btn-grey btn-round'
+                onClick={this.props.close}>Cancel</button>
       </div>
     )
   },
@@ -276,7 +279,7 @@ const CreateCollectionModal = React.createClass ({
     return (
       <div className='header'>
         <span className='title'>
-          Create Collection
+          Create a new Collection
         </span>
         <span onClick={this.props.close} className='close'>x</span>
       </div>

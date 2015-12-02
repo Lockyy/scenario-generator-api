@@ -15,6 +15,9 @@ class ModalStore {
   handleSetVisibleModal(data) {
     this.previousModal = this.visibleModal;
     this.visibleModal = data.modal;
+    if(data.config) {
+      this.config = data.config
+    }
     this.previousHeight = data.height;
   }
 
@@ -23,11 +26,14 @@ class ModalStore {
     this.previousModal = null;
     document.body.scrollTop = this.previousHeight;
     this.previousHeight = null;
+    this.config = {}
   }
 
   resetData() {
     this.visibleModal = null;
     this.previousModal = null;
+    this.previousHeight = null;
+    this.config = {}
     this.error = null;
   }
 }

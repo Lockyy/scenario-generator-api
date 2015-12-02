@@ -101,12 +101,12 @@ const AddToCollectionModal = React.createClass ({
   },
 
   addToCollection: function(e, collection) {
+    if($(e.target).hasClass('btn-tick')) { return }
     let _this = this
     let product = this.state.product;
     // Set the button to ticked
     $(e.target).addClass('btn-tick')
-    // Remove onClick event
-    $(e.target).prop('onclick',null).off('click')
+    $(e.target).parent().addClass('added')
 
     let sendNotification = function() {
       FluxNotificationsActions.showNotification({
@@ -198,7 +198,7 @@ const AddToCollectionModal = React.createClass ({
     if(this.productInCollection(collection)) {
       return <div className='already-in-collection'>The product you are trying to add is already a part of this collection</div>
     } else {
-      return <div className='btn btn-round btn-red-inverted btn-add' onClick={(e) => this.addToCollection(e, collection)}>Add</div>
+      return <div className='btn btn-round btn-red-inverted btn-add btn-small' onClick={(e) => this.addToCollection(e, collection)}>Add</div>
     }
   },
 
@@ -214,7 +214,7 @@ const AddToCollectionModal = React.createClass ({
           </div>
         </div>
         <div className='right-buttons'>
-          <div className='btn btn-round btn-blue-inverted btn-view' onClick={() => this.previewCollection(collection)} />
+          <div className='btn btn-round btn-blue-inverted btn-view btn-small' onClick={() => this.previewCollection(collection)} />
           {this.renderAddButton(collection)}
         </div>
       </div>
