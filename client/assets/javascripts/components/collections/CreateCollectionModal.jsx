@@ -258,7 +258,7 @@ const CreateCollectionModal = React.createClass ({
         <span className='title'>
           Create Collection
         </span>
-        <span onClick={this.props.close} className='close'>x</span>
+        <span onClick={this.props.close} className='close'></span>
       </div>
     )
   },

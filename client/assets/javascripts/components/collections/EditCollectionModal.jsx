@@ -264,7 +264,7 @@ const EditCollectionModal = React.createClass ({
             Shared with {this.state.collection.users.length} user(s).
           </span>
         </div>
-        <span onClick={this.props.close} className='close'>x</span>
+        <span onClick={this.props.close} className='close'></span>
       </div>
     )
   },
