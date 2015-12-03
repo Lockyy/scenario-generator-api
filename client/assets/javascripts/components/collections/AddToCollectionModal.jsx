@@ -16,20 +16,6 @@ import { CreateCollectionMixin } from './CreateCollectionModal'
 import { ViewCollectionMixin } from './ViewCollectionModal'
 
 const AddToCollectionMixin = {
-  productInCollection: function (collection) {
-    if (collection.products.length == 0) {
-      return false;
-    }
-    let collectionProductIDs = _.map(collection.products, function (product) {
-      return product.id
-    });
-    let productID = this.state.product.id;
-    return _.indexOf(collectionProductIDs, productID) > -1
-  },
-
-  onChangeProduct: function (data) {
-    this.setState({product: data.data});
-  },
 
   renderAddToCollectionModal: function (product) {
     return (
@@ -53,7 +39,7 @@ const AddToCollectionMixin = {
 
 const AddToCollectionModal = React.createClass ({
   displayName: 'AddToCollectionModal',
-  mixins: [ViewCollectionMixin, AddToCollectionMixin, CreateCollectionMixin],
+  mixins: [ViewCollectionMixin, CreateCollectionMixin],
 
   getInitialState: function () {
     return {
@@ -78,6 +64,9 @@ const AddToCollectionModal = React.createClass ({
       searchedCollections: data.data.searchedCollections,
       searchTerm: data.data.searchTerm
     });
+  },
+  onChangeProduct: function (data) {
+    this.setState({product: data.data});
   },
   onChangeModal: function (data) {
     let visible = data.visibleModal == this.constructor.displayName;
@@ -109,6 +98,17 @@ const AddToCollectionModal = React.createClass ({
 
   previewCollection: function (collection) {
     this.showViewCollectionModal(collection, this.addToCollection)
+  },
+
+  productInCollection: function (collection) {
+    if (collection.products.length == 0) {
+      return false;
+    }
+    let collectionProductIDs = _.map(collection.products, function (product) {
+      return product.id
+    });
+    let productID = this.state.product.id;
+    return _.indexOf(collectionProductIDs, productID) > -1
   },
 
   addToCollection: function (e, collection) {
