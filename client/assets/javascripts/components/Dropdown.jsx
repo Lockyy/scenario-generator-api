@@ -133,11 +133,11 @@ const SelectStyles = {
   border: '1px solid #f6f6f6',
   '-webkit-appearance': 'none',
   '-webkit-border-radius': 0,
-  paddingLeft: 25,
   width: '100%',
   display: 'block',
   'font-size': 13,
-  padding: '5px 15px'
+  padding: '5px 15px',
+  paddingLeft: 25,
 }
 
 export default Dropdown;
