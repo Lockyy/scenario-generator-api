@@ -34,6 +34,10 @@ class User < ActiveRecord::Base
     with_oauth(provider, uid).first
   end
 
+  def visible_collections(user)
+    self.collections.visible(user) + self.shared_collections.visible(user)
+  end
+
   def update_oauth!(provider, uid, login_hash)
     oauth = user_oauths.where(provider: provider, uid: uid).first_or_initialize
     oauth.last_login_hash = login_hash || {}

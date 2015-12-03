@@ -28,6 +28,11 @@ const UserProfilePage  = React.createClass({
     }
   },
 
+  componentWillReceiveProps(newProps) {
+    FluxUserActions.fetchData(newProps.params.userId);
+    FluxUserActions.fetchRecentActivity(newProps.params.userId);
+  },
+
   componentDidMount() {
     UserStore.listen(this.onChange);
     FluxUserActions.fetchData(this.context.router.state.params.userId);
