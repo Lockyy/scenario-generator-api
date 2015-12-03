@@ -47,22 +47,27 @@ const CollectionPageMobile = React.createClass({
   },
 
   getSearchString: function() {
-    let params = this.props.params || {};
-    return _.isUndefined(params.search_string) ? '' : params.search_string;
+    if(this.context.router.state.location.query) {
+      return this.context.router.state.location.query.search_string || ''
+    }
+    return ''
+  },
+
+  getPage: function() {
+    if(this.context.router.state.location.query) {
+      return this.context.router.state.location.query.page || 1
+    }
+    return 1
   },
 
   changePageAndSearch: function(params) {
-    let search_string = _.isUndefined(params.search_string) ? this.getSearchString() : params.search_string;
-    let page = params.page || 1;
+    let search_string = params.search_string || this.getSearchString();
+    let page = params.page || this.getpage();
 
-    let query = this.context.router.state.location.query;
-    this.performSearch(this.getSearchParams({ search_string: search_string, page: page}));
+    let query = this.getSearchParams({ search_string: search_string, page: page});
+    this.performSearch(query);
 
-    if (search_string && search_string.length > 0 && page) {
-      this.transitionTo(`/app/directory/collections/${search_string}/${page}`, query);
-    } else {
-      this.transitionTo(`/app/directory/collections`, query);
-    }
+    this.transitionTo(`/app/directory/collections`, query);
   },
 
   onChangePage: function(page) {
@@ -80,14 +85,9 @@ const CollectionPageMobile = React.createClass({
 
     let _data = {
       search_string: data.search_string,
-      page: data.page,
-      filter_by: data.filter_by,
-      filtered_tags: data.filtered_tags,
-      section: data.section,
-      sorting: data.sorting,
-      match_mode: data.match_mode
+      page: data.page
     };
-    return _.merge(_data, this.context.router.state.location.query);
+    return _.merge(this.context.router.state.location.query, _data);
   },
 
   renderCollectionResults: function() {
@@ -97,7 +97,7 @@ const CollectionPageMobile = React.createClass({
           type='collections'
           data={this.props.data.collections}
           bottom='pagination'
-          currentPage={this.props.params.page}
+          currentPage={this.getPage()}
           topLeft='type'
           topRight='dropdown'
           dropdownOptions={{

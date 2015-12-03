@@ -41,10 +41,6 @@ const CollectionsPage = React.createClass({
     FluxSearchPageActions.getSearchResults(data);
   },
 
-  componentWillReceiveProps: function(newProps) {
-    this.performSearch(this.getSearchParams(newProps.params));
-  },
-
   componentDidMount: function() {
     SearchPageStore.listen(this.onChange.bind(this));
     this.performSearch(this.getSearchParams(this.props.params));
