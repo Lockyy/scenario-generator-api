@@ -100,7 +100,7 @@ const Results = React.createClass ({
               </a>
             </div>
             <div className='company'>
-              <a href={`/app/company/${result.company.id}`}>
+              <a href={`/app/companies/${result.company.id}`}>
                 { result.company.name }
               </a>
             </div>
