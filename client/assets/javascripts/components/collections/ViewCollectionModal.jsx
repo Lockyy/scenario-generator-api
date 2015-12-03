@@ -4,6 +4,8 @@ import { Link, Navigation } from 'react-router';
 import Modal from 'react-modal';
 import CollectionStore from '../../stores/CollectionStore';
 import ModalStore from '../../stores/ModalStore';
+import ProductStore from '../../stores/ProductStore';
+import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
 import FluxModalActions from '../../actions/FluxModalActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
@@ -19,7 +21,7 @@ const ViewCollectionMixin = {
   },
 
   closeViewCollectionModal: function() {
-    FluxModalActions.closeModal()
+    FluxModalActions.closeModal();
     FluxCollectionActions.clearCollection();
   },
 
@@ -34,6 +36,8 @@ const ViewCollectionMixin = {
     }
   }
 };
+
+//TODO: refactor to use the methods on the mixin: AddToCollectionMixinXXX
 
 const ViewCollectionModal = React.createClass ({
   displayName: 'ViewCollectionModal',
@@ -63,6 +67,10 @@ const ViewCollectionModal = React.createClass ({
   componentDidMount: function() {
     CollectionStore.listen(this.onChangeCollection);
     ModalStore.listen(this.onChangeModal);
+    ProductStore.listen(this.onChangeProduct);
+  },
+  onChangeProduct: function (data) {
+    this.setState({product: data.data});
   },
   onChangeCollection: function(data) {
     this.setState({collection: data.data.collection});
@@ -72,11 +80,47 @@ const ViewCollectionModal = React.createClass ({
     this.setState({ visible: visible });
   },
 
+  addToCollection: function(e, collection) {
+    let product = this.state.product;
+    let sendNotification = function() {
+      FluxNotificationsActions.showNotification({
+        type: 'saved',
+        text: `${product.name} added to ${collection.name}`,
+        subject: {
+          id: collection.id,
+          type: 'Collection',
+          name: collection.name
+        }
+      })
+    };
+
+    if(product.id && collection.id) {
+      FluxCollectionActions.addProductToCollection(product.id, collection.id, sendNotification)
+    }
+  },
+
+  productInCollection: function (collection) {
+    if (collection.products.length == 0) {
+      return false;
+    }
+    let collectionProductIDs = _.map(collection.products, function (product) {
+      return product.id
+    });
+    let productID = this.state.product.id;
+    return _.indexOf(collectionProductIDs, productID) > -1
+  },
+
   renderButtons: function() {
-    let backButton = <button className='btn btn-grey btn-round' onClick={this.props.close}>Back</button>
+    let backButton = <button className='btn btn-grey btn-round' onClick={this.props.close}>Back</button>;
+    let addButton = "";
+    let collection = this.state.collection
+    if (!this.productInCollection(collection)) {
+      addButton = <button className='btn btn-red-inverted btn-round' onClick={(e) => this.addToCollection(e, collection)}>Add</button>;
+    }
       return (
         <div className='buttons'>
           {backButton}
+        {addButton}
         </div>
       )
   },
@@ -114,7 +158,8 @@ const ViewCollectionModal = React.createClass ({
 
         <div className='collection-details'>
           <div className='author-and-date'>
-            Created by <a className='author' href={userProfileUrl}>{this.state.collection.user.name}</a>, {this.state.collection.display_date}
+            Created by <a className='author'
+                          href={userProfileUrl}>{this.state.collection.user.name}</a>, {this.state.collection.display_date}
           </div>
           { this.renderSharees() }
           <div className='collection-description'>
