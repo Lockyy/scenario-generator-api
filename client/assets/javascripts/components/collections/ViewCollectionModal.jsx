@@ -25,12 +25,13 @@ const ViewCollectionMixin = {
     FluxCollectionActions.clearCollection();
   },
 
-  showViewCollectionModal: function(collection) {
+  showViewCollectionModal: function(collection, addProductToCollection) {
     if(!collection.products) {
       FluxCollectionActions.fetchCollection(collection.id, function() {
         FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop);
       })
     } else {
+      if(addProductToCollection){collection.addProduct = addProductToCollection;}
       FluxCollectionActions.fetchedCollection(collection);
       FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop);
     }
@@ -80,25 +81,6 @@ const ViewCollectionModal = React.createClass ({
     this.setState({ visible: visible });
   },
 
-  addToCollection: function(e, collection) {
-    let product = this.state.product;
-    let sendNotification = function() {
-      FluxNotificationsActions.showNotification({
-        type: 'saved',
-        text: `${product.name} added to ${collection.name}`,
-        subject: {
-          id: collection.id,
-          type: 'Collection',
-          name: collection.name
-        }
-      })
-    };
-
-    if(product.id && collection.id) {
-      FluxCollectionActions.addProductToCollection(product.id, collection.id, sendNotification)
-    }
-  },
-
   productInCollection: function (collection) {
     if (collection.products.length == 0) {
       return false;
@@ -114,8 +96,8 @@ const ViewCollectionModal = React.createClass ({
     let backButton = <button className='btn btn-grey btn-round' onClick={this.props.close}>Back</button>;
     let addButton = "";
     let collection = this.state.collection
-    if (!this.productInCollection(collection)) {
-      addButton = <button className='btn btn-red-inverted btn-round' onClick={(e) => this.addToCollection(e, collection)}>Add</button>;
+    if (!this.productInCollection(collection) && collection.addProduct) {
+      addButton = <button className='btn btn-red-inverted btn-round' onClick={(e) => collection.addProduct(e, collection)}>Add</button>;
     }
       return (
         <div className='buttons'>
