@@ -49,7 +49,8 @@ const CollaboratorCollectionModal = React.createClass ({
         users: [],
         emails: [],
         user: {}
-      }
+      },
+      unsaved_collection: {}
     }
   },
 
@@ -60,7 +61,12 @@ const CollaboratorCollectionModal = React.createClass ({
     ModalStore.listen(this.onChangeModal);
   },
   onChangeCollection: function(data) {
-    this.setState({collection: data.data.collection, displayedUsers: data.data.collection.users});
+    let unsavedCollection = jQuery.extend(true, {}, data.data.collection)
+    this.setState({
+      collection: data.data.collection,
+      displayedUsers: unsavedCollection.users,
+      unsaved_collection: unsavedCollection
+    });
   },
   onChangeModal: function(data) {
     let visible = data.visibleModal == this.constructor.displayName;
@@ -69,7 +75,7 @@ const CollaboratorCollectionModal = React.createClass ({
 
   // Gather users currently associated with the collection
   gatherUsers: function() {
-    return _.map(this.state.collection.users, function(user) {
+    return _.map(this.state.unsaved_collection.users, function(user) {
       return {
         id: user.id,
         rank: user.rank
@@ -79,7 +85,7 @@ const CollaboratorCollectionModal = React.createClass ({
 
   // Gather the emails currently having this collection shared with them
   gatherEmails: function() {
-    return _.map(this.state.collection.emails, function(email) {
+    return _.map(this.state.unsaved_collection.emails, function(email) {
       return {
         email: email.email,
         rank: email.rank
@@ -88,13 +94,14 @@ const CollaboratorCollectionModal = React.createClass ({
   },
 
   updateUsers: function(users) {
-    let collection = this.state.collection
+    let collection = this.state.unsaved_collection
     collection.users = users
-    this.setState({ collection: collection })
+    this.setState({ unsaved_collection: collection })
+    this.filterCollaborators($(this.refs.filterInput.getDOMNode()).val())
   },
 
   updateUser: function(id, rank) {
-    let users = this.state.collection.users;
+    let users = this.state.unsaved_collection.users;
     let index = _.findIndex(users, function(user) { return user.id == id })
     if(index > -1) {
       users[index] = _.merge(users[index], {rank: rank})
@@ -103,16 +110,15 @@ const CollaboratorCollectionModal = React.createClass ({
   },
 
   removeUser: function(user_id) {
-    let updatedUsers = this.state.collection.users.filter(function(user) {
+    let updatedUsers = this.state.unsaved_collection.users.filter(function(user) {
       return user.id !== user_id;
     });
 
     this.updateUsers(updatedUsers);
   },
 
-  filterCollaborators: function(e) {
-    let val = $(e.target).val()
-    let displayedUsers = _.filter(this.state.collection.users, function(user) {
+  filterCollaborators: function(val) {
+    let displayedUsers = _.filter(this.state.unsaved_collection.users, function(user) {
       if(_.indexOf(['owner', 'co-owner', 'coowner', 'is co-owner', 'is coowner'], val.toLowerCase()) > -1) {
         if(user.rank == 'owner') { return true }
       }
@@ -135,7 +141,7 @@ const CollaboratorCollectionModal = React.createClass ({
     let _this = this
     let id    = this.state.collection.id
     let name  = this.state.collection.name
-    let total = this.state.collection.users.length + this.state.collection.emails.length
+    let total = this.state.unsaved_collection.users.length + this.state.unsaved_collection.emails.length
 
     let data = {
       users: this.gatherUsers(),
@@ -145,15 +151,15 @@ const CollaboratorCollectionModal = React.createClass ({
     }
 
     FluxCollectionActions.shareCollection(id, data, function() {
-      _this.props.close()
+      _this.close()
 
       FluxNotificationsActions.showNotification({
         type: 'shared',
+        text: 'Your changes were saved successfully',
         subject: {
           id: id,
           type: 'Collection',
           name: name,
-          text: `Collection shared with ${total} users`
         }
       })
     })
@@ -164,8 +170,9 @@ const CollaboratorCollectionModal = React.createClass ({
       <div className='twitter-typeahead filtering'>
         <input
           className='form-control tt-input'
+          ref='filterInput'
           placeholder='Search Collaborators'
-          onChange={this.filterCollaborators} />
+          onChange={(e) => this.filterCollaborators($(e.target).val())} />
       </div>
     )
   },
@@ -193,7 +200,7 @@ const CollaboratorCollectionModal = React.createClass ({
   },
 
   renderUsers: function() {
-    if(this.state.collection.users && this.state.collection.users.length > 0) {
+    if(this.state.unsaved_collection.users && this.state.unsaved_collection.users.length > 0) {
       return (
         <Results
           type='sharee-users'
@@ -211,7 +218,7 @@ const CollaboratorCollectionModal = React.createClass ({
         <button className='btn btn-red-inverted btn-round'
                 onClick={this.submitForm}>Save</button>
         <button className='btn btn-grey btn-round'
-                onClick={this.props.close}>Cancel</button>
+                onClick={this.close}>Cancel</button>
       </div>
     )
   },
@@ -236,22 +243,28 @@ const CollaboratorCollectionModal = React.createClass ({
 
   renderheader: function() {
     return (
-      <div className='header collection'>
+      <div className='header share'>
         <span className='title'>
           Manage collaborators access
         </span>
-        <a onClick={this.props.close} className='close'></a>
+        <a onClick={this.close} className='close'></a>
       </div>
     )
+  },
+
+  close: function(e) {
+    if(e) { e.preventDefault() }
+    this.setState({unsaved_collection: this.state.collection})
+    this.props.close()
   },
 
   render: function() {
     return (
       <Modal
         isOpen={this.state.visible}
-        onRequestClose={this.props.close}
+        onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
+        <div className='back-button' onClick={this.close}>{"< Close"}</div>
         {this.renderheader()}
         {this.renderShareForm()}
       </Modal>
