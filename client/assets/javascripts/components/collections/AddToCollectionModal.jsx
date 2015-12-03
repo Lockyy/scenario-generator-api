@@ -198,11 +198,12 @@ const AddToCollectionModal = React.createClass ({
     if(this.productInCollection(collection)) {
       return <div className='already-in-collection'>Product already added to Collection</div>
     } else {
-      return <div className='btn btn-round btn-red-inverted btn-add btn-small' onClick={(e) => this.addToCollection(e, collection)}>Add</div>
+      return <div className='btn btn-round btn-red-inverted btn-add btn-list-small btn-text-normal' onClick={(e) => this.addToCollection(e, collection)}>Add</div>
     }
   },
 
   renderCollectionListItem: function(collection) {
+    let userProfileUrl = "/app/users/" + collection.user.id;
     return (
       <div className='collection'>
         <div className='collection-details'>
@@ -212,12 +213,12 @@ const AddToCollectionModal = React.createClass ({
               {collection.name}
             </div>
             <div className='collection-details'>
-              Created by <span className='author'>"{collection.user.name}"</span>, {collection.display_date}
+              Created by <a className='author' href={userProfileUrl}>{collection.user.name}</a>, {collection.display_date}
             </div>
           </span>
         </div>
         <div className='right-buttons'>
-          <div className='btn btn-round btn-blue-inverted btn-view btn-small' onClick={() => this.previewCollection(collection)} />
+          <div className='btn btn-round btn-blue-inverted btn-view btn-list-small' onClick={() => this.previewCollection(collection)} />
           {this.renderAddButton(collection)}
         </div>
       </div>
@@ -249,7 +250,7 @@ const AddToCollectionModal = React.createClass ({
           <span className='title'>
             Add product to an existing collection
           </span>
-          <span onClick={this.close} className='close'></span>
+          <a href="#" onClick={this.close} className='close'></a>
         </div>
         {this.renderAddToCollectionForm()}
       </Modal>
