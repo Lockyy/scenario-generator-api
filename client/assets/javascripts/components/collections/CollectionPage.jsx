@@ -112,7 +112,7 @@ const CollectionPage = React.createClass({
   },
 
   shareCollection: function() {
-    this.showShareCollectionModal(this.state.data.collection, {confirm: 'Save', cancel: 'Cancel'})
+    this.showShareCollectionModal(this.state.data.collection, {confirm: 'Save', cancel: 'Cancel', hideRadios: true})
   },
 
   manageCollaborators: function() {

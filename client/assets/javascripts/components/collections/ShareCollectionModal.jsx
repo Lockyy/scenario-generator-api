@@ -289,21 +289,23 @@ const ShareCollectionModal = React.createClass ({
   },
 
   renderPrivacyToggle: function() {
-    return (
-      <div className='privacy-radios'>
-        Who can view this collection?
-        <label>
-          <input  type='radio' name='privacy' value='hidden' onClick={this.setPrivacy}
-                  checked={this.state.collection.privacy == 'hidden'} />
-￼         Just me and people I specify below (Private)
-        </label>
-        <label>
-          <input  type='radio' name='privacy' value='visible' onClick={this.setPrivacy}
-                  checked={this.state.collection.privacy == 'visible'} />
-￼         Everyone in Fletcher (Public). You can still add collaborators.
-        </label>
-      </div>
-    )
+    if(!this.state.config.hideRadios) {
+      return (
+        <div className='privacy-radios'>
+          Who can view this collection?
+          <label>
+            <input  type='radio' name='privacy' value='hidden' onClick={this.setPrivacy}
+                    checked={this.state.collection.privacy == 'hidden'} />
+  ￼         Just me and people I specify below (Private)
+          </label>
+          <label>
+            <input  type='radio' name='privacy' value='visible' onClick={this.setPrivacy}
+                    checked={this.state.collection.privacy == 'visible'} />
+  ￼         Everyone in Fletcher (Public). You can still add collaborators.
+          </label>
+        </div>
+      )
+    }
   },
 
   renderShareForm: function() {
@@ -334,7 +336,7 @@ const ShareCollectionModal = React.createClass ({
 
   renderheader: function() {
     return (
-      <div className='header collection'>
+      <div className='header share'>
         <span className='title'>
           Privacy & Sharing
         </span>
