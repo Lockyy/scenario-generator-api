@@ -177,7 +177,7 @@ const EditCollectionModal = React.createClass ({
       <div>
         <div className='field-messages'>
           <div className='errors' ref='errors'>
-            Please complete this field
+            Please enter a title and description
           </div>
         </div>
         <div className='form-group attached-fields' ref='fields_container'>
