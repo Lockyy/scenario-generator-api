@@ -42,9 +42,12 @@ const SearchBox = React.createClass ({
   onChange: function(data) {
     this.setState(data);
     let resultsHolder = $(React.findDOMNode(this.refs.resultsHolder));
+    let navbar = $('.navbar');
+    navbar.css('position', 'relative');
     resultsHolder.show();
     resultsHolder.on('clickoutside', function(){
       $(this).hide()
+      navbar.css('position', 'fixed');
     });
   },
 
@@ -94,14 +97,6 @@ const SearchBox = React.createClass ({
             topClass='table-header full-width'
             containerClass={'header'}
             searchTerm={this.state.data.search_string} />
-          <Results
-            type='collections'
-            data={this.state.data.collections}
-            topLeft='type'
-            topRight='link'
-            topClass='table-header full-width'
-            containerClass={'header'}
-            searchTerm={this.state.data.search_string} />
           <TagResults
             data={this.state.data.tags}
             containerClass={'header'}
@@ -111,6 +106,14 @@ const SearchBox = React.createClass ({
             hide={this.state.data.tags.total <= 0}
             searchTerm={this.state.data.search_string}
             onClick={this.onTagClick} />
+          <Results
+            type='collections'
+            data={this.state.data.collections}
+            topLeft='type'
+            topRight='link'
+            topClass='table-header full-width'
+            containerClass={'header'}
+            searchTerm={this.state.data.search_string} />
         </div>
       )
     }

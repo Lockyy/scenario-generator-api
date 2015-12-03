@@ -1,4 +1,8 @@
 @import 'variables'
+=tag-og-inverted
+  color: white
+  background-color: $orange
+  border-color: white
 
 .tags-manager
   padding: 20px
@@ -13,6 +17,8 @@
     cursor: pointer
     border-radius: 0px
     padding: 5px 15px
+    &:hover
+      +tag-og-inverted
     span::after
       display: inline-block
       margin-left: 10px
