@@ -1,5 +1,9 @@
 @import "variables"
-
+=tag-og-inverted
+  color: white
+  background-color: $orange
+  border-color: white
+       
 .tag-holder
   .tags
     .tag
@@ -7,16 +11,14 @@
       color: $orange
       border: 1px solid $orange
       padding: 3px 5px
-      margin: 2px
+      margin: 5px 10px 5px 10px
       border-radius: 2px
       cursor: pointer
-
-
+      &:hover
+        +tag-og-inverted
     &.white
       .tag
-        color: white
-        border-color: white
-        background-color: $orange
+        +tag-og-inverted
 
   .product-name
     font-weight: bold
