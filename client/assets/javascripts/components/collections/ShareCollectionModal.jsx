@@ -271,21 +271,26 @@ const ShareCollectionModal = React.createClass ({
 
   setPrivacy: function(e) {
     let newValue = $(e.target).val()
-    let message, button;
+    let message, button, title;
     let _this = this;
 
-    if(newValue == 'visible') {
-      message = 'Are you sure you want to make this collection public? All Fletcher users will be able to view it.'
-    } else {
+    if(newValue == 'hidden') {
+      title = 'Make this collection private?'
       message = 'Are you sure you want to make this collection private? Only Fletcher users you share it with will be able to see it.'
+      button = 'Make Private'
+    } else {
+      title = 'Make this collection public?'
+      message = 'Are you sure you want to make this collection public? All Fletcher users will be able to view it.'
+      button = 'Make Public'
     }
 
     FluxAlertActions.showAlert({
-      title: 'Make this collection public?',
+      title: title,
       blue: true,
-      success: 'Continue',
+      success: button,
       cancel: 'Cancel',
       message: message,
+      showClose: true,
       successCallback: function() {
         let updatedCollection = _.merge(_this.state.unsaved_collection, {privacy: newValue})
         _this.setState({unsaved_collection: updatedCollection})
