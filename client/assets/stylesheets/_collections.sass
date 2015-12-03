@@ -28,11 +28,20 @@
     @include make-row
     padding: 15px 0px
     border-bottom: 1px solid $grey
+    span.name:first-child
+      &::before
+        content: url('icons/icon-collections-red.svg')
+        position: relative
+        top: 6px
+        left: -8px
+        
     &.header
       color: $dark-grey
       font-size: 13px
       background: $light-grey
       padding: 10px 0px
+      span.name::before
+        content: ""
     .name
       @include make-xs-column(8)
       @include make-sm-column(6)

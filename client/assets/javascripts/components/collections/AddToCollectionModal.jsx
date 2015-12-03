@@ -249,7 +249,7 @@ const AddToCollectionModal = React.createClass ({
           <span className='title'>
             Add product to an existing collection
           </span>
-          <span onClick={this.close} className='close'>x</span>
+          <span onClick={this.close} className='close'></span>
         </div>
         {this.renderAddToCollectionForm()}
       </Modal>

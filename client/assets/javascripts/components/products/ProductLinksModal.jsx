@@ -83,7 +83,7 @@ const ProductLinksModal = React.createClass ({
           <span className='title'>
             Links Added
           </span>
-          <span onClick={this.props.close} className='close'>x</span>
+          <span onClick={this.props.close} className='close'></span>
         </div>
         {_.isEmpty(this.getProductData('links')) ? (<span className='message'>No links have been added</span>) :
               <ul className="links">{this.getLinks()}</ul>}

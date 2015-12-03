@@ -240,7 +240,7 @@ const CollaboratorCollectionModal = React.createClass ({
         <span className='title'>
           Manage collaborators access
         </span>
-        <span onClick={this.props.close} className='close'>x</span>
+        <span onClick={this.props.close} className='close'></span>
       </div>
     )
   },

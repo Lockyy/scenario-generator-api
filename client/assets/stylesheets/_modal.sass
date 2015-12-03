@@ -2,6 +2,11 @@
 
 $modal-padding: 25px
 
+=before-title
+  width: 25px
+  height: 25px
+  margin-right: 10px
+
 .app
   .ReactModal__Overlay
     z-index: 999999
@@ -29,20 +34,19 @@ $modal-padding: 25px
       .header
         &.collections
           .title::before
+            +before-title
             background-image: url('icons/icon-collections-red.svg')
         &.share
           .title::before
+            +before-title
             background-image: url('icons/icon-share.svg')
         .title::before
-          content: '.'
+          content: ''
           color: transparent
-          width: 25px
-          height: 25px
           background-repeat: no-repeat
           background-position: center
           background-size: contain
           display: inline-block
-          margin-right: 10px
       .results-list-padding
         padding: 10px 0px
         border-top: 1px solid $grey
@@ -218,14 +222,13 @@ $modal-padding: 25px
           .owner-rank-title
             width: 144px
       .results:not(.sharee)
-        max-height: 190px
+        max-height: 26rem
         overflow-y: auto
         overflow-x: hidden
         .review
           display: flex
           align-items: center
       .scrollable
-        max-height: 190px
         overflow-y: auto
         overflow-x: hidden
       .buttons
@@ -243,10 +246,17 @@ $modal-padding: 25px
         padding-bottom: 5px
         border-bottom: 2px solid $primary-red
         .title
-          font-size: 20px
+          font-size: 24px
+          font-style: italic
+          margin-bottom: 6px
         .close
-          font-size: 20px
           position: relative
+          background-image: url("icons/icon-modal-close.svg")
+          background-repeat: no-repeat
+          background-position: center
+          opacity: 1
+          width: 25px
+          height: 25px
       .back-button
         display: none
       .copy-link
@@ -349,5 +359,7 @@ $modal-padding: 25px
 
 .alertButtons
   display: flex
-  justify-content: space-around
+  justify-content: center
   margin-top: 15px
+  button
+    margin: 0 3em 0 3em

@@ -80,7 +80,7 @@ const ShareProductModal = React.createClass ({
           <span className='title'>
             Share this product with other users
           </span>
-          <span onClick={this.props.close} className='close'>x</span>
+          <span onClick={this.props.close} className='close'></span>
         </div>
         <div className="input-group">
           <input  type="text"

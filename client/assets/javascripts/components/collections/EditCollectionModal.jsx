@@ -273,7 +273,7 @@ const EditCollectionModal = React.createClass ({
         <span className='title'>
           Edit Collection
         </span>
-        <span onClick={this.props.close} className='close'>x</span>
+        <span onClick={this.props.close} className='close'></span>
       </div>
     )
   },
