@@ -16,7 +16,7 @@
     color: white
     &:hover, &:active, &:focus
       color: $primary-red
-      background: white
+      background: transparent
 
   &.btn-red-inverted
     background: transparent
@@ -50,10 +50,10 @@
     color: white
     &:hover, &:active, &:focus
       color: $orange
-      background: white
+      background: transparent
 
   &.btn-orange-inverted
-    background: white
+    background: transparent
     border: 2px solid $orange
     color: $orange
     &:hover, &:active, &:focus
@@ -63,7 +63,7 @@
   &.btn-grey
     color: $font-grey
     border: 2px solid $font-grey
-    background: white
+    background: transparent
     &:hover, &:active, &:focus, &.active
       background: $font-grey
       border-color: $font-grey
@@ -97,6 +97,10 @@
       background-position: center
       background-repeat: no-repeat
       border: 2px solid $primary-red
+
+  &.btn-hover-white
+    &:hover, &:active, &:focus
+      background: white
 
   &.btn-add
     width: 56px
