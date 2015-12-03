@@ -47,7 +47,8 @@ const AddToCollectionModal = React.createClass ({
         name: ''
       },
       collections: [],
-      searchTerm: ''
+      searchTerm: '',
+      addedCollections: [],
     }
   },
 
@@ -76,6 +77,7 @@ const AddToCollectionModal = React.createClass ({
   close: function () {
     FluxCollectionActions.clearCollection();
     FluxCollectionActions.performSearch('');
+    this.setState({addedCollections: []})
     this.props.close()
   },
 
@@ -112,13 +114,7 @@ const AddToCollectionModal = React.createClass ({
   },
 
   addToCollection: function (e, collection) {
-    if ($(e.target).hasClass('btn-tick')) {
-      return
-    }
     let product = this.state.product;
-    // Set the button to ticked
-    $(e.target).addClass('btn-tick');
-    $(e.target).parent().addClass('added');
 
     let sendNotification = function () {
       FluxNotificationsActions.showNotification({
@@ -135,6 +131,9 @@ const AddToCollectionModal = React.createClass ({
     if (product.id && collection.id) {
       FluxCollectionActions.addProductToCollection(product.id, collection.id, sendNotification);
       FluxCollectionActions.performSearch(this.state.searchTerm || '');
+      let addedCollections = this.state.addedCollections
+      addedCollections.push(collection.id)
+      this.setState({addedCollections: addedCollections})
     }
   },
 
@@ -202,8 +201,14 @@ const AddToCollectionModal = React.createClass ({
     )
   },
 
+  collectionTicked: function (collection_id) {
+    return _.indexOf(this.state.addedCollections, collection_id) > -1
+  },
+
   renderAddButton: function (collection) {
-    if (this.productInCollection(collection)) {
+    if(this.collectionTicked(collection.id)) {
+      return <div className='btn btn-round btn-red-inverted btn-add btn-list-small btn-text-normal btn-tick'>Added</div>
+    } else if (this.productInCollection(collection)) {
       return <div className='already-in-collection'>Product already added to Collection</div>
     } else {
       return <div className='btn btn-round btn-red-inverted btn-add btn-list-small btn-text-normal' onClick={(e) => this.addToCollection(e, collection)}>Add</div>
@@ -226,7 +231,7 @@ const AddToCollectionModal = React.createClass ({
             </div>
           </span>
         </div>
-        <div className='right-buttons'>
+        <div className={`right-buttons ${this.collectionTicked(collection.id) ? 'added' : null}`}>
           <div className='btn btn-round btn-blue-inverted btn-view btn-list-small'
                onClick={() => this.previewCollection(collection)}/>
           {this.renderAddButton(collection)}
