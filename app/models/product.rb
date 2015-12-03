@@ -102,9 +102,10 @@ products.url, company_id, products.views, products.created_at, products.updated_
   end
 
   def cache_scores
-    reviews = self.reviews
-    self.quality_score_cache = reviews.map(&:quality_score).compact.average || 0
-    self.price_score_cache = reviews.map(&:price_score).compact.average || 0
+    average_quality = self.reviews.map(&:quality_score).compact.average
+    average_price = self.reviews.map(&:price_score).compact.average
+    self.quality_score_cache = average_quality.nan? ? 0 : average_quality
+    self.price_score_cache = average_price.nan? ? 0 : average_price
   end
 
   def rating

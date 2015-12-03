@@ -1,4 +1,4 @@
-class AddUserIdToCollectionProducts < ActiveRecord::Migration
+class UpdateData < ActiveRecord::Migration
   def change
     CollectionProduct.all.each do |collection_product|
       unless collection_product.user_id
@@ -6,5 +6,6 @@ class AddUserIdToCollectionProducts < ActiveRecord::Migration
         collection_product.save
       end
     end
+    Product.find_each(&:save)
   end
 end
