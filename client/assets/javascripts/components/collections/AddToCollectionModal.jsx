@@ -16,6 +16,20 @@ import { CreateCollectionMixin } from './CreateCollectionModal'
 import { ViewCollectionMixin } from './ViewCollectionModal'
 
 const AddToCollectionMixin = {
+  productInCollection: function (collection) {
+    if (collection.products.length == 0) {
+      return false;
+    }
+    let collectionProductIDs = _.map(collection.products, function (product) {
+      return product.id
+    });
+    let productID = this.state.product.id;
+    return _.indexOf(collectionProductIDs, productID) > -1
+  },
+
+  onChangeProduct: function (data) {
+    this.setState({product: data.data});
+  },
 
   renderAddToCollectionModal: function(product) {
     return (
@@ -39,7 +53,7 @@ const AddToCollectionMixin = {
 
 const AddToCollectionModal = React.createClass ({
   displayName: 'AddToCollectionModal',
-  mixins: [ CreateCollectionMixin, ViewCollectionMixin ],
+  mixins: [ViewCollectionMixin, AddToCollectionMixin, CreateCollectionMixin],
 
   getInitialState: function() {
     return {
@@ -68,9 +82,6 @@ const AddToCollectionModal = React.createClass ({
   onChangeModal: function(data) {
     let visible = data.visibleModal == this.constructor.displayName;
     this.setState({ visible: visible });
-  },
-  onChangeProduct: function(data) {
-    this.setState({ product: data.data });
   },
 
   close: function() {
@@ -123,12 +134,6 @@ const AddToCollectionModal = React.createClass ({
     if(product.id && collection.id) {
       FluxCollectionActions.addProductToCollection(product.id, collection.id, sendNotification)
     }
-  },
-
-  productInCollection: function(collection) {
-    let collectionProductIDs = _.map(collection.products, function(product){ return product.id })
-    let productID = this.state.product.id
-    return _.indexOf(collectionProductIDs, productID) > -1
   },
 
   renderSearchBox: function() {
