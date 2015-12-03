@@ -37,8 +37,6 @@ const ViewCollectionMixin = {
   }
 };
 
-//TODO: refactor to use the methods on the mixin: AddToCollectionMixinXXX
-
 const ViewCollectionModal = React.createClass ({
   displayName: 'ViewCollectionModal',
   mixins: [
