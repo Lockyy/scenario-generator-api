@@ -56,7 +56,7 @@ class Api::CollectionsController < AppController
   end
 
   def leave
-    collection_user = @collection.collection_products.find_by({sharee: current_user})
+    collection_user = @collection.collection_users.find_by({sharee: current_user})
 
     if collection_user.destroy
       returnJSON = render json: {success: true}
