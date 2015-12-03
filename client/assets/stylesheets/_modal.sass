@@ -40,13 +40,15 @@ $modal-padding: 25px
           .title::before
             +before-title
             background-image: url('icons/icon-share.svg')
-        .title::before
-          content: ''
-          color: transparent
-          background-repeat: no-repeat
-          background-position: center
-          background-size: contain
-          display: inline-block
+        .title
+          display: flex
+          &::before
+            content: ''
+            color: transparent
+            background-repeat: no-repeat
+            background-position: center
+            background-size: contain
+            display: inline-block
       .results-list-padding
         padding: 10px 0px
         border-top: 1px solid $grey
