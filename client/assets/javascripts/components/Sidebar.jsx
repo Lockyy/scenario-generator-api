@@ -7,7 +7,7 @@ import MyRecentActivity from './menu/MyRecentActivity';
 import { Link, Navigation } from 'react-router';
 
 const Sidebar = React.createClass ({
-  mixins: [ Navigation, ViewCollectionMixin ],
+  mixins: [Navigation, ViewCollectionMixin],
   displayName: 'Sidebar',
 
   contextTypes: {
@@ -18,21 +18,21 @@ const Sidebar = React.createClass ({
     router: React.PropTypes.object
   },
 
-  getChildContext: function() {
+  getChildContext: function () {
     return {router: this.props.router};
   },
 
-  getHamburgerMenuDom: function() {
+  getHamburgerMenuDom: function () {
     return $(this.refs.menu.getDOMNode());
   },
 
-  showHamburgerMenu: function() {
+  showHamburgerMenu: function () {
     return this.getHamburgerMenuDom().stop().toggle("slide", {
       direction: 'right'
-    }, 600, function() {
-      return this.getHamburgerMenuDom().on('clickoutside', _.throttle(function(outsideE) {
+    }, 600, function () {
+      return this.getHamburgerMenuDom().on('clickoutside', _.throttle(function (outsideE) {
         if (_.include($(outsideE.target).attr('class'), 'myTagSuggestion') ||
-            _.include($(outsideE.target).data('role'), 'remove')) {
+          _.include($(outsideE.target).data('role'), 'remove')) {
           return;
         }
         return closeHamburgerMenu();
@@ -40,15 +40,15 @@ const Sidebar = React.createClass ({
     }.bind(this));
   },
 
-  closeHamburgerMenu: function() {
+  closeHamburgerMenu: function () {
     return this.getHamburgerMenuDom().stop().toggle("slide", {
       direction: 'right'
-    }, 'slow', function() {
+    }, 'slow', function () {
       return this.getHamburgerMenuDom().off('clickoutside');
     }.bind(this));
   },
 
-  renderTopButtons: function() {
+  renderTopButtons: function () {
     return (
       <ul className='menu-nav'>
         <li className='logout'>
@@ -61,10 +61,10 @@ const Sidebar = React.createClass ({
     )
   },
 
-  renderCurrentUserInfo: function() {
+  renderCurrentUserInfo: function () {
     return (
       <div className='profile-container'>
-        <img src={this.context.currentUser.avatar_url} className='avatar' />
+        <img src={this.context.currentUser.avatar_url} className='avatar'/>
         <Link to="/app/users/current" onClick={this.closeHamburgerMenu}>My Profile</Link>
 
         {
@@ -72,13 +72,13 @@ const Sidebar = React.createClass ({
           <div className='admin-container'>
             <Link to='/admin' className='btn btn-default btn-round'>Admin Area</Link>
           </div>
-          : ''
-        }
+            : ''
+          }
       </div>
     )
   },
 
-  renderTags: function() {
+  renderTags: function () {
     return (
       <div className='my-tags-container'>
         <UserTags showMessage={_.isEmpty(this.context.currentUser.tags)} showTitle={true}
@@ -88,32 +88,26 @@ const Sidebar = React.createClass ({
     )
   },
 
-  renderBookmarks: function() {
+  renderBookmarks: function () {
     return (
       <div className='my-bookmarks-container'>
         <h2>My bookmarks</h2>
         <div className='content'>
-          <UserBookmarks showMessage={false} showTitle={false} sidebar={true} />
+          <UserBookmarks showMessage={false} showTitle={false} sidebar={true}/>
         </div>
       </div>
     )
   },
 
-  renderRecentActivity: function() {
+  renderRecentActivity: function () {
     return (
       <div className='my-recent-activity-container'>
-        <MyRecentActivity small={true} />
+        <MyRecentActivity small={true}/>
       </div>
     )
   },
 
-  showCollection: function(collection) {
-    this.closeHamburgerMenu()
-    this.context.router.transitionTo(`/app/collections/${collection.id}`)
-  },
-
-  renderCollections: function() {
-    let _this = this;
+  renderCollections: function () {
     return (
       <div className='my-collections-container'>
         <h2>
@@ -122,27 +116,29 @@ const Sidebar = React.createClass ({
         {
           _.map(this.context.currentUser.collections.slice(0, 2), function(collection) {
             return (
-              <div className='collection'>
-                <h3 className='title' onClick={() => _this.showCollection(collection)}>
+            <div className='collection'>
+              <h3>
+                <a className='title' href={`/app/collections/${collection.id}`}>
                   { collection.name }
-                </h3>
-                <div className='products'>
-                  Includes: {
-                    _.map(collection.products.slice(0, 2), function(product) {
-                      return <Link to={`/app/products/${product.id}`}>{product.name}</Link>;
-                    })
-                  }
-                </div>
+                </a>
+              </h3>
+              <div className='products'>
+                Includes: {
+                _.map(collection.products.slice(0, 2), function(product) {
+                  return <a href={`/app/products/${product.id}`}>{product.name} </a>;
+                  })
+                }
               </div>
-            )
-          })
-        }
-        <Link to='/app/users/current#collections' className='link-view-all'>View all collections</Link>
+            </div>
+              )
+            })
+          }
+        <Link to='/app/directory/collections' className='link-view-all'>View all collections</Link>
       </div>
     )
   },
 
-  render: function() {
+  render: function () {
     return (
       <div>
         <li className="show-hamburger-menu text-hide"
