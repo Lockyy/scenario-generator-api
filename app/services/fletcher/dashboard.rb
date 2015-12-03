@@ -50,7 +50,7 @@ module Fletcher
 
     def collections
       params = pagination_params(@params[COLLECTIONS_SECTION], DEFAULTS[COLLECTIONS_SECTION])
-      Collection.all.visible(@user).limit(params[:limit]).offset(params[:offset])
+      Collection.all.visible(@user).latest.limit(params[:limit]).offset(params[:offset])
     end
 
     private

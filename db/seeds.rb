@@ -39,7 +39,15 @@ def create_tags(reviews)
 end
 
 def create_collection(user, products, privacy, shares = 0)
-  collection = Collection.create(name: Faker::Company.bs, description: Faker::Company.bs, user: user, products: products, privacy: privacy)
+  created = rand(1.year).seconds.ago
+  collection = Collection.create({name: Faker::Company.bs,
+                                  description: Faker::Company.bs,
+                                  user: user,
+                                  products: products,
+                                  privacy: privacy,
+                                  created_at: created,
+                                  updated_at: created
+                                })
   puts "Creating Collection: #{collection.name}"
   if(privacy == 'hidden')
     share_array = []
