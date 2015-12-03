@@ -133,7 +133,6 @@ const SelectStyles = {
   border: '1px solid #f6f6f6',
   '-webkit-appearance': 'none',
   '-webkit-border-radius': 0,
-  padding: 5,
   paddingLeft: 25,
   width: '100%',
   display: 'block',
