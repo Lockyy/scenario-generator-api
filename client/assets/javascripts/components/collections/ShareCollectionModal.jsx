@@ -291,6 +291,7 @@ const ShareCollectionModal = React.createClass ({
       cancel: 'Cancel',
       message: message,
       showClose: true,
+      headerIconClass: 'collections',
       successCallback: function() {
         let updatedCollection = _.merge(_this.state.unsaved_collection, {privacy: newValue})
         _this.setState({unsaved_collection: updatedCollection})

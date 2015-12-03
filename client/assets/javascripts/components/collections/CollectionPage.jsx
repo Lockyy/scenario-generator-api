@@ -77,6 +77,8 @@ const CollectionPage = React.createClass({
       cancel: 'Cancel',
       message: 'Deleting this collection will delete it for all the users in it. This action can’t be undone. Confirm you action below.',
       checkbox: 'I confirm that I want to delete this collection',
+      headerIconClass: 'collections',
+      showClose: true,
       successCallback: function() {
         FluxCollectionActions.deleteCollection({
           id: _this.props.params.id,
@@ -366,6 +368,7 @@ const CollectionPage = React.createClass({
       cancel: 'Cancel',
       message: message,
       showClose: true,
+      headerIconClass: 'collections',
       successCallback: function() {
         _this.setState({privacy: newValue})
         FluxCollectionActions.updateCollection(_this.state.data.collection.id, {privacy: newValue})

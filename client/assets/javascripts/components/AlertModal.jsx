@@ -124,13 +124,20 @@ const AlertModal = React.createClass({
     }
   },
 
+  getOnRequestCloseFunc: function() {
+    if(this.state.data.showClose) {
+      return this.cancelButton
+    }
+  },
+
   render: function() {
     return (
       <Modal  isOpen={this.state.modalIsOpen}
               style={DefaultModalStyles}
-              overlayClassName={'alert-modal'}>
+              overlayClassName={'alert-modal'}
+              onRequestClose={this.getOnRequestCloseFunc()}>
         {this.state.data.showClose ? <div className='back-button' onClick={this.cancelButton}>{"< Close"}</div> : null}
-        <div className='header'>
+        <div className={`header ${this.state.data.headerIconClass}`}>
           <span className='title'>
             {this.state.data.title}
           </span>
