@@ -118,7 +118,7 @@ const Dropdown = React.createClass({
 
   render: function() {
     return (
-      <div className='dropdown-container'>
+      <div className={`dropdown-container ${this.props.showText ? 'no-arrow' : null}`}>
         { this.props.showText ? (<span className='dropdown-label'>{this.props.text || 'Sort by:'}</span>) : null }
         { this.renderDropdown() }
       </div>

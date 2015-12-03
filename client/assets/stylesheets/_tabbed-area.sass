@@ -12,6 +12,13 @@ $color-blackcharcoal: #3c3c3b
 .tabbed-area
   margin-top: 50px
   border-top: 2px solid $red
+  &.no-border
+    border-top: 0px
+  &.no-margin
+    margin-top: 0px
+  &.no-child-padding
+    .child-tabbed-area
+      padding-top: 0px
   .placeholder-message
     margin-top: 10px
     color: $dark-grey

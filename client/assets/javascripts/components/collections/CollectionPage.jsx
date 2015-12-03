@@ -8,6 +8,7 @@ import FluxNotificationsActions from '../../actions/FluxNotificationsActions';
 import CollectionStore from '../../stores/CollectionStore'
 import Rating from '../Rating'
 import Avatar from '../Avatar'
+import TabbedArea from '../TabbedArea'
 import { EditCollectionMixin } from './EditCollectionModal'
 import { ShareCollectionMixin } from './ShareCollectionModal'
 import { CollaboratorCollectionMixin } from './CollaboratorCollectionModal'
@@ -111,7 +112,7 @@ const CollectionPage = React.createClass({
   },
 
   shareCollection: function() {
-    this.showShareCollectionModal(this.state.data.collection, {confirm: 'Save', cancel: 'Cancel'})
+    this.showShareCollectionModal(this.state.data.collection, {confirm: 'Save', cancel: 'Cancel', hideRadios: true})
   },
 
   manageCollaborators: function() {
@@ -194,7 +195,7 @@ const CollectionPage = React.createClass({
 
   renderProductsTable: function(products) {
     return (
-      <div className='col-xs-8 collection-products-table'>
+      <div className='collection-products-table' tabTitle='Products' ref='products'>
         <div className='row table-header'>
           <div className='col-xs-8'>Product</div>
           <div className='col-xs-3'>Date Added</div>
@@ -215,10 +216,7 @@ const CollectionPage = React.createClass({
 
   renderCollaboratorSidebar: function() {
     return (
-      <div className='col-xs-4'>
-        <div className='table-header'>
-          Collaborators
-        </div>
+      <div tabTitle='Collaborators' ref='collaborators' >
         {this.renderEditButtons()}
         {this.renderOwnerView()}
         {this.renderCollaboratorView()}
@@ -324,9 +322,11 @@ const CollectionPage = React.createClass({
           </div>
         </label>
 
-        {_.map(this.viewers(), function(viewer) {
-          return <Avatar url={viewer.avatar_url} link={`/app/users/${viewer.id}`}/>
-        })}
+        <div>
+          {_.map(this.viewers(), function(viewer) {
+            return <Avatar url={viewer.avatar_url} link={`/app/users/${viewer.id}`}/>
+          })}
+        </div>
 
         <label>
           <input  type='radio' name='privacy' value='visible' onClick={this.setPrivacy}
@@ -373,11 +373,25 @@ const CollectionPage = React.createClass({
     }
   },
 
+  renderFilePathLink: function(name, url) {
+    return <a href={url} className='right-arrow-after grey-color'>{name}</a>
+  },
+
+  getParameterByName: function(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+  },
+
   renderFilePath: function() {
+    let name = this.getParameterByName('name') || this.state.data.collection.user.name
+    let link = this.getParameterByName('link') || `/app/users/${this.state.data.collection.user.id}`
+
     return (
       <div className='vertical-padding red-bottom-border bottom-margin color-dark-grey'>
-        <span className='right-arrow-after grey-color'>{this.firstProductName()}</span>
-        <span className='right-arrow-after grey-color'>Collections</span>
+        {this.renderFilePathLink(name, link)}
+        {this.renderFilePathLink('Collections', link + '#collections')}
         <span className='color-red'>{this.state.data.collection.name}</span>
       </div>
     )
@@ -390,10 +404,11 @@ const CollectionPage = React.createClass({
         <div className='large-text vertical-padding bottom-margin-2'>
           { this.state.data.collection.name }
         </div>
-        <div className='row'>
-          { this.renderCollaboratorSidebar() }
+        <TabbedArea
+          containerClass={'no-border no-margin no-child-padding'}>
           { this.renderProductsTable(this.state.data.collection.products) }
-        </div>
+          { this.renderCollaboratorSidebar() }
+        </TabbedArea>
       </div>
     );
   }
