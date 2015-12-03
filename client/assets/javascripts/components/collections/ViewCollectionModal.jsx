@@ -4,6 +4,8 @@ import { Link, Navigation } from 'react-router';
 import Modal from 'react-modal';
 import CollectionStore from '../../stores/CollectionStore';
 import ModalStore from '../../stores/ModalStore';
+import ProductStore from '../../stores/ProductStore';
+import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
 import FluxModalActions from '../../actions/FluxModalActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
@@ -19,18 +21,18 @@ const ViewCollectionMixin = {
   },
 
   closeViewCollectionModal: function() {
-    FluxModalActions.closeModal()
+    FluxModalActions.closeModal();
     FluxCollectionActions.clearCollection();
   },
 
-  showViewCollectionModal: function(collection) {
+  showViewCollectionModal: function(collection, addProductToCollection) {
     if(!collection.products) {
       FluxCollectionActions.fetchCollection(collection.id, function() {
         FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop);
       })
     } else {
       FluxCollectionActions.fetchedCollection(collection);
-      FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop);
+      FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop, {addProductToCollection: addProductToCollection});
     }
   }
 };
@@ -54,7 +56,8 @@ const ViewCollectionModal = React.createClass ({
         user: {
           id: ''
         }
-      }
+      },
+      config: {}
     }
   },
 
@@ -63,22 +66,44 @@ const ViewCollectionModal = React.createClass ({
   componentDidMount: function() {
     CollectionStore.listen(this.onChangeCollection);
     ModalStore.listen(this.onChangeModal);
+    ProductStore.listen(this.onChangeProduct);
+  },
+  onChangeProduct: function (data) {
+    this.setState({product: data.data});
   },
   onChangeCollection: function(data) {
     this.setState({collection: data.data.collection});
   },
   onChangeModal: function(data) {
     let visible = data.visibleModal == this.constructor.displayName;
-    this.setState({ visible: visible });
+    this.setState({ visible: visible, config: data.config });
+  },
+
+  productInCollection: function (collection) {
+    if (collection.products.length == 0) {
+      return false;
+    }
+    let collectionProductIDs = _.map(collection.products, function (product) {
+      return product.id
+    });
+    let productID = this.state.product.id;
+    return _.indexOf(collectionProductIDs, productID) > -1
   },
 
   renderButtons: function() {
-    let backButton = <button className='btn btn-grey btn-round' onClick={this.props.close}>Back</button>
-      return (
-        <div className='buttons'>
-          {backButton}
-        </div>
-      )
+    let backButton = <button className='btn btn-grey btn-round' onClick={this.props.close}>Back</button>;
+    let addButton = "";
+    let collection = this.state.collection
+    if (!this.productInCollection(collection) && this.state.config.addProductToCollection) {
+      addButton = <button className='btn btn-red-inverted btn-round' onClick={(e) => this.state.config.addProductToCollection(e, collection)}>Add</button>;
+    }
+
+    return (
+      <div className='buttons'>
+        {backButton}
+        {addButton}
+      </div>
+    )
   },
 
   renderSharees: function() {
@@ -114,7 +139,8 @@ const ViewCollectionModal = React.createClass ({
 
         <div className='collection-details'>
           <div className='author-and-date'>
-            Created by <a className='author' href={userProfileUrl}>{this.state.collection.user.name}</a>, {this.state.collection.display_date}
+            Created by <a className='author'
+                          href={userProfileUrl}>{this.state.collection.user.name}</a>, {this.state.collection.display_date}
           </div>
           { this.renderSharees() }
           <div className='collection-description'>
