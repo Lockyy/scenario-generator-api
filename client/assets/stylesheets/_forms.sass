@@ -44,15 +44,15 @@ label
     input[type='checkbox']
       & + span
         &::before
-          background: $highlight-blue
-          width: 10px
-          height: 10px
-          content: '.'
+          border: 1px solid $highlight-blue
+          width: 15px
+          height: 15px
+          content: ''
           color: transparent
           margin-right: 10px
           position: relative
-          border: none
           box-shadow: none
       &:checked + span::before
         background-image: url('icons/collection-added.svg')
         background-size: contain
+        background-color: $highlight-blue
