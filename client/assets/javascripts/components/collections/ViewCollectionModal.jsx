@@ -83,11 +83,13 @@ const ViewCollectionModal = React.createClass ({
     if (collection.products.length == 0) {
       return false;
     }
-    let collectionProductIDs = _.map(collection.products, function (product) {
-      return product.id
-    });
-    let productID = this.state.product.id;
-    return _.indexOf(collectionProductIDs, productID) > -1
+    if(this.state.product) {
+      let collectionProductIDs = _.map(collection.products, function (product) {
+        return product.id
+      });
+      let productID = this.state.product.id;
+      return _.indexOf(collectionProductIDs, productID) > -1
+    }
   },
 
   renderButtons: function() {
