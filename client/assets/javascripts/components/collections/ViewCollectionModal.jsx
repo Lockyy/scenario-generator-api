@@ -31,9 +31,8 @@ const ViewCollectionMixin = {
         FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop);
       })
     } else {
-      if(addProductToCollection){collection.addProduct = addProductToCollection;}
       FluxCollectionActions.fetchedCollection(collection);
-      FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop);
+      FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop, {addProductToCollection: addProductToCollection});
     }
   }
 };
@@ -59,7 +58,8 @@ const ViewCollectionModal = React.createClass ({
         user: {
           id: ''
         }
-      }
+      },
+      config: {}
     }
   },
 
@@ -78,7 +78,7 @@ const ViewCollectionModal = React.createClass ({
   },
   onChangeModal: function(data) {
     let visible = data.visibleModal == this.constructor.displayName;
-    this.setState({ visible: visible });
+    this.setState({ visible: visible, config: data.config });
   },
 
   productInCollection: function (collection) {
@@ -96,15 +96,16 @@ const ViewCollectionModal = React.createClass ({
     let backButton = <button className='btn btn-grey btn-round' onClick={this.props.close}>Back</button>;
     let addButton = "";
     let collection = this.state.collection
-    if (!this.productInCollection(collection) && collection.addProduct) {
-      addButton = <button className='btn btn-red-inverted btn-round' onClick={(e) => collection.addProduct(e, collection)}>Add</button>;
+    if (!this.productInCollection(collection) && this.state.config.addProductToCollection) {
+      addButton = <button className='btn btn-red-inverted btn-round' onClick={(e) => this.state.config.addProductToCollection(e, collection)}>Add</button>;
     }
-      return (
-        <div className='buttons'>
-          {backButton}
+
+    return (
+      <div className='buttons'>
+        {backButton}
         {addButton}
-        </div>
-      )
+      </div>
+    )
   },
 
   renderSharees: function() {
