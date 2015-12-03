@@ -88,7 +88,7 @@ const ProductFilesModal = React.createClass ({
           <span className='title'>
             Files Added
           </span>
-          <span onClick={this.props.close} className='close'>x</span>
+          <span onClick={this.props.close} className='close'></span>
         </div>
         {_.isEmpty(this.getProductData('attachments')) ? (<span className='message'>No files have been added</span>) :
               <ul className="attachments">{this.getAttachments()}</ul>}
