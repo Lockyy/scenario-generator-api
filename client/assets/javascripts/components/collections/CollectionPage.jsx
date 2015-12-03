@@ -105,7 +105,7 @@ const CollectionPage = React.createClass({
           id: _this.props.params.id,
           name: collection_name
         })
-        _this.context.router.transitionTo('/app')
+        _this.context.router.transitionTo(_this.getPreviousLink())
       }
     })
   },
@@ -394,9 +394,17 @@ const CollectionPage = React.createClass({
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   },
 
+  getPreviousLink: function() {
+    return this.getParameterByName('link') || `/app/users/${this.state.data.collection.user.id}`
+  },
+
+  getPreviousName: function() {
+    return this.getParameterByName('name') || this.state.data.collection.user.name
+  },
+
   renderFilePath: function() {
-    let name = this.getParameterByName('name') || this.state.data.collection.user.name
-    let link = this.getParameterByName('link') || `/app/users/${this.state.data.collection.user.id}`
+    let name = this.getPreviousName()
+    let link = this.getPreviousLink()
 
     return (
       <div className='vertical-padding red-bottom-border bottom-margin color-dark-grey'>
