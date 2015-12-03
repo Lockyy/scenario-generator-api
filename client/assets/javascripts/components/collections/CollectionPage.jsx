@@ -16,6 +16,7 @@ import { CollaboratorCollectionMixin } from './CollaboratorCollectionModal'
 const CollectionPage = React.createClass({
   displayName: 'CollectionPage',
   mixins: [ Navigation, EditCollectionMixin, ShareCollectionMixin, CollaboratorCollectionMixin ],
+  avatarSize: 30,
 
   contextTypes: {
     currentUser: React.PropTypes.object.isRequired
@@ -267,13 +268,14 @@ const CollectionPage = React.createClass({
   },
 
   renderOwners: function() {
+    let _this = this
     return (
       <div className='grey-bottom-border vertical-padding'>
         <div className='bottom-margin'>
           Owners
         </div>
         {_.map(this.owners(), function(owner) {
-          return <Avatar url={owner.avatar_url} link={`/app/users/${owner.id}`}/>
+          return <Avatar url={owner.avatar_url} link={`/app/users/${owner.id}`} size={_this.avatarSize}/>
         })}
       </div>
     )
@@ -281,14 +283,14 @@ const CollectionPage = React.createClass({
 
   renderCollaborators: function() {
     if(this.collaborators().length <= 0) { return }
-
+    let _this = this
     return (
       <div className='grey-bottom-border vertical-padding'>
         <div className='bottom-margin'>
           Can add products
         </div>
         {_.map(this.collaborators(), function(collaborator) {
-          return <Avatar url={collaborator.avatar_url} link={`/app/users/${collaborator.id}`}/>
+          return <Avatar url={collaborator.avatar_url} link={`/app/users/${collaborator.id}`} size={_this.avatarSize}/>
         })}
       </div>
     )
@@ -297,17 +299,19 @@ const CollectionPage = React.createClass({
   renderAllCollaborators: function() {
     let allCollaborators = this.owners().concat(this.collaborators())
     if(allCollaborators.length <= 0) { return }
+    let _this = this
 
     return (
       <div className='grey-bottom-border vertical-padding'>
         {_.map(allCollaborators, function(collaborator) {
-          return <Avatar url={collaborator.avatar_url} link={`/app/users/${collaborator.id}`}/>
+          return <Avatar url={collaborator.avatar_url} link={`/app/users/${collaborator.id}`} size={_this.avatarSize}/>
         })}
       </div>
     )
   },
 
   renderViewers: function() {
+    let _this = this
     return (
       <div className='grey-bottom-border vertical-padding'>
         <div className='bottom-margin'>
@@ -324,7 +328,7 @@ const CollectionPage = React.createClass({
 
         <div>
           {_.map(this.viewers(), function(viewer) {
-            return <Avatar url={viewer.avatar_url} link={`/app/users/${viewer.id}`}/>
+            return <Avatar url={viewer.avatar_url} link={`/app/users/${viewer.id}`} size={_this.avatarSize}/>
           })}
         </div>
 
