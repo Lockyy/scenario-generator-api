@@ -5,7 +5,7 @@ class Notification < ActiveRecord::Base
 
   belongs_to :notification_subject, polymorphic: true
 
-  enum notification_type: [ :share ]
+  enum notification_type: [ :share, :updated_permissions, :deleted ]
 
   default_scope -> { order('created_at ASC') }
 
