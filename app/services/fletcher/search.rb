@@ -4,7 +4,8 @@ module Fletcher
     MAX_PER_PAGE = 100
     DEFAULT_PAGE = 1
 
-    def initialize(params)
+    def initialize(params, user)
+      @user = user
       @params = default_params.merge(params).with_indifferent_access
       @terms = get_terms
       @page = @params[:page]
@@ -128,7 +129,7 @@ module Fletcher
 
     def collections(terms)
       search_collections = SearchCollections.new(@params[:filter_by], terms, @params[:sorting][:collections], @filter_tags, @params[:match_mode][:collections])
-      search_collections.results
+      search_collections.results.visible(@user)
     end
 
     def tags(terms)

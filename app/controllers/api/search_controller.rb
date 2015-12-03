@@ -3,7 +3,7 @@ module Api
     respond_to :json
 
     def index
-      @results = Fletcher::Search.new(params).results
+      @results = Fletcher::Search.new(params, current_user).results
 
       respond_to do |format|
         format.json { render }
