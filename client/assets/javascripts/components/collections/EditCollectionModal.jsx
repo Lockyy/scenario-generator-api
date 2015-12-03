@@ -46,7 +46,8 @@ const EditCollectionModal = React.createClass ({
         description: '',
         products: [],
         users: []
-      }
+      },
+      unsaved_collection: {}
     }
   },
 
@@ -57,7 +58,7 @@ const EditCollectionModal = React.createClass ({
     ModalStore.listen(this.onChangeModal);
   },
   onChange: function(data) {
-    this.setState({collection: data.data.collection});
+    this.setState({collection: data.data.collection, unsaved_collection: jQuery.extend(true, {}, data.data.collection)});
   },
   onChangeModal: function(data) {
     let visible = data.visibleModal == this.constructor.displayName;
@@ -67,33 +68,29 @@ const EditCollectionModal = React.createClass ({
   // Gather the IDs for the products currently added to the collection.
   // Used when creating the collection.
   getProductIDs: function() {
-    return _.map(this.state.collection.products, function(product) {
+    return _.map(this.state.unsaved_collection.products, function(product) {
       return product.id
     })
   },
 
   // Remove a product from the collections products.
-  // We aren't modifying the CollectionStore version of the collection because
-  // these changes are unsaved at this stage.
   removeProduct: function(product_id) {
-    let products = this.state.collection.products.filter(function(product) {
+    let products = this.state.unsaved_collection.products.filter(function(product) {
       return product.id !== product_id;
     });
 
-    let collection = this.state.collection
+    let collection = this.state.unsaved_collection
     collection.products = products
 
-    this.setState({product_name: null, collection: collection})
+    this.setState({product_name: null, unsaved_collection: collection})
   },
 
   // Add a product to the collections products.
-  // We aren't modifying the CollectionStore version of the collection because
-  // these changes are unsaved at this stage.
   addProduct: function(product, selected) {
     if(selected) {
-      let updatedCollection = this.state.collection
+      let updatedCollection = this.state.unsaved_collection
       updatedCollection.products.push(_.merge(product, {unsaved: true}))
-      this.setState({product_name: null, collection: updatedCollection})
+      this.setState({product_name: null, unsaved_collection: updatedCollection})
     } else {
       this.setState({product_name: product.name})
     }
@@ -102,8 +99,8 @@ const EditCollectionModal = React.createClass ({
   getCollection: function(e) {
     return {
       id: this.state.collection.id,
-      name: this.state.collection.name,
-      description: this.state.collection.description,
+      name: this.state.unsaved_collection.name,
+      description: this.state.unsaved_collection.description,
       products: this.getProductIDs(),
       privacy: this.state.collection.privacy
     }
@@ -129,16 +126,16 @@ const EditCollectionModal = React.createClass ({
     let collection = this.getCollection(e)
 
     FluxCollectionActions.updateCollection(collection.id, collection, function(data) {
-      _this.props.close();
+      _this.close();
       _this.sendNotificationOnUpdate(collection);
     })
   },
 
   onChangeField: function(name, value) {
     if(!this.state.collection.owned) { return }
-    let hash = this.state.collection;
+    let hash = this.state.unsaved_collection;
     hash[name] = value
-    this.setState({ collection: hash })
+    this.setState({ unsaved_collection: hash })
   },
 
   // Runs validation on text fields.
@@ -186,7 +183,7 @@ const EditCollectionModal = React.createClass ({
                   placeholder='Title'
                   name='collection[name]'
                   ref='collection_name'
-                  value={this.state.collection.name}
+                  value={this.state.unsaved_collection.name}
                   onFocus={onFocus}
                   onBlur={onBlur}
                   onChange={(e) => this.onChangeField('name', e.currentTarget.value)}/>
@@ -196,7 +193,7 @@ const EditCollectionModal = React.createClass ({
                     name='collection[description]'
                     rows='10'
                     ref='collection_description'
-                    value={this.state.collection.description}
+                    value={this.state.unsaved_collection.description}
                     onFocus={onFocus}
                     onBlur={onBlur}
                     onChange={(e) => this.onChangeField('description', e.currentTarget.value)}/>
@@ -218,7 +215,7 @@ const EditCollectionModal = React.createClass ({
   },
 
   unsavedProducts: function() {
-    return _.filter(this.state.collection.products, function(product) {
+    return _.filter(this.state.unsaved_collection.products, function(product) {
       return product.unsaved
     })
   },
@@ -273,18 +270,24 @@ const EditCollectionModal = React.createClass ({
         <span className='title'>
           Edit Collection
         </span>
-        <a onClick={this.props.close} className='close'></a>
+        <a onClick={this.close} className='close'></a>
       </div>
     )
+  },
+
+  close: function(e) {
+    if(e) { e.preventDefault() }
+    this.setState({unsaved_collection: this.state.collection})
+    this.props.close()
   },
 
   render: function() {
     return (
       <Modal
         isOpen={this.state.visible}
-        onRequestClose={this.props.close}
+        onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
+        <div className='back-button' onClick={this.close}>{"< Close"}</div>
         {this.renderheader()}
         {this.renderCollectionForm()}
       </Modal>

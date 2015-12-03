@@ -50,7 +50,8 @@ const ShareCollectionModal = React.createClass ({
         users: [],
         emails: []
       },
-      config: {}
+      config: {},
+      unsaved_collection: {}
     }
   },
 
@@ -61,7 +62,11 @@ const ShareCollectionModal = React.createClass ({
     ModalStore.listen(this.onChangeModal);
   },
   onChangeCollection: function(data) {
-    this.setState({collection: data.data.collection});
+    let unsavedCollection = jQuery.extend(true, {}, data.data.collection)
+    this.setState({
+      collection: data.data.collection,
+      unsaved_collection: unsavedCollection
+    });
   },
   onChangeModal: function(data) {
     let visible = data.visibleModal == this.constructor.displayName;
@@ -70,7 +75,7 @@ const ShareCollectionModal = React.createClass ({
 
   // Gather users currently associated with the collection
   gatherUsers: function() {
-    return _.map(this.state.collection.users, function(user) {
+    return _.map(this.state.unsaved_collection.users, function(user) {
       return {
         id: user.id,
         rank: user.rank
@@ -80,7 +85,7 @@ const ShareCollectionModal = React.createClass ({
 
   // Gather the emails currently having this collection shared with them
   gatherEmails: function() {
-    return _.map(this.state.collection.emails, function(email) {
+    return _.map(this.state.unsaved_collection.emails, function(email) {
       return {
         email: email.email,
         rank: email.rank
@@ -89,31 +94,31 @@ const ShareCollectionModal = React.createClass ({
   },
 
   updateUsers: function(users) {
-    let collection = this.state.collection
+    let collection = this.state.unsaved_collection
     collection.users = users
-    this.setState({ user_name: null, collection: collection })
+    this.setState({ user_name: null, unsaved_collection: collection })
   },
 
   updateEmails: function(emails) {
-    let collection = this.state.collection
+    let collection = this.state.unsaved_collection
     collection.emails = emails
-    this.setState({ user_name: null, collection: collection })
+    this.setState({ user_name: null, unsaved_collection: collection })
   },
 
   addUser: function(user) {
-    let users = this.state.collection.users;
+    let users = this.state.unsaved_collection.users;
     users.push(_.merge(user, {rank: 'viewer', unsaved: true}))
     this.updateUsers(users);
   },
 
   addEmail: function(email) {
-    let emails = this.state.collection.emails;
+    let emails = this.state.unsaved_collection.emails;
     emails.push({email: email, rank: 'viewer', unsaved: true})
     this.updateEmails(emails);
   },
 
   updateUser: function(id, rank) {
-    let users = this.state.collection.users;
+    let users = this.state.unsaved_collection.users;
     let index = _.findIndex(users, function(user) { return user.id == id })
     if(index > -1) {
       users[index] = _.merge(users[index], {rank: rank})
@@ -122,7 +127,7 @@ const ShareCollectionModal = React.createClass ({
   },
 
   updateEmail: function(email, rank) {
-    let emails = this.state.collection.emails;
+    let emails = this.state.unsaved_collection.emails;
     let index = _.findIndex(emails, function(email_obj) { return email_obj.email == email })
     if(index > -1) {
       emails[index] = _.merge(emails[index], {rank: rank})
@@ -131,7 +136,7 @@ const ShareCollectionModal = React.createClass ({
   },
 
   removeUser: function(user_id) {
-    let updatedUsers = this.state.collection.users.filter(function(user) {
+    let updatedUsers = this.state.unsaved_collection.users.filter(function(user) {
       return user.id !== user_id;
     });
 
@@ -139,7 +144,7 @@ const ShareCollectionModal = React.createClass ({
   },
 
   removeEmails: function(email) {
-    let updatedEmails = this.state.collection.emails.filter(function(email_obj) {
+    let updatedEmails = this.state.unsaved_collection.emails.filter(function(email_obj) {
       return email_obj.email !== email;
     });
     this.updateEmails(updatedEmails);
@@ -159,7 +164,7 @@ const ShareCollectionModal = React.createClass ({
     let _this = this
     let id    = this.state.collection.id
     let name = this.state.collection.name
-    let total = this.state.collection.users.length + this.state.collection.emails.length
+    let total = this.state.unsaved_collection.users.length + this.state.unsaved_collection.emails.length
 
     let data = {
       users: this.gatherUsers(),
@@ -169,7 +174,7 @@ const ShareCollectionModal = React.createClass ({
     }
 
     FluxCollectionActions.shareCollection(id, data, function() {
-      _this.props.close()
+      _this.close()
 
       FluxNotificationsActions.showNotification({
         type: 'shared',
@@ -195,20 +200,20 @@ const ShareCollectionModal = React.createClass ({
   },
 
   unsavedUsers: function() {
-    return _.filter(this.state.collection.users, function(user) {
+    return _.filter(this.state.unsaved_collection.users, function(user) {
       return user.unsaved
     })
   },
 
   unsavedEmails: function() {
-    return _.filter(this.state.collection.emails, function(email) {
+    return _.filter(this.state.unsaved_collection.emails, function(email) {
       return email.unsaved
     })
   },
 
   renderUsers: function() {
     let unsavedUsers = this.unsavedUsers()
-    if(this.state.collection.users && unsavedUsers.length > 0) {
+    if(this.state.unsaved_collection.users && unsavedUsers.length > 0) {
       return (
         <Results
           type='sharee-users'
@@ -222,7 +227,7 @@ const ShareCollectionModal = React.createClass ({
 
   renderEmails: function() {
     let unsavedEmails = this.unsavedEmails()
-    if(this.state.collection.emails && unsavedEmails.length > 0) {
+    if(this.state.unsaved_collection.emails && unsavedEmails.length > 0) {
       return (
         <Results
           type='sharee-emails'
@@ -251,7 +256,7 @@ const ShareCollectionModal = React.createClass ({
       <div className='buttons'>
         { this.state.config.cancel ?
             <button className='btn btn-grey btn-round'
-              onClick={this.props.close}>{this.state.config.cancel}</button> : null }
+              onClick={this.close}>{this.state.config.cancel}</button> : null }
         <button className='btn btn-red btn-round'
           onClick={this.submitForm}>{this.state.config.confirm || 'Finish'}</button>
       </div>
@@ -260,8 +265,8 @@ const ShareCollectionModal = React.createClass ({
 
   setSendEmailInvites: function(e) {
     let newValue = $(e.target).is(":checked")
-    let updatedCollection = _.merge(this.state.collection, {send_email_invites: newValue})
-    this.setState({collection: updatedCollection})
+    let updatedCollection = _.merge(this.state.unsaved_collection, {send_email_invites: newValue})
+    this.setState({unsaved_collection: updatedCollection})
   },
 
   setPrivacy: function(e) {
@@ -282,8 +287,8 @@ const ShareCollectionModal = React.createClass ({
       cancel: 'Cancel',
       message: message,
       successCallback: function() {
-        let updatedCollection = _.merge(_this.state.collection, {privacy: newValue})
-        _this.setState({collection: updatedCollection})
+        let updatedCollection = _.merge(_this.state.unsaved_collection, {privacy: newValue})
+        _this.setState({unsaved_collection: updatedCollection})
       }
     })
   },
@@ -295,12 +300,12 @@ const ShareCollectionModal = React.createClass ({
           Who can view this collection?
           <label>
             <input  type='radio' name='privacy' value='hidden' onClick={this.setPrivacy}
-                    checked={this.state.collection.privacy == 'hidden'} />
+                    checked={this.state.unsaved_collection.privacy == 'hidden'} />
   ￼         Just me and people I specify below (Private)
           </label>
           <label>
             <input  type='radio' name='privacy' value='visible' onClick={this.setPrivacy}
-                    checked={this.state.collection.privacy == 'visible'} />
+                    checked={this.state.unsaved_collection.privacy == 'visible'} />
   ￼         Everyone in Fletcher (Public). You can still add collaborators.
           </label>
         </div>
@@ -340,18 +345,24 @@ const ShareCollectionModal = React.createClass ({
         <span className='title'>
           Privacy & Sharing
         </span>
-        <a onClick={this.props.close} className='close'></a>
+        <a onClick={this.close} className='close'></a>
       </div>
     )
+  },
+
+  close: function(e) {
+    if(e) { e.preventDefault() }
+    this.setState({unsaved_collection: this.state.collection})
+    this.props.close()
   },
 
   render: function() {
     return (
       <Modal
         isOpen={this.state.visible}
-        onRequestClose={this.props.close}
+        onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
+        <div className='back-button' onClick={this.close}>{"< Close"}</div>
         {this.renderheader()}
         {this.renderShareForm()}
       </Modal>
