@@ -269,10 +269,10 @@ const ShareCollectionModal = React.createClass ({
     let message, button;
     let _this = this;
 
-    if(newValue) {
-      message = 'Are you sure you want to make this collection private? Only Fletcher users you share it with will be able to see it.'
-    } else {
+    if(newValue == 'visible') {
       message = 'Are you sure you want to make this collection public? All Fletcher users will be able to view it.'
+    } else {
+      message = 'Are you sure you want to make this collection private? Only Fletcher users you share it with will be able to see it.'
     }
 
     FluxAlertActions.showAlert({
