@@ -49,6 +49,7 @@ $modal-padding: 25px
         margin: 0px
         display: block
       .collection
+        height: 65px
         .privacy-radios
           font-size: 13px
           color: $dark-grey
@@ -76,6 +77,8 @@ $modal-padding: 25px
           color: $dark-grey
           .author
             color: $primary-red
+            font-weight: bold
+            text-decoration: underline
         .collection-sharees
           margin-bottom: 10px
         .header
@@ -172,6 +175,9 @@ $modal-padding: 25px
                   color: $dark-grey
                   .author
                     color: $primary-red
+                    font-weight: bold
+                    padding: 0 3px
+                    text-decoration: underline
             &.create-collection-link
               cursor: pointer
               .title
@@ -244,9 +250,22 @@ $modal-padding: 25px
         border-bottom: 2px solid $primary-red
         .title
           font-size: 20px
+        .title::before
+          background-image: url('icons/icon-collections-red.svg')
         .close
           font-size: 20px
           position: relative
+          background: url('icons/icon-close.png') left
+          background-size: 22px
+          background-repeat: no-repeat
+          width: 29px
+          height: 15px
+          margin-top: 8px
+
+      .buttons
+        width: 200px
+        margin: 0 auto
+
       .back-button
         display: none
       .copy-link

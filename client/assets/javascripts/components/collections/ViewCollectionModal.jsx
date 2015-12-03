@@ -73,14 +73,12 @@ const ViewCollectionModal = React.createClass ({
   },
 
   renderButtons: function() {
-    if(this.state.collection && this.context.currentUser.id == this.state.collection.user.id)
-    {
+    let backButton = <button className='btn btn-grey btn-round' onClick={this.props.close}>Back</button>
       return (
         <div className='buttons'>
-          <button className='btn btn-red-inverted btn-round' onClick={this.props.close}>Back</button>
+          {backButton}
         </div>
       )
-    }
   },
 
   renderSharees: function() {
@@ -99,6 +97,7 @@ const ViewCollectionModal = React.createClass ({
   },
 
   render: function() {
+    let userProfileUrl = "/app/users/" + this.state.collection.user.id;
     return (
       <Modal
         isOpen={this.state.visible}
@@ -110,12 +109,12 @@ const ViewCollectionModal = React.createClass ({
           <span className='title'>
             {this.state.collection.name}
           </span>
-          <span onClick={this.props.close} className='close'>x</span>
+          <a onClick={this.props.close} className='close'></a>
         </div>
 
         <div className='collection-details'>
           <div className='author-and-date'>
-            Created by <span className='author'>"{this.state.collection.user.name}"</span>, {this.state.collection.display_date}
+            Created by <a className='author' href={userProfileUrl}>{this.state.collection.user.name}</a>, {this.state.collection.display_date}
           </div>
           { this.renderSharees() }
           <div className='collection-description'>
