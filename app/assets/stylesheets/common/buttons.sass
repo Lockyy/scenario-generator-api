@@ -14,7 +14,7 @@
     background: $primary-red
     border: 2px solid $primary-red
     color: white
-    &:hover, &:active, &:focus
+    &:hover, &:active
       color: $primary-red
       background: transparent
 
@@ -22,7 +22,7 @@
     background: transparent
     border: 2px solid $primary-red
     color: $primary-red
-    &:hover, &:active, &:focus
+    &:hover, &:active
       color: white
       background: $primary-red
       border: 2px solid transparent
@@ -31,7 +31,7 @@
     background: $highlight-blue
     border: 2px solid $highlight-blue
     color: white
-    &:hover, &:active, &:focus
+    &:hover, &:active
       color: $highlight-blue
       background: white
 
@@ -39,7 +39,7 @@
     background: transparent
     border: 2px solid $highlight-blue
     color: $highlight-blue
-    &:hover, &:active, &:focus
+    &:hover, &:active
       color: white
       background: $highlight-blue
       border-color: transparent
@@ -48,7 +48,7 @@
     background: $orange
     border: 2px solid $orange
     color: white
-    &:hover, &:active, &:focus
+    &:hover, &:active
       color: $orange
       background: transparent
 
@@ -56,7 +56,7 @@
     background: transparent
     border: 2px solid $orange
     color: $orange
-    &:hover, &:active, &:focus
+    &:hover, &:active
       color: white
       background: $orange
 
@@ -64,7 +64,7 @@
     color: $font-grey
     border: 2px solid $font-grey
     background: transparent
-    &:hover, &:active, &:focus, &.active
+    &:hover, &:active, &.active
       background: $font-grey
       border-color: $font-grey
       color: white
@@ -72,13 +72,13 @@
   &.btn-white
     background: white
     color: $primary-red
-    &:hover, &:active, &:focus
+    &:hover, &:active
       color: $primary-red
 
   &.btn-round
     border-width: 1px
     @include round-corners(30px)
-    &:hover, &:active, &:focus
+    &:hover, &:active
       border-width: 1px
 
   &.btn-tick
@@ -90,7 +90,7 @@
     background-repeat: no-repeat
     padding: 5px 15px
     cursor: initial
-    &:hover, &:active, &:focus
+    &:hover, &:active
       color: transparent
       background-color: $primary-red
       background-image: url('icons/collection-added.svg')
@@ -99,7 +99,7 @@
       border: 2px solid $primary-red
 
   &.btn-hover-white
-    &:hover, &:active, &:focus
+    &:hover, &:active
       background: white
 
   &.btn-add
