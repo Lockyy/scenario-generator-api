@@ -84,7 +84,7 @@ const CollectionPage = React.createClass({
           id: _this.props.params.id,
           name: collection_name
         })
-        _this.context.router.transitionTo('/app')
+        _this.context.router.transitionTo(_this.getPreviousLink())
       }
     })
   },
