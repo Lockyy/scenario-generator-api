@@ -327,8 +327,8 @@ const CollectionPage = React.createClass({
         </div>
         <label>
           <input type='radio' name='privacy' value='hidden' onClick={this.setPrivacy}
-                 checked={this.state.data.collection.privacy == 'hidden'}/>
-          ￼ Specific People
+                 checked={this.state.data.collection.privacy == 'hidden'} />
+          Specific People
           <div className='small-text left-margin-2-5'>
             This collection will be viewable only to the people you specify.
           </div>
@@ -342,8 +342,8 @@ const CollectionPage = React.createClass({
 
         <label>
           <input type='radio' name='privacy' value='visible' onClick={this.setPrivacy}
-                 checked={this.state.data.collection.privacy == 'visible'}/>
-          ￼ Public
+                checked={this.state.data.collection.privacy == 'visible'} />
+          Public
           <div className='small-text left-margin-2-5'>
             Open it to the public. Every user in Fletcher will be able to view your collection.
           </div>
