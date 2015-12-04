@@ -162,19 +162,19 @@ const ShareCollectionModal = React.createClass ({
     e.preventDefault()
 
     let _this = this
-    let id    = this.state.collection.id
-    let name = this.state.collection.name
-    let total = this.state.unsaved_collection.users.length + this.state.unsaved_collection.emails.length
+    let id    = this.state.collection.id;
+    let name = this.state.collection.name;
+    let total = this.state.unsaved_collection.users.length + this.state.unsaved_collection.emails.length;
 
     let data = {
       users: this.gatherUsers(),
       emails: this.gatherEmails(),
-      privacy: this.state.collection.privacy,
+      privacy: this.state.unsaved_collection.privacy,
       send_email_invites: this.state.collection.send_email_invites
-    }
+    };
 
     FluxCollectionActions.shareCollection(id, data, function() {
-      _this.close()
+      _this.close();
 
       FluxNotificationsActions.showNotification({
         type: 'shared',
