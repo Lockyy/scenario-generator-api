@@ -157,21 +157,21 @@ const CollectionPage = React.createClass({
   },
 
   renderLeaveButton: function () {
-    if(this.state.data.collection.editable || this.state.data.collection.viewer) {
-    return (
-      <div className='vertical-padding grey-bottom-border color-dark-grey small-text'>
-        <div className='bottom-margin uppercase'>
-          Leave Collection
+    if (this.state.data.collection.editable || this.state.data.collection.viewer) {
+      return (
+        <div className='vertical-padding grey-bottom-border color-dark-grey small-text'>
+          <div className='bottom-margin uppercase'>
+            Leave Collection
+          </div>
+          <div className='bottom-margin'>
+            If you leave this collection you will no longer be able to view it or collaborate
+          </div>
+          <div className='btn btn-blue-inverted btn-round'
+               onClick={this.leaveCollection}>
+            Leave
+          </div>
         </div>
-        <div className='bottom-margin'>
-          If you leave this collection you will no longer be able to view it or collaborate
-        </div>
-        <div className='btn btn-blue-inverted btn-round'
-             onClick={this.leaveCollection}>
-          Leave
-        </div>
-      </div>
-    )
+      )
     }
   },
 
@@ -284,7 +284,9 @@ const CollectionPage = React.createClass({
   },
 
   renderCollaborators: function () {
-    if(this.collaborators().length <= 0) { return }
+    if (this.collaborators().length <= 0) {
+      return
+    }
     let _this = this
     return (
       <div className='grey-bottom-border vertical-padding'>
@@ -299,8 +301,10 @@ const CollectionPage = React.createClass({
   },
 
   renderAllCollaborators: function () {
-    let allCollaborators = this.owners().concat(this.collaborators())
-    if(allCollaborators.length <= 0) { return }
+    let allCollaborators = this.owners().concat(this.collaborators());
+    if (allCollaborators.length <= 0) {
+      return
+    }
     let _this = this;
 
     return (
