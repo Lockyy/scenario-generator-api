@@ -59,7 +59,6 @@ const CollectionPageDesktop = React.createClass({
 
     let query = this.getSearchParams({ search_string: search_string, page: page});
     this.performSearch(query);
-    debugger
     this.transitionTo(`/app/directory/collections`, query);
   },
 
