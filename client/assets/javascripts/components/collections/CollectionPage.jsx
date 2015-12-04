@@ -84,7 +84,8 @@ const CollectionPage = React.createClass({
           id: _this.props.params.id,
           name: collection_name
         })
-        _this.context.router.transitionTo(_this.getPreviousLink())
+        let previous = _this.getParameterByName('link') || `/app/users/current`
+        _this.context.router.transitionTo(previous)
       }
     })
   },
@@ -105,7 +106,8 @@ const CollectionPage = React.createClass({
           id: _this.props.params.id,
           name: collection_name
         })
-        _this.context.router.transitionTo(_this.getPreviousLink())
+        let previous = _this.getParameterByName('link') || `/app/users/current`
+        _this.context.router.transitionTo(previous)
       }
     })
   },
