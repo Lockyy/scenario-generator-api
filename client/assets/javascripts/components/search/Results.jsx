@@ -50,14 +50,15 @@ const Results = React.createClass ({
   },
 
   renderCollection: function(result) {
+    let url = '/app/collections/'+result.id;
     return (
       <div className='result'>
         <div className='row'>
           <div className='col-xs-12'>
             <div className='name'>
-              <Link to={`/app/collections/${result.id}`} onClick={this.props.onClick}>
+              <a href={url}  onClick={this.props.onClick}>
                 { result.name }
-              </Link>
+              </a>
             </div>
             <div className='small-text'>
               Created by <Link  className='link'
@@ -427,7 +428,7 @@ const Results = React.createClass ({
   renderTop: function() {
     return (
       <div className={`top ${this.props.topClass}`}>
-        { this.renderTopLeft() }
+        { this.renderTopLeft() }r
         { this.renderTopRight() }
       </div>
     )
