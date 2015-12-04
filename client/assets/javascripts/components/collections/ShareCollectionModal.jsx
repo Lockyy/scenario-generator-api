@@ -296,12 +296,12 @@ const ShareCollectionModal = React.createClass ({
           <label>
             <input  type='radio' name='privacy' value='hidden' onClick={this.setPrivacy}
                     checked={this.state.collection.privacy == 'hidden'} />
-  ￼         Just me and people I specify below (Private)
+            Just me and people I specify below (Private)
           </label>
           <label>
             <input  type='radio' name='privacy' value='visible' onClick={this.setPrivacy}
                     checked={this.state.collection.privacy == 'visible'} />
-  ￼         Everyone in Fletcher (Public). You can still add collaborators.
+            Everyone in Fletcher (Public). You can still add collaborators.
           </label>
         </div>
       )
