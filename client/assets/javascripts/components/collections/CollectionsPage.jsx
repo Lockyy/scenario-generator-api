@@ -1,5 +1,5 @@
-import React from 'react';
 import _ from 'lodash';
+import React from 'react';
 import { Link, Navigation } from 'react-router';
 import FluxSearchPageActions from '../../actions/FluxSearchPageActions'
 import SearchPageStore from '../../stores/SearchPageStore'
@@ -43,51 +43,79 @@ const CollectionsPage = React.createClass({
 
   componentDidMount: function() {
     SearchPageStore.listen(this.onChange.bind(this));
-    this.performSearch(this.getSearchParams(this.props.params));
+    this.performSearch(this.getSearchParams());
   },
 
   onChange: function(data) {
     this.setState(data);
   },
 
-  changePageAndSearch: function(params) {
-    let search_string = _.isUndefined(params.search_string) ? this.props.params.search_string : params.search_string;
-    let page = params.page || 1;
-
-    let query = this.context.router.state.location.query;
-    let searchParams = this.getSearchParams({
-                          search_string: search_string, page: page});
-
-    this.performSearch(searchParams);
-
-    if (search_string && search_string.length > 0 && page) {
-      this.transitionTo(`/app/directory/collections/${search_string}/${page}`, query);
-    } else {
-      this.transitionTo(`/app/directory/collections`, query);
+  getSearchString: function() {
+    if(this.context.router.state.location.query) {
+      return this.context.router.state.location.query.search_string || ''
     }
+    return ''
+  },
+
+  getPage: function() {
+    if(this.context.router.state.location.query) {
+      return this.context.router.state.location.query.page || 1
+    }
+    return 1
+  },
+
+  getSorting: function() {
+    if (this.context.router.state.location.query &&
+        this.context.router.state.location.query.sorting) {
+      return this.context.router.state.location.query.sorting.collections || 'relevance'
+    }
+    return 'relevance'
+  },
+
+  changeQuery: function(params) {
+    let query = this.getSearchParams(params)
+    this.performSearch(query);
+
+    this.transitionTo(`/app/directory/collections`, query);
+  },
+
+  onChangePage: function(page) {
+    this.changeQuery({ page: page });
+  },
+
+  onSetQuery: function(query) {
+    this.changeQuery(query)
+  },
+
+  getSearchParams: function(params){
+    params = _.merge({}, params);
+    let search_string;
+
+    // We do it like this because params.search_string || this.getSearchString will return
+    // this.getSearchString if they user is trying to give an empty filter
+    if(params.search_string || params.search_string == '') {
+      search_string = params.search_string
+    } else {
+      search_string = this.getSearchString()
+    }
+
+    let _data = {
+      search_string: search_string,
+      page: params.page || this.getPage(),
+      sorting: { collections: (params.sorting ? params.sorting.collections : null) || this.getSorting() }
+    };
+
+    return _data
   },
 
   onSearchInput: function(event) {
-    this.changePageAndSearch({search_string: event.target.value})
+    this.changeQuery({search_string: event.target.value, page: 1})
   },
 
   onSubmit: function(e) {
     e.preventDefault();
 
-    this.changePageAndSearch(this.state.data);
-  },
-
-  getSearchParams: function(data){
-    data = _.merge({}, this.state.params, this.props.params, data)
-    let _data = {
-      search_string: data.search_string,
-      page: data.page,
-      filter_by: data.filter_by,
-      filtered_tags: data.filtered_tags,
-      sorting: data.sorting,
-      match_mode: data.match_mode
-    };
-    return _.merge(_data, { sorting: this.context.router.state.location.query || {} });
+    this.changeQuery(this.state.data);
   },
 
   render: function() {
@@ -97,9 +125,15 @@ const CollectionsPage = React.createClass({
       <div className='search-page collections'>
         <form onSubmit={this.onSubmit}>
           <CollectionsPageDesktop {...data}
-            onSearchInput={this.onSearchInput} onSubmit={this.onSubmit} onPerformSearch={this.performSearch} />
+            onSearchInput={this.onSearchInput} onSubmit={this.onSubmit}
+            onPerformSearch={this.performSearch} page={this.getPage()}
+            onSetQuery={this.onSetQuery} onChangePage={this.onChangePage}
+            searchString={this.getSearchString()} />
           <CollectionsPageMobile {...data}
-            onSearchInput={this.onSearchInput} onSubmit={this.onSubmit} onPerformSearch={this.performSearch} />
+            onSearchInput={this.onSearchInput} onSubmit={this.onSubmit}
+            onPerformSearch={this.performSearch} page={this.getPage()}
+            onSetQuery={this.onSetQuery} onChangePage={this.onChangePage}
+            searchString={this.getSearchString()} />
         </form>
       </div>
     );

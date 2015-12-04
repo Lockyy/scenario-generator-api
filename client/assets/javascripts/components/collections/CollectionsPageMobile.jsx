@@ -28,66 +28,12 @@ const CollectionPageMobile = React.createClass({
           collections: 'alphabetical_order'
         }
       },
-      onPerformSearch: function(data) {},
-      onChange: function(data) {},
     }
   },
 
   componentDidMount: function() {
     let $inputBox = React.findDOMNode(this.refs.inputBox);
     $inputBox.focus();
-  },
-
-  performSearch: function(data) {
-    this.props.onPerformSearch(data);
-  },
-
-  onChange: function(data) {
-    this.props.onChange(data);
-  },
-
-  getSearchString: function() {
-    if(this.context.router.state.location.query) {
-      return this.context.router.state.location.query.search_string || ''
-    }
-    return ''
-  },
-
-  getPage: function() {
-    if(this.context.router.state.location.query) {
-      return this.context.router.state.location.query.page || 1
-    }
-    return 1
-  },
-
-  changePageAndSearch: function(params) {
-    let search_string = params.search_string || this.getSearchString();
-    let page = params.page || this.getpage();
-
-    let query = this.getSearchParams({ search_string: search_string, page: page});
-    this.performSearch(query);
-
-    this.transitionTo(`/app/directory/collections`, query);
-  },
-
-  onChangePage: function(page) {
-    this.changePageAndSearch({ page: page });
-  },
-
-  setQuery: function(query) {
-    let _data = _.merge(this.getSearchParams(this.props.data), query);
-    this.transitionTo(this.context.router.state.location.pathname, _data.sorting);
-    this.performSearch(_data);
-  },
-
-  getSearchParams: function(data){
-    data = _.merge({}, data);
-
-    let _data = {
-      search_string: data.search_string,
-      page: data.page
-    };
-    return _.merge(this.context.router.state.location.query || {}, _data);
   },
 
   renderCollectionResults: function() {
@@ -97,7 +43,7 @@ const CollectionPageMobile = React.createClass({
           type='collections'
           data={this.props.data.collections}
           bottom='pagination'
-          currentPage={this.getPage()}
+          currentPage={this.props.page}
           topLeft='type'
           topRight='dropdown'
           dropdownOptions={{
@@ -107,8 +53,8 @@ const CollectionPageMobile = React.createClass({
           }}
           sorting={this.props.data.sorting.collections}
           emptyResults={<div className='no-results'>We couldn’t find any results for your search.</div>}
-          onChangePage={this.onChangePage}
-          onSetQuery={this.setQuery} />
+          onChangePage={this.props.onChangePage}
+          onSetQuery={this.props.onSetQuery} />
       </div>
     )
   },

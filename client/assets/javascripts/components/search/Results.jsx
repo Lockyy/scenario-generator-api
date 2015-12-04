@@ -428,7 +428,7 @@ const Results = React.createClass ({
   renderTop: function() {
     return (
       <div className={`top ${this.props.topClass}`}>
-        { this.renderTopLeft() }r
+        { this.renderTopLeft() }
         { this.renderTopRight() }
       </div>
     )

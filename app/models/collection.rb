@@ -18,6 +18,8 @@ class Collection < ActiveRecord::Base
   validates :user, presence: true
   validates :privacy, presence: true
 
+  before_save :capitalize_name
+
   scope :latest, -> { order(created_at: :desc) }
 
   scope :visible, -> (user) {
@@ -45,6 +47,10 @@ class Collection < ActiveRecord::Base
 
   scope :recently_added, -> do
     order('created_at desc')
+  end
+
+  def capitalize_name
+    self.name = self.name.slice(0,1).capitalize + self.name.slice(1..-1)
   end
 
   def visible_to?(user)

@@ -64,10 +64,6 @@ $(function onLoad() {
                         </Route>
                         <Route path="app/tags/:letter" component={TagsPage}>
                         </Route>
-                        <Route path="app/directory/collections/:search_string/:page" component={CollectionsPage}>
-                        </Route>
-                        <Route path="app/directory/collections/:search_string" component={CollectionsPage}>
-                        </Route>
                         <Route path="app/directory/collections" component={CollectionsPage}>
                         </Route>
                         <Route name='CollectionPage' path="app/collections/:id" component={CollectionPage}>
