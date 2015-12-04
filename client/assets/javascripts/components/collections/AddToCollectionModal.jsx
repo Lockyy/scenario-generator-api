@@ -240,6 +240,10 @@ const AddToCollectionModal = React.createClass ({
     )
   },
 
+  hasCollectionList: function() {
+    return $('div.collection-set').length;
+  },
+
   renderAddToCollectionForm: function () {
     return (
       <div className='row'>
@@ -268,6 +272,9 @@ const AddToCollectionModal = React.createClass ({
           <a href="#" onClick={this.close} className='close'></a>
         </div>
         {this.renderAddToCollectionForm()}
+        <div className='add-placeholder'>
+          {this.hasCollectionList() ? "" : "No results found."}
+        </div>
       </Modal>
     )
   }
