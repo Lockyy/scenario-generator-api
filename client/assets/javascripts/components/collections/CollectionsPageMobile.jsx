@@ -87,7 +87,7 @@ const CollectionPageMobile = React.createClass({
       search_string: data.search_string,
       page: data.page
     };
-    return _.merge(this.context.router.state.location.query, _data);
+    return _.merge(this.context.router.state.location.query || {}, _data);
   },
 
   renderCollectionResults: function() {

@@ -59,7 +59,7 @@ const CollectionPageDesktop = React.createClass({
 
     let query = this.getSearchParams({ search_string: search_string, page: page});
     this.performSearch(query);
-
+    debugger
     this.transitionTo(`/app/directory/collections`, query);
   },
 
@@ -92,7 +92,7 @@ const CollectionPageDesktop = React.createClass({
       search_string: data.search_string,
       page: data.page
     };
-    return _.merge(this.context.router.state.location.query, _data);
+    return _.merge(this.context.router.state.location.query || {}, _data);
   },
 
   renderCollectionResults: function() {
