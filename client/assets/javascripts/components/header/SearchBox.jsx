@@ -67,9 +67,14 @@ const SearchBox = React.createClass ({
   },
 
   onTagClick: function(e) {
+    this.closeDropdown()
+    this.props.router.transitionTo(`/app/tag/${e.target.dataset.slug}/products/1`);
+  },
+
+  closeDropdown: function() {
     $('.search-container .form-control').val('')
     $('.search-container .results-holder').hide()
-    this.props.router.transitionTo(`/app/tag/${e.target.dataset.slug}/products/1`);
+    $('.navbar').css('position', 'fixed')
   },
 
   displayResults: function() {
@@ -113,7 +118,8 @@ const SearchBox = React.createClass ({
             topRight='link'
             topClass='table-header full-width'
             containerClass={'header'}
-            searchTerm={this.state.data.search_string} />
+            searchTerm={this.state.data.search_string}
+            onClick={this.closeDropdown} />
         </div>
       )
     }

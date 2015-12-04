@@ -55,7 +55,7 @@ const Results = React.createClass ({
         <div className='row'>
           <div className='col-xs-12'>
             <div className='name'>
-              <Link to={`/app/collections/${result.id}`}>
+              <Link to={`/app/collections/${result.id}`} onClick={this.props.onClick}>
                 { result.name }
               </Link>
             </div>
