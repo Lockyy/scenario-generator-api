@@ -186,7 +186,7 @@ const Results = React.createClass ({
             active={result.rank}
             showText={false}
             native={true}
-            options={{ viewer: 'Can View', collaborator: 'Can add products' }} />
+            options={{ viewer: 'Can View', collaborator: 'Can add products', owner: 'Co-owner' }} />
         </div>
       )
     }
