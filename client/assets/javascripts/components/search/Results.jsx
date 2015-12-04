@@ -264,6 +264,8 @@ const Results = React.createClass ({
       }
 
       return <div className={this.props.type}>{resultTags}</div>;
+    } else {
+      return <div>{this.props.noResults}</div>
     }
   },
 

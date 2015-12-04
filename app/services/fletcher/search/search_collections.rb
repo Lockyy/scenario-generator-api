@@ -9,6 +9,12 @@ module Fletcher
 
     private
 
+    def obtain_related_tags(data)
+      @related_tags ||= Tag
+                          .joins(reviews: { product: :collection_products})
+                          .where({reviews: { products: { collection_products: { collection_id: data.map(&:id) }}}}).uniq
+    end
+
     def search_by(attribute, terms)
       simple_search = SORT_FIELDS_SIMPLE_SEARCH.include?(@sort_description) || @match_mode == 'all'
       @search_by = simple_search ? build_search_by : build_full_text_search_by
@@ -20,8 +26,8 @@ module Fletcher
         Collection.search_by_name_and_description(terms.join(' '))
       }).with_indifferent_access
 
-      default_search_by[:name] = lambda { |terms| Product.search_by_name(terms.join(' ')) }
-      default_search_by[:description] = lambda { |terms| Product.search_by_description(terms.join(' ')) }
+      default_search_by[:name] = lambda { |terms| Collection.search_by_name(terms.join(' ')) }
+      default_search_by[:description] = lambda { |terms| Collection.search_by_description(terms.join(' ')) }
       default_search_by
     end
 

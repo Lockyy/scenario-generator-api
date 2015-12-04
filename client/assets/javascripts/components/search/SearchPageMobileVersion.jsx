@@ -19,7 +19,11 @@ const SearchPageMobileVersion = React.createClass({
         companies: [],
         tags: [],
         collections: [],
-        related_tags: [],
+        related_tags: {
+          companies: { total: 0, data: [] },
+          products: { total: 0, data: [] },
+          collections: { total: 0, data: [] }
+        },
         filtered_tags: [],
         params: {
           section: 'products'
@@ -236,8 +240,32 @@ const SearchPageMobileVersion = React.createClass({
     }
   },
 
+  getRelatedTags: function() {
+    let companies_tags = this.props.data.related_tags.companies
+    let products_tags = this.props.data.related_tags.products
+    let collections_tags = this.props.data.related_tags.collections
+    switch(this.getSection()) {
+      case 'all':
+        return {
+          data: companies_tags.data.concat(products_tags.data).concat(collections_tags.data),
+          total: companies_tags.total + products_tags.total + collections_tags.total
+        }
+      case 'products':
+        return products_tags
+      case 'companies':
+        return companies_tags
+      case 'collections':
+        return collections_tags
+      default:
+        return {
+          total: 0,
+          data: []
+        }
+    }
+  },
+
   renderFilters: function() {
-    let relatedTags = this.props.data.related_tags;
+    let relatedTags = this.getRelatedTags();
     let hide = !relatedTags.total || relatedTags.total <= 0;
     let self = this;
 

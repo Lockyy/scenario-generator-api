@@ -16,7 +16,6 @@ module Fletcher
       @companies = companies(@terms)
       @collections = collections(@terms)
       @tags = tags(@terms)
-      @related_tags = related_tags
     end
 
     def results
@@ -40,8 +39,18 @@ module Fletcher
           products: data_hash(@products),
           collections: data_hash(@collections),
           related_tags: {
-              total: @related_tags.size,
-              data: @related_tags
+            companies: {
+              total: @companies_related_tags.size,
+              data: @companies_related_tags
+            },
+            products: {
+              total: @products_related_tags.size,
+              data: @products_related_tags
+            },
+            collections: {
+              total: @collections_related_tags.size,
+              data: @collections_related_tags
+            }
           },
           tags: {
               total: @tags.size,
@@ -60,7 +69,7 @@ module Fletcher
 
     def default_params
       {
-        filter_by: '',
+        filter_by: 'name',
         filter_by_tags: [],
         sorting: {
           companies: :relevance,
@@ -129,26 +138,13 @@ module Fletcher
 
     def collections(terms)
       search_collections = SearchCollections.new(@params[:filter_by], terms, @params[:sorting][:collections], @filter_tags, @params[:match_mode][:collections])
+      @collections_related_tags = search_collections.related_tags
       search_collections.results.visible(@user)
     end
 
     def tags(terms)
       return [] if @params[:search_string].blank?
       SearchTags.new(@params[:filter_by], terms, @params[:sorting][:tags], @filter_tags, @params[:match_mode][:tags]).results
-    end
-
-    def related_tags
-      section = @params[:section]
-
-      if section == 'products'
-        @products_related_tags
-      elsif section == 'companies'
-        @companies_related_tags
-      elsif section == 'tags' || @params[:search_string].blank?
-        []
-      else
-        ((@products_related_tags || []) + (@companies_related_tags || [])).uniq
-      end
     end
 
     def filtered_tags(filtered_tags)

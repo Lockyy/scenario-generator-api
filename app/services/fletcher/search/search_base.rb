@@ -23,8 +23,14 @@ module Fletcher
     private
 
     def obtain_related_tags(data)
-      @related_tags ||=
-        Tag.where(TagTaggable.where(taggable_id: data.map(&:id), taggable_type: data.first.class.name).map(&:tag_id))
+      @related_tags ||= Tag
+                          .joins(:tag_taggables)
+                          .where({
+                            tag_taggables: {
+                              taggable_id: data.map(&:id),
+                              taggable_type: data.first.class.name
+                            }
+                          }).uniq
     end
 
     def filter_by_tags(filter_tags, data)

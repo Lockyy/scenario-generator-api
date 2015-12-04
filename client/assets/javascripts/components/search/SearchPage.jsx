@@ -21,7 +21,11 @@ const SearchPage = React.createClass({
         companies: [],
         collections: [],
         tags: [],
-        related_tags: [],
+        related_tags: {
+          companies: { total: 0, data: [] },
+          products: { total: 0, data: [] },
+          collections: { total: 0, data: [] }
+        },
         filtered_tags: [],
         displayResults: false,
         match_mode: {
@@ -54,7 +58,10 @@ const SearchPage = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
-    this.performSearch(this.getSearchParams(newProps.params));
+    if( this.props.params.search_string != newProps.params.search_string ||
+        this.props.params.page != newProps.params.page) {
+      this.performSearch(this.getSearchParams(newProps.params));
+    }
   },
 
   componentDidMount: function() {

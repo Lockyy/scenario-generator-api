@@ -49,6 +49,10 @@ class Collection < ActiveRecord::Base
     order('created_at desc')
   end
 
+  scope :with_tags, ->(tags_names) do
+    joins(:tags).where('tags.name in (?)', tags_names).uniq
+  end
+
   def capitalize_name
     self.name = self.name.slice(0,1).capitalize + self.name.slice(1..-1)
   end

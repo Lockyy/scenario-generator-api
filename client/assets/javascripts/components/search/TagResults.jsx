@@ -133,7 +133,7 @@ const TagResults = React.createClass ({
         onClick={this.props.onClick}
         selected={this.getTagNames(this.props.selected)} />
     } else {
-      return this.props.emptyResults
+      return <div>{this.props.emptyResults}</div>
     }
   },
 
@@ -149,7 +149,6 @@ const TagResults = React.createClass ({
             { this.renderTopRight() }
           </div>
           <div className='tags-container'>
-            {this.props.noResultsTag}
             {this.renderTags()}
             {showAllTags}
           </div>

@@ -17,7 +17,11 @@ const SearchPageDesktopVersion = React.createClass({
         companies: [],
         collections: [],
         tags: [],
-        related_tags: [],
+        related_tags: {
+          companies: { total: 0, data: [] },
+          products: { total: 0, data: [] },
+          collections: { total: 0, data: [] }
+        },
         filtered_tags: [],
         params: {
           section: 'all'
@@ -69,7 +73,7 @@ const SearchPageDesktopVersion = React.createClass({
   },
 
   changeTab: function(section) {
-    this.changePageAndSearch({ section: section });
+    this.transitionTo(`/app/search/${section}/${this.getSearchString()}/${1}`, this.context.router.state.location.query);
   },
 
   onChangePage: function(page) {
@@ -87,14 +91,12 @@ const SearchPageDesktopVersion = React.createClass({
       return 'link ' + active;
     }
 
-    if(total || this.name == 'all') {
-      return (
-        <div  className={ build_link_class(name) }
-              onClick={ () => this.changeTab(name) }>
-          { displayName } ({total})
-        </div>
-      )
-    }
+    return (
+      <div  className={ build_link_class(name) }
+            onClick={ () => this.changeTab(name) }>
+        { displayName } ({total})
+      </div>
+    )
   },
 
   renderLeftBar: function() {
@@ -146,9 +148,7 @@ const SearchPageDesktopVersion = React.createClass({
 
   renderAllResults: function() {
     let noResultsTag = <div className='no-results'>We couldn’t find any results for your search.</div>;
-    if(this.props.data.total_results == 0 && !this.displaySection('products') &&
-      !this.displaySection('companies') &&
-      !this.displaySection('tags')) {
+    if(this.props.data.total_results == 0) {
       return noResultsTag;
     }
 
@@ -213,6 +213,7 @@ const SearchPageDesktopVersion = React.createClass({
         <Results
           type='products'
           data={this.props.data.products}
+          noResults={'No products found that match your search'}
           showImages={true}
           bottom='pagination'
           currentPage={this.props.params.page}
@@ -231,6 +232,7 @@ const SearchPageDesktopVersion = React.createClass({
         <Results
           type='companies'
           data={this.props.data.companies}
+          noResults={'No companies found that match your search'}
           showImages={true}
           bottom='pagination'
           currentPage={this.props.params.page}
@@ -254,6 +256,7 @@ const SearchPageDesktopVersion = React.createClass({
         <Results
           type='collections'
           data={this.props.data.collections}
+          noResults={'No collections found that match your search'}
           showImages={true}
           bottom='pagination'
           currentPage={this.props.params.page}
@@ -283,7 +286,7 @@ const SearchPageDesktopVersion = React.createClass({
           sorting={this.props.data.sorting.tags}
           searchTerm={this.getSearchString()}
           section={this.props.params.section}
-          emptyResults={<div className='no-results'>We couldn’t find any results for your search.</div>}
+          emptyResults={'No tags found that match your search'}
           onSetQuery={this.setQuery} />
       </div>
     )
@@ -304,8 +307,32 @@ const SearchPageDesktopVersion = React.createClass({
     }
   },
 
+  getRelatedTags: function() {
+    let companies_tags = this.props.data.related_tags.companies
+    let products_tags = this.props.data.related_tags.products
+    let collections_tags = this.props.data.related_tags.collections
+    switch(this.getSection()) {
+      case 'all':
+        return {
+          data: companies_tags.data.concat(products_tags.data).concat(collections_tags.data),
+          total: companies_tags.total + products_tags.total + collections_tags.total
+        }
+      case 'products':
+        return products_tags
+      case 'companies':
+        return companies_tags
+      case 'collections':
+        return collections_tags
+      default:
+        return {
+          total: 0,
+          data: []
+        }
+    }
+  },
+
   renderFilters: function() {
-    let relatedTags = this.props.data.related_tags;
+    let relatedTags = this.getRelatedTags();
     let hide = !relatedTags.total || relatedTags.total <= 0;
     let self = this;
 
