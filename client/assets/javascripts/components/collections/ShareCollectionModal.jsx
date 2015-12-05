@@ -240,7 +240,7 @@ const ShareCollectionModal = React.createClass ({
         <label className='results-list-padding'>
           <input  type='checkbox' name='emails' onClick={this.setSendEmailInvites}
                   checked={this.state.collection.send_email_invites} />
-  ￼       Notify users via email
+          Notify users via email
         </label>
       )
     }
