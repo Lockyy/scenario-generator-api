@@ -227,7 +227,7 @@ const AddToCollectionModal = React.createClass ({
             </div>
             <div className='collection-details'>
               Created by <a className='author'
-                            href={userProfileUrl}>{collection.user.name}</a>, {collection.display_date}
+                            href={userProfileUrl}>{collection.user.name}</a><span>, {collection.display_date}</span>
             </div>
           </span>
         </div>
@@ -241,7 +241,9 @@ const AddToCollectionModal = React.createClass ({
   },
 
   hasCollectionList: function() {
-    return $('div.collection-set').length;
+    return _.filter(this.state.searchedCollections, function(set) {
+      return set.total > 0;
+    }).length > 0;
   },
 
   renderAddToCollectionForm: function () {
@@ -249,7 +251,6 @@ const AddToCollectionModal = React.createClass ({
       <div className='row'>
         <form className='col-xs-12 form collection'
               ref='collection_form'>
-          {this.renderSearchBox()}
           <div className='grey collections-sets'>
             {this.renderCollectionLists()}
           </div>
@@ -271,10 +272,10 @@ const AddToCollectionModal = React.createClass ({
           </span>
           <a href="#" onClick={this.close} className='close'></a>
         </div>
-        {this.renderAddToCollectionForm()}
-        <div className='add-placeholder'>
-          {this.hasCollectionList() ? "" : "No results found."}
-        </div>
+        {this.renderSearchBox()}
+        { this.hasCollectionList() ?
+            this.renderAddToCollectionForm() : 
+            <span className="no-results">No results found.</span> }
       </Modal>
     )
   }
