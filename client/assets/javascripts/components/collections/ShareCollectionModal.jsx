@@ -107,13 +107,13 @@ const ShareCollectionModal = React.createClass ({
 
   addUser: function(user) {
     let users = this.state.unsaved_collection.users;
-    users.push(_.merge(user, {rank: 'owner', unsaved: true}))
+    users.push(_.merge(user, {rank: 'viewer', unsaved: true}))
     this.updateUsers(users);
   },
 
   addEmail: function(email) {
     let emails = this.state.unsaved_collection.emails;
-    emails.push({email: email, rank: 'owner', unsaved: true})
+    emails.push({email: email, rank: 'viewer', unsaved: true})
     this.updateEmails(emails);
   },
 
