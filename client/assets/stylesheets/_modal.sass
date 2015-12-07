@@ -19,6 +19,9 @@ $modal-padding: 25px
       z-index: 9999999
       .ReactModal__Content
         top: -100px !important
+        .no-results
+          display: block
+          margin: 15px 0 0 0
     .ReactModal__Content
       width: 500px
       @extend .col-xs-12
@@ -49,12 +52,15 @@ $modal-padding: 25px
             background-position: center
             background-size: contain
             display: inline-block
+      .row
+        padding: 2px
       .results-list-padding
         padding: 10px 0px
         border-top: 1px solid $grey
         margin: 0px
         display: block
       .collection
+        transition: all 0.3s
         .privacy-radios
           font-size: 13px
           color: $dark-grey

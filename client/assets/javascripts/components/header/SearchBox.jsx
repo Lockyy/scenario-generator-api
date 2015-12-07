@@ -43,11 +43,11 @@ const SearchBox = React.createClass ({
     this.setState(data);
     let resultsHolder = $(React.findDOMNode(this.refs.resultsHolder));
     let navbar = $('.navbar');
-    navbar.css('position', 'relative');
+    navbar.addClass('scrollable-header');
     resultsHolder.show();
     resultsHolder.on('clickoutside', function(){
       $(this).hide()
-      navbar.css('position', 'fixed');
+      navbar.removeClass('scrollable-header');
     });
   },
 
@@ -72,9 +72,9 @@ const SearchBox = React.createClass ({
   },
 
   closeDropdown: function() {
-    $('.search-container .form-control').val('')
-    $('.search-container .results-holder').hide()
-    $('.navbar').css('position', 'fixed')
+    $('.search-container .form-control').val('');
+    $('.search-container .results-holder').hide();
+    $('.navbar').removeClass('scrollable-header');
   },
 
   displayResults: function() {

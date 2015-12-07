@@ -10,6 +10,18 @@
   width: 100%
   z-index: 900
 
+  &.scrollable-header
+    position: absolute
+    &::before
+      display: block
+      position: absolute
+      width: 25px
+      height: 25px
+      transform: scale(2, 0.9)
+      top: 64px
+      left: 50%
+      content: url('icons/icon-dropdown-tri.svg')
+
   .container
     width: 95%
     padding: 5px
