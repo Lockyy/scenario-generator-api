@@ -242,7 +242,7 @@ const ShareCollectionModal = React.createClass ({
   renderSendEmailsCheckbox: function() {
     if(this.unsavedEmails().length + this.unsavedUsers().length > 0) {
       return (
-        <label className='results-list-padding'>
+        <label className='results-list-padding grey'>
           <input  type='checkbox' name='emails' onClick={this.setSendEmailInvites}
                   checked={this.state.collection.send_email_invites} />
           Notify users via email

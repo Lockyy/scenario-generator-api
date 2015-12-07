@@ -9,6 +9,29 @@ $inactive-color: $grey
 $background-color: white
 $active-color: $primary-red
 
+$checked-img: url('icons/collection-added.svg')
+
+=wh($wh)
+  width: $wh
+  height: $wh
+
+=check-helper($colorborder, $bg, $bgchecked, $box-size, $img)
+  input[type='checkbox']
+    & + span
+      &::before
+        +wh($box-size)
+        position: relative
+        content: ''
+        margin-right: 10px
+        background: $bg
+        color: transparent
+        border: solid 1px $colorborder
+    &:checked + span::before
+      background-image: $img
+      background-size: contain
+      background-color: $bgchecked
+      box-shadow: none
+
 label
   font-size: 13px
   color: $dark-grey
@@ -24,8 +47,7 @@ label
         &::before
           display: inline-block
           margin-right: 5px
-          width: $size
-          height: $size
+          +wh($size)
           content: '.'
           color: transparent
           background: $background-color
@@ -41,19 +63,6 @@ label
       border-radius: 0px
   &.blue
     color: $highlight-blue
-    input[type='checkbox']
-      & + span
-        &::before
-          background: white
-          width: 10px
-          height: 10px
-          content: ''
-          color: transparent
-          margin-right: 10px
-          position: relative
-          border: solid 1px $highlight-blue
-          box-shadow: none
-      &:checked + span::before
-        background-image: url('icons/collection-added.svg')
-        background-size: contain
-        background-color: $highlight-blue
+    +check-helper($highlight-blue, white, $highlight-blue, $size, $checked-img)
+  &.grey
+    +check-helper($grey, white, $grey, $size, $checked-img)
