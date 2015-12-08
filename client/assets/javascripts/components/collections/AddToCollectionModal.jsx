@@ -119,7 +119,7 @@ const AddToCollectionModal = React.createClass ({
     let sendNotification = function () {
       FluxNotificationsActions.showNotification({
         type: 'saved',
-        text: `${product.name} added to ${collection.name}`,
+        text: `You added <b>${product.name}</b> to the Collection <b>${collection.name}</b>`,
         subject: {
           id: collection.id,
           type: 'Collection',
@@ -131,8 +131,8 @@ const AddToCollectionModal = React.createClass ({
     if (product.id && collection.id) {
       FluxCollectionActions.addProductToCollection(product.id, collection.id, sendNotification);
       FluxCollectionActions.performSearch(this.state.searchTerm || '');
-      let addedCollections = this.state.addedCollections
-      addedCollections.push(collection.id)
+      let addedCollections = this.state.addedCollections;
+      addedCollections.push(collection.id);
       this.setState({addedCollections: addedCollections})
     }
   },

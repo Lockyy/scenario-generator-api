@@ -119,8 +119,8 @@ const CreateCollectionModal = React.createClass ({
   sendNotificationOnSubmission: function(collection) {
     FluxNotificationsActions.showNotification({
       type: 'saved',
+      text: `Your new Collection <b>${collection.name}</b> was successfully created!`,
       subject: {
-        id: collection.id,
         type: 'Collection',
         name: collection.name
       }
