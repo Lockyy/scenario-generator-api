@@ -13,6 +13,7 @@ module.exports = {
       borderTopColor: '#3d5560',
       backgroundColor: '#4dbcc6',
       borderWidth: '4px 0px 0px',
+      padding: '10px',
 
       isVisible: {
         opacity: 1

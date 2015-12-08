@@ -8,6 +8,8 @@ import ProductStore from '../../stores/ProductStore'
 import Reviews from './ReviewsMobileVersion'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
+import MoreOptionsDropdown from '../MoreOptionsDropdown';
+import MoreOptionsButton from '../MoreOptionsButton';
 import Tags from '../Tags';
 import Section from '../Section';
 import UrlHelper from '../../utils/helpers/UrlHelper'
@@ -105,43 +107,19 @@ const ProductPageMobileVersion = React.createClass({
     );
   },
 
-  toggleMoreOptionsDropdown: function() {
-    $(this.refs.moreOptionsDropdown.getDOMNode()).slideToggle()
-  },
-
-  renderMoreOptionsButton: function() {
-    return (
-      <div className='more-options-button' onClick={this.toggleMoreOptionsDropdown}/>
-    )
-  },
-
-  showCreateModal: function() {
-    debugger
-    this.showCreateCollectionModal({products: [this.props.data]})
-  },
-
-  renderMoreOptions: function() {
-    return (
-      <div ref='moreOptionsDropdown' className='more-options-dropdown background-grey bottom-margin shadow'>
-        <div className='vertical-padding dark-grey-bottom-border horizontal-padding centered' onClick={() => this.showAddToCollectionModal('')}>
-          Add to an existing collection
-        </div>
-        <div className='vertical-padding horizontal-padding centered' onClick={this.showCreateModal}>
-          Create new collection
-        </div>
-      </div>
-    )
-  },
-
   renderReviewButton: function() {
     return (
       <div className='links'>
         <a href={this.props.reviewButtonURL} className='btn btn-red btn-round'>
           { this.props.reviewButtonText }
         </a>
-        {this.renderMoreOptionsButton()}
+        <MoreOptionsButton/>
       </div>
     )
+  },
+
+  showCreateModal: function() {
+    this.showCreateCollectionModal({products: [this.props.data]})
   },
 
   renderInfo: function() {
@@ -167,7 +145,7 @@ const ProductPageMobileVersion = React.createClass({
             <Rating value={this.getProductData('rating')} name='rating'/>
             {this.totalReviews()} Review(s)
           </div>
-          <PriceRating value={this.getProductData('price')} name='rating'/>
+          <PriceRating value={this.getProductData('price')} name='rating' showScoreText='true'/>
           <div className="files">
             <a className="files-link" href='#show-attachments' onClick={this.props.showFiles}
               data-toggle="modal" data-target="#files-modal" >
@@ -207,11 +185,17 @@ const ProductPageMobileVersion = React.createClass({
     }
 
     let tags = this.getProductData('tags');
+
+    let rows = [
+    {description: "Add to an existing collection", action: this.showAddToCollectionModal},
+    {description: "Create new collection", action: this.showCreateModal}
+    ];
+
     return (
       <div className='mobile-version'>
         {this.renderTitle()}
         {this.renderReviewButton()}
-        {this.renderMoreOptions()}
+        <MoreOptionsDropdown rows={rows}/>
         {this.renderInfo()}
 
 
@@ -234,6 +218,7 @@ const ProductPageMobileVersion = React.createClass({
 
           <div className='col-xs-12 tags'>
             <Section hasPagination={false} title={"Collections"}>
+              <span className="no-collections">No collections have been created, yet. Why not make one yourself?</span>
               <div className='collection-buttons'>
                 <div className='btn btn-round btn-red' onClick={this.showCreateModal}>
                   Create New

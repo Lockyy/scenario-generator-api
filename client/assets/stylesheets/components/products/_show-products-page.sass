@@ -244,8 +244,8 @@
 
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px)
-
   .product.show
+    padding-top: 20px
     .modal-content, #links-modal, #files-modal
       .modal-content
         width: 95%
@@ -262,7 +262,19 @@
 
       .more-options-dropdown
         display: none
-
+        position: absolute
+        z-index: 1
+        width: 100%
+        background: $grey
+        .dropdown-row
+          color: $blackish-grey
+          border-bottom: 1px $dark-grey solid
+          cursor: pointer
+          padding: 20px
+          &:hover
+            background: $grey
+            transition: all 0.3s
+            
       & > .links
         display: flex
         align-items: center
@@ -307,7 +319,6 @@
             .rating-container
               float: left
               width: auto
-              margin-right: 15px
 
             &::after
               content: ''
@@ -332,10 +343,10 @@
               float: left
               background: $light-grey
               border: none
-              border: 1px dashed $blackish-grey
               border-radius: 0
               text-transform: none
               font-size: 12px
+              margin: 0
               padding: 15px
               color: $red
 

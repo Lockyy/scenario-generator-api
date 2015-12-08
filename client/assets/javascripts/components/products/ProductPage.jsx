@@ -95,7 +95,7 @@ const ProductPage = React.createClass({
     if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
       return 'Edit My Review'
     } else {
-      return 'Review this Product'
+      return 'Add a Review'
     }
   },
 
