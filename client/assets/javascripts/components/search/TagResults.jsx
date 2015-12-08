@@ -74,8 +74,9 @@ const TagResults = React.createClass ({
       case 'size':
         return this.getCountResultsMessage('top-right');
       case 'link':
+        let closeMethod = this.props.close ? this.props.close: function(){} ;
         return (
-          <Link className='top-right' to={`/app/search/tags/${this.props.searchTerm}/1`}>
+          <Link onClick={closeMethod} className='top-right' to={`/app/search/tags/${this.props.searchTerm}/1`}>
             See all {this.props.data.total}
           </Link>
         );

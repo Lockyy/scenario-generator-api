@@ -72,6 +72,7 @@ const SearchBox = React.createClass ({
   },
 
   closeDropdown: function() {
+    console.log("lala")
     $('.search-container .form-control').val('');
     $('.search-container .results-holder').hide();
     $('.navbar').removeClass('scrollable-header');
@@ -93,6 +94,7 @@ const SearchBox = React.createClass ({
             topRight='link'
             topClass='table-header full-width'
             className={'header'}
+            close={this.closeDropdown}
             searchTerm={this.state.data.search_string} />
           <Results
             type='companies'
@@ -101,6 +103,7 @@ const SearchBox = React.createClass ({
             topRight='link'
             topClass='table-header full-width'
             className={'header'}
+            close={this.closeDropdown}
             searchTerm={this.state.data.search_string} />
           <TagResults
             data={this.state.data.tags}
@@ -108,6 +111,7 @@ const SearchBox = React.createClass ({
             topRight={'link'}
             topClass='table-header full-width'
             max={10}
+            close={this.closeDropdown}
             hide={this.state.data.tags.total <= 0}
             searchTerm={this.state.data.search_string}
             onClick={this.onTagClick} />
@@ -116,6 +120,7 @@ const SearchBox = React.createClass ({
             data={this.state.data.collections}
             topLeft='type'
             topRight='link'
+            close={this.closeDropdown}
             topClass='table-header full-width'
             className={'header'}
             searchTerm={this.state.data.search_string}
