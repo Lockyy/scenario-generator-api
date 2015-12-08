@@ -9,7 +9,6 @@ import Reviews from './ReviewsMobileVersion'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
 import MoreOptionsDropdown from '../MoreOptionsDropdown';
-import MoreOptionsButton from '../MoreOptionsButton';
 import Tags from '../Tags';
 import Section from '../Section';
 import UrlHelper from '../../utils/helpers/UrlHelper'
@@ -113,7 +112,6 @@ const ProductPageMobileVersion = React.createClass({
         <a href={this.props.reviewButtonURL} className='btn btn-red btn-round'>
           { this.props.reviewButtonText }
         </a>
-        <MoreOptionsButton/>
       </div>
     )
   },

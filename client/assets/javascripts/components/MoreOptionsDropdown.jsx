@@ -4,24 +4,47 @@ import _ from 'lodash';
 const MoreOptionsDropdown = React.createClass({
   displayName: 'MoreOptions',
 
-  getDefaultProps: function getDefaultProps() {
+  getInitialState: function getInitialState() {
     return {
-      name: 'more-options'
-    }
+      visible: false
+    };
   },
 
-  
+  getDefaultProps: function getDefaultProps() {
+    return {
+      name: 'more-options',
+      rows: []
+    };
+  },
+
+  toggleDropdown: function() {
+    this.setState({
+      visible: !this.state.visible
+    });
+  },
+
+	handleClick: function() {
+		this.toggleDropdown();
+	},
+
   renderMoreOptions: function(rows) {
     let dropdownRows = _.map(this.props.rows, function(row) {
-      return (
-          <div className="dropdown-row" onClick={row.action}>
-            {row.description}
-          </div>
+    return (
+      <div className="dropdown-row" 
+					 onClick={row.action}>
+        {row.description}
+      </div>
       );
     });
     return (
-      <div ref='moreOptionsDropdown' className='more-options-dropdown background-grey bottom-margin shadow'>
-        {dropdownRows}
+      <div className="more-options-container">
+        <button className='more-options-button' 
+								handleClick={this.handleClick}/>
+        <div className={this.state.visible ? 
+						'more-options-dropdown' :
+						'more-options-dropdown hidden'}>
+          {dropdownRows}
+        </div>
       </div>
     );
   },
@@ -37,7 +60,8 @@ const MoreOptionsDropdown = React.createClass({
 })
 
 MoreOptionsDropdown.propTypes = {
-  name: React.PropTypes.string.isRequired
+  name: React.PropTypes.string.isRequired,
+  rows: React.PropTypes.array.isRequired
 };
 
 export default MoreOptionsDropdown;
