@@ -193,7 +193,7 @@ const ProductPageMobileVersion = React.createClass({
       <div className='mobile-version'>
         {this.renderTitle()}
         {this.renderReviewButton()}
-        <MoreOptionsDropdown rows={rows}/>
+        <MoreOptionsDropdown custom="top-dropdown" rows={rows}/>
         {this.renderInfo()}
 
 

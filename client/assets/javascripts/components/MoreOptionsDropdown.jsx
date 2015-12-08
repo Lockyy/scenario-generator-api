@@ -13,7 +13,8 @@ const MoreOptionsDropdown = React.createClass({
   getDefaultProps: function getDefaultProps() {
     return {
       name: 'more-options',
-      rows: []
+      rows: [],
+      custom: ''
     };
   },
 
@@ -36,13 +37,14 @@ const MoreOptionsDropdown = React.createClass({
       </div>
       );
     });
+    let customClass = this.props.custom;
     return (
       <div className="more-options-container">
         <button className='more-options-button' 
-								handleClick={this.handleClick}/>
+								onClick={this.handleClick}/>
         <div className={this.state.visible ? 
-						'more-options-dropdown' :
-						'more-options-dropdown hidden'}>
+						'more-options-dropdown ' + customClass :
+						'more-options-dropdown closed '}>
           {dropdownRows}
         </div>
       </div>

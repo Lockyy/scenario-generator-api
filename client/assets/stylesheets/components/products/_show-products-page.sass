@@ -259,9 +259,28 @@
 
     .mobile-version
       display: block
+      .more-options-button
+        position: relative
+        left: 80%
+        bottom: 50px
+        display: inline-block
+        background-image: url('icons/more.svg')
+        width: 30px
+        height: 30px
+        background-repeat: no-repeat
+        background-position: center
+        background-color: $light-grey
+        border-radius: 45px
+        background-size: 20px 20px
+        border: none
 
       .more-options-dropdown
-        display: none
+        transition: all 1s
+        overflow: hidden
+        &.closed
+          height: 0px
+        &.top-dropdown
+          height: 121px
         position: absolute
         z-index: 1
         width: 100%
@@ -272,7 +291,7 @@
           cursor: pointer
           padding: 20px
           &:hover
-            background: $grey
+            background: $dark-grey
             transition: all 0.3s
             
       & > .links
@@ -281,19 +300,7 @@
         justify-content: center
         margin-top: 50px
         margin-bottom: 20px
-        .more-options-button
-          position: relative
-          left: 20px
-          display: inline-block
-          background-image: url('icons/more.svg')
-          width: 30px
-          height: 30px
-          background-repeat: no-repeat
-          background-position: center
-          background-color: $light-grey
-          border-radius: 45px
-          background-size: 20px 20px
-
+        
       .info-row
         display: block
         padding-bottom: 0
