@@ -5,9 +5,7 @@ import           { Navigation } from 'react-router'
 import       NotificationSystem from 'react-notification-system';
 import       NotificationsStore from '../../stores/NotificationsStore'
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
-import       NotificationStyles from './NotificationStyles'
 import  { ViewCollectionMixin } from '../collections/ViewCollectionModal'
-
 
 const Notifications = React.createClass({
   displayName: 'Notifications',
@@ -106,9 +104,7 @@ const Notifications = React.createClass({
   },
 
   render: function() {
-    return <NotificationSystem
-              style={NotificationStyles}
-              ref="notificationSystem" />
+    return <NotificationSystem allowHTML={true} style={false} ref="notificationSystem" />
   }
 })
 
