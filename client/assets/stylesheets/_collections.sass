@@ -1,4 +1,7 @@
 @import 'variables'
+=mw
+  width: 100%
+  float: left
 
 .collections-container
   .btn
@@ -48,12 +51,20 @@
     .name
       @include make-xs-column(8)
       @include make-sm-column(6)
+      +mw
     .owner
       @include make-xs-column(4)
       @include make-sm-column(3)
+      +mw
+    .user-link
+      color: $red
     .date
-      @extend .hidden-xs
       @include make-sm-column(3)
+      &.mobile
+        padding: 0
+    .includes
+      @include make-sm-column(12)
+      float: left
 
 .form.collection
   .attached-fields

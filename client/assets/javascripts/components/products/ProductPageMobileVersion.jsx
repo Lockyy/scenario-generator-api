@@ -15,6 +15,7 @@ import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
 import CollectionsCollection from '../collections/CollectionsCollection';
+import CollectionStore from '../../stores/CollectionStore'
 import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
 import { CreateCollectionMixin } from '../collections/CreateCollectionModal';
 
@@ -216,7 +217,6 @@ const ProductPageMobileVersion = React.createClass({
 
           <div className='col-xs-12 tags'>
             <Section hasPagination={false} title={"Collections"}>
-              <span className="no-collections">No collections have been created, yet. Why not make one yourself?</span>
               <div className='collection-buttons'>
                 <div className='btn btn-round btn-red' onClick={this.showCreateModal}>
                   Create New
@@ -226,7 +226,8 @@ const ProductPageMobileVersion = React.createClass({
                 </div>
               </div>
               <CollectionsCollection
-                product={this.props.data} />
+                product={this.props.data}
+                mobile="true"/>
             </Section>
           </div>
 
