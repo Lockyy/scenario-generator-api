@@ -265,7 +265,7 @@ describe 'Collection sharing' do
                   ])
                 }.to change {
                   invited_sharee = @collection.invited_sharees.find_by(email: new_email)
-                  invited_sharee && invited_sharee.rank == user_1_rank
+                  invited_sharee && invited_sharee[:rank] == user_1_rank
                 }.to(true)
               end
 
@@ -279,7 +279,7 @@ describe 'Collection sharing' do
                   ])
                 }.to change {
                   invited_sharee = @collection.invited_sharees.find_by(email: new_email_2)
-                  invited_sharee && invited_sharee.rank == user_2_rank
+                  invited_sharee && invited_sharee[:rank] == user_2_rank
                 }.to(true)
               end
             end

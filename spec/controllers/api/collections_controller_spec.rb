@@ -128,7 +128,7 @@ describe Api::CollectionsController do
                 products: [@new_product.id],
                 name: 'New Title',
                 description: 'New Description',
-                privacy: 'visible',
+                privacy: 'hidden',
                 format: :json)
           @body = JSON.parse(response.body)
         end
@@ -148,7 +148,7 @@ describe Api::CollectionsController do
         end
 
         it 'updates the collection privacy' do
-          expect(@collection.reload.privacy).to eq('visible')
+          expect(@collection.reload.privacy).to eq('hidden')
         end
       end
 
@@ -197,12 +197,12 @@ describe Api::CollectionsController do
 
         it 'has the new ranks in the api response' do
           expect(@body['users'].map {|u| {id: u['id'], rank: u['rank']}}).to eq [
-            { id: @user_editor.id, rank: 1 },
-            { id: @user_viewer.id, rank: 0 },
+            { id: @user_editor.id, rank: 'collaborator' },
+            { id: @user_viewer.id, rank: 'viewer' },
           ]
           expect(@body['emails'].map {|u| {email: u['email'], rank: u['rank']}}).to eq [
-            { email: @email_1, rank: 1 },
-            { email: @email_2, rank: 0 },
+            { email: @email_1, rank: 'collaborator' },
+            { email: @email_2, rank: 'viewer' },
           ]
         end
       end
@@ -244,6 +244,8 @@ describe Api::CollectionsController do
       describe 'PATCH #update' do
         before do
           @new_product = create(:product, :with_reviews)
+          @old_name = @collection.name
+          @old_description = @collection.description
           patch(:update,
                 id: @collection.id,
                 products: [@new_product.id],
@@ -254,7 +256,25 @@ describe Api::CollectionsController do
           @body = JSON.parse(response.body)
         end
 
-        it_behaves_like 'an API request that returns a 401'
+        it_behaves_like 'an API that returns a collection'
+
+        it 'adds the new product to the collection' do
+          expect(@collection.reload.products).to eq([@new_product])
+        end
+
+        it 'does not update the collection name' do
+          expect(@collection.reload.name).to_not eq('New Title')
+          expect(@collection.reload.name).to eq @old_name
+        end
+
+        it 'does not update the collection description' do
+          expect(@collection.reload.description).to_not eq('New Description')
+          expect(@collection.reload.description).to eq @old_description
+        end
+
+        it 'does not update the collection privacy' do
+          expect(@collection.reload.privacy).to eq('hidden')
+        end
       end
 
       describe 'DELETE #destroy' do
@@ -462,7 +482,7 @@ describe Api::CollectionsController do
                 products: [@new_product.id],
                 name: 'New Title',
                 description: 'New Description',
-                privacy: 'visible',
+                privacy: 'hidden',
                 format: :json)
           @body = JSON.parse(response.body)
         end
@@ -482,7 +502,7 @@ describe Api::CollectionsController do
         end
 
         it 'updates the collection privacy' do
-          expect(@collection.reload.privacy).to eq('visible')
+          expect(@collection.reload.privacy).to eq('hidden')
         end
       end
 
@@ -521,8 +541,8 @@ describe Api::CollectionsController do
 
         it 'has the new ranks in the api response' do
           expect(@body['users'].map {|u| {id: u['id'], rank: u['rank']}}).to eq [
-            { id: @user_editor.id, rank: 1 },
-            { id: @user_viewer.id, rank: 0 },
+            { id: @user_editor.id, rank: 'collaborator' },
+            { id: @user_viewer.id, rank: 'viewer' },
           ]
         end
       end
@@ -564,17 +584,37 @@ describe Api::CollectionsController do
       describe 'PATCH #update' do
         before do
           @new_product = create(:product, :with_reviews)
+          @old_name = @collection.name
+          @old_description = @collection.description
           patch(:update,
                 id: @collection.id,
                 products: [@new_product.id],
                 name: 'New Title',
                 description: 'New Description',
-                privacy: 'visible',
+                privacy: 'hidden',
                 format: :json)
           @body = JSON.parse(response.body)
         end
 
-        it_behaves_like 'an API request that returns a 401'
+        it_behaves_like 'an API that returns a collection'
+
+        it 'adds the new product to the collection' do
+          expect(@collection.reload.products).to eq([@new_product])
+        end
+
+        it 'does not update the collection name' do
+          expect(@collection.reload.name).to_not eq('New Title')
+          expect(@collection.reload.name).to eq @old_name
+        end
+
+        it 'does not update the collection description' do
+          expect(@collection.reload.description).to_not eq('New Description')
+          expect(@collection.reload.description).to eq @old_description
+        end
+
+        it 'does not update the collection privacy' do
+          expect(@collection.reload.privacy).to eq('visible')
+        end
       end
 
       describe 'DELETE #destroy' do

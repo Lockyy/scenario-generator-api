@@ -71,7 +71,7 @@ const SearchPageMobileVersion = React.createClass({
     }
 
     return (
-      <div className={ build_link_class(name) } onClick={ () => this.onChangeTab(name) }>
+      <div className={ build_link_class(name) } onClick={ () => this.props.onChangeTab(name) }>
         { displayName } ({total})
       </div>
     );
@@ -89,29 +89,6 @@ const SearchPageMobileVersion = React.createClass({
         { this.renderSideLink(totalCompanies, 'companies', 'Companies')}
         { this.renderSideLink(totalTags, 'tags', 'Tags')}
         { this.renderSideLink(totalCollections, 'collections', 'Collections')}
-      </div>
-    )
-  },
-
-  renderCollectionResults: function() {
-    return (
-      <div className='col-xs-6'>
-        <Results
-          type='collections'
-          data={this.props.data.collections}
-          bottom='pagination'
-          currentPage={this.props.params.page}
-          topLeft='type'
-          topRight='dropdown'
-          dropdownOptions={{
-            relevance: 'Relevance',
-            latest: 'Latest',
-            alphabetical_order: 'Alphabetical order',
-          }}
-          sorting={this.props.data.sorting.collections}
-          emptyResults={<div className='no-results'>We couldn’t find any results for your search.</div>}
-          onChangePage={this.props.onChangePage}
-          onChangeSort={this.props.onChangeSort} />
       </div>
     )
   },
@@ -176,7 +153,7 @@ const SearchPageMobileVersion = React.createClass({
 
   renderCollectionResults: function() {
     return (
-      <div className='col-xs-6'>
+      <div className='col-xs-12'>
         <Results
           type='collections'
           data={this.props.data.collections}
