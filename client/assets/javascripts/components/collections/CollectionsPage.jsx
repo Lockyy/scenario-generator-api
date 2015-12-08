@@ -83,7 +83,7 @@ const CollectionsPage = React.createClass({
     this.changeQuery({ page: page });
   },
 
-  onSetQuery: function(query) {
+  onChangeSort: function(query) {
     this.changeQuery(query)
   },
 
@@ -127,12 +127,12 @@ const CollectionsPage = React.createClass({
           <CollectionsPageDesktop {...data}
             onSearchInput={this.onSearchInput} onSubmit={this.onSubmit}
             onPerformSearch={this.performSearch} page={this.getPage()}
-            onSetQuery={this.onSetQuery} onChangePage={this.onChangePage}
+            onChangeSort={this.onChangeSort} onChangePage={this.onChangePage}
             searchString={this.getSearchString()} />
           <CollectionsPageMobile {...data}
             onSearchInput={this.onSearchInput} onSubmit={this.onSubmit}
             onPerformSearch={this.performSearch} page={this.getPage()}
-            onSetQuery={this.onSetQuery} onChangePage={this.onChangePage}
+            onChangeSort={this.onChangeSort} onChangePage={this.onChangePage}
             searchString={this.getSearchString()} />
         </form>
       </div>

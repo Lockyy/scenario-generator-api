@@ -23,7 +23,7 @@ const TagResults = React.createClass ({
   addSortParam: function(sortDescription) {
     let match_mode = _.contains(this.SORT_FIELDS_SIMPLE_SEARCH, sortDescription) ? 'any' : 'all';
     let query = { sorting: { tags: sortDescription }, match_mode: { tags: match_mode } }
-    this.props.onSetQuery(query)
+    this.props.onChangeSort(query)
   },
 
   dropdownOptions: function() {
@@ -115,6 +115,25 @@ const TagResults = React.createClass ({
     }
   },
 
+  renderBottom: function() {
+    switch(this.props.bottom) {
+      case 'button':
+        return this.renderButton();
+    }
+  },
+
+  renderButton: function() {
+    if(this.props.data.total < this.getMaxDisplayedData()) { return false }
+
+    return (
+      <div className='show-more'>
+        <Link to={`/app/search/tags/${this.props.searchTerm}/1`} className='btn btn-grey btn-round'>
+          Show More
+        </Link>
+      </div>
+    )
+  },
+
   getTagNames: function(tags){
     return _.collect(tags, function(tag) { return tag.name })
   },
@@ -151,6 +170,7 @@ const TagResults = React.createClass ({
           <div className='tags-container'>
             {this.renderTags()}
             {showAllTags}
+            {this.renderBottom()}
           </div>
         </div>
       )

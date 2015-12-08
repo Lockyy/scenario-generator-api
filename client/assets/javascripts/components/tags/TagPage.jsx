@@ -82,7 +82,7 @@ const TagPage = React.createClass({
     FluxCurrentUserActions.removeTag({name: this.tag()});
   },
 
-  changeSort: function(newSortParams) {
+  onChangeSort: function(newSortParams) {
     this.transitionTo(`/app/tag/${this.tag()}/products/1`, { sorting: newSortParams.sorting.products });
   },
 
@@ -134,7 +134,7 @@ const TagPage = React.createClass({
           sorting={this.sorting()}
 
           onChangePage={this.changePage}
-          onSetQuery={this.changeSort} />
+          onChangeSort={this.onChangeSort} />
       </div>
     )
   },
