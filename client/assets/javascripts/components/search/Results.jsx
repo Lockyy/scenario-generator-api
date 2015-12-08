@@ -459,7 +459,7 @@ const Results = React.createClass ({
 
   render: function() {
     return (
-      <div className={`results ${this.props.containerClass || ''}`}>
+      <div className={`results ${this.props.className || ''}`}>
         { this.renderTop() }
         { this.renderResults() }
         { this.renderBottom() }

@@ -92,7 +92,7 @@ const SearchBox = React.createClass ({
             topLeft='type'
             topRight='link'
             topClass='table-header full-width'
-            containerClass={'header'}
+            className={'header'}
             searchTerm={this.state.data.search_string} />
           <Results
             type='companies'
@@ -100,11 +100,11 @@ const SearchBox = React.createClass ({
             topLeft='type'
             topRight='link'
             topClass='table-header full-width'
-            containerClass={'header'}
+            className={'header'}
             searchTerm={this.state.data.search_string} />
           <TagResults
             data={this.state.data.tags}
-            containerClass={'header'}
+            className={'header'}
             topRight={'link'}
             topClass='table-header full-width'
             max={10}
@@ -117,7 +117,7 @@ const SearchBox = React.createClass ({
             topLeft='type'
             topRight='link'
             topClass='table-header full-width'
-            containerClass={'header'}
+            className={'header'}
             searchTerm={this.state.data.search_string}
             onClick={this.closeDropdown} />
         </div>
