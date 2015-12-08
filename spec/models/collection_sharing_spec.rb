@@ -67,7 +67,7 @@ describe 'Collection sharing' do
         describe "with user 1 at rank #{user_1_rank}" do
           [0,1,2].each do |user_2_rank|
             describe "with user 2 at rank #{user_2_rank}" do
-              it 'correctly sets user 1 to rank #{user_1_rank}' do
+              it "correctly sets user 1 to rank #{user_1_rank}" do
                 expect {
                   @collection.share([
                     {id: @users[0].id, rank: user_1_rank},
@@ -78,7 +78,7 @@ describe 'Collection sharing' do
                 }.to(true)
               end
 
-              it 'correctly sets user 2 to rank #{user_2_rank}' do
+              it "correctly sets user 2 to rank #{user_2_rank}" do
                 expect {
                   @collection.share([
                     {id: @users[0].id, rank: user_1_rank},
