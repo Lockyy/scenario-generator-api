@@ -17,7 +17,11 @@ const SearchPageDesktopVersion = React.createClass({
         companies: [],
         collections: [],
         tags: [],
-        related_tags: [],
+        related_tags: {
+          companies: { total: 0, data: [] },
+          products: { total: 0, data: [] },
+          collections: { total: 0, data: [] }
+        },
         filtered_tags: [],
         params: {
           section: 'all'
@@ -34,67 +38,53 @@ const SearchPageDesktopVersion = React.createClass({
           tags: 'alphabetical_order',
           collections: 'alphabetical_order'
         }
-      },
-      onPerformSearch: function(data) {}
+      }
     }
   },
 
-  performSearch: function(data) {
-    this.props.onPerformSearch(data);
-  },
+  // Handling data
+  ////////////////
 
-  getSection: function() {
-    let params = this.props.params || {};
-    return params.section || (_.isEmpty(params) || _.isEmpty(params.section) ? 'all' : params.section);
-  },
-
-  getSearchString: function() {
-    let params = this.props.params || {};
-    return _.isEmpty(params.search_string) ? '' : params.search_string;
-  },
-
-  changePageAndSearch: function(params) {
-    let search_string = params.search_string || this.getSearchString();
-    let section = params.section || this.getSection();
-    let page = params.page || 1;
-
-    let query = this.context.router.state.location.query;
-    this.performSearch(this.getSearchParams({ search_string: search_string, page: page, section: section}));
-
-    if (search_string && section && page) {
-      this.transitionTo(`/app/search/${section}/${search_string}/${page}`, query);
-    } else {
-      this.transitionTo(`/app/search/${section}`, query);
+  getRelatedTags: function() {
+    let companies_tags = this.props.data.related_tags.companies
+    let products_tags = this.props.data.related_tags.products
+    let collections_tags = this.props.data.related_tags.collections
+    switch(this.props.activeSection) {
+      case 'all':
+        return {
+          data: companies_tags.data.concat(products_tags.data).concat(collections_tags.data),
+          total: companies_tags.total + products_tags.total + collections_tags.total
+        }
+      case 'products':
+        return products_tags
+      case 'companies':
+        return companies_tags
+      case 'collections':
+        return collections_tags
+      default:
+        return {
+          total: 0,
+          data: []
+        }
     }
   },
 
-  changeTab: function(section) {
-    this.changePageAndSearch({ section: section });
-  },
-
-  onChangePage: function(page) {
-    this.changePageAndSearch({ page: page });
-  },
-
-  displaySection: function(sectionName) {
-    return (this.getSection() == sectionName || this.getSection() == 'all')
-  },
+  // Rendering
+  ////////////
 
   renderSideLink: function(total, name, displayName) {
-    let section = this.getSection();
+    let section = this.props.activeSection;
     function build_link_class(name) {
       let active = section == name ? 'active' : '';
       return 'link ' + active;
     }
 
-    if(total || this.name == 'all') {
-      return (
-        <div  className={ build_link_class(name) }
-              onClick={ () => this.changeTab(name) }>
-          { displayName } ({total})
-        </div>
-      )
-    }
+    return (
+      <div  className={ build_link_class(name) }
+            onClick={ () => this.props.onChangeTab(name) }>
+        { displayName } ({total})
+      </div>
+    )
   },
 
   renderLeftBar: function() {
@@ -123,32 +113,9 @@ const SearchPageDesktopVersion = React.createClass({
     )
   },
 
-  setQuery: function(query) {
-    let _data = _.merge(this.getSearchParams(this.props.data), query);
-    this.transitionTo(this.context.router.state.location.pathname, _data.sorting);
-    this.performSearch(_data);
-  },
-
-  getSearchParams: function(data){
-    data = _.merge({}, data);
-
-    let _data = {
-      search_string: data.search_string,
-      page: data.page,
-      filter_by: data.filter_by,
-      filtered_tags: data.filtered_tags,
-      section: data.section,
-      sorting: data.sorting,
-      match_mode: data.match_mode
-    };
-    return _.merge(_data, this.context.router.state.location.query);
-  },
-
   renderAllResults: function() {
     let noResultsTag = <div className='no-results'>We couldn’t find any results for your search.</div>;
-    if(this.props.data.total_results == 0 && !this.displaySection('products') &&
-      !this.displaySection('companies') &&
-      !this.displaySection('tags')) {
+    if(this.props.data.total_results == 0) {
       return noResultsTag;
     }
 
@@ -158,18 +125,20 @@ const SearchPageDesktopVersion = React.createClass({
           type='products'
           data={this.props.data.products}
           bottom='button'
+          className={this.props.data.products.total <= 0 ? 'hidden' : null}
           showImages={true}
-          searchTerm={this.getSearchString()}
+          searchTerm={this.props.searchString}
           topLeft='type'
           topRight='dropdown'
           sorting={this.props.data.sorting.products}
-          onSetQuery={this.setQuery} />
+          onChangeSort={this.props.onChangeSort} />
         <Results
           type='companies'
           data={this.props.data.companies}
           bottom='button'
+          className={this.props.data.companies.total <= 0 ? 'hidden' : null}
           showImages={true}
-          searchTerm={this.getSearchString()}
+          searchTerm={this.props.searchString}
           topLeft='type'
           topRight='dropdown'
           dropdownOptions={{
@@ -178,22 +147,25 @@ const SearchPageDesktopVersion = React.createClass({
             alphabetical_order: 'Alphabetical order',
           }}
           sorting={this.props.data.sorting.companies}
-          onSetQuery={this.setQuery} />
+          onChangeSort={this.props.onChangeSort} />
         <TagResults
           data={this.props.data.tags}
-          hide={!this.displaySection('tags')}
           topRight={'dropdown'}
+          className={this.props.data.tags.total <= 0 ? 'hidden' : null}
+          max={50}
+          bottom={'button'}
           sorting={this.props.data.sorting.tags}
-          searchTerm={this.getSearchString()}
-          section={this.getSection()}
+          searchTerm={this.props.searchString}
+          section={this.props.activeSection}
           emptyResults={noResultsTag}
-          onSetQuery={this.setQuery} />
+          onChangeSort={this.props.onChangeSort} />
         <Results
           type='collections'
           data={this.props.data.collections}
           bottom='button'
+          className={this.props.data.collections.total <= 0 ? 'hidden' : null}
           showImages={true}
-          searchTerm={this.getSearchString()}
+          searchTerm={this.props.searchString}
           topLeft='type'
           topRight='dropdown'
           dropdownOptions={{
@@ -202,7 +174,7 @@ const SearchPageDesktopVersion = React.createClass({
             alphabetical_order: 'Alphabetical order',
           }}
           sorting={this.props.data.sorting.collections}
-          onSetQuery={this.setQuery} />
+          onChangeSort={this.props.onChangeSort} />
       </div>
     )
   },
@@ -213,14 +185,15 @@ const SearchPageDesktopVersion = React.createClass({
         <Results
           type='products'
           data={this.props.data.products}
+          noResults={'No products found that match your search'}
           showImages={true}
           bottom='pagination'
           currentPage={this.props.params.page}
           topLeft='type'
           topRight='dropdown'
           sorting={this.props.data.sorting.products}
-          onChangePage={this.onChangePage}
-          onSetQuery={this.setQuery} />
+          onChangePage={this.props.onChangePage}
+          onChangeSort={this.props.onChangeSort} />
       </div>
     )
   },
@@ -231,6 +204,7 @@ const SearchPageDesktopVersion = React.createClass({
         <Results
           type='companies'
           data={this.props.data.companies}
+          noResults={'No companies found that match your search'}
           showImages={true}
           bottom='pagination'
           currentPage={this.props.params.page}
@@ -242,8 +216,8 @@ const SearchPageDesktopVersion = React.createClass({
             alphabetical_order: 'Alphabetical order',
           }}
           sorting={this.props.data.sorting.companies}
-          onChangePage={this.onChangePage}
-          onSetQuery={this.setQuery} />
+          onChangePage={this.props.onChangePage}
+          onChangeSort={this.props.onChangeSort} />
       </div>
     )
   },
@@ -254,6 +228,7 @@ const SearchPageDesktopVersion = React.createClass({
         <Results
           type='collections'
           data={this.props.data.collections}
+          noResults={'No collections found that match your search'}
           showImages={true}
           bottom='pagination'
           currentPage={this.props.params.page}
@@ -267,8 +242,8 @@ const SearchPageDesktopVersion = React.createClass({
           bottomLink={'/app/directory/collections'}
           linkText={'Browse all public collections'}
           sorting={this.props.data.sorting.collections}
-          onChangePage={this.onChangePage}
-          onSetQuery={this.setQuery} />
+          onChangePage={this.props.onChangePage}
+          onChangeSort={this.props.onChangeSort} />
       </div>
     )
   },
@@ -278,19 +253,18 @@ const SearchPageDesktopVersion = React.createClass({
       <div className='col-xs-6'>
         <TagResults
           data={this.props.data.tags}
-          hide={!this.displaySection('tags')}
           topRight={'dropdown'}
           sorting={this.props.data.sorting.tags}
-          searchTerm={this.getSearchString()}
+          searchTerm={this.props.searchString}
           section={this.props.params.section}
-          emptyResults={<div className='no-results'>We couldn’t find any results for your search.</div>}
-          onSetQuery={this.setQuery} />
+          emptyResults={'No tags found that match your search'}
+          onChangeSort={this.props.onChangeSort} />
       </div>
     )
   },
 
   renderResults: function() {
-    switch(this.getSection()) {
+    switch(this.props.activeSection) {
       case 'all':
         return this.renderAllResults()
       case 'products':
@@ -305,29 +279,9 @@ const SearchPageDesktopVersion = React.createClass({
   },
 
   renderFilters: function() {
-    let relatedTags = this.props.data.related_tags;
+    let relatedTags = this.getRelatedTags();
     let hide = !relatedTags.total || relatedTags.total <= 0;
-    let self = this;
-
-    let tagEvent = function(e){
-      let selectedTags = self.props.data.filtered_tags.data;
-      let selectedTag = { 'name': e.target.textContent };
-      let tagAlreadySelected = _.findWhere(selectedTags, selectedTag);
-      let className = 'selected';
-
-      if(tagAlreadySelected) {
-        _.remove(selectedTags, function(tag) {
-          return tag == tagAlreadySelected;
-        });
-        $(e.target).removeClass(className );
-      } else {
-        selectedTags.push({name: e.target.textContent});
-        $(e.target).addClass(className );
-      }
-
-      let data = self.getSearchParams(_.merge({},self.props.data,{section: self.props.params.section, page: '1'}));
-      self.performSearch(data);
-    };
+    let _this = this;
 
     let filteredTags = this.props.data.filtered_tags.data;
     return (
@@ -337,16 +291,14 @@ const SearchPageDesktopVersion = React.createClass({
           data={relatedTags}
           hide={hide}
           showLinkAllTags={true}
-          onClick={tagEvent}
+          onClick={this.props.onClickFilterTag}
           selected={filteredTags}
-          searchTerm={this.getSearchString()} />
+          searchTerm={this.props.searchString} />
       </div>
     )
   },
 
   render: function() {
-    let search_string = this.props.data.search_string;
-
     return (
       <div className='desktop-version'>
         <div className='row'>
@@ -354,7 +306,7 @@ const SearchPageDesktopVersion = React.createClass({
             <input
               className='search-box'
               ref='inputBox'
-              value={ search_string }
+              value={ this.props.searchString }
               onChange={ this.props.onSearchInput } disabled/>
           </div>
         </div>

@@ -204,7 +204,7 @@ const CollaboratorCollectionModal = React.createClass ({
       return (
         <Results
           type='sharee-users'
-          containerClass='sharee'
+          className='sharee'
           onRemove={this.removeUser}
           onUpdate={this.updateUser}
           data={{data: this.state.displayedUsers}} />

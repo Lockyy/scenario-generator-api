@@ -41,9 +41,23 @@ end
 
 
 json.related_tags do
-  json.total @results[:related_tags][:total]
-  json.data  @results[:related_tags][:data] do |tag|
-    json.(tag, :id, :name, :slug)
+  json.companies do
+    json.total @results[:related_tags][:companies][:total]
+    json.data  @results[:related_tags][:companies][:data] do |tag|
+      json.(tag, :id, :name, :slug)
+    end
+  end
+  json.products do
+    json.total @results[:related_tags][:products][:total]
+    json.data  @results[:related_tags][:products][:data] do |tag|
+      json.(tag, :id, :name, :slug)
+    end
+  end
+  json.collections do
+    json.total @results[:related_tags][:collections][:total]
+    json.data  @results[:related_tags][:collections][:data] do |tag|
+      json.(tag, :id, :name, :slug)
+    end
   end
 end
 

@@ -8,6 +8,12 @@ module Fletcher
 
     private
 
+    def obtain_related_tags(data)
+      @related_tags ||= Tag
+                          .joins(:reviews)
+                          .where({reviews: { product_id: data.map(&:id) }}).uniq
+    end
+
     def search_by(attribute, terms)
       simple_search = SORT_FIELDS_SIMPLE_SEARCH.include?(@sort_description) || @match_mode == 'all'
       @search_by = simple_search ? build_search_by : build_full_text_search_by

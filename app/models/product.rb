@@ -53,7 +53,7 @@ class Product < ActiveRecord::Base
   end
 
   scope :with_tags, ->(tags_names) do
-    joins(:tags).where('tags.name in (?)', tags_names)
+    joins(:tags).where('tags.name in (?)', tags_names).uniq
   end
 
   scope :rating, -> rating_order do

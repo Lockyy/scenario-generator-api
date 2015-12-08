@@ -12,7 +12,6 @@ module Fletcher
       @search_by[attribute].call(terms)
     end
 
-
     def build_full_text_search_by
       default_search_by = Hash.new(lambda { |terms|
         ::Company.search_by_name_and_description(terms.join(' '))

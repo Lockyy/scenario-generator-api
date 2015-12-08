@@ -69,7 +69,7 @@ const CollectionPageDesktop = React.createClass({
           }}
           sorting={this.props.data.sorting.collections}
           onChangePage={this.props.onChangePage}
-          onSetQuery={this.props.onSetQuery} />
+          onChangeSort={this.props.onChangeSort} />
       </div>
     )
   },

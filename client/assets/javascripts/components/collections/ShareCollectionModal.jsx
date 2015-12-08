@@ -217,7 +217,7 @@ const ShareCollectionModal = React.createClass ({
       return (
         <Results
           type='sharee-users'
-          containerClass='sharee'
+          className='sharee'
           onRemove={this.removeUser}
           onUpdate={this.updateUser}
           data={{data: unsavedUsers}} />
@@ -231,7 +231,7 @@ const ShareCollectionModal = React.createClass ({
       return (
         <Results
           type='sharee-emails'
-          containerClass='sharee'
+          className='sharee'
           onRemove={this.removeEmails}
           onUpdate={this.updateEmail}
           data={{data: unsavedEmails}} />

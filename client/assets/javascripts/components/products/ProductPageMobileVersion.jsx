@@ -116,7 +116,6 @@ const ProductPageMobileVersion = React.createClass({
   },
 
   showCreateModal: function() {
-    debugger
     this.showCreateCollectionModal({products: [this.props.data]})
   },
 

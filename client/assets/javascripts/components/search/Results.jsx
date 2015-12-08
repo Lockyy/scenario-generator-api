@@ -264,6 +264,8 @@ const Results = React.createClass ({
       }
 
       return <div className={this.props.type}>{resultTags}</div>;
+    } else {
+      return <div>{this.props.noResults}</div>
     }
   },
 
@@ -352,7 +354,7 @@ const Results = React.createClass ({
     let query = { sorting: {}, match_mode: {} }
     query.sorting[this.props.type] = sortDescription
     query.match_mode[this.props.type] = match_mode
-    this.props.onSetQuery(query)
+    this.props.onChangeSort(query)
   },
 
   getCountResultsMessage: function(className) {
@@ -457,7 +459,7 @@ const Results = React.createClass ({
 
   render: function() {
     return (
-      <div className={`results ${this.props.containerClass || ''}`}>
+      <div className={`results ${this.props.className || ''}`}>
         { this.renderTop() }
         { this.renderResults() }
         { this.renderBottom() }
