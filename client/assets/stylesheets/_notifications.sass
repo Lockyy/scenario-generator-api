@@ -1,0 +1,80 @@
+.notifications-tr
+  font-family: inherit
+  position: fixed
+  width: 320px
+  padding: 0 10px 10px 10px
+  z-index: 9999999
+  -webkit-box-sizing: border-box
+  -moz-box-sizing: border-box
+  box-sizing: border-box
+  height: auto
+  top: 75px
+  bottom: auto
+  left: auto
+  right: 0
+
+  .notification.notification-info.notification-visible
+    position: relative
+    width: 100%
+    cursor: pointer
+    border-radius: 2px
+    font-size: 13px
+    border-style: solid
+    margin: 10px 0 0
+    padding: 10px
+    display: block
+    box-sizing: border-box
+    box-shadow: rgba(0, 0, 0, 0.0980392) 0 0 5px 2px
+    opacity: 1
+    transition: 0.3s ease-in-out
+    border-color: rgb(61, 85, 96) rgb(178, 208, 221) rgb(178, 208, 221)
+    color: rgb(61, 85, 96)
+    border-width: 4px 0 0
+    right: 0
+    height: auto
+    background-color: rgb(77, 188, 198)
+
+    .notification-message
+      margin: 0
+      padding: 0
+
+    .notification-dismiss
+      font-family: Arial
+      font-size: 17px
+      position: absolute
+      top: 4px
+      right: 5px
+      line-height: 15px
+      background-color: none
+      color: #ffffff
+      border-radius: 50%
+      width: 14px
+      height: 14px
+      font-weight: bold
+      text-align: center
+
+    .notification-action-wrapper
+      margin: 0
+      padding: 0
+
+      .notification-action-button
+        background: #ffffff
+        border-radius: 2px
+        padding: 0px 5px
+        font-weight: bold
+        margin: 10px 0 0 0
+        border: 0
+        background-color: transparent
+        color: white
+        text-decoration: underline
+
+@media only screen and (max-width : 768px)
+  .notifications-tr
+    width: 100%
+    padding: 0
+    top: auto
+    bottom: 0
+    right: auto
+
+    .notification.notification-info.notification-visible
+      border: none
