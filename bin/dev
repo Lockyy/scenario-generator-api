@@ -44,6 +44,9 @@ run_project_container(){
   else
     echo 'Creating project container'
 
+    rm -rf tmp
+    rm -f log/development.log
+    rm -f log/test.log
     cp Dockerfile.development Dockerfile
     docker build -t codelittinc/$PROJECT_NAME .
     rm Dockerfile
