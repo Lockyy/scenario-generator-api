@@ -7,7 +7,6 @@ import       NotificationsStore from '../../stores/NotificationsStore'
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import  { ViewCollectionMixin } from '../collections/ViewCollectionModal'
 
-
 const Notifications = React.createClass({
   displayName: 'Notifications',
   mixins: [ Navigation, ViewCollectionMixin ],
@@ -105,9 +104,7 @@ const Notifications = React.createClass({
   },
 
   render: function() {
-    return <NotificationSystem
-              style={false}
-              ref="notificationSystem" />
+    return <NotificationSystem allowHTML={true} style={false} ref="notificationSystem" />
   }
 })
 

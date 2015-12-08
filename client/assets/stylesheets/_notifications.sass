@@ -13,6 +13,9 @@
   left: auto
   right: 0
 
+  .notification.notification-info.notification-hidden
+    display: none
+
   .notification.notification-info.notification-visible
     position: relative
     width: 100%
@@ -33,6 +36,9 @@
     right: 0
     height: auto
     background-color: rgb(77, 188, 198)
+
+    b
+      font-weight: bold
 
     .notification-message
       margin: 0
@@ -58,15 +64,7 @@
       padding: 0
 
       .notification-action-button
-        background: #ffffff
-        border-radius: 2px
-        padding: 0px 5px
-        font-weight: bold
-        margin: 10px 0 0 0
-        border: 0
-        background-color: transparent
-        color: white
-        text-decoration: underline
+        display: none
 
 @media only screen and (max-width : 768px)
   .notifications-tr
@@ -78,3 +76,4 @@
 
     .notification.notification-info.notification-visible
       border: none
+      font-size: 22px
