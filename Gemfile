@@ -37,6 +37,7 @@ gem 'friendly_id', '~> 5.1.0'
 gem 'lodash-rails'
 gem 'es5-shim-rails'
 gem 'counter_culture', '~> 0.1.33'
+gem 'slacked'
 
 group :development do
   gem 'better_errors'
