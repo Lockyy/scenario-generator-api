@@ -63,6 +63,10 @@ const ProductPage = React.createClass({
     FluxProductPageActions.fetchProduct(this.id());
   },
 
+  componentWillReceiveProps: function(newProps) {
+    FluxProductPageActions.fetchProduct(newProps.params.id);
+  },
+
   onChange: function(data) {
     this.setState(data);
   },

@@ -71,25 +71,26 @@ const CollectionsCollection = React.createClass ({
           current++;
 
           return (
+            <div className={"product-list-link-container" + (current > 8 ?  " hidden" : "")}>
 
-          <div className={"product-list-link-container" + (current > 8 ?  " hidden" : "")}>
+              <Link
+                className="product-list-link"
+                to={`/app/products/${product.id}`}>
+                {product.name}
+              </Link>
 
-            <a className="product-list-link" href={`/app/products/${product.id}`}>
-              {product.name}
-            </a>
-            
-            {(!hasMore && 
-              current == collection.products.length) ||
-              (hasMore &&
-              current == collection.products.length) ? 
-              "" : <span>,&nbsp;</span> }
+              {(!hasMore &&
+                current == collection.products.length) ||
+                (hasMore &&
+                current == collection.products.length) ?
+                "" : <span>,&nbsp;</span> }
 
-            {hasMore && current == 8 ?
-              <a className="has-n-more"
-                 onClick={ this.handleClick }>
-                {"(" + count + " more)"}
-              </a> : ""}
-          </div>
+              {hasMore && current == 8 ?
+                <a className="has-n-more"
+                   onClick={ this.handleClick }>
+                  {"(" + count + " more)"}
+                </a> : ""}
+            </div>
           );
         }.bind(this))}
       </div>
