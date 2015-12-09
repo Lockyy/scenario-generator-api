@@ -69,6 +69,12 @@ $color-blackcharcoal: #3c3c3b
         &.active
           background-image: img-url('icons/icon-tags-red.svg')
 
+      &.collaborators
+        background-image: img-url('icons/icon-share-grey.svg')
+
+        &.active
+          background-image: img-url('icons/icon-share.svg')
+
       &.lists
         background-image: img-url('icons/icon-lists-grey.svg')
 
@@ -81,7 +87,7 @@ $color-blackcharcoal: #3c3c3b
         &.active
           background-image: img-url('icons/icon-bookmarks-red.svg')
 
-      &.collections
+      &.collections, &.products
         background-image: img-url('icons/icon-collections-grey.svg')
 
         &.active
@@ -111,18 +117,28 @@ $color-blackcharcoal: #3c3c3b
   .tabbed-area
     border-top: none
     .tabbed-area-sidebar
-      padding: 0px 15px
+      padding-right: 0px
       margin-bottom: 15px
       text-transform: uppercase
-      border-bottom: 1px solid $grey
+      display: flex
       .sidebar-element
+        border-top: 2px solid $grey
+        border-bottom: 2px solid transparent
         display: inline-block
         padding: 5px
-        border-bottom: none
-        color: $blackish-grey
         font-size: 10px
         cursor: pointer
-        background: none !important
+        height: 50px
+        flex: 1
+        display: flex
+        justify-content: center
+        align-items: flex-end
+        background-position: center 10%
+        background-size: 15px
+        color: transparent
         &.active
+          border-top: 2px solid $primary-red
+          border-bottom: 2px solid $primary-red
+          background-color: $light-grey
           &::after
             display: none
