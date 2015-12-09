@@ -24,15 +24,15 @@ const MoreOptionsDropdown = React.createClass({
     });
   },
 
-	handleClick: function() {
-		this.toggleDropdown();
-	},
+  handleClick: function() {
+    this.toggleDropdown();
+  },
 
   renderMoreOptions: function(rows) {
     let dropdownRows = _.map(this.props.rows, function(row) {
     return (
       <div className="dropdown-row" 
-					 onClick={row.action}>
+           onClick={row.action}>
         {row.description}
       </div>
       );
@@ -41,10 +41,10 @@ const MoreOptionsDropdown = React.createClass({
     return (
       <div className="more-options-container">
         <button className='more-options-button' 
-								onClick={this.handleClick}/>
+                onClick={this.handleClick}/>
         <div className={this.state.visible ? 
-						'more-options-dropdown ' + customClass :
-						'more-options-dropdown closed '}>
+            'more-options-dropdown ' + customClass :
+            'more-options-dropdown closed '}>
           {dropdownRows}
         </div>
       </div>
