@@ -5,7 +5,7 @@ import TabbedArea from '../TabbedArea';
 import UserTags from './UserTags';
 import UserBookmarks from './UserBookmarks';
 import CollectionsCollection from '../collections/CollectionsCollection';
-import { CreateCollectionMixin } from '../collections/CreateCollectionModal'
+import { CreateCollectionMixin } from '../collections/CreateCollectionMixin'
 
 const UserProfileWorkArea  = React.createClass({
   displayName: 'UserProfileWorkArea',
