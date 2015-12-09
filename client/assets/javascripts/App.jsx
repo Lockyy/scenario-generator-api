@@ -25,6 +25,16 @@ let GAInitiailizer = ga.Initializer;
 
 $(function onLoad() {
     function render() {
+        $(document).ajaxStart(function() {
+          $('#loading-bar').addClass('filling-90');
+        }).ajaxSuccess(function() {
+          $('#loading-bar').removeClass('filling-90');
+          $('#loading-bar').addClass('filled');
+          setTimeout(function() {
+            $('#loading-bar').removeClass('filled');
+          }, 300)
+        });
+
         UserAPI.getCurrentUser(function(currentUser) {
 
             FluxCurrentUserActions.updateData(currentUser);
