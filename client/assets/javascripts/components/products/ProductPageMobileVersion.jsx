@@ -223,7 +223,7 @@ const ProductPageMobileVersion = React.createClass({
                 <div className='btn btn-round btn-red' onClick={this.showCreateModal}>
                   Create New
                 </div>
-                <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal('')}>
+                <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal('', {mobile: true})}>
                   Add to existing
                 </div>
               </div>

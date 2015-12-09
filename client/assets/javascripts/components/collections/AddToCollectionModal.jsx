@@ -31,9 +31,9 @@ const AddToCollectionMixin = {
     FluxModalActions.closeModal()
   },
 
-  showAddToCollectionModal: function (searchTerm) {
-    FluxCollectionActions.performSearch(searchTerm)
-    FluxModalActions.setVisibleModal('AddToCollectionModal')
+  showAddToCollectionModal: function (searchTerm, mobile) {
+    FluxCollectionActions.performSearch(searchTerm);
+    FluxModalActions.setVisibleModal('AddToCollectionModal', 0, mobile);
   }
 };
 
@@ -49,6 +49,7 @@ const AddToCollectionModal = React.createClass ({
       collections: [],
       searchTerm: '',
       addedCollections: [],
+      config: {}
     }
   },
 
@@ -70,8 +71,9 @@ const AddToCollectionModal = React.createClass ({
     this.setState({product: data.data});
   },
   onChangeModal: function (data) {
+    console.log(data, data.config);
     let visible = data.visibleModal == this.constructor.displayName;
-    this.setState({visible: visible});
+    this.setState({ visible: visible, config: data.config });
   },
 
   close: function () {
@@ -209,7 +211,10 @@ const AddToCollectionModal = React.createClass ({
     if(this.collectionTicked(collection.id)) {
       return <div className='btn btn-round btn-red-inverted btn-add btn-list-small btn-text-normal btn-tick'>Added</div>
     } else if (this.productInCollection(collection)) {
-      return <div className='already-in-collection'>Product already added to Collection</div>
+      return <div className='already-in-collection'>
+        {this.state.config.mobile ? 
+          "Already added" :
+          "Product already added to collection"}</div>
     } else {
       return <div className='btn btn-round btn-red-inverted btn-add btn-list-small btn-text-normal' onClick={(e) => this.addToCollection(e, collection)}>Add</div>
     }
@@ -232,8 +237,11 @@ const AddToCollectionModal = React.createClass ({
           </span>
         </div>
         <div className={`right-buttons ${this.collectionTicked(collection.id) ? 'added' : null}`}>
-          <div className='btn btn-round btn-blue-inverted btn-view btn-list-small'
-               onClick={() => this.previewCollection(collection)}/>
+          <div className={'btn btn-round btn-blue-inverted btn-view btn-list-small' + (this.state.config.mobile ? ' mobile' : null)}
+               onClick={() => this.previewCollection(collection)}>
+               {this.state.config.mobile ?
+                 "Preview" : null}
+          </div>
           {this.renderAddButton(collection)}
         </div>
       </div>

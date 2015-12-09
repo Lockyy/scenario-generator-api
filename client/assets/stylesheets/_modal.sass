@@ -336,7 +336,7 @@ $modal-padding: 25px
         top: 0px !important
         border-radius: 0px
         .header
-          margin-bottom: 15px
+          margin-bottom: 30px
           padding-bottom: 5px
           border-bottom: 1px solid $primary-red
           .title
@@ -373,7 +373,32 @@ $modal-padding: 25px
               flex-direction: column
               align-items: flex-start
               .right-buttons
-                display: block
+                width: 90%
+                display: flex
+                align-items: center
+                justify-content: center
+                margin-top: 13px
+                div
+                  width: 50%
+                  &:first-child
+                    border-top-left-radius: 5px
+                    border-bottom-left-radius: 5px
+                  &:last-child
+                    border-top-right-radius: 5px
+                    border-bottom-right-radius: 5px
+                    border-left: 0
+                  border-radius: 0
+                  border: 2px solid $grey
+                  margin-left: 0
+                  &.already-in-collection
+                    color: $dark-grey
+                    font-size: 1em
+                    text-align: center
+                    line-height: 2.6
+                    font-style: italic
+                    margin-left: 0
+                    width: 50%
+                  height: 40px
 
 
 .alertButtons

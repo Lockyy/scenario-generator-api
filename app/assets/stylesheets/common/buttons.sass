@@ -125,6 +125,23 @@
     &:hover
       &::after
         background-image: url('icons/icon-collection-preview-white.svg')
+    &.mobile
+      &::after
+        background: none
+        height: 25px
+        width: 25px
+        position: relative
+        bottom: 100%
+        display: block
+        content: url('icons/icon-collection-preview-blue.svg')
+        color: transparent
+    &:hover
+      &::after
+        background: none
+        display: block
+        content: url('icons/icon-collection-preview-white.svg')
+        color: transparent
+ 
 
   &.btn-small
     padding: 11px 20px
