@@ -74,10 +74,9 @@ const CollectionsCollection = React.createClass ({
 
           <div className={"product-list-link-container" + (current > 8 ?  " hidden" : "")}>
 
-            <Link className="product-list-link"
-                  to={`/app/products/${product.id}`}>
+            <a className="product-list-link" href={`/app/products/${product.id}`}>
               {product.name}
-            </Link>
+            </a>
             
             {(!hasMore && 
               current == collection.products.length) ||
