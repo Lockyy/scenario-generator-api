@@ -72,7 +72,6 @@ const SearchBox = React.createClass ({
   },
 
   closeDropdown: function() {
-    console.log("lala")
     $('.search-container .form-control').val('');
     $('.search-container .results-holder').hide();
     $('.navbar').removeClass('scrollable-header');
