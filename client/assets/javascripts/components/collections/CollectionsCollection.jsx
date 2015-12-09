@@ -17,8 +17,9 @@ const CollectionsCollection = React.createClass ({
       data: {
         collections: CollectionStore.state.data.collections,
         products: CollectionStore.state.data.products
-      }
-    }
+      },
+      prodLists: []
+    };
   },
 
   getDefaultProps: function() {
@@ -53,22 +54,41 @@ const CollectionsCollection = React.createClass ({
     )
   },
 
+  handleClick: function(e) {
+    let callee = $(e.target);
+    let container = callee.parent().parent();
+    container.find('*').removeClass('hidden');
+    callee.remove();
+  },
+
   renderCollectionProductsList: function(collection) {
-    let count = collection.products.length - 8;
+    let count = (collection.products.length - 8);
     let hasMore = count > 0;
+    let current = 0;
     return (
-      <div>
+      <div className={"product-list-container"}>
         {_.map(collection.products, function(product) {
+          current++;
+
           return (
-          <div className="product-list-link-container">
+
+          <div className={"product-list-link-container" + (current > 8 ?  " hidden" : "")}>
+
             <Link className="product-list-link"
                   to={`/app/products/${product.id}`}>
               {product.name}
-            </Link><span>, </span>
-            {hasMore ?
+            </Link>
+            
+            {(!hasMore && 
+              current == collection.products.length) ||
+              (hasMore &&
+              current == collection.products.length) ? 
+              "" : <span>,&nbsp;</span> }
+
+            {hasMore && current == 8 ?
               <a className="has-n-more"
-                 onClick={this.getMoreProducts}>
-                ({count} more)
+                 onClick={ this.handleClick }>
+                {"(" + count + " more)"}
               </a> : ""}
           </div>
           );
@@ -102,10 +122,10 @@ const CollectionsCollection = React.createClass ({
                   {collection.display_date}
                 </span>
               </span>
-              <span className='includes mobile'>
-                Includes: 
-                {this.renderCollectionProductsList(collection)}
-              </span>
+              {this.props.mobile ?
+                <span className='includes mobile'>
+                  Includes:&nbsp;{this.renderCollectionProductsList(collection)}
+                </span> : ""}
             </div>
           )
         }.bind(this))}

@@ -56,15 +56,32 @@
       @include make-xs-column(4)
       @include make-sm-column(3)
       +mw
+      span, a
+        float: left
+        padding-right: 5px
     .user-link
       color: $red
     .date
+      display: none
       @include make-sm-column(3)
       &.mobile
+        display: block
         padding: 0
     .includes
       @include make-sm-column(12)
+      display: none
+      &.mobile
+        display: block
+      .has-n-more
+        color: $red
+      span:first-child
+        float: left
+    .product-list-link-container
       float: left
+      &.list-expandable
+        display: none
+    .product-list-link
+      text-decoration: underline
 
 .form.collection
   .attached-fields
