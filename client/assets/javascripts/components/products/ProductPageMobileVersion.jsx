@@ -122,7 +122,7 @@ const ProductPageMobileVersion = React.createClass({
   renderMoreOptions: function() {
     return (
       <div ref='moreOptionsDropdown' className='more-options-dropdown background-grey bottom-margin shadow'>
-        <div className='vertical-padding dark-grey-bottom-border horizontal-padding centered' onClick={() => this.showAddToCollectionModal('')}>
+        <div className='vertical-padding dark-grey-bottom-border horizontal-padding centered' onClick={() => this.showAddToCollectionModal('', null)}>
           Add to an existing collection
         </div>
         <div className='vertical-padding horizontal-padding centered' onClick={this.showCreateModal}>
@@ -237,7 +237,7 @@ const ProductPageMobileVersion = React.createClass({
                 <div className='btn btn-round btn-red' onClick={this.showCreateModal}>
                   Create New
                 </div>
-                <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal('')}>
+                <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal('', {mobile: true})}>
                   Add to existing
                 </div>
               </div>
