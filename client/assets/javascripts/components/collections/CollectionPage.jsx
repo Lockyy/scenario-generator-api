@@ -75,7 +75,7 @@ const CollectionPage = React.createClass({
       blue: true,
       success: 'Delete',
       cancel: 'Cancel',
-      message: 'Deleting this collection will delete it for all the users in it. This action can’t be undone. Confirm you action below.',
+      message: 'Deleting this collection will delete it for all the users in it. This action can’t be undone. Confirm your action below.',
       checkbox: 'I confirm that I want to delete this collection',
       headerIconClass: 'collections',
       showClose: true,
@@ -131,7 +131,7 @@ const CollectionPage = React.createClass({
           <div className='btn btn-red-inverted btn-round btn-small' onClick={this.shareCollection}>
             Share
           </div>
-          <div className='btn btn-grey btn-round btn-small' onClick={this.manageCollaborators}>
+          <div className='btn btn-grey-inverted btn-round btn-small' onClick={this.manageCollaborators}>
             Manage Collaborators
           </div>
         </div>

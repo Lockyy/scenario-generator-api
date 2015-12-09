@@ -12,6 +12,7 @@ import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import { EditCollectionMixin } from './EditCollectionModal';
 import Avatar from '../Avatar';
 import Results from '../search/Results';
+import Footer from '../Footer';
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
@@ -39,12 +40,11 @@ const ViewCollectionMixin = {
 
 const ViewCollectionModal = React.createClass ({
   displayName: 'ViewCollectionModal',
-  mixins: [
-    EditCollectionMixin
-  ],
+  mixins: [ EditCollectionMixin ],
 
   contextTypes: {
-    currentUser: React.PropTypes.object.isRequired
+    currentUser: React.PropTypes.object.isRequired,
+    router: React.PropTypes.object
   },
 
   getInitialState: function() {
@@ -103,13 +103,12 @@ const ViewCollectionModal = React.createClass ({
     if (!this.productInCollection(collection) && this.state.config.addProductToCollection) {
       addButton = (
         <button
-          className='btn btn-red-inverted btn-round'
-          onClick={this.state.config.addProductToCollection(e, collection)}>
+          className='btn btn-red btn-round'
+          onClick={(e) => this.state.config.addProductToCollection(e, collection)}>
           Add
         </button>
       );
     }
-
     return (
       <div className='buttons'>
         {backButton}
@@ -140,7 +139,7 @@ const ViewCollectionModal = React.createClass ({
         isOpen={this.state.visible}
         onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.close}>{"< Close"}</div>
+        <div className='back-button' onClick={this.close}>Back</div>
 
         <div className='header collection'>
           <span className='title'>
@@ -167,6 +166,7 @@ const ViewCollectionModal = React.createClass ({
 
           {this.renderButtons()}
         </div>
+        <Footer className='visible-xs' />
       </Modal>
     )
   }

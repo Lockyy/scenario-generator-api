@@ -87,7 +87,7 @@ const ProductPageMobileVersion = React.createClass({
     }
 
     return (
-      <a href="#" onClick={onClickFn} className='btn btn-grey btn-bookmark'>
+      <a href="#" onClick={onClickFn} className='btn btn-grey-inverted btn-bookmark'>
         <span className={className}>{text}</span>
       </a>
     );
@@ -101,7 +101,7 @@ const ProductPageMobileVersion = React.createClass({
     }
 
     return (
-      <a href='#' className='btn btn-grey btn-share' onClick={share}>
+      <a href='#' className='btn btn-grey-inverted btn-share' onClick={share}>
         <span className='with-icon'>Share</span>
       </a>
     );
