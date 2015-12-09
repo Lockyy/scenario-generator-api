@@ -28,7 +28,4 @@ const CreateCollectionMixin = {
   }
 };
 
-
-module.exports = {
-  CreateCollectionMixin: CreateCollectionMixin
-};
+export default CreateCollectionMixin;

@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import Modal from 'react-modal';
 import AlertModal from './AlertModal';
-import { CreateCollectionMixin } from './collections/CreateCollectionMixin';
+import  CreateCollectionMixin from './collections/CreateCollectionMixin';
 import { ShareCollectionMixin } from './collections/ShareCollectionModal';
 import { AddToCollectionMixin } from './collections/AddToCollectionModal';
 import { ViewCollectionMixin } from './collections/ViewCollectionModal';

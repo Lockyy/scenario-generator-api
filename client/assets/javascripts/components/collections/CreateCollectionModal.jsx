@@ -12,7 +12,7 @@ import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import ProductName from '../reviews/ProductName'
 import Results from '../search/Results'
 import { ShareCollectionMixin } from './ShareCollectionModal'
-import { CreateCollectionMixin } from './CreateCollectionMixin'
+import  CreateCollectionMixin  from './CreateCollectionMixin'
 
 const CreateCollectionModal = React.createClass ({
   displayName: 'CreateCollectionModal',
@@ -276,6 +276,4 @@ const CreateCollectionModal = React.createClass ({
   }
 });
 
-module.exports = {
-  CreateCollectionModal: CreateCollectionModal
-};
+export default CreateCollectionModal;

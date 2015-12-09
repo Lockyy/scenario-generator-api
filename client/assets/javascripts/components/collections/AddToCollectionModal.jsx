@@ -12,7 +12,7 @@ import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import CollectionTypeahead from './CollectionTypeahead'
 import Results from '../search/Results'
-import { CreateCollectionMixin } from './CreateCollectionMixin'
+import CreateCollectionMixin from './CreateCollectionMixin'
 import { ViewCollectionMixin } from './ViewCollectionModal'
 
 const AddToCollectionMixin = {
