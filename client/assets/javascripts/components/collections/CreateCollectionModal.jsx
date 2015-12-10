@@ -245,7 +245,6 @@ const CreateCollectionModal = React.createClass ({
 
   renderCollectionForm: function () {
     let renderInsideForm = this.props.renderInsideForm ? this.props.renderInsideForm : '';
-    let renderFooter = this.props.footer ? this.props.footer : '';
     return (
       <div className='row'>
         <form className='col-xs-12 form collection'
@@ -259,7 +258,6 @@ const CreateCollectionModal = React.createClass ({
           <div className='grey'>
             {renderInsideForm}
             {this.renderSubmissionButtons()}
-            {renderFooter}
           </div>
         </form>
       </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import  CreateCollectionModal  from './CreateCollectionModal'
 import  ShareCollection  from './ShareCollection'
-import  Links  from '../Links'
 
 const CreateCollectionMobileModal = React.createClass ({
   displayName: 'CreateCollectionModal',
@@ -12,7 +11,6 @@ const CreateCollectionMobileModal = React.createClass ({
         <CreateCollectionModal
           close={this.props.close}
           renderInsideForm={renderInsideForm}
-          footer={<Links/>}
         />
       </div>
     )
