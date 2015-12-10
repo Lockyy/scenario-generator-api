@@ -89,11 +89,12 @@ const CreateCollectionModal = React.createClass ({
   },
 
   getCollection: function (e) {
+    let privacy = this.state.privacy || e.currentTarget.dataset.privacy;
     return {
       id: this.state.data.collection.id,
       name: this.state.data.collection.name,
       description: this.state.data.collection.description,
-      privacy: e.currentTarget.dataset.privacy,
+      privacy: privacy,
       products: this.getProductIDs()
     }
   },
@@ -126,7 +127,9 @@ const CreateCollectionModal = React.createClass ({
     FluxCollectionActions.createCollection(collection, function (collection) {
       _this.props.close();
       _this.sendNotificationOnSubmission(collection);
-      _this.transitionToShare(collection, _this);
+      if (_this.props.showShareStep) {
+        _this.transitionToShare(collection, _this);
+      }
     })
   },
 

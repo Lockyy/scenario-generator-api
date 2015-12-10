@@ -7,7 +7,9 @@ const CreateCollectionDesktopModal = React.createClass ({
     return (
       <div id="create-collection-desktop-modal">
         <CreateCollectionModal
-          close={this.props.close}/>
+          close={this.props.close}
+          showShareStep='true'
+        />
       </div>
     )
   }

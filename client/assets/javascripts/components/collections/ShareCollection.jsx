@@ -154,7 +154,7 @@ const ShareCollection = React.createClass ({
     };
 
     FluxCollectionActions.shareCollection(id, data, function () {
-      _this.close();
+      _this.props.close();
 
       FluxNotificationsActions.showNotification({
         type: 'shared',
@@ -236,7 +236,7 @@ const ShareCollection = React.createClass ({
       <div className='buttons submission-buttons'>
         { this.state.config.cancel ?
         <button className='btn btn-grey btn-round'
-                onClick={this.close}>{this.state.config.cancel}</button> : null }
+                onClick={this.props.close}>{this.state.config.cancel}</button> : null }
         <button className='btn btn-red btn-round'
                 onClick={this.submitForm}>{this.state.config.confirm || 'Finish'}</button>
       </div>
@@ -315,9 +315,6 @@ const ShareCollection = React.createClass ({
           </span>
           <a onClick={this.props.close} className='close'></a>
         </div>
-
-        <form className='col-xs-12 form collection'
-              ref='collection_form'>
           {this.renderPrivacyToggle()}
           <div className='grey'>
             <div className='grey-title'>
@@ -335,7 +332,6 @@ const ShareCollection = React.createClass ({
             {this.renderSendEmailsCheckbox()}
             {this.renderSubmissionButtons()}
           </div>
-        </form>
       </div>
     )
   }
