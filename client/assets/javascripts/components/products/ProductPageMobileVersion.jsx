@@ -186,10 +186,10 @@ const ProductPageMobileVersion = React.createClass({
     let tags = this.getProductData('tags');
 
     let rows = [
-      {description: "Add to an existing collection", 
+      {description: "Add to an existing collection",
        action: () => this.showAddToCollectionModal('')},
-      {description: "Create new collection", 
-       action: () => this.showCreateModal}
+      {description: "Create new collection",
+       action: this.showCreateModal}
     ];
 
     return (
