@@ -7,7 +7,6 @@
   .placeholder-section.message
     padding: 12px 0 20px 0
 
-
 .right-arrow-after
   display: inline-flex
   align-items: center
@@ -144,7 +143,7 @@
       border-bottom-right-radius: 0
 
     textarea.form-control
-      border-top-left-radius: 0!important
+      border-top-left-radius: 0 !important
       border-top-right-radius: 0 !important
       border-top: 0px none transparent !important
       outline: 0px none transparent
@@ -176,3 +175,22 @@
     input:focus, textarea:focus
       box-shadow: none !important
       border: 1px solid $red
+
+#create-collection-mobile-modal
+  display: none
+
+@media (max-width: 480px)
+  .app
+    .ReactModal__Overlay
+      .ReactModal__Content
+        .header.collections
+          border-bottom-color: $grey
+
+          .title::before
+            background: none
+            width: 0
+            height: 0
+            margin-right: 0
+            padding: 20px 0
+            text-transform: uppercase
+            font-size: 14px

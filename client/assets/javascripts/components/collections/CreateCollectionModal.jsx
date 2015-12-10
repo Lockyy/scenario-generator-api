@@ -235,6 +235,7 @@ const CreateCollectionModal = React.createClass ({
   },
 
   renderCollectionForm: function() {
+    let renderInsideForm = this.props.renderInsideForm ? this.props.renderInsideForm : '';
     return (
       <div className='row'>
         <form className='col-xs-12 form collection'
@@ -244,6 +245,7 @@ const CreateCollectionModal = React.createClass ({
 
           <div className='grey'>
             {this.renderProducts()}
+            {renderInsideForm}
             {this.renderSubmissionButtons()}
           </div>
         </form>
