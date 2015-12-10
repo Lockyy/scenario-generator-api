@@ -335,14 +335,21 @@ $modal-padding: 25px
         left: 0px !important
         top: 0px !important
         border-radius: 0px
+        .reviews
+          color: $dark-grey
+        .num-collaborators
+          color: $dark-grey
         .header
+          &.mobile
+            margin-bottom: 0
+            border: 0
+            .title
+              font-style: unset
           margin-bottom: 30px
           padding-bottom: 5px
           border-bottom: 1px solid $primary-red
           .title
             font-size: 16px
-        .results:not(.sharee)
-          max-height: 190px
         .scrollable
           max-height: 190px
           overflow-y: auto

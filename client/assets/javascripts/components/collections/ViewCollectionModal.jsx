@@ -25,14 +25,17 @@ const ViewCollectionMixin = {
     FluxCollectionActions.clearCollection();
   },
 
-  showViewCollectionModal: function(collection, addProductToCollection) {
+  showViewCollectionModal: function(collection, data) {
+    console.log(collection);
+    console.log(data);
     if(!collection.products) {
       FluxCollectionActions.fetchCollection(collection.id, function() {
         FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop);
       })
     } else {
       FluxCollectionActions.fetchedCollection(collection);
-      FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop, {addProductToCollection: addProductToCollection});
+      FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop, 
+          {addProductToCollection: data.addProductToCollection, mobile: data.mobile});
     }
   }
 };
@@ -95,31 +98,45 @@ const ViewCollectionModal = React.createClass ({
   renderButtons: function() {
     let backButton = <button className='btn btn-grey btn-round' onClick={this.props.close}>Back</button>;
     let addButton = "";
+    let mobile = this.state.config.mobile;
+    let addProduct = this.state.config.addProductToCollection;
     let collection = this.state.collection
-    if (!this.productInCollection(collection) && this.state.config.addProductToCollection) {
-      addButton = <button className='btn btn-red-inverted btn-round' onClick={(e) => this.state.config.addProductToCollection(e, collection)}>Add</button>;
+    if (!this.productInCollection(collection) && addProduct) {
+      addButton = <button className='btn btn-red-inverted btn-round' onClick={(e) => addProduct(e, collection)}>Add</button>;
+    }
+    else if(mobile) {
+      addButton = <button className='btn btn-red-inverted mobile' onClick={(e) => addProduct(e, collection)}>Add</button>;
     }
 
     return (
       <div className='buttons'>
-        {backButton}
+        {mobile ? null : backButton }
         {addButton}
       </div>
     )
   },
 
   renderSharees: function() {
-    if(this.state.collection.users) {
-      let totalUsers = this.state.collection.users.length
-      return (
-        <div className='collection-sharees'>
-          <Avatar url={this.state.collection.user.avatar_url} />
-          {_.map(this.state.collection.users.slice(0,6), function(sharee) {
-            return <Avatar url={sharee.avatar_url} />
-          })}
-          { totalUsers > 7 ? <Avatar number={totalUsers - 7} />: '' }
-        </div>
-      )
+    if(!this.state.config.mobile && this.state.collection.users) {
+        let totalUsers = this.state.collection.users.length;
+          return (
+            <div className='collection-sharees'>
+              <Avatar url={this.state.collection.user.avatar_url} />
+              {_.map(this.state.collection.users.slice(0,6), function(sharee) {
+                return <Avatar url={sharee.avatar_url} />
+              })}
+              { totalUsers > 7 ? <Avatar number={totalUsers - 7} />: '' }
+            </div>
+          );
+    }
+    else {
+      if(this.state.collection.users) {
+        return (
+            <span className="num-collaborators">
+              {this.state.collection.users.length} collaborators
+            </span>
+        );
+      }
     }
   },
 
@@ -132,7 +149,7 @@ const ViewCollectionModal = React.createClass ({
         style={DefaultModalStyles}>
         <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
 
-        <div className='header collection'>
+        <div className={'header collection' + (this.state.config.mobile ? ' mobile' : '')}>
           <span className='title'>
             {this.state.collection.name}
           </span>
@@ -145,9 +162,10 @@ const ViewCollectionModal = React.createClass ({
                           href={userProfileUrl}>{this.state.collection.user.name}</a>, {this.state.collection.display_date}
           </div>
           { this.renderSharees() }
-          <div className='collection-description'>
-            {this.state.collection.description}
-          </div>
+          { this.state.config.mobile ? null :
+            <div className='collection-description'>
+              {this.state.collection.description}
+            </div> }
         </div>
 
         <div className='grey'>

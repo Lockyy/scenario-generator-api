@@ -101,7 +101,9 @@ const AddToCollectionModal = React.createClass ({
   },
 
   previewCollection: function (collection) {
-    this.showViewCollectionModal(collection, this.addToCollection)
+    this.showViewCollectionModal(collection, 
+      {addProductToCollection: this.addToCollection, 
+       mobile: this.state.config.mobile})
   },
 
   productInCollection: function (collection) {
@@ -237,7 +239,7 @@ const AddToCollectionModal = React.createClass ({
           </span>
         </div>
         <div className={`right-buttons ${this.collectionTicked(collection.id) ? 'added' : null}`}>
-          <div className={'btn btn-round btn-blue-inverted btn-view btn-list-small' + (this.state.config.mobile ? ' mobile' : null)}
+          <div className={'btn btn-round btn-blue-inverted btn-view btn-list-small' + (this.state.config.mobile ? ' mobile' : '')}
                onClick={() => this.previewCollection(collection)}>
                {this.state.config.mobile ?
                  "Preview" : null}
