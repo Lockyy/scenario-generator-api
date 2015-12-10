@@ -431,9 +431,16 @@ $modal-padding: 25px
                   height: 40px
 
 
-.alertButtons
+.alert-buttons
   display: flex
   justify-content: center
   margin-top: 15px
   button
     margin: 0 3em 0 3em
+
+
+@media (max-width:480px)
+  .alert-buttons
+    button
+      margin-left: 0px
+      margin-right: 0px

@@ -84,7 +84,7 @@ const AlertModal = React.createClass({
 
   renderButtons: function() {
     return (
-      <div className='alertButtons buttons'>
+      <div className='alert-buttons buttons'>
         <button onClick={this.successButton}
                 className={`btn btn-round ${this.state.data.blue ? 'btn-blue-inverted' : 'btn-red' }`}
                 disabled={this.buttonDisabled()}>
