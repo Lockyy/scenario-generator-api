@@ -1,4 +1,5 @@
 @import 'functions'
+@import 'variables'
 
 @mixin icon($image)
   background: img-url($image) no-repeat
@@ -71,6 +72,10 @@
         @include star-on
 
 .rating-container.price
+  .score-text
+    &::before
+      content: 'Average pricing: '
+      color: $dark-grey
   .items
     .rating-group
       input[type='radio'] + label
