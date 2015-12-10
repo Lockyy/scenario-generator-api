@@ -14,6 +14,7 @@ import Results from '../search/Results'
 import { ShareCollectionMixin } from './ShareCollectionModal'
 import Footer from '../Footer';
 import  CreateCollectionMixin  from './CreateCollectionMixin'
+import  ShareCollection  from './ShareCollection'
 
 const CreateCollectionModal = React.createClass ({
   displayName: 'CreateCollectionModal',
@@ -23,7 +24,7 @@ const CreateCollectionModal = React.createClass ({
     router: React.PropTypes.object
   },
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       data: {
         collection: {
@@ -119,11 +120,11 @@ const CreateCollectionModal = React.createClass ({
       return
     }
 
-    let _this = this
-    let collection = this.getCollection(e)
+    let _this = this;
+    let collection = this.getCollection(e);
 
     FluxCollectionActions.createCollection(collection, function (collection) {
-      _this.props.close()
+      _this.props.close();
       _this.sendNotificationOnSubmission(collection);
       _this.transitionToShare(collection, _this);
     })
@@ -131,25 +132,25 @@ const CreateCollectionModal = React.createClass ({
 
   onChangeField: function (name, e) {
     let hash = this.state.data.collection;
-    hash[name] = e.currentTarget.value
-    let newState = this.state.data
-    newState.collection = hash
+    hash[name] = e.currentTarget.value;
+    let newState = this.state.data;
+    newState.collection = hash;
     this.setState({data: newState})
   },
 
   // Runs validation on text fields.
   // Returns false if there are errors.
   validation: function (skipDescription) {
-    let errorDom = $(this.refs.errors.getDOMNode())
-    let titleDOM = $(this.refs.collection_name.getDOMNode())
-    let descriptionDOM = $(this.refs.collection_description.getDOMNode())
+    let errorDom = $(this.refs.errors.getDOMNode());
+    let titleDOM = $(this.refs.collection_name.getDOMNode());
+    let descriptionDOM = $(this.refs.collection_description.getDOMNode());
     let errors;
     if (skipDescription) {
       errors = titleDOM.val() == ''
     } else {
       errors = titleDOM.val() == '' || descriptionDOM.val() == ''
     }
-    errorDom.toggleClass('active', errors)
+    errorDom.toggleClass('active', errors);
 
     return !errors
   },
@@ -244,7 +245,12 @@ const CreateCollectionModal = React.createClass ({
   },
 
   renderCollectionForm: function () {
-    let renderInsideForm = this.props.renderInsideForm ? this.props.renderInsideForm : '';
+    let self = this;
+    let sharedOptions = this.props.renderSharePrivacy ? <ShareCollection onChangeEvent={function(callback,e){
+      callback(e);
+      self.setState({privacy: $(e.target).val()})
+    }}/> : '';
+
     return (
       <div className='row'>
         <form className='col-xs-12 form collection'
@@ -256,7 +262,7 @@ const CreateCollectionModal = React.createClass ({
             {this.renderProducts()}
           </div>
           <div className='grey'>
-            {renderInsideForm}
+            {sharedOptions}
             {this.renderSubmissionButtons()}
           </div>
         </form>
@@ -284,7 +290,7 @@ const CreateCollectionModal = React.createClass ({
         <div className='back-button' onClick={this.props.close}>Back</div>
         {this.renderheader()}
         {this.renderCollectionForm()}
-        <Footer className='visible-xs' />
+        <Footer className='visible-xs'/>
       </Modal>
     )
   }

@@ -37,7 +37,7 @@ const ShareCollection = React.createClass ({
   },
 
   onChangeCollection: function (data) {
-    let unsavedCollection = jQuery.extend(true, {}, data.data.collection)
+    let unsavedCollection = jQuery.extend(true, {}, data.data.collection);
     this.setState({
       collection: data.data.collection,
       unsaved_collection: unsavedCollection
@@ -233,7 +233,7 @@ const ShareCollection = React.createClass ({
 
   renderSubmissionButtons: function () {
     return (
-      <div className='buttons'>
+      <div className='buttons submission-buttons'>
         { this.state.config.cancel ?
         <button className='btn btn-grey btn-round'
                 onClick={this.close}>{this.state.config.cancel}</button> : null }
@@ -249,7 +249,7 @@ const ShareCollection = React.createClass ({
     this.setState({unsaved_collection: updatedCollection})
   },
 
-  setPrivacy: function (e) {
+  onChangeEvent: function (e) {
     let newValue = $(e.target).val()
     let message, button, title;
     let _this = this;
@@ -281,16 +281,23 @@ const ShareCollection = React.createClass ({
 
   renderPrivacyToggle: function () {
     if (!this.state.config.hideRadios) {
+      let event = this.props.onChangeEvent ? this.props.onChangeEvent : this.onChangeEvent;
+      let self = this;
+      let callback = function (e) {
+        let newValue = $(e.target).val()
+        let updatedCollection = _.merge(self.state.unsaved_collection, {privacy: newValue})
+        self.setState({unsaved_collection: updatedCollection})
+      };
       return (
         <div className='privacy-radios'>
           Who can view this collection?
           <label>
-            <input type='radio' name='privacy' value='hidden' onClick={this.setPrivacy}
+            <input type='radio' name='privacy' value='hidden' onClick={event.bind(this, callback)}
                    checked={this.state.unsaved_collection.privacy == 'hidden'}/>
             Just me and people I specify below (Private)
           </label>
           <label>
-            <input type='radio' name='privacy' value='visible' onClick={this.setPrivacy}
+            <input type='radio' name='privacy' value='visible' onClick={event.bind(this, callback)}
                    checked={this.state.unsaved_collection.privacy == 'visible'}/>
             Everyone in Fletcher (Public). You can still add collaborators.
           </label>
