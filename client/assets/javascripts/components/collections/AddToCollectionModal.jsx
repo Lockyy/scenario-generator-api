@@ -31,9 +31,9 @@ const AddToCollectionMixin = {
     FluxModalActions.closeModal()
   },
 
-  showAddToCollectionModal: function (searchTerm, mobile) {
+  showAddToCollectionModal: function (searchTerm, config) {
     FluxCollectionActions.performSearch(searchTerm);
-    FluxModalActions.setVisibleModal('AddToCollectionModal', 0, mobile);
+    FluxModalActions.setVisibleModal('AddToCollectionModal', 0, config);
   }
 };
 
@@ -71,7 +71,6 @@ const AddToCollectionModal = React.createClass ({
     this.setState({product: data.data});
   },
   onChangeModal: function (data) {
-    console.log(data, data.config);
     let visible = data.visibleModal == this.constructor.displayName;
     this.setState({ visible: visible, config: data.config });
   },
@@ -101,7 +100,10 @@ const AddToCollectionModal = React.createClass ({
   },
 
   previewCollection: function (collection) {
-    this.showViewCollectionModal(collection, this.addToCollection)
+    this.showViewCollectionModal(collection, {
+      addProductToCollection: this.addToCollection,
+      previousConfig: this.state.config
+    })
   },
 
   productInCollection: function (collection) {
@@ -212,7 +214,7 @@ const AddToCollectionModal = React.createClass ({
       return <div className='btn btn-round btn-red-inverted btn-add btn-list-small btn-text-normal btn-tick'>Added</div>
     } else if (this.productInCollection(collection)) {
       return <div className='already-in-collection'>
-        {this.state.config.mobile ? 
+        {this.state.config.mobile ?
           "Already added" :
           "Product already added to collection"}</div>
     } else {
@@ -282,7 +284,7 @@ const AddToCollectionModal = React.createClass ({
         </div>
         {this.renderSearchBox()}
         { this.hasCollectionList() ?
-            this.renderAddToCollectionForm() : 
+            this.renderAddToCollectionForm() :
             <span className="no-results">No results found.</span> }
       </Modal>
     )

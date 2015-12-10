@@ -182,7 +182,7 @@ const ProductPageDesktopVersion = React.createClass({
             <div className='btn btn-round btn-grey' onClick={() => this.showCreateCollectionModal({products: [this.props.data]})}>
               Create Collection
             </div>
-            <div className='btn btn-round btn-grey' onClick={() => this.showAddToCollectionModal()}>
+            <div className='btn btn-round btn-grey' onClick={() => this.showAddToCollectionModal('', {mobile: true})}>
               Add to existing collection
             </div>
             <CollectionsCollection

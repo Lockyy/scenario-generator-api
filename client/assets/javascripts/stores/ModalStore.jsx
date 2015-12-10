@@ -21,12 +21,15 @@ class ModalStore {
     this.previousHeight = data.height;
   }
 
-  handleCloseModal() {
+  handleCloseModal(previousOptions) {
     this.visibleModal = this.previousModal;
+    if(this.previousModal) {
+      FluxModalActions.preventScroll()
+    }
     this.previousModal = null;
     document.body.scrollTop = this.previousHeight;
     this.previousHeight = null;
-    this.config = {}
+    this.config = previousOptions || {}
   }
 
   resetData() {

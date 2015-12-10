@@ -187,7 +187,7 @@ const ProductPageMobileVersion = React.createClass({
 
     let rows = [
       {description: "Add to an existing collection",
-       action: () => this.showAddToCollectionModal('')},
+       action: () => this.showAddToCollectionModal('', {mobile: true})},
       {description: "Create new collection",
        action: this.showCreateModal}
     ];
