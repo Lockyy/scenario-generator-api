@@ -129,7 +129,7 @@ const TagsManager = React.createClass({
     this._hideTagsItems();
     this._hideButtonContainer();
 
-    this._getTagsManagerContainer().on('clickoutside', _.debounce(function (e) {
+    this._getTagsManagerContainer().on('clickoutside', _.debounce(function(e) {
       if (!(_.include($(e.target).attr('class'), 'myTagSuggestion') ||
           _.include($(e.target).data('role'), 'remove') || _.include($(e.target).attr('class'), 'tt-suggestion'))) {
         _this._closeTagsManager();

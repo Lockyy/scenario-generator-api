@@ -37,7 +37,7 @@ const ModalManager = React.createClass ({
     router: React.PropTypes.object
   },
 
-  getChildContext: function () {
+  getChildContext: function() {
     return {router: this.props.router};
   },
 

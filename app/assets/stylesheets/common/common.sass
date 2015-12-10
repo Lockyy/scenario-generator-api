@@ -14,10 +14,11 @@ form
     box-shadow: none
 
 .link
-  color: $primary-red
-  cursor: pointer
-  &.underlined
-    text-decoration: underline
+  &, &:visited
+    color: $primary-red
+    cursor: pointer
+    &.underlined
+      text-decoration: underline
 
 .grey-bottom-border
   @include grey-bottom-border
@@ -55,7 +56,9 @@ form
   background: $light-grey
 
 .background-grey
-  background: $grey
+  @include background-grey
+.background-primary-grey
+  background: $primary-grey
 
 .color-red
   color: $primary-red

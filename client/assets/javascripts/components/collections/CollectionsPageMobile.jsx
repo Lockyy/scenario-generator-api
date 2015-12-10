@@ -5,9 +5,9 @@ import FluxSearchPageActions from '../../actions/FluxSearchPageActions'
 import SearchPageStore from '../../stores/SearchPageStore'
 import Results from '../search/Results'
 
-const CollectionPageMobile = React.createClass({
+const CollectionsPageMobile = React.createClass({
   mixins: [ Navigation ],
-  displayName: 'CollectionPageMobile',
+  displayName: 'CollectionsPageMobile',
 
   getDefaultProps: function() {
     return {
@@ -100,4 +100,4 @@ const CollectionPageMobile = React.createClass({
   }
 })
 
-export default CollectionPageMobile;
+export default CollectionsPageMobile;

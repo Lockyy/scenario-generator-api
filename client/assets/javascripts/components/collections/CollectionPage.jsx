@@ -9,6 +9,7 @@ import CollectionStore from '../../stores/CollectionStore'
 import Rating from '../Rating'
 import Avatar from '../Avatar'
 import TabbedArea from '../TabbedArea'
+import MoreOptionsDropdown from '../MoreOptionsDropdown';
 import { EditCollectionMixin } from './EditCollectionModal'
 import { ShareCollectionMixin } from './ShareCollectionModal'
 import { CollaboratorCollectionMixin } from './CollaboratorCollectionModal'
@@ -22,7 +23,7 @@ const CollectionPage = React.createClass({
     currentUser: React.PropTypes.object.isRequired
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       data: {
         collection: {
@@ -33,40 +34,41 @@ const CollectionPage = React.createClass({
           },
           products: [],
           owned: false,
-          editable: false
+          editable: false,
+          users: []
         }
       }
     };
   },
 
-  id: function () {
+  id: function() {
     return this.props.params.id
   },
 
-  componentDidMount: function () {
+  componentDidMount: function() {
     CollectionStore.listen(this.onChange);
     this.fetchCollection()
   },
 
-  componentWillReceiveProps: function (newProps) {
+  componentWillReceiveProps: function(newProps) {
     if (!newProps.isTransitioning) {
       this.fetchCollection()
     }
   },
 
-  fetchCollection: function (id) {
+  fetchCollection: function(id) {
     FluxCollectionActions.fetchCollection(this.id());
   },
 
-  onChange: function (data) {
+  onChange: function(data) {
     this.setState(data);
   },
 
-  ownedByUser: function () {
+  ownedByUser: function() {
     return this.state.data.collection.owned
   },
 
-  deleteCollection: function () {
+  deleteCollection: function() {
     let _this = this;
     let collection_name = this.state.data.collection.name;
 
@@ -79,7 +81,7 @@ const CollectionPage = React.createClass({
       checkbox: 'I confirm that I want to delete this collection',
       headerIconClass: 'collections',
       showClose: true,
-      successCallback: function () {
+      successCallback: function() {
         FluxCollectionActions.deleteCollection({
           id: _this.props.params.id,
           name: collection_name
@@ -90,7 +92,7 @@ const CollectionPage = React.createClass({
     })
   },
 
-  leaveCollection: function () {
+  leaveCollection: function() {
     let _this = this;
     let collection_name = this.state.data.collection.name;
 
@@ -101,7 +103,7 @@ const CollectionPage = React.createClass({
       cancel: 'Cancel',
       message: 'Leaving this collection will remove it from your profile and from the Collections tab of the included products for you only.',
       checkbox: 'I confirm that I want to leave this collection',
-      successCallback: function () {
+      successCallback: function() {
         FluxCollectionActions.leaveCollection({
           id: _this.props.params.id,
           name: collection_name
@@ -112,19 +114,23 @@ const CollectionPage = React.createClass({
     })
   },
 
-  editCollection: function () {
+  editCollection: function() {
     this.showEditCollectionModal(this.state.data.collection)
   },
 
-  shareCollection: function () {
+  shareCollection: function() {
     this.showShareCollectionModal(this.state.data.collection, {confirm: 'Finish', cancel: 'Cancel', hideRadios: false})
   },
 
-  manageCollaborators: function () {
+  viewCollaborators: function() {
+    console.log('To Implement')
+  },
+
+  manageCollaborators: function() {
     this.showCollaboratorCollectionModal(this.state.data.collection)
   },
 
-  renderEditButtons: function () {
+  renderEditButtons: function() {
     if (this.ownedByUser()) {
       return (
         <div className='user-buttons vertical-padding grey-bottom-border'>
@@ -139,7 +145,7 @@ const CollectionPage = React.createClass({
     }
   },
 
-  renderDeleteButton: function () {
+  renderDeleteButton: function() {
     if (this.ownedByUser()) {
       return (
         <div className='vertical-padding grey-bottom-border color-dark-grey small-text'>
@@ -158,7 +164,7 @@ const CollectionPage = React.createClass({
     }
   },
 
-  renderLeaveButton: function () {
+  renderLeaveButton: function() {
     if (this.state.data.collection.editable || this.state.data.collection.viewer) {
       return (
         <div className='vertical-padding grey-bottom-border color-dark-grey small-text'>
@@ -177,11 +183,11 @@ const CollectionPage = React.createClass({
     }
   },
 
-  removeProduct: function (product) {
+  removeProduct: function(product) {
     FluxCollectionActions.deleteProduct(this.id(), product.id)
   },
 
-  renderProductRow: function (product) {
+  renderProductRow: function(product) {
     return (
       <div className='row collection-product-row'>
         <div className='col-xs-8'>
@@ -189,8 +195,10 @@ const CollectionPage = React.createClass({
           <Rating value={product.rating} name='rating'/>
         </div>
         <div className='col-xs-3'>
-          <div>{product.added_on}</div>
-          <div>{product.added_by}</div>
+          <div className='hidden-xs'>
+            <div>{product.added_on}</div>
+            <div>{product.added_by}</div>
+          </div>
         </div>
         { this.ownedByUser() ?
         <div className='link underlined' onClick={() => this.removeProduct(product)}>Remove</div> : '' }
@@ -198,28 +206,30 @@ const CollectionPage = React.createClass({
     )
   },
 
-  renderProductsTable: function (products) {
+  renderProductsTable: function(products) {
     return (
       <div className='collection-products-table' tabTitle='Products' ref='products'>
-        <div className='row table-header'>
+        <div className='row table-header hidden-xs'>
           <div className='col-xs-8'>Product</div>
           <div className='col-xs-3'>Date Added</div>
         </div>
         {_.map(products, this.renderProductRow)}
-        { this.state.data.collection.editable ? this.renderAddProductButton() : '' }
+        <div className='add-product-container'>
+          { this.state.data.collection.editable ? this.renderAddProductButton() : '' }
+        </div>
       </div>
     )
   },
 
-  renderAddProductButton: function () {
+  renderAddProductButton: function() {
     return (
       <div className='link add-product-link' onClick={() => this.showEditCollectionModal()}>
-        Add product
+        Add a new product
       </div>
     )
   },
 
-  renderCollaboratorSidebar: function () {
+  renderCollaboratorSidebar: function() {
     return (
       <div tabTitle='Collaborators' ref='collaborators'>
         {this.renderEditButtons()}
@@ -229,7 +239,7 @@ const CollectionPage = React.createClass({
     )
   },
 
-  renderOwnerView: function () {
+  renderOwnerView: function() {
     if (this.state.data.collection.owned) {
       return (
         <div>
@@ -242,7 +252,7 @@ const CollectionPage = React.createClass({
     }
   },
 
-  renderCollaboratorView: function () {
+  renderCollaboratorView: function() {
     if (!this.state.data.collection.owned) {
       return (
         <div>
@@ -253,25 +263,25 @@ const CollectionPage = React.createClass({
     }
   },
 
-  owners: function () {
-    return [this.state.data.collection.user].concat(_.filter(this.state.data.collection.users, function (user) {
+  owners: function() {
+    return [this.state.data.collection.user].concat(_.filter(this.state.data.collection.users, function(user) {
       return user.rank == 'owner'
     }))
   },
 
-  collaborators: function () {
-    return _.filter(this.state.data.collection.users, function (user) {
+  collaborators: function() {
+    return _.filter(this.state.data.collection.users, function(user) {
       return user.rank == 'collaborator'
     })
   },
 
-  viewers: function () {
-    return _.filter(this.state.data.collection.users, function (user) {
+  viewers: function() {
+    return _.filter(this.state.data.collection.users, function(user) {
       return user.rank == 'viewer'
     })
   },
 
-  renderOwners: function () {
+  renderOwners: function() {
     let _this = this
     return (
       <div className='grey-bottom-border vertical-padding'>
@@ -285,7 +295,7 @@ const CollectionPage = React.createClass({
     )
   },
 
-  renderCollaborators: function () {
+  renderCollaborators: function() {
     if (this.collaborators().length <= 0) {
       return
     }
@@ -297,12 +307,12 @@ const CollectionPage = React.createClass({
         </div>
         {_.map(this.collaborators(), function(collaborator) {
           return <Avatar url={collaborator.avatar_url} link={`/app/users/${collaborator.id}`} size={_this.avatarSize}/>
-          })}
+        })}
       </div>
     )
   },
 
-  renderAllCollaborators: function () {
+  renderAllCollaborators: function() {
     let allCollaborators = this.owners().concat(this.collaborators());
     if (allCollaborators.length <= 0) {
       return
@@ -318,7 +328,7 @@ const CollectionPage = React.createClass({
     )
   },
 
-  renderViewers: function () {
+  renderViewers: function() {
     let _this = this
     return (
       <div className='grey-bottom-border vertical-padding'>
@@ -352,7 +362,7 @@ const CollectionPage = React.createClass({
     )
   },
 
-  setPrivacy: function (e) {
+  setPrivacy: function(e) {
     let newValue = $(e.target).val()
     let message, button, title;
     let _this = this;
@@ -375,45 +385,45 @@ const CollectionPage = React.createClass({
       message: message,
       showClose: true,
       headerIconClass: 'collections',
-      successCallback: function () {
+      successCallback: function() {
         _this.setState({privacy: newValue})
         FluxCollectionActions.updateCollection(_this.state.data.collection.id, {privacy: newValue})
       }
     })
   },
 
-  firstProductName: function () {
+  firstProductName: function() {
     let product = this.state.data.collection.products[0]
     if (product) {
       return product.name
     }
   },
 
-  renderFilePathLink: function (name, url) {
+  renderFilePathLink: function(name, url) {
     return <a href={url} className='right-arrow-after grey-color'>{name}</a>
   },
 
-  getParameterByName: function (name) {
+  getParameterByName: function(name) {
     name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
       results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
   },
 
-  getPreviousLink: function () {
+  getPreviousLink: function() {
     return this.getParameterByName('link') || `/app/users/${this.state.data.collection.user.id}`
   },
 
-  getPreviousName: function () {
+  getPreviousName: function() {
     return this.getParameterByName('name') || this.state.data.collection.user.name
   },
 
-  renderFilePath: function () {
+  renderFilePath: function() {
     let name = this.getPreviousName()
     let link = this.getPreviousLink()
 
     return (
-      <div className='vertical-padding red-bottom-border bottom-margin color-dark-grey'>
+      <div className='vertical-padding red-bottom-border bottom-margin color-dark-grey hidden-xs'>
         {this.renderFilePathLink(name, link)}
         {this.renderFilePathLink('Collections', link + '#collections')}
         <span className='color-red'>{this.state.data.collection.name}</span>
@@ -421,18 +431,83 @@ const CollectionPage = React.createClass({
     )
   },
 
-  render: function () {
+  renderBackButton: function() {
+    let link = this.getParameterByName('link')
+    if(link) {
+      return <Link className='back-button' to={link}>Back</Link>
+    }
+  },
+
+  getMoreOptionsRows: function() {
+    let rows = [{
+      description: "View Collaborators",
+      action: this.viewCollaborators
+    }]
+
+    if(this.state.data.collection.owned) {
+      rows.push({
+        description: "Manage Collaborators",
+        action: this.manageCollaborators })
+      rows.push({
+        description: "Add Collaborators",
+        action: this.shareCollection })
+      rows.push({
+        description: "Delete Collection",
+        className: 'blue',
+        action: this.deleteCollection })
+    }
+
+    if( this.state.data.collection.editable &&
+        this.state.data.collection.user.id != this.context.currentUser.id) {
+      rows.push({
+        description: "Leave Collection",
+        className: 'blue',
+        action: this.leaveCollection })
+    }
+
+    return rows
+  },
+
+  renderHeader: function() {
+    return (
+      <div className='header vertical-padding bottom-margin-2 horizontal-padding'>
+        <div className='large-text'>
+          { this.state.data.collection.name }
+        </div>
+        <div>
+          Created by <Link
+                        to={`/app/users/${this.state.data.collection.user.id}`}
+                        className='link'>
+            {this.state.data.collection.user.name}
+          </Link>, {this.state.data.collection.display_date}
+        </div>
+        { this.state.data.collection.users.length > 0 ? (
+            <div >
+              {this.state.data.collection.users.length} collaborator(s)
+            </div>
+          ) : null }
+        <MoreOptionsDropdown
+          rows={this.getMoreOptionsRows()} />
+      </div>
+    )
+  },
+
+  render: function() {
     return (
       <div className='tags-page'>
         {this.renderFilePath()}
-        <div className='large-text vertical-padding bottom-margin-2'>
-          { this.state.data.collection.name }
-        </div>
+        {this.renderBackButton()}
+        {this.renderHeader()}
         <TabbedArea
-          containerClass={'no-border no-margin no-child-padding'}>
+          containerClass={'no-border no-margin no-child-padding hidden-xs'}>
           { this.renderProductsTable(this.state.data.collection.products) }
           { this.renderCollaboratorSidebar() }
         </TabbedArea>
+        <div className='visible-xs row background-light-grey'>
+          <div className='col-xs-12'>
+            { this.renderProductsTable(this.state.data.collection.products) }
+          </div>
+        </div>
       </div>
     );
   }

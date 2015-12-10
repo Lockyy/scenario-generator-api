@@ -18,7 +18,7 @@ import { ViewCollectionMixin } from './ViewCollectionModal'
 
 const AddToCollectionMixin = {
 
-  renderAddToCollectionModal: function (product) {
+  renderAddToCollectionModal: function(product) {
     return (
       <AddToCollectionModal
         ref='collectionShareModal'
@@ -28,11 +28,11 @@ const AddToCollectionMixin = {
     )
   },
 
-  closeAddToCollectionModal: function () {
+  closeAddToCollectionModal: function() {
     FluxModalActions.closeModal()
   },
 
-  showAddToCollectionModal: function (searchTerm, config) {
+  showAddToCollectionModal: function(searchTerm, config) {
     FluxCollectionActions.performSearch(searchTerm);
     FluxModalActions.setVisibleModal('AddToCollectionModal', 0, config);
   }
@@ -46,7 +46,7 @@ const AddToCollectionModal = React.createClass ({
     router: React.PropTypes.object
   },
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       product: {
         name: ''
@@ -60,72 +60,72 @@ const AddToCollectionModal = React.createClass ({
 
   // Flux Methods
   // Keep track of changes that are made to the store
-  componentDidMount: function () {
+  componentDidMount: function() {
     CollectionStore.listen(this.onChangeCollections);
     ProductStore.listen(this.onChangeProduct);
     ModalStore.listen(this.onChangeModal);
     FluxCollectionActions.performSearch('')
   },
-  onChangeCollections: function (data) {
+  onChangeCollections: function(data) {
     this.setState({
       searchedCollections: data.data.searchedCollections,
       searchTerm: data.data.searchTerm
     });
   },
-  onChangeProduct: function (data) {
+  onChangeProduct: function(data) {
     this.setState({product: data.data});
   },
-  onChangeModal: function (data) {
+  onChangeModal: function(data) {
     let visible = data.visibleModal == this.constructor.displayName;
     this.setState({ visible: visible, config: data.config });
   },
 
-  close: function () {
+  close: function() {
     FluxCollectionActions.clearCollection();
     FluxCollectionActions.performSearch('');
     this.setState({addedCollections: []})
     this.props.close()
   },
 
-  onFocus: function (e) {
+  onFocus: function(e) {
     $(React.findDOMNode(this.refs.fields_container)).addClass('focus')
   },
 
-  onBlur: function (e) {
+  onBlur: function(e) {
     $(React.findDOMNode(this.refs.fields_container)).removeClass('focus')
   },
 
-  performSearchHandler: function (e) {
+  performSearchHandler: function(e) {
     let newSearchTerm = $(e.target).val()
     this.performSearch(newSearchTerm)
   },
 
-  performSearch: function (searchTerm) {
+  performSearch: function(searchTerm) {
     FluxCollectionActions.performSearch(searchTerm);
   },
 
-  previewCollection: function (collection) {
+  previewCollection: function(collection) {
     this.showViewCollectionModal(collection, {
       addProductToCollection: this.addToCollection,
       previousConfig: this.state.config
     })
   },
 
-  productInCollection: function (collection) {
+  productInCollection: function(collection) {
     if (collection.products.length == 0) {
       return false;
     }
-    let collectionProductIDs = _.map(collection.products, function (product) {
+    let collectionProductIDs = _.map(collection.products, function(product) {
       return product.id
     });
     let productID = this.state.product.id;
     return _.indexOf(collectionProductIDs, productID) > -1
   },
 
-  addToCollection: function (e, collection) {
+  addToCollection: function(e, collection) {
     let product = this.state.product;
 
-    let sendNotification = function () {
+    let sendNotification = function() {
       FluxNotificationsActions.showNotification({
         type: 'saved',
         text: `You added <b>${product.name}</b> to the Collection <b>${collection.name}</b>`,
@@ -146,7 +146,7 @@ const AddToCollectionModal = React.createClass ({
     }
   },
 
-  renderSearchBox: function () {
+  renderSearchBox: function() {
     return (
       <input onChange={this.performSearchHandler}
              placeholder='Search collections, products, and tags'
@@ -155,8 +155,8 @@ const AddToCollectionModal = React.createClass ({
     )
   },
 
-  renderCollectionLists: function () {
-    return _.map(this.state.searchedCollections, function (collectionSet, setKey) {
+  renderCollectionLists: function() {
+    return _.map(this.state.searchedCollections, function(collectionSet, setKey) {
       return (
         <div>
           { this.renderCollectionList(collectionSet, setKey) }
@@ -166,12 +166,12 @@ const AddToCollectionModal = React.createClass ({
     }.bind(this))
   },
 
-  renderCollectionList: function (collectionSet, setKey) {
+  renderCollectionList: function(collectionSet, setKey) {
     if (collectionSet.total <= 0) {
       return false;
     }
 
-    let collectionDOMs = _.map(collectionSet.data, function (collection) {
+    let collectionDOMs = _.map(collectionSet.data, function(collection) {
       return this.renderCollectionListItem(collection)
     }.bind(this))
 
@@ -187,12 +187,12 @@ const AddToCollectionModal = React.createClass ({
     )
   },
 
-  renderCreateCollectionLink: function () {
+  renderCreateCollectionLink: function() {
     if (!this.state.searchTerm) {
       return false
     }
 
-    let onClick = function () {
+    let onClick = function() {
       this.close()
       this.showCreateCollectionModal({name: this.state.searchTerm, products: [this.state.product]})
     }.bind(this)
@@ -210,11 +210,11 @@ const AddToCollectionModal = React.createClass ({
     )
   },
 
-  collectionTicked: function (collection_id) {
+  collectionTicked: function(collection_id) {
     return _.indexOf(this.state.addedCollections, collection_id) > -1
   },
 
-  renderAddButton: function (collection) {
+  renderAddButton: function(collection) {
     if(this.collectionTicked(collection.id)) {
       return <div className='btn btn-round btn-red-inverted btn-add btn-list-small btn-text-normal btn-tick'>Added</div>
     } else if (this.productInCollection(collection)) {
@@ -227,7 +227,7 @@ const AddToCollectionModal = React.createClass ({
     }
   },
 
-  renderCollectionListItem: function (collection) {
+  renderCollectionListItem: function(collection) {
     let userProfileUrl = "/app/users/" + collection.user.id;
     return (
       <div className='collection'>
@@ -261,7 +261,7 @@ const AddToCollectionModal = React.createClass ({
     }).length > 0;
   },
 
-  renderAddToCollectionForm: function () {
+  renderAddToCollectionForm: function() {
     return (
       <div className='row'>
         <form className='col-xs-12 form collection'
@@ -274,7 +274,7 @@ const AddToCollectionModal = React.createClass ({
     )
   },
 
-  render: function () {
+  render: function() {
     return (
       <Modal
         isOpen={this.state.visible}
