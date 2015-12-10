@@ -33,6 +33,14 @@ const ModalManager = React.createClass ({
     CollaboratorCollectionMixin,
   ],
 
+  childContextTypes: {
+    router: React.PropTypes.object
+  },
+
+  getChildContext: function () {
+    return {router: this.props.router};
+  },
+
   render: function() {
     return (
       <div>

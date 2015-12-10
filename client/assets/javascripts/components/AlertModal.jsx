@@ -84,22 +84,13 @@ const AlertModal = React.createClass({
 
   renderButtons: function() {
     return (
-      <div className='alertButtons'>
-        { this.state.data.blue ? (
-            <button onClick={this.successButton}
-                    className='btn btn-round btn-blue-inverted'
-                    disabled={this.buttonDisabled()}>
-              {this.state.data.success}
-            </button>
-          ) : (
-            <button onClick={this.successButton}
-                    className='btn btn-round btn-red'
-                    disabled={this.buttonDisabled()}>
-              {this.state.data.success}
-            </button>
-          )
-        }
-        {this.showCancelButton() ? (<button onClick={this.cancelButton} className='btn btn-round btn-grey'>
+      <div className='alert-buttons buttons'>
+        <button onClick={this.successButton}
+                className={`btn btn-round ${this.state.data.blue ? 'btn-blue-inverted' : 'btn-red' }`}
+                disabled={this.buttonDisabled()}>
+          {this.state.data.success}
+        </button>
+        {this.showCancelButton() ? (<button onClick={this.cancelButton} className='btn btn-round btn-grey-inverted'>
                                       {this.state.data.cancel}
                                     </button> ) : null }
       </div>
@@ -136,7 +127,7 @@ const AlertModal = React.createClass({
               style={DefaultModalStyles}
               overlayClassName={'alert-modal'}
               onRequestClose={this.getOnRequestCloseFunc()}>
-        {this.state.data.showClose ? <div className='back-button' onClick={this.cancelButton}>{"< Close"}</div> : null}
+        {this.state.data.showClose ? <div className='back-button' onClick={this.cancelButton}>Back</div> : null}
         <div className={`header ${this.state.data.headerIconClass}`}>
           <span className='title'>
             {this.state.data.title}

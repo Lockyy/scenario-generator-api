@@ -12,6 +12,7 @@ import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import ProductName from '../reviews/ProductName'
 import Results from '../search/Results'
 import { ShareCollectionMixin } from './ShareCollectionModal'
+import Footer from '../Footer';
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
@@ -41,6 +42,10 @@ const CreateCollectionMixin = {
 const CreateCollectionModal = React.createClass ({
   displayName: 'CreateCollectionModal',
   mixins: [ ShareCollectionMixin ],
+
+  contextTypes: {
+    router: React.PropTypes.object
+  },
 
   getInitialState: function() {
     return {
@@ -249,7 +254,7 @@ const CreateCollectionModal = React.createClass ({
   renderSubmissionButtons: function() {
     return (
       <div className='buttons'>
-        <button className='btn btn-red-inverted btn-round'
+        <button className='btn btn-red btn-round'
                 onClick={this.submitForm}
                 data-privacy='hidden'>Create Collection</button>
         <button className='btn btn-grey btn-round'
@@ -292,9 +297,10 @@ const CreateCollectionModal = React.createClass ({
         isOpen={this.state.visible}
         onRequestClose={this.props.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
+        <div className='back-button' onClick={this.props.close}>Back</div>
         {this.renderheader()}
         {this.renderCollectionForm()}
+        <Footer className='visible-xs' />
       </Modal>
     )
   }

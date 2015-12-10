@@ -7,6 +7,7 @@ import NewReviewPage from './components/reviews/NewReviewPage';
 import CompanyProfilePage from './components/companies/CompanyProfilePage';
 import UserProfilePage from './components/users/UserProfilePage';
 import ProductPage from './components/products/ProductPage';
+import Footer from './components/Footer';
 import TagPage from './components/tags/TagPage';
 import TagsPage from './components/tags/TagsPage';
 import SearchPage from './components/search/SearchPage';
@@ -100,6 +101,10 @@ $(function onLoad() {
                 React.render((
                     <ModalManager router={router} />
                 ), $('#modals')[0]);
+
+                React.render((
+                    <Footer router={router} />
+                ), $('#footer')[0]);
             });
         })
     };

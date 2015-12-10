@@ -12,6 +12,7 @@ import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import CollectionTypeahead from './CollectionTypeahead'
 import Results from '../search/Results'
+import Footer from '../Footer';
 import { CreateCollectionMixin } from './CreateCollectionModal'
 import { ViewCollectionMixin } from './ViewCollectionModal'
 
@@ -40,6 +41,10 @@ const AddToCollectionMixin = {
 const AddToCollectionModal = React.createClass ({
   displayName: 'AddToCollectionModal',
   mixins: [ViewCollectionMixin, CreateCollectionMixin],
+
+  contextTypes: {
+    router: React.PropTypes.object
+  },
 
   getInitialState: function () {
     return {
@@ -275,7 +280,7 @@ const AddToCollectionModal = React.createClass ({
         isOpen={this.state.visible}
         onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.close}>{"< Close"}</div>
+        <div className='back-button' onClick={this.close}>Back</div>
         <div className='header collections'>
           <span className='title'>
             Add product to an existing collection
@@ -286,6 +291,7 @@ const AddToCollectionModal = React.createClass ({
         { this.hasCollectionList() ?
             this.renderAddToCollectionForm() :
             <span className="no-results">No results found.</span> }
+        <Footer className='visible-xs' />
       </Modal>
     )
   }

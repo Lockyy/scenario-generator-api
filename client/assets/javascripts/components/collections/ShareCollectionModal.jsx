@@ -11,6 +11,7 @@ import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import UserTypeahead from '../UserTypeahead'
 import Results from '../search/Results'
+import Footer from '../Footer';
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
@@ -39,6 +40,10 @@ const ShareCollectionMixin = {
 
 const ShareCollectionModal = React.createClass ({
   displayName: 'ShareCollectionModal',
+
+  contextTypes: {
+    router: React.PropTypes.object
+  },
 
   getInitialState: function() {
     return {
@@ -368,9 +373,10 @@ const ShareCollectionModal = React.createClass ({
         isOpen={this.state.visible}
         onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.close}>{"< Close"}</div>
+        <div className='back-button' onClick={this.close}>Back</div>
         {this.renderheader()}
         {this.renderShareForm()}
+        <Footer className='visible-xs' />
       </Modal>
     )
   }
