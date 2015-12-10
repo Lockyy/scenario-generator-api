@@ -11,6 +11,7 @@ import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import UserTypeahead from '../UserTypeahead'
 import Results from '../search/Results'
 import Avatar from '../Avatar'
+import Footer from '../Footer';
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
@@ -38,6 +39,10 @@ const CollaboratorCollectionMixin = {
 
 const CollaboratorCollectionModal = React.createClass ({
   displayName: 'CollaboratorCollectionModal',
+
+  contextTypes: {
+    router: React.PropTypes.object
+  },
 
   getInitialState: function() {
     return {
@@ -215,7 +220,7 @@ const CollaboratorCollectionModal = React.createClass ({
   renderSubmissionButtons: function() {
     return (
       <div className='buttons'>
-        <button className='btn btn-red-inverted btn-round'
+        <button className='btn btn-red btn-round'
                 onClick={this.submitForm}>Save</button>
         <button className='btn btn-grey btn-round'
                 onClick={this.close}>Cancel</button>
@@ -264,9 +269,10 @@ const CollaboratorCollectionModal = React.createClass ({
         isOpen={this.state.visible}
         onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.close}>{"Back"}</div>
+        <div className='back-button' onClick={this.close}>Back</div>
         {this.renderheader()}
         {this.renderShareForm()}
+        <Footer className='visible-xs' />
       </Modal>
     )
   }

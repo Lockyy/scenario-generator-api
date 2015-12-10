@@ -77,13 +77,13 @@ const ProductPageDesktopVersion = React.createClass({
   renderBookmarkLink: function() {
     if(this.props.data.bookmarked) {
       return (
-        <div onClick={this.props.onUnbookmark} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onUnbookmark} className='btn btn-grey-inverted btn-round'>
           Remove Bookmark
         </div>
       )
     } else {
       return (
-        <div onClick={this.props.onBookmark} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onBookmark} className='btn btn-grey-inverted btn-round'>
           Bookmark
         </div>
       )
@@ -96,7 +96,7 @@ const ProductPageDesktopVersion = React.createClass({
         <Link to={this.props.reviewButtonURL} className='btn btn-red btn-round review-link'>
           { this.props.reviewButtonText }
         </Link>
-        <div onClick={this.props.onShare} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onShare} className='btn btn-grey-inverted btn-round'>
           Share
         </div>
         {this.renderBookmarkLink()}
@@ -179,10 +179,10 @@ const ProductPageDesktopVersion = React.createClass({
             <div className='placeholder-section message'>
               Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!
             </div>
-            <div className='btn btn-round btn-grey' onClick={() => this.showCreateCollectionModal({products: [this.props.data]})}>
+            <div className='btn btn-round btn-grey-inverted' onClick={() => this.showCreateCollectionModal({products: [this.props.data]})}>
               Create Collection
             </div>
-            <div className='btn btn-round btn-grey' onClick={() => this.showAddToCollectionModal()}>
+            <div className='btn btn-round btn-grey-inverted' onClick={() => this.showAddToCollectionModal('', {mobile: true})}>
               Add to existing collection
             </div>
             <CollectionsCollection

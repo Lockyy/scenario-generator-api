@@ -8,12 +8,14 @@ import ProductStore from '../../stores/ProductStore'
 import Reviews from './ReviewsMobileVersion'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
+import MoreOptionsDropdown from '../MoreOptionsDropdown';
 import Tags from '../Tags';
 import Section from '../Section';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
 import CollectionsCollection from '../collections/CollectionsCollection';
+import CollectionStore from '../../stores/CollectionStore'
 import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
 import CreateCollectionMixin from '../collections/CreateCollectionMixin';
 
@@ -85,7 +87,7 @@ const ProductPageMobileVersion = React.createClass({
     }
 
     return (
-      <a href="#" onClick={onClickFn} className='btn btn-grey btn-bookmark'>
+      <a href="#" onClick={onClickFn} className='btn btn-grey-inverted btn-bookmark'>
         <span className={className}>{text}</span>
       </a>
     );
@@ -99,37 +101,10 @@ const ProductPageMobileVersion = React.createClass({
     }
 
     return (
-      <a href='#' className='btn btn-grey btn-share' onClick={share}>
+      <a href='#' className='btn btn-grey-inverted btn-share' onClick={share}>
         <span className='with-icon'>Share</span>
       </a>
     );
-  },
-
-  toggleMoreOptionsDropdown: function() {
-    $(this.refs.moreOptionsDropdown.getDOMNode()).slideToggle()
-  },
-
-  renderMoreOptionsButton: function() {
-    return (
-      <div className='more-options-button' onClick={this.toggleMoreOptionsDropdown}/>
-    )
-  },
-
-  showCreateModal: function() {
-    this.showCreateCollectionModal({products: [this.props.data]})
-  },
-
-  renderMoreOptions: function() {
-    return (
-      <div ref='moreOptionsDropdown' className='more-options-dropdown background-grey bottom-margin shadow'>
-        <div className='vertical-padding dark-grey-bottom-border horizontal-padding centered' onClick={() => this.showAddToCollectionModal('')}>
-          Add to an existing collection
-        </div>
-        <div className='vertical-padding horizontal-padding centered' onClick={this.showCreateModal}>
-          Create new collection
-        </div>
-      </div>
-    )
   },
 
   renderReviewButton: function() {
@@ -138,9 +113,12 @@ const ProductPageMobileVersion = React.createClass({
         <a href={this.props.reviewButtonURL} className='btn btn-red btn-round'>
           { this.props.reviewButtonText }
         </a>
-        {this.renderMoreOptionsButton()}
       </div>
     )
+  },
+
+  showCreateModal: function() {
+    this.showCreateCollectionModal({products: [this.props.data]})
   },
 
   renderInfo: function() {
@@ -166,7 +144,7 @@ const ProductPageMobileVersion = React.createClass({
             <Rating value={this.getProductData('rating')} name='rating'/>
             {this.totalReviews()} Review(s)
           </div>
-          <PriceRating value={this.getProductData('price')} name='rating'/>
+          <PriceRating value={this.getProductData('price')} name='rating' showScoreText='true'/>
           <div className="files">
             <a className="files-link" href='#show-attachments' onClick={this.props.showFiles}
               data-toggle="modal" data-target="#files-modal" >
@@ -206,11 +184,19 @@ const ProductPageMobileVersion = React.createClass({
     }
 
     let tags = this.getProductData('tags');
+
+    let rows = [
+      {description: "Add to an existing collection",
+       action: () => this.showAddToCollectionModal('', {mobile: true})},
+      {description: "Create new collection",
+       action: this.showCreateModal}
+    ];
+
     return (
       <div className='mobile-version'>
         {this.renderTitle()}
         {this.renderReviewButton()}
-        {this.renderMoreOptions()}
+        <MoreOptionsDropdown custom="top-dropdown" rows={rows}/>
         {this.renderInfo()}
 
 
@@ -237,12 +223,13 @@ const ProductPageMobileVersion = React.createClass({
                 <div className='btn btn-round btn-red' onClick={this.showCreateModal}>
                   Create New
                 </div>
-                <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal('')}>
+                <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal('', {mobile: true})}>
                   Add to existing
                 </div>
               </div>
               <CollectionsCollection
-                product={this.props.data} />
+                product={this.props.data}
+                mobile="true"/>
             </Section>
           </div>
 

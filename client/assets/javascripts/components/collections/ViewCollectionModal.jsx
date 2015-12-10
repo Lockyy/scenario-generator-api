@@ -12,6 +12,7 @@ import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import { EditCollectionMixin } from './EditCollectionModal';
 import Avatar from '../Avatar';
 import Results from '../search/Results';
+import Footer from '../Footer';
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
@@ -20,31 +21,30 @@ const ViewCollectionMixin = {
     return <ViewCollectionModal close={this.closeViewCollectionModal}/>
   },
 
-  closeViewCollectionModal: function() {
-    FluxModalActions.closeModal();
+  closeViewCollectionModal: function(previousConfig) {
+    FluxModalActions.closeModal(previousConfig);
     FluxCollectionActions.clearCollection();
   },
 
-  showViewCollectionModal: function(collection, addProductToCollection) {
+  showViewCollectionModal: function(collection, config) {
     if(!collection.products) {
       FluxCollectionActions.fetchCollection(collection.id, function() {
         FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop);
       })
     } else {
       FluxCollectionActions.fetchedCollection(collection);
-      FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop, {addProductToCollection: addProductToCollection});
+      FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop, config);
     }
   }
 };
 
 const ViewCollectionModal = React.createClass ({
   displayName: 'ViewCollectionModal',
-  mixins: [
-    EditCollectionMixin
-  ],
+  mixins: [ EditCollectionMixin ],
 
   contextTypes: {
-    currentUser: React.PropTypes.object.isRequired
+    currentUser: React.PropTypes.object.isRequired,
+    router: React.PropTypes.object
   },
 
   getInitialState: function() {
@@ -92,14 +92,23 @@ const ViewCollectionModal = React.createClass ({
     }
   },
 
+  close: function() {
+    this.props.close(this.state.config.previousConfig)
+  },
+
   renderButtons: function() {
-    let backButton = <button className='btn btn-grey btn-round' onClick={this.props.close}>Back</button>;
+    let backButton = <button className='btn btn-grey btn-round' onClick={this.close}>Back</button>;
     let addButton = "";
     let collection = this.state.collection
     if (!this.productInCollection(collection) && this.state.config.addProductToCollection) {
-      addButton = <button className='btn btn-red-inverted btn-round' onClick={(e) => this.state.config.addProductToCollection(e, collection)}>Add</button>;
+      addButton = (
+        <button
+          className='btn btn-red btn-round'
+          onClick={(e) => this.state.config.addProductToCollection(e, collection)}>
+          Add
+        </button>
+      );
     }
-
     return (
       <div className='buttons'>
         {backButton}
@@ -128,15 +137,15 @@ const ViewCollectionModal = React.createClass ({
     return (
       <Modal
         isOpen={this.state.visible}
-        onRequestClose={this.props.close}
+        onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.props.close}>{"Back"}</div>
+        <div className='back-button' onClick={this.close}>Back</div>
 
         <div className='header collection'>
           <span className='title'>
             {this.state.collection.name}
           </span>
-          <a onClick={this.props.close} className='close'></a>
+          <a onClick={this.close} className='close'></a>
         </div>
 
         <div className='collection-details'>
@@ -157,6 +166,7 @@ const ViewCollectionModal = React.createClass ({
 
           {this.renderButtons()}
         </div>
+        <Footer className='visible-xs' />
       </Modal>
     )
   }

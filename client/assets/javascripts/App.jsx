@@ -7,6 +7,7 @@ import NewReviewPage from './components/reviews/NewReviewPage';
 import CompanyProfilePage from './components/companies/CompanyProfilePage';
 import UserProfilePage from './components/users/UserProfilePage';
 import ProductPage from './components/products/ProductPage';
+import Footer from './components/Footer';
 import TagPage from './components/tags/TagPage';
 import TagsPage from './components/tags/TagsPage';
 import SearchPage from './components/search/SearchPage';
@@ -25,6 +26,16 @@ let GAInitiailizer = ga.Initializer;
 
 $(function onLoad() {
     function render() {
+        $(document).ajaxStart(function() {
+          $('#loading-bar').addClass('filling-90');
+        }).ajaxSuccess(function() {
+          $('#loading-bar').removeClass('filling-90');
+          $('#loading-bar').addClass('filled');
+          setTimeout(function() {
+            $('#loading-bar').removeClass('filled');
+          }, 300)
+        });
+
         UserAPI.getCurrentUser(function(currentUser) {
 
             FluxCurrentUserActions.updateData(currentUser);
@@ -90,6 +101,10 @@ $(function onLoad() {
                 React.render((
                     <ModalManager router={router} />
                 ), $('#modals')[0]);
+
+                React.render((
+                    <Footer router={router} />
+                ), $('#footer')[0]);
             });
         })
     };

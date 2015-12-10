@@ -12,13 +12,18 @@ import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import ProductName from '../reviews/ProductName'
 import Results from '../search/Results'
 import { ShareCollectionMixin } from './ShareCollectionModal'
+import Footer from '../Footer';
 import  CreateCollectionMixin  from './CreateCollectionMixin'
 
 const CreateCollectionModal = React.createClass ({
   displayName: 'CreateCollectionModal',
   mixins: [ShareCollectionMixin, CreateCollectionMixin],
 
-  getInitialState: function () {
+  contextTypes: {
+    router: React.PropTypes.object
+  },
+
+  getInitialState: function() {
     return {
       data: {
         collection: {
@@ -278,9 +283,10 @@ const CreateCollectionModal = React.createClass ({
         isOpen={this.state.visible}
         onRequestClose={this.props.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.props.close}>{"Back"}</div>
+        <div className='back-button' onClick={this.props.close}>Back</div>
         {this.renderheader()}
         {this.renderCollectionForm()}
+        <Footer className='visible-xs' />
       </Modal>
     )
   }

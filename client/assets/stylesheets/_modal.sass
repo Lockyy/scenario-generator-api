@@ -146,7 +146,7 @@ $modal-padding: 25px
             padding-bottom: 0px
         &.collections-sets
           padding-top: 0px
-          padding-bottom: 0px
+          padding-bottom: 50px
           margin-top: 35px
           max-height: 400px
           overflow-y: auto
@@ -329,18 +329,27 @@ $modal-padding: 25px
   .app
     .ReactModal__Overlay
       top: 70px !important
+      &.alert-modal
+        z-index: 9999999
+        .ReactModal__Content
+          top: 0px !important
       .ReactModal__Content
         width: 100%
         height: 100%
         left: 0px !important
         top: 0px !important
         border-radius: 0px
+        overflow: scroll !important
+        .footer
+          margin-top: 100px
         .header
-          margin-bottom: 15px
+          margin-bottom: 30px
           padding-bottom: 5px
-          border-bottom: 1px solid $primary-red
+          border-bottom: 1px solid $light-grey
           .title
             font-size: 16px
+            &::before
+              display: none
         .results:not(.sharee)
           max-height: 190px
         .scrollable
@@ -358,18 +367,32 @@ $modal-padding: 25px
               font-size: 15px
             textarea
               height: 75px
+        .buttons
+          display: flex
+          flex-direction: column
+          align-items: center
+          justify-content: center
+          .btn + .btn
+            margin-top: 15px
+            margin-left: 0px
         .back-button
           display: block
-          background: $light-grey url("icons/icon-back.svg") no-repeat center left
+          background: $light-grey
           cursor: pointer
           margin: -25px
           margin-bottom: 10px
-          padding: 17px 36px
-          padding-top: 19px
-          background-position-x: 10px
-          background-size: 25px
-          font-size: 16px
-
+          padding: 15px
+          &::before
+            display: inline-block
+            content: '.'
+            color: transparent
+            background-image: url('icons/dark-grey-arrow.svg')
+            background-repeat: no-repeat
+            transform: rotate(180deg)
+            background-size: contain
+            width: 15px
+            margin-left: 10px
+            margin-right: 10px
         .close
           display: none
         .grey
@@ -378,11 +401,46 @@ $modal-padding: 25px
               flex-direction: column
               align-items: flex-start
               .right-buttons
-                display: block
+                width: 90%
+                display: flex
+                align-items: center
+                justify-content: center
+                margin-top: 13px
+                margin-right: auto
+                margin-left: auto
+                div
+                  width: 50%
+                  &:first-child
+                    border-top-left-radius: 5px
+                    border-bottom-left-radius: 5px
+                  &:last-child
+                    border-top-right-radius: 5px
+                    border-bottom-right-radius: 5px
+                    border-left: 0
+                  border-radius: 0
+                  border: 2px solid $grey
+                  margin-left: 0
+                  &.already-in-collection
+                    color: $dark-grey
+                    font-size: 1em
+                    text-align: center
+                    line-height: 2.6
+                    font-style: italic
+                    margin-left: 0
+                    width: 50%
+                  height: 40px
 
-.alertButtons
+
+.alert-buttons
   display: flex
   justify-content: center
   margin-top: 15px
   button
     margin: 0 3em 0 3em
+
+
+@media (max-width:480px)
+  .alert-buttons
+    button
+      margin-left: 0px
+      margin-right: 0px

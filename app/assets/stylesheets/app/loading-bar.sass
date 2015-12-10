@@ -1,0 +1,27 @@
+@import "common/variables"
+
+$height: 3px
+
+#loading-bar
+  display: flex
+  width: 100%
+  height: 0px
+  position: absolute
+  bottom: -1px
+  background: white
+  .bar
+    transition: 4s
+    display: inline-block
+    width: 0%
+    background: $primary-red
+  &.filling-90, &.filled
+    height: $height
+    .bar
+      height: $height
+  &.filling-90
+    .bar
+      width: 90%
+  &.filled
+    .bar
+      transition: 0.2s
+      width: 100%

@@ -116,8 +116,8 @@ const ReviewsMobileVersion = React.createClass({
     let helpful = voted && userVote.helpful;
     let unhelpful = voted && !userVote.helpful;
 
-    let yesClass = `btn btn-grey ${ helpful ? 'active' : '' }`;
-    let noClass = `btn btn-grey ${ unhelpful ? 'active' : '' }`;
+    let yesClass = `btn btn-grey-inverted ${ helpful ? 'active' : '' }`;
+    let noClass = `btn btn-grey-inverted ${ unhelpful ? 'active' : '' }`;
 
     return (<div className='helpful-review-container'>
       <div className='vote-container'>
