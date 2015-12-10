@@ -5,7 +5,7 @@ const Links = React.createClass({
   displayName: 'Links',
   render: function () {
     return (
-      <div className='container links'>
+      <div className='container default-links'>
         <div class="row">
           <div id="logo-container" class="logo">
             <img className='company-logo' src='/assets/logos/mark-grey.svg'/>
