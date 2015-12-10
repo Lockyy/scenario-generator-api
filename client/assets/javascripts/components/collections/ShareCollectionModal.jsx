@@ -57,17 +57,6 @@ const ShareCollectionModal = React.createClass ({
     this.setState({ visible: visible, config: data.config });
   },
 
-  renderheader: function() {
-    return (
-      <div className='header share'>
-        <span className='title'>
-          Privacy & Sharing
-        </span>
-        <a onClick={this.close} className='close'></a>
-      </div>
-    )
-  },
-
   close: function(e) {
     if(e) { e.preventDefault() }
     this.setState({unsaved_collection: this.state.collection})
@@ -80,9 +69,8 @@ const ShareCollectionModal = React.createClass ({
         isOpen={this.state.visible}
         onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.close}>{"< Close"}</div>
-        {this.renderheader()}
-        <ShareCollection/>
+        <div className='back-button' onClick={this.close}>{"Back"}</div>
+        <ShareCollection close={this.close}/>
 
       </Modal>
     )

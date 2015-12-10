@@ -136,7 +136,7 @@ const AlertModal = React.createClass({
               style={DefaultModalStyles}
               overlayClassName={'alert-modal'}
               onRequestClose={this.getOnRequestCloseFunc()}>
-        {this.state.data.showClose ? <div className='back-button' onClick={this.cancelButton}>{"< Close"}</div> : null}
+        {this.state.data.showClose ? <div className='back-button' onClick={this.cancelButton}>{"Back"}</div> : null}
         <div className={`header ${this.state.data.headerIconClass}`}>
           <span className='title'>
             {this.state.data.title}

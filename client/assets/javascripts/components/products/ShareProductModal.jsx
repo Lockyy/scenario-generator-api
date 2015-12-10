@@ -75,7 +75,7 @@ const ShareProductModal = React.createClass ({
         isOpen={this.state.visible}
         onRequestClose={this.props.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
+        <div className='back-button' onClick={this.props.close}>{"Back"}</div>
         <div className='header share'>
           <span className='title'>
             Share this product with other users

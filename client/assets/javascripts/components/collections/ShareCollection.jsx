@@ -301,7 +301,14 @@ const ShareCollection = React.createClass ({
 
   render: function () {
     return (
-      <div className='row'>
+      <div className='share-collection-container'>
+        <div className='header share'>
+          <span className='title'>
+            Privacy & Sharing
+          </span>
+          <a onClick={this.props.close} className='close'></a>
+        </div>
+
         <form className='col-xs-12 form collection'
               ref='collection_form'>
           {this.renderPrivacyToggle()}

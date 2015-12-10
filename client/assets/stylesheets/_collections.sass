@@ -180,17 +180,67 @@
   display: none
 
 @media (max-width: 480px)
+
+  .mobile-title
+    background: none
+    width: 0
+    height: 0
+    margin-right: 0
+    padding: 20px 0
+    text-transform: uppercase
+    font-size: 14px
+
   .app
     .ReactModal__Overlay
+      overflow-y: scroll
+
       .ReactModal__Content
         .header.collections
           border-bottom-color: $grey
 
-          .title::before
-            background: none
-            width: 0
-            height: 0
-            margin-right: 0
-            padding: 20px 0
+          .title
+            line-height: 0
+            padding-top: 33px
+            height: 55px
             text-transform: uppercase
             font-size: 14px
+            font-style: initial
+          
+          .title::before
+            @extend .mobile-title
+
+        .required
+          margin-bottom: 10px
+
+        .collection-products-container
+          background-color: transparent
+
+        .share-collection-container
+          .header.share
+            border-bottom-color: $grey
+            text-transform: uppercase
+
+            .title::before
+              @extend .mobile-title
+
+          .privacy-radios
+            span
+              font-size: 15px
+
+              &::before
+                width: 20px
+                height: 20px
+
+          .grey-description
+            font-size: 15px
+          
+        .buttons
+          display: block
+          border: none !important
+
+          button
+            width: 100%
+            margin: 0
+            font-size: 15px
+            line-height: 28px
+            margin-bottom: 30px

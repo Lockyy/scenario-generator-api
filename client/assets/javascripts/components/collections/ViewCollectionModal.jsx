@@ -130,7 +130,7 @@ const ViewCollectionModal = React.createClass ({
         isOpen={this.state.visible}
         onRequestClose={this.props.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
+        <div className='back-button' onClick={this.props.close}>{"Back"}</div>
 
         <div className='header collection'>
           <span className='title'>

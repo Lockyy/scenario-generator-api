@@ -264,7 +264,7 @@ const CollaboratorCollectionModal = React.createClass ({
         isOpen={this.state.visible}
         onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.close}>{"< Close"}</div>
+        <div className='back-button' onClick={this.close}>{"Back"}</div>
         {this.renderheader()}
         {this.renderShareForm()}
       </Modal>

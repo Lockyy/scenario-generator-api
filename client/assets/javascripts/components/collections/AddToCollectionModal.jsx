@@ -265,7 +265,7 @@ const AddToCollectionModal = React.createClass ({
         isOpen={this.state.visible}
         onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.close}>{"< Close"}</div>
+        <div className='back-button' onClick={this.close}>{"Back"}</div>
         <div className='header collections'>
           <span className='title'>
             Add product to an existing collection
