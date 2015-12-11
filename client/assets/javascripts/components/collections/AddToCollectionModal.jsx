@@ -109,7 +109,6 @@ const AddToCollectionModal = React.createClass ({
     this.showViewCollectionModal(collection, {
       addProductToCollection: this.addToCollection,
       mobile: this.state.config.mobile,
-      previousConfig: this.state.config,
     })
   },
 

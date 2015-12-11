@@ -21,8 +21,8 @@ const ViewCollectionMixin = {
     return <ViewCollectionModal close={this.closeViewCollectionModal}/>
   },
 
-  closeViewCollectionModal: function(previousConfig) {
-    FluxModalActions.closeModal(previousConfig);
+  closeViewCollectionModal: function() {
+    FluxModalActions.closeModal();
     FluxCollectionActions.clearCollection();
   },
 
@@ -93,7 +93,7 @@ const ViewCollectionModal = React.createClass ({
   },
 
   close: function() {
-    this.props.close(this.state.config.previousConfig)
+    this.props.close()
   },
 
   renderButtons: function() {
