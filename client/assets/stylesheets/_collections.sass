@@ -35,13 +35,13 @@
     @include make-row
     padding: 15px 0px
     border-bottom: 1px solid $grey
+    &:last-child
+      border-bottom: 0px
     span.name:first-child
-      padding-left: 20px
-
       &::before
         display: block
-        width: 25px
-        height: 25px
+        width: 20px
+        height: 20px
         content: url('icons/icon-collections-red.svg')
         position: absolute
         top: -1px
@@ -88,6 +88,10 @@
         display: none
     .product-list-link
       text-decoration: underline
+
+@media (max-width:480px)
+  .collections-collection
+    margin-top: 0px
 
 .form.collection
   .attached-fields

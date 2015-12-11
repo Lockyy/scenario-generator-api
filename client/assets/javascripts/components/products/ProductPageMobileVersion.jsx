@@ -231,7 +231,7 @@ const ProductPageMobileVersion = React.createClass({
               </div>
               <CollectionsCollection
                 product={this.props.data}
-                mobile="true"/>
+                mobile="true" />
             </Section>
           </div>
 
