@@ -450,15 +450,21 @@ const CollectionPage = React.createClass({
   },
 
   getMoreOptionsRows: function() {
-    let rows = [{
-      description: "View Collaborators",
-      action: this.viewCollaborators
-    }]
+    let rows = []
+
+    if(this.state.data.collection.users.length > 0) {
+      rows.push({
+        description: "View Collaborators",
+        action: this.viewCollaborators
+      })
+      if(this.state.data.collection.owned) {
+        rows.push({
+          description: "Manage Collaborators",
+          action: this.manageCollaborators })
+      }
+    }
 
     if(this.state.data.collection.owned) {
-      rows.push({
-        description: "Manage Collaborators",
-        action: this.manageCollaborators })
       rows.push({
         description: "Add Collaborators",
         action: this.shareCollection })
