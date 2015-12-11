@@ -10,7 +10,7 @@ const Footer = React.createClass({
     router: React.PropTypes.object
   },
 
-  getChildContext: function () {
+  getChildContext: function() {
     return {router: this.context.router || this.props.router};
   },
 
