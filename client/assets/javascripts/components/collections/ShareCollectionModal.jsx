@@ -148,7 +148,7 @@ const ShareCollectionModal = React.createClass ({
     this.updateUsers(updatedUsers);
   },
 
-  removeEmails: function(email) {
+  removeEmail: function(email) {
     let updatedEmails = this.state.unsaved_collection.emails.filter(function(email_obj) {
       return email_obj.email !== email;
     });
@@ -237,7 +237,7 @@ const ShareCollectionModal = React.createClass ({
         <Results
           type='sharee-emails'
           className='sharee'
-          onRemove={this.removeEmails}
+          onRemove={this.removeEmail}
           onUpdate={this.updateEmail}
           data={{data: unsavedEmails}} />
       )
