@@ -97,7 +97,7 @@ const TagPage = React.createClass({
       </div>);
   },
 
-  renderTagInfo: function () {
+  renderTagInfo: function() {
     return (
       <div className='col-xs-12 tag-header'>
         <div className='tag-name'>

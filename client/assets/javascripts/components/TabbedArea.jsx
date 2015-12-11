@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 const TabbedArea = React.createClass({
   displayName: 'TabbedArea',
 
-  getInitialState: function () {
+  getInitialState: function() {
     return {
       activeTab: this.getActiveTab()
     }
@@ -43,8 +43,8 @@ const TabbedArea = React.createClass({
     }.bind(this))
   },
 
-  renderTabbedArea: function () {
-    return React.Children.map(this.props.children, function (child) {
+  renderTabbedArea: function() {
+    return React.Children.map(this.props.children, function(child) {
       if(child.ref == this.state.activeTab) {
         return child
       }

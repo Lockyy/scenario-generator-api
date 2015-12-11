@@ -3,7 +3,7 @@ json.(collection, :id, :name, :description, :privacy,
 
 json.length collection.products.length
 
-json.viewer !collection.collection_users.find_by(sharee: current_user, rank: 0).nil?
+json.viewer !collection.collection_users.find_by(sharee: current_user).nil?
 json.editable collection.editable_by?(current_user)
 json.owned collection.owned_by?(current_user)
 

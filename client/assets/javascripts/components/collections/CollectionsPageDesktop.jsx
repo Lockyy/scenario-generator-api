@@ -3,9 +3,9 @@ import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import Results from '../search/Results'
 
-const CollectionPageDesktop = React.createClass({
+const CollectionsPageDesktop = React.createClass({
   mixins: [ Navigation ],
-  displayName: 'CollectionPageDesktop',
+  displayName: 'CollectionsPageDesktop',
 
   getDefaultProps: function() {
     return {
@@ -86,4 +86,4 @@ const CollectionPageDesktop = React.createClass({
   }
 })
 
-export default CollectionPageDesktop;
+export default CollectionsPageDesktop;

@@ -108,11 +108,21 @@ const ProductPageMobileVersion = React.createClass({
   },
 
   renderReviewButton: function() {
+    let rows = [
+      {description: "Add to an existing collection",
+       action: () => this.showAddToCollectionModal('', {mobile: true})},
+      {description: "Create new collection",
+       action: this.showCreateModal}
+    ];
+
     return (
       <div className='links'>
         <a href={this.props.reviewButtonURL} className='btn btn-red btn-round'>
           { this.props.reviewButtonText }
         </a>
+        <MoreOptionsDropdown
+          dropdownClassName="top-dropdown"
+          rows={rows} />
       </div>
     )
   },
@@ -185,18 +195,10 @@ const ProductPageMobileVersion = React.createClass({
 
     let tags = this.getProductData('tags');
 
-    let rows = [
-      {description: "Add to an existing collection",
-       action: () => this.showAddToCollectionModal('', {mobile: true})},
-      {description: "Create new collection",
-       action: this.showCreateModal}
-    ];
-
     return (
       <div className='mobile-version'>
         {this.renderTitle()}
         {this.renderReviewButton()}
-        <MoreOptionsDropdown custom="top-dropdown" rows={rows}/>
         {this.renderInfo()}
 
 

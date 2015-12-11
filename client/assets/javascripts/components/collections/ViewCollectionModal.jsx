@@ -68,7 +68,7 @@ const ViewCollectionModal = React.createClass ({
     ModalStore.listen(this.onChangeModal);
     ProductStore.listen(this.onChangeProduct);
   },
-  onChangeProduct: function (data) {
+  onChangeProduct: function(data) {
     this.setState({product: data.data});
   },
   onChangeCollection: function(data) {
@@ -79,12 +79,12 @@ const ViewCollectionModal = React.createClass ({
     this.setState({ visible: visible, config: data.config });
   },
 
-  productInCollection: function (collection) {
+  productInCollection: function(collection) {
     if (collection.products.length == 0) {
       return false;
     }
     if(this.state.product) {
-      let collectionProductIDs = _.map(collection.products, function (product) {
+      let collectionProductIDs = _.map(collection.products, function(product) {
         return product.id
       });
       let productID = this.state.product.id;
