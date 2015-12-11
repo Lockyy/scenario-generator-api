@@ -21,9 +21,9 @@ const ShareCollection = React.createClass ({
         description: '',
         products: [],
         owner: this.context.currentUser,
-        users: [],
-        emails: []
-      }
+        users: []
+      };
+    collection['emails'] = [];
     return {
       collection: collection,
       config: this.props.config || {},
@@ -38,7 +38,8 @@ const ShareCollection = React.createClass ({
   },
 
   onChangeCollection: function (data) {
-    let unsavedCollection = jQuery.extend(true, {}, data.data.collection);
+    let unsavedCollection = jQuery.extend(true, this.state.unsaved_collection, data.data.collection);
+
     this.setState({
       collection: data.data.collection,
       unsaved_collection: unsavedCollection
@@ -316,23 +317,23 @@ const ShareCollection = React.createClass ({
           </span>
           <a onClick={this.props.close} className='close'></a>
         </div>
-          {this.renderPrivacyToggle()}
-          <div className='grey'>
-            <div className='grey-title'>
-              Add collaborators to your collection
-            </div>
-            <div className='grey-description'>
-              Add collaborators and manage their access level accordingly. You can add more people from the collection’s
-              page once the collection is created.
-            </div>
-            {this.renderUserTypeahead()}
-            <div className='scrollable'>
-              {this.renderEmails()}
-              {this.renderUsers()}
-            </div>
-            {this.renderSendEmailsCheckbox()}
-            {this.renderSubmissionButtons()}
+        {this.renderPrivacyToggle()}
+        <div className='grey'>
+          <div className='grey-title'>
+            Add collaborators to your collection
           </div>
+          <div className='grey-description'>
+            Add collaborators and manage their access level accordingly. You can add more people from the collection’s
+            page once the collection is created.
+          </div>
+          {this.renderUserTypeahead()}
+          <div className='scrollable'>
+            {this.renderEmails()}
+            {this.renderUsers()}
+          </div>
+          {this.renderSendEmailsCheckbox()}
+          {this.renderSubmissionButtons()}
+        </div>
       </div>
     )
   }

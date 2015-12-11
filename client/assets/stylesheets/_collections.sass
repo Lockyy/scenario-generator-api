@@ -233,7 +233,6 @@
 
   .app
     .ReactModal__Overlay
-      overflow-y: scroll
 
       .ReactModal__Content
         .header.collections
@@ -256,6 +255,22 @@
         .collection-products-container
           background-color: transparent
 
+          .results
+            overflow: visible
+            max-height: none
+
+            .collection-product
+              .result.collection-product
+                border-top: solid 1px $grey
+
+                &:nth-child(1)
+                  border: none
+
+                .remove
+                  position: static
+                  text-decoration: underline
+                  margin-top: 10px
+
         .share-collection-container
           .header.share
             border-bottom-color: $grey
@@ -274,6 +289,41 @@
 
           .grey-description
             font-size: 15px
+
+          .results.sharee
+            .dropdown-container
+              &::before
+                content: ''
+                width: 0
+                height: 0
+              &::after
+                content: "."
+                pointer-events: none
+                color: transparent
+                display: block
+                width: 15px
+                height: 15px
+                position: absolute
+                top: 8px
+                right: 10px
+                background: url("icons/icon-down-arrow.png") center no-repeat
+                -webkit-transform: none
+                -ms-transform: none
+                transform: none
+
+            .sharee-emails
+              .remove-button
+                position: relative
+                top: 4px
+                background-image: url("icons/icon-modal-close.svg")
+                background-repeat: no-repeat
+                background-position: center
+                opacity: 1
+                width: 25px
+                height: 25px
+
+        .submission-buttons-container
+          background-color: white !important
 
         .submission-buttons
           display: none !important

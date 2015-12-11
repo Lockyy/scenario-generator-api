@@ -178,7 +178,7 @@ const Results = React.createClass ({
           <div className='name'>
             { result.email }
             { this.props.onRemove ? (
-                <span className='remove-button' onClick={() => this.props.onRemove(result.email)}>x</span>
+                <span className='remove-button' onClick={() => this.props.onRemove(result.email)}></span>
               ) : null }
           </div>
           <Dropdown

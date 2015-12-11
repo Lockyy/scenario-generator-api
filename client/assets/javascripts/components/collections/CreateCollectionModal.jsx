@@ -266,8 +266,11 @@ const CreateCollectionModal = React.createClass ({
           </div>
           <div className='grey'>
             {sharedOptions}
+          </div>
+          <div className='grey submission-buttons-container'>
             {this.renderSubmissionButtons()}
           </div>
+
         </form>
       </div>
     )
