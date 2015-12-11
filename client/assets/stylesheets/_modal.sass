@@ -146,7 +146,7 @@ $modal-padding: 25px
             padding-bottom: 0px
         &.collections-sets
           padding-top: 0px
-          padding-bottom: 0px
+          padding-bottom: 50px
           margin-top: 35px
           max-height: 400px
           overflow-y: auto
@@ -276,8 +276,6 @@ $modal-padding: 25px
           opacity: 1
           width: 25px
           height: 25px
-      .back-button
-        display: none
       .copy-link
         cursor: pointer
 
@@ -329,27 +327,38 @@ $modal-padding: 25px
   .app
     .ReactModal__Overlay
       top: 70px !important
+      &.alert-modal
+        z-index: 9999999
+        .ReactModal__Content
+          top: 0px !important
       .ReactModal__Content
         width: 100%
         height: 100%
         left: 0px !important
         top: 0px !important
         border-radius: 0px
+        overflow: scroll !important
+        .footer
+          margin-top: 100px
         .reviews
           color: $dark-grey
         .num-collaborators
           color: $dark-grey
         .header
+          margin-bottom: 30px
+          padding-bottom: 5px
+          border-bottom: 1px solid $light-grey
           &.mobile
             margin-bottom: 0
             border: 0
             .title
               font-style: unset
-          margin-bottom: 30px
-          padding-bottom: 5px
-          border-bottom: 1px solid $primary-red
           .title
             font-size: 16px
+            &::before
+              display: none
+        .results:not(.sharee)
+          max-height: 190px
         .scrollable
           max-height: 190px
           overflow-y: auto
@@ -365,13 +374,14 @@ $modal-padding: 25px
               font-size: 15px
             textarea
               height: 75px
-        .back-button
-          display: block
-          background: $grey
-          cursor: pointer
-          margin: -25px
-          margin-bottom: 10px
-          padding: 15px
+        .buttons
+          display: flex
+          flex-direction: column
+          align-items: center
+          justify-content: center
+          .btn + .btn
+            margin-top: 15px
+            margin-left: 0px
         .close
           display: none
         .grey
@@ -385,6 +395,8 @@ $modal-padding: 25px
                 align-items: center
                 justify-content: center
                 margin-top: 13px
+                margin-right: auto
+                margin-left: auto
                 div
                   width: 50%
                   &:first-child
@@ -408,9 +420,16 @@ $modal-padding: 25px
                   height: 40px
 
 
-.alertButtons
+.alert-buttons
   display: flex
   justify-content: center
   margin-top: 15px
   button
     margin: 0 3em 0 3em
+
+
+@media (max-width:480px)
+  .alert-buttons
+    button
+      margin-left: 0px
+      margin-right: 0px

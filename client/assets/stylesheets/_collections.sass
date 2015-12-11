@@ -147,9 +147,11 @@
 .collection-products-table
   .collection-product-row
     @include vertical-padding
-    @include grey-bottom-border
+    @include grey-top-border
     display: flex
     align-items: center
+    &:first-child
+      border-top: 0px
   .add-product-link
     display: inline-flex
     align-items: center
@@ -157,6 +159,19 @@
     &::before
       content: url('icons/icon-collections-new-red.svg')
       margin-right: 5px
+      margin-top: 5px
+
+@media (max-width:480px)
+  .collection-products-table
+    display: flex
+    flex-direction: column-reverse
+    .add-product-container
+      @include background-primary-grey
+      display: block
+      margin: 0px -15px
+      padding: 10px 15px
+      .add-product-link
+        margin: 0px
 
 .collection.form
   .attached-fields

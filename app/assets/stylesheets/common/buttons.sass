@@ -61,6 +61,15 @@
       background: $orange
 
   &.btn-grey
+    color: white
+    border: 2px solid $font-grey
+    background: $font-grey
+    &:hover, &:active, &.active
+      background: white
+      border-color: $font-grey
+      color: $font-grey
+
+  &.btn-grey-inverted
     color: $font-grey
     border: 2px solid $font-grey
     background: transparent
@@ -135,13 +144,13 @@
         display: block
         content: url('icons/icon-collection-preview-blue.svg')
         color: transparent
-      &:hover
-        &::after
-          background: none
-          display: block
-          content: url('icons/icon-collection-preview-white.svg')
-          color: transparent
- 
+    &:hover
+      &::after
+        background: none
+        display: block
+        content: url('icons/icon-collection-preview-white.svg')
+        color: transparent
+
 
   &.btn-small
     padding: 11px 20px

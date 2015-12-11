@@ -87,7 +87,7 @@ const ProductPageMobileVersion = React.createClass({
     }
 
     return (
-      <a href="#" onClick={onClickFn} className='btn btn-grey btn-bookmark'>
+      <a href="#" onClick={onClickFn} className='btn btn-grey-inverted btn-bookmark'>
         <span className={className}>{text}</span>
       </a>
     );
@@ -101,45 +101,28 @@ const ProductPageMobileVersion = React.createClass({
     }
 
     return (
-      <a href='#' className='btn btn-grey btn-share' onClick={share}>
+      <a href='#' className='btn btn-grey-inverted btn-share' onClick={share}>
         <span className='with-icon'>Share</span>
       </a>
     );
   },
 
-  toggleMoreOptionsDropdown: function() {
-    $(this.refs.moreOptionsDropdown.getDOMNode()).slideToggle()
-  },
-
-  renderMoreOptionsButton: function() {
-    return (
-      <div className='more-options-button' onClick={this.toggleMoreOptionsDropdown}/>
-    )
-  },
-
-  showCreateModal: function() {
-    this.showCreateCollectionModal({products: [this.props.data]})
-  },
-
-  renderMoreOptions: function() {
-    return (
-      <div ref='moreOptionsDropdown' className='more-options-dropdown background-grey bottom-margin shadow'>
-        <div className='vertical-padding dark-grey-bottom-border horizontal-padding centered' onClick={() => this.showAddToCollectionModal('', null)}>
-          Add to an existing collection
-        </div>
-        <div className='vertical-padding horizontal-padding centered' onClick={this.showCreateModal}>
-          Create new collection
-        </div>
-      </div>
-    )
-  },
-
   renderReviewButton: function() {
+    let rows = [
+      {description: "Add to an existing collection",
+       action: () => this.showAddToCollectionModal('', {mobile: true})},
+      {description: "Create new collection",
+       action: this.showCreateModal}
+    ];
+
     return (
       <div className='links'>
         <a href={this.props.reviewButtonURL} className='btn btn-red btn-round'>
           { this.props.reviewButtonText }
         </a>
+        <MoreOptionsDropdown
+          dropdownClassName="top-dropdown"
+          rows={rows} />
       </div>
     )
   },
@@ -212,18 +195,10 @@ const ProductPageMobileVersion = React.createClass({
 
     let tags = this.getProductData('tags');
 
-    let rows = [
-      {description: "Add to an existing collection", 
-       action: () => this.showAddToCollectionModal},
-      {description: "Create new collection", 
-       action: () => this.showCreateModal}
-    ];
-
     return (
       <div className='mobile-version'>
         {this.renderTitle()}
         {this.renderReviewButton()}
-        <MoreOptionsDropdown custom="top-dropdown" rows={rows}/>
         {this.renderInfo()}
 
 

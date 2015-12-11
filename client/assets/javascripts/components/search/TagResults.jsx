@@ -128,7 +128,7 @@ const TagResults = React.createClass ({
 
     return (
       <div className='show-more'>
-        <Link to={`/app/search/tags/${this.props.searchTerm}/1`} className='btn btn-grey btn-round'>
+        <Link to={`/app/search/tags/${this.props.searchTerm}/1`} className='btn btn-grey-inverted btn-round'>
           Show More
         </Link>
       </div>

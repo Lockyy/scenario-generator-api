@@ -4,6 +4,9 @@ import _ from 'lodash';
 const MoreOptionsDropdown = React.createClass({
   displayName: 'MoreOptions',
 
+  // Initialization
+  /////////////////
+
   getInitialState: function getInitialState() {
     return {
       visible: false
@@ -18,47 +21,63 @@ const MoreOptionsDropdown = React.createClass({
     };
   },
 
+  // Event handling
+  /////////////////
+
   toggleDropdown: function() {
     this.setState({
       visible: !this.state.visible
     });
   },
 
-  handleClick: function() {
+  onButtonClick: function() {
     this.toggleDropdown();
   },
 
+  onRowClick: function(row) {
+    row.action();
+    this.toggleDropdown();
+  },
+
+  // Rendering
+  ////////////
+
   renderMoreOptions: function(rows) {
     let dropdownRows = _.map(this.props.rows, function(row) {
-    return (
-      <div className="dropdown-row" 
-           onClick={row.action}>
-        {row.description}
-      </div>
+      return (
+        <div
+          className={`dropdown-row ${row.className}`}
+          onClick={() => this.onRowClick(row)}>
+          {row.description}
+        </div>
       );
-    });
-    let customClass = this.props.custom;
+    }.bind(this));
+
+    let dropdownClassName = 'more-options-dropdown'
+    if(!this.state.visible) {
+      dropdownClassName = dropdownClassName + ' closed'
+    }
+
     return (
       <div className="more-options-container">
-        <button className='more-options-button' 
-                onClick={this.handleClick}/>
-        <div className={this.state.visible ? 
-            'more-options-dropdown ' + customClass :
-            'more-options-dropdown closed '}>
+        <button
+          className='more-options-button'
+          onClick={this.onButtonClick}/>
+        <div className={dropdownClassName}>
           {dropdownRows}
         </div>
       </div>
     );
   },
 
-
   render: function render() {
-   return (
-       <div>
-         { this.renderMoreOptions() }
-       </div>
+    return (
+      <div className={this.props.className}>
+        { this.renderMoreOptions() }
+      </div>
     );
   }
+
 })
 
 MoreOptionsDropdown.propTypes = {

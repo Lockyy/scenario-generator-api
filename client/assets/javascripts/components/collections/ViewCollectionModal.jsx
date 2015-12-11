@@ -12,6 +12,7 @@ import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import { EditCollectionMixin } from './EditCollectionModal';
 import Avatar from '../Avatar';
 import Results from '../search/Results';
+import Footer from '../Footer';
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
@@ -20,34 +21,30 @@ const ViewCollectionMixin = {
     return <ViewCollectionModal close={this.closeViewCollectionModal}/>
   },
 
-  closeViewCollectionModal: function() {
-    FluxModalActions.closeModal();
+  closeViewCollectionModal: function(previousConfig) {
+    FluxModalActions.closeModal(previousConfig);
     FluxCollectionActions.clearCollection();
   },
 
-  showViewCollectionModal: function(collection, data) {
-    console.log(collection);
-    console.log(data);
+  showViewCollectionModal: function(collection, config) {
     if(!collection.products) {
       FluxCollectionActions.fetchCollection(collection.id, function() {
         FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop);
       })
     } else {
       FluxCollectionActions.fetchedCollection(collection);
-      FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop, 
-          {addProductToCollection: data.addProductToCollection, mobile: data.mobile});
+      FluxModalActions.setVisibleModal('ViewCollectionModal', document.body.scrollTop, config);
     }
   }
 };
 
 const ViewCollectionModal = React.createClass ({
   displayName: 'ViewCollectionModal',
-  mixins: [
-    EditCollectionMixin
-  ],
+  mixins: [ EditCollectionMixin ],
 
   contextTypes: {
-    currentUser: React.PropTypes.object.isRequired
+    currentUser: React.PropTypes.object.isRequired,
+    router: React.PropTypes.object
   },
 
   getInitialState: function() {
@@ -71,7 +68,7 @@ const ViewCollectionModal = React.createClass ({
     ModalStore.listen(this.onChangeModal);
     ProductStore.listen(this.onChangeProduct);
   },
-  onChangeProduct: function (data) {
+  onChangeProduct: function(data) {
     this.setState({product: data.data});
   },
   onChangeCollection: function(data) {
@@ -82,12 +79,12 @@ const ViewCollectionModal = React.createClass ({
     this.setState({ visible: visible, config: data.config });
   },
 
-  productInCollection: function (collection) {
+  productInCollection: function(collection) {
     if (collection.products.length == 0) {
       return false;
     }
     if(this.state.product) {
-      let collectionProductIDs = _.map(collection.products, function (product) {
+      let collectionProductIDs = _.map(collection.products, function(product) {
         return product.id
       });
       let productID = this.state.product.id;
@@ -95,14 +92,25 @@ const ViewCollectionModal = React.createClass ({
     }
   },
 
+  close: function() {
+    this.props.close(this.state.config.previousConfig)
+  },
+
   renderButtons: function() {
-    let backButton = <button className='btn btn-grey btn-round' onClick={this.props.close}>Back</button>;
+    let backButton = <button className='btn btn-grey btn-round' onClick={this.close}>Back</button>;
     let addButton = "";
     let mobile = this.state.config.mobile;
     let addProduct = this.state.config.addProductToCollection;
     let collection = this.state.collection
+
     if (!this.productInCollection(collection) && addProduct) {
-      addButton = <button className='btn btn-red-inverted btn-round' onClick={(e) => addProduct(e, collection)}>Add</button>;
+      addButton = (
+        <button
+          className='btn btn-red btn-round'
+          onClick={(e) => addProduct(e, collection)}>
+          Add
+        </button>
+      );
     }
     else if(mobile) {
       addButton = <button className='btn btn-red-inverted mobile' onClick={(e) => addProduct(e, collection)}>Add</button>;
@@ -118,23 +126,23 @@ const ViewCollectionModal = React.createClass ({
 
   renderSharees: function() {
     if(!this.state.config.mobile && this.state.collection.users) {
-        let totalUsers = this.state.collection.users.length;
-          return (
-            <div className='collection-sharees'>
-              <Avatar url={this.state.collection.user.avatar_url} />
-              {_.map(this.state.collection.users.slice(0,6), function(sharee) {
-                return <Avatar url={sharee.avatar_url} />
-              })}
-              { totalUsers > 7 ? <Avatar number={totalUsers - 7} />: '' }
-            </div>
-          );
+      let totalUsers = this.state.collection.users.length;
+      return (
+        <div className='collection-sharees'>
+          <Avatar url={this.state.collection.user.avatar_url} />
+          {_.map(this.state.collection.users.slice(0,6), function(sharee) {
+            return <Avatar url={sharee.avatar_url} />
+          })}
+          { totalUsers > 7 ? <Avatar number={totalUsers - 7} />: '' }
+        </div>
+      );
     }
     else {
       if(this.state.collection.users) {
         return (
-            <span className="num-collaborators">
-              {this.state.collection.users.length} collaborators
-            </span>
+          <span className="num-collaborators">
+            {this.state.collection.users.length} collaborators
+          </span>
         );
       }
     }
@@ -145,15 +153,15 @@ const ViewCollectionModal = React.createClass ({
     return (
       <Modal
         isOpen={this.state.visible}
-        onRequestClose={this.props.close}
+        onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
+        <div className='back-button' onClick={this.close}>Back</div>
 
         <div className={'header collection' + (this.state.config.mobile ? ' mobile' : '')}>
           <span className='title'>
             {this.state.collection.name}
           </span>
-          <a onClick={this.props.close} className='close'></a>
+          <a onClick={this.close} className='close'></a>
         </div>
 
         <div className='collection-details'>
@@ -175,6 +183,7 @@ const ViewCollectionModal = React.createClass ({
 
           {this.renderButtons()}
         </div>
+        <Footer className='visible-xs' />
       </Modal>
     )
   }

@@ -37,7 +37,7 @@ const TagsPage = React.createClass({
     )
   },
 
-  renderLeftBar: function () {
+  renderLeftBar: function() {
     if(this.state.data.tags) {
       let containerClass = 'col-xs-12 col-sm-3 left-bar';
       if(this.getLetter()) {

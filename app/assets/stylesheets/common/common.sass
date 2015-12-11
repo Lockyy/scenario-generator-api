@@ -14,15 +14,22 @@ form
     box-shadow: none
 
 .link
-  color: $primary-red
-  cursor: pointer
-  &.underlined
-    text-decoration: underline
+  &, &:visited
+    color: $primary-red
+    cursor: pointer
+    &.underlined
+      text-decoration: underline
+  &.black
+    &, &:visited
+      color: initial
+      cursor: pointer
 
 .grey-bottom-border
   @include grey-bottom-border
 .dark-grey-bottom-border
   @include dark-grey-bottom-border
+.last-no-border:last-child
+  border: 0px
 
 .red-bottom-border
   @include red-bottom-border
@@ -55,7 +62,9 @@ form
   background: $light-grey
 
 .background-grey
-  background: $grey
+  @include background-grey
+.background-primary-grey
+  background: $primary-grey
 
 .color-red
   color: $primary-red
@@ -82,3 +91,7 @@ form
 
 .shadow
   box-shadow: 0px 2px 4px $grey
+
+.flex-vertical-centering
+  display: flex
+  align-items: center

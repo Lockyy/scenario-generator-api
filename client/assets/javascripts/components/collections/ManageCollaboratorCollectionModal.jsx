@@ -11,33 +11,38 @@ import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import UserTypeahead from '../UserTypeahead'
 import Results from '../search/Results'
 import Avatar from '../Avatar'
+import Footer from '../Footer';
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
-const CollaboratorCollectionMixin = {
-  renderCollaboratorCollectionModal: function() {
+const ManageCollaboratorCollectionMixin = {
+  renderManageCollaboratorCollectionModal: function() {
     return (
-      <CollaboratorCollectionModal
-        ref='collectionShareModal'
+      <ManageCollaboratorCollectionModal
+        ref='manageCollaboratorCollectionModal'
         close={this.closeShareCollectionModal} />
     )
   },
 
-  closeCollaboratorCollectionModal: function() {
+  closeManageCollaboratorCollectionModal: function() {
     FluxModalActions.closeModal();
     if(this.props.router.state.components[0].displayName != 'CollectionPage') {
       FluxCollectionActions.clearCollection();
     }
   },
 
-  showCollaboratorCollectionModal: function(collection) {
-    FluxModalActions.setVisibleModal('CollaboratorCollectionModal');
+  showManageCollaboratorCollectionModal: function(collection) {
+    FluxModalActions.setVisibleModal('ManageCollaboratorCollectionModal');
     FluxCollectionActions.fetchedCollection(collection);
   }
 };
 
-const CollaboratorCollectionModal = React.createClass ({
-  displayName: 'CollaboratorCollectionModal',
+const ManageCollaboratorCollectionModal = React.createClass ({
+  displayName: 'ManageCollaboratorCollectionModal',
+
+  contextTypes: {
+    router: React.PropTypes.object
+  },
 
   getInitialState: function() {
     return {
@@ -215,7 +220,7 @@ const CollaboratorCollectionModal = React.createClass ({
   renderSubmissionButtons: function() {
     return (
       <div className='buttons'>
-        <button className='btn btn-red-inverted btn-round'
+        <button className='btn btn-red btn-round'
                 onClick={this.submitForm}>Save</button>
         <button className='btn btn-grey btn-round'
                 onClick={this.close}>Cancel</button>
@@ -264,15 +269,16 @@ const CollaboratorCollectionModal = React.createClass ({
         isOpen={this.state.visible}
         onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.close}>{"< Close"}</div>
+        <div className='back-button' onClick={this.close}>Back</div>
         {this.renderheader()}
         {this.renderShareForm()}
+        <Footer className='visible-xs' />
       </Modal>
     )
   }
 });
 
 module.exports = {
-  CollaboratorCollectionMixin: CollaboratorCollectionMixin,
-  CollaboratorCollectionModal: CollaboratorCollectionModal
+  ManageCollaboratorCollectionMixin: ManageCollaboratorCollectionMixin,
+  ManageCollaboratorCollectionModal: ManageCollaboratorCollectionModal
 };

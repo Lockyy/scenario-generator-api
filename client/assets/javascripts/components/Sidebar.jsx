@@ -18,19 +18,19 @@ const Sidebar = React.createClass ({
     router: React.PropTypes.object
   },
 
-  getChildContext: function () {
+  getChildContext: function() {
     return {router: this.props.router};
   },
 
-  getHamburgerMenuDom: function () {
+  getHamburgerMenuDom: function() {
     return $(this.refs.menu.getDOMNode());
   },
 
-  showHamburgerMenu: function () {
+  showHamburgerMenu: function() {
     return this.getHamburgerMenuDom().stop().toggle("slide", {
       direction: 'right'
-    }, 600, function () {
-      return this.getHamburgerMenuDom().on('clickoutside', _.throttle(function (outsideE) {
+    }, 600, function() {
+      return this.getHamburgerMenuDom().on('clickoutside', _.throttle(function(outsideE) {
         if (_.include($(outsideE.target).attr('class'), 'myTagSuggestion') ||
           _.include($(outsideE.target).data('role'), 'remove')) {
           return;
@@ -40,15 +40,15 @@ const Sidebar = React.createClass ({
     }.bind(this));
   },
 
-  closeHamburgerMenu: function () {
+  closeHamburgerMenu: function() {
     return this.getHamburgerMenuDom().stop().toggle("slide", {
       direction: 'right'
-    }, 'slow', function () {
+    }, 'slow', function() {
       return this.getHamburgerMenuDom().off('clickoutside');
     }.bind(this));
   },
 
-  renderTopButtons: function () {
+  renderTopButtons: function() {
     return (
       <ul className='menu-nav'>
         <li className='logout'>
@@ -61,7 +61,7 @@ const Sidebar = React.createClass ({
     )
   },
 
-  renderCurrentUserInfo: function () {
+  renderCurrentUserInfo: function() {
     return (
       <div className='profile-container'>
         <img src={this.context.currentUser.avatar_url} className='avatar'/>
@@ -78,7 +78,7 @@ const Sidebar = React.createClass ({
     )
   },
 
-  renderTags: function () {
+  renderTags: function() {
     return (
       <div className='my-tags-container'>
         <UserTags showMessage={_.isEmpty(this.context.currentUser.tags)} showTitle={true}
@@ -88,7 +88,7 @@ const Sidebar = React.createClass ({
     )
   },
 
-  renderBookmarks: function () {
+  renderBookmarks: function() {
     return (
       <div className='my-bookmarks-container'>
         <h2>My bookmarks</h2>
@@ -99,7 +99,7 @@ const Sidebar = React.createClass ({
     )
   },
 
-  renderRecentActivity: function () {
+  renderRecentActivity: function() {
     return (
       <div className='my-recent-activity-container'>
         <MyRecentActivity small={true}/>
@@ -107,7 +107,7 @@ const Sidebar = React.createClass ({
     )
   },
 
-  renderCollections: function () {
+  renderCollections: function() {
     return (
       <div className='my-collections-container'>
         <h2>
@@ -138,7 +138,7 @@ const Sidebar = React.createClass ({
     )
   },
 
-  render: function () {
+  render: function() {
     return (
       <div>
         <li className="show-hamburger-menu text-hide"
