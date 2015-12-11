@@ -337,9 +337,9 @@ const CollectionPage = React.createClass({
     let checkedHidden = this.isPrivacyChecked('hidden');
     let checkedPublic = this.isPrivacyChecked('visible');
     return (
-      <div className='grey-bottom-border vertical-padding'>
+      <form className='grey-bottom-border vertical-padding'>
         <div className='bottom-margin'>
-          Can view {this.state.data.collection.privacy}
+          Can view
         </div>
         <label>
           <input checked={checkedHidden} type='radio' name='privacy' value='hidden' onClick={this.setPrivacy}/>
@@ -363,7 +363,7 @@ const CollectionPage = React.createClass({
             Open it to the public. Every user in Fletcher will be able to view your collection.
           </div>
         </label>
-      </div>
+      </form>
     )
   },
 
