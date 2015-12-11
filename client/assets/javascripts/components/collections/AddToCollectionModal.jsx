@@ -21,7 +21,7 @@ const AddToCollectionMixin = {
   renderAddToCollectionModal: function(product) {
     return (
       <AddToCollectionModal
-        ref='collectionShareModal'
+        ref='addToCollectionModal'
         product={product}
         close={this.closeAddToCollectionModal}
         onAddToCollection={this.onAddToCollection}/>

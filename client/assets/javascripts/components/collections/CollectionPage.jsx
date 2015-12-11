@@ -12,11 +12,18 @@ import TabbedArea from '../TabbedArea'
 import MoreOptionsDropdown from '../MoreOptionsDropdown';
 import { EditCollectionMixin } from './EditCollectionModal'
 import { ShareCollectionMixin } from './ShareCollectionModal'
-import { CollaboratorCollectionMixin } from './CollaboratorCollectionModal'
+import { ManageCollaboratorCollectionMixin } from './ManageCollaboratorCollectionModal'
 
 const CollectionPage = React.createClass({
   displayName: 'CollectionPage',
-  mixins: [Navigation, EditCollectionMixin, ShareCollectionMixin, CollaboratorCollectionMixin],
+
+  mixins: [
+    Navigation,
+    EditCollectionMixin,
+    ShareCollectionMixin,
+    ManageCollaboratorCollectionMixin,
+  ],
+
   avatarSize: 30,
 
   contextTypes: {
@@ -127,7 +134,7 @@ const CollectionPage = React.createClass({
   },
 
   manageCollaborators: function() {
-    this.showCollaboratorCollectionModal(this.state.data.collection)
+    this.showManageCollaboratorCollectionModal(this.state.data.collection)
   },
 
   renderEditButtons: function() {

@@ -15,30 +15,30 @@ import Footer from '../Footer';
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
-const CollaboratorCollectionMixin = {
-  renderCollaboratorCollectionModal: function() {
+const ManageCollaboratorCollectionMixin = {
+  renderManageCollaboratorCollectionModal: function() {
     return (
-      <CollaboratorCollectionModal
-        ref='collectionShareModal'
+      <ManageCollaboratorCollectionModal
+        ref='manageCollaboratorCollectionModal'
         close={this.closeShareCollectionModal} />
     )
   },
 
-  closeCollaboratorCollectionModal: function() {
+  closeManageCollaboratorCollectionModal: function() {
     FluxModalActions.closeModal();
     if(this.props.router.state.components[0].displayName != 'CollectionPage') {
       FluxCollectionActions.clearCollection();
     }
   },
 
-  showCollaboratorCollectionModal: function(collection) {
-    FluxModalActions.setVisibleModal('CollaboratorCollectionModal');
+  showManageCollaboratorCollectionModal: function(collection) {
+    FluxModalActions.setVisibleModal('ManageCollaboratorCollectionModal');
     FluxCollectionActions.fetchedCollection(collection);
   }
 };
 
-const CollaboratorCollectionModal = React.createClass ({
-  displayName: 'CollaboratorCollectionModal',
+const ManageCollaboratorCollectionModal = React.createClass ({
+  displayName: 'ManageCollaboratorCollectionModal',
 
   contextTypes: {
     router: React.PropTypes.object
@@ -279,6 +279,6 @@ const CollaboratorCollectionModal = React.createClass ({
 });
 
 module.exports = {
-  CollaboratorCollectionMixin: CollaboratorCollectionMixin,
-  CollaboratorCollectionModal: CollaboratorCollectionModal
+  ManageCollaboratorCollectionMixin: ManageCollaboratorCollectionMixin,
+  ManageCollaboratorCollectionModal: ManageCollaboratorCollectionModal
 };

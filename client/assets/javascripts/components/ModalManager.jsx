@@ -8,7 +8,7 @@ import { ShareCollectionMixin } from './collections/ShareCollectionModal';
 import { AddToCollectionMixin } from './collections/AddToCollectionModal';
 import { ViewCollectionMixin } from './collections/ViewCollectionModal';
 import { EditCollectionMixin } from './collections/EditCollectionModal';
-import { CollaboratorCollectionMixin } from './collections/CollaboratorCollectionModal';
+import { ManageCollaboratorCollectionMixin } from './collections/ManageCollaboratorCollectionModal';
 import { ShareProductMixin } from './products/ShareProductModal';
 import { ProductFilesMixin } from './products/ProductFilesModal';
 import { ProductLinksMixin } from './products/ProductLinksModal';
@@ -30,7 +30,7 @@ const ModalManager = React.createClass ({
     ShareProductMixin,
     ProductFilesMixin,
     ProductLinksMixin,
-    CollaboratorCollectionMixin,
+    ManageCollaboratorCollectionMixin,
   ],
 
   childContextTypes: {
@@ -53,7 +53,7 @@ const ModalManager = React.createClass ({
         { this.renderShareProductModal() }
         { this.renderProductFilesModal() }
         { this.renderProductLinksModal() }
-        { this.renderCollaboratorCollectionModal() }
+        { this.renderManageCollaboratorCollectionModal() }
       </div>
     )
   }
