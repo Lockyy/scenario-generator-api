@@ -222,7 +222,9 @@ const CollectionPage = React.createClass({
           <div className='col-xs-8'>Product</div>
           <div className='col-xs-3'>Date Added</div>
         </div>
-        {_.map(products, this.renderProductRow)}
+        <div className='collection-product-rows'>
+          {_.map(products, this.renderProductRow)}
+        </div>
         <div className='add-product-container'>
           { this.state.data.collection.editable ? this.renderAddProductButton() : '' }
         </div>
