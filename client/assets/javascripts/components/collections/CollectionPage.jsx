@@ -12,11 +12,20 @@ import TabbedArea from '../TabbedArea'
 import MoreOptionsDropdown from '../MoreOptionsDropdown';
 import { EditCollectionMixin } from './EditCollectionModal'
 import { ShareCollectionMixin } from './ShareCollectionModal'
-import { CollaboratorCollectionMixin } from './CollaboratorCollectionModal'
+import { ManageCollaboratorCollectionMixin } from './ManageCollaboratorCollectionModal'
+import { UserListMixin } from '../modals/UserListModal'
 
 const CollectionPage = React.createClass({
   displayName: 'CollectionPage',
-  mixins: [Navigation, EditCollectionMixin, ShareCollectionMixin, CollaboratorCollectionMixin],
+
+  mixins: [
+    Navigation,
+    EditCollectionMixin,
+    ShareCollectionMixin,
+    ManageCollaboratorCollectionMixin,
+    UserListMixin,
+  ],
+
   avatarSize: 30,
 
   contextTypes: {
@@ -123,11 +132,11 @@ const CollectionPage = React.createClass({
   },
 
   viewCollaborators: function() {
-    console.log('To Implement')
+    this.showUserListModal(this.state.data.collection.users)
   },
 
   manageCollaborators: function() {
-    this.showCollaboratorCollectionModal(this.state.data.collection)
+    this.showManageCollaboratorCollectionModal(this.state.data.collection)
   },
 
   renderEditButtons: function() {
@@ -213,7 +222,9 @@ const CollectionPage = React.createClass({
           <div className='col-xs-8'>Product</div>
           <div className='col-xs-3'>Date Added</div>
         </div>
-        {_.map(products, this.renderProductRow)}
+        <div className='collection-product-rows'>
+          {_.map(products, this.renderProductRow)}
+        </div>
         <div className='add-product-container'>
           { this.state.data.collection.editable ? this.renderAddProductButton() : '' }
         </div>
@@ -439,15 +450,21 @@ const CollectionPage = React.createClass({
   },
 
   getMoreOptionsRows: function() {
-    let rows = [{
-      description: "View Collaborators",
-      action: this.viewCollaborators
-    }]
+    let rows = []
+
+    if(this.state.data.collection.users.length > 0) {
+      rows.push({
+        description: "View Collaborators",
+        action: this.viewCollaborators
+      })
+      if(this.state.data.collection.owned) {
+        rows.push({
+          description: "Manage Collaborators",
+          action: this.manageCollaborators })
+      }
+    }
 
     if(this.state.data.collection.owned) {
-      rows.push({
-        description: "Manage Collaborators",
-        action: this.manageCollaborators })
       rows.push({
         description: "Add Collaborators",
         action: this.shareCollection })
