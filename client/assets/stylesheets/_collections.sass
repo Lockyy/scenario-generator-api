@@ -290,37 +290,62 @@
           .grey-description
             font-size: 15px
 
-          .results.sharee
-            .dropdown-container
-              &::before
-                content: ''
-                width: 0
-                height: 0
-              &::after
-                content: "."
-                pointer-events: none
-                color: transparent
-                display: block
-                width: 15px
-                height: 15px
-                position: absolute
-                top: 8px
-                right: 10px
-                background: url("icons/icon-down-arrow.png") center no-repeat
-                -webkit-transform: none
-                -ms-transform: none
-                transform: none
+          .scrollable
+            max-height: none
+            overflow-y: visible
+            overflow-x: visible
 
-            .sharee-emails
-              .remove-button
-                position: relative
-                top: 4px
-                background-image: url("icons/icon-modal-close.svg")
-                background-repeat: no-repeat
-                background-position: center
-                opacity: 1
-                width: 25px
-                height: 25px
+            .results.sharee
+              overflow: visible
+              max-height: none
+              .dropdown-container
+                &::before
+                  content: ''
+                  width: 0
+                  height: 0
+                &::after
+                  content: "."
+                  pointer-events: none
+                  color: transparent
+                  display: block
+                  width: 15px
+                  height: 15px
+                  position: absolute
+                  top: 8px
+                  right: 10px
+                  background: url("icons/icon-down-arrow.png") center no-repeat
+                  -webkit-transform: none
+                  -ms-transform: none
+                  transform: none
+                  z-index: 99999
+
+
+                .dropdown-link
+                  &::before
+                    content: "."
+                    pointer-events: none
+                    color: transparent
+                    display: block
+                    width: 15px
+                    height: 15px
+                    position: absolute
+                    top: 8px
+                    right: 10px
+                    -webkit-transform: none
+                    -ms-transform: none
+                    transform: none
+                    z-index: 99999
+
+              .sharee-emails
+                .remove-button
+                  position: relative
+                  top: 4px
+                  background-image: url("icons/icon-modal-close.svg")
+                  background-repeat: no-repeat
+                  background-position: center
+                  opacity: 1
+                  width: 25px
+                  height: 25px
 
         .submission-buttons-container
           background-color: white !important

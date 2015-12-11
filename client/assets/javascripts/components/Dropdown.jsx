@@ -33,9 +33,9 @@ const Dropdown = React.createClass({
   renderSortOption: function(displayString, sortKey) {
     if(sortKey != this.props.active) {
       return (
-        <div  className='dropdown-link'
+        <div className='dropdown-link'
               onClick={ () => this.onClick(sortKey) }>
-          {displayString}
+          <span value={sortKey} className="dropdown-text"><img src='/assets/logos/mark-grey.svg'/>{displayString}</span>
         </div>
       )
     }

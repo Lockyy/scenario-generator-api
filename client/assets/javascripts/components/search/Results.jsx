@@ -6,6 +6,7 @@ import SearchConstants from '../../utils/constants/SearchConstants';
 import Dropdown from '../Dropdown';
 import Avatar from '../Avatar';
 import AutoFitPicture from '../AutoFitPicture';
+import DropdownConstant from '../../utils/constants/DropdownConstants';
 
 const Results = React.createClass ({
 
@@ -164,7 +165,7 @@ const Results = React.createClass ({
             onClick={(rank) => this.props.onUpdate(result.id, rank)}
             active={result.rank}
             showText={false}
-            native={true}
+            native={false}
             options={{ owner: 'Co-owner', collaborator: 'Can add products', viewer: 'Can View' }} />
         </div>
       )
@@ -185,7 +186,7 @@ const Results = React.createClass ({
             onClick={(rank) => this.props.onUpdate(result.email, rank)}
             active={result.rank}
             showText={false}
-            native={true}
+            native={false}
             options={{ owner: 'Co-owner', collaborator: 'Can add products', viewer: 'Can View' }} />
         </div>
       )
