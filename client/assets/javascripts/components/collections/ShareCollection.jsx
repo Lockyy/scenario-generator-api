@@ -16,17 +16,18 @@ const ShareCollection = React.createClass ({
   displayName: 'ShareCollection',
 
   getInitialState: function () {
-    return {
-      collection: {
+    let collection = this.props.collection || {
         name: '',
         description: '',
         products: [],
         owner: this.context.currentUser,
         users: [],
         emails: []
-      },
-      config: {},
-      unsaved_collection: {}
+      }
+    return {
+      collection: collection,
+      config: this.props.config || {},
+      unsaved_collection: collection
     }
   },
 
@@ -281,23 +282,23 @@ const ShareCollection = React.createClass ({
 
   renderPrivacyToggle: function () {
     if (!this.state.config.hideRadios) {
-      let event = this.props.onChangeEvent ? this.props.onChangeEvent : this.onChangeEvent;
       let self = this;
       let callback = function (e) {
-        let newValue = $(e.target).val()
-        let updatedCollection = _.merge(self.state.unsaved_collection, {privacy: newValue})
+        let newValue = $(e.target).val();
+        let updatedCollection = _.merge(self.state.unsaved_collection, {privacy: newValue});
         self.setState({unsaved_collection: updatedCollection})
       };
+      let event = this.props.onChangeEvent ? this.props.onChangeEvent.bind(this, callback) : this.onChangeEvent;
       return (
         <div className='privacy-radios'>
           Who can view this collection?
           <label>
-            <input type='radio' name='privacy' value='hidden' onClick={event.bind(this, callback)}
+            <input type='radio' name='privacy' value='hidden' onClick={event}
                    checked={this.state.unsaved_collection.privacy == 'hidden'}/>
             Just me and people I specify below (Private)
           </label>
           <label>
-            <input type='radio' name='privacy' value='visible' onClick={event.bind(this, callback)}
+            <input type='radio' name='privacy' value='visible' onClick={event}
                    checked={this.state.unsaved_collection.privacy == 'visible'}/>
             Everyone in Fletcher (Public). You can still add collaborators.
           </label>

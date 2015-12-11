@@ -17,7 +17,6 @@ import Footer from '../Footer';
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
 const ShareCollectionMixin = {
-
   renderShareCollectionModal: function() {
     return (
       <ShareCollectionModal
@@ -53,8 +52,18 @@ const ShareCollectionModal = React.createClass ({
   // Flux Methods
   // Keep track of changes that are made to the store
   componentDidMount: function() {
+    CollectionStore.listen(this.onChangeCollection);
     ModalStore.listen(this.onChangeModal);
   },
+
+  onChangeCollection: function(data) {
+    let unsavedCollection = jQuery.extend(true, {}, data.data.collection);
+    this.setState({
+      collection: data.data.collection,
+      unsaved_collection: unsavedCollection
+    });
+  },
+
 
   onChangeModal: function(data) {
     let visible = data.visibleModal == this.constructor.displayName;
@@ -63,7 +72,7 @@ const ShareCollectionModal = React.createClass ({
 
   close: function(e) {
     if(e) { e.preventDefault() }
-    this.setState({unsaved_collection: this.state.collection})
+    this.setState({unsaved_collection: this.state.collection});
     this.props.close()
   },
 
@@ -74,7 +83,7 @@ const ShareCollectionModal = React.createClass ({
         onRequestClose={this.close}
         style={DefaultModalStyles}>
         <div className='back-button' onClick={this.close}>Back</div>
-        <ShareCollection close={this.close}/>
+        <ShareCollection  collection={this.state.collection} config={this.state.config} close={this.close} />
         <Footer className='visible-xs' />
       </Modal>
     )
