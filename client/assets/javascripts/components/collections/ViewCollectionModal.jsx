@@ -180,7 +180,7 @@ const ViewCollectionModal = React.createClass ({
 
         <div className='horizontal-padding'>
           <div className={'header collection' + (this.state.config.mobile ? ' mobile' : '')}>
-            <span className='title'>
+            <span className='title with-collection-icon'>
               {this.state.collection.name}
             </span>
             <a onClick={this.close} className='close'></a>
