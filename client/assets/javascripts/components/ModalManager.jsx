@@ -12,6 +12,7 @@ import { ManageCollaboratorCollectionMixin } from './collections/ManageCollabora
 import { ShareProductMixin } from './products/ShareProductModal';
 import { ProductFilesMixin } from './products/ProductFilesModal';
 import { ProductLinksMixin } from './products/ProductLinksModal';
+import { UserListMixin } from './modals/UserListModal';
 
 var appElement = document.getElementById('content');
 
@@ -31,6 +32,7 @@ const ModalManager = React.createClass ({
     ProductFilesMixin,
     ProductLinksMixin,
     ManageCollaboratorCollectionMixin,
+    UserListMixin,
   ],
 
   childContextTypes: {
@@ -54,6 +56,7 @@ const ModalManager = React.createClass ({
         { this.renderProductFilesModal() }
         { this.renderProductLinksModal() }
         { this.renderManageCollaboratorCollectionModal() }
+        { this.renderUserListModal() }
       </div>
     )
   }

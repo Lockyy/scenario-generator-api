@@ -13,6 +13,7 @@ import MoreOptionsDropdown from '../MoreOptionsDropdown';
 import { EditCollectionMixin } from './EditCollectionModal'
 import { ShareCollectionMixin } from './ShareCollectionModal'
 import { ManageCollaboratorCollectionMixin } from './ManageCollaboratorCollectionModal'
+import { UserListMixin } from '../modals/UserListModal'
 
 const CollectionPage = React.createClass({
   displayName: 'CollectionPage',
@@ -22,6 +23,7 @@ const CollectionPage = React.createClass({
     EditCollectionMixin,
     ShareCollectionMixin,
     ManageCollaboratorCollectionMixin,
+    UserListMixin,
   ],
 
   avatarSize: 30,
@@ -130,7 +132,7 @@ const CollectionPage = React.createClass({
   },
 
   viewCollaborators: function() {
-    console.log('To Implement')
+    this.showUserListModal(this.state.data.collection.users)
   },
 
   manageCollaborators: function() {
