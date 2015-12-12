@@ -49,7 +49,11 @@ const UserProfileWorkArea  = React.createClass({
         <div className='btn btn-round btn-grey-inverted' onClick={this.showCreateCollectionModal}>
           Create Collection
         </div>
-        <CollectionsCollection />
+        <CollectionsCollection
+          className='hidden-xs' />
+        <CollectionsCollection
+          mobile="true"
+          className='horizontal-padding-2 visible-xs' />
       </div>
     );
   },
@@ -69,7 +73,7 @@ const UserProfileWorkArea  = React.createClass({
 
   getTagsSection: function getTagsSection() {
     return (
-      <div className='my-tags-container work-area-section' ref='tags' tabTitle='Followed Tags' >
+      <div className='my-tags-container work-area-section' ref='tags' tabTitle='Tags' >
         <UserTags showMessage='true' />
       </div>
     );
