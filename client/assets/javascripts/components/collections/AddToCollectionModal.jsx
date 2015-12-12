@@ -75,6 +75,7 @@ const AddToCollectionModal = React.createClass ({
   onChangeProduct: function(data) {
     this.setState({product: data.data});
   },
+
   onChangeModal: function(data) {
     let visible = data.visibleModal == this.constructor.displayName;
     this.setState({ visible: visible, config: data.config });
@@ -104,10 +105,10 @@ const AddToCollectionModal = React.createClass ({
     FluxCollectionActions.performSearch(searchTerm);
   },
 
-  previewCollection: function(collection) {
+  previewCollection: function (collection) {
     this.showViewCollectionModal(collection, {
       addProductToCollection: this.addToCollection,
-      previousConfig: this.state.config
+      mobile: this.state.config.mobile,
     })
   },
 
@@ -201,7 +202,7 @@ const AddToCollectionModal = React.createClass ({
       <div className='collection create-collection-link' onClick={onClick}>
         <div className='collection-info'>
           <div className='title'>
-            <div className='add-collection-icon'/>
+            <div className='add-collection-icon' />
             Create a new collection called:
             <div className='collection-name'>"{TextHelper.truncate(this.state.searchTerm, 30)}"</div>
           </div>
@@ -243,11 +244,11 @@ const AddToCollectionModal = React.createClass ({
             </div>
           </span>
         </div>
-        <div className={`right-buttons ${this.collectionTicked(collection.id) ? 'added' : null}`}>
-          <div className={'btn btn-round btn-blue-inverted btn-view btn-list-small' + (this.state.config.mobile ? ' mobile' : null)}
-               onClick={() => this.previewCollection(collection)}>
-               {this.state.config.mobile ?
-                 "Preview" : null}
+        <div className={`right-buttons ${this.collectionTicked(collection.id) ? 'added' : ''}`}>
+          <div
+            className={'btn btn-round btn-blue-inverted btn-view btn-list-small' + (this.state.config.mobile ? ' mobile' : '')}
+            onClick={() => this.previewCollection(collection)}>
+            { this.state.config.mobile ? "Preview" : null }
           </div>
           {this.renderAddButton(collection)}
         </div>
