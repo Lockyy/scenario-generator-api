@@ -240,7 +240,7 @@ const CollectionPage = React.createClass({
     )
   },
 
-  renderCollaboratorSidebar: function() {
+  renderCollaboratorInfo: function() {
     return (
       <div tabTitle='Collaborators' ref='collaborators'>
         {this.renderEditButtons()}
@@ -518,7 +518,7 @@ const CollectionPage = React.createClass({
         <TabbedArea
           containerClass={'no-border no-margin no-child-padding hidden-xs'}>
           { this.renderProductsTable(this.state.data.collection.products) }
-          { this.renderCollaboratorSidebar() }
+          { this.renderCollaboratorInfo() }
         </TabbedArea>
         <div className='visible-xs row background-light-grey'>
           <div className='col-xs-12'>
