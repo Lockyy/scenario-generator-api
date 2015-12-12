@@ -120,7 +120,7 @@ const UserTypeahead  = React.createClass({
       <div className='form-group typeahead'>
         {this.props.hideLabel ? null : (<label id='product_name_label' htmlFor='user[name]'>{"User's Name"}</label>)}
         <TypeAhead name='user[name]' value={this.props.value} className='form-control'
-          id='user_name' placeholder='Search users, or enter their emails if they are not in Fletcher'
+          id='user_name' placeholder='Search users, or enter their emails'
           bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
           onSelectOption={this._onSelectUser} onSelectNoOption={this._onSelectEmail}
           onChange={this._onNameChange} onRender={this._hideCreateWhenMatch}

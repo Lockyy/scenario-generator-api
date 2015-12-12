@@ -307,7 +307,7 @@ const ShareCollectionModal = React.createClass ({
   renderPrivacyToggle: function() {
     if(!this.state.config.hideRadios) {
       return (
-        <div className='privacy-radios'>
+        <div className='privacy-radios hidden-xs'>
           Who can view this collection?
           <label>
             <input  type='radio' name='privacy' value='hidden' onClick={this.setPrivacy}
@@ -331,11 +331,13 @@ const ShareCollectionModal = React.createClass ({
               ref='collection_form'>
           {this.renderPrivacyToggle()}
           <div className='grey'>
-            <div className='grey-title'>
-              Add collaborators to your collection
-            </div>
-            <div className='grey-description'>
-              Add collaborators and manage their access level accordingly. You can add more people from the collection’s page once the collection is created.
+            <div className='hidden-xs'>
+              <div className='grey-title'>
+                Add collaborators to your collection
+              </div>
+              <div className='grey-description'>
+                Add collaborators and manage their access level accordingly. You can add more people from the collection’s page once the collection is created.
+              </div>
             </div>
             {this.renderUserTypeahead()}
             <div className='scrollable'>
@@ -353,8 +355,11 @@ const ShareCollectionModal = React.createClass ({
   renderheader: function() {
     return (
       <div className='header share'>
-        <span className='title'>
+        <span className='title hidden-xs'>
           Privacy & Sharing
+        </span>
+        <span className='title visible-xs'>
+          Add Collaborators
         </span>
         <a onClick={this.close} className='close'></a>
       </div>
@@ -375,6 +380,11 @@ const ShareCollectionModal = React.createClass ({
         style={DefaultModalStyles}>
         <div className='back-button' onClick={this.close}>Back</div>
         {this.renderheader()}
+
+        <div className='visible-xs'>
+          Add collaborators and manage their access level accordingly. You can add more people from the collection’s page once the collection is created.
+        </div>
+
         {this.renderShareForm()}
         <Footer className='visible-xs' />
       </Modal>
