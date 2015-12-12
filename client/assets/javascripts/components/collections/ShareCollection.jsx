@@ -113,6 +113,10 @@ const ShareCollection = React.createClass ({
     })
     if (index > -1) {
       emails[index] = _.merge(emails[index], {rank: rank})
+
+      if (this.props.onUpdateEmail) {
+        this.props.onUpdateEmail(emails)
+      }
       this.updateEmails(emails)
     }
   },
@@ -121,6 +125,10 @@ const ShareCollection = React.createClass ({
     let updatedUsers = this.state.unsaved_collection.users.filter(function (user) {
       return user.id !== user_id;
     });
+
+    if (this.props.onUpdateUser) {
+      this.props.onUpdateUser(updatedUsers)
+    }
 
     this.updateUsers(updatedUsers);
   },
@@ -147,7 +155,6 @@ const ShareCollection = React.createClass ({
     let id = this.state.collection.id;
     let name = this.state.collection.name;
     let total = this.state.unsaved_collection.users.length + this.state.unsaved_collection.emails.length;
-
     let data = {
       users: this.gatherUsers(),
       emails: this.gatherEmails(),
@@ -196,6 +203,9 @@ const ShareCollection = React.createClass ({
   renderUsers: function () {
     let unsavedUsers = this.unsavedUsers()
     if (this.state.unsaved_collection.users && unsavedUsers.length > 0) {
+      if (this.props.onUpdateUser) {
+        this.props.onUpdateUser(unsavedUsers)
+      }
       return (
         <Results
           type='sharee-users'
@@ -210,6 +220,10 @@ const ShareCollection = React.createClass ({
   renderEmails: function () {
     let unsavedEmails = this.unsavedEmails()
     if (this.state.unsaved_collection.emails && unsavedEmails.length > 0) {
+      if (this.props.onUpdateEmail) {
+        this.props.onUpdateEmail(unsavedEmails)
+      }
+
       return (
         <Results
           type='sharee-emails'

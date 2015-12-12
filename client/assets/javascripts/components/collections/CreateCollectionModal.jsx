@@ -94,6 +94,8 @@ const CreateCollectionModal = React.createClass ({
       id: this.state.data.collection.id,
       name: this.state.data.collection.name,
       description: this.state.data.collection.description,
+      emails: this.state.data.collection.emails,
+      users: this.state.data.collection.users,
       privacy: privacy,
       products: this.getProductIDs()
     }
@@ -220,6 +222,15 @@ const CreateCollectionModal = React.createClass ({
     )
   },
 
+  updateEmails: function (emails) {
+    this.state.data.collection.emails = emails;
+  },
+
+
+  updateUsers: function (users) {
+    this.state.data.collection.users = users;
+  },
+
   renderProducts: function () {
     return (
       <Results
@@ -249,10 +260,13 @@ const CreateCollectionModal = React.createClass ({
 
   renderCollectionForm: function () {
     let self = this;
-    let sharedOptions = this.props.renderSharePrivacy ? <ShareCollection onChangeEvent={function(callback,e){
-      callback(e);
-      self.setState({privacy: $(e.target).val()})
-    }}/> : '';
+    let shareCollection = <ShareCollection onUpdateEmail={this.updateEmails.bind(self)}
+                                           onUpdateUser={this.updateUsers.bind(self)}
+                                           onChangeEvent={function(callback,e){
+                          callback(e);
+                          self.setState({privacy: $(e.target).val()})}}/>
+
+    let sharedOptions = this.props.renderSharePrivacy ? shareCollection : '';
 
     return (
       <div className='row'>

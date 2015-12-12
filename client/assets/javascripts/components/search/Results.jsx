@@ -6,7 +6,7 @@ import SearchConstants from '../../utils/constants/SearchConstants';
 import Dropdown from '../Dropdown';
 import Avatar from '../Avatar';
 import AutoFitPicture from '../AutoFitPicture';
-import DropdownConstant from '../../utils/constants/DropdownConstants';
+import DropdownConstants from '../../utils/constants/DropdownConstants';
 
 const Results = React.createClass ({
 
@@ -166,7 +166,8 @@ const Results = React.createClass ({
             active={result.rank}
             showText={false}
             native={false}
-            options={{ owner: 'Co-owner', collaborator: 'Can add products', viewer: 'Can View' }} />
+            with_images={true}
+            options={DropdownConstants.shareOptions} />
         </div>
       )
     }
@@ -187,7 +188,8 @@ const Results = React.createClass ({
             active={result.rank}
             showText={false}
             native={false}
-            options={{ owner: 'Co-owner', collaborator: 'Can add products', viewer: 'Can View' }} />
+            with_images={true}
+            options={DropdownConstants.shareOptions} />
         </div>
       )
     }
@@ -369,13 +371,7 @@ const Results = React.createClass ({
   },
 
   dropdownOptions: function() {
-    return this.props.dropdownOptions || {
-      relevance: 'Relevance',
-      latest: 'Latest',
-      high_to_low: 'Rating High to Low',
-      low_to_high: 'Rating Low to High',
-      alphabetical_order: 'Alphabetical order',
-    }
+    return this.props.dropdownOptions || DropdownConstant.genericSortOptions
   },
 
   renderTopRight: function() {

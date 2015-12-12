@@ -5,7 +5,6 @@ import Modal from 'react-modal';
 import CollectionStore from '../../stores/CollectionStore';
 import ModalStore from '../../stores/ModalStore';
 import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
-import Dropdown from '../Dropdown';
 import FluxAlertActions from '../../actions/FluxAlertActions';
 import FluxModalActions from '../../actions/FluxModalActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';

@@ -18,10 +18,11 @@ const Dropdown = React.createClass({
   },
 
   onClick: function(sortKey) {
-    this.props.onClick(sortKey)
-    this.props.active = sortKey
+    this.props.onClick(sortKey);
+    this.props.active = sortKey;
     this.forceUpdate()
-    this.props.preventDropdown = true
+    this.props.preventDropdown = true;
+    this.hideDropdown()
   },
 
   getID: function() {
@@ -30,12 +31,15 @@ const Dropdown = React.createClass({
     }
   },
 
-  renderSortOption: function(displayString, sortKey) {
-    if(sortKey != this.props.active) {
+  renderSortOption: function(option) {
+    let image = option.image ? <img class="visible-xs" src={option.image}/> : null;
+
+    if(option.option != this.props.active) {
       return (
-        <div className='dropdown-link'
-              onClick={ () => this.onClick(sortKey) }>
-          <span value={sortKey} className="dropdown-text"><img src='/assets/logos/mark-grey.svg'/>{displayString}</span>
+        <div className={`dropdown-link ${ image ? 'dropdown-link-with-image' : ''}`}
+              onClick={ () => this.onClick(option.option) }>
+          <span value={option.option} className="dropdown-text">{option.display}</span>
+          {image}
         </div>
       )
     }
@@ -66,10 +70,14 @@ const Dropdown = React.createClass({
   },
 
   renderActiveOption: function() {
+    let self = this;
+    let active = _.find(this.props.options, function(op){return op.option ==self.props.active });
+    let image = active.image ? <img class="visible-xs" src={active.image}/> : '';
     return (
-      <div  className='active-dropdown-link'
+      <div  className={`active-dropdown-link  ${image ? 'active-dropdown-link-with-image' : ''}`}
             onClick={ this.activeClicked } >
-        {this.props.options[this.props.active]}
+        <span value={active.option} className="dropdown-text">{active.display}</span>
+        {image}
       </div>
     )
   },
@@ -96,21 +104,28 @@ const Dropdown = React.createClass({
   },
 
   renderOptions: function() {
-    let _this = this
-    return _.map(this.props.options, function(displayString, sortKey) {
+    let _this = this;
+    return _.collect(this.props.options, function(option) {
       return (
-        <option value={sortKey} selected={sortKey == _this.props.active}>{displayString}</option>
+        <option value={option.option} selected={option.option == _this.props.active}>
+          {option.display}
+          {image}
+        </option>
       )
     })
   },
 
   renderCustomDropdown: function() {
+    let self = this;
+    let options = _.collect(this.props.options, function(option){
+      return self.renderSortOption(option);
+    });
     return (
       <div  className={`dropdown-links ${this.props.containerClass}`}
             ref={this.getID()}>
         {this.renderActiveOption()}
         <div className='dropdown'>
-          {_.map(this.props.options, this.renderSortOption)}
+          {options}
         </div>
       </div>
     )
@@ -118,12 +133,12 @@ const Dropdown = React.createClass({
 
   render: function() {
     return (
-      <div className={`dropdown-container ${this.props.showText ? 'no-arrow' : null}`}>
+      <div className={`dropdown-container ${this.props.showText ? 'no-arrow' : null} ${this.state.open ? '' : 'closed'} ${this.props.with_images ? 'with-images': ''}`}>
         { this.props.showText ? (<span className='dropdown-label'>{this.props.text || 'Sort by:'}</span>) : null }
         { this.renderDropdown() }
       </div>
     )
-  },
+  }
 
 })
 

@@ -6,6 +6,7 @@ import ReviewBox from './ReviewBox';
 import Section from '../Section';
 import SectionRow from '../SectionRow';
 import Dropdown from '../Dropdown';
+import DropdownConstants from '../../utils/constants/DropdownConstants';
 
 function sumSizeFunc(item) {
   return item.props.size;
@@ -93,13 +94,7 @@ const RecentActivitySection = React.createClass({
         onClick={this.changeSorting}
         active={this.currentSorting()}
         showText={true}
-        options={{
-          latest: 'Latest',
-          highScore: 'Rating: Low to High',
-          lowScore: 'Rating: High to Low',
-          unhelpful: 'Most Helpful: Low to High',
-          helpful: 'Most Helpful: High to Low'
-        }} />
+        options={DropdownConstants.recentReviewSection} />
     )
   },
 

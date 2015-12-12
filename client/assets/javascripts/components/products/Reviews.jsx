@@ -8,6 +8,7 @@ import Rating from '../Rating';
 import PriceRating from '../PriceRating';
 import Tags from '../Tags';
 import Dropdown from '../Dropdown';
+import DropdownConstants from '../../utils/constants/DropdownConstants';
 import Avatar from '../Avatar';
 import ReviewConstants from '../../utils/constants/ReviewConstants';
 
@@ -265,13 +266,7 @@ const Reviews = React.createClass({
           showText={true}
           onClick={this.changeSorting}
           active={this.currentSorting()}
-          options={{
-            latest: 'Latest',
-            highScore: 'Rating: Low to High',
-            lowScore: 'Rating: High to Low',
-            unhelpful: 'Most Helpful: Low to High',
-            helpful: 'Most Helpful: High to Low'
-          }} />
+          options={DropdownConstants.reviewSortOptions} />
       </div>
     )
   },
