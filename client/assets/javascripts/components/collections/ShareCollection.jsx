@@ -156,7 +156,7 @@ const ShareCollection = React.createClass ({
       users: this.gatherUsers(),
       emails: this.gatherEmails(),
       privacy: this.state.unsaved_collection.privacy,
-      send_email_invites: this.state.collection.send_email_invites
+      send_email_invites: this.state.unsaved_collection.send_email_invites
     };
 
     FluxCollectionActions.shareCollection(id, data, function () {
