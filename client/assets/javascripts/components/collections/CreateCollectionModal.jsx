@@ -97,7 +97,8 @@ const CreateCollectionModal = React.createClass ({
       emails: this.state.data.collection.emails,
       users: this.state.data.collection.users,
       privacy: privacy,
-      products: this.getProductIDs()
+      products: this.getProductIDs(),
+      send_email_invites: this.state.data.collection.send_email_invites
     }
   },
 
@@ -231,6 +232,10 @@ const CreateCollectionModal = React.createClass ({
     this.state.data.collection.users = users;
   },
 
+  updateSendInviteEmails: function (invite) {
+    this.state.data.collection.send_email_invites = invite;
+  },
+
   renderProducts: function () {
     return (
       <Results
@@ -262,6 +267,7 @@ const CreateCollectionModal = React.createClass ({
     let self = this;
     let shareCollection = <ShareCollection onUpdateEmail={this.updateEmails.bind(self)}
                                            onUpdateUser={this.updateUsers.bind(self)}
+                                           onUpdateSentInviteEmails={this.updateSendInviteEmails.bind(self)}
                                            onChangeEvent={function(callback,e){
                           callback(e);
                           self.setState({privacy: $(e.target).val()})}}/>

@@ -75,12 +75,18 @@ const ShareCollection = React.createClass ({
     let collection = this.state.unsaved_collection
     collection.users = users
     this.setState({user_name: null, unsaved_collection: collection})
+    if (this.props.onUpdateUser) {
+      this.props.onUpdateUser(this.gatherUsers())
+    }
   },
 
   updateEmails: function (emails) {
     let collection = this.state.unsaved_collection
     collection.emails = emails
     this.setState({user_name: null, unsaved_collection: collection})
+    if (this.props.onUpdateEmail) {
+      this.props.onUpdateEmail(this.gatherEmails())
+    }
   },
 
   addUser: function (user) {
@@ -113,10 +119,6 @@ const ShareCollection = React.createClass ({
     })
     if (index > -1) {
       emails[index] = _.merge(emails[index], {rank: rank})
-
-      if (this.props.onUpdateEmail) {
-        this.props.onUpdateEmail(emails)
-      }
       this.updateEmails(emails)
     }
   },
@@ -125,11 +127,6 @@ const ShareCollection = React.createClass ({
     let updatedUsers = this.state.unsaved_collection.users.filter(function (user) {
       return user.id !== user_id;
     });
-
-    if (this.props.onUpdateUser) {
-      this.props.onUpdateUser(updatedUsers)
-    }
-
     this.updateUsers(updatedUsers);
   },
 
@@ -201,11 +198,8 @@ const ShareCollection = React.createClass ({
   },
 
   renderUsers: function () {
-    let unsavedUsers = this.unsavedUsers()
+    let unsavedUsers = this.unsavedUsers();
     if (this.state.unsaved_collection.users && unsavedUsers.length > 0) {
-      if (this.props.onUpdateUser) {
-        this.props.onUpdateUser(unsavedUsers)
-      }
       return (
         <Results
           type='sharee-users'
@@ -220,10 +214,6 @@ const ShareCollection = React.createClass ({
   renderEmails: function () {
     let unsavedEmails = this.unsavedEmails()
     if (this.state.unsaved_collection.emails && unsavedEmails.length > 0) {
-      if (this.props.onUpdateEmail) {
-        this.props.onUpdateEmail(unsavedEmails)
-      }
-
       return (
         <Results
           type='sharee-emails'
@@ -262,6 +252,9 @@ const ShareCollection = React.createClass ({
   setSendEmailInvites: function (e) {
     let newValue = $(e.target).is(":checked")
     let updatedCollection = _.merge(this.state.unsaved_collection, {send_email_invites: newValue})
+    if(this.props.onUpdateSentInviteEmails){
+      this.props.onUpdateSentInviteEmails(newValue)
+    }
     this.setState({unsaved_collection: updatedCollection})
   },
 
