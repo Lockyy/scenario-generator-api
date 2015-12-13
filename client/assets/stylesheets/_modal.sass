@@ -246,6 +246,11 @@ $modal-padding: 25px
       .scrollable
         overflow-y: auto
         overflow-x: hidden
+
+        .dropdown-container
+          position: absolute
+          right: 25px
+
       .buttons
         display: flex
         justify-content: center
@@ -354,6 +359,10 @@ $modal-padding: 25px
           max-height: 190px
           overflow-y: auto
           overflow-x: hidden
+          .dropdown-container
+            position: relative
+            right: 0
+
         .form-group
           &.typeahead
             min-height: 0px !important

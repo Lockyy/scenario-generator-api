@@ -109,7 +109,6 @@ const Dropdown = React.createClass({
       return (
         <option value={option.option} selected={option.option == _this.props.active}>
           {option.display}
-          {image}
         </option>
       )
     })
