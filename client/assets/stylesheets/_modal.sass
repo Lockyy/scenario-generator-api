@@ -7,6 +7,14 @@ $modal-padding: 25px
   height: 25px
   margin-right: 10px
 
+=italicize-placeholders
+  &::-moz-placeholder
+    font-style: italic
+  &::-webkit-input-placeholder
+    font-style: italic
+  &::ms-input-placeholder
+    font-style: italic
+
 .app
   .ReactModal__Overlay
     z-index: 999999
@@ -84,6 +92,9 @@ $modal-padding: 25px
           text-align: right
           color: $dark-grey
           font-size: 12px
+      .attached-fields
+        textarea
+          +italicize-placeholders
       .collection-details
         .author-and-date
           font-size: 11px
@@ -374,6 +385,7 @@ $modal-padding: 25px
               font-size: 15px
             textarea
               height: 75px
+              +italicize-placeholders
         .buttons
           display: flex
           flex-direction: column
