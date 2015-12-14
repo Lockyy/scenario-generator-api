@@ -150,9 +150,9 @@ const ViewCollectionModal = React.createClass ({
       let totalUsers = this.state.collection.users.length;
       return (
         <div className='collection-sharees' onClick={this.onCollaboratorClick}>
-          <Avatar url={this.state.collection.user.avatar_url} />
+          <Avatar user={this.state.collection.user} disableLink={true} />
           {_.map(this.state.collection.users.slice(0,6), function(sharee) {
-            return <Avatar url={sharee.avatar_url} />
+            return <Avatar user={sharee} disableLink={true} />
           })}
           { totalUsers > 7 ? <Avatar number={totalUsers - 7} />: '' }
         </div>

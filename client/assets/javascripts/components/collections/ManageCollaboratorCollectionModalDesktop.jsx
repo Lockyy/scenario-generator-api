@@ -55,7 +55,10 @@ const ManageCollaboratorCollectionModalDesktop = React.createClass ({
         <div className='sharee-users'>
           <div className='result user sharee'>
             <div className='info'>
-              <Avatar url={user.avatar_url} styles={{backgroundColor: 'white'}}/>
+              <Avatar
+                user={user}
+                disableLink={true}
+                styles={{backgroundColor: 'white'}} />
               <span>
                 <div className='name color-red'>
                   { user.name }

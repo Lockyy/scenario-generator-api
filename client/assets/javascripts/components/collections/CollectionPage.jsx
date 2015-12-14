@@ -300,8 +300,8 @@ const CollectionPage = React.createClass({
           Owners
         </div>
         {_.map(this.owners(), function(owner) {
-          return <Avatar url={owner.avatar_url} link={`/app/users/${owner.id}`} size={_this.avatarSize}/>
-          })}
+          return <Avatar user={owner} size={_this.avatarSize} />
+        })}
       </div>
     )
   },
@@ -317,7 +317,7 @@ const CollectionPage = React.createClass({
           Can add products
         </div>
         {_.map(this.collaborators(), function(collaborator) {
-          return <Avatar url={collaborator.avatar_url} link={`/app/users/${collaborator.id}`} size={_this.avatarSize}/>
+          return <Avatar user={collaborator} size={_this.avatarSize} />
         })}
       </div>
     )
@@ -333,7 +333,7 @@ const CollectionPage = React.createClass({
     return (
       <div className='grey-bottom-border vertical-padding'>
         {_.map(allCollaborators, function(collaborator) {
-          return <Avatar url={collaborator.avatar_url} link={`/app/users/${collaborator.id}`} size={_this.avatarSize}/>
+          return <Avatar user={collaborator} size={_this.avatarSize} />
           })}
       </div>
     )
@@ -357,8 +357,8 @@ const CollectionPage = React.createClass({
 
         <div>
           {_.map(this.viewers(), function(viewer) {
-            return <Avatar url={viewer.avatar_url} link={`/app/users/${viewer.id}`} size={_this.avatarSize}/>
-            })}
+            return <Avatar user={viewer} size={_this.avatarSize} />
+          })}
         </div>
 
         <label>

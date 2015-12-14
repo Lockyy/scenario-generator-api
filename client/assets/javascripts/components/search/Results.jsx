@@ -120,7 +120,11 @@ const Results = React.createClass ({
       return (
         <div className='result user row'>
           <div className='col-xs-2'>
-            <Avatar url={result.avatar_url} styles={{backgroundColor: 'white'}}/>
+            <Avatar
+              user={result}
+              disableHover={true}
+              disableLink={true}
+              styles={{backgroundColor: 'white'}} />
           </div>
           <div className='col-xs-7'>
             <div className='name'>
@@ -146,7 +150,11 @@ const Results = React.createClass ({
       return (
         <div className='result user sharee'>
           <div className='info'>
-            <Avatar url={result.avatar_url} styles={{backgroundColor: 'white'}}/>
+            <Avatar
+              user={result}
+              disableHover={true}
+              disableLink={true}
+              styles={{backgroundColor: 'white'}} />
             <span>
               <div className='name'>
                 { result.name }
