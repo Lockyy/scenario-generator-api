@@ -36,7 +36,7 @@ const Sidebar = React.createClass ({
           return;
         }
         return closeHamburgerMenu();
-      }));
+      }.bind(this)));
     }.bind(this));
   },
 
