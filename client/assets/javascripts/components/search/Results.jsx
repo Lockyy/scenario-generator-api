@@ -375,7 +375,7 @@ const Results = React.createClass ({
   },
 
   dropdownOptions: function() {
-    return this.props.dropdownOptions || DropdownConstant.genericSortOptions
+    return this.props.dropdownOptions || DropdownConstants.genericSortOptions
   },
 
   renderTopRight: function() {
