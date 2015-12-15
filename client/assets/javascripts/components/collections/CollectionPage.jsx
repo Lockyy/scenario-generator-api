@@ -225,17 +225,17 @@ const CollectionPage = React.createClass({
         <div className='collection-product-rows'>
           {_.map(products, this.renderProductRow)}
         </div>
-        <div className='add-product-container'>
-          { this.state.data.collection.editable ? this.renderAddProductButton() : '' }
-        </div>
+        { this.state.data.collection.editable ? this.renderAddProductButton() : '' }
       </div>
     )
   },
 
   renderAddProductButton: function() {
     return (
-      <div className='link add-product-link' onClick={() => this.showEditCollectionModal()}>
-        Add a new product
+      <div className='add-product-container'>
+        <div className='link add-product-link' onClick={() => this.showEditCollectionModal()}>
+          Add a new product
+        </div>
       </div>
     )
   },
