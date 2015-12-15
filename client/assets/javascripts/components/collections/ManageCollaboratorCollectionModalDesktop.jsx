@@ -138,7 +138,7 @@ const ManageCollaboratorCollectionModalDesktop = React.createClass ({
 
   render: function() {
     return (
-      <div className='hidden-xs'>
+      <div>
         {this.renderheader()}
         {this.renderShareForm()}
       </div>

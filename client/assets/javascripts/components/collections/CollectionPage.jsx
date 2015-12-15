@@ -331,10 +331,15 @@ const CollectionPage = React.createClass({
     let _this = this;
 
     return (
-      <div className='grey-bottom-border vertical-padding'>
-        {_.map(allCollaborators, function(collaborator) {
-          return <Avatar url={collaborator.avatar_url} link={`/app/users/${collaborator.id}`} size={_this.avatarSize}/>
-          })}
+      <div>
+        <div className='top-margin small-text'>
+          Collaborators in this collection
+        </div>
+        <div className='vertical-padding'>
+          {_.map(allCollaborators, function(collaborator) {
+            return <Avatar url={collaborator.avatar_url} link={`/app/users/${collaborator.id}`} size={_this.avatarSize}/>
+            })}
+        </div>
       </div>
     )
   },

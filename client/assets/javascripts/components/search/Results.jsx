@@ -26,6 +26,10 @@ const Results = React.createClass ({
     return Math.min(dataMax, (this.props.per_page || SearchConstants.PER_PAGE))
   },
 
+  totalElements: function() {
+    return this.props.data.total
+  },
+
   renderCompany: function(result) {
     return (
       <div className='result'>
@@ -362,7 +366,7 @@ const Results = React.createClass ({
 
   getCountResultsMessage: function(className) {
     if(this.props.data) {
-      let total = this.props.data.total;
+      let total = this.totalElements();
       return (
         <div className={className ? className : ''}>
           { total ? total : 'No'  } result{total > 1 || total == 0 ? 's' : ''} found
@@ -378,15 +382,15 @@ const Results = React.createClass ({
     let closeMethod = this.props.close ? this.props.close: function(){} ;
     switch(this.props.topRight) {
       case 'link':
-        if(this.props.data.total > 0) {
+        if(this.totalElements() > 0) {
           return (
             <Link onClick={closeMethod} className='top-right' to={`/app/search/${this.props.type}/${this.props.searchTerm}/1`}>
-              See all {this.props.data.total}
+              View all matching {this.props.type} ({this.totalElements()})
             </Link>
           );
         }
       case 'dropdown':
-        if(this.props.data.total > 0) {
+        if(this.totalElements() > 0) {
           return(
             <div className='top-right'>
               <Dropdown
@@ -397,17 +401,17 @@ const Results = React.createClass ({
           )
         }
       case 'count':
-        if(this.getMaxDisplayedData() < this.props.data.total) {
+        if(this.getMaxDisplayedData() < this.totalElements()) {
           return (
             <div className='top-right'>
-                <span> Showing <span className='value'>{ this.getMaxDisplayedData() }</span> of <span className='value'>{this.props.data.total}</span> results found </span>
+                <span> Showing <span className='value'>{ this.getMaxDisplayedData() }</span> of <span className='value'>{this.totalElements()}</span> results found </span>
             </div>
           )
         }
       case 'size':
         return (
           <div className='top-right'>
-            { this.props.data.total } result(s) found
+            { this.totalElements() } result(s) found
           </div>
         )
         break;

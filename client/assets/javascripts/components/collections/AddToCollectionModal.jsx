@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
+import RenderMobile from '../RenderMobile';
 import TextHelper from '../../utils/helpers/TextHelper';
 import Modal from 'react-modal';
 import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
@@ -216,15 +217,31 @@ const AddToCollectionModal = React.createClass ({
   },
 
   renderAddButton: function(collection) {
+    // If just added
     if(this.collectionTicked(collection.id)) {
-      return <div className='btn btn-round btn-red-inverted btn-add btn-list-small btn-text-normal btn-tick'>Added</div>
+      return (
+        <div
+          className='btn btn-round btn-red-inverted btn-add btn-list-small btn-text-normal btn-tick'>
+          Added
+        </div>
+      )
+    // If already added
     } else if (this.productInCollection(collection)) {
-      return <div className='already-in-collection'>
-        {this.state.config.mobile ?
-          "Already added" :
-          "Product already added to collection"}</div>
+      return (
+        <div
+          className='already-in-collection'>
+          Already added
+        </div>
+      )
+    // If the product can still be added
     } else {
-      return <div className='btn btn-round btn-red-inverted btn-add btn-list-small btn-text-normal' onClick={(e) => this.addToCollection(e, collection)}>Add</div>
+      return (
+        <div
+          className='btn btn-round btn-red-inverted btn-add btn-list-small btn-text-normal'
+          onClick={(e) => this.addToCollection(e, collection)}>
+          Add
+        </div>
+      )
     }
   },
 
@@ -292,7 +309,7 @@ const AddToCollectionModal = React.createClass ({
         { this.hasCollectionList() ?
             this.renderAddToCollectionForm() :
             <span className="no-results">No results found.</span> }
-        <Footer className='visible-xs' />
+        <RenderMobile component={Footer} />
       </Modal>
     )
   }
