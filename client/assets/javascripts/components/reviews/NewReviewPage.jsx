@@ -82,7 +82,7 @@ const NewReviewPage  = React.createClass({
     let reviewID = this._getCurrentUserReviewId();
 
     if(reviewID && params.reviewId != reviewID) {
-      this.context.router.transitionTo(`/app/products/${this._getProductId()}/reviews/${reviewID}`);
+      this.context.router.transitionTo(`/app/products/${this._getProductId()}/${this._getProductData().slug}/reviews/${reviewID}`);
       this._fetchReview(this._getProductId(), reviewID);
     }
   },
@@ -125,7 +125,7 @@ const NewReviewPage  = React.createClass({
 
     FluxReviewPageActions.submitReview(review,
       function(data) {
-        _this.context.router.transitionTo(`/app/products/${data.product.id}`)
+        _this.context.router.transitionTo(`/app/products/${data.product.id}/${data.product.slug}`)
         FluxNotificationsActions.showNotification({
           type: 'saved',
           subject: _.merge(data.product, {type: 'review'})
