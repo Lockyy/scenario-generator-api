@@ -74,7 +74,7 @@ const TagResults = React.createClass ({
         let closeMethod = this.props.close ? this.props.close: function(){} ;
         return (
           <Link onClick={closeMethod} className='top-right' to={`/app/search/tags/${this.props.searchTerm}/1`}>
-            See all {this.props.data.total}
+            View all matching tags ({this.props.data.total})
           </Link>
         );
       case 'hide':

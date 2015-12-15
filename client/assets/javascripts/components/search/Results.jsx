@@ -381,7 +381,7 @@ const Results = React.createClass ({
         if(this.props.data.total > 0) {
           return (
             <Link onClick={closeMethod} className='top-right' to={`/app/search/${this.props.type}/${this.props.searchTerm}/1`}>
-              See all {this.props.data.total}
+              View all matching {this.props.type} ({this.props.data.total})
             </Link>
           );
         }
