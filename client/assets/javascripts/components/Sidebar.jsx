@@ -27,17 +27,19 @@ const Sidebar = React.createClass ({
   },
 
   showHamburgerMenu: function() {
+    let _this = this
+
     return this.getHamburgerMenuDom().stop().toggle("slide", {
       direction: 'right'
     }, 600, function() {
-      return this.getHamburgerMenuDom().on('clickoutside', _.throttle(function(outsideE) {
+      return _this.getHamburgerMenuDom().on('clickoutside', _.throttle(function(outsideE) {
         if (_.include($(outsideE.target).attr('class'), 'myTagSuggestion') ||
           _.include($(outsideE.target).data('role'), 'remove')) {
           return;
         }
         return closeHamburgerMenu();
-      }.bind(this)));
-    }.bind(this));
+      }));
+    });
   },
 
   closeHamburgerMenu: function() {
