@@ -1,6 +1,8 @@
 import _ from 'lodash'
 import React from 'react'
 import timeago from 'timeago'
+import RenderDesktop from '../RenderDesktop'
+import RenderMobile from '../RenderMobile'
 import { Link, Navigation } from 'react-router'
 import Modal from 'react-modal'
 import FluxProductPageActions from '../../actions/FluxProductPageActions'
@@ -114,7 +116,8 @@ const ProductPage = React.createClass({
   render: function() {
     return (
       <div className='product show'>
-        <ProductPageDesktopVersion
+        <RenderDesktop
+          component={ProductPageDesktopVersion}
           reviewButtonURL={this.reviewButtonURL()}
           reviewButtonText={this.reviewButtonText()}
           onBookmark={this.bookmark}
@@ -123,7 +126,7 @@ const ProductPage = React.createClass({
           showFiles={this.showProductFilesModal}
           showLinks={this.showProductLinksModal}
           {...this.state} />
-        <ProductPageMobileVersion
+        <RenderMobile
           reviewButtonURL={this.reviewButtonURL()}
           reviewButtonText={this.reviewButtonText()}
           onBookmark={this.bookmark}
