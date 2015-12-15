@@ -1,6 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
+import RenderDesktop from '../RenderDesktop';
+import RenderMobile from '../RenderMobile';
 import Modal from 'react-modal';
 import CollectionStore from '../../stores/CollectionStore';
 import ModalStore from '../../stores/ModalStore';
@@ -247,7 +249,8 @@ const ManageCollaboratorCollectionModal = React.createClass ({
         onRequestClose={this.close}
         style={DefaultModalStyles}>
 
-        <ManageCollaboratorCollectionModalDesktop
+        <RenderDesktop
+          component={ManageCollaboratorCollectionModalDesktop}
           displayedUsers={this.state.displayedUsers}
           collection={this.state.collection}
           unsaved_collection={this.state.unsaved_collection}
@@ -259,7 +262,8 @@ const ManageCollaboratorCollectionModal = React.createClass ({
           submitForm={this.submitForm}
           filterCollaborators={this.filterCollaborators} />
 
-        <ManageCollaboratorCollectionModalMobile
+        <RenderMobile
+          component={ManageCollaboratorCollectionModalMobile}
           displayedUsers={this.state.displayedUsers}
           collection={this.state.collection}
           unsaved_collection={this.state.unsaved_collection}

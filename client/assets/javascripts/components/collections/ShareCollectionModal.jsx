@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
+import RenderMobile from '../RenderMobile';
 import Modal from 'react-modal';
 import CollectionStore from '../../stores/CollectionStore';
 import ModalStore from '../../stores/ModalStore';
@@ -64,7 +65,6 @@ const ShareCollectionModal = React.createClass ({
     });
   },
 
-
   onChangeModal: function(data) {
     let visible = data.visibleModal == this.constructor.displayName;
     this.setState({ visible: visible, config: data.config });
@@ -83,8 +83,10 @@ const ShareCollectionModal = React.createClass ({
         onRequestClose={this.close}
         style={DefaultModalStyles}>
         <div className='back-button' onClick={this.close}>Back</div>
+
         <ShareCollection  collection={this.state.collection} config={this.state.config} close={this.close} />
-        <Footer className='visible-xs' />
+
+        <RenderMobile component={Footer} />
       </Modal>
     )
   }
