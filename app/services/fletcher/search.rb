@@ -137,7 +137,7 @@ module Fletcher
     end
 
     def collections(terms)
-      search_collections = SearchCollections.new(@params[:filter_by], terms, @params[:sorting][:collections], @filter_tags, @params[:match_mode][:collections])
+      search_collections = SearchCollections.new(@params[:filter_by], terms, @params[:sorting][:collections], @filter_tags, @params[:match_mode][:collections] || 'all')
       @collections_related_tags = search_collections.related_tags
       search_collections.results.visible(@user)
     end
