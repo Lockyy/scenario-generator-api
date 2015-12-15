@@ -49,38 +49,23 @@ $(function onLoad() {
       React.withContext({'currentUser': currentUser}, function() {
         let router = React.render((
           <Router history={history} onUpdate={onRouterTransition}>
-            // Dashboard
             <Route path="app" component={Dashboard} />
-
-            // Products
             <Route path="app/products/:id" component={ProductPage} />
             <Route path="app/products/:id/:slug" component={ProductPage} />
-
-            // Reviews
             <Route path="app/reviews/new" component={NewReviewPage} />
             <Route path="app/products/:productId/reviews/new" component={NewReviewPage} />
             <Route path="app/products/:productId/:slug/reviews/new" component={NewReviewPage} />
             <Route path="app/products/:productId/reviews/:reviewId" component={NewReviewPage} />
             <Route path="app/products/:productId/:slug/reviews/:reviewId" component={NewReviewPage} />
-
-            // Companies
             <Route name="company" path="app/companies/:companyId" component={CompanyProfilePage} />
             <Route name="company" path="app/companies/:companyId/:slug" component={CompanyProfilePage} />
-
-            // Users
             <Route name="user" path="app/users/:userId" component={UserProfilePage} />
-
-            // Search
             <Route name="search" path="app/search/:section/:search_string/:page" component={SearchPage} />
             <Route name="search" path="app/search/:section" component={SearchPage} />
             <Route name="search" path="app/search" component={SearchPage} />
-
-            // Tags
             <Route path="app/tag/:tag/products/:page" component={TagPage} />
             <Route path="app/tags" component={TagsPage} />
             <Route path="app/tags/:letter" component={TagsPage} />
-
-            // Collections
             <Route path="app/directory/collections" component={CollectionsPage} />
             <Route name='CollectionPage' path="app/collections/:id" component={CollectionPage} />
           </Router>
