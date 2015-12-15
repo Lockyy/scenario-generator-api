@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Link } from 'react-router';
 import Tags from '../Tags'
 import Dropdown from '../Dropdown';
+import DropdownConstants from '../../utils/constants/DropdownConstants';
 
 const TagResults = React.createClass ({
 
@@ -27,11 +28,7 @@ const TagResults = React.createClass ({
   },
 
   dropdownOptions: function() {
-    return this.props.dropdownOptions || {
-      relevance: 'Relevance',
-      latest: 'Latest',
-      alphabetical_order: 'Alphabetical order',
-    }
+    return this.props.dropdownOptions || DropdownConstants.sortOptions
   },
 
   getCountResultsMessage: function(className) {
@@ -77,7 +74,7 @@ const TagResults = React.createClass ({
         let closeMethod = this.props.close ? this.props.close: function(){} ;
         return (
           <Link onClick={closeMethod} className='top-right' to={`/app/search/tags/${this.props.searchTerm}/1`}>
-            See all {this.props.data.total}
+            View all matching tags ({this.props.data.total})
           </Link>
         );
       case 'hide':

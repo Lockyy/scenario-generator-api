@@ -30,3 +30,4 @@ config/database.yml
 # Ignore Vim swap files
 *.swp
 *.swo
+.idea

@@ -10,7 +10,7 @@ class Api::CollectionsController < AppController
     products = Product.where(id: params[:products])
     @collection = current_user.collections.create(collection_params)
     @collection.update_products(products, current_user)
-
+    update_share_options
     respond_to do |format|
       format.json do
         if @collection.persisted?
@@ -66,12 +66,7 @@ class Api::CollectionsController < AppController
   end
 
   def share
-    @collection.update_attributes({
-      privacy: params[:privacy],
-      send_email_invites: params[:send_email_invites]
-    })
-
-    if @collection.share_and_invite(params[:users], params[:emails])
+    if update_share_options
       @collection.reload
       returnJSON = render_success
     else
@@ -83,12 +78,25 @@ class Api::CollectionsController < AppController
 
   private
 
+  def update_share_options
+    _params = share_params
+    @collection.update_attributes({
+                                      privacy: _params[:privacy],
+                                      send_email_invites: _params[:send_email_invites]
+                                  })
+    @collection.share_and_invite(_params[:users], _params[:emails])
+  end
+
   def render_success
     render 'show'
   end
 
   def render_error
     render 'show', status: 400
+  end
+
+  def share_params
+    params.permit(:privacy, :send_email_invites, users:[:id, :rank], emails: [:email, :rank])
   end
 
   def collection_params

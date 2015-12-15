@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import Results from '../search/Results'
+import DropdownConstants from '../../utils/constants/DropdownConstants'
 
 const CollectionsPageDesktop = React.createClass({
   mixins: [ Navigation ],
@@ -62,11 +63,7 @@ const CollectionsPageDesktop = React.createClass({
           currentPage={this.props.page}
           topLeft='type'
           topRight='dropdown'
-          dropdownOptions={{
-            relevance: 'Relevance',
-            latest: 'Latest',
-            alphabetical_order: 'Alphabetical order',
-          }}
+          dropdownOptions={DropdownConstants.sortOptions}
           sorting={this.props.data.sorting.collections}
           onChangePage={this.props.onChangePage}
           onChangeSort={this.props.onChangeSort} />

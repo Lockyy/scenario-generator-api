@@ -18,33 +18,33 @@ const Dropdown = React.createClass({
   },
 
   onClick: function(sortKey) {
-    this.props.onClick(sortKey)
-    this.props.active = sortKey
+    this.props.onClick(sortKey);
+    this.props.active = sortKey;
     this.forceUpdate()
-    this.props.preventDropdown = true
+    this.props.preventDropdown = true;
+    this.hideDropdown()
   },
 
   getID: function() {
-    if(this.state){
-      return this.state.id
-    }
+    return this.state.id
   },
 
-  renderSortOption: function(displayString, sortKey) {
-    if(sortKey != this.props.active) {
+  renderSortOption: function(option) {
+    let image = option.image ? <img class="visible-xs" src={option.image}/> : null;
+
+    if(option.option != this.props.active) {
       return (
-        <div  className='dropdown-link'
-              onClick={ () => this.onClick(sortKey) }>
-          {displayString}
+        <div className={`dropdown-link ${ image ? 'dropdown-link-with-image' : ''}`}
+              onClick={ () => this.onClick(option.option) }>
+          <span value={option.option} className="dropdown-text">{option.display}</span>
+          {image}
         </div>
       )
     }
   },
 
   showDropdown: function() {
-    if(this.props.preventDropdown) {
-      return false;
-    }
+    if(this.props.native || this.props.preventDropdown ) { return }
 
     let node = $(this.refs[this.getID()].getDOMNode())
     node.toggleClass('active')
@@ -52,6 +52,8 @@ const Dropdown = React.createClass({
   },
 
   hideDropdown: function() {
+    if(this.props.native) { return }
+
     let node = $(this.refs[this.getID()].getDOMNode())
     node.removeClass('active')
     this.setState({open: false})
@@ -66,10 +68,14 @@ const Dropdown = React.createClass({
   },
 
   renderActiveOption: function() {
+    let self = this;
+    let active = _.find(this.props.options, function(op){return op.option ==self.props.active });
+    let image = active.image ? <img class="visible-xs" src={active.image}/> : '';
     return (
-      <div  className='active-dropdown-link'
+      <div  className={`active-dropdown-link  ${image ? 'active-dropdown-link-with-image' : ''}`}
             onClick={ this.activeClicked } >
-        {this.props.options[this.props.active]}
+        <span value={active.option} className="dropdown-text">{active.display}</span>
+        {image}
       </div>
     )
   },
@@ -86,7 +92,6 @@ const Dropdown = React.createClass({
     )
   },
 
-
   renderDropdown: function() {
     if(this.props.native) {
       return this.renderNativeDropdown()
@@ -96,21 +101,27 @@ const Dropdown = React.createClass({
   },
 
   renderOptions: function() {
-    let _this = this
-    return _.map(this.props.options, function(displayString, sortKey) {
+    let _this = this;
+    return _.collect(this.props.options, function(option) {
       return (
-        <option value={sortKey} selected={sortKey == _this.props.active}>{displayString}</option>
+        <option value={option.option} selected={option.option == _this.props.active}>
+          {option.display}
+        </option>
       )
     })
   },
 
   renderCustomDropdown: function() {
+    let self = this;
+    let options = _.collect(this.props.options, function(option){
+      return self.renderSortOption(option);
+    });
     return (
       <div  className={`dropdown-links ${this.props.containerClass}`}
             ref={this.getID()}>
         {this.renderActiveOption()}
         <div className='dropdown'>
-          {_.map(this.props.options, this.renderSortOption)}
+          {options}
         </div>
       </div>
     )
@@ -118,12 +129,12 @@ const Dropdown = React.createClass({
 
   render: function() {
     return (
-      <div className={`dropdown-container ${this.props.showText ? 'no-arrow' : null}`}>
+      <div className={`dropdown-container ${this.props.showText ? 'no-arrow' : null} ${this.state.open ? '' : 'closed'} ${this.props.with_images ? 'with-images': ''}`}>
         { this.props.showText ? (<span className='dropdown-label'>{this.props.text || 'Sort by:'}</span>) : null }
         { this.renderDropdown() }
       </div>
     )
-  },
+  }
 
 })
 

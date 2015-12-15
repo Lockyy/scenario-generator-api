@@ -20,7 +20,7 @@ const Footer = React.createClass({
         <div className="container">
           <div className="row">
             <div className="col-xs-12 logo">
-              <img src='/assets/mark-grey.svg' />
+              <img src='/assets/logos/mark-grey.svg' />
             </div>
           </div>
           <div className="row">

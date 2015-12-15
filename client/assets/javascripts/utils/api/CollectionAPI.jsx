@@ -4,7 +4,7 @@ module.exports = {
 
   createCollection: function(data, resolve, reject) {
     let url = `/api/collections`;
-    return this.hitAPI(url, 'post', data, resolve, reject);
+    return this.hitAPIJSON(url, 'post', data, resolve, reject);
   },
 
   addProductToCollection: function(product_id, collection_id, resolve, reject) {

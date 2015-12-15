@@ -3,7 +3,6 @@ import _ from 'lodash';
 import { Link } from 'react-router';
 import timeago from 'timeago';
 import TextHelper from '../../utils/helpers/TextHelper';
-import Dropdown from '../Dropdown';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxAlertActions from '../../actions/FluxAlertActions';
 import { ViewCollectionMixin } from '../collections/ViewCollectionModal';

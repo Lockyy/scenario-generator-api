@@ -9,6 +9,7 @@ import PriceRating from '../PriceRating';
 import Tags from '../Tags';
 import Dropdown from '../Dropdown';
 import ReviewConstants from '../../utils/constants/ReviewConstants';
+import DropdownConstants from '../../utils/constants/DropdownConstants';
 
 const ReviewsMobileVersion = React.createClass({
   displayName: 'ReviewsMobileVersion',
@@ -220,13 +221,7 @@ const ReviewsMobileVersion = React.createClass({
         <Dropdown
           onClick={this.changeSorting}
           active={this.currentSorting()}
-          options={{
-            latest: 'Latest',
-            highScore: 'Rating: Low to High',
-            lowScore: 'Rating: High to Low',
-            unhelpful: 'Most Helpful: Low to High',
-            helpful: 'Most Helpful: High to Low'
-          }} />
+          options={DropdownConstants.reviewSortOptions} />
       </div>
     )
   },

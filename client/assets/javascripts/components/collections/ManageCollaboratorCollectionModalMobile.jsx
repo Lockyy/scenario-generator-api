@@ -194,7 +194,7 @@ const ManageCollaboratorCollectionModalMobile = React.createClass ({
 
   render: function() {
     return (
-      <div className='visible-xs'>
+      <div>
         <div className='back-button' onClick={this.props.close}>Back</div>
         {this.renderOwnerView()}
         <Footer />

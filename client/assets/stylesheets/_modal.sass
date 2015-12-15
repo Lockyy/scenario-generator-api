@@ -7,6 +7,14 @@ $modal-padding: 25px
   height: 25px
   margin-right: 10px
 
+=italicize-placeholders
+  &::-moz-placeholder
+    font-style: italic
+  &::-webkit-input-placeholder
+    font-style: italic
+  &::ms-input-placeholder
+    font-style: italic
+
 .app
   .ReactModal__Overlay
     z-index: 999999
@@ -35,6 +43,25 @@ $modal-padding: 25px
       border: 0px
       padding: $modal-padding $modal-padding $modal-padding
       .header
+        display: flex
+        justify-content: space-between
+        margin-bottom: 25px
+        padding-bottom: 5px
+        border-bottom: 2px solid $primary-red
+        .title
+          font-size: 23px
+          font-style: italic
+          position: relative
+          top: 3px
+        .close
+          position: relative
+          top: 4px
+          background-image: url("icons/icon-modal-close.svg")
+          background-repeat: no-repeat
+          background-position: center
+          opacity: 1
+          width: 25px
+          height: 25px
         &.collections
           .title::before
             +before-title
@@ -43,8 +70,14 @@ $modal-padding: 25px
           .title::before
             +before-title
             background-image: url('icons/icon-share.svg')
+        &.previewing
+          border-bottom: 2px solid $highlight-blue
+          .title::before
+            +before-title
+            background-image: url('icons/icon-collection-preview-blue.svg')
         .title
           display: flex
+          align-items: center
           &::before
             content: ''
             color: transparent
@@ -84,6 +117,9 @@ $modal-padding: 25px
           text-align: right
           color: $dark-grey
           font-size: 12px
+      .attached-fields
+        textarea
+          +italicize-placeholders
       .collection-details
         .author-and-date
           font-size: 11px
@@ -227,10 +263,9 @@ $modal-padding: 25px
                   display: none
               .already-in-collection
                 display: inline-block
-                width: 100px
                 font-size: 9px
                 line-height: 10px
-                margin-left: 5px
+                margin-left: 10px
                 color: $primary-red
       .results
         .sharee
@@ -246,6 +281,11 @@ $modal-padding: 25px
       .scrollable
         overflow-y: auto
         overflow-x: hidden
+
+        .dropdown-container
+          position: absolute
+          right: 25px
+
       .buttons
         display: flex
         justify-content: center
@@ -254,28 +294,6 @@ $modal-padding: 25px
         margin-top: 15px
         cursor: pointer
         text-decoration: underline
-      .header
-        display: flex
-        justify-content: space-between
-        margin-bottom: 25px
-        padding-bottom: 5px
-        border-bottom: 2px solid $primary-red
-        .title
-          font-size: 23px
-          font-style: italic
-          position: relative
-          top: 3px
-        .title::before
-          background-image: url('icons/icon-collections-red.svg')
-        .close
-          position: relative
-          top: 4px
-          background-image: url("icons/icon-modal-close.svg")
-          background-repeat: no-repeat
-          background-position: center
-          opacity: 1
-          width: 25px
-          height: 25px
       .copy-link
         cursor: pointer
 
@@ -345,7 +363,7 @@ $modal-padding: 25px
         .num-collaborators
           color: $dark-grey
         .header
-          margin-bottom: 30px
+          margin-bottom: 10px
           padding-bottom: 5px
           border-bottom: 1px solid $light-grey
           &.mobile
@@ -363,6 +381,10 @@ $modal-padding: 25px
           max-height: 190px
           overflow-y: auto
           overflow-x: hidden
+          .dropdown-container
+            position: relative
+            right: 0
+
         .form-group
           &.typeahead
             min-height: 0px !important
@@ -374,6 +396,7 @@ $modal-padding: 25px
               font-size: 15px
             textarea
               height: 75px
+              +italicize-placeholders
         .buttons
           display: flex
           flex-direction: column

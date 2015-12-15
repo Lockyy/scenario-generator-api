@@ -4,6 +4,7 @@ import { Link, Navigation } from 'react-router';
 import FluxSearchPageActions from '../../actions/FluxSearchPageActions'
 import SearchPageStore from '../../stores/SearchPageStore'
 import Results from '../search/Results'
+import DropdownConstants from '../../utils/constants/DropdownConstants'
 
 const CollectionsPageMobile = React.createClass({
   mixins: [ Navigation ],
@@ -46,11 +47,7 @@ const CollectionsPageMobile = React.createClass({
           currentPage={this.props.page}
           topLeft='type'
           topRight='dropdown'
-          dropdownOptions={{
-            relevance: 'Relevance',
-            latest: 'Latest',
-            alphabetical_order: 'Alphabetical order',
-          }}
+          dropdownOptions={DropdownConstants.sortOptions}
           sorting={this.props.data.sorting.collections}
           emptyResults={<div className='no-results'>We couldn’t find any results for your search.</div>}
           onChangePage={this.props.onChangePage}

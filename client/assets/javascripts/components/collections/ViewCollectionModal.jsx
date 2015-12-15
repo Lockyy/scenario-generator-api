@@ -1,6 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
+import RenderDesktop from '../RenderDesktop';
+import RenderMobile from '../RenderMobile';
+import TextHelper from '../../utils/helpers/TextHelper';
 import Modal from 'react-modal';
 import CollectionStore from '../../stores/CollectionStore';
 import ModalStore from '../../stores/ModalStore';
@@ -101,6 +104,10 @@ const ViewCollectionModal = React.createClass ({
     }
   },
 
+  userProfileUrl: function() {
+    return `/app/users/${this.state.collection.user.id}`
+  },
+
   // State changing
   /////////////////
 
@@ -114,39 +121,44 @@ const ViewCollectionModal = React.createClass ({
     }
   },
 
+  truncatedName: function() {
+    return TextHelper.truncate(this.state.collection.name, 23)
+  },
+
   // Rendering
   ////////////
 
   renderButtons: function() {
     let backButton = <button className='btn btn-grey btn-round' onClick={this.close}>Back</button>;
-    let addButton = "";
-    let mobile = this.state.config.mobile;
+    let addButton;
     let addProduct = this.state.config.addProductToCollection;
     let collection = this.state.collection
 
     if (!this.productInCollection(collection) && addProduct) {
       addButton = (
         <button
-          className='btn btn-red btn-round'
+          className='btn btn-red btn-round mobile'
           onClick={(e) => addProduct(e, collection)}>
           Add
         </button>
       );
     }
-    else if(mobile) {
-      addButton = <button className='btn btn-red-inverted mobile' onClick={(e) => addProduct(e, collection)}>Add</button>;
-    }
 
     return (
       <div className='buttons'>
-        {mobile ? null : backButton }
+        <RenderDesktop
+          component='button'
+          className='btn btn-grey btn-round'
+          onClick={this.close}>
+          Back
+        </RenderDesktop>
         {addButton}
       </div>
     )
   },
 
-  renderSharees: function() {
-    if(!this.state.config.mobile && this.state.collection.users) {
+  renderShareesDesktop: function() {
+    if(this.state.collection.users) {
       let totalUsers = this.state.collection.users.length;
       return (
         <div className='collection-sharees' onClick={this.onCollaboratorClick}>
@@ -158,19 +170,71 @@ const ViewCollectionModal = React.createClass ({
         </div>
       );
     }
-    else {
-      if(this.state.collection.users) {
-        return (
-          <span className="num-collaborators" onClick={this.onCollaboratorClick}>
-            {this.state.collection.users.length} collaborator(s)
-          </span>
-        );
-      }
+  },
+
+  renderShareesMobile: function() {
+    if(this.state.collection.users) {
+      return (
+        <span className="num-collaborators" onClick={this.onCollaboratorClick}>
+          {this.state.collection.users.length} collaborator(s)
+        </span>
+      );
     }
   },
 
+  renderHeaderMobile: function() {
+    return (
+      <div className='horizontal-padding'>
+        <div className={'header' + (this.state.config.mobile ? ' mobile' : '')}>
+          <span className={'title with-collection-icon'}>{this.state.collection.name}</span>
+          <a onClick={this.close} className='close'></a>
+        </div>
+
+        <div className='collection-details'>
+          <div className='author-and-date'>
+            Created by (
+              <a className='author'
+                href={this.userProfileUrl()}>
+                {this.state.collection.user.name}
+              </a>
+            ), {this.state.collection.display_date}
+          </div>
+          { this.renderShareesMobile() }
+        </div>
+      </div>
+    )
+  },
+
+  renderHeaderDesktop: function() {
+    return (
+      <div>
+        <div className='header previewing'>
+          <span className={'title'}>
+            <span className='color-highlight-blue extra-space'>Previewing: </span>
+            {this.truncatedName()}
+          </span>
+          <a onClick={this.close} className='close'></a>
+        </div>
+
+        <div className='collection-details'>
+          <div className='author-and-date'>
+            Created by (
+              <a className='author'
+                href={this.userProfileUrl()}>
+                {this.state.collection.user.name}
+              </a>
+            ), {this.state.collection.display_date}
+          </div>
+          { this.renderShareesDesktop() }
+          <div className='collection-description'>
+            {this.state.collection.description}
+          </div>
+        </div>
+      </div>
+    )
+  },
+
   render: function() {
-    let userProfileUrl = "/app/users/" + this.state.collection.user.id;
     return (
       <Modal
         isOpen={this.state.visible}
@@ -178,26 +242,8 @@ const ViewCollectionModal = React.createClass ({
         style={DefaultModalStyles}>
         <div className='back-button' onClick={this.close}>Back</div>
 
-        <div className='horizontal-padding'>
-          <div className={'header collection' + (this.state.config.mobile ? ' mobile' : '')}>
-            <span className='title with-collection-icon'>
-              {this.state.collection.name}
-            </span>
-            <a onClick={this.close} className='close'></a>
-          </div>
-
-          <div className='collection-details'>
-            <div className='author-and-date'>
-              Created by <a className='author'
-                            href={userProfileUrl}>{this.state.collection.user.name}</a>, {this.state.collection.display_date}
-            </div>
-            { this.renderSharees() }
-            { this.state.config.mobile ? null :
-              <div className='collection-description'>
-                {this.state.collection.description}
-              </div> }
-          </div>
-        </div>
+        <RenderDesktop>{this.renderHeaderDesktop()}</RenderDesktop>
+        <RenderMobile>{this.renderHeaderMobile()}</RenderMobile>
 
         <div className='grey'>
           <Results
@@ -206,7 +252,7 @@ const ViewCollectionModal = React.createClass ({
 
           {this.renderButtons()}
         </div>
-        <Footer className='visible-xs' />
+        <RenderMobile component={Footer} />
       </Modal>
     )
   }

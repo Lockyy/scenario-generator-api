@@ -52,7 +52,13 @@ const SearchBox = React.createClass ({
   },
 
   onSearchInput: function(event) {
-    this.performSearch(event.target.value);
+    let search_string = event.target.value;
+
+    if(search_string.length <= 0) {
+      this.closeDropdown();
+    } else {
+      this.performSearch(search_string);
+    }
   },
 
   onSubmit: function(event) {

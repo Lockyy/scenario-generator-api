@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
+import RenderMobile from '../RenderMobile';
 import Modal from 'react-modal';
 import CollectionStore from '../../stores/CollectionStore';
 import ModalStore from '../../stores/ModalStore';
@@ -13,41 +14,18 @@ import ProductName from '../reviews/ProductName'
 import Results from '../search/Results'
 import { ShareCollectionMixin } from './ShareCollectionModal'
 import Footer from '../Footer';
-
-// This mixin is included wherever we want this modal.
-// It let's you render, show, and close the modal.
-const CreateCollectionMixin = {
-  renderCreateCollectionModal: function() {
-    return <CreateCollectionModal
-              close={this.closeCreateCollectionModal}/>
-  },
-
-  closeCreateCollectionModal: function() {
-    FluxModalActions.closeModal();
-    FluxCollectionActions.clearCollection();
-  },
-
-  showCreateCollectionModal: function(details) {
-    FluxCollectionActions.fetchedCollection({
-      name: (details.name || ''),
-      products: (details.products || []),
-      description: '',
-      users: [],
-      user: {}
-    });
-    FluxModalActions.setVisibleModal('CreateCollectionModal')
-  },
-};
+import  CreateCollectionMixin  from './CreateCollectionMixin'
+import  ShareCollection  from './ShareCollection'
 
 const CreateCollectionModal = React.createClass ({
   displayName: 'CreateCollectionModal',
-  mixins: [ ShareCollectionMixin ],
+  mixins: [ShareCollectionMixin, CreateCollectionMixin],
 
   contextTypes: {
     router: React.PropTypes.object
   },
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       data: {
         collection: {
@@ -64,22 +42,22 @@ const CreateCollectionModal = React.createClass ({
 
   // Flux Methods
   // Keep track of changes that are made to the store
-  componentDidMount: function() {
+  componentDidMount: function () {
     CollectionStore.listen(this.onChangeCollection);
     ModalStore.listen(this.onChangeModal);
   },
-  onChangeCollection: function(data) {
+  onChangeCollection: function (data) {
     this.setState({data: data.data});
   },
-  onChangeModal: function(data) {
+  onChangeModal: function (data) {
     let visible = data.visibleModal == this.constructor.displayName;
-    this.setState({ visible: visible });
+    this.setState({visible: visible});
   },
 
   // Gather the IDs for the products currently added to the collection.
   // Used when creating the collection.
-  getProductIDs: function() {
-    return _.map(this.state.data.collection.products, function(product) {
+  getProductIDs: function () {
+    return _.map(this.state.data.collection.products, function (product) {
       return product.id
     })
   },
@@ -87,8 +65,8 @@ const CreateCollectionModal = React.createClass ({
   // Remove a product from the collections products.
   // We aren't modifying the CollectionStore version of the collection because
   // these changes are unsaved at this stage.
-  removeProduct: function(product_id) {
-    let products = this.state.data.collection.products.filter(function(product) {
+  removeProduct: function (product_id) {
+    let products = this.state.data.collection.products.filter(function (product) {
       return product.id !== product_id;
     });
 
@@ -101,8 +79,8 @@ const CreateCollectionModal = React.createClass ({
   // Add a product to the collections products.
   // We aren't modifying the CollectionStore version of the collection because
   // these changes are unsaved at this stage.
-  addProduct: function(product, selected) {
-    if(selected) {
+  addProduct: function (product, selected) {
+    if (selected) {
       let newProducts = this.state.data.collection.products
       newProducts.push(product)
       this.setState({product_name: null, collection: {products: newProducts}})
@@ -111,17 +89,21 @@ const CreateCollectionModal = React.createClass ({
     }
   },
 
-  getCollection: function(e) {
+  getCollection: function (e) {
+    let privacy = this.state.privacy || e.currentTarget.dataset.privacy;
     return {
       id: this.state.data.collection.id,
       name: this.state.data.collection.name,
       description: this.state.data.collection.description,
-      privacy: e.currentTarget.dataset.privacy,
-      products: this.getProductIDs()
+      emails: this.state.data.collection.emails,
+      users: this.state.data.collection.users,
+      privacy: privacy,
+      products: this.getProductIDs(),
+      send_email_invites: this.state.data.collection.send_email_invites
     }
   },
 
-  sendNotificationOnSubmission: function(collection) {
+  sendNotificationOnSubmission: function (collection) {
     FluxNotificationsActions.showNotification({
       type: 'saved',
       text: `Your new Collection <b>${collection.name}</b> was successfully created!`,
@@ -132,61 +114,65 @@ const CreateCollectionModal = React.createClass ({
     })
   },
 
-  transitionToShare: function(collection, _this) {
+  transitionToShare: function (collection, _this) {
     _this.showShareCollectionModal(collection)
   },
 
-  submitForm: function(e) {
+  submitForm: function (e) {
     e.preventDefault()
     // Don't submit if the form isn't complete
-    if(!this.formCompleted()) { return }
+    if (!this.formCompleted()) {
+      return
+    }
 
-    let _this = this
-    let collection = this.getCollection(e)
+    let _this = this;
+    let collection = this.getCollection(e);
 
-    FluxCollectionActions.createCollection(collection, function(collection) {
-      _this.props.close()
+    FluxCollectionActions.createCollection(collection, function (collection) {
+      _this.props.close();
       _this.sendNotificationOnSubmission(collection);
-      _this.transitionToShare(collection, _this);
+      if (_this.props.showShareStep) {
+        _this.transitionToShare(collection, _this);
+      }
     })
   },
 
-  onChangeField: function(name, e) {
+  onChangeField: function (name, e) {
     let hash = this.state.data.collection;
-    hash[name] = e.currentTarget.value
-    let newState = this.state.data
-    newState.collection = hash
-    this.setState({ data: newState })
+    hash[name] = e.currentTarget.value;
+    let newState = this.state.data;
+    newState.collection = hash;
+    this.setState({data: newState})
   },
 
   // Runs validation on text fields.
   // Returns false if there are errors.
-  validation: function(skipDescription) {
-    let errorDom = $(this.refs.errors.getDOMNode())
-    let titleDOM = $(this.refs.collection_name.getDOMNode())
-    let descriptionDOM = $(this.refs.collection_description.getDOMNode())
+  validation: function (skipDescription) {
+    let errorDom = $(this.refs.errors.getDOMNode());
+    let titleDOM = $(this.refs.collection_name.getDOMNode());
+    let descriptionDOM = $(this.refs.collection_description.getDOMNode());
     let errors;
-    if(skipDescription) {
+    if (skipDescription) {
       errors = titleDOM.val() == ''
     } else {
       errors = titleDOM.val() == '' || descriptionDOM.val() == ''
     }
-    errorDom.toggleClass('active', errors)
+    errorDom.toggleClass('active', errors);
 
     return !errors
   },
 
-  skipDescriptionValidation: function(e) {
+  skipDescriptionValidation: function (e) {
     return $(e.target).prop("tagName") == 'INPUT' && $(e.relatedTarget).prop("tagName") == 'TEXTAREA'
   },
 
-  renderTextFields: function() {
+  renderTextFields: function () {
     let _this = this;
-    let onFocus = function(e) {
+    let onFocus = function (e) {
       $(React.findDOMNode(_this.refs.fields_container)).addClass('focus')
     }
 
-    let onBlur = function(e) {
+    let onBlur = function (e) {
       $(React.findDOMNode(_this.refs.fields_container)).removeClass('focus')
       _this.validation(_this.skipDescriptionValidation(e))
     }
@@ -202,15 +188,15 @@ const CreateCollectionModal = React.createClass ({
           </div>
         </div>
         <div className='form-group attached-fields' ref='fields_container'>
-          <input  type='text'
-                  className='form-control'
-                  placeholder='Title *'
-                  name='collection[name]'
-                  ref='collection_name'
-                  value={this.state.data.collection.name}
-                  onFocus={onFocus}
-                  onBlur={onBlur}
-                  onChange={(e) => this.onChangeField('name', e)} />
+          <input type='text'
+                 className='form-control'
+                 placeholder='Title *'
+                 name='collection[name]'
+                 ref='collection_name'
+                 value={this.state.data.collection.name}
+                 onFocus={onFocus}
+                 onBlur={onBlur}
+                 onChange={(e) => this.onChangeField('name', e)}/>
           <textarea type='text'
                     className='form-control'
                     placeholder='Describe your collection *'
@@ -220,50 +206,79 @@ const CreateCollectionModal = React.createClass ({
                     value={this.state.data.collection.description}
                     onFocus={onFocus}
                     onBlur={onBlur}
-                    onChange={(e) => this.onChangeField('description', e)} />
+                    onChange={(e) => this.onChangeField('description', e)}/>
         </div>
       </div>
     )
   },
 
-  renderProductTypeahead: function() {
+  renderProductTypeahead: function () {
     return (
-      <ProductName  ref='product_name'
-                    value={this.state.product_name}
-                    helpMessage={'Add Product'}
-                    hideLabel={true}
-                    onSetProduct={this.addProduct}
-                    placeholder={'Add products to your collection'}
-                    noEmptySubmit={true} />
+      <ProductName ref='product_name'
+                   value={this.state.product_name}
+                   helpMessage={'Add Product'}
+                   hideLabel={true}
+                   onSetProduct={this.addProduct}
+                   placeholder={'Add products to your collection'}
+                   noEmptySubmit={true}/>
     )
   },
 
-  renderProducts: function() {
+  updateEmails: function (emails) {
+    this.state.data.collection.emails = emails;
+  },
+
+
+  updateUsers: function (users) {
+    this.state.data.collection.users = users;
+  },
+
+  updateSendInviteEmails: function (invite) {
+    this.state.data.collection.send_email_invites = invite;
+  },
+
+  renderProducts: function () {
     return (
       <Results
         type='collection-product'
         onRemove={this.removeProduct}
-        data={{data: this.state.data.collection.products}} />
+        data={{data: this.state.data.collection.products}}/>
     )
   },
 
-  formCompleted: function() {
+  formCompleted: function () {
     return (this.validation(false))
   },
 
-  renderSubmissionButtons: function() {
+  renderSubmissionButtons: function () {
     return (
       <div className='buttons'>
-        <button className='btn btn-red btn-round'
-                onClick={this.submitForm}
-                data-privacy='hidden'>Create Collection</button>
-        <button className='btn btn-grey btn-round'
-                onClick={this.props.close}>Cancel</button>
+        <div
+          className='btn btn-red btn-round'
+          onClick={this.submitForm}
+          data-privacy='hidden'>
+          Create Collection
+        </div>
+        <div
+          className='btn btn-grey-inverted btn-round'
+          onClick={this.props.close}>
+          Cancel
+        </div>
       </div>
     )
   },
 
-  renderCollectionForm: function() {
+  renderCollectionForm: function () {
+    let self = this;
+    let shareCollection = <ShareCollection onUpdateEmail={this.updateEmails.bind(self)}
+                                           onUpdateUser={this.updateUsers.bind(self)}
+                                           onUpdateSentInviteEmails={this.updateSendInviteEmails.bind(self)}
+                                           onChangeEvent={function(callback,e){
+                          callback(e);
+                          self.setState({privacy: $(e.target).val()})}}/>
+
+    let sharedOptions = this.props.renderSharePrivacy ? shareCollection : '';
+
     return (
       <div className='row'>
         <form className='col-xs-12 form collection'
@@ -271,16 +286,22 @@ const CreateCollectionModal = React.createClass ({
           {this.renderTextFields()}
           {this.renderProductTypeahead()}
 
-          <div className='grey'>
+          <div className='grey collection-products-container'>
             {this.renderProducts()}
+          </div>
+          <div className='grey'>
+            {sharedOptions}
+          </div>
+          <div className='grey submission-buttons-container'>
             {this.renderSubmissionButtons()}
           </div>
+
         </form>
       </div>
     )
   },
 
-  renderheader: function() {
+  renderheader: function () {
     return (
       <div className='header collections'>
         <span className='title'>
@@ -291,7 +312,7 @@ const CreateCollectionModal = React.createClass ({
     )
   },
 
-  render: function() {
+  render: function () {
     return (
       <Modal
         isOpen={this.state.visible}
@@ -300,13 +321,10 @@ const CreateCollectionModal = React.createClass ({
         <div className='back-button' onClick={this.props.close}>Back</div>
         {this.renderheader()}
         {this.renderCollectionForm()}
-        <Footer className='visible-xs' />
+        <RenderMobile component={Footer} />
       </Modal>
     )
   }
 });
 
-module.exports = {
-  CreateCollectionMixin: CreateCollectionMixin,
-  CreateCollectionModal: CreateCollectionModal
-};
+export default CreateCollectionModal;

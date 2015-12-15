@@ -6,6 +6,7 @@ import FluxTagPageActions from '../../actions/FluxTagPageActions'
 import FluxCurrentUserActions from '../../actions/FluxCurrentUserActions'
 import TagStore from '../../stores/TagStore'
 import Results from '../search/Results'
+import DropdownConstants from '../../utils/constants/DropdownConstants';
 
 const TagPage = React.createClass({
   displayName: 'TagPage',
@@ -125,12 +126,7 @@ const TagPage = React.createClass({
           topLeft='count'
 
           topRight='dropdown'
-          dropdownOptions={{
-            latest: 'Latest',
-            high_to_low: 'Rating High to Low',
-            low_to_high: 'Rating Low to High',
-            alphabetical_order: 'Alphabetical order',
-          }}
+          dropdownOptions={DropdownConstants.tagSortOptions}
           sorting={this.sorting()}
 
           onChangePage={this.changePage}

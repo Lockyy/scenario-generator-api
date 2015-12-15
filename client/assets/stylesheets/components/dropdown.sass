@@ -5,20 +5,23 @@
   font-size: 14px
   display: inline-block
   position: relative
+  &.with-images
+    img
+      display: none
+
   &:not(.no-arrow)::before
     content: '.'
     pointer-events: none
     color: transparent
     display: block
-    background-image: url('icons/grey-arrow.svg')
+    background: url('icons/grey-arrow.svg') center no-repeat
     width: 15px
     height: 15px
     transform: rotate(90deg)
-    background-position: center
-    background-repeat: no-repeat
     position: absolute
     top: 8px
     left: 5px
+    z-index: 100
   .dropdown-label
     margin-right: 20px
 
@@ -46,7 +49,7 @@
     .dropdown-link, .active-dropdown-link
       position: relative
       background: white
-      padding: 5px 25px 5px 15px
+      padding: 5px 25px 5px 25px
       cursor: pointer
     &.active
       border-bottom: 1px solid white
@@ -57,3 +60,55 @@
       width: 100px
       .dropdown
         width: 100px
+
+
+@media (max-width: 480px)
+  .dropdown-container
+    &.with-images
+      img
+        display: inline-block
+      &.closed
+        width: 100px
+        overflow: hidden
+        .dropdown-links
+          .active-dropdown-link-with-image
+            .dropdown-text
+              display: none
+
+      &::before
+        content: ''
+        width: 0
+        height: 0
+      &::after
+        content: "."
+        pointer-events: none
+        color: transparent
+        display: block
+        width: 15px
+        height: 15px
+        position: absolute
+        top: 22px
+        right: 10px
+        background: url("icons/icon-down-arrow.png") center no-repeat
+        z-index: 99
+
+      .dropdown-links
+        .active-dropdown-link-with-image
+          padding-left: 15px
+          img
+            width: 45px
+
+          &.closed
+            width: 100px
+
+        .dropdown-link-with-image
+          padding-left: 15px
+
+          img
+            width: 35px
+            height: 35px
+
+        .active-dropdown-link-with-image,.dropdown-link-with-image
+          .dropdown-text
+            color: grey
+            padding-right: 0

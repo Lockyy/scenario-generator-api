@@ -202,7 +202,7 @@
       border-bottom-right-radius: 0
 
     textarea.form-control
-      border-top-left-radius: 0!important
+      border-top-left-radius: 0 !important
       border-top-right-radius: 0 !important
       border-top: 0px none transparent !important
       outline: 0px none transparent
@@ -234,3 +234,116 @@
     input:focus, textarea:focus
       box-shadow: none !important
       border: 1px solid $red
+
+#create-collection-mobile-modal
+  display: none
+
+@media (max-width: 480px)
+
+  .mobile-title
+    background: none
+    width: 0
+    height: 0
+    margin-right: 0
+    padding: 20px 0
+    text-transform: uppercase
+    font-size: 14px
+
+  .app
+    .ReactModal__Overlay
+
+      .ReactModal__Content
+        .header.collections
+          border-bottom-color: $grey
+
+          .title
+            line-height: 0
+            padding-top: 33px
+            height: 55px
+            text-transform: uppercase
+            font-size: 14px
+            font-style: initial
+
+          .title::before
+            @extend .mobile-title
+
+        .required
+          margin-bottom: 10px
+
+        .collection-products-container
+          background-color: transparent
+
+          .results
+            overflow: visible
+            max-height: none
+
+            .collection-product
+              .result.collection-product
+                border-top: solid 1px $grey
+
+                &:nth-child(1)
+                  border: none
+
+                .remove
+                  position: static
+                  text-decoration: underline
+                  margin-top: 10px
+
+        .share-collection-container
+          .header.share
+            border-bottom-color: $grey
+            text-transform: uppercase
+
+            .title::before
+              @extend .mobile-title
+
+          .privacy-radios
+            span
+              font-size: 15px
+
+              &::before
+                width: 20px
+                height: 20px
+                min-width: 20px
+                max-height: 20px
+
+
+          .grey-description
+            font-size: 15px
+
+          .scrollable
+            max-height: none
+            overflow-y: visible
+            overflow-x: visible
+
+            .results.sharee
+              overflow: visible
+              max-height: none
+
+              .sharee-emails
+                .remove-button
+                  position: relative
+                  top: 4px
+                  background-image: url("icons/icon-modal-close.svg")
+                  background-repeat: no-repeat
+                  background-position: center
+                  opacity: 1
+                  width: 25px
+                  height: 25px
+
+        .submission-buttons-container
+          background-color: white !important
+
+        .submission-buttons
+          display: none !important
+
+        .buttons
+          display: block
+          border: none !important
+
+          button
+            width: 100%
+            margin: 0
+            font-size: 15px
+            line-height: 28px
+            margin-bottom: 30px

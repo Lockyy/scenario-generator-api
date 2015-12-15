@@ -1,11 +1,11 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
+import RenderMobile from '../RenderMobile';
 import Modal from 'react-modal';
 import CollectionStore from '../../stores/CollectionStore';
 import ModalStore from '../../stores/ModalStore';
 import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
-import Dropdown from '../Dropdown';
 import FluxAlertActions from '../../actions/FluxAlertActions';
 import FluxModalActions from '../../actions/FluxModalActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
@@ -295,7 +295,7 @@ const EditCollectionModal = React.createClass ({
         <div className='back-button' onClick={this.close}>Back</div>
         {this.renderheader()}
         {this.renderCollectionForm()}
-        <Footer className='visible-xs' />
+        <RenderMobile component={Footer} />
       </Modal>
     )
   }

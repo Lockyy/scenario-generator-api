@@ -331,24 +331,34 @@ const CollectionPage = React.createClass({
     let _this = this;
 
     return (
-      <div className='grey-bottom-border vertical-padding'>
-        {_.map(allCollaborators, function(collaborator) {
-          return <Avatar user={collaborator} size={_this.avatarSize} />
-          })}
+      <div>
+        <div className='top-margin small-text'>
+          Collaborators in this collection
+        </div>
+        <div className='vertical-padding'>
+          {_.map(allCollaborators, function(collaborator) {
+            return <Avatar user={collaborator} size={_this.avatarSize} />
+            })}
+        </div>
       </div>
     )
   },
 
+  isPrivacyChecked: function(type){
+    return this.state.data.collection.privacy == type ? 'checked' : ''
+  },
+
   renderViewers: function() {
     let _this = this
+    let checkedHidden = this.isPrivacyChecked('hidden');
+    let checkedPublic = this.isPrivacyChecked('visible');
     return (
-      <div className='grey-bottom-border vertical-padding'>
+      <form className='grey-bottom-border vertical-padding'>
         <div className='bottom-margin'>
           Can view
         </div>
         <label>
-          <input type='radio' name='privacy' value='hidden' onClick={this.setPrivacy}
-                 checked={this.state.data.collection.privacy == 'hidden'} />
+          <input checked={checkedHidden} type='radio' name='privacy' value='hidden' onClick={this.setPrivacy}/>
           Specific People
           <div className='small-text left-margin-2-5'>
             This collection will be viewable only to the people you specify.
@@ -362,14 +372,14 @@ const CollectionPage = React.createClass({
         </div>
 
         <label>
-          <input type='radio' name='privacy' value='visible' onClick={this.setPrivacy}
-                checked={this.state.data.collection.privacy == 'visible'} />
+          <input checked={checkedPublic} type='radio' name='privacy' value='visible' onClick={this.setPrivacy}
+             />
           Public
           <div className='small-text left-margin-2-5'>
             Open it to the public. Every user in Fletcher will be able to view your collection.
           </div>
         </label>
-      </div>
+      </form>
     )
   },
 

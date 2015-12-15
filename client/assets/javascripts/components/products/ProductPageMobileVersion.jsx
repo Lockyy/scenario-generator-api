@@ -17,7 +17,7 @@ import RelatedProducts from './RelatedProducts'
 import CollectionsCollection from '../collections/CollectionsCollection';
 import CollectionStore from '../../stores/CollectionStore'
 import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
-import { CreateCollectionMixin } from '../collections/CreateCollectionModal';
+import CreateCollectionMixin from '../collections/CreateCollectionMixin';
 
 const ProductPageMobileVersion = React.createClass({
   displayName: 'ProductPageMobileVersion',

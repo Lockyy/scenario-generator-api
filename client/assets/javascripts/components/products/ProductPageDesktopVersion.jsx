@@ -15,7 +15,7 @@ import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
 import CollectionsCollection from '../collections/CollectionsCollection';
 import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
-import { CreateCollectionMixin } from '../collections/CreateCollectionModal';
+import CreateCollectionMixin from '../collections/CreateCollectionMixin';
 
 const ProductPageDesktopVersion = React.createClass({
   displayName: 'ProductPageDesktopVersion',
@@ -182,7 +182,7 @@ const ProductPageDesktopVersion = React.createClass({
             <div className='btn btn-round btn-grey-inverted' onClick={() => this.showCreateCollectionModal({products: [this.props.data]})}>
               Create Collection
             </div>
-            <div className='btn btn-round btn-grey-inverted' onClick={() => this.showAddToCollectionModal('', {mobile: true})}>
+            <div className='btn btn-round btn-grey-inverted' onClick={() => this.showAddToCollectionModal('', {mobile: false})}>
               Add to existing collection
             </div>
             <CollectionsCollection
