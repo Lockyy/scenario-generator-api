@@ -36,8 +36,8 @@ const ProductTaggedBox = React.createClass ({
 
           <div className='details'>
             <div className="header">
-              <h3 className='title'><Link to={`/app/products/${this.props.slug}`}>{this.props.name}</Link></h3>
-              <h4 className='company'><Link to={`/app/companies/${company.slug}`} >{company.name}</Link></h4>
+              <h3 className='title'><Link to={`/app/products/${this.props.id}/${this.props.slug}`}>{this.props.name}</Link></h3>
+              <h4 className='company'><Link to={`/app/companies/${company.id}/${company.slug}`} >{company.name}</Link></h4>
             </div>
 
             <div className='review'>
