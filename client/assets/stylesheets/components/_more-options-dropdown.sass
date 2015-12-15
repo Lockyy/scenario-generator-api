@@ -22,6 +22,34 @@
       position: absolute
       right: 10%
       top: 7px
+      display: flex
+      justify-content: center
+      transition-delay: 1s
+      outline: none !important
+      &::after
+        transition-delay: 1s
+        width: 0px
+        height: 0px
+        content: ''
+        display: block
+        border-bottom: 0px solid $grey
+        border-left: 0px solid transparent
+        border-right: 0px solid transparent
+        position: relative
+        top: 28px
+      &.open
+        transition-delay: 0s
+        &::after
+          transition-delay: 0s
+          width: 0px
+          height: 0px
+          content: ''
+          display: block
+          border-bottom: 10px solid $grey
+          border-left: 14px solid transparent
+          border-right: 14px solid transparent
+          position: relative
+          top: 23px
 
     .more-options-dropdown
       transition: all 1s
@@ -31,7 +59,7 @@
       width: 100%
       background: $grey
       left: 0
-      top: 75px
+      top: 50px
       max-height: 300px
       &.closed
         max-height: 0px
