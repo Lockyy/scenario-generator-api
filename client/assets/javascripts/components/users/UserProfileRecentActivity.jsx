@@ -36,7 +36,10 @@ const UserProfileRecentActivity  = React.createClass({
           Collections are created by users to group products they are interested.
         </div>
         <CollectionsCollection
-          collections={this.props.collections} />
+          className='hidden-xs' />
+        <CollectionsCollection
+          mobile="true"
+          className='horizontal-padding-2 visible-xs' />
       </div>
     );
   },

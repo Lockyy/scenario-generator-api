@@ -13,7 +13,10 @@ class ModalStore {
   }
 
   handleSetVisibleModal(data) {
-    this.previousModal = this.visibleModal;
+    // Store existing modal data
+    this.previousModals.push(this.visibleModal);
+    this.previousConfigs.push(this.config);
+
     this.visibleModal = data.modal;
     if(data.config) {
       this.config = data.config
@@ -22,20 +25,22 @@ class ModalStore {
   }
 
   handleCloseModal(previousOptions) {
-    this.visibleModal = this.previousModal;
-    if(this.previousModal) {
-      FluxModalActions.preventScroll()
-    }
+    // Restore previous modal data
+    let previousModal = this.previousModals.pop();
+    this.visibleModal = previousModal;
+    this.config = this.previousConfigs.pop();
+    if(previousModal) { FluxModalActions.preventScroll() }
+
     this.previousModal = null;
     document.body.scrollTop = this.previousHeight;
     this.previousHeight = null;
-    this.config = previousOptions || {}
   }
 
   resetData() {
     this.visibleModal = null;
-    this.previousModal = null;
+    this.previousModals = [];
     this.previousHeight = null;
+    this.previousConfigs = [{}]
     this.config = {}
     this.error = null;
   }

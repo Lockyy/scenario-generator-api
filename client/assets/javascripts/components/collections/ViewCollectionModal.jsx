@@ -10,6 +10,7 @@ import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
 import FluxModalActions from '../../actions/FluxModalActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import { EditCollectionMixin } from './EditCollectionModal';
+import { UserListMixin } from '../modals/UserListModal'
 import Avatar from '../Avatar';
 import Results from '../search/Results';
 import Footer from '../Footer';
@@ -21,8 +22,8 @@ const ViewCollectionMixin = {
     return <ViewCollectionModal close={this.closeViewCollectionModal}/>
   },
 
-  closeViewCollectionModal: function(previousConfig) {
-    FluxModalActions.closeModal(previousConfig);
+  closeViewCollectionModal: function() {
+    FluxModalActions.closeModal();
     FluxCollectionActions.clearCollection();
   },
 
@@ -40,7 +41,10 @@ const ViewCollectionMixin = {
 
 const ViewCollectionModal = React.createClass ({
   displayName: 'ViewCollectionModal',
-  mixins: [ EditCollectionMixin ],
+  mixins: [
+    EditCollectionMixin,
+    UserListMixin,
+  ],
 
   contextTypes: {
     currentUser: React.PropTypes.object.isRequired,
@@ -55,14 +59,16 @@ const ViewCollectionModal = React.createClass ({
         products: [],
         user: {
           id: ''
-        }
+        },
+        users: []
       },
       config: {}
     }
   },
 
   // Flux Methods
-  // Keep track of changes that are made to the store
+  ///////////////
+
   componentDidMount: function() {
     CollectionStore.listen(this.onChangeCollection);
     ModalStore.listen(this.onChangeModal);
@@ -79,6 +85,9 @@ const ViewCollectionModal = React.createClass ({
     this.setState({ visible: visible, config: data.config });
   },
 
+  // Data handling
+  ////////////////
+
   productInCollection: function(collection) {
     if (collection.products.length == 0) {
       return false;
@@ -92,43 +101,71 @@ const ViewCollectionModal = React.createClass ({
     }
   },
 
+  // State changing
+  /////////////////
+
   close: function() {
-    this.props.close(this.state.config.previousConfig)
+    this.props.close()
   },
+
+  onCollaboratorClick: function() {
+    if(this.state.collection.users.length > 0) {
+      this.showUserListModal(this.state.collection.users)
+    }
+  },
+
+  // Rendering
+  ////////////
 
   renderButtons: function() {
     let backButton = <button className='btn btn-grey btn-round' onClick={this.close}>Back</button>;
     let addButton = "";
+    let mobile = this.state.config.mobile;
+    let addProduct = this.state.config.addProductToCollection;
     let collection = this.state.collection
-    if (!this.productInCollection(collection) && this.state.config.addProductToCollection) {
+
+    if (!this.productInCollection(collection) && addProduct) {
       addButton = (
         <button
           className='btn btn-red btn-round'
-          onClick={(e) => this.state.config.addProductToCollection(e, collection)}>
+          onClick={(e) => addProduct(e, collection)}>
           Add
         </button>
       );
     }
+    else if(mobile) {
+      addButton = <button className='btn btn-red-inverted mobile' onClick={(e) => addProduct(e, collection)}>Add</button>;
+    }
+
     return (
       <div className='buttons'>
-        {backButton}
+        {mobile ? null : backButton }
         {addButton}
       </div>
     )
   },
 
   renderSharees: function() {
-    if(this.state.collection.users) {
-      let totalUsers = this.state.collection.users.length
+    if(!this.state.config.mobile && this.state.collection.users) {
+      let totalUsers = this.state.collection.users.length;
       return (
-        <div className='collection-sharees'>
+        <div className='collection-sharees' onClick={this.onCollaboratorClick}>
           <Avatar url={this.state.collection.user.avatar_url} />
           {_.map(this.state.collection.users.slice(0,6), function(sharee) {
             return <Avatar url={sharee.avatar_url} />
           })}
           { totalUsers > 7 ? <Avatar number={totalUsers - 7} />: '' }
         </div>
-      )
+      );
+    }
+    else {
+      if(this.state.collection.users) {
+        return (
+          <span className="num-collaborators" onClick={this.onCollaboratorClick}>
+            {this.state.collection.users.length} collaborator(s)
+          </span>
+        );
+      }
     }
   },
 
@@ -141,21 +178,24 @@ const ViewCollectionModal = React.createClass ({
         style={DefaultModalStyles}>
         <div className='back-button' onClick={this.close}>Back</div>
 
-        <div className='header collection'>
-          <span className='title'>
-            {this.state.collection.name}
-          </span>
-          <a onClick={this.close} className='close'></a>
-        </div>
-
-        <div className='collection-details'>
-          <div className='author-and-date'>
-            Created by <a className='author'
-                          href={userProfileUrl}>{this.state.collection.user.name}</a>, {this.state.collection.display_date}
+        <div className='horizontal-padding'>
+          <div className={'header collection' + (this.state.config.mobile ? ' mobile' : '')}>
+            <span className='title with-collection-icon'>
+              {this.state.collection.name}
+            </span>
+            <a onClick={this.close} className='close'></a>
           </div>
-          { this.renderSharees() }
-          <div className='collection-description'>
-            {this.state.collection.description}
+
+          <div className='collection-details'>
+            <div className='author-and-date'>
+              Created by <a className='author'
+                            href={userProfileUrl}>{this.state.collection.user.name}</a>, {this.state.collection.display_date}
+            </div>
+            { this.renderSharees() }
+            { this.state.config.mobile ? null :
+              <div className='collection-description'>
+                {this.state.collection.description}
+              </div> }
           </div>
         </div>
 

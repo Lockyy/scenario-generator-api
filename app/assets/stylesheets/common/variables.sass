@@ -2,6 +2,8 @@ $primary-grey: #EEEEEE
 
 $primary-red: #B2141A
 
+$jll-gold: #daca83
+
 $shadow-grey: #F2F2F2
 $light-grey-shadow: #808080
 $light-grey: #f6f6f6
@@ -45,6 +47,9 @@ $default_rounded_amount: 5px
 @mixin vertical-padding($times: 1)
   padding-top: 10px * $times
   padding-bottom: 10px * $times
+@mixin horizontal-padding($times: 1)
+  padding-left: 15px * $times
+  padding-right: 15px * $times
 
 @mixin background-grey
   background: $grey
@@ -55,6 +60,8 @@ $default_rounded_amount: 5px
   border-top: 1px solid $grey
 @mixin grey-bottom-border
   border-bottom: 1px solid $grey
+@mixin light-grey-bottom-border
+  border-bottom: 1px solid $light-grey
 @mixin dark-grey-bottom-border
   border-bottom: 1px solid $dark-grey
 @mixin red-bottom-border

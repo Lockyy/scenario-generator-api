@@ -38,7 +38,7 @@ const CollectionBox = React.createClass ({
   },
 
   previewCollection: function(collection) {
-    this.showViewCollectionModal(collection, false)
+    this.showViewCollectionModal(collection, {})
   },
 
   render: function() {

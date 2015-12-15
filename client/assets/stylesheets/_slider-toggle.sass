@@ -1,0 +1,21 @@
+@import 'functions'
+@import 'variables'
+
+.slider-toggle
+  display: flex
+  .toggle-svg
+    width: 63px
+    height: 31px
+    transition: 1s
+    background-size: cover
+    background-repeat: no-repeat
+    background-position: center
+    margin-right: 5px
+    &.false
+      background-image: url('icons/slider-toggle-off.svg')
+    &.true
+      background-image: url('icons/slider-toggle-on.svg')
+  .description
+    width: 78%
+    .title
+      font-weight: bold

@@ -6,8 +6,11 @@ import CollectionStore from '../../stores/CollectionStore';
 import ModalStore from '../../stores/ModalStore';
 import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
 import FluxModalActions from '../../actions/FluxModalActions';
+import FluxAlertActions from '../../actions/FluxAlertActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
+import ManageCollaboratorCollectionModalDesktop from './ManageCollaboratorCollectionModalDesktop';
+import ManageCollaboratorCollectionModalMobile from './ManageCollaboratorCollectionModalMobile';
 import UserTypeahead from '../UserTypeahead'
 import Results from '../search/Results'
 import Avatar from '../Avatar'
@@ -15,30 +18,30 @@ import Footer from '../Footer';
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
-const CollaboratorCollectionMixin = {
-  renderCollaboratorCollectionModal: function() {
+const ManageCollaboratorCollectionMixin = {
+  renderManageCollaboratorCollectionModal: function() {
     return (
-      <CollaboratorCollectionModal
-        ref='collectionShareModal'
+      <ManageCollaboratorCollectionModal
+        ref='manageCollaboratorCollectionModal'
         close={this.closeShareCollectionModal} />
     )
   },
 
-  closeCollaboratorCollectionModal: function() {
+  closeManageCollaboratorCollectionModal: function() {
     FluxModalActions.closeModal();
     if(this.props.router.state.components[0].displayName != 'CollectionPage') {
       FluxCollectionActions.clearCollection();
     }
   },
 
-  showCollaboratorCollectionModal: function(collection) {
-    FluxModalActions.setVisibleModal('CollaboratorCollectionModal');
+  showManageCollaboratorCollectionModal: function(collection) {
+    FluxModalActions.setVisibleModal('ManageCollaboratorCollectionModal');
     FluxCollectionActions.fetchedCollection(collection);
   }
 };
 
-const CollaboratorCollectionModal = React.createClass ({
-  displayName: 'CollaboratorCollectionModal',
+const ManageCollaboratorCollectionModal = React.createClass ({
+  displayName: 'ManageCollaboratorCollectionModal',
 
   contextTypes: {
     router: React.PropTypes.object
@@ -60,7 +63,8 @@ const CollaboratorCollectionModal = React.createClass ({
   },
 
   // Flux Methods
-  // Keep track of changes that are made to the store
+  ///////////////
+
   componentDidMount: function() {
     CollectionStore.listen(this.onChangeCollection);
     ModalStore.listen(this.onChangeModal);
@@ -78,7 +82,9 @@ const CollaboratorCollectionModal = React.createClass ({
     this.setState({ visible: visible });
   },
 
-  // Gather users currently associated with the collection
+  // Data handling
+  ////////////////
+
   gatherUsers: function() {
     return _.map(this.state.unsaved_collection.users, function(user) {
       return {
@@ -88,7 +94,6 @@ const CollaboratorCollectionModal = React.createClass ({
     })
   },
 
-  // Gather the emails currently having this collection shared with them
   gatherEmails: function() {
     return _.map(this.state.unsaved_collection.emails, function(email) {
       return {
@@ -98,11 +103,31 @@ const CollaboratorCollectionModal = React.createClass ({
     })
   },
 
+  // State changing
+  /////////////////
+
   updateUsers: function(users) {
     let collection = this.state.unsaved_collection
     collection.users = users
     this.setState({ unsaved_collection: collection })
-    this.filterCollaborators($(this.refs.filterInput.getDOMNode()).val())
+    if(this.refs.filterInput) {
+      this.filterCollaborators($(this.refs.filterInput.getDOMNode()).val())
+    }
+  },
+
+  updateEmails: function(emails) {
+    let collection = this.state.unsaved_collection
+    collection.emails = emails
+    this.setState({ user_name: null, unsaved_collection: collection })
+  },
+
+  updateEmail: function(email, rank) {
+    let emails = this.state.unsaved_collection.emails;
+    let index = _.findIndex(emails, function(email_obj) { return email_obj.email == email })
+    if(index > -1) {
+      emails[index] = _.merge(emails[index], {rank: rank})
+      this.updateEmails(emails)
+    }
   },
 
   updateUser: function(id, rank) {
@@ -120,6 +145,13 @@ const CollaboratorCollectionModal = React.createClass ({
     });
 
     this.updateUsers(updatedUsers);
+  },
+
+  removeEmail: function(email) {
+    let updatedEmails = this.state.unsaved_collection.emails.filter(function(email_obj) {
+      return email_obj.email !== email;
+    });
+    this.updateEmails(updatedEmails);
   },
 
   filterCollaborators: function(val) {
@@ -170,91 +202,33 @@ const CollaboratorCollectionModal = React.createClass ({
     })
   },
 
-  renderUserTypeahead: function() {
-    return (
-      <div className='twitter-typeahead filtering'>
-        <input
-          className='form-control tt-input'
-          ref='filterInput'
-          placeholder='Search Collaborators'
-          onChange={(e) => this.filterCollaborators($(e.target).val())} />
-      </div>
-    )
-  },
+  setPrivacy: function(val) {
+    let message, button, title;
+    let _this = this;
 
-  renderOwner: function() {
-    let user = this.state.collection.user
-
-    return (
-      <div className='results sharee'>
-        <div className='sharee-users'>
-          <div className='result user sharee'>
-            <div className='info'>
-              <Avatar url={user.avatar_url} styles={{backgroundColor: 'white'}}/>
-              <span>
-                <div className='name color-red'>
-                  { user.name }
-                </div>
-              </span>
-            </div>
-            <div className='color-red owner-rank-title'>Owner</div>
-          </div>
-        </div>
-      </div>
-    )
-  },
-
-  renderUsers: function() {
-    if(this.state.unsaved_collection.users && this.state.unsaved_collection.users.length > 0) {
-      return (
-        <Results
-          type='sharee-users'
-          className='sharee'
-          onRemove={this.removeUser}
-          onUpdate={this.updateUser}
-          data={{data: this.state.displayedUsers}} />
-      )
+    if(val == 'hidden') {
+      title = 'Make this collection private?'
+      message = 'Are you sure you want to make this collection private? Only Fletcher users you share it with will be able to see it.'
+      button = 'Make Private'
+    } else {
+      title = 'Make this collection public?'
+      message = 'Are you sure you want to make this collection public? All Fletcher users will be able to view it.'
+      button = 'Make Public'
     }
-  },
 
-  renderSubmissionButtons: function() {
-    return (
-      <div className='buttons'>
-        <button className='btn btn-red btn-round'
-                onClick={this.submitForm}>Save</button>
-        <button className='btn btn-grey btn-round'
-                onClick={this.close}>Cancel</button>
-      </div>
-    )
-  },
-
-  renderShareForm: function() {
-    return (
-      <div className='row'>
-        <form className='col-xs-12 form collection'
-              ref='collection_form'>
-          {this.renderUserTypeahead()}
-          <div className='grey'>
-            <div className='scrollable'>
-              {this.renderOwner()}
-              {this.renderUsers()}
-            </div>
-            {this.renderSubmissionButtons()}
-          </div>
-        </form>
-      </div>
-    )
-  },
-
-  renderheader: function() {
-    return (
-      <div className='header share'>
-        <span className='title'>
-          Manage collaborators access
-        </span>
-        <a onClick={this.close} className='close'></a>
-      </div>
-    )
+    FluxAlertActions.showAlert({
+      title: title,
+      blue: true,
+      success: button,
+      cancel: 'Cancel',
+      message: message,
+      showClose: true,
+      headerIconClass: 'collections',
+      successCallback: function() {
+        let updatedCollection = _.merge(_this.state.unsaved_collection, {privacy: val})
+        _this.setState({unsaved_collection: updatedCollection})
+      }
+    })
   },
 
   close: function(e) {
@@ -263,22 +237,46 @@ const CollaboratorCollectionModal = React.createClass ({
     this.props.close()
   },
 
+  // Rendering
+  ////////////
+
   render: function() {
     return (
       <Modal
         isOpen={this.state.visible}
         onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.close}>Back</div>
-        {this.renderheader()}
-        {this.renderShareForm()}
-        <Footer className='visible-xs' />
+
+        <ManageCollaboratorCollectionModalDesktop
+          displayedUsers={this.state.displayedUsers}
+          collection={this.state.collection}
+          unsaved_collection={this.state.unsaved_collection}
+          close={this.close}
+          updateUser={this.updateUser}
+          removeUser={this.removeUser}
+          updateEmail={this.updateEmail}
+          removeEmail={this.removeEmail}
+          submitForm={this.submitForm}
+          filterCollaborators={this.filterCollaborators} />
+
+        <ManageCollaboratorCollectionModalMobile
+          displayedUsers={this.state.displayedUsers}
+          collection={this.state.collection}
+          unsaved_collection={this.state.unsaved_collection}
+          close={this.close}
+          updateUser={this.updateUser}
+          removeUser={this.removeUser}
+          updateEmail={this.updateEmail}
+          removeEmail={this.removeEmail}
+          submitForm={this.submitForm}
+          setPrivacy={this.setPrivacy} />
+
       </Modal>
     )
   }
 });
 
 module.exports = {
-  CollaboratorCollectionMixin: CollaboratorCollectionMixin,
-  CollaboratorCollectionModal: CollaboratorCollectionModal
+  ManageCollaboratorCollectionMixin: ManageCollaboratorCollectionMixin,
+  ManageCollaboratorCollectionModal: ManageCollaboratorCollectionModal
 };
