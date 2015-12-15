@@ -200,7 +200,7 @@ const CollectionPage = React.createClass({
     return (
       <div className='row collection-product-row'>
         <div className='col-xs-8'>
-          <Link to={`/app/products/${product.id}`}>{product.name}</Link>
+          <Link to={`/app/products/${product.id}/${product.slug}`}>{product.name}</Link>
           <Rating value={product.rating} name='rating'/>
         </div>
         <div className='col-xs-3'>
