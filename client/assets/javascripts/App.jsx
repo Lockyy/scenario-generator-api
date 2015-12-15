@@ -25,89 +25,93 @@ import UserAPI from './utils/api/UserAPI'
 let GAInitiailizer = ga.Initializer;
 
 $(function onLoad() {
-    function render() {
-        $(document).ajaxStart(function() {
-          $('#loading-bar').addClass('filling-90');
-        }).ajaxSuccess(function() {
-          $('#loading-bar').removeClass('filling-90');
-          $('#loading-bar').addClass('filled');
-          setTimeout(function() {
-            $('#loading-bar').removeClass('filled');
-          }, 300)
-        });
+  function render() {
+    $(document).ajaxStart(function() {
+      $('#loading-bar').addClass('filling-90');
+    }).ajaxSuccess(function() {
+      $('#loading-bar').removeClass('filling-90');
+      $('#loading-bar').addClass('filled');
+      setTimeout(function() {
+      $('#loading-bar').removeClass('filled');
+      }, 300)
+    });
 
-        UserAPI.getCurrentUser(function(currentUser) {
+    UserAPI.getCurrentUser(function(currentUser) {
 
-            FluxCurrentUserActions.updateData(currentUser);
+      FluxCurrentUserActions.updateData(currentUser);
 
-            ga('create', 'UA-52961131-2', 'auto');
-            let onRouterTransition = function() {
-                ga('send', 'pageview')
-            }
-            onRouterTransition()
+      ga('create', 'UA-52961131-2', 'auto');
+      let onRouterTransition = function() {
+        ga('send', 'pageview')
+      }
+      onRouterTransition()
 
-            React.withContext({'currentUser': currentUser}, function() {
-                let router = React.render((
-                    <Router history={history} onUpdate={onRouterTransition}>
-                        <Route path="app" component={Dashboard}>
-                        </Route>
-                        <Route path="app/reviews/new" component={NewReviewPage}>
-                        </Route>
-                        <Route path="app/products/:id" component={ProductPage}>
-                        </Route>
-                        <Route path="app/products/:productId/reviews/new" component={NewReviewPage}>
-                        </Route>
-                        <Route path="app/products/:productId/reviews/:reviewId" component={NewReviewPage}>
-                        </Route>
-                        <Route name="company" path="app/companies/:companyId" component={CompanyProfilePage}>
-                        </Route>
-                        <Route name="user" path="app/users/:userId" component={UserProfilePage}>
-                        </Route>
-                        <Route name="search" path="app/search/:section/:search_string/:page" component={SearchPage}>
-                        </Route>
-                        <Route name="search" path="app/search/:section" component={SearchPage}>
-                        </Route>
-                        <Route name="search" path="app/search" component={SearchPage}>
-                        </Route>
-                        <Route path="app/tag/:tag/products/:page" component={TagPage}>
-                        </Route>
-                        <Route path="app/tags" component={TagsPage}>
-                        </Route>
-                        <Route path="app/tags/:letter" component={TagsPage}>
-                        </Route>
-                        <Route path="app/directory/collections" component={CollectionsPage}>
-                        </Route>
-                        <Route name='CollectionPage' path="app/collections/:id" component={CollectionPage}>
-                        </Route>
-                    </Router>
-                ), document.getElementById('content'));
+      React.withContext({'currentUser': currentUser}, function() {
+        let router = React.render((
+          <Router history={history} onUpdate={onRouterTransition}>
+            // Dashboard
+            <Route path="app" component={Dashboard} />
 
-                React.render((
-                    <SearchBox router={router} />
-                ), $('.search-container')[0]);
+            // Products
+            <Route path="app/products/:id" component={ProductPage} />
+            <Route path="app/products/:id/:slug" component={ProductPage} />
 
-                React.render((
-                    <Sidebar router={router} />
-                ), $('#hamburger-menu')[0]);
+            // Reviews
+            <Route path="app/reviews/new" component={NewReviewPage} />
+            <Route path="app/products/:productId/reviews/new" component={NewReviewPage} />
+            <Route path="app/products/:productId/:slug/reviews/new" component={NewReviewPage} />
+            <Route path="app/products/:productId/reviews/:reviewId" component={NewReviewPage} />
+            <Route path="app/products/:productId/:slug/reviews/:reviewId" component={NewReviewPage} />
 
-                React.render((
-                    <GAInitiailizer/>
-                ), $('#analytics')[0]);
+            // Companies
+            <Route name="company" path="app/companies/:companyId" component={CompanyProfilePage} />
+            <Route name="company" path="app/companies/:companyId/:slug" component={CompanyProfilePage} />
 
-                React.render((
-                    <Notifications router={router} />
-                ), $('#notifications')[0]);
+            // Users
+            <Route name="user" path="app/users/:userId" component={UserProfilePage} />
 
-                React.render((
-                    <ModalManager router={router} />
-                ), $('#modals')[0]);
+            // Search
+            <Route name="search" path="app/search/:section/:search_string/:page" component={SearchPage} />
+            <Route name="search" path="app/search/:section" component={SearchPage} />
+            <Route name="search" path="app/search" component={SearchPage} />
 
-                React.render((
-                    <Footer router={router} />
-                ), $('#footer')[0]);
-            });
-        })
-    };
+            // Tags
+            <Route path="app/tag/:tag/products/:page" component={TagPage} />
+            <Route path="app/tags" component={TagsPage} />
+            <Route path="app/tags/:letter" component={TagsPage} />
 
-    render();
+            // Collections
+            <Route path="app/directory/collections" component={CollectionsPage} />
+            <Route name='CollectionPage' path="app/collections/:id" component={CollectionPage} />
+          </Router>
+        ), document.getElementById('content'));
+
+        React.render((
+          <SearchBox router={router} />
+        ), $('.search-container')[0]);
+
+        React.render((
+          <Sidebar router={router} />
+        ), $('#hamburger-menu')[0]);
+
+        React.render((
+          <GAInitiailizer/>
+        ), $('#analytics')[0]);
+
+        React.render((
+          <Notifications router={router} />
+        ), $('#notifications')[0]);
+
+        React.render((
+          <ModalManager router={router} />
+        ), $('#modals')[0]);
+
+        React.render((
+          <Footer router={router} />
+        ), $('#footer')[0]);
+      });
+    })
+  };
+
+  render();
 });
