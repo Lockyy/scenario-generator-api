@@ -69,7 +69,7 @@ const Dropdown = React.createClass({
 
   renderActiveOption: function() {
     let self = this;
-    let active = _.find(this.props.options, function(op){return op.option ==self.props.active });
+    let active = _.find(this.props.options, function(op){return op.option == self.props.active });
     let image = active.image ? <img class="visible-xs" src={active.image}/> : '';
     return (
       <div  className={`active-dropdown-link  ${image ? 'active-dropdown-link-with-image' : ''}`}
