@@ -21,7 +21,8 @@ const ShareCollection = React.createClass ({
         description: '',
         products: [],
         owner: this.context.currentUser,
-        users: []
+        users: [],
+        privacy: "hidden"
       };
     collection['emails'] = [];
     return {
