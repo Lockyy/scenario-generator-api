@@ -99,7 +99,7 @@ const ReviewsMobileVersion = React.createClass({
 
 	getEditReviewTag: function(review) {
 		return <div className='edit-review-container'>
-			<Link to={`/app/products/${review.product.id}/reviews/${review.id}`}
+			<Link to={`/app/products/${review.product.id}/${review.product.slug}/reviews/${review.id}`}
 				className='btn btn-white'>Edit my review</Link>
 		</div>;
 	},
