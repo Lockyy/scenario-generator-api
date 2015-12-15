@@ -5,6 +5,7 @@ import Results from './Results'
 import TagResults from './TagResults'
 import Tags from '../Tags'
 import TagsBox from '../TagsBox'
+import DropdownConstants from '../../utils/constants/DropdownConstants'
 
 const SearchPageDesktopVersion = React.createClass({
   mixins: [ Navigation ],
@@ -130,6 +131,7 @@ const SearchPageDesktopVersion = React.createClass({
           searchTerm={this.props.searchString}
           topLeft='type'
           topRight='dropdown'
+          dropdownOptions={DropdownConstants.sortOptions}
           sorting={this.props.data.sorting.products}
           onChangeSort={this.props.onChangeSort} />
         <Results
@@ -141,11 +143,7 @@ const SearchPageDesktopVersion = React.createClass({
           searchTerm={this.props.searchString}
           topLeft='type'
           topRight='dropdown'
-          dropdownOptions={{
-            relevance: 'Relevance',
-            latest: 'Latest',
-            alphabetical_order: 'Alphabetical order',
-          }}
+          dropdownOptions={DropdownConstants.sortOptions}
           sorting={this.props.data.sorting.companies}
           onChangeSort={this.props.onChangeSort} />
         <TagResults
@@ -168,11 +166,7 @@ const SearchPageDesktopVersion = React.createClass({
           searchTerm={this.props.searchString}
           topLeft='type'
           topRight='dropdown'
-          dropdownOptions={{
-            relevance: 'Relevance',
-            latest: 'Latest',
-            alphabetical_order: 'Alphabetical order',
-          }}
+          dropdownOptions={DropdownConstants.sortOptions}
           sorting={this.props.data.sorting.collections}
           onChangeSort={this.props.onChangeSort} />
       </div>
@@ -210,11 +204,7 @@ const SearchPageDesktopVersion = React.createClass({
           currentPage={this.props.params.page}
           topLeft='type'
           topRight='dropdown'
-          dropdownOptions={{
-            relevance: 'Relevance',
-            latest: 'Latest',
-            alphabetical_order: 'Alphabetical order',
-          }}
+          dropdownOptions={DropdownConstants.sortOptions}
           sorting={this.props.data.sorting.companies}
           onChangePage={this.props.onChangePage}
           onChangeSort={this.props.onChangeSort} />
@@ -234,11 +224,7 @@ const SearchPageDesktopVersion = React.createClass({
           currentPage={this.props.params.page}
           topLeft='type'
           topRight='dropdown'
-          dropdownOptions={{
-            relevance: 'Relevance',
-            latest: 'Latest',
-            alphabetical_order: 'Alphabetical order',
-          }}
+          dropdownOptions={DropdownConstants.sortOptions}
           bottomLink={'/app/directory/collections'}
           linkText={'Browse all public collections'}
           sorting={this.props.data.sorting.collections}
