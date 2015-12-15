@@ -41,7 +41,7 @@ const Results = React.createClass ({
               )
             }
             <div className='name'>
-              <a href={`/app/${this.props.type}/${result.id}`}>
+              <a href={`/app/companies/${result.id}/${result.slug}`}>
                 { result.name }
               </a>
             </div>
@@ -101,12 +101,12 @@ const Results = React.createClass ({
           { this.renderImage(result) }
           <div className={ this.productContentClass(result) }>
             <div className='name'>
-              <a href={`/app/${this.props.type}/${result.id}`}>
+              <a href={`/app/products/${result.id}/${result.slug}`}>
                 { result.name }
               </a>
             </div>
             <div className='company'>
-              <a href={`/app/companies/${result.company.id}`}>
+              <a href={`/app/companies/${result.company.id}/${result.company.slug}`}>
                 { result.company.name }
               </a>
             </div>
