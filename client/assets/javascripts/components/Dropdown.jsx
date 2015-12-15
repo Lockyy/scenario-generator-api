@@ -26,9 +26,7 @@ const Dropdown = React.createClass({
   },
 
   getID: function() {
-    if(this.state){
-      return this.state.id
-    }
+    return this.state.id
   },
 
   renderSortOption: function(option) {
@@ -46,9 +44,7 @@ const Dropdown = React.createClass({
   },
 
   showDropdown: function() {
-    if(this.props.preventDropdown) {
-      return false;
-    }
+    if(this.props.native || this.props.preventDropdown ) { return }
 
     let node = $(this.refs[this.getID()].getDOMNode())
     node.toggleClass('active')
@@ -56,6 +52,8 @@ const Dropdown = React.createClass({
   },
 
   hideDropdown: function() {
+    if(this.props.native) { return }
+
     let node = $(this.refs[this.getID()].getDOMNode())
     node.removeClass('active')
     this.setState({open: false})
@@ -93,7 +91,6 @@ const Dropdown = React.createClass({
       </select>
     )
   },
-
 
   renderDropdown: function() {
     if(this.props.native) {
