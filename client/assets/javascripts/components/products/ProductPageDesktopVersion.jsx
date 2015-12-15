@@ -64,7 +64,7 @@ const ProductPageDesktopVersion = React.createClass({
             </div>
             <div className='company'>
               <Link
-                to={`/app/companies/${this.getCompanyData('slug')}`}>
+                to={`/app/companies/${this.getCompanyData('id')}/${this.getCompanyData('slug')}`}>
                 {this.getCompanyData('name')}
               </Link>
             </div>

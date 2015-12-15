@@ -47,6 +47,7 @@ const ProductPage = React.createClass({
         },
         attachments: [],
         links: [],
+        slug: ''
       },
       modalIsOpen: false
     };
@@ -107,9 +108,9 @@ const ProductPage = React.createClass({
 
   reviewButtonURL: function() {
     if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
-      return `/app/products/${this.id()}/reviews/${this.getCurrentUserReview().id}`
+      return `/app/products/${this.id()}/${this.state.data.slug}/reviews/${this.getCurrentUserReview().id}`
     } else {
-      return `/app/products/${this.id()}/reviews/new`
+      return `/app/products/${this.id()}/${this.state.data.slug}/reviews/new`
     }
   },
 
@@ -127,6 +128,7 @@ const ProductPage = React.createClass({
           showLinks={this.showProductLinksModal}
           {...this.state} />
         <RenderMobile
+          component={ProductPageMobileVersion}
           reviewButtonURL={this.reviewButtonURL()}
           reviewButtonText={this.reviewButtonText()}
           onBookmark={this.bookmark}
