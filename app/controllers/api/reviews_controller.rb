@@ -31,7 +31,7 @@ module Api
         if (review.save!)
           @review = review.review
           product = review.product
-          message = "A new review was created for the product '#{product.name}' with the title '#{@review.title}' you can see it at: #{request.base_url}/app/products/#{product.id}"
+          message = "A new review was created for the product '#{product.name}' with the title '#{@review.title}' you can see it at: #{request.base_url}/app/products/#{product.id}/#{product.slug}"
           Slacked.post_async(message)
           format.json { render :show, status: :created, location: api_review_url(@review) }
         else
