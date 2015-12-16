@@ -154,25 +154,6 @@ const CollectionPage = React.createClass({
     }
   },
 
-  renderLeaveButton: function() {
-    if (this.state.data.collection.editable || this.state.data.collection.viewer) {
-      return (
-        <div className='vertical-padding grey-bottom-border color-dark-grey small-text'>
-          <div className='bottom-margin uppercase'>
-            Leave Collection
-          </div>
-          <div className='bottom-margin'>
-            If you leave this collection you will no longer be able to view it or collaborate
-          </div>
-          <div className='btn btn-blue-inverted btn-round'
-               onClick={this.leaveCollection}>
-            Leave
-          </div>
-        </div>
-      )
-    }
-  },
-
   removeProduct: function(product) {
     FluxCollectionActions.deleteProduct(this.id(), product.id)
   },
@@ -248,7 +229,6 @@ const CollectionPage = React.createClass({
       return (
         <div>
           {this.renderAllCollaborators()}
-          {this.renderLeaveButton()}
         </div>
       )
     }
@@ -501,12 +481,26 @@ const CollectionPage = React.createClass({
 
   render: function() {
     let actionList = [];
-    if (this.ownedByUser()) {
+    let isOwned = this.ownedByUser();
+    let canLeave = (this.state.data.collection.editable ||
+                    this.state.data.collection.viewer);
+
+    if (isOwned) {
       actionList.push(
         {action: this.deleteCollection, 
+         type: 'delete-form',
          ref: 'collaborators', 
          tabTitle: 'Delete Collection'}
       );
+    }
+
+    if (canLeave && !isOwned) {
+      actionList.push(
+        {action: this.leaveCollection,
+         type: 'leave-collection',
+         ref: 'collaborators',
+         tabTitle: 'Leave Collection'}
+         );
     }
 
     return (

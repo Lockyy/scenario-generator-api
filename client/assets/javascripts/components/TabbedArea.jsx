@@ -47,7 +47,7 @@ const TabbedArea = React.createClass({
     return _.map(this.props.actions, function(action) {
       return (
         <div 
-          className={`sidebar-element action ${action.ref} ${action.ref == this.state.activeTab ? 'active' : ''}`}
+          className={`sidebar-element action ${action.ref} ${action.type} ${action.ref == this.state.activeTab ? 'active' : ''}`}
           onClick={() => action.action()}>
           {action.tabTitle}
         </div>
