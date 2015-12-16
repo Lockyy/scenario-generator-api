@@ -154,25 +154,6 @@ const CollectionPage = React.createClass({
     }
   },
 
-  renderDeleteButton: function() {
-    if (this.ownedByUser()) {
-      return (
-        <div className='vertical-padding grey-bottom-border color-dark-grey small-text'>
-          <div className='bottom-margin uppercase'>
-            Delete
-          </div>
-          <div className='bottom-margin'>
-            Deleting this collection will delete it for all the users in it. You can’t undo this action.
-          </div>
-          <div className='btn btn-blue-inverted btn-round'
-               onClick={this.deleteCollection}>
-            Delete
-          </div>
-        </div>
-      )
-    }
-  },
-
   renderLeaveButton: function() {
     if (this.state.data.collection.editable || this.state.data.collection.viewer) {
       return (
@@ -257,7 +238,6 @@ const CollectionPage = React.createClass({
           {this.renderOwners()}
           {this.renderCollaborators()}
           {this.renderViewers()}
-          {this.renderDeleteButton()}
         </div>
       )
     }
