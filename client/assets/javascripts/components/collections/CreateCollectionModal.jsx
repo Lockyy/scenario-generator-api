@@ -151,12 +151,19 @@ const CreateCollectionModal = React.createClass ({
     let errorDom = $(this.refs.errors.getDOMNode());
     let titleDOM = $(this.refs.collection_name.getDOMNode());
     let descriptionDOM = $(this.refs.collection_description.getDOMNode());
+    let titleEmpty = titleDOM.val() == '';
+    let descriptionEmpty = descriptionDOM.val() == '';
     let errors;
+
     if (skipDescription) {
-      errors = titleDOM.val() == ''
+      errors = titleEmpty
     } else {
-      errors = titleDOM.val() == '' || descriptionDOM.val() == ''
+      errors = titleEmpty == '' || descriptionEmpty
+      descriptionDOM.toggleClass('greyed', descriptionEmpty);
     }
+
+    titleDOM.toggleClass('greyed', titleEmpty);
+
     errorDom.toggleClass('active', errors);
 
     return !errors

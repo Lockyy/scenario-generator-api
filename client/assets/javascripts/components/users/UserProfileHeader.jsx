@@ -30,7 +30,15 @@ const UserProfileHeader  = React.createClass({
   getAvatarContainer: function getAvatarContainer() {
     return(
       <div className='avatar-container row'>
-        <Avatar size={150} url={this.props.avatar_url} />
+        <Avatar
+          size={150}
+          disableHover={true}
+          disableLink={true}
+          user={{
+            id: this.props.id,
+            name: this.props.name,
+            avatar_url: this.props.avatar_url
+          }} />
         <span className='user-name'>{this.props.name}</span>
       </div>
     );

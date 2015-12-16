@@ -137,6 +137,9 @@
       padding-top: 20px
       padding-bottom: 20px
       border-bottom: 1px solid $grey
+      .reviews
+        font-size: 12px
+        color: $dark-grey
       &:first-child
         padding-top: 5px
       &:last-child
@@ -257,18 +260,12 @@
           border-bottom-color: $grey
 
           .title
-            line-height: 0
-            padding-top: 33px
-            height: 55px
             text-transform: uppercase
             font-size: 14px
             font-style: initial
 
           .title::before
             @extend .mobile-title
-
-        .required
-          margin-bottom: 10px
 
         .collection-products-container
           background-color: transparent
@@ -341,7 +338,7 @@
           display: block
           border: none !important
 
-          button
+          button, .btn
             width: 100%
             margin: 0
             font-size: 15px
