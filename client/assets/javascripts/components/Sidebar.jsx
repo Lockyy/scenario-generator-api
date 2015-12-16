@@ -127,7 +127,7 @@ const Sidebar = React.createClass ({
               <div className='products'>
                 Includes: {
                 _.map(collection.products.slice(0, 2), function(product) {
-                  return <a href={`/app/products/${product.id}`}>{product.name} </a>;
+                  return <a href={`/app/products/${product.id}/${product.slug}`}>{product.name} </a>;
                   })
                 }
               </div>

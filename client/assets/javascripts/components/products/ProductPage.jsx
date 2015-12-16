@@ -1,6 +1,8 @@
 import _ from 'lodash'
 import React from 'react'
 import timeago from 'timeago'
+import RenderDesktop from '../RenderDesktop'
+import RenderMobile from '../RenderMobile'
 import { Link, Navigation } from 'react-router'
 import Modal from 'react-modal'
 import FluxProductPageActions from '../../actions/FluxProductPageActions'
@@ -45,6 +47,7 @@ const ProductPage = React.createClass({
         },
         attachments: [],
         links: [],
+        slug: ''
       },
       modalIsOpen: false
     };
@@ -105,16 +108,17 @@ const ProductPage = React.createClass({
 
   reviewButtonURL: function() {
     if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
-      return `/app/products/${this.id()}/reviews/${this.getCurrentUserReview().id}`
+      return `/app/products/${this.id()}/${this.state.data.slug}/reviews/${this.getCurrentUserReview().id}`
     } else {
-      return `/app/products/${this.id()}/reviews/new`
+      return `/app/products/${this.id()}/${this.state.data.slug}/reviews/new`
     }
   },
 
   render: function() {
     return (
       <div className='product show'>
-        <ProductPageDesktopVersion
+        <RenderDesktop
+          component={ProductPageDesktopVersion}
           reviewButtonURL={this.reviewButtonURL()}
           reviewButtonText={this.reviewButtonText()}
           onBookmark={this.bookmark}
@@ -123,7 +127,8 @@ const ProductPage = React.createClass({
           showFiles={this.showProductFilesModal}
           showLinks={this.showProductLinksModal}
           {...this.state} />
-        <ProductPageMobileVersion
+        <RenderMobile
+          component={ProductPageMobileVersion}
           reviewButtonURL={this.reviewButtonURL()}
           reviewButtonText={this.reviewButtonText()}
           onBookmark={this.bookmark}

@@ -10,7 +10,7 @@ describe "Product page", js: true do
     @public_collection = create(:collection, :visible, products: [@product])
     @owned_collection = create(:collection, user: @user, products: [@product])
     @private_collection = create(:collection, name: 'Private Collcetion', products: [@product])
-    visit "/app/products/#{@product.id}"
+    visit "/app/products/#{@product.id}/#{@product.slug}"
     wait_for_ajax
   end
 

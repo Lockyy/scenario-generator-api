@@ -62,8 +62,8 @@ const ReviewBox = React.createClass ({
               <div className='activity-type'>
                 {this.formatActivityType()}
               </div>
-              <h3 className='title'><a href={`/app/products/${product.id}`}>{product.name}</a></h3>
-              <h4 className='company'><a href={`/app/companies/${company.id}`} >{company.name}</a></h4>
+              <h3 className='title'><a href={`/app/products/${product.id}/${product.slug}`}>{product.name}</a></h3>
+              <h4 className='company'><a href={`/app/companies/${company.id}/${company.slug}`} >{company.name}</a></h4>
             </div>
 
             <div className='review'>
@@ -95,7 +95,7 @@ const ReviewBox = React.createClass ({
               <div className='read-more-container'>
                 {
                   showReadMore ?
-                  <a href={`/app/products/${this.props.product.id}`} className='link'>
+                  <a href={`/app/products/${this.props.product.id}/${this.props.product.slug}`} className='link'>
                     <span className='icon-edit-review'>Read more</span>
                   </a> : ''
                 }
@@ -104,7 +104,7 @@ const ReviewBox = React.createClass ({
               <div className='footer'>
                 {
                   editable ?
-                  <a href={`/app/products/${this.props.product.id}/reviews/${this.props.id}`} className='btn btn-round'>
+                  <a href={`/app/products/${this.props.product.id}/${this.props.product.slug}/reviews/${this.props.id}`} className='btn btn-round'>
                     <span className='icon-edit-review'>Edit</span>
                   </a> :
                   <span className='created_at'>{timeago(this.props.created_at)}</span>

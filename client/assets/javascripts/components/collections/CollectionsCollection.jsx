@@ -75,7 +75,7 @@ const CollectionsCollection = React.createClass ({
 
               <Link
                 className="product-list-link"
-                to={`/app/products/${product.id}`}>
+                to={`/app/products/${product.id}/${product.slug}`}>
                 {product.name}
               </Link>
 

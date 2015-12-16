@@ -11,7 +11,7 @@ describe "Edit review page", js:true do
   describe 'with a review that exists' do
     before do
       @review = create(:review, user: @user)
-      visit "/app/products/#{@review.product.id}/reviews/#{@review.id}"
+      visit "/app/products/#{@review.product.id}/#{@review.product.slug}/reviews/#{@review.id}"
       wait_for_ajax
     end
 
