@@ -138,11 +138,11 @@ const AddToCollectionModal = React.createClass ({
         }
       })
     };
-    let self = this;
+    let _this = this;
     if (product.id && collection.id) {
       let callback = function(){
         sendNotification();
-        self.close()
+        _this.close()
       };
 
       FluxCollectionActions.addProductToCollection(product.id, collection.id, callback);

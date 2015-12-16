@@ -136,7 +136,7 @@ const ViewCollectionModal = React.createClass ({
     if (!this.productInCollection(collection) && addProduct) {
       addButton = (
         <button
-          className='btn btn-red btn-round mobile'
+          className='btn btn-red-inverted btn-round mobile'
           onClick={(e) => addProduct(e, collection)}>
           Add
         </button>
