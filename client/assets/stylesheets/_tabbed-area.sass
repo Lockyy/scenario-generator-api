@@ -57,6 +57,7 @@ $color-blackcharcoal: #3c3c3b
       &.active, &:hover
         color: $primary-red
 
+
       &.reviews, &.recent_activity
         background-image: img-url('icons/icon-review-grey.svg')
 
@@ -92,6 +93,19 @@ $color-blackcharcoal: #3c3c3b
 
         &.active
           background-image: img-url('icons/icon-collections-red.svg')
+
+      &.action
+        display: none
+        &.active
+          &.leave-collection
+            background-image: img-url('icons/icon-end-collab.svg')
+          &.delete-form
+            background-image: img-url('icons/icon-delete-collection-form.svg')
+          display: block
+          color: $jll-petrol
+          text-decoration: underline
+          &::after
+            display: none
 
       &.active
         font-weight: bold

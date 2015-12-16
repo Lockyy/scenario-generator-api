@@ -43,6 +43,22 @@ const TabbedArea = React.createClass({
     }.bind(this))
   },
 
+  renderSidebarActions: function() {
+    return _.map(this.props.actions, function(action) {
+      return (
+        <div 
+          className={`sidebar-element 
+                      action 
+                      ${action.type} 
+                      ${_.includes(action.refs, this.state.activeTab) ? 'active' : ''}`}
+          onClick={() => action.action()}>
+          {action.tabTitle}
+        </div>
+      ); 
+    }.bind(this))
+  },
+
+
   renderTabbedArea: function() {
     return React.Children.map(this.props.children, function(child) {
       if(child.ref == this.state.activeTab) {
@@ -56,6 +72,7 @@ const TabbedArea = React.createClass({
       <div className={`tabbed-area row ${this.props.containerClass}`}>
         <div className='col-xs-12 col-sm-3 tabbed-area-sidebar'>
           {this.renderSidebar()}
+          {this.renderSidebarActions()}
         </div>
         <div className={`col-xs-12 col-sm-9 child-tabbed-area ${this.state.activeTab}`}>
           {this.renderTabbedArea()}

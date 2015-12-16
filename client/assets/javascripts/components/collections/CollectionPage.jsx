@@ -154,44 +154,6 @@ const CollectionPage = React.createClass({
     }
   },
 
-  renderDeleteButton: function() {
-    if (this.ownedByUser()) {
-      return (
-        <div className='vertical-padding grey-bottom-border color-dark-grey small-text'>
-          <div className='bottom-margin uppercase'>
-            Delete
-          </div>
-          <div className='bottom-margin'>
-            Deleting this collection will delete it for all the users in it. You can’t undo this action.
-          </div>
-          <div className='btn btn-blue-inverted btn-round'
-               onClick={this.deleteCollection}>
-            Delete
-          </div>
-        </div>
-      )
-    }
-  },
-
-  renderLeaveButton: function() {
-    if (this.state.data.collection.editable || this.state.data.collection.viewer) {
-      return (
-        <div className='vertical-padding grey-bottom-border color-dark-grey small-text'>
-          <div className='bottom-margin uppercase'>
-            Leave Collection
-          </div>
-          <div className='bottom-margin'>
-            If you leave this collection you will no longer be able to view it or collaborate
-          </div>
-          <div className='btn btn-blue-inverted btn-round'
-               onClick={this.leaveCollection}>
-            Leave
-          </div>
-        </div>
-      )
-    }
-  },
-
   removeProduct: function(product) {
     FluxCollectionActions.deleteProduct(this.id(), product.id)
   },
@@ -257,7 +219,6 @@ const CollectionPage = React.createClass({
           {this.renderOwners()}
           {this.renderCollaborators()}
           {this.renderViewers()}
-          {this.renderDeleteButton()}
         </div>
       )
     }
@@ -268,7 +229,6 @@ const CollectionPage = React.createClass({
       return (
         <div>
           {this.renderAllCollaborators()}
-          {this.renderLeaveButton()}
         </div>
       )
     }
@@ -520,13 +480,37 @@ const CollectionPage = React.createClass({
   },
 
   render: function() {
+    let actionList = [];
+    let isOwned = this.ownedByUser();
+    let canLeave = (this.state.data.collection.editable ||
+                    this.state.data.collection.viewer);
+
+    if (isOwned) {
+      actionList.push(
+        {action: this.deleteCollection, 
+         type: 'delete-form',
+         refs: ['collaborators', 'products'],
+         tabTitle: 'Delete Collection'}
+      );
+    }
+
+    if (canLeave && !isOwned) {
+      actionList.push(
+        {action: this.leaveCollection,
+         type: 'leave-collection',
+         refs: ['collaborators', 'products'],
+         tabTitle: 'Leave Collection'}
+         );
+    }
+
     return (
       <div className='tags-page'>
         {this.renderFilePath()}
         {this.renderBackButton()}
         {this.renderHeader()}
         <TabbedArea
-          containerClass={'no-border no-margin no-child-padding hidden-xs'}>
+          containerClass={'no-border no-margin no-child-padding hidden-xs'}
+          actions={actionList}>
           { this.renderProductsTable(this.state.data.collection.products) }
           { this.renderCollaboratorInfo() }
         </TabbedArea>
