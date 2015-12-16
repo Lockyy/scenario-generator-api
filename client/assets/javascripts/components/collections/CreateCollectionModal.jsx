@@ -261,7 +261,7 @@ const CreateCollectionModal = React.createClass ({
     return (
       <div className='buttons'>
         <div
-          className='btn btn-red btn-round'
+          className='btn btn-red-inverted btn-round'
           onClick={this.submitForm}
           data-privacy='hidden'>
           Create Collection
