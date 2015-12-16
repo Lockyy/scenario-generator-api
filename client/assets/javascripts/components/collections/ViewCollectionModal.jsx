@@ -129,7 +129,6 @@ const ViewCollectionModal = React.createClass ({
   ////////////
 
   renderButtons: function() {
-    let backButton = <button className='btn btn-grey btn-round' onClick={this.close}>Back</button>;
     let addButton;
     let addProduct = this.state.config.addProductToCollection;
     let collection = this.state.collection

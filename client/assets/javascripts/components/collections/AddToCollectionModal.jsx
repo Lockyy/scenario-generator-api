@@ -138,9 +138,14 @@ const AddToCollectionModal = React.createClass ({
         }
       })
     };
-
+    let self = this;
     if (product.id && collection.id) {
-      FluxCollectionActions.addProductToCollection(product.id, collection.id, sendNotification);
+      let callback = function(){
+        sendNotification();
+        self.close()
+      };
+
+      FluxCollectionActions.addProductToCollection(product.id, collection.id, callback);
       FluxCollectionActions.performSearch(this.state.searchTerm || '');
       let addedCollections = this.state.addedCollections;
       addedCollections.push(collection.id);
