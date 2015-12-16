@@ -8,6 +8,9 @@ import FluxNotificationsActions from '../../actions/FluxNotificationsActions';
 import CollectionStore from '../../stores/CollectionStore'
 import Rating from '../Rating'
 import Avatar from '../Avatar'
+import RenderDesktop from '../RenderDesktop';
+import RenderMobile from '../RenderMobile';
+import TableDisplay from '../TableDisplay'
 import TabbedArea from '../TabbedArea'
 import MoreOptionsDropdown from '../MoreOptionsDropdown';
 import { EditCollectionMixin } from './EditCollectionModal'
@@ -196,36 +199,52 @@ const CollectionPage = React.createClass({
     FluxCollectionActions.deleteProduct(this.id(), product.id)
   },
 
-  renderProductRow: function(product) {
-    return (
-      <div className='row collection-product-row'>
-        <div className='col-xs-8'>
-          <Link to={`/app/products/${product.id}/${product.slug}`}>{product.name}</Link>
-          <Rating value={product.rating} name='rating'/>
-        </div>
-        <div className='col-xs-3'>
-          <div className='hidden-xs'>
-            <div>{product.added_on}</div>
-            <div>{product.added_by}</div>
-          </div>
-        </div>
-        { this.ownedByUser() ?
-        <div className='link underlined' onClick={() => this.removeProduct(product)}>Remove</div> : '' }
-      </div>
-    )
-  },
-
   renderProductsTable: function(products) {
     return (
-      <div className='collection-products-table' tabTitle='Products' ref='products'>
-        <div className='row table-header hidden-xs'>
-          <div className='col-xs-8'>Product</div>
-          <div className='col-xs-3'>Date Added</div>
-        </div>
-        <div className='collection-product-rows'>
-          {_.map(products, this.renderProductRow)}
-        </div>
-        { this.state.data.collection.editable ? this.renderAddProductButton() : '' }
+      <div tabTitle='Products' ref='products'>
+        <RenderMobile
+          conditional={this.state.data.collection.editable}>
+          {this.renderAddProductButton()}
+        </RenderMobile>
+
+        <TableDisplay
+          data={products}
+          allowSorting={true}
+          defaultSortColumn='added_on_raw'
+          columns={[
+            {
+              title: 'Product',
+              linkTo: 'products',
+              dataColumn: 'name',
+              secondaryDataType: 'rating',
+              secondaryDataColumn: 'rating',
+              sortByColumn: 'name',
+              width: 8,
+            },
+            {
+              title: 'Date Added',
+              dataColumn: 'added_on',
+              secondaryDataType: 'string',
+              secondaryDataColumn: 'added_by',
+              sortByColumn: 'added_on_raw',
+              width: 3,
+              hiddenOn: 'mobile',
+            },
+            {
+              title: '',
+              dataColumn: '',
+              value: 'Remove',
+              className: 'link underlined small-text',
+              onClick: this.removeProduct,
+              display: this.ownedByUser(),
+              width: 1
+            }
+          ]} />
+
+        <RenderDesktop
+          conditional={this.state.data.collection.editable}>
+          {this.renderAddProductButton()}
+        </RenderDesktop>
       </div>
     )
   },
