@@ -4,38 +4,7 @@ import { Link, Navigation } from 'react-router';
 import RenderDesktop from './RenderDesktop';
 import Rating from './Rating'
 
-// <TableDisplay
-//   data={products}
-//   allow_sorting={true}
-//   columns={[
-//     {
-//       title: 'Product',
-//       link: true,
-//       link_to: 'products',
-//       dataColumn: 'added_on',
-//       secondaryDataType: 'rating',
-//       secondaryDataColumn: 'rating',
-//       sortByColumn: 'added_on',
-//       width: 8,
-//     },
-//     {
-//       title: 'Date Added',
-//       dataColumn: 'added_on',
-//       secondaryDataType: 'string',
-//       secondaryDataColumn: 'added_by',
-//       sortByColumn: 'added_on',
-//       width: 8,
-//     },
-//     {
-//       title: '',
-//       dataColumn: '',
-//       value: 'Remove',
-//       className='linked underlined',
-//       onClick={this.removeProduct},
-//       display={this.ownedByUser()},
-//       width: 1
-//     }
-//   ]} />
+// https://github.com/codelittinc/fletcher/wiki/TableDisplay
 
 const TableDisplay = React.createClass ({
 
@@ -50,8 +19,15 @@ const TableDisplay = React.createClass ({
     }
   },
 
+  getDefaultProps: function () {
+    return {
+      data: [],
+      allowSorting: true,
+    }
+  },
+
   componentWillReceiveProps: function(nextProps) {
-    this.performSort(nextProps.data, nextProps.defaultSortColumn, null, 'desc')
+    this.performSort(nextProps.data, nextProps.defaultSortColumn, nextProps.defaultSortColumnAttribute, 'desc')
   },
 
   // Events
@@ -223,6 +199,7 @@ const TableDisplay = React.createClass ({
         case 'rating':
           return <Rating value={row[column.secondaryDataColumn]} name='rating'/>
       }
+      return <div>{row[column.secondaryDataColumn]}</div>
     }
   },
 
