@@ -230,7 +230,7 @@ const AddToCollectionModal = React.createClass ({
       return (
         <div
           className='already-in-collection'>
-          Already added
+          Product already added to Collection
         </div>
       )
     // If the product can still be added
