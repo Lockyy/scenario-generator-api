@@ -10,12 +10,14 @@
   .placeholder-section.message
     padding: 12px 0 20px 0
 
-.with-collection-icon::before
-  display: block
-  width: 20px
-  height: 20px
-  content: url("icons/icon-collections-red.svg")
-  margin-right: 5px
+.with-collection-icon
+  display: flex
+  &::before
+    display: inline-block
+    width: 20px
+    height: 20px
+    content: url("icons/icon-collections-red.svg")
+    margin-right: 5px
 
 .right-arrow-after
   display: inline-flex
@@ -160,34 +162,25 @@
     margin-right: -20px
     padding: 10px 20px
 
-.collection-products-table
-  .collection-product-row
-    @include vertical-padding
-    @include grey-top-border
-    display: flex
-    align-items: center
-    &:first-child
-      border-top: 0px
-  .add-product-link
-    display: inline-flex
-    align-items: center
-    margin-top: 25px
-    &::before
-      content: url('icons/icon-collections-new-red.svg')
-      margin-right: 5px
-      margin-top: 5px
+.add-product-link
+  display: inline-flex
+  align-items: center
+  &::before
+    content: url('icons/icon-collections-new-red.svg')
+    margin-right: 5px
+    margin-top: 5px
 
 @media (max-width:480px)
-  .collection-products-table
+  .table-display
     display: flex
     flex-direction: column-reverse
-    .add-product-container
-      @include background-primary-grey
-      display: block
-      margin: 0px -15px
-      padding: 10px 15px
-      .add-product-link
-        margin: 0px
+  .add-product-container
+    @include background-primary-grey
+    display: block
+    margin: 0px -15px
+    padding: 10px 15px
+    .add-product-link
+      margin: 0px
 
 .collection.form
   .attached-fields
