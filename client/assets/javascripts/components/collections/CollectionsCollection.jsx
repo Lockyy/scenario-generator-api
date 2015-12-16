@@ -2,6 +2,9 @@ import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import CollectionBox from './CollectionBox';
+import RenderDesktop from '../RenderDesktop';
+import RenderMobile from '../RenderMobile';
+import TableDisplay from '../TableDisplay';
 import CollectionStore from '../../stores/CollectionStore';
 
 const CollectionsCollection = React.createClass ({
@@ -34,24 +37,6 @@ const CollectionsCollection = React.createClass ({
 
   onChange: function(data) {
     this.setState(data);
-  },
-
-  renderHeader: function() {
-    if(this.state.data.collections.length == 0) { return }
-
-    return (
-      <div className='collections-collection-row header'>
-        <span className='name'>
-          Name
-        </span>
-        <span className='owner'>
-          Owner
-        </span>
-        <span className='date'>
-          Modified
-        </span>
-      </div>
-    )
   },
 
   handleClick: function(e) {
@@ -100,32 +85,31 @@ const CollectionsCollection = React.createClass ({
   renderCollections: function() {
     let _this = this;
     let params = '';
+
     if(this.context.router.state.components[0].displayName == 'ProductPage') {
       params = `?name=${this.props.product.name}&link=${window.location.pathname}`
     }
-    let mobileSpec = this.props.mobile ? ' mobile' : '';
+
     return (
       <div>
         {_.map(this.state.data.collections, function(collection) {
           return (
             <div className='collections-collection-row'>
-              <span className={'name' + mobileSpec}>
+              <span className={'name mobile'}>
                 <Link to={`/app/collections/${collection.id}${params}`}>{collection.name}</Link>
               </span>
-              <span className={'owner' + mobileSpec}>
-                {this.props.mobile ? 'Created by ' : ''}
+              <span className={'owner mobile'}>
+                Created by
                 <Link className='user-link' to={`/app/users/${collection.user.id}`}>
-                  {collection.user.id == this.context.currentUser.id ? 'You' : collection.user.name}
-                </Link>
-                {this.props.mobile ? ', ' : ''}
-                <span className={'date' + mobileSpec}>
+                  {collection.user.id == this.context.currentUser.id ? ' You' : ` ${collection.user.name}`}
+                </Link>,
+                <span className={'date mobile'}>
                   {collection.display_date}
                 </span>
               </span>
-              {this.props.mobile ?
-                <span className='includes mobile'>
-                  Includes:&nbsp;{this.renderCollectionProductsList(collection)}
-                </span> : ""}
+              <span className='includes mobile'>
+                Includes:&nbsp;{this.renderCollectionProductsList(collection)}
+              </span>
             </div>
           )
         }.bind(this))}
@@ -135,15 +119,47 @@ const CollectionsCollection = React.createClass ({
 
   render: function() {
     let _this = this
-
     return (
       <div className={`collections-collection ${this.props.className || ''}`}>
       {this.state.data.collections.length > 0 ? null :
         <span className="no-collections">
           No collections have been created, yet. Why not make one yourself?
         </span>}
-        {this.props.mobile ? '' : this.renderHeader()}
-        {this.renderCollections()}
+
+        <RenderDesktop
+          component={TableDisplay}
+          conditional={this.state.data.collections.length > 0}
+          data={this.state.data.collections}
+          allowSorting={true}
+          defaultSortColumn='updated_at'
+          columns={[
+            {
+              title: 'Name',
+              linkTo: 'collections',
+              dataColumn: 'name',
+              className: 'with-collection-icon',
+              sortByColumn: 'name',
+              width: 6,
+            },
+            {
+              title: 'Owner',
+              dataColumn: 'user',
+              dataColumnAttribute: 'name',
+              sortByColumn: 'user',
+              sortByColumnAttribute: 'name',
+              width: 3,
+            },
+            {
+              title: 'Last modified',
+              dataColumn: 'display_date',
+              width: 3,
+              sortByColumn: 'updated_at'
+            }
+          ]} />
+
+        <RenderMobile>
+          {this.renderCollections()}
+        </RenderMobile>
       </div>
     )
   }

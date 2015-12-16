@@ -15,6 +15,7 @@ json.products collection.collection_products do |collection_product|
   json.(collection_product.product,  :id, :name, :description, :rating,
                                      :created_at, :updated_at, :author, :short_desc, :slug)
 
+  json.added_on_raw collection_product.created_at
   json.added_on collection_product.display_date
   if collection_product.user
     if collection_product.user == current_user
