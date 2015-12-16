@@ -500,13 +500,23 @@ const CollectionPage = React.createClass({
   },
 
   render: function() {
+    let actionList = [];
+    if (this.ownedByUser()) {
+      actionList.push(
+        {action: this.deleteCollection, 
+         ref: 'collaborators', 
+         tabTitle: 'End Collaboration'}
+      );
+    }
+
     return (
       <div className='tags-page'>
         {this.renderFilePath()}
         {this.renderBackButton()}
         {this.renderHeader()}
         <TabbedArea
-          containerClass={'no-border no-margin no-child-padding hidden-xs'}>
+          containerClass={'no-border no-margin no-child-padding hidden-xs'}
+          actions={actionList}>
           { this.renderProductsTable(this.state.data.collection.products) }
           { this.renderCollaboratorInfo() }
         </TabbedArea>
