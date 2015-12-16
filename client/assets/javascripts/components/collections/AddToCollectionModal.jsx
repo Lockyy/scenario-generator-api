@@ -229,7 +229,7 @@ const AddToCollectionModal = React.createClass ({
     } else if (this.productInCollection(collection)) {
       return (
         <div
-          className='already-in-collection'>
+          className='already-in-collection only-child'>
           Product already added to Collection
         </div>
       )
@@ -243,6 +243,20 @@ const AddToCollectionModal = React.createClass ({
         </div>
       )
     }
+  },
+
+  renderPreviewButton: function(collection){
+    let previewButton =<div
+      className={'btn btn-round btn-blue-inverted btn-view btn-list-small' + (this.state.config.mobile ? ' mobile' : '')}
+      onClick={() => this.previewCollection(collection)}>
+      { this.state.config.mobile ? "Preview" : null }
+    </div>;
+
+    previewButton = this.productInCollection(collection) ? '' : previewButton;
+
+    return (
+      {previewButton}
+    )
   },
 
   renderCollectionListItem: function(collection) {
@@ -262,11 +276,7 @@ const AddToCollectionModal = React.createClass ({
           </span>
         </div>
         <div className={`right-buttons ${this.collectionTicked(collection.id) ? 'added' : ''}`}>
-          <div
-            className={'btn btn-round btn-blue-inverted btn-view btn-list-small' + (this.state.config.mobile ? ' mobile' : '')}
-            onClick={() => this.previewCollection(collection)}>
-            { this.state.config.mobile ? "Preview" : null }
-          </div>
+          {this.renderPreviewButton(collection)}
           {this.renderAddButton(collection)}
         </div>
       </div>
