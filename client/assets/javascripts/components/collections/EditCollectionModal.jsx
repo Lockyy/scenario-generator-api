@@ -146,16 +146,23 @@ const EditCollectionModal = React.createClass ({
   // Runs validation on text fields.
   // Returns false if there are errors.
   validation: function(skipDescription) {
-    let errorDom = $(this.refs.errors.getDOMNode())
-    let titleDOM = $(this.refs.collection_name.getDOMNode())
-    let descriptionDOM = $(this.refs.collection_description.getDOMNode())
+    let errorDom = $(this.refs.errors.getDOMNode());
+    let titleDOM = $(this.refs.collection_name.getDOMNode());
+    let descriptionDOM = $(this.refs.collection_description.getDOMNode());
+    let titleEmpty = titleDOM.val() == '';
+    let descriptionEmpty = descriptionDOM.val() == '';
     let errors;
-    if(skipDescription) {
-      errors = titleDOM.val() == ''
+
+    if (skipDescription) {
+      errors = titleEmpty
     } else {
-      errors = titleDOM.val() == '' || descriptionDOM.val() == ''
+      errors = titleEmpty || descriptionEmpty
+      descriptionDOM.toggleClass('greyed', descriptionEmpty);
     }
-    errorDom.toggleClass('active', errors)
+
+    titleDOM.toggleClass('greyed', titleEmpty);
+
+    errorDom.toggleClass('active', errors);
 
     return !errors
   },
