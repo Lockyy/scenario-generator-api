@@ -8,18 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body class="app <%= params[:action] %>">
+    <div id="wrapper">
 
-    <%= render 'app/header' %>
+      <%= render 'app/header' %>
 
-    <%= yield %>
+      <%= yield %>
 
-    <div id='footer'></div>
+      <div id='notifications'></div>
+      <div id='modals'></div>
 
-    <div id='notifications'></div>
-    <div id='modals'></div>
+      <%= javascript_include_tag 'app', 'data-turbolinks-track' => true %>
 
-    <%= javascript_include_tag 'app', 'data-turbolinks-track' => true %>
+      <div id="analytics"></div>
 
-    <div id="analytics"></div>
+    </div>
+
+    <footer id='footer'></footer>
   </body>
 </html>
