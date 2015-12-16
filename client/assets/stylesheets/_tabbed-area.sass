@@ -57,6 +57,15 @@ $color-blackcharcoal: #3c3c3b
       &.active, &:hover
         color: $primary-red
 
+      &.action
+        display: none
+        &.active
+          display: block
+          color: #4B9BC6
+          text-decoration: underline
+          &::after
+            display: none
+
       &.reviews, &.recent_activity
         background-image: img-url('icons/icon-review-grey.svg')
 

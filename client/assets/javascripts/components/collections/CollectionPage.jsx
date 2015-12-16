@@ -505,7 +505,7 @@ const CollectionPage = React.createClass({
       actionList.push(
         {action: this.deleteCollection, 
          ref: 'collaborators', 
-         tabTitle: 'End Collaboration'}
+         tabTitle: 'Delete Collection'}
       );
     }
 
