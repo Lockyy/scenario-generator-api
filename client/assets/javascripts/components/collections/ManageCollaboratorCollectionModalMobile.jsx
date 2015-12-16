@@ -99,8 +99,8 @@ const ManageCollaboratorCollectionModalMobile = React.createClass ({
 
         <div className='light-grey-bottom-border vertical-padding'>
           <Avatar
-            url={this.props.collection.user.avatar_url}
-            link={`/app/users/${this.props.collection.user.id}`}
+            user={user}
+            disableLink={true}
             size={this.avatarSize} />
         </div>
 

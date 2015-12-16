@@ -186,7 +186,7 @@ const Reviews = React.createClass({
     return (
       <div className="row review">
         <div className="col-xs-12 user">
-          <Avatar url={review.user.avatar_url} />
+          <Avatar user={review.user} disableHover={true} />
           <div className='details'>
             <div className='name'>
               <Link
