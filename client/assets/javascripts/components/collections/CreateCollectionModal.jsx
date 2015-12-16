@@ -158,7 +158,7 @@ const CreateCollectionModal = React.createClass ({
     if (skipDescription) {
       errors = titleEmpty
     } else {
-      errors = titleEmpty == '' || descriptionEmpty
+      errors = titleEmpty || descriptionEmpty
       descriptionDOM.toggleClass('greyed', descriptionEmpty);
     }
 
@@ -293,14 +293,16 @@ const CreateCollectionModal = React.createClass ({
           {this.renderTextFields()}
           {this.renderProductTypeahead()}
 
-          <div className='grey collection-products-container'>
-            {this.renderProducts()}
-          </div>
           <div className='grey'>
-            {sharedOptions}
-          </div>
-          <div className='grey submission-buttons-container'>
-            {this.renderSubmissionButtons()}
+            <div className='collection-products-container'>
+              {this.renderProducts()}
+            </div>
+            <div>
+              {sharedOptions}
+            </div>
+            <div className='submission-buttons-container'>
+              {this.renderSubmissionButtons()}
+            </div>
           </div>
 
         </form>
