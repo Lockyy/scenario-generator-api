@@ -61,7 +61,7 @@ const MoreOptionsDropdown = React.createClass({
     return (
       <div className="more-options-container">
         <button
-          className='more-options-button'
+          className={`more-options-button ${this.state.visible ? 'open' : ''}`}
           onClick={this.onButtonClick}/>
         <div className={dropdownClassName}>
           {dropdownRows}

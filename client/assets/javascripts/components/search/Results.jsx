@@ -212,7 +212,7 @@ const Results = React.createClass ({
               <Rating
                 value={result.rating}
                 name='rating' />
-              <span className='reviews'>{result.reviews.length} review(s)</span>
+              <span className='reviews'>/ {result.reviews.length} review(s)</span>
             </div>
 
             {
