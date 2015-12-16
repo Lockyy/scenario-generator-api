@@ -489,7 +489,7 @@ const CollectionPage = React.createClass({
       actionList.push(
         {action: this.deleteCollection, 
          type: 'delete-form',
-         ref: 'collaborators', 
+         refs: ['collaborators', 'products'],
          tabTitle: 'Delete Collection'}
       );
     }
@@ -498,7 +498,7 @@ const CollectionPage = React.createClass({
       actionList.push(
         {action: this.leaveCollection,
          type: 'leave-collection',
-         ref: 'collaborators',
+         refs: ['collaborators', 'products'],
          tabTitle: 'Leave Collection'}
          );
     }
