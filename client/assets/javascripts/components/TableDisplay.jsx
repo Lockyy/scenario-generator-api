@@ -78,6 +78,9 @@ const TableDisplay = React.createClass ({
   },
 
   getRowLink: function(row, type) {
+    if(type == 'collections') {
+      return `/app/${type}/${row.id}`
+    }
     return `/app/${type}/${row.id}/${row.slug}`
   },
 
