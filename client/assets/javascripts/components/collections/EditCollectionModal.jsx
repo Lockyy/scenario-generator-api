@@ -94,7 +94,15 @@ const EditCollectionModal = React.createClass ({
   addProduct: function(product, selected) {
     if(selected) {
       let updatedCollection = this.state.unsaved_collection
-      updatedCollection.products.push(_.merge(product, {unsaved: true}))
+      let productIDs = 
+        _.map(updatedCollection.products, function(product) {
+          return product.id;
+      });
+
+      if(!_.includes(productIDs, product.id)) {
+        updatedCollection.products.push(_.merge(product, {unsaved: true}));
+      }
+
       this.setState({product_name: null, unsaved_collection: updatedCollection})
     } else {
       this.setState({product_name: product.name})
