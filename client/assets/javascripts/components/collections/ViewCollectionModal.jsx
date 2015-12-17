@@ -147,12 +147,12 @@ const ViewCollectionModal = React.createClass ({
       <div>
         <RenderDesktop>
           <div className='buttons'>
+            {addButton}
             <button
               className='btn btn-grey-inverted btn-round'
               onClick={this.close}>
               Back
             </button>
-            {addButton}
           </div>
         </RenderDesktop>
         <RenderMobile

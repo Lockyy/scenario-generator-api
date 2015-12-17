@@ -161,7 +161,7 @@ const CollectionsCollection = React.createClass ({
     let collections = this.state.data.collections
     let noCollectionsTag = (
       <span className="no-collections">
-        No collections have been created, yet. Why not make one yourself?
+        {this.props.emptyMessage || 'You do not collaborate on any collections. Why not create one yourself?' }
       </span> )
 
     return (

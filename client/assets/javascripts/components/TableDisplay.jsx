@@ -186,8 +186,8 @@ const TableDisplay = React.createClass ({
     } else {
       return (
         <div
-          className={`${column.className} ${row.onClick ? 'clickable' : ''}`}
-          onClick={() => row.onClick(row)}>
+          className={`${column.className} ${column.onClick ? 'clickable' : ''}`}
+          onClick={() => column.onClick ? column.onClick(row) : null}>
           {rowValue}
         </div>
       )
