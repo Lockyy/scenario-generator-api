@@ -61,29 +61,29 @@ const CollectionsCollection = React.createClass ({
           current++;
 
           return (
-            <div className={"product-list-link-container" + (current > 8 ?  " hidden" : "")}>
+          <div className={"product-list-link-container" + (current > 8 ?  " hidden" : "")}>
 
-              <Link
-                className="product-list-link"
-                to={`/app/products/${product.id}/${product.slug}`}>
-                {product.name}
-              </Link>
+            <Link
+              className="product-list-link"
+              to={`/app/products/${product.id}/${product.slug}`}>
+              {product.name}
+            </Link>
 
-              <Decide
-                condition={current != collection.products.length}
-                success={() => ', '} />
+            <Decide
+              condition={current != collection.products.length}
+              success={() => ', '}/>
 
-              <Decide
-                condition={hasMore && current == 8}
-                success={() => (
+            <Decide
+              condition={hasMore && current == 8}
+              success={() => (
                   <a
                     className="has-n-more"
                     onClick={ this.handleClick }>
                     {`(${count} more)`}
-                  </a>)} />
-            </div>
-          );
-        }.bind(this))}
+                  </a>)}/>
+          </div>
+            );
+          }.bind(this))}
       </div>
     );
   },
@@ -99,7 +99,7 @@ const CollectionsCollection = React.createClass ({
       <div>
         {_.map(collections, function(collection) {
           return (
-            <div className='collections-collection-row'>
+          <div className='collections-collection-row'>
               <span className={'name mobile'}>
                 <Link to={`/app/collections/${collection.id}${params}`}>{collection.name}</Link>
               </span>
@@ -109,7 +109,7 @@ const CollectionsCollection = React.createClass ({
                   <Decide
                     condition={collection.user.id == this.context.currentUser.id}
                     success={() => ' You,'}
-                    failure={() => ` ${collection.user.name},`} />
+                    failure={() => ` ${collection.user.name},`}/>
                 </Link>
                 <span className={'date mobile'}>
                   {collection.display_date}
@@ -118,9 +118,9 @@ const CollectionsCollection = React.createClass ({
               <span className='includes mobile'>
                 Includes:&nbsp;{this.renderCollectionProductsList(collection)}
               </span>
-            </div>
-          )
-        }.bind(this))}
+          </div>
+            )
+          }.bind(this))}
       </div>
     )
   },
@@ -156,6 +156,15 @@ const CollectionsCollection = React.createClass ({
     return filteredCollections;
   },
 
+  getFilterDropdown: function () {
+    return <Dropdown
+      showText={true}
+      onClick={this.setFilter}
+      active={this.currentFilter()}
+      text="Show:"
+      options={DropdownConstants.collectionFilterOptions}/>
+  },
+
   render: function () {
     let filteredCollections = this.filter();
     let collections = this.state.data.collections
@@ -163,19 +172,19 @@ const CollectionsCollection = React.createClass ({
       <span className="no-collections">
         {this.props.emptyMessage || 'You do not collaborate on any collections. Why not create one yourself?' }
       </span> )
+    let _this = this;
 
     return (
       <div className={`collections-collection ${this.props.className || ''}`}>
-        <Dropdown
-          showText={true}
-          onClick={this.setFilter}
-          active={this.currentFilter()}
-          text="Show:"
-          options={DropdownConstants.collectionFilterOptions}/>
+
+        <Decide
+          condition={collections.length != 0}
+          success={_this.getFilterDropdown.bind(_this)}/>
+
 
         <Decide
           condition={collections.length == 0}
-          success={() => noCollectionsTag} />
+          success={() => noCollectionsTag}/>
 
         <RenderDesktop
           component={TableDisplay}
