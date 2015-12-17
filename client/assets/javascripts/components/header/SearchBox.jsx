@@ -29,7 +29,8 @@ const SearchBox = React.createClass ({
         search_string: '',
         products: { data: [] },
         companies: { data: [] },
-        tags: { data: [] }
+        tags: { data: [] },
+        collections: { data: [] },
       }
     }
   },
@@ -84,7 +85,7 @@ const SearchBox = React.createClass ({
   },
 
   displayResults: function() {
-    return this.state.data.total_results > 0
+    return this.state.data.search_string.length > 0
   },
 
   renderResults: function() {
@@ -118,7 +119,6 @@ const SearchBox = React.createClass ({
               topClass='table-header full-width'
               max={10}
               close={this.closeDropdown}
-              hide={this.state.data.tags.total <= 0}
               searchTerm={this.state.data.search_string}
               onClick={this.onTagClick} />
             <Results
