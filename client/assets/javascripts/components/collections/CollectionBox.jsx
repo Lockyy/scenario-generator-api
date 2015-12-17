@@ -60,7 +60,7 @@ const CollectionBox = React.createClass ({
                 {description}
               </p>
 
-              <div className='preview-collection' onClick={() => this.previewCollection(this.props.collection)}>
+              <div className='preview-collection with-preview-icon small-icon' onClick={() => this.previewCollection(this.props.collection)}>
                 Preview
               </div>
             </div>
