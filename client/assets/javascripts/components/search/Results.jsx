@@ -419,7 +419,7 @@ const Results = React.createClass ({
       case 'size':
         return (
           <div className='top-right'>
-            { this.totalElements() } result(s) found
+            { this.totalElements() } result{this.totalElements() == 1 ? '' : 's'} found
           </div>
         )
         break;

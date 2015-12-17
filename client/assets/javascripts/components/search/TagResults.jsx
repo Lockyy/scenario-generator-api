@@ -35,7 +35,7 @@ const TagResults = React.createClass ({
     let total = this.props.data.total;
     return (
       <div className={className ? className : ''}>
-        { total ? total : 'No'  } result{total > 1 || total == 0 ? 's' : ''} found
+        { total } result{total == 1 ? '' : 's'} found
       </div>);
   },
 
@@ -67,15 +67,15 @@ const TagResults = React.createClass ({
               </div>
           )
         }
-      case 'size':
-        return this.getCountResultsMessage('top-right');
       case 'link':
-        let closeMethod = this.props.close ? this.props.close: function(){} ;
-        return (
-          <Link onClick={closeMethod} className='top-right' to={`/app/search/tags/${this.props.searchTerm}/1`}>
-            View all matching tags ({this.props.data.total})
-          </Link>
-        );
+        if(this.props.data.data.length > 0) {
+          let closeMethod = this.props.close ? this.props.close: function(){} ;
+          return (
+            <Link onClick={closeMethod} className='top-right' to={`/app/search/tags/${this.props.searchTerm}/1`}>
+              View all matching tags ({this.props.data.total})
+            </Link>
+          );
+        }
       case 'hide':
         if(this.props.data.data.length > 0) {
           return (
@@ -89,7 +89,8 @@ const TagResults = React.createClass ({
             </div>
           )
         }
-        break
+      case 'size':
+        return this.getCountResultsMessage('top-right');
     }
   },
 
