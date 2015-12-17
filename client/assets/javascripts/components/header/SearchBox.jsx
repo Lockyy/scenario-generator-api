@@ -34,10 +34,14 @@ const SearchBox = React.createClass ({
     }
   },
 
-  performSearch: function(search_string) {
-    SearchHeaderStore.listen(this.onChange.bind(this));
-    FluxSearchHeaderActions.getSearchResults({ search_string: search_string, page: 1, per_page: 2, filter_by: 'name' });
-  },
+  performSearch: _.debounce(function(search_string) {
+    if(search_string.length <= 0) {
+      this.closeDropdown();
+    } else {
+      SearchHeaderStore.listen(this.onChange.bind(this));
+      FluxSearchHeaderActions.getSearchResults({ search_string: search_string, page: 1, per_page: 2, filter_by: 'name' });
+    }
+  }, 300),
 
   onChange: function(data) {
     this.setState(data);
@@ -54,11 +58,7 @@ const SearchBox = React.createClass ({
   onSearchInput: function(event) {
     let search_string = event.target.value;
 
-    if(search_string.length <= 0) {
-      this.closeDropdown();
-    } else {
-      this.performSearch(search_string);
-    }
+    this.performSearch(search_string)
   },
 
   onSubmit: function(event) {
@@ -79,7 +79,7 @@ const SearchBox = React.createClass ({
 
   closeDropdown: function() {
     $('.search-container .form-control').val('');
-    $('.search-container .results-holder').hide();
+    $('.search-container .results-dropdown').hide();
     $('.navbar').removeClass('scrollable-header');
   },
 
