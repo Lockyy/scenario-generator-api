@@ -3,14 +3,24 @@
 .search-container
   .form-group
     position: relative
-    .results-holder
-      position: absolute
-      z-index: 100
-      overflow: hidden
-      width: 630px
-      margin-top: 21px
-      padding: 0px 20px 20px
-      background: white
-      box-shadow: 0px 1px 5px $grey
-      .small-text
-        display: none
+    .results-dropdown
+      &::before
+        display: block
+        position: absolute
+        width: 25px
+        height: 25px
+        transform: scale(2, 0.9)
+        left: 25px
+        content: url('icons/icon-dropdown-tri.svg')
+      .results-holder
+        position: absolute
+        z-index: 100
+        overflow: auto
+        max-height: 700px
+        width: 630px
+        margin-top: 21px
+        padding: 0px 20px 20px
+        background: white
+        box-shadow: 0px 1px 5px $grey
+        .small-text
+          display: none

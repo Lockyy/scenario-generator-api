@@ -91,45 +91,47 @@ const SearchBox = React.createClass ({
     if(this.displayResults()) {
 
       return (
-        <div ref='resultsHolder' className='results-holder'>
-          <Results
-            type='products'
-            data={this.state.data.products}
-            topLeft='type'
-            topRight='link'
-            topClass='table-header full-width'
-            className={'header'}
-            close={this.closeDropdown}
-            searchTerm={this.state.data.search_string} />
-          <Results
-            type='companies'
-            data={this.state.data.companies}
-            topLeft='type'
-            topRight='link'
-            topClass='table-header full-width'
-            className={'header'}
-            close={this.closeDropdown}
-            searchTerm={this.state.data.search_string} />
-          <TagResults
-            data={this.state.data.tags}
-            className={'header'}
-            topRight={'link'}
-            topClass='table-header full-width'
-            max={10}
-            close={this.closeDropdown}
-            hide={this.state.data.tags.total <= 0}
-            searchTerm={this.state.data.search_string}
-            onClick={this.onTagClick} />
-          <Results
-            type='collections'
-            data={this.state.data.collections}
-            topLeft='type'
-            topRight='link'
-            close={this.closeDropdown}
-            topClass='table-header full-width'
-            className={'header'}
-            searchTerm={this.state.data.search_string}
-            onClick={this.closeDropdown} />
+        <div className='results-dropdown'>
+          <div ref='resultsHolder' className='results-holder'>
+            <Results
+              type='products'
+              data={this.state.data.products}
+              topLeft='type'
+              topRight='link'
+              topClass='table-header full-width'
+              className={'header'}
+              close={this.closeDropdown}
+              searchTerm={this.state.data.search_string} />
+            <Results
+              type='companies'
+              data={this.state.data.companies}
+              topLeft='type'
+              topRight='link'
+              topClass='table-header full-width'
+              className={'header'}
+              close={this.closeDropdown}
+              searchTerm={this.state.data.search_string} />
+            <TagResults
+              data={this.state.data.tags}
+              className={'header'}
+              topRight={'link'}
+              topClass='table-header full-width'
+              max={10}
+              close={this.closeDropdown}
+              hide={this.state.data.tags.total <= 0}
+              searchTerm={this.state.data.search_string}
+              onClick={this.onTagClick} />
+            <Results
+              type='collections'
+              data={this.state.data.collections}
+              topLeft='type'
+              topRight='link'
+              close={this.closeDropdown}
+              topClass='table-header full-width'
+              className={'header'}
+              searchTerm={this.state.data.search_string}
+              onClick={this.closeDropdown} />
+          </div>
         </div>
       )
     }
