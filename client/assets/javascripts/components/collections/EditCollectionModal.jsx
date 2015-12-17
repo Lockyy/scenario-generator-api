@@ -249,8 +249,10 @@ const EditCollectionModal = React.createClass ({
     return (
       <div className='buttons'>
         <button
-          className='btn btn-grey btn-round'
+          className='btn btn-red-inverted btn-round'
           onClick={this.submitForm}>Save</button>
+        <button className='btn btn-grey-inverted btn-round'
+                onClick={this.close}>Cancel</button>
       </div>
     )
   },
@@ -280,7 +282,7 @@ const EditCollectionModal = React.createClass ({
     return (
       <div className='header collections'>
         <span className='title'>
-          Edit Collection
+          Edit collection and add products
         </span>
         <a onClick={this.close} className='close'></a>
       </div>
