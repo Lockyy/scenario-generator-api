@@ -123,7 +123,7 @@ const CollectionsCollection = React.createClass ({
       <div className={`collections-collection ${this.props.className || ''}`}>
       {this.state.data.collections.length > 0 ? null :
         <span className="no-collections">
-          No collections have been created, yet. Why not make one yourself?
+          {this.props.emptyMessage || 'You do not collaborate on any collections. Why not create one yourself?' }
         </span>}
 
         <RenderDesktop

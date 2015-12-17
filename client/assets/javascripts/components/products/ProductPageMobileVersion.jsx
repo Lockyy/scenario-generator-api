@@ -231,7 +231,8 @@ const ProductPageMobileVersion = React.createClass({
               </div>
               <CollectionsCollection
                 product={this.props.data}
-                mobile="true" />
+                mobile="true"
+                emptyMessage='This product has not been added to any collections.' />
             </Section>
           </div>
 
