@@ -245,7 +245,8 @@ const EditCollectionModal = React.createClass ({
       <Results
         type='collection-product'
         onRemove={this.removeProduct}
-        data={{data: this.unsavedProducts()}} />
+        data={{data: this.unsavedProducts()}}
+        per_page={20}/>
     )
   },
 
