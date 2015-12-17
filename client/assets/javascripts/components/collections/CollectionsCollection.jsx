@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import CollectionBox from './CollectionBox';
+import Decide from '../Decide';
 import RenderDesktop from '../RenderDesktop';
 import RenderMobile from '../RenderMobile';
 import TableDisplay from '../TableDisplay';
@@ -64,17 +65,18 @@ const CollectionsCollection = React.createClass ({
                 {product.name}
               </Link>
 
-              {(!hasMore &&
-                current == collection.products.length) ||
-                (hasMore &&
-                current == collection.products.length) ?
-                "" : <span>,&nbsp;</span> }
+              <Decide
+                condition={current != collection.products.length}
+                success={', '} />
 
-              {hasMore && current == 8 ?
-                <a className="has-n-more"
-                   onClick={ this.handleClick }>
-                  {"(" + count + " more)"}
-                </a> : ""}
+              <Decide
+                condition={hasMore && current == 8}
+                success={(
+                  <a
+                    className="has-n-more"
+                    onClick={ this.handleClick }>
+                    {`(${count} more)`}
+                  </a>)} />
             </div>
           );
         }.bind(this))}
@@ -101,8 +103,11 @@ const CollectionsCollection = React.createClass ({
               <span className={'owner mobile'}>
                 Created by
                 <Link className='user-link' to={`/app/users/${collection.user.id}`}>
-                  {collection.user.id == this.context.currentUser.id ? ' You' : ` ${collection.user.name}`}
-                </Link>,
+                  <Decide
+                    condition={collection.user.id == this.context.currentUser.id}
+                    success={' You,'}
+                    failure={` ${collection.user.name},`} />
+                </Link>
                 <span className={'date mobile'}>
                   {collection.display_date}
                 </span>
@@ -119,12 +124,16 @@ const CollectionsCollection = React.createClass ({
 
   render: function() {
     let _this = this
+    let noCollectionsTag = (
+      <span className="no-collections">
+        No collections have been created, yet. Why not make one yourself?
+      </span> )
+
     return (
       <div className={`collections-collection ${this.props.className || ''}`}>
-      {this.state.data.collections.length > 0 ? null :
-        <span className="no-collections">
-          No collections have been created, yet. Why not make one yourself?
-        </span>}
+        <Decide
+          condition={this.state.data.collections.length == 0}
+          success={noCollectionsTag} />
 
         <RenderDesktop
           component={TableDisplay}
