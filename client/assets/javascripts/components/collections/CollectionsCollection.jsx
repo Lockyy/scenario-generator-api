@@ -6,47 +6,51 @@ import RenderDesktop from '../RenderDesktop';
 import RenderMobile from '../RenderMobile';
 import TableDisplay from '../TableDisplay';
 import CollectionStore from '../../stores/CollectionStore';
+import DropdownConstants from '../../utils/constants/DropdownConstants';
+import CollectionContants from '../../utils/constants/CollectionConstants';
+import Dropdown from '../Dropdown';
 
 const CollectionsCollection = React.createClass ({
   displayName: 'CollectionsCollection',
-  mixins: [ Navigation ],
+  mixins: [Navigation],
 
   contextTypes: {
     currentUser: React.PropTypes.object
   },
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       data: {
         collections: CollectionStore.state.data.collections,
         products: CollectionStore.state.data.products
       },
-      prodLists: []
+      prodLists: [],
+      filter: CollectionContants.DEFAULT_FILTER
     };
   },
 
-  getDefaultProps: function() {
+  getDefaultProps: function () {
     return {
       mobile: false
     };
   },
 
-  componentDidMount: function() {
+  componentDidMount: function () {
     CollectionStore.listen(this.onChange);
   },
 
-  onChange: function(data) {
+  onChange: function (data) {
     this.setState(data);
   },
 
-  handleClick: function(e) {
+  handleClick: function (e) {
     let callee = $(e.target);
     let container = callee.parent().parent();
     container.find('*').removeClass('hidden');
     callee.remove();
   },
 
-  renderCollectionProductsList: function(collection) {
+  renderCollectionProductsList: function (collection) {
     let count = (collection.products.length - 8);
     let hasMore = count > 0;
     let current = 0;
@@ -56,45 +60,44 @@ const CollectionsCollection = React.createClass ({
           current++;
 
           return (
-            <div className={"product-list-link-container" + (current > 8 ?  " hidden" : "")}>
+          <div className={"product-list-link-container" + (current > 8 ?  " hidden" : "")}>
 
-              <Link
-                className="product-list-link"
-                to={`/app/products/${product.id}/${product.slug}`}>
-                {product.name}
-              </Link>
+            <Link
+              className="product-list-link"
+              to={`/app/products/${product.id}/${product.slug}`}>
+              {product.name}
+            </Link>
 
-              {(!hasMore &&
-                current == collection.products.length) ||
-                (hasMore &&
+            {(!hasMore &&
+              current == collection.products.length) ||
+              (hasMore &&
                 current == collection.products.length) ?
-                "" : <span>,&nbsp;</span> }
+              "" : <span>,&nbsp;</span> }
 
-              {hasMore && current == 8 ?
-                <a className="has-n-more"
-                   onClick={ this.handleClick }>
-                  {"(" + count + " more)"}
-                </a> : ""}
-            </div>
-          );
-        }.bind(this))}
+            {hasMore && current == 8 ?
+            <a className="has-n-more"
+               onClick={ this.handleClick }>
+              {"(" + count + " more)"}
+            </a> : ""}
+          </div>
+            );
+          }.bind(this))}
       </div>
     );
   },
 
-  renderCollections: function() {
-    let _this = this;
+  renderCollections: function (collections) {
     let params = '';
 
-    if(this.context.router.state.components[0].displayName == 'ProductPage') {
+    if (this.context.router.state.components[0].displayName == 'ProductPage') {
       params = `?name=${this.props.product.name}&link=${window.location.pathname}`
     }
 
     return (
       <div>
-        {_.map(this.state.data.collections, function(collection) {
+        {_.map(collections, function(collection) {
           return (
-            <div className='collections-collection-row'>
+          <div className='collections-collection-row'>
               <span className={'name mobile'}>
                 <Link to={`/app/collections/${collection.id}${params}`}>{collection.name}</Link>
               </span>
@@ -110,26 +113,65 @@ const CollectionsCollection = React.createClass ({
               <span className='includes mobile'>
                 Includes:&nbsp;{this.renderCollectionProductsList(collection)}
               </span>
-            </div>
-          )
-        }.bind(this))}
+          </div>
+            )
+          }.bind(this))}
       </div>
     )
   },
 
-  render: function() {
-    let _this = this
+  currentFilter: function () {
+    return this.state.filter
+  },
+
+  setFilter: function (filter) {
+    this.setState({filter: filter})
+  },
+
+  filter: function () {
+    let data = this.state.data;
+    let collections = data.collections;
+    let filteredCollections = [];
+    let filter = this.currentFilter();
+    if (filter == 'owner') {
+      filteredCollections = _.select(collections, function (collection) {
+        return collection.owned
+      })
+    } else if (filter == 'collaborator') {
+      filteredCollections = _.select(collections, function (collection) {
+        return collection.viewer
+      })
+    } else if (filter == 'public') {
+      filteredCollections = _.select(collections, function (collection) {
+        return collection.privacy == 'visible'
+      })
+    } else {
+      filteredCollections = collections
+    }
+    return filteredCollections;
+  },
+
+  render: function () {
+    let filteredCollections = this.filter();
+    let collections = this.state.data.collections
     return (
       <div className={`collections-collection ${this.props.className || ''}`}>
-      {this.state.data.collections.length > 0 ? null :
+        <Dropdown
+          showText={true}
+          onClick={this.setFilter}
+          active={this.currentFilter()}
+          text="Show:"
+          options={DropdownConstants.collectionFilterOptions}/>
+
+        {collections.length > 0 ? null :
         <span className="no-collections">
           No collections have been created, yet. Why not make one yourself?
         </span>}
 
         <RenderDesktop
           component={TableDisplay}
-          conditional={this.state.data.collections.length > 0}
-          data={this.state.data.collections}
+          conditional={collections.length > 0}
+          data={filteredCollections}
           allowSorting={true}
           defaultSortColumn='updated_at'
           columns={[
@@ -155,7 +197,7 @@ const CollectionsCollection = React.createClass ({
               width: 3,
               sortByColumn: 'updated_at'
             }
-          ]} />
+          ]}/>
 
         <RenderMobile>
           {this.renderCollections()}
