@@ -241,11 +241,12 @@ const ShareCollection = React.createClass ({
   renderSubmissionButtons: function () {
     return (
       <div className='buttons submission-buttons'>
-        { this.state.config.cancel ?
-        <button className='btn btn-grey btn-round'
-                onClick={this.props.close}>{this.state.config.cancel}</button> : null }
-        <button className='btn btn-red btn-round'
+        <button className='btn btn-red-inverted btn-round'
                 onClick={this.submitForm}>{this.state.config.confirm || 'Finish'}</button>
+        { this.state.config.cancel ?
+        <button className='btn btn-grey-inverted btn-round'
+                onClick={this.props.close}>{this.state.config.cancel}</button> : null }
+
       </div>
     )
   },

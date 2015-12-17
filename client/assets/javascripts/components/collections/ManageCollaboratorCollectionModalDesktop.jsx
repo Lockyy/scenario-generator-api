@@ -101,9 +101,9 @@ const ManageCollaboratorCollectionModalDesktop = React.createClass ({
   renderSubmissionButtons: function() {
     return (
       <div className='buttons'>
-        <button className='btn btn-red btn-round'
+        <button className='btn btn-red-inverted btn-round'
                 onClick={this.props.submitForm}>Save</button>
-        <button className='btn btn-grey btn-round'
+        <button className='btn btn-grey-inverted btn-round'
                 onClick={this.props.close}>Cancel</button>
       </div>
     )

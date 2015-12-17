@@ -70,12 +70,6 @@ $color-blackcharcoal: #3c3c3b
         &.active
           background-image: img-url('icons/icon-tags-red.svg')
 
-      &.collaborators
-        background-image: img-url('icons/icon-share-grey.svg')
-
-        &.active
-          background-image: img-url('icons/icon-share.svg')
-
       &.lists
         background-image: img-url('icons/icon-lists-grey.svg')
 
@@ -88,7 +82,7 @@ $color-blackcharcoal: #3c3c3b
         &.active
           background-image: img-url('icons/icon-bookmarks-red.svg')
 
-      &.collections, &.products
+      &.collections
         background-image: img-url('icons/icon-collections-grey.svg')
 
         &.active
@@ -100,7 +94,10 @@ $color-blackcharcoal: #3c3c3b
           &.leave-collection
             background-image: img-url('icons/icon-end-collab.svg')
           &.delete-form
+            text-transform: capitalize
+            padding: 22.5px 25px
             background-image: img-url('icons/icon-delete-collection-form.svg')
+
           display: block
           color: $jll-petrol
           text-decoration: underline

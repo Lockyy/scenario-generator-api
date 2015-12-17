@@ -97,9 +97,10 @@ const CollectionPage = React.createClass({
         FluxCollectionActions.deleteCollection({
           id: _this.props.params.id,
           name: collection_name
-        })
-        let previous = _this.getParameterByName('link') || `/app/users/current`
-        _this.context.router.transitionTo(previous)
+        });
+        //TODO: Change this into a transition
+        let previous = _this.getParameterByName('link') || `/app/users/current#collections`;
+        window.location.href = previous
       }
     })
   },
@@ -131,7 +132,7 @@ const CollectionPage = React.createClass({
   },
 
   shareCollection: function() {
-    this.showShareCollectionModal(this.state.data.collection, {confirm: 'Confirm Share', cancel: 'Cancel', hideRadios: false})
+    this.showShareCollectionModal(this.state.data.collection, {confirm: 'Save', cancel: 'Cancel', hideRadios: false})
   },
 
   viewCollaborators: function() {
