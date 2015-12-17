@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import RenderMobile from '../RenderMobile';
+import Decide from '../Decide';
 import TextHelper from '../../utils/helpers/TextHelper';
 import Modal from 'react-modal';
 import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
@@ -124,7 +125,7 @@ const AddToCollectionModal = React.createClass ({
     return _.indexOf(collectionProductIDs, productID) > -1
   },
 
-  addToCollection: function(e, collection) {
+  addToCollection: function(e, collection, callback) {
     let product = this.state.product;
 
     let sendNotification = function() {
@@ -138,18 +139,14 @@ const AddToCollectionModal = React.createClass ({
         }
       })
     };
-    let _this = this;
-    if (product.id && collection.id) {
-      let callback = function(){
-        sendNotification();
-        _this.close()
-      };
 
-      FluxCollectionActions.addProductToCollection(product.id, collection.id, callback);
+    if (product.id && collection.id) {
+      FluxCollectionActions.addProductToCollection(product.id, collection.id, sendNotification);
       FluxCollectionActions.performSearch(this.state.searchTerm || '');
       let addedCollections = this.state.addedCollections;
       addedCollections.push(collection.id);
       this.setState({addedCollections: addedCollections})
+      callback();
     }
   },
 
@@ -167,7 +164,9 @@ const AddToCollectionModal = React.createClass ({
       return (
         <div>
           { this.renderCollectionList(collectionSet, setKey) }
-          { setKey == 'owned' ? this.renderCreateCollectionLink() : '' }
+          <Decide
+            condition={ setKey == 'owned' }
+            success={() => this.renderCreateCollectionLink()} />
         </div>
       )
     }.bind(this))
@@ -321,9 +320,12 @@ const AddToCollectionModal = React.createClass ({
           <a href="#" onClick={this.close} className='close'></a>
         </div>
         {this.renderSearchBox()}
-        { this.hasCollectionList() ?
-            this.renderAddToCollectionForm() :
-            <span className="no-results">No results found.</span> }
+
+        <Decide
+          condition={this.hasCollectionList()}
+          success={this.renderAddToCollectionForm}
+          failure={() => <span className="no-results">No results found.</span>} />
+
         <RenderMobile component={Footer} />
       </Modal>
     )

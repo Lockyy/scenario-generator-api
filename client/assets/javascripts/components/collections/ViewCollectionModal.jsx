@@ -125,6 +125,10 @@ const ViewCollectionModal = React.createClass ({
     return TextHelper.truncate(this.state.collection.name, 23)
   },
 
+  onClickAdd: function(e) {
+    this.state.config.addProductToCollection(e, this.state.collection, this.close);
+  },
+
   // Rendering
   ////////////
 
@@ -137,7 +141,7 @@ const ViewCollectionModal = React.createClass ({
       addButton = (
         <button
           className='btn btn-red-inverted btn-round mobile'
-          onClick={(e) => addProduct(e, collection)}>
+          onClick={this.onClickAdd}>
           Add
         </button>
       );
