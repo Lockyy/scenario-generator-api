@@ -2,12 +2,13 @@ import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import CollectionBox from './CollectionBox';
+import Decide from '../Decide';
 import RenderDesktop from '../RenderDesktop';
 import RenderMobile from '../RenderMobile';
 import TableDisplay from '../TableDisplay';
 import CollectionStore from '../../stores/CollectionStore';
 import DropdownConstants from '../../utils/constants/DropdownConstants';
-import CollectionContants from '../../utils/constants/CollectionConstants';
+import CollectionConstants from '../../utils/constants/CollectionConstants';
 import Dropdown from '../Dropdown';
 
 const CollectionsCollection = React.createClass ({
@@ -25,7 +26,7 @@ const CollectionsCollection = React.createClass ({
         products: CollectionStore.state.data.products
       },
       prodLists: [],
-      filter: CollectionContants.DEFAULT_FILTER
+      filter: CollectionConstants.DEFAULT_FILTER
     };
   },
 
@@ -60,28 +61,29 @@ const CollectionsCollection = React.createClass ({
           current++;
 
           return (
-          <div className={"product-list-link-container" + (current > 8 ?  " hidden" : "")}>
+            <div className={"product-list-link-container" + (current > 8 ?  " hidden" : "")}>
 
-            <Link
-              className="product-list-link"
-              to={`/app/products/${product.id}/${product.slug}`}>
-              {product.name}
-            </Link>
+              <Link
+                className="product-list-link"
+                to={`/app/products/${product.id}/${product.slug}`}>
+                {product.name}
+              </Link>
 
-            {(!hasMore &&
-              current == collection.products.length) ||
-              (hasMore &&
-                current == collection.products.length) ?
-              "" : <span>,&nbsp;</span> }
+              <Decide
+                condition={current != collection.products.length}
+                success={() => ', '} />
 
-            {hasMore && current == 8 ?
-            <a className="has-n-more"
-               onClick={ this.handleClick }>
-              {"(" + count + " more)"}
-            </a> : ""}
-          </div>
-            );
-          }.bind(this))}
+              <Decide
+                condition={hasMore && current == 8}
+                success={() => (
+                  <a
+                    className="has-n-more"
+                    onClick={ this.handleClick }>
+                    {`(${count} more)`}
+                  </a>)} />
+            </div>
+          );
+        }.bind(this))}
       </div>
     );
   },
@@ -97,15 +99,18 @@ const CollectionsCollection = React.createClass ({
       <div>
         {_.map(collections, function(collection) {
           return (
-          <div className='collections-collection-row'>
+            <div className='collections-collection-row'>
               <span className={'name mobile'}>
                 <Link to={`/app/collections/${collection.id}${params}`}>{collection.name}</Link>
               </span>
               <span className={'owner mobile'}>
                 Created by
                 <Link className='user-link' to={`/app/users/${collection.user.id}`}>
-                  {collection.user.id == this.context.currentUser.id ? ' You' : ` ${collection.user.name}`}
-                </Link>,
+                  <Decide
+                    condition={collection.user.id == this.context.currentUser.id}
+                    success={() => ' You,'}
+                    failure={() => ` ${collection.user.name},`} />
+                </Link>
                 <span className={'date mobile'}>
                   {collection.display_date}
                 </span>
@@ -113,9 +118,9 @@ const CollectionsCollection = React.createClass ({
               <span className='includes mobile'>
                 Includes:&nbsp;{this.renderCollectionProductsList(collection)}
               </span>
-          </div>
-            )
-          }.bind(this))}
+            </div>
+          )
+        }.bind(this))}
       </div>
     )
   },
@@ -154,6 +159,11 @@ const CollectionsCollection = React.createClass ({
   render: function () {
     let filteredCollections = this.filter();
     let collections = this.state.data.collections
+    let noCollectionsTag = (
+      <span className="no-collections">
+        {this.props.emptyMessage || 'You do not collaborate on any collections. Why not create one yourself?' }
+      </span> )
+
     return (
       <div className={`collections-collection ${this.props.className || ''}`}>
         <Dropdown
@@ -163,10 +173,9 @@ const CollectionsCollection = React.createClass ({
           text="Show:"
           options={DropdownConstants.collectionFilterOptions}/>
 
-        {collections.length > 0 ? null :
-        <span className="no-collections">
-          {this.props.emptyMessage || 'You do not collaborate on any collections. Why not create one yourself?' }
-        </span>}
+        <Decide
+          condition={collections.length == 0}
+          success={() => noCollectionsTag} />
 
         <RenderDesktop
           component={TableDisplay}
