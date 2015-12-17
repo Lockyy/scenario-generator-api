@@ -113,5 +113,23 @@ module.exports = {
       option: 'helpful',
       display: 'Most Helpful: High to Low'
     }
+  ],
+  collectionFilterOptions: [
+    {
+      option: 'all',
+      display: 'All Collections'
+    },
+    {
+      option: 'owner',
+      display: 'Owned/Co-Owned'
+    },
+    {
+      option: 'collaborator',
+      display: 'Collaborated'
+    },
+    {
+      option: 'public',
+      display: 'Public'
+    }
   ]
 };

@@ -29,15 +29,20 @@ const SearchBox = React.createClass ({
         search_string: '',
         products: { data: [] },
         companies: { data: [] },
-        tags: { data: [] }
+        tags: { data: [] },
+        collections: { data: [] },
       }
     }
   },
 
-  performSearch: function(search_string) {
-    SearchHeaderStore.listen(this.onChange.bind(this));
-    FluxSearchHeaderActions.getSearchResults({ search_string: search_string, page: 1, per_page: 2, filter_by: 'name' });
-  },
+  performSearch: _.debounce(function(search_string) {
+    if(search_string.length <= 0) {
+      this.closeDropdown();
+    } else {
+      SearchHeaderStore.listen(this.onChange.bind(this));
+      FluxSearchHeaderActions.getSearchResults({ search_string: search_string, page: 1, per_page: 2, filter_by: 'name' });
+    }
+  }, 300),
 
   onChange: function(data) {
     let _this = this;
@@ -52,11 +57,7 @@ const SearchBox = React.createClass ({
   onSearchInput: function(event) {
     let search_string = event.target.value;
 
-    if(search_string.length <= 0) {
-      this.closeDropdown();
-    } else {
-      this.performSearch(search_string);
-    }
+    this.performSearch(search_string)
   },
 
   onSubmit: function(event) {
@@ -81,7 +82,7 @@ const SearchBox = React.createClass ({
   },
 
   displayResults: function() {
-    return this.state.data.total_results > 0
+    return this.state.data.search_string.length > 0
   },
 
   renderResults: function() {
@@ -115,7 +116,6 @@ const SearchBox = React.createClass ({
               topClass='table-header full-width'
               max={10}
               close={this.closeDropdown}
-              hide={this.state.data.tags.total <= 0}
               searchTerm={this.state.data.search_string}
               onClick={this.onTagClick} />
             <Results

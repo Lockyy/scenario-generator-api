@@ -186,7 +186,8 @@ const ProductPageDesktopVersion = React.createClass({
               Add to existing collection
             </div>
             <CollectionsCollection
-              product={this.props.data} />
+              product={this.props.data}
+              emptyMessage='This product has not been added to any collections.' />
           </div>
           <div
             tabTitle='Custom Data'
