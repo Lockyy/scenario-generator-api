@@ -12,29 +12,59 @@ import _ from 'lodash';
 
 const Decide = React.createClass ({
 
-  getDefaultProps: function() {
-    return {
-      condition: true,
-      success: <span/>,
-      failure: <span/>
+  NOTFUNCTIONERRORMESSAGE: 'Decide component only accepts functions for success and failure props. This is to ensure only the correct statement is evaluated.\nYou might want to wrap your value like this: "() => value;".',
+  NORESULTSERROR: 'Decide component requires either a success or failure function.',
+
+  // Ensure we have a success or failure and ensure that the success and failure
+  // we were given are functions.
+  // We require that success and failure are both functions because otherwise they
+  // are both executed which can lead to unpredicted behaviour.
+  validation: function() {
+    if(!this.props.success && !this.props.failure) {
+      throw this.NORESULTSERROR;
+    }
+
+    if((this.props.success && !_.isFunction(this.props.success)) ||
+       (this.props.failure && !_.isFunction(this.props.failure))) {
+      throw this.NOTFUNCTIONERRORMESSAGE;
     }
   },
 
-  render: function() {
-    let returnedElement;
-
+  getCorrectResult: function() {
     if(this.props.condition) {
-      returnedElement = this.props.success;
+      return this.run(this.props.success);
     } else {
-      returnedElement = this.props.failure;
+      return this.run(this.props.failure);
     }
+  },
 
-    // If this isn't a react element than we need to wrap it in a span.
+  run: function(func) {
+    if(func) {
+      return func()
+    }
+    return this.defaultResult()
+  },
+
+  defaultResult: function() {
+    return <span/>;
+  },
+
+  // If the variable passed in isn't a React Element we need to wrap it in
+  // a span to return it.
+  wrapElement: function(returnedElement) {
     if(React.isValidElement(returnedElement)) {
       return returnedElement;
     } else {
       return <span>{returnedElement}</span>;
     }
+  },
+
+  render: function() {
+    this.validation();
+
+    let returnedElement = this.getCorrectResult();
+
+    return this.wrapElement(returnedElement);
   },
 })
 

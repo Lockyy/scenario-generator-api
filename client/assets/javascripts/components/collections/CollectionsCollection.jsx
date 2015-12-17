@@ -67,11 +67,11 @@ const CollectionsCollection = React.createClass ({
 
               <Decide
                 condition={current != collection.products.length}
-                success={', '} />
+                success={() => ', '} />
 
               <Decide
                 condition={hasMore && current == 8}
-                success={(
+                success={() => (
                   <a
                     className="has-n-more"
                     onClick={ this.handleClick }>
@@ -105,8 +105,8 @@ const CollectionsCollection = React.createClass ({
                 <Link className='user-link' to={`/app/users/${collection.user.id}`}>
                   <Decide
                     condition={collection.user.id == this.context.currentUser.id}
-                    success={' You,'}
-                    failure={` ${collection.user.name},`} />
+                    success={() => ' You,'}
+                    failure={() => ` ${collection.user.name},`} />
                 </Link>
                 <span className={'date mobile'}>
                   {collection.display_date}
@@ -133,7 +133,7 @@ const CollectionsCollection = React.createClass ({
       <div className={`collections-collection ${this.props.className || ''}`}>
         <Decide
           condition={this.state.data.collections.length == 0}
-          success={noCollectionsTag} />
+          success={() => noCollectionsTag} />
 
         <RenderDesktop
           component={TableDisplay}
