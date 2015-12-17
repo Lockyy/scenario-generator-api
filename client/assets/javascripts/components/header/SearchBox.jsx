@@ -46,14 +46,13 @@ const SearchBox = React.createClass ({
 
   onChange: function(data) {
     this.setState(data);
-    let resultsHolder = $(React.findDOMNode(this.refs.resultsHolder));
+    let resultsDropdown = $(React.findDOMNode(this.refs.resultsDropdown));
     let navbar = $('.navbar');
     navbar.addClass('scrollable-header');
-    resultsHolder.show();
-    resultsHolder.on('clickoutside', function(){
-      $(this).hide()
-      navbar.removeClass('scrollable-header');
-    });
+    resultsDropdown.show();
+    resultsDropdown.on('clickoutside', function(){
+      this.closeDropdown()
+    }.bind(this));
   },
 
   onSearchInput: function(event) {
@@ -92,8 +91,8 @@ const SearchBox = React.createClass ({
     if(this.displayResults()) {
 
       return (
-        <div className='results-dropdown'>
-          <div ref='resultsHolder' className='results-holder'>
+        <div className='results-dropdown' ref='resultsDropdown'>
+          <div className='results-holder'>
             <Results
               type='products'
               data={this.state.data.products}
