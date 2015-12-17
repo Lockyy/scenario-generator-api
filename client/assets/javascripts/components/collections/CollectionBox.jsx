@@ -51,7 +51,7 @@ const CollectionBox = React.createClass ({
             <div className='details'>
 
               <div className="header">
-                <h3 className='title'>
+                <h3 className='title with-collection-icon'>
                   <Link to={`/app/collections/${this.props.collection.id}`}>{this.props.collection.name}</Link>
                 </h3>
               </div>

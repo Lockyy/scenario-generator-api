@@ -1,0 +1,18 @@
+@import 'variables'
+
+.table-display
+  .table-display-row
+    @include vertical-padding
+    @include grey-top-border
+    display: flex
+    align-items: center
+    &:first-child
+      border-top: 0px
+  .sort-icon
+    content: url('icons/icon-arrow.svg')
+    transition: 1s all
+    width: 10px
+    height: 10px
+    margin-left: 5px
+    &.asc
+      transform: rotate(180deg)

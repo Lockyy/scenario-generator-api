@@ -129,7 +129,7 @@ const ViewCollectionModal = React.createClass ({
   ////////////
 
   renderButtons: function() {
-    let addButton;
+    let addButton = false;
     let addProduct = this.state.config.addProductToCollection;
     let collection = this.state.collection
 
@@ -144,14 +144,23 @@ const ViewCollectionModal = React.createClass ({
     }
 
     return (
-      <div className='buttons'>
-        <RenderDesktop
-          component='button'
-          className='btn btn-grey-inverted btn-round'
-          onClick={this.close}>
-          Back
+      <div>
+        <RenderDesktop>
+          <div className='buttons'>
+            <button
+              className='btn btn-grey-inverted btn-round'
+              onClick={this.close}>
+              Back
+            </button>
+            {addButton}
+          </div>
         </RenderDesktop>
-        {addButton}
+        <RenderMobile
+          conditional={addButton}>
+          <div className='buttons'>
+            {addButton}
+          </div>
+        </RenderMobile>
       </div>
     )
   },
@@ -185,7 +194,7 @@ const ViewCollectionModal = React.createClass ({
     return (
       <div className='horizontal-padding'>
         <div className={'header' + (this.state.config.mobile ? ' mobile' : '')}>
-          <span className={'title with-collection-icon'}>{this.state.collection.name}</span>
+          <span className={'title'}>{this.state.collection.name}</span>
           <a onClick={this.close} className='close'></a>
         </div>
 

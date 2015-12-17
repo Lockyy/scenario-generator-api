@@ -63,8 +63,7 @@ const TagResults = React.createClass ({
               <Dropdown
                 onClick={this.addSortParam}
                 active={this.props.sorting}
-                options={this.dropdownOptions()}
-                containerClass={'red'} />
+                options={this.dropdownOptions()} />
               </div>
           )
         }
@@ -155,12 +154,12 @@ const TagResults = React.createClass ({
   },
 
   render: function() {
-    let showAllTags = this.props.showLinkAllTags ? <a href='/app/tags' className='all-tags-link'> Browse all tags</a> : '';
+    let showAllTags = this.props.showLinkAllTags ? <a href='/app/tags' className='all-tags-link'> See all tags</a> : '';
     if(this.props.hide) {
       return <div></div>
     } else {
       return (
-        <div className={`results tags ${this.props.containerClass}`}>
+        <div className={`results tags ${this.props.className}`}>
           <div className={`top ${this.props.topClass}`}>
             { this.renderTopLeft() }
             { this.renderTopRight() }
