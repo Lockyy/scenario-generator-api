@@ -27,7 +27,7 @@ class Attachment < ActiveRecord::Base
       "application/x-mspublisher", "application/msword",
       "application/x-mswrite", "application/vnd.ms-works"
     ],
-    message: "%{value} is not a valid attachment type"
+    message: "You are trying to upload an invalid file type"
   }
 
   def author
