@@ -288,14 +288,15 @@ const CreateCollectionModal = React.createClass ({
 
   getShareOptions: function(){
     let self = this;
-    return <div className='grey'>
-      <div><ShareCollection onUpdateEmail={this.updateEmails.bind(self)}
+    return (
+      <div className='grey'>
+        <ShareCollection onUpdateEmail={this.updateEmails.bind(self)}
                             onUpdateUser={this.updateUsers.bind(self)}
                             onUpdateSentInviteEmails={this.updateSendInviteEmails.bind(self)}
                             onChangeEvent={function(callback,e){
                           callback(e);
-                          self.setState({privacy: $(e.target).val()})}}/></div>
-    </div>
+                          self.setState({privacy: $(e.target).val()})}}/>
+    </div>)
   },
 
   renderCollectionForm: function () {
