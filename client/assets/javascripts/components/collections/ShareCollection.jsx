@@ -11,6 +11,7 @@ import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import UserTypeahead from '../UserTypeahead'
 import Results from '../search/Results'
+import Decide from '../Decide'
 
 const ShareCollection = React.createClass ({
   displayName: 'ShareCollection',

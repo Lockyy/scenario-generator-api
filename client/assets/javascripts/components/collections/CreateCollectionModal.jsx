@@ -80,12 +80,17 @@ const CreateCollectionModal = React.createClass ({
   // We aren't modifying the CollectionStore version of the collection because
   // these changes are unsaved at this stage.
   addProduct: function (product, selected) {
-    if (selected) {
-      let newProducts = this.state.data.collection.products
-      newProducts.push(product)
-      this.setState({product_name: null, collection: {products: newProducts}})
-    } else {
-      this.setState({product_name: product.name})
+    if(!_.includes(this.getProductIDs(), product.id)) {
+      if (selected) {
+        let newProducts = this.state.data.collection.products
+        newProducts.push(product)
+        this.setState({product_name: null, collection: {products: newProducts}})
+      } else {
+        this.setState({product_name: product.name})
+      }
+    }
+    else {
+      this.setState({product_name: null});
     }
   },
 
@@ -157,9 +162,20 @@ const CreateCollectionModal = React.createClass ({
 
     if (skipDescription) {
       errors = titleEmpty
+      if(errors){ scrollTo(titleDOM); }
     } else {
-      errors = titleEmpty || descriptionEmpty
+      errors = titleEmpty || descriptionEmpty;
+      if(errors){
+        let element = titleEmpty ? titleDOM : descriptionDOM
+        scrollTo(element);
+      }
       descriptionDOM.toggleClass('greyed', descriptionEmpty);
+    }
+
+    function scrollTo(element){
+      $('.ReactModal__Content').animate({
+        scrollTop: $(element).offset().top
+      }, 1000);
     }
 
     titleDOM.toggleClass('greyed', titleEmpty);
@@ -249,7 +265,8 @@ const CreateCollectionModal = React.createClass ({
       <Results
         type='collection-product'
         onRemove={this.removeProduct}
-        data={{data: this.state.data.collection.products}}/>
+        data={{data: this.state.data.collection.products}}
+        per_page={20}/>
     )
   },
 
@@ -275,17 +292,25 @@ const CreateCollectionModal = React.createClass ({
     )
   },
 
-  renderCollectionForm: function () {
-    let self = this;
-    let shareCollection = <ShareCollection onUpdateEmail={this.updateEmails.bind(self)}
-                                           onUpdateUser={this.updateUsers.bind(self)}
-                                           noButtons={true}
-                                           onUpdateSentInviteEmails={this.updateSendInviteEmails.bind(self)}
-                                           onChangeEvent={function(callback,e){
-                          callback(e);
-                          self.setState({privacy: $(e.target).val()})}}/>
+  getShareOptions: function(){
+    let _this = this;
+    return (
+      <div className='grey'>
+        <ShareCollection
+          noButtons={true}
+          onUpdateEmail={this.updateEmails.bind(_this)}
+          onUpdateUser={this.updateUsers.bind(_this)}
+          onUpdateSentInviteEmails={this.updateSendInviteEmails.bind(_this)}
+          onChangeEvent={function(callback,e){
+            callback(e);
+            _this.setState({privacy: $(e.target).val()})
+          }} />
+      </div>
+    )
+  },
 
-    let sharedOptions = this.props.renderSharePrivacy ? shareCollection : '';
+  renderCollectionForm: function () {
+    let sharedOptions = this.props.renderSharePrivacy ? this.getShareOptions() : '';
 
     return (
       <div className='row'>
@@ -293,19 +318,11 @@ const CreateCollectionModal = React.createClass ({
               ref='collection_form'>
           {this.renderTextFields()}
           {this.renderProductTypeahead()}
-
-          <div className='grey'>
-            <div className='collection-products-container'>
-              {this.renderProducts()}
-            </div>
-            <div>
-              {sharedOptions}
-            </div>
-            <div className='submission-buttons-container'>
-              {this.renderSubmissionButtons()}
-            </div>
+          {this.renderProducts()}
+          {sharedOptions}
+          <div className='submission-buttons-container grey'>
+            {this.renderSubmissionButtons()}
           </div>
-
         </form>
       </div>
     )

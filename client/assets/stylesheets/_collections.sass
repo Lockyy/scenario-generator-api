@@ -108,7 +108,7 @@
     .product-list-link
       text-decoration: underline
 
-@media (max-width:480px)
+@media (max-width: $screen-sm)
   .collections-collection
     margin-top: 0px
 
@@ -181,7 +181,7 @@
     margin-right: 5px
     margin-top: 5px
 
-@media (max-width:480px)
+@media (max-width: $screen-sm)
   .table-display
     display: flex
     flex-direction: column-reverse
@@ -243,7 +243,7 @@
 #create-collection-mobile-modal
   display: none
 
-@media (max-width: 480px)
+@media (max-width: $screen-sm)
 
   .mobile-title
     background: none
@@ -268,6 +268,9 @@
 
           .title::before
             @extend .mobile-title
+
+        .grey.collection-products-section
+          background-color: white
 
         .collection-products-container
           background-color: transparent
@@ -329,6 +332,10 @@
                   opacity: 1
                   width: 25px
                   height: 25px
+
+
+        .submission-buttons-container
+          margin-top: 50px
 
         .buttons
           display: block

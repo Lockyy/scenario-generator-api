@@ -272,9 +272,10 @@ $modal-padding: 25px
           .owner-rank-title
             width: 144px
       .results:not(.sharee)
-        max-height: 26rem
+        max-height: 22vh
         overflow-y: auto
         overflow-x: hidden
+        padding: 0 1em
         .review
           display: flex
           align-items: center
@@ -341,7 +342,7 @@ $modal-padding: 25px
             .created_at
               text-align: right
 
-@media (max-width:480px)
+@media (max-width: $screen-sm)
   .app
     .ReactModal__Overlay
       top: 70px !important
@@ -452,7 +453,7 @@ $modal-padding: 25px
     margin: 0 3em 0 3em
 
 
-@media (max-width:480px)
+@media (max-width: $screen-sm)
   .alert-buttons
     button
       margin-left: 0px
