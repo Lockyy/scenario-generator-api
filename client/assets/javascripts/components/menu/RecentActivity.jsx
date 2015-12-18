@@ -5,9 +5,9 @@ import FluxCurrentUserActions from '../../actions/FluxCurrentUserActions'
 import CurrentUserStore from '../../stores/CurrentUserStore'
 import ReviewBox from '../users/ReviewBox'
 
-const MyRecentActivity = React.createClass ({
+const RecentActivity = React.createClass ({
   mixins: [ Navigation ],
-  displayName: 'MyRecentActivity',
+  displayName: 'RecentActivity',
 
   contextTypes: {
     currentUser: React.PropTypes.object,
@@ -51,8 +51,8 @@ const MyRecentActivity = React.createClass ({
       <div className='no-content'>You haven’t added a review yet.</div> :
       this._getRecentActivity();
     return (
-      <div className='my-recent-activity'>
-        <h2>My recent reviews</h2>
+      <div className='recent-activity'>
+        <h2>Recent reviews</h2>
 
         { details }
 
@@ -61,4 +61,4 @@ const MyRecentActivity = React.createClass ({
   }
 })
 
-export default MyRecentActivity;
+export default RecentActivity;
