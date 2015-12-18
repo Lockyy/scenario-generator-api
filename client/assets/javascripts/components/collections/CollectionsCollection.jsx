@@ -218,7 +218,7 @@ const CollectionsCollection = React.createClass ({
           ]}/>
 
         <RenderMobile>
-          {this.renderCollections(collections)}
+          {this.renderCollections(filteredCollections)}
         </RenderMobile>
       </div>
     )
