@@ -46,7 +46,7 @@ const UserProfileWorkArea  = React.createClass({
         <div className='placeholder-message'>
           Create and share lists of products you are comparing or interested in.
         </div>
-        <div className='btn btn-round btn-grey-inverted' onClick={this.showCreateCollectionModal}>
+        <div className='btn btn-round btn-grey-inverted bottom-margin-2' onClick={this.showCreateCollectionModal}>
           Create Collection
         </div>
         <CollectionsCollection
