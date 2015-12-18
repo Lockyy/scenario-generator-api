@@ -1,3 +1,5 @@
+@import 'common/variables'
+
 #hamburger-menu
   .menu.hamburger-menu
     width: 25%
@@ -5,11 +7,10 @@
     display: block
     position: fixed
     overflow-y: scroll
-    padding-bottom: 50px
     top: 0
     right: 0
     z-index: 5000
-    background: #dfdfdf
+    background: $light-grey
     color: #3c3c3c
     display: none
     box-shadow: -5px 0px 10px 0px rgba(50, 50, 50, 0.45)
@@ -22,7 +23,9 @@
       margin-left: 0px
 
     & > .container
-      width: 85%
+      width: 100%
+      margin: 0px
+      padding: 0px
       padding-top: 0
 
       h2
@@ -37,7 +40,7 @@
         overflow: hidden
 
       .menu-nav
-        padding: 0
+        padding: 0px 40px
         margin: 20px 0 0 0
         display: flex
         align-items: center
@@ -67,7 +70,7 @@
               @include round-corners(30px)
 
       .profile-container, .sidebar-row
-        border-bottom: 2px solid $dark-grey
+        border-bottom: 1px solid $grey
 
         .no-content, .content
           margin: 15px 0px
@@ -117,13 +120,30 @@
           max-width: 170px
 
       .sidebar-row
-        padding: 1em 83px
+        padding: 1.5em 83px
         font-size: 20px
         color: #3c3c3c
         font-weight: bolder
         background-repeat: no-repeat
-        background-position: left center
+        background-position: 10% center
         background-size: 25px
+        display: block
+        text-decoration: none !important
+        position: relative
+        &::after
+          background-image: url("icons/grey-arrow.svg")
+          width: 15px
+          height: 15px
+          display: block
+          content: ''
+          background-size: contain
+          background-repeat: no-repeat
+          position: absolute
+          right: 40px
+          top: 37px
+        &.profile
+          border-top: 1px solid $grey
+          margin-top: 50px
         &.reviews
           background-image: image_url('icons/icon-review-red.svg')
         &.tags
@@ -132,10 +152,13 @@
           background-image: image_url('icons/icon-bookmarks-red.svg')
         &.collections
           background-image: image_url('icons/icon-collections-red.svg')
+        .avatar
+          position: absolute
+          left: 38px
 
   @media only screen and (max-width: $screen-md-max)
     .menu.hamburger-menu
-      width: 40%
+      width: 30%
 
   @media only screen and (max-width: $screen-sm-max)
     .menu.hamburger-menu

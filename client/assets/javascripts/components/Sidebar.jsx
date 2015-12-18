@@ -4,6 +4,7 @@ import UserTags from './users/UserTags';
 import UserBookmarks from './users/UserBookmarks';
 import { ViewCollectionMixin } from './collections/ViewCollectionModal';
 import RecentActivity from './menu/RecentActivity';
+import Avatar from './Avatar';
 import { Link, Navigation } from 'react-router';
 
 const Sidebar = React.createClass ({
@@ -65,18 +66,16 @@ childContextTypes: {
 
   renderCurrentUserInfo: function() {
     return (
-      <div className='profile-container'>
-        <img src={this.context.currentUser.avatar_url} className='avatar'/>
-        <Link to="/app/users/current" onClick={this.closeHamburgerMenu}>Profile</Link>
-
-        {
-          this.context.currentUser.admin ?
-          <div className='admin-container'>
-            <Link to='/admin' className='btn btn-default btn-round'>Admin Area</Link>
-          </div>
-            : ''
-          }
-      </div>
+      <Link
+        className={'sidebar-link sidebar-row profile'}
+        to="/app/users/current"
+        onClick={this.closeHamburgerMenu}>
+        <Avatar
+          disableHover={true}
+          size={31}
+          user={this.context.currentUser} />
+        Profile
+      </Link>
     )
   },
 
@@ -88,22 +87,21 @@ childContextTypes: {
       'Bookmarks',
       'Collections',
     ];
-        
+
     return _.map(sideSections, function(section) {
       let sectionName = section.toLowerCase();
       return (
-        <div className={'sidebar-link sidebar-row ' + sectionName}>
-          <a onClick={function() {
-              _this.closeHamburgerMenu();
-              window.location.href = 
-                ("/app/users/current#" + sectionName);
-              if(window.location.pathname == '/app/users/current') {
-                window.location.reload();
-              }
-            }}>
-            {section}
-          </a>
-        </div>
+        <a
+          className={'sidebar-link sidebar-row ' + sectionName}
+          href={"/app/users/current#" + sectionName}
+          onClick={function() {
+            _this.closeHamburgerMenu
+            if(window.location.pathname == '/app/users/current') {
+              window.location.reload();
+            }
+          }}>
+          {section}
+        </a>
       );
     });
   },

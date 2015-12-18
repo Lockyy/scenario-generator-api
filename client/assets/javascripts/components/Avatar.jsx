@@ -102,7 +102,7 @@ const Avatar = React.createClass({
   render: function render() {
     return (
       <div
-        className={`${this.props.className || ''}`}
+        className={`avatar ${this.props.className || ''}`}
         style={AvatarStyles.container}
         onMouseEnter={this.toggleHover}
         onMouseLeave={this.toggleHover} >
