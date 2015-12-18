@@ -293,16 +293,20 @@ const CreateCollectionModal = React.createClass ({
   },
 
   getShareOptions: function(){
-    let self = this;
+    let _this = this;
     return (
       <div className='grey'>
-        <ShareCollection onUpdateEmail={this.updateEmails.bind(self)}
-                            onUpdateUser={this.updateUsers.bind(self)}
-                            onUpdateSentInviteEmails={this.updateSendInviteEmails.bind(self)}
-                            onChangeEvent={function(callback,e){
-                          callback(e);
-                          self.setState({privacy: $(e.target).val()})}}/>
-    </div>)
+        <ShareCollection
+          noButtons={true}
+          onUpdateEmail={this.updateEmails.bind(_this)}
+          onUpdateUser={this.updateUsers.bind(_this)}
+          onUpdateSentInviteEmails={this.updateSendInviteEmails.bind(_this)}
+          onChangeEvent={function(callback,e){
+            callback(e);
+            _this.setState({privacy: $(e.target).val()})
+          }} />
+      </div>
+    )
   },
 
   renderCollectionForm: function () {
