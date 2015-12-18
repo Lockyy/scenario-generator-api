@@ -89,6 +89,9 @@ const CreateCollectionModal = React.createClass ({
         this.setState({product_name: product.name})
       }
     }
+    else {
+      this.setState({product_name: null});
+    }
   },
 
   getCollection: function (e) {
