@@ -81,9 +81,9 @@ const ManageCollaboratorCollectionModalMobile = React.createClass ({
   renderSaveButton: function() {
     return (
       <div className='buttons top-margin-2'>
-        <button className='btn btn-red btn-round'
+        <button className='btn btn-red-inverted btn-round'
                 onClick={this.props.submitForm}>Save</button>
-        <button className='btn btn-grey btn-round'
+        <button className='btn btn-grey-inverted btn-round'
                 onClick={this.props.close}>Cancel</button>
       </div>
     )
@@ -178,13 +178,13 @@ const ManageCollaboratorCollectionModalMobile = React.createClass ({
 
         <Results
           type='sharee-users'
-          className={`sharee ${this.props.unsaved_collection.privacy == 'hidden' ? 'disabled' : ''}`}
+          className={`sharee`}
           onRemove={this.props.removeUser}
           onUpdate={this.props.updateUser}
           data={{data: this.viewers()}} />
         <Results
           type='sharee-emails'
-          className={`sharee ${this.props.unsaved_collection.privacy == 'hidden' ? 'disabled' : ''}`}
+          className={`sharee`}
           onRemove={this.props.removeEmail}
           onUpdate={this.props.updateEmail}
           data={{data: this.viewers(true)}} />
