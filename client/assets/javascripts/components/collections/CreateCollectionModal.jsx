@@ -157,9 +157,20 @@ const CreateCollectionModal = React.createClass ({
 
     if (skipDescription) {
       errors = titleEmpty
+      if(errors){ scrollTo(titleDOM); }
     } else {
-      errors = titleEmpty || descriptionEmpty
+      errors = titleEmpty || descriptionEmpty;
+      if(errors){
+        let element = titleEmpty ? titleDOM : descriptionDOM
+        scrollTo(element);
+      }
       descriptionDOM.toggleClass('greyed', descriptionEmpty);
+    }
+
+    function scrollTo(element){
+      $('.ReactModal__Content').animate({
+        scrollTop: $(element).offset().top
+      }, 1000);
     }
 
     titleDOM.toggleClass('greyed', titleEmpty);
