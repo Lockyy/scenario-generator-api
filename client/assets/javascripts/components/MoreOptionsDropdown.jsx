@@ -71,11 +71,15 @@ const MoreOptionsDropdown = React.createClass({
   },
 
   render: function render() {
-    return (
-      <div className={this.props.className}>
-        { this.renderMoreOptions() }
-      </div>
-    );
+    if(this.props.rows.length > 0) {
+      return (
+        <div className={this.props.className}>
+          { this.renderMoreOptions() }
+        </div>
+      );
+    } else {
+      return <span/>
+    }
   }
 
 })
