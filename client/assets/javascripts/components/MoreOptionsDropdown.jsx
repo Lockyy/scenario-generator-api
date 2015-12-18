@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import Decide from './Decide';
 
 const MoreOptionsDropdown = React.createClass({
   displayName: 'MoreOptions',
@@ -71,15 +72,15 @@ const MoreOptionsDropdown = React.createClass({
   },
 
   render: function render() {
-    if(this.props.rows.length > 0) {
-      return (
-        <div className={this.props.className}>
-          { this.renderMoreOptions() }
-        </div>
-      );
-    } else {
-      return <span/>
-    }
+    return (
+      <Decide
+        condition={this.props.rows.length > 0}
+        success={() => (
+          <div className={this.props.className}>
+            { this.renderMoreOptions() }
+          </div>
+        )} />
+    )
   }
 
 })
