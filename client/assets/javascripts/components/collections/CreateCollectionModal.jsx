@@ -275,16 +275,20 @@ const CreateCollectionModal = React.createClass ({
     )
   },
 
-  renderCollectionForm: function () {
+  getShareOptions: function(){
     let self = this;
-    let shareCollection = <ShareCollection onUpdateEmail={this.updateEmails.bind(self)}
-                                           onUpdateUser={this.updateUsers.bind(self)}
-                                           onUpdateSentInviteEmails={this.updateSendInviteEmails.bind(self)}
-                                           onChangeEvent={function(callback,e){
+    return <div className='grey'>
+      <div><ShareCollection onUpdateEmail={this.updateEmails.bind(self)}
+                            onUpdateUser={this.updateUsers.bind(self)}
+                            onUpdateSentInviteEmails={this.updateSendInviteEmails.bind(self)}
+                            onChangeEvent={function(callback,e){
                           callback(e);
-                          self.setState({privacy: $(e.target).val()})}}/>
+                          self.setState({privacy: $(e.target).val()})}}/></div>
+    </div>
+  },
 
-    let sharedOptions = this.props.renderSharePrivacy ? shareCollection : '';
+  renderCollectionForm: function () {
+    let sharedOptions = this.props.renderSharePrivacy ? this.getShareOptions() : '';
 
     return (
       <div className='row'>
@@ -292,19 +296,11 @@ const CreateCollectionModal = React.createClass ({
               ref='collection_form'>
           {this.renderTextFields()}
           {this.renderProductTypeahead()}
-
-          <div className='grey'>
-            <div className='collection-products-container'>
-              {this.renderProducts()}
-            </div>
-            <div>
-              {sharedOptions}
-            </div>
-            <div className='submission-buttons-container'>
-              {this.renderSubmissionButtons()}
-            </div>
+          {this.renderProducts()}
+          {sharedOptions}
+          <div className='submission-buttons-container grey'>
+            {this.renderSubmissionButtons()}
           </div>
-
         </form>
       </div>
     )
