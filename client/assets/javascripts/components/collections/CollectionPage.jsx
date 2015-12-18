@@ -434,7 +434,7 @@ const CollectionPage = React.createClass({
 
     if(this.state.data.collection.owned) {
       rows.push({
-        description: "Add Collaborators",
+        description: "Privacy & Sharing",
         action: this.shareCollection })
       rows.push({
         description: "Delete Collection",
@@ -477,7 +477,7 @@ const CollectionPage = React.createClass({
 
     if (isOwned) {
       actionList.push(
-        {action: this.deleteCollection, 
+        {action: this.deleteCollection,
          type: 'delete-form',
          refs: ['collaborators', 'products'],
          tabTitle: 'Delete Collection'}
