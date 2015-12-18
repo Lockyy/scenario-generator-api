@@ -27,7 +27,7 @@
 
   .dropdown-links
     width: 200px
-    border: 1px solid $light-grey
+    border: 1px solid $grey
     display: inline-block
     position: relative
     &.red
@@ -40,7 +40,7 @@
       width: 200px
       position: absolute
       left: -1px
-      border: 1px solid $light-grey
+      border: 1px solid $grey
       border-top: none
     .dropdown-link
       z-index: 100
@@ -68,9 +68,9 @@
       img
         display: inline-block
       &.closed
-        width: 100px
         overflow: hidden
         .dropdown-links
+          width: unset
           .active-dropdown-link-with-image
             .dropdown-text
               display: none
@@ -89,7 +89,7 @@
         position: absolute
         top: 22px
         right: 10px
-        background: url("icons/icon-down-arrow.png") center no-repeat
+        background: url("icons/dropdown-arrow.svg") center no-repeat
         z-index: 99
 
       .dropdown-links

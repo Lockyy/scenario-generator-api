@@ -36,8 +36,8 @@ const Dropdown = React.createClass({
       return (
         <div className={`dropdown-link ${ image ? 'dropdown-link-with-image' : ''}`}
               onClick={ () => this.onClick(option.option) }>
-          <span value={option.option} className="dropdown-text">{option.display}</span>
           {image}
+          <span value={option.option} className="dropdown-text">{option.display}</span>
         </div>
       )
     }
@@ -74,8 +74,8 @@ const Dropdown = React.createClass({
     return (
       <div  className={`active-dropdown-link  ${image ? 'active-dropdown-link-with-image' : ''}`}
             onClick={ this.activeClicked } >
-        <span value={active.option} className="dropdown-text">{active.display}</span>
         {image}
+        <span value={active.option} className="dropdown-text">{active.display}</span>
       </div>
     )
   },
