@@ -9,7 +9,7 @@ import FluxTagsPageActions from '../../actions/FluxTagsPageActions';
 const TagResults = React.createClass ({
 
   getInitialState: function() {
-    return { data: [] }
+    return { data: { data: [], total: 0 }}
   },
 
   componentWillReceiveProps: function(props) {
@@ -73,7 +73,7 @@ const TagResults = React.createClass ({
           )
         }
       case 'link':
-        if(this.props.data.data.length > 0) {
+        if(this.props.data.total > 0) {
           let closeMethod = this.props.close ? this.props.close: function(){} ;
           return (
             <Link onClick={closeMethod} className='top-right' to={`/app/search/tags/${this.props.searchTerm}/1`}>
@@ -82,7 +82,7 @@ const TagResults = React.createClass ({
           );
         }
       case 'hide':
-        if(this.props.data.data.length > 0) {
+        if(this.props.data.total > 0) {
           return (
             <div className='toggle-section-container' onClick={this.toggleSection}>
               <a href='#' className='toggle-section show-section' style={{display: 'none'}}>
