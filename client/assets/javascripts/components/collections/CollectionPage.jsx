@@ -105,28 +105,6 @@ const CollectionPage = React.createClass({
     })
   },
 
-  leaveCollection: function() {
-    let _this = this;
-    let collection_name = this.state.data.collection.name;
-
-    FluxAlertActions.showAlert({
-      title: 'Leave this collection?',
-      blue: true,
-      success: 'Leave',
-      cancel: 'Cancel',
-      message: 'Leaving this collection will remove it from your profile and from the Collections tab of the included products for you only.',
-      checkbox: 'I confirm that I want to leave this collection',
-      successCallback: function() {
-        FluxCollectionActions.leaveCollection({
-          id: _this.props.params.id,
-          name: collection_name
-        })
-        let previous = _this.getParameterByName('link') || `/app/users/current`
-        _this.context.router.transitionTo(previous)
-      }
-    })
-  },
-
   editCollection: function() {
     this.showEditCollectionModal(this.state.data.collection)
   },
@@ -464,14 +442,6 @@ const CollectionPage = React.createClass({
         action: this.deleteCollection })
     }
 
-    if( this.state.data.collection.editable &&
-        this.state.data.collection.user.id != this.context.currentUser.id) {
-      rows.push({
-        description: "Leave Collection",
-        className: 'blue',
-        action: this.leaveCollection })
-    }
-
     return rows
   },
 
@@ -512,15 +482,6 @@ const CollectionPage = React.createClass({
          refs: ['collaborators', 'products'],
          tabTitle: 'Delete Collection'}
       );
-    }
-
-    if (canLeave && !isOwned) {
-      actionList.push(
-        {action: this.leaveCollection,
-         type: 'leave-collection',
-         refs: ['collaborators', 'products'],
-         tabTitle: 'Leave Collection'}
-         );
     }
 
     return (
