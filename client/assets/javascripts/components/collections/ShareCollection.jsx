@@ -243,7 +243,7 @@ const ShareCollection = React.createClass ({
     return (
       <div className='buttons submission-buttons'>
         <button className='btn btn-red-inverted btn-round'
-                onClick={this.submitForm}>{this.state.config.confirm || 'Finish'}</button>
+                onClick={this.submitForm}>{this.state.config.confirm || 'Save'}</button>
         <button className='btn btn-grey-inverted btn-round'
                 onClick={this.props.close}>{this.state.config.cancel || 'Skip'}</button>
       </div>
