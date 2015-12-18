@@ -146,7 +146,9 @@ const AddToCollectionModal = React.createClass ({
       let addedCollections = this.state.addedCollections;
       addedCollections.push(collection.id);
       this.setState({addedCollections: addedCollections})
-      callback();
+      if(_.isFunction(callback) {
+        callback();
+      }
     }
   },
 
