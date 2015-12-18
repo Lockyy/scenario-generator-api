@@ -232,7 +232,7 @@ const EditCollectionModal = React.createClass ({
 
   unsavedProducts: function() {
     return _.filter(this.state.unsaved_collection.products, function(product) {
-      return product
+      return product.unsaved;
     })
   },
 
