@@ -123,7 +123,7 @@ class Collection < ActiveRecord::Base
   end
 
   def display_date
-    created_at.strftime('%b %e, %Y')
+    updated_at.strftime('%b %e, %Y')
   end
 
 end

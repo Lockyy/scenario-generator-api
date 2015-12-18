@@ -156,6 +156,15 @@ const CollectionsCollection = React.createClass ({
     return filteredCollections;
   },
 
+  getFilterDropdown: function () {
+    return <Dropdown
+      showText={true}
+      onClick={this.setFilter}
+      active={this.currentFilter()}
+      text="Show:"
+      options={DropdownConstants.collectionFilterOptions}/>
+  },
+
   render: function () {
     let filteredCollections = this.filter();
     let collections = this.state.data.collections
@@ -163,19 +172,19 @@ const CollectionsCollection = React.createClass ({
       <span className="no-collections">
         {this.props.emptyMessage || 'You do not collaborate on any collections. Why not create one yourself?' }
       </span> )
+    let _this = this;
 
     return (
       <div className={`collections-collection ${this.props.className || ''}`}>
-        <Dropdown
-          showText={true}
-          onClick={this.setFilter}
-          active={this.currentFilter()}
-          text="Show:"
-          options={DropdownConstants.collectionFilterOptions}/>
+
+        <Decide
+          condition={collections.length != 0}
+          success={_this.getFilterDropdown.bind(_this)}/>
+
 
         <Decide
           condition={collections.length == 0}
-          success={() => noCollectionsTag} />
+          success={() => noCollectionsTag}/>
 
         <RenderDesktop
           component={TableDisplay}
