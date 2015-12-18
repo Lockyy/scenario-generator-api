@@ -154,7 +154,7 @@ describe "User Profile Page", js: true do
         end
 
         it "doesn't display the other tabs" do
-          expect(page).to_not have_content('Collections are created by users to group products they are interested.')
+          expect(page).to_not have_content('Collections are created by users to group products they are interested in.')
         end
       end
 
@@ -169,7 +169,7 @@ describe "User Profile Page", js: true do
         end
 
         it 'has a message informing the user about collections' do
-          expect(page).to have_content('Collections are created by users to group products they are interested.')
+          expect(page).to have_content('Collections are created by users to group products they are interested in.')
         end
 
         it "displays public collections" do
