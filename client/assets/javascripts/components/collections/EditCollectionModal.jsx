@@ -94,12 +94,8 @@ const EditCollectionModal = React.createClass ({
   addProduct: function(product, selected) {
     if(selected) {
       let updatedCollection = this.state.unsaved_collection
-      let productIDs = 
-        _.map(updatedCollection.products, function(product) {
-          return product.id;
-      });
 
-      if(!_.includes(productIDs, product.id)) {
+      if(!_.includes(this.getProductIDs(), product.id)) {
         updatedCollection.products.push(_.merge(product, {unsaved: true}));
       }
 
@@ -236,7 +232,7 @@ const EditCollectionModal = React.createClass ({
 
   unsavedProducts: function() {
     return _.filter(this.state.unsaved_collection.products, function(product) {
-      return product.unsaved
+      return product
     })
   },
 
