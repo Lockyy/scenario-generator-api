@@ -341,7 +341,9 @@ const ShareCollection = React.createClass ({
             {this.renderUsers()}
           </div>
           {this.renderSendEmailsCheckbox()}
-          {this.renderSubmissionButtons()}
+          <Decide
+            condition={!this.props.noButtons}
+            success={this.renderSubmissionButtons} />
         </div>
       </div>
     )

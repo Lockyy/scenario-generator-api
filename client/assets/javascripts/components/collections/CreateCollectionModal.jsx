@@ -279,6 +279,7 @@ const CreateCollectionModal = React.createClass ({
     let self = this;
     let shareCollection = <ShareCollection onUpdateEmail={this.updateEmails.bind(self)}
                                            onUpdateUser={this.updateUsers.bind(self)}
+                                           noButtons={true}
                                            onUpdateSentInviteEmails={this.updateSendInviteEmails.bind(self)}
                                            onChangeEvent={function(callback,e){
                           callback(e);
