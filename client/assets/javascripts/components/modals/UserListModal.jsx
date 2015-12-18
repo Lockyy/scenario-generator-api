@@ -76,7 +76,7 @@ const UserListModal = React.createClass ({
         {_.map(this.state.users, function(user) {
           return (
             <div className='user grey-bottom-border last-no-border vertical-padding flex-vertical-centering'>
-              <Avatar url={user.avatar_url} />
+              <Avatar user={user} />
               <span
                 data-user-id={user.id}
                 onClick={this.onClickUser}
