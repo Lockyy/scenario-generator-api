@@ -4,11 +4,16 @@ import { Link } from 'react-router';
 import Tags from '../Tags'
 import Dropdown from '../Dropdown';
 import DropdownConstants from '../../utils/constants/DropdownConstants';
+import FluxTagsPageActions from '../../actions/FluxTagsPageActions';
 
 const TagResults = React.createClass ({
 
   getInitialState: function() {
     return { data: [] }
+  },
+
+  componentWillReceiveProps: function(props) {
+    FluxTagsPageActions.fetchTags(props.searchTerm);
   },
 
   contextTypes: {
