@@ -3,7 +3,8 @@ import _ from 'lodash';
 import UserTags from './users/UserTags';
 import UserBookmarks from './users/UserBookmarks';
 import { ViewCollectionMixin } from './collections/ViewCollectionModal';
-import MyRecentActivity from './menu/MyRecentActivity';
+import RecentActivity from './menu/RecentActivity';
+import Avatar from './Avatar';
 import { Link, Navigation } from 'react-router';
 
 const Sidebar = React.createClass ({
@@ -13,8 +14,7 @@ const Sidebar = React.createClass ({
   contextTypes: {
     currentUser: React.PropTypes.object
   },
-
-  childContextTypes: {
+childContextTypes: {
     router: React.PropTypes.object
   },
 
@@ -33,7 +33,7 @@ const Sidebar = React.createClass ({
       direction: 'right'
     }, 600, function() {
       return _this.getHamburgerMenuDom().on('clickoutside', _.throttle(function(outsideE) {
-        if (_.include($(outsideE.target).attr('class'), 'myTagSuggestion') ||
+        if (_.include($(outsideE.target).attr('class'), 'TagSuggestion') ||
           _.include($(outsideE.target).data('role'), 'remove')) {
           return;
         }
@@ -53,91 +53,57 @@ const Sidebar = React.createClass ({
   renderTopButtons: function() {
     return (
       <ul className='menu-nav'>
-        <li className='logout'>
-          <a href="/sign_out">Log out</a>
-        </li>
         <li className='close-hamburger-menu text-hide'>
           <div onClick={this.closeHamburgerMenu}><a>Close Menu</a></div>
         </li>
+        <li className='logout'>
+          <a href="/sign_out">Log out</a>
+        </li>
+
       </ul>
     )
   },
 
   renderCurrentUserInfo: function() {
     return (
-      <div className='profile-container'>
-        <img src={this.context.currentUser.avatar_url} className='avatar'/>
-        <Link to="/app/users/current" onClick={this.closeHamburgerMenu}>My Profile</Link>
-
-        {
-          this.context.currentUser.admin ?
-          <div className='admin-container'>
-            <Link to='/admin' className='btn btn-default btn-round'>Admin Area</Link>
-          </div>
-            : ''
-          }
-      </div>
+      <Link
+        className={'sidebar-link sidebar-row profile'}
+        to="/app/users/current"
+        onClick={this.closeHamburgerMenu}>
+        <Avatar
+          disableHover={true}
+          size={31}
+          user={this.context.currentUser} />
+        Profile
+      </Link>
     )
   },
 
-  renderTags: function() {
-    return (
-      <div className='my-tags-container'>
-        <UserTags showMessage={_.isEmpty(this.context.currentUser.tags)} showTitle={true}
-                  message='Adding tags will update your News Feed with the latest news from the ones you follow'
-                  messageClass='no-content'/>
-      </div>
-    )
-  },
+  renderSideLinks: function() {
+    let _this = this;
+    let sideSections = [
+      'Reviews',
+      'Tags',
+      'Bookmarks',
+      'Collections',
+    ];
 
-  renderBookmarks: function() {
-    return (
-      <div className='my-bookmarks-container'>
-        <h2>My bookmarks</h2>
-        <div className='content'>
-          <UserBookmarks showMessage={false} showTitle={false} sidebar={true}/>
-        </div>
-      </div>
-    )
-  },
-
-  renderRecentActivity: function() {
-    return (
-      <div className='my-recent-activity-container'>
-        <MyRecentActivity small={true}/>
-      </div>
-    )
-  },
-
-  renderCollections: function() {
-    return (
-      <div className='my-collections-container'>
-        <h2>
-          My Collections
-        </h2>
-        {
-          _.map(this.context.currentUser.collections.slice(0, 2), function(collection) {
-            return (
-            <div className='collection'>
-              <h3>
-                <a className='title' href={`/app/collections/${collection.id}`}>
-                  { collection.name }
-                </a>
-              </h3>
-              <div className='products'>
-                Includes: {
-                _.map(collection.products.slice(0, 2), function(product) {
-                  return <a href={`/app/products/${product.id}/${product.slug}`}>{product.name} </a>;
-                  })
-                }
-              </div>
-            </div>
-              )
-            })
-          }
-        <Link to='/app/directory/collections' className='link-view-all'>View all collections</Link>
-      </div>
-    )
+    return _.map(sideSections, function(section) {
+      let sectionName = section.toLowerCase();
+      return (
+        <a
+          className={'sidebar-link sidebar-row ' + sectionName}
+          href={"/app/users/current#" + sectionName}
+          onClick={function() {
+            _this.closeHamburgerMenu
+            if(window.location.pathname == '/app/users/current') {
+              window.location.reload();
+            }
+          }}>
+          {section}
+        </a>
+      );
+    });
   },
 
   render: function() {
@@ -150,10 +116,7 @@ const Sidebar = React.createClass ({
             <header>
               { this.renderTopButtons() }
               { this.renderCurrentUserInfo() }
-              { this.renderTags() }
-              { this.renderBookmarks() }
-              { this.renderRecentActivity() }
-              { this.renderCollections() }
+              { this.renderSideLinks() }
             </header>
           </div>
         </nav>
