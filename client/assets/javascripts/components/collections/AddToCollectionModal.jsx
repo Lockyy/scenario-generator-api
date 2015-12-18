@@ -142,7 +142,6 @@ const AddToCollectionModal = React.createClass ({
 
     if (product.id && collection.id) {
       FluxCollectionActions.addProductToCollection(product.id, collection.id, sendNotification);
-      FluxCollectionActions.performSearch(this.state.searchTerm || '');
       let addedCollections = this.state.addedCollections;
       addedCollections.push(collection.id);
       this.setState({addedCollections: addedCollections})
