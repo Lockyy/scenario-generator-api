@@ -114,7 +114,7 @@ const CollectionPage = React.createClass({
   },
 
   viewCollaborators: function() {
-    this.showUserListModal(this.state.data.collection.users)
+    this.showUserListModal(this.state.data.collection.users.concat([this.state.data.collection.user]))
   },
 
   manageCollaborators: function() {
@@ -421,10 +421,6 @@ const CollectionPage = React.createClass({
     let rows = []
 
     if(this.state.data.collection.users.length > 0) {
-      rows.push({
-        description: "View Collaborators",
-        action: this.viewCollaborators
-      })
       if(this.state.data.collection.owned) {
         rows.push({
           description: "Manage Collaborators",
@@ -440,6 +436,11 @@ const CollectionPage = React.createClass({
         description: "Delete Collection",
         className: 'blue',
         action: this.deleteCollection })
+    } else {
+      rows.push({
+        description: "View Collaborators",
+        action: this.viewCollaborators
+      })
     }
 
     return rows
