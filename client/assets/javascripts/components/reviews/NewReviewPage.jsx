@@ -185,8 +185,7 @@ const NewReviewPage  = React.createClass({
   render: function render() {
     let info = (<div className='info'>
       <div className='instructions'>
-        If you can't find a product, please select the Add and Review <i className='add-symbol'></i> option from the drop down.
-        This will add the product to the directory when you've reviewed it.
+        If you can’t find the product you are looking for, click <i className='add-symbol'></i> to quickly add it to Fletcher <span className='internal-only'>Internal IT</span> and then rate and review.
       </div>
     </div>);
 

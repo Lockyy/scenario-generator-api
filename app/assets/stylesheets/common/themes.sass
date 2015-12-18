@@ -1,0 +1,41 @@
+@import 'common/variables'
+
+.internal-only
+  display: none
+
+body.internal
+  .internal-only
+    display: block
+    &.inline-block
+      display: inline-block
+    &.flex
+      display: flex
+    &.inline-flex
+      display: inline-flex
+
+  .navbar.navbar-default
+    background-color: $jll-internal-blue
+    color: $primary-grey
+    border-bottom: 1px solid darken($jll-internal-blue, 5)
+    box-shadow: 0px 3px 5px #525252
+
+  .internal-warning
+    position: relative
+    top: 70px
+    background: $jll-petrol
+    padding: 15px
+    width: 100%
+    font-size: 12px
+    color: white
+    display: flex
+    justify-content: center
+    align-items: center
+    line-height: 18px
+    img
+      width: 20px
+      margin-right: 5px
+  @media only screen and (max-width : 768px)
+    .internal-warning
+      top: 65px
+    .welcome-message
+      padding-top: 128px

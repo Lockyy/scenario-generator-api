@@ -1,6 +1,11 @@
 <nav class="navbar navbar-default">
   <div class="container">
-    <%= link_to image_tag('logos/logo-white-2.svg'), '/app', class: 'brand' %>
+    <div class="brand">
+      <%= link_to image_tag('logos/logo-white-2.svg'), '/app' %>
+      <% if theme_class == 'internal' %>
+        <%= link_to image_tag('logos/logo-white-2-internal.svg'), '/app', class: 'internal-only' %>
+      <% end %>
+    </div>
 
     <div class="search-container"></div>
 
@@ -16,3 +21,15 @@
     </ul>
   </div>
 </nav>
+
+<% if theme_class == 'internal' %>
+  <div class="internal-warning">
+    <%= image_tag "icons/warning.svg", alt:"Internal warning icon" %>
+    <div class="hidden-xs hidden-sm">
+      This is a private instance of Fletcher for the Internal IT team. Reviews, products and companies submitted in this platform will not be accessible to the public.
+    </div>
+    <div class="visible-xs visible-sm">
+      This is a private instance of Fletcher. Anything submitted in this platform will not be accessible to the public.
+    </div>
+  </div>
+<% end %>
