@@ -80,12 +80,17 @@ const CreateCollectionModal = React.createClass ({
   // We aren't modifying the CollectionStore version of the collection because
   // these changes are unsaved at this stage.
   addProduct: function (product, selected) {
-    if (selected) {
-      let newProducts = this.state.data.collection.products
-      newProducts.push(product)
-      this.setState({product_name: null, collection: {products: newProducts}})
-    } else {
-      this.setState({product_name: product.name})
+    if(!_.includes(this.getProductIDs(), product.id)) {
+      if (selected) {
+        let newProducts = this.state.data.collection.products
+        newProducts.push(product)
+        this.setState({product_name: null, collection: {products: newProducts}})
+      } else {
+        this.setState({product_name: product.name})
+      }
+    }
+    else {
+      this.setState({product_name: null});
     }
   },
 
@@ -249,7 +254,8 @@ const CreateCollectionModal = React.createClass ({
       <Results
         type='collection-product'
         onRemove={this.removeProduct}
-        data={{data: this.state.data.collection.products}}/>
+        data={{data: this.state.data.collection.products}}
+        per_page={20}/>
     )
   },
 

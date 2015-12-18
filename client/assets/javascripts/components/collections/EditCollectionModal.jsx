@@ -94,7 +94,11 @@ const EditCollectionModal = React.createClass ({
   addProduct: function(product, selected) {
     if(selected) {
       let updatedCollection = this.state.unsaved_collection
-      updatedCollection.products.push(_.merge(product, {unsaved: true}))
+
+      if(!_.includes(this.getProductIDs(), product.id)) {
+        updatedCollection.products.push(_.merge(product, {unsaved: true}));
+      }
+
       this.setState({product_name: null, unsaved_collection: updatedCollection})
     } else {
       this.setState({product_name: product.name})
@@ -228,7 +232,7 @@ const EditCollectionModal = React.createClass ({
 
   unsavedProducts: function() {
     return _.filter(this.state.unsaved_collection.products, function(product) {
-      return product.unsaved
+      return product
     })
   },
 
@@ -237,7 +241,8 @@ const EditCollectionModal = React.createClass ({
       <Results
         type='collection-product'
         onRemove={this.removeProduct}
-        data={{data: this.unsavedProducts()}} />
+        data={{data: this.unsavedProducts()}}
+        per_page={20}/>
     )
   },
 
