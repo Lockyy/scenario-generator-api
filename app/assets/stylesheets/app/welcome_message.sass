@@ -31,7 +31,6 @@
 
 @media only screen and (max-width: 750px)
   .welcome-message
-    background-image: image_url('backgrounds/welcome_message/welcome_message_mobile.jpg')
     background-size: cover
     margin-top: -70px
     padding-top: 100px
@@ -58,7 +57,6 @@
 
 @media only screen and (min-width: 750px) and (max-width: $screen-md-max)
   .welcome-message
-    background-image: image_url('backgrounds/welcome_message/welcome_message_1200.jpg')
     height: 610px
     .text
       font-size: 16px
@@ -67,7 +65,6 @@
 
 @media only screen and (min-width: $screen-md-max) and (max-width: $screen-lg-min)
   .welcome-message
-    background-image: image_url('backgrounds/welcome_message/welcome_message_1600.jpg')
     height: 540px
     .text
       font-size: 20px
@@ -81,11 +78,41 @@
 @media only screen and (min-width: $screen-lg-min)
   .welcome-message
     padding: 80px 0 150px 0
-    background-image: image_url('backgrounds/welcome_message/welcome_message_large.jpg')
     background-size: cover
     height: 675px
 
-/* CSS for high-resolution devices */
-@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)
-  .welcome-message
-    background-image: image_url('backgrounds/welcome_message/welcome_message_large@2x.jpg')
+body
+  &.default
+    @media only screen and (max-width: 750px)
+      .welcome-message
+        background-image: image_url('backgrounds/welcome_message/default/welcome_message_mobile.jpg')
+    @media only screen and (min-width: 750px) and (max-width: $screen-md-max)
+      .welcome-message
+        background-image: image_url('backgrounds/welcome_message/default/welcome_message_1200.jpg')
+    @media only screen and (min-width: $screen-md-max) and (max-width: $screen-lg-min)
+      .welcome-message
+        background-image: image_url('backgrounds/welcome_message/default/welcome_message_1600.jpg')
+    @media only screen and (min-width: $screen-lg-min)
+      .welcome-message
+        background-image: image_url('backgrounds/welcome_message/default/welcome_message_large.jpg')
+    /* CSS for high-resolution devices */
+    @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)
+      .welcome-message
+        background-image: image_url('backgrounds/welcome_message/default/welcome_message_large@2x.jpg')
+  &.internal
+    @media only screen and (max-width: 750px)
+      .welcome-message
+        background-image: image_url('backgrounds/welcome_message/internal/welcome_message_mobile.jpg')
+    @media only screen and (min-width: 750px) and (max-width: $screen-md-max)
+      .welcome-message
+        background-image: image_url('backgrounds/welcome_message/internal/welcome_message_1200.jpg')
+    @media only screen and (min-width: $screen-md-max) and (max-width: $screen-lg-min)
+      .welcome-message
+        background-image: image_url('backgrounds/welcome_message/internal/welcome_message_1600.jpg')
+    @media only screen and (min-width: $screen-lg-min)
+      .welcome-message
+        background-image: image_url('backgrounds/welcome_message/internal/welcome_message_1920.jpg')
+    /* CSS for high-resolution devices */
+    @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)
+      .welcome-message
+        background-image: image_url('backgrounds/welcome_message/internal/welcome_message_3200.jpg')
