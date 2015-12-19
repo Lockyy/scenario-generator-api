@@ -32,7 +32,7 @@ const Dashboard = React.createClass({
   },
 
   componentDidMount: function() {
-    DashboardStore.listen(this.onChange.bind(this));
+    DashboardStore.listen(this.onChange);
     FluxDashboardActions.fetchData();
   },
 
