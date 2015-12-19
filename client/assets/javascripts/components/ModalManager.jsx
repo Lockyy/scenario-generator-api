@@ -17,7 +17,6 @@ import { UserListMixin } from './modals/UserListModal';
 var appElement = document.getElementById('content');
 
 Modal.setAppElement(appElement);
-Modal.injectCSS();
 
 const ModalManager = React.createClass ({
   displayName: 'ModalManager',

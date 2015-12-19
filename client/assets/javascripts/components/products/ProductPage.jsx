@@ -22,7 +22,6 @@ import { ProductLinksMixin } from './ProductLinksModal';
 var appElement = document.getElementById('content');
 
 Modal.setAppElement(appElement);
-Modal.injectCSS();
 
 const ProductPage = React.createClass({
   displayName: 'ProductPage',

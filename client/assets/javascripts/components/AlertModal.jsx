@@ -9,7 +9,6 @@ import AlertStore from '../stores/AlertStore'
 var appElement = document.getElementById('content');
 
 Modal.setAppElement(appElement);
-Modal.injectCSS();
 
 // Displays an modal with a success button and an optional cancel button.
 // Use it like this:
