@@ -114,7 +114,7 @@ const CollectionPage = React.createClass({
   },
 
   viewCollaborators: function() {
-    this.showUserListModal(this.state.data.collection.users)
+    this.showUserListModal(this.state.data.collection.users.concat([this.state.data.collection.user]))
   },
 
   manageCollaborators: function() {
@@ -421,10 +421,6 @@ const CollectionPage = React.createClass({
     let rows = []
 
     if(this.state.data.collection.users.length > 0) {
-      rows.push({
-        description: "View Collaborators",
-        action: this.viewCollaborators
-      })
       if(this.state.data.collection.owned) {
         rows.push({
           description: "Manage Collaborators",
@@ -434,12 +430,17 @@ const CollectionPage = React.createClass({
 
     if(this.state.data.collection.owned) {
       rows.push({
-        description: "Add Collaborators",
+        description: "Privacy & Sharing",
         action: this.shareCollection })
       rows.push({
         description: "Delete Collection",
         className: 'blue',
         action: this.deleteCollection })
+    } else {
+      rows.push({
+        description: "View Collaborators",
+        action: this.viewCollaborators
+      })
     }
 
     return rows
@@ -477,7 +478,7 @@ const CollectionPage = React.createClass({
 
     if (isOwned) {
       actionList.push(
-        {action: this.deleteCollection, 
+        {action: this.deleteCollection,
          type: 'delete-form',
          refs: ['collaborators', 'products'],
          tabTitle: 'Delete Collection'}

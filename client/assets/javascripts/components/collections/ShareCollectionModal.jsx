@@ -84,7 +84,10 @@ const ShareCollectionModal = React.createClass ({
         style={DefaultModalStyles}>
         <div className='back-button' onClick={this.close}>Back</div>
 
-        <ShareCollection  collection={this.state.collection} config={this.state.config} close={this.close} />
+        <ShareCollection
+          collection={this.state.collection}
+          config={this.state.config}
+          close={this.close} />
 
         <RenderMobile component={Footer} />
       </Modal>

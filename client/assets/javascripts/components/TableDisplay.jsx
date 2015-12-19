@@ -27,7 +27,11 @@ const TableDisplay = React.createClass ({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    this.performSort(nextProps.data, nextProps.defaultSortColumn, nextProps.defaultSortColumnAttribute, 'desc')
+    let sortColumn = this.state.sortByColumn || nextProps.defaultSortColumn
+    let sortColumnAttribyute = this.state.sortByColumnAttribute || nextProps.defaultSortColumnAttribute
+    let sortDirection = this.state.sortDirection || 'desc'
+
+    this.performSort(nextProps.data, sortColumn, nextProps.defaultSortColumnAttribute, sortDirection)
   },
 
   // Events
@@ -59,6 +63,7 @@ const TableDisplay = React.createClass ({
     this.setState({
       data: sortedData,
       sortByColumn: column,
+      sortByColumnAttribute: columnAttribute,
       sortDirection: direction
     })
   },
