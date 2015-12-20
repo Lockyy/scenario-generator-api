@@ -23,7 +23,7 @@ const Notifications = React.createClass({
   },
 
   componentDidMount: function() {
-    NotificationsStore.listen(this.onChange.bind(this));
+    NotificationsStore.listen(this.onChange);
     FluxNotificationsActions.fetchNotifications();
     this._notificationSystem = this.refs.notificationSystem;
 
