@@ -1,10 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
-import { Link, Navigation } from 'react-router';
+import { Link } from 'react-router';
 
 const Footer = React.createClass({
   displayName: 'Footer',
-  mixins: [ Navigation ],
 
   childContextTypes: {
     router: React.PropTypes.object
