@@ -38,7 +38,7 @@ const AlertModal = React.createClass({
   },
 
   componentDidMount: function() {
-    AlertStore.listen(this.onChange.bind(this));
+    AlertStore.listen(this.onChange);
   },
 
   onChange: function(data) {
