@@ -5,16 +5,17 @@ import UserBookmarks from './users/UserBookmarks';
 import { ViewCollectionMixin } from './collections/ViewCollectionModal';
 import RecentActivity from './menu/RecentActivity';
 import Avatar from './Avatar';
-import { Link, Navigation } from 'react-router';
+import { Link } from 'react-router';
 
 const Sidebar = React.createClass ({
-  mixins: [Navigation, ViewCollectionMixin],
+  mixins: [ViewCollectionMixin],
   displayName: 'Sidebar',
 
   contextTypes: {
     currentUser: React.PropTypes.object
   },
-childContextTypes: {
+
+  childContextTypes: {
     router: React.PropTypes.object
   },
 
@@ -27,7 +28,7 @@ childContextTypes: {
   },
 
   showHamburgerMenu: function() {
-    let _this = this
+    let _this = this;
 
     return this.getHamburgerMenuDom().stop().toggle("slide", {
       direction: 'right'
@@ -54,12 +55,13 @@ childContextTypes: {
     return (
       <ul className='menu-nav'>
         <li className='close-hamburger-menu text-hide'>
-          <div onClick={this.closeHamburgerMenu}><a>Close Menu</a></div>
+          <div onClick={this.closeHamburgerMenu}>
+            <a>Close Menu</a>
+          </div>
         </li>
         <li className='logout'>
           <a href="/sign_out">Log out</a>
         </li>
-
       </ul>
     )
   },
@@ -95,7 +97,7 @@ childContextTypes: {
           className={'sidebar-link sidebar-row ' + sectionName}
           href={"/app/users/current#" + sectionName}
           onClick={function() {
-            _this.closeHamburgerMenu
+            _this.closeHamburgerMenu();
             if(window.location.pathname == '/app/users/current') {
               window.location.reload();
             }
@@ -110,7 +112,9 @@ childContextTypes: {
     return (
       <div>
         <li className="show-hamburger-menu text-hide"
-            onClick={this.showHamburgerMenu}><a>Show Menu</a></li>
+            onClick={this.showHamburgerMenu}>
+          <a>Show Menu</a>
+        </li>
         <nav className='menu hamburger-menu' ref='menu'>
           <div className='container'>
             <header>
