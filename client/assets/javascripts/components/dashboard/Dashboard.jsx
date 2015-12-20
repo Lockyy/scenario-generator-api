@@ -17,6 +17,18 @@ function sumSizeFunc(item) {
 const Dashboard = React.createClass({
   displayName: 'Dashboard',
 
+  contextTypes: {
+    currentUser: React.PropTypes.object.isRequired
+  },
+
+  childContextTypes: {
+    currentUser: React.PropTypes.object.isRequired
+  },
+
+  getChildContext: function() {
+    return {'currentUser': this.context.currentUser};
+  },
+
   getDefaultProps: function() {
     return {
       data: {

@@ -20,6 +20,10 @@ class CollectionSection extends React.Component {
     return 4;
   }
 
+  contextTypes: {
+    'currentUser': React.PropTypes.object.isRequired
+  }
+
   getOffset() {
     return this.getMax() * this.state.rows;
   }
@@ -75,11 +79,13 @@ class CollectionSection extends React.Component {
   }
 
   render() {
-    return (<Section hasPagination={this.state.hasPagination} {...this.props}>
-      <ReactCSSTransitionGroup transitionName="section-row">
-        {this.fetchActivity()}
-      </ReactCSSTransitionGroup >
-    </Section>);
+    return (
+      <Section hasPagination={this.state.hasPagination} {...this.props}>
+        <ReactCSSTransitionGroup transitionName="section-row">
+          {this.fetchActivity()}
+        </ReactCSSTransitionGroup >
+      </Section>
+    );
   }
 }
 
