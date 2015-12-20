@@ -96,6 +96,7 @@ const Sidebar = React.createClass ({
         <a
           className={'sidebar-link sidebar-row ' + sectionName}
           href={"/app/users/current#" + sectionName}
+          key={sectionName}
           onClick={function() {
             _this.closeHamburgerMenu();
             if(window.location.pathname == '/app/users/current') {
