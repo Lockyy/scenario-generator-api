@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Link, Navigation } from 'react-router';
+import { Link } from 'react-router';
 import Modal from 'react-modal';
 import AlertModal from './AlertModal';
 import  CreateCollectionMixin from './collections/CreateCollectionMixin';
@@ -21,7 +21,6 @@ Modal.setAppElement(appElement);
 const ModalManager = React.createClass ({
   displayName: 'ModalManager',
   mixins: [
-    Navigation,
     CreateCollectionMixin,
     ShareCollectionMixin,
     AddToCollectionMixin,
