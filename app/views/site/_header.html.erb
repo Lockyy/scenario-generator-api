@@ -34,3 +34,9 @@
     </div>
   </div>
 </nav>
+
+<% if flash[:error] %>
+  <div class='flash'>
+    <%= flash[:error] %>
+  </div>
+<% end %>

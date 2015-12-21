@@ -12,6 +12,6 @@ class SiteController < ApplicationController
   private
 
   def app_redirect
-    redirect_to app_path if current_user
+    redirect_to app_path if current_user && current_user.whitelisted?
   end
 end
