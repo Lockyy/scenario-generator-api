@@ -22,14 +22,24 @@
   </div>
 </nav>
 
-<% if theme_class == 'internal' %>
-  <div class="internal-warning">
-    <%= image_tag "icons/warning.svg", alt:"Internal warning icon" %>
-    <div class="hidden-xs hidden-sm">
-      This is a private instance of Fletcher for the Internal IT team. Reviews, products and companies submitted in this platform will not be accessible to the public.
-    </div>
-    <div class="visible-xs visible-sm">
-      This is a private instance of Fletcher. Anything submitted in this platform will not be accessible to the public.
+<% if theme_class == 'internal' || flash[:error] %>
+  <div class="flash">
+
+    <% if flash[:error] %>
+      <div class='message'>
+        <%= image_tag "icons/warning-orange.svg", alt:"Internal warning icon" %>
+        <%= flash[:error] %>
+      </div>
+    <% end %>
+
+    <div class="internal-only">
+      <%= image_tag "icons/warning.svg", alt:"Internal warning icon" %>
+      <div class="hidden-xs hidden-sm">
+        This is a private instance of Fletcher for the Internal IT team. Reviews, products and companies submitted in this platform will not be accessible to the public.
+      </div>
+      <div class="visible-xs visible-sm">
+        This is a private instance of Fletcher. Anything submitted in this platform will not be accessible to the public.
+      </div>
     </div>
   </div>
 <% end %>

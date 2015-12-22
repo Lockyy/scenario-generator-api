@@ -34,3 +34,10 @@
     </div>
   </div>
 </nav>
+
+<% if flash[:error] %>
+  <div class='flash'>
+    <%= image_tag "icons/warning-orange.svg", alt:"Internal warning icon" %>
+    <%= flash[:error] %>
+  </div>
+<% end %>

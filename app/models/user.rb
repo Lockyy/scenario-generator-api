@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
   validates :name, presence: true
 
   after_save :check_for_invitations
+  before_validation :whitelisted?
 
   def self.generate_password
     Devise.friendly_token
@@ -64,5 +65,15 @@ class User < ActiveRecord::Base
     invites.each do |invite|
       invite.update_attributes(email: nil, sharee: self)
     end
+  end
+
+  def whitelisted?
+    return true unless ENV['ENABLE_WHITELIST']
+
+    # If no AllowedUser is found the user is not whitelisted
+    allowed = !AllowedUser.find_by(email: self.email).nil?
+    # Add an error to tell the user they aren't whitelisted
+    self.errors.add :email, 'is not whitelisted' unless allowed
+    allowed
   end
 end
