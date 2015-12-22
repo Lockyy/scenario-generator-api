@@ -12,7 +12,7 @@ DB_CONTAINER_NAME=$PROJECT_NAME-db
 PROJECT_CONTAINER_NAME=$PROJECT_NAME-$PROJECT_MAIN_LANGUAGE
 
 find_docker_id() {
-  echo $(docker ps -a | grep $1 | sed 's/\([0-9a-z]\+\).*/\1/')
+  echo $(docker ps -a | grep -m 1 $1 | awk '{ print $1 }')
 }
 
 attach_to_project_container(){
