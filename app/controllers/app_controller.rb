@@ -11,7 +11,7 @@ class AppController < ApplicationController
 
   def check_whitelist
     unless current_user.whitelisted?
-      flash[:error] = 'Your email address is not whitelisted, please contact ed.bialozewski@am.jll.com if you require access'
+      flash[:error] = 'This is a private instance of Fletcher, please contact ed.bialozewski@am.jll.com if you require access'
       redirect_to root_path
     end
   end

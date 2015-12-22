@@ -26,7 +26,10 @@
   <div class="flash">
 
     <% if flash[:error] %>
-      <div class='message'><%= flash[:error] %></div>
+      <div class='message'>
+        <%= image_tag "icons/warning-orange.svg", alt:"Internal warning icon" %>
+        <%= flash[:error] %>
+      </div>
     <% end %>
 
     <div class="internal-only">
