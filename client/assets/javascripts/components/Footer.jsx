@@ -37,16 +37,16 @@ const Footer = React.createClass({
                 target="_blank">
                 Privacy
               </Link> -
-              <Link
-                to='/contact'
+              <a
+                href='/contact'
                 target="_blank">
                 Contact
-              </Link> -
-              <Link
-                to='/support'
+              </a> -
+              <a
+                href='/support'
                 target="_blank">
                 Support
-              </Link>
+              </a>
             </div>
           </div>
         </div>
