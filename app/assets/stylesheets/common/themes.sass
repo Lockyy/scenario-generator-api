@@ -13,18 +13,19 @@ body.internal
     &.inline-flex
       display: inline-flex
 
-  .navbar.navbar-default
-    background-color: $jll-internal-blue
-    color: $primary-grey
-    border-bottom: 1px solid darken($jll-internal-blue, 5)
-    box-shadow: 0px 3px 5px #525252
+  &.app
+    .navbar.navbar-default
+      background-color: $jll-internal-blue
+      color: $primary-grey
+      border-bottom: 1px solid darken($jll-internal-blue, 5)
+      box-shadow: 0px 3px 5px #525252
 
-  .flash
-    background: $jll-petrol
-    .internal-only
-      display: flex
-    .message + .internal-only
-      display: none
+    .flash
+      background: $jll-petrol
+      .internal-only
+        display: flex
+      .message + .internal-only
+        display: none
 
   @media only screen and (max-width : 768px)
     .internal-warning
