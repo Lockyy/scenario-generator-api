@@ -16,6 +16,15 @@ const Results = React.createClass ({
     return { data: [] }
   },
 
+  getDefaultProps: function() {
+    return {
+      data: {
+        total: 0,
+        data: []
+      }
+    }
+  },
+
   contextTypes: {
     router: React.PropTypes.object
   },

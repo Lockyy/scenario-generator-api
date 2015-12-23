@@ -90,7 +90,7 @@ const UserListModal = React.createClass ({
     )
   },
 
-  renderheader: function() {
+  renderHeader: function() {
     return (
       <div className='header hidden-xs'>
         <span className='title'>
@@ -112,7 +112,7 @@ const UserListModal = React.createClass ({
           Back
         </div>
 
-        {this.renderheader()}
+        {this.renderHeader()}
         {this.renderUsers()}
 
         <Footer className='visible-xs' />

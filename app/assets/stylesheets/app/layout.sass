@@ -1,9 +1,12 @@
 body.no-scroll
   max-height: 100%
   overflow: hidden
-  position: fixed
-  .navbar
-    margin-top: 0px !important
+
+@media only screen and (max-width: 768px)
+  body.no-scroll
+    position: fixed
+    .navbar
+      margin-top: 0px !important
 
 html, body.app
   height: 100%

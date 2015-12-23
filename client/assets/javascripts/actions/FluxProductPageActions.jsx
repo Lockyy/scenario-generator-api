@@ -5,7 +5,7 @@ import FluxCollectionActions from './FluxCollectionActions';
 
 class FluxProductPageActions {
 
-  fetchProduct(id) {
+  fetchProduct(id, errorCallback) {
     this.dispatch();
 
     ProductAPI.getProduct(
@@ -16,6 +16,9 @@ class FluxProductPageActions {
       },
       (error) => {
         this.actions.registerError(error);
+        if(errorCallback) {
+          errorCallback();
+        }
       }
     );
   }

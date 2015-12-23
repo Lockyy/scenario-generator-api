@@ -71,7 +71,7 @@ class User < ActiveRecord::Base
     return true unless ENV['ENABLE_WHITELIST']
 
     # If no AllowedUser is found the user is not whitelisted
-    allowed = !AllowedUser.find_by(email: self.email).nil?
+    allowed = !AllowedUser.find_by(email: self.email.downcase).nil?
     # Add an error to tell the user they aren't whitelisted
     self.errors.add :email, 'is not whitelisted' unless allowed
     allowed

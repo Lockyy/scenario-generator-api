@@ -9,8 +9,14 @@ const Footer = React.createClass({
     router: React.PropTypes.object
   },
 
+  contextTypes: {
+    router: React.PropTypes.object
+  },
+
   getChildContext: function() {
-    return {router: this.context.router || this.props.router};
+    return {
+      router: this.context.router || this.props.router
+    };
   },
 
   render: function() {

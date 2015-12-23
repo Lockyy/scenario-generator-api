@@ -178,12 +178,13 @@ const ShareCollection = React.createClass ({
 
   renderUserTypeahead: function () {
     return (
-      <UserTypeahead ref='user_typeahead'
-                     value={this.state.user_name}
-                     helpMessage={'Add User'}
-                     hideLabel={true}
-                     onSetUser={this.userTypeaheadUpdate}
-                     onSetEmail={this.addEmail}/>
+      <UserTypeahead
+        ref='user_typeahead'
+        value={this.state.user_name}
+        helpMessage={'Add User'}
+        hideLabel={true}
+        onSetUser={this.userTypeaheadUpdate}
+        onSetEmail={this.addEmail} />
     )
   },
 
@@ -321,19 +322,33 @@ const ShareCollection = React.createClass ({
       <div className='share-collection-container'>
         <div className='header share'>
           <span className='title'>
-            Privacy & Sharing
+            {this.state.config.title || 'Privacy & Sharing'}
           </span>
           <a onClick={this.props.close} className='close'></a>
         </div>
         {this.renderPrivacyToggle()}
+
+        <Decide
+          condition={this.state.config.noGreyDescription}
+          success={() => (
+            <div className='grey-description'>
+              Add collaborators and manage their access level accordingly.
+            </div>
+          )} />
+
         <div className='grey'>
-          <div className='grey-title'>
-            Add collaborators to your collection
-          </div>
-          <div className='grey-description'>
-            Add collaborators and manage their access level accordingly. You can add more people from the collection’s
-            page once the collection is created.
-          </div>
+          <Decide
+            condition={!this.state.config.noGreyDescription}
+            success={() => (
+              <div>
+                <div className='grey-title'>
+                  Add collaborators to your collection
+                </div>
+                <div className='grey-description'>
+                  Add collaborators and manage their access level accordingly.
+                </div>
+              </div>
+            )} />
           {this.renderUserTypeahead()}
           <div className='scrollable'>
             {this.renderEmails()}

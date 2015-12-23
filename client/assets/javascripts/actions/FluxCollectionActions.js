@@ -5,7 +5,7 @@ import FluxNotificationsActions from './FluxNotificationsActions'
 
 class FluxCollectionActions {
 
-  fetchCollection(id, resolve) {
+  fetchCollection(id, resolve, errorCallback) {
     CollectionAPI.fetchCollection(id,
       (data) => {
         this.actions.fetchedCollection(data);
@@ -15,6 +15,9 @@ class FluxCollectionActions {
       },
       (error) => {
         this.actions.registerError(error);
+        if(errorCallback) {
+          errorCallback();
+        }
       }
     );
   }
@@ -89,7 +92,7 @@ class FluxCollectionActions {
     );
   }
 
-  deleteCollection(collection) {
+  deleteCollection(collection, callback) {
     CollectionAPI.deleteCollection(collection.id,
       (data) => {
         this.actions.removeCollection(collection.id);
@@ -101,9 +104,20 @@ class FluxCollectionActions {
             name: collection.name
           }
         })
+        callback()
       },
       (error) => {
         this.actions.registerError(error);
+        FluxNotificationsActions.showNotification({
+          type: 'deleted',
+          text: `${collection.name} has already been deleted by somebody else`,
+          subject: {
+            id: collection.id,
+            type: 'Collection',
+            name: collection.name
+          }
+        })
+        callback()
       }
     );
   }

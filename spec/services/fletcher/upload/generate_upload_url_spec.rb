@@ -16,7 +16,7 @@ RSpec.describe Fletcher::Upload::GenerateUploadUrl do
   end
 
   describe '#generate!' do
-    let(:url) { 'http://fletcher.com/image.png' }
+    let(:url) { 'http://fletcher.mx/image.png' }
 
     it 'generates a presigned url' do
       generator = double('generator')

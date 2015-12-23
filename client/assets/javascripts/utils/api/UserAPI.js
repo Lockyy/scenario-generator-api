@@ -9,7 +9,8 @@ module.exports = {
     return new Promise(function() {
       $.ajax({
         url: url,
-        success: resolve
+        success: resolve,
+        error: reject
       });
     });
   },
@@ -20,7 +21,8 @@ module.exports = {
     return new Promise(function() {
       $.ajax({
         url: url,
-        success: resolve
+        success: resolve,
+        error: reject
       });
     });
   },
@@ -32,7 +34,8 @@ module.exports = {
       $.ajax({
         url: url,
         data: paginationParams,
-        success: resolve
+        success: resolve,
+        error: reject
       });
     });
   },

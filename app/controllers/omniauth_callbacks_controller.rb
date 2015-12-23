@@ -1,13 +1,19 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def yammer
     result = Omniauth::Result.new(env['omniauth.auth'])
-    user = authenticate_user!(result)
 
-    if user.nil?
-      redirect_to root_url
+    if AllowedUser.whitelisted? result.email
+      user = authenticate_user!(result)
+
+      if user.nil?
+        redirect_to root_url
+      else
+        sign_in user
+        redirect_to stored_location_for(:user) || app_path
+      end
     else
-      sign_in user
-      redirect_to stored_location_for(:user) || app_path
+      flash[:error] = 'This is a private instance of Fletcher, please contact ed.bialozewski@am.jll.com if you require access'
+      redirect_to root_path
     end
   end
 
