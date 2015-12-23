@@ -98,10 +98,11 @@ const CollectionPage = React.createClass({
         FluxCollectionActions.deleteCollection({
           id: _this.props.params.id,
           name: collection_name
+        }, function() {
+          //TODO: Change this into a transition
+          let previous = _this.getParameterByName('link') || `/app/users/current#collections`;
+          window.location.href = previous
         });
-        //TODO: Change this into a transition
-        let previous = _this.getParameterByName('link') || `/app/users/current#collections`;
-        window.location.href = previous
       }
     })
   },
