@@ -1,4 +1,4 @@
-import React from 'react';
+]import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
 import Modal from 'react-modal';
@@ -41,7 +41,7 @@ const ManageCollaboratorCollectionModalDesktop = React.createClass ({
         <input
           className='form-control tt-input'
           ref='filterInput'
-          placeholder='Search among the existing collaborators'
+          placeholder='Filter among the added collaborators'
           onChange={(e) => this.props.filterCollaborators($(e.target).val())} />
       </div>
     )
@@ -128,11 +128,11 @@ const ManageCollaboratorCollectionModalDesktop = React.createClass ({
     )
   },
 
-  renderheader: function() {
+  renderHeader: function() {
     return (
       <div className='header share'>
         <span className='title'>
-          Manage collaborators access
+          Manage existing collaborators access
         </span>
         <a onClick={this.props.close} className='close'></a>
       </div>
@@ -142,7 +142,7 @@ const ManageCollaboratorCollectionModalDesktop = React.createClass ({
   render: function() {
     return (
       <div>
-        {this.renderheader()}
+        {this.renderHeader()}
         {this.renderShareForm()}
       </div>
     )
