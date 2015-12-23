@@ -41,7 +41,7 @@ const ManageCollaboratorCollectionModalDesktop = React.createClass ({
         <input
           className='form-control tt-input'
           ref='filterInput'
-          placeholder='Search Collaborators'
+          placeholder='Search among the existing collaborators'
           onChange={(e) => this.props.filterCollaborators($(e.target).val())} />
       </div>
     )
