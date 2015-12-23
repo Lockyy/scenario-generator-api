@@ -125,8 +125,8 @@ const ManageCollaboratorCollectionModalMobile = React.createClass ({
   renderCollaborators: function() {
     let _this = this
 
-    let collaborators = this.collaborators()
-    if(collaborators.length <= 0) { return }
+    let collaboratorsLength = this.collaborators().length + this.collaborators(true).length
+    if(collaboratorsLength <= 0) { return }
 
     return (
       <div>
@@ -153,11 +153,29 @@ const ManageCollaboratorCollectionModalMobile = React.createClass ({
 
   renderViewers: function() {
     let _this = this
+
     return (
       <div>
         <div className='vertical-padding medium-text'>
           Can view
         </div>
+
+        <SliderToggle
+          className='vertical-padding'
+          options={{
+            true: {
+              value: 'hidden',
+              title: 'Specific People',
+              description: 'This collection will be viewable only to the people you specify.'
+            },
+            false: {
+              value: 'visible',
+              title: 'Public',
+              description: 'Open it to the public. Every user in Fletcher will be able to view your collection.'
+            },
+          }}
+          active={this.props.unsaved_collection.privacy == 'hidden'}
+          onChange={this.props.setPrivacy} />
 
         <Results
           type='sharee-users'

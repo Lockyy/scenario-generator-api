@@ -8,6 +8,7 @@ import FluxNotificationsActions from '../../actions/FluxNotificationsActions';
 import CollectionStore from '../../stores/CollectionStore'
 import Rating from '../Rating'
 import Avatar from '../Avatar'
+import Decide from '../Decide';
 import RenderDesktop from '../RenderDesktop';
 import RenderMobile from '../RenderMobile';
 import TableDisplay from '../TableDisplay'
@@ -110,7 +111,7 @@ const CollectionPage = React.createClass({
   },
 
   shareCollection: function() {
-    this.showShareCollectionModal(this.state.data.collection, {confirm: 'Save', cancel: 'Cancel', hideRadios: false})
+    this.showShareCollectionModal(this.state.data.collection, {confirm: 'Save', cancel: 'Cancel', title: 'Add Collaborators', hideRadios: true, noGreyDescription: true})
   },
 
   viewCollaborators: function() {
@@ -126,10 +127,10 @@ const CollectionPage = React.createClass({
       return (
         <div className='user-buttons vertical-padding grey-bottom-border'>
           <div className='btn btn-red-inverted btn-round btn-small' onClick={this.shareCollection}>
-            Share
+            ADD NEW COLLABORATORS
           </div>
           <div className='btn btn-grey-inverted btn-round btn-small' onClick={this.manageCollaborators}>
-            Manage Collaborators
+            MANAGE EXISTING COLLABORATORS
           </div>
         </div>
       )
@@ -232,6 +233,17 @@ const CollectionPage = React.createClass({
     }
   },
 
+  totalCollaborators: function() {
+    let total = this.owners().length + this.collaborators().length
+
+    if(this.state.data.collection.privacy == 'hidden' || this.ownedByUser()) {
+      total += this.viewers().length
+    }
+
+    return total
+  },
+
+
   owners: function() {
     return [this.state.data.collection.user].concat(_.filter(this.state.data.collection.users, function(user) {
       return user.rank == 'owner'
@@ -283,8 +295,8 @@ const CollectionPage = React.createClass({
 
   renderAllCollaborators: function() {
     let allCollaborators = this.owners().concat(this.collaborators());
-    if (allCollaborators.length <= 0) {
-      return
+    if(this.state.data.collection.privacy == 'hidden') {
+      allCollaborators = allCollaborators.concat(this.viewers());
     }
     let _this = this;
 
@@ -420,23 +432,22 @@ const CollectionPage = React.createClass({
   getMoreOptionsRows: function() {
     let rows = []
 
-    if(this.state.data.collection.users.length > 0) {
-      if(this.state.data.collection.owned) {
-        rows.push({
-          description: "Manage Collaborators",
-          action: this.manageCollaborators })
-      }
-    }
 
     if(this.state.data.collection.owned) {
       rows.push({
-        description: "Privacy & Sharing",
-        action: this.shareCollection })
+        description: "Add Collaborators",
+        action: this.shareCollection
+      })
+      rows.push({
+        description: "Manage Collaborators",
+        action: this.manageCollaborators
+      })
       rows.push({
         description: "Delete Collection",
         className: 'blue',
-        action: this.deleteCollection })
-    } else {
+        action: this.deleteCollection
+      })
+    } else if(this.totalCollaborators()) {
       rows.push({
         description: "View Collaborators",
         action: this.viewCollaborators
@@ -452,18 +463,16 @@ const CollectionPage = React.createClass({
         <div className='large-text'>
           { this.state.data.collection.name }
         </div>
-        <div>
+        <div className='color-dark-grey'>
           Created by <Link
                         to={`/app/users/${this.state.data.collection.user.id}`}
                         className='link'>
             {this.state.data.collection.user.name}
           </Link>, {this.state.data.collection.display_date}
         </div>
-        { this.state.data.collection.users.length > 0 ? (
-            <div >
-              {this.state.data.collection.users.length} collaborator(s)
-            </div>
-          ) : null }
+        <div className='color-dark-grey'>
+          {this.totalCollaborators()} collaborator(s)
+        </div>
         <MoreOptionsDropdown
           rows={this.getMoreOptionsRows()} />
       </div>
