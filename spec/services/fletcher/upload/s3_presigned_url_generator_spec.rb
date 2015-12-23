@@ -20,7 +20,7 @@ RSpec.describe Fletcher::Upload::S3PresignedUrlGenerator do
   end
 
   describe '#generate!' do
-    let(:url) { "http://fletcher.com/uploads/r4nD0m5equ3nc3/#{filename}" }
+    let(:url) { "http://fletcher.mx/uploads/r4nD0m5equ3nc3/#{filename}" }
     let(:s3client) { double('s3client').as_null_object }
     subject { Fletcher::Upload::S3PresignedUrlGenerator.new(s3client) }
 

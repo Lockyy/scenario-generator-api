@@ -21,7 +21,7 @@ RSpec.describe Fletcher::NewReview do
         name: 'header.png',
         size: 12364,
         content_type: 'image/png',
-        url: 'http://img.fletcher.com/random_seq/header.png'
+        url: 'http://img.fletcher.mx/random_seq/header.png'
       }],
       product: {
         name: 'product',
@@ -31,7 +31,7 @@ RSpec.describe Fletcher::NewReview do
           name: 'company name',
           url: 'test',
           avatar: {
-            url: 'http://img.fletcher.com/random_seq/logo.png'
+            url: 'http://img.fletcher.mx/random_seq/logo.png'
           }
         }
       }
