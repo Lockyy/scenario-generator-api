@@ -54,13 +54,13 @@ const Sidebar = React.createClass ({
   renderTopButtons: function() {
     return (
       <ul className='menu-nav'>
+        <li className='logout'>
+          <a href="/sign_out">Log out</a>
+        </li>
         <li className='close-hamburger-menu text-hide'>
           <div onClick={this.closeHamburgerMenu}>
             <a>Close Menu</a>
           </div>
-        </li>
-        <li className='logout'>
-          <a href="/sign_out">Log out</a>
         </li>
       </ul>
     )
