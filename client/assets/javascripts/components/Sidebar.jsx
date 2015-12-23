@@ -95,10 +95,10 @@ const Sidebar = React.createClass ({
       return (
         <a
           className={'sidebar-link sidebar-row ' + sectionName}
-          href={"/app/users/current#" + sectionName}
           key={sectionName}
           onClick={function() {
             _this.closeHamburgerMenu();
+            window.location.href = "/app/users/current#" + sectionName;
             if(window.location.pathname == '/app/users/current') {
               window.location.reload();
             }
