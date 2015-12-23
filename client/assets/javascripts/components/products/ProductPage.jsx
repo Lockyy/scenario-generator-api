@@ -6,6 +6,7 @@ import RenderMobile from '../RenderMobile'
 import { Link, Navigation } from 'react-router'
 import Modal from 'react-modal'
 import FluxProductPageActions from '../../actions/FluxProductPageActions'
+import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import FluxBookmarkActions from '../../actions/FluxBookmarkActions'
 import ProductStore from '../../stores/ProductStore'
 import Reviews from './Reviews'
@@ -62,11 +63,23 @@ const ProductPage = React.createClass({
 
   componentDidMount: function() {
     ProductStore.listen(this.onChange.bind(this));
-    FluxProductPageActions.fetchProduct(this.id());
+    FluxProductPageActions.fetchProduct(this.id(), function() {
+      this.transitionTo('/app')
+      FluxNotificationsActions.showNotification({
+        type: '404',
+        text: `That product does not exist`
+      })
+    }.bind(this));
   },
 
   componentWillReceiveProps: function(newProps) {
-    FluxProductPageActions.fetchProduct(newProps.params.id);
+    FluxProductPageActions.fetchProduct(newProps.params.id, function() {
+      this.transitionTo('/app')
+      FluxNotificationsActions.showNotification({
+        type: '404',
+        text: `That product does not exist`
+      })
+    }.bind(this));
   },
 
   onChange: function(data) {

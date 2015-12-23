@@ -1,24 +1,43 @@
 import React from 'react';
 import _ from 'lodash';
+import { Navigation } from 'react-router'
 import CompanyStore from '../../stores/CompanyStore'
 import CompanyProfileHeader from './CompanyProfileHeader'
 import FluxCompanyActions from '../../actions/FluxCompanyActions'
+import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 
 const CompanyProfilePage  = React.createClass({
   displayName: 'CompanyProfilePage',
+  mixins: [ Navigation ],
 
   contextTypes: {
     router: React.PropTypes.func
   },
 
   getInitialState: function() {
-      return this.defaultProps();
+    return this.defaultProps();
   },
 
   componentDidMount() {
     CompanyStore.listen(this.onChange.bind(this));
     let params = this.context.router.state.params;
-    FluxCompanyActions.fetchData(params);
+    FluxCompanyActions.fetchData(params, function() {
+      this.transitionTo('/app')
+      FluxNotificationsActions.showNotification({
+        type: '404',
+        text: `That company does not exist`
+      })
+    }.bind(this));
+  },
+
+  componentWillReceiveProps: function(newProps) {
+    FluxCompanyActions.fetchData(newProps.params.id, function() {
+      this.transitionTo('/app')
+      FluxNotificationsActions.showNotification({
+        type: '404',
+        text: `That company does not exist`
+      })
+    }.bind(this));
   },
 
   openSharePageModal: function() {

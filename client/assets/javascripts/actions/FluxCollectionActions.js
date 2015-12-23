@@ -5,7 +5,7 @@ import FluxNotificationsActions from './FluxNotificationsActions'
 
 class FluxCollectionActions {
 
-  fetchCollection(id, resolve) {
+  fetchCollection(id, resolve, errorCallback) {
     CollectionAPI.fetchCollection(id,
       (data) => {
         this.actions.fetchedCollection(data);
@@ -15,6 +15,9 @@ class FluxCollectionActions {
       },
       (error) => {
         this.actions.registerError(error);
+        if(errorCallback) {
+          errorCallback();
+        }
       }
     );
   }

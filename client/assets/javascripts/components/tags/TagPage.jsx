@@ -3,6 +3,7 @@ import React from 'react';
 import timeago from 'timeago';
 import { Link, Navigation } from 'react-router';
 import FluxTagPageActions from '../../actions/FluxTagPageActions'
+import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import FluxCurrentUserActions from '../../actions/FluxCurrentUserActions'
 import TagStore from '../../stores/TagStore'
 import Results from '../search/Results'
@@ -60,7 +61,13 @@ const TagPage = React.createClass({
   },
 
   fetchProducts: function(tag, page, sorting) {
-    FluxTagPageActions.fetchProducts(tag, page, sorting);
+    FluxTagPageActions.fetchProducts(tag, page, sorting, function() {
+      this.transitionTo('/app')
+      FluxNotificationsActions.showNotification({
+        type: '404',
+        text: `That tag does not exist`
+      })
+    }.bind(this));
   },
 
   onChange: function(data) {

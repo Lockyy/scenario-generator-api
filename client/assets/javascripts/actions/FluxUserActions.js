@@ -4,7 +4,7 @@ import UserAPI from '../utils/api/UserAPI';
 import FluxCollectionActions from './FluxCollectionActions'
 
 class FluxUserActions {
-  fetchData(id) {
+  fetchData(id, errorCallback) {
     UserAPI.getUser(id,
       (data) => {
         this.actions.updateData(data);
@@ -12,6 +12,9 @@ class FluxUserActions {
       },
       (error) => {
         this.actions.registerError(error);
+        if(errorCallback) {
+          errorCallback();
+        }
       }
     );
   }

@@ -1,7 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
+import { Navigation } from 'react-router'
 import FluxUserActions from '../../actions/FluxUserActions';
 import FluxBookmarkActions from '../../actions/FluxBookmarkActions';
+import FluxNotificationsActions from '../../actions/FluxNotificationsActions';
 import UserStore from '../../stores/UserStore';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import Section from '../Section'
@@ -12,6 +14,7 @@ import UserProfileWorkArea from './UserProfileWorkArea';
 
 const UserProfilePage  = React.createClass({
   displayName: 'UserProfilePage',
+  mixins: [ Navigation ],
 
   contextTypes: {
     router: React.PropTypes.object,
@@ -28,15 +31,29 @@ const UserProfilePage  = React.createClass({
     }
   },
 
-  componentWillReceiveProps(newProps) {
-    FluxUserActions.fetchData(newProps.params.userId);
-    FluxUserActions.fetchRecentActivity(newProps.params.userId);
-  },
-
   componentDidMount() {
     UserStore.listen(this.onChange);
-    FluxUserActions.fetchData(this.context.router.state.params.userId);
+    FluxUserActions.fetchData(this.context.router.state.params.userId, function() {
+      this.transitionTo('/app')
+      FluxNotificationsActions.showNotification({
+        type: '404',
+        text: `That user does not exist`
+      })
+    }.bind(this));
     FluxUserActions.fetchRecentActivity(this.context.router.state.params.userId);
+  },
+
+  componentWillReceiveProps(newProps) {
+    if(newProps.params.userId != this.context.router.state.params.userId) {
+      FluxUserActions.fetchData(newProps.params.userId, function() {
+        this.transitionTo('/app')
+        FluxNotificationsActions.showNotification({
+          type: '404',
+          text: `That user does not exist`
+        })
+      }.bind(this));
+      FluxUserActions.fetchRecentActivity(newProps.params.userId);
+    }
   },
 
   onChange(data) {

@@ -69,8 +69,14 @@ const CollectionPage = React.createClass({
     }
   },
 
-  fetchCollection: function(id) {
-    FluxCollectionActions.fetchCollection(this.id());
+  fetchCollection: function() {
+    FluxCollectionActions.fetchCollection(this.id(), null, function() {
+      this.transitionTo('/app')
+      FluxNotificationsActions.showNotification({
+        type: '404',
+        text: `That collection does not exist`
+      })
+    }.bind(this));
   },
 
   onChange: function(data) {
