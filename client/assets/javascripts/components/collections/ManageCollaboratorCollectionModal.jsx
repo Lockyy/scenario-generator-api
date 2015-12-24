@@ -185,7 +185,7 @@ const ManageCollaboratorCollectionModal = React.createClass ({
     let data = {
       users: this.gatherUsers(),
       emails: this.gatherEmails(),
-      privacy: this.state.collection.privacy,
+      privacy: this.state.unsaved_collection.privacy,
       send_email_invites: this.state.collection.send_email_invites
     }
 
@@ -235,8 +235,8 @@ const ManageCollaboratorCollectionModal = React.createClass ({
 
   close: function(e) {
     if(e) { e.preventDefault() }
-    this.setState({unsaved_collection: this.state.collection})
-    this.props.close()
+    this.setState({ collection: this.state.unsaved_collection });
+    this.props.close();
   },
 
   // Rendering
