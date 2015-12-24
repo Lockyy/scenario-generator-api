@@ -52,8 +52,8 @@ const UserProfilePage  = React.createClass({
           text: `That user does not exist`
         })
       }.bind(this));
-      FluxUserActions.fetchRecentActivity(newProps.params.userId);
     }
+    FluxUserActions.fetchRecentActivity(newProps.params.userId);
   },
 
   onChange(data) {
