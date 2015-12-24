@@ -332,7 +332,7 @@ const ShareCollection = React.createClass ({
           condition={this.state.config.noGreyDescription}
           success={() => (
             <div className='grey-description'>
-              Add collaborators and manage their access level accordingly.
+              Add collaborators and set their access level accordingly.
             </div>
           )} />
 
@@ -345,7 +345,7 @@ const ShareCollection = React.createClass ({
                   Add collaborators to your collection
                 </div>
                 <div className='grey-description'>
-                  Add collaborators and manage their access level accordingly.
+                  Add collaborators and set their access level accordingly.
                 </div>
               </div>
             )} />

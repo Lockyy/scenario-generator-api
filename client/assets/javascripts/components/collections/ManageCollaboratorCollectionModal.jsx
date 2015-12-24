@@ -75,7 +75,6 @@ const ManageCollaboratorCollectionModal = React.createClass ({
     let unsavedCollection = jQuery.extend(true, {}, data.data.collection)
     this.setState({
       collection: data.data.collection,
-      displayedUsers: unsavedCollection.users,
       unsaved_collection: unsavedCollection
     });
   },
@@ -128,8 +127,7 @@ const ManageCollaboratorCollectionModal = React.createClass ({
     let index = _.findIndex(emails, function(email_obj) { return email_obj.email == email })
     if(index > -1) {
       emails[index] = _.merge(emails[index], {rank: rank})
-      this.updateEmails(emails)
-    }
+      this.updateEmails(emails) }
   },
 
   updateUser: function(id, rank) {
@@ -185,7 +183,7 @@ const ManageCollaboratorCollectionModal = React.createClass ({
     let data = {
       users: this.gatherUsers(),
       emails: this.gatherEmails(),
-      privacy: this.state.collection.privacy,
+      privacy: this.state.unsaved_collection.privacy,
       send_email_invites: this.state.collection.send_email_invites
     }
 
@@ -235,8 +233,8 @@ const ManageCollaboratorCollectionModal = React.createClass ({
 
   close: function(e) {
     if(e) { e.preventDefault() }
-    this.setState({unsaved_collection: this.state.collection})
-    this.props.close()
+    this.setState({ collection: this.state.unsaved_collection });
+    this.props.close();
   },
 
   // Rendering
@@ -251,7 +249,7 @@ const ManageCollaboratorCollectionModal = React.createClass ({
 
         <RenderDesktop
           component={ManageCollaboratorCollectionModalDesktop}
-          displayedUsers={this.state.displayedUsers}
+          displayedUsers={this.state.unsaved_collection.users}
           collection={this.state.collection}
           unsaved_collection={this.state.unsaved_collection}
           close={this.close}
