@@ -22,15 +22,22 @@ const SliderToggle = React.createClass({
   ////////////
 
   render: function render() {
-    let activeDetails = this.getActiveDetails()
+    let activeDetails = this.getActiveDetails();
+    let sliderStyles = {
+      backgroundColor: 'white',
+      border: 'none'
+    };
 
     return (
-      <div
-        className={`slider-toggle ${this.props.className || ''}`}
-        onClick={this.sliderClicked}>
-        <div className={`toggle-svg ${this.props.active}`} />
+      <div className={`slider-toggle ${this.props.className || ''}`}>
+        <button className={`toggle-svg ${this.props.active}`}
+                onClick={this.sliderClicked}
+                style={sliderStyles}/>
         <div className='description'>
-          <span className='title'>{activeDetails.title}: </span>{activeDetails.description}
+          <span className='title'>
+            {activeDetails.title}: 
+          </span>
+          {activeDetails.description}
         </div>
       </div>
     )
