@@ -172,7 +172,7 @@ const ManageCollaboratorCollectionModalMobile = React.createClass ({
               value: 'visible',
               title: 'Public',
               description: 'Open it to the public. Every user in Fletcher will be able to view your collection.'
-            },
+            }
           }}
           active={this.props.unsaved_collection.privacy == 'hidden'}
           onChange={this.props.setPrivacy} />
@@ -195,7 +195,7 @@ const ManageCollaboratorCollectionModalMobile = React.createClass ({
 
   render: function() {
     return (
-      <div>
+      <div className="manage-collaborator-container-mobile">
         <div className='back-button' onClick={this.props.close}>Back</div>
         {this.renderOwnerView()}
         <Footer />
