@@ -8,14 +8,14 @@ module Omniauth
 
     def authenticate!
       @user ||= ::User.find_with_oauth(@result.provider, @result.uid)
-      @user ||= create_user!
+      @user ||= create_user
       return false unless @user.valid?
       update_info!
     end
 
     private
 
-    def create_user!
+    def create_user
       @user ||= ::User.create(name: @result.name, email: @result.email, password: ::User.generate_password)
     end
 
