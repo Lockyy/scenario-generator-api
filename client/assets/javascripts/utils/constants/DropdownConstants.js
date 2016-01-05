@@ -125,7 +125,7 @@ module.exports = {
     },
     {
       option: 'collaborator',
-      display: 'Collaborated'
+      display: 'Collaborating'
     },
     {
       option: 'public',
