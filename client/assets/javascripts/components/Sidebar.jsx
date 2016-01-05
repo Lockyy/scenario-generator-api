@@ -92,6 +92,8 @@ const Sidebar = React.createClass ({
 
     return _.map(sideSections, function(section) {
       let sectionName = section.toLowerCase();
+      let sectionNameDisplay = "My " + section;
+
       return (
         <a
           className={'sidebar-link sidebar-row ' + sectionName}
@@ -103,7 +105,7 @@ const Sidebar = React.createClass ({
               window.location.reload();
             }
           }}>
-          {section}
+          {sectionNameDisplay}
         </a>
       );
     });
