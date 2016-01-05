@@ -8,7 +8,6 @@ import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
 import FluxModalActions from '../../actions/FluxModalActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
-import UserTypeahead from '../UserTypeahead'
 import Results from '../search/Results'
 import Avatar from '../Avatar'
 import Footer from '../Footer';
