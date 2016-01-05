@@ -35,18 +35,6 @@ const ManageCollaboratorCollectionModalDesktop = React.createClass ({
     }
   },
 
-  renderUserTypeahead: function() {
-    return (
-      <div className='twitter-typeahead filtering'>
-        <input
-          className='form-control tt-input'
-          ref='filterInput'
-          placeholder='Filter among the added collaborators'
-          onChange={(e) => this.props.filterCollaborators($(e.target).val())} />
-      </div>
-    )
-  },
-
   renderOwner: function() {
     let user = this.props.collection.user
 
@@ -114,7 +102,6 @@ const ManageCollaboratorCollectionModalDesktop = React.createClass ({
       <div className='row'>
         <form className='col-xs-12 form collection'
               ref='collection_form'>
-          {this.renderUserTypeahead()}
           <div className='grey'>
             <div className='scrollable'>
               {this.renderOwner()}
