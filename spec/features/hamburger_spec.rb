@@ -53,7 +53,7 @@ describe "Hamburger Menu", js: true do
 
     it 'shows collections' do
       expect(first('.menu.hamburger-menu')).to have_content 'My Collections'
-      expect(first('.menu.hamburger-menu')).to have_content @collection.title
+      expect(first('.menu.hamburger-menu')).to have_content @collection.name
     end
 
     describe 'clicking the close hamburger menu button' do

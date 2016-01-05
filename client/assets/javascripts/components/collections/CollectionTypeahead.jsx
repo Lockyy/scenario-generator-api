@@ -31,22 +31,22 @@ const CollectionTypeahead  = React.createClass({
     let _this = this
     return {
       name: 'collections',
-      displayKey: 'title',
+      displayKey: 'name',
       templates: {
         empty: function(data) {
           let query = data.query;
           return `<p class='tt-no-results' data-query='${query}'>No Results for “${query}”</p>`
         },
         suggestion: function(data) {
-          let title = data.title.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+          let title = data.name.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
           return `<p>${title}<span class='tt-help'>${_this.props.helpMessage || 'Add to Collection'} <i class="review-symbol"> -> </i></span></p>`
         }
       }
     }
   },
 
-  _onNameChange: function _onNameChange(collection_title) {
-    this.props._onSelectCollection({ title: collection_title }, false)
+  _onNameChange: function _onNameChange(collection_name) {
+    this.props._onSelectCollection({ name: collection_name }, false)
   },
 
   _onSelectCollection: function _onSelectCollection(collection) {

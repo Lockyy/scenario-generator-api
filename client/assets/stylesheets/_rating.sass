@@ -1,4 +1,5 @@
 @import 'functions'
+@import 'variables'
 
 @mixin icon($image)
   background: img-url($image) no-repeat
@@ -71,6 +72,15 @@
         @include star-on
 
 .rating-container.price
+  .score-text
+    &::before
+      content: 'Average pricing: '
+      color: $dark-grey
+      @media all 
+        @media (max-width: 380px)
+          content: 'Avg. price: '
+        @media (max-width: 320px)
+          content: 'Avg: '
   .items
     .rating-group
       input[type='radio'] + label
@@ -80,3 +90,5 @@
       input[type='radio'] + label.before-marked,
       input[type='radio']:checked + label
         @include price-on
+
+  

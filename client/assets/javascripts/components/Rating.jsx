@@ -64,7 +64,7 @@ const Rating = React.createClass({
 
   _onClear: function _onClear(e) {
     this._getAllStars().find('label').removeClass('marked').removeClass('before-marked')
-    e.target.value = false
+    e.target.value = 0
     this.props.onChange(e)
   },
 
@@ -119,7 +119,7 @@ const Rating = React.createClass({
       return _this.buildStar(n + 1);
     });
     let scoreText = <div className='score-text'>
-      {this.props.textOptions[this.props.value - 1]}
+      {this.props.textOptions[Math.round(this.props.value) - 1]}
     </div>;
 
     return (<div className={containerClasses} ref='container'>

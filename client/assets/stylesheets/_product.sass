@@ -5,12 +5,40 @@
   padding: 0
 
   &.collection
-    .title
-      cursor: pointer
-      &:hover
-        text-decoration: underline
     .content
-      height: 300px
+      height: 215px
+      .data
+        .details
+          position: relative
+          height: 100%
+          .title
+            cursor: pointer
+            font-size: 15px
+            font-weight: normal
+            display: flex
+            align-items: center
+            &:hover
+              text-decoration: underline
+          .description
+            font-size: 13px
+          .content
+            height: 300px
+          .preview-collection
+            font-size: 14px
+            display: flex
+            justify-content: flex-end
+            align-items: center
+            cursor: pointer
+            color: $highlight-blue
+            position: absolute
+            bottom: 5px
+            right: 0px
+        .footer
+          display: flex
+          justify-content: space-between
+          align-items: center
+          font-size: 11px
+          text-align: left
 
   .content
     height: $box-height

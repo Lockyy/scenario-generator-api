@@ -15,33 +15,48 @@ const SearchBox = React.createClass ({
     router: React.PropTypes.object
   },
 
+  childContextTypes: {
+    router: React.PropTypes.object
+  },
+
+  getChildContext: function() {
+    return {router: this.props.router};
+  },
+
   getInitialState: function() {
     return {
       data: {
         search_string: '',
         products: { data: [] },
         companies: { data: [] },
-        tags: { data: [] }
+        tags: { data: [] },
+        collections: { data: [] },
       }
     }
   },
 
-  performSearch: function(search_string) {
-    SearchHeaderStore.listen(this.onChange.bind(this));
-    FluxSearchHeaderActions.getSearchResults({ search_string: search_string, page: 1, per_page: 2, filter_by: 'name' });
-  },
+  performSearch: _.debounce(function(search_string) {
+    if(search_string.length <= 0) {
+      this.closeDropdown();
+    } else {
+      SearchHeaderStore.listen(this.onChange.bind(this));
+      FluxSearchHeaderActions.getSearchResults({ search_string: search_string, page: 1, per_page: 2, filter_by: 'name' });
+    }
+  }, 300),
 
   onChange: function(data) {
     this.setState(data);
-    let resultsHolder = $(React.findDOMNode(this.refs.resultsHolder));
-    resultsHolder.show();
-    resultsHolder.on('clickoutside', function(){
-      $(this).hide()
-    });
+    let resultsDropdown = $(React.findDOMNode(this.refs.resultsDropdown));
+    resultsDropdown.show();
+    resultsDropdown.on('clickoutside', function(){
+      this.closeDropdown()
+    }.bind(this));
   },
 
   onSearchInput: function(event) {
-    this.performSearch(event.target.value);
+    let search_string = event.target.value;
+
+    this.performSearch(search_string)
   },
 
   onSubmit: function(event) {
@@ -56,41 +71,63 @@ const SearchBox = React.createClass ({
   },
 
   onTagClick: function(e) {
-    $('.search-container .form-control').val('')
-    $('.search-container .results-holder').hide()
+    this.closeDropdown()
     this.props.router.transitionTo(`/app/tag/${e.target.dataset.slug}/products/1`);
   },
 
+  closeDropdown: function() {
+    $('.search-container .form-control').val('');
+    $('.search-container .results-dropdown').hide();
+  },
+
   displayResults: function() {
-    return this.state.data.total_results > 0
+    return this.state.data.search_string.length > 0
   },
 
   renderResults: function() {
     if(this.displayResults()) {
 
       return (
-        <div ref='resultsHolder' className='results-holder'>
-          <Results
-            type='products'
-            data={this.state.data.products}
-            topLeft='type'
-            topRight='link'
-            containerClass={'header'}
-            searchTerm={this.state.data.search_string} />
-          <Results
-            type='companies'
-            data={this.state.data.companies}
-            topLeft='type'
-            topRight='link'
-            containerClass={'header'}
-            searchTerm={this.state.data.search_string} />
-          <TagResults
-            data={this.state.data.tags}
-            containerClass={'header'}
-            topRight={'size'}
-            hide={this.state.data.tags.total <= 0}
-            searchTerm={this.state.data.search_string}
-            onClick={this.onTagClick} />
+        <div className='results-dropdown' ref='resultsDropdown'>
+          <div className='results-holder'>
+            <Results
+              type='products'
+              data={this.state.data.products}
+              topLeft='type'
+              topRight='link'
+              topClass='table-header full-width'
+              className={'header'}
+              close={this.closeDropdown}
+              searchTerm={this.state.data.search_string} />
+            <Results
+              type='companies'
+              data={this.state.data.companies}
+              topLeft='type'
+              topRight='link'
+              topClass='table-header full-width'
+              className={'header'}
+              close={this.closeDropdown}
+              searchTerm={this.state.data.search_string} />
+            <TagResults
+              data={this.state.data.tags}
+              className={'header'}
+              topRight={'link'}
+              topClass='table-header full-width'
+              max={10}
+              close={this.closeDropdown}
+              searchTerm={this.state.data.search_string}
+              onClick={this.onTagClick} />
+            <Results
+              type='collections'
+              data={this.state.data.collections}
+              topLeft='type'
+              topRight='link'
+              close={this.closeDropdown}
+              topClass='table-header full-width'
+              className={'header'}
+              searchTerm={this.state.data.search_string}
+              onClick={this.closeDropdown} />
+          </div>
         </div>
       )
     }

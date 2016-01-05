@@ -33,8 +33,12 @@ const UserTypeahead  = React.createClass({
       name: 'users',
       displayKey: 'name',
       templates: {
+        header: _this._getHeaderTemplate,
         empty: function(data) {
           let query = data.query;
+          if(_this._validateEmail(query)) {
+            return `<p class='tt-no-results tt-empty' data-query='${query}'>“${query}”<span class='tt-help'>Invite via email <i class="add-symbol"> + </i></span></p>`
+          }
           return `<p class='tt-no-results' data-query='${query}'>No Results for “${query}”</p>`
         },
         suggestion: function(data) {
@@ -52,6 +56,12 @@ const UserTypeahead  = React.createClass({
   _onSelectUser: function _onSelectUser(user) {
     if(user.id) {
       this.props.onSetUser(user, true);
+    }
+  },
+
+  _onSelectEmail: function _onSelectEmail(query) {
+    if(this._validateEmail(query)) {
+      this.props.onSetEmail(query)
     }
   },
 
@@ -92,16 +102,29 @@ const UserTypeahead  = React.createClass({
     }
   },
 
+  _validateEmail: function _validateEmail(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
+  },
+
+  _getHeaderTemplate: function _getHeaderTemplate(data) {
+    let query = data.query;
+    if(this._validateEmail(query)) {
+      return `<p class='tt-no-results tt-empty' data-query='${query}'>“${query}”<span class='tt-help'>Invite via email <i class="add-symbol"> + </i></span></p>`
+    }
+    return
+  },
+
   render: function render() {
     return (
       <div className='form-group typeahead'>
         {this.props.hideLabel ? null : (<label id='product_name_label' htmlFor='user[name]'>{"User's Name"}</label>)}
         <TypeAhead name='user[name]' value={this.props.value} className='form-control'
-          id='user_name' placeholder='Search users and add them'
+          id='user_name' placeholder={this.props.placeholder || 'Search users, or enter their emails'}
           bloodhoundProps={this._getBloodhoundProps()} typeaheadProps={this._getTypeaheadProps()}
-          onSelectOption={this._onSelectUser} onChange={this._onNameChange}
-          onRender={this._hideCreateWhenMatch} onFocus={this._resizeFormGroup}
-          onBlur={this._resizeFormGroupToNormal}
+          onSelectOption={this._onSelectUser} onSelectNoOption={this._onSelectEmail}
+          onChange={this._onNameChange} onRender={this._hideCreateWhenMatch}
+          onFocus={this._resizeFormGroup} onBlur={this._resizeFormGroupToNormal}
           ref='user_name' disabled={this.props.disabled} required/>
         <span className="help-block with-errors"></span>
       </div>

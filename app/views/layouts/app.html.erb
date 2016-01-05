@@ -5,21 +5,27 @@
     <%= stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/favicon' %>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   </head>
-  <body class="app <%= params[:action] %>">
+  <body class="app <%= params[:action] %> <%= theme_class %>">
+    <div id="loading-bar">
+      <div class="bar"></div>
+    </div>
+    <div id="wrapper">
 
-    <%= render 'app/header' %>
+      <%= render 'app/header' %>
 
-    <%= yield %>
+      <%= yield %>
 
-    <%= render 'site/footer' %>
+      <div id='notifications'></div>
+      <div id='modals'></div>
 
-    <div id='notifications'></div>
-    <div id='modals'></div>
+      <%= javascript_include_tag 'app', 'data-turbolinks-track' => true %>
 
-    <%= javascript_include_tag 'app', 'data-turbolinks-track' => true %>
+      <div id="analytics"></div>
 
-    <div id="analytics"></div>
+    </div>
+
+    <footer id='footer'></footer>
   </body>
 </html>

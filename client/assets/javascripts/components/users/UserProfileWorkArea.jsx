@@ -5,7 +5,7 @@ import TabbedArea from '../TabbedArea';
 import UserTags from './UserTags';
 import UserBookmarks from './UserBookmarks';
 import CollectionsCollection from '../collections/CollectionsCollection';
-import { CreateCollectionMixin } from '../collections/CreateCollectionModal'
+import CreateCollectionMixin from '../collections/CreateCollectionMixin'
 
 const UserProfileWorkArea  = React.createClass({
   displayName: 'UserProfileWorkArea',
@@ -43,13 +43,17 @@ const UserProfileWorkArea  = React.createClass({
         className='my-collections-container work-area-section'
         ref='collections'
         tabTitle='Collections' >
-        <div className='placeholder-section message'>
-          Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!
+        <div className='placeholder-message'>
+          Create and share lists of products you are comparing or interested in.
         </div>
-        <div className='btn btn-round btn-red' onClick={this.showCreateCollectionModal}>
+        <div className='btn btn-round btn-grey-inverted bottom-margin-2' onClick={this.showCreateCollectionModal}>
           Create Collection
         </div>
-        <CollectionsCollection />
+        <CollectionsCollection
+          className='hidden-xs' />
+        <CollectionsCollection
+          mobile="true"
+          className='horizontal-padding-2 visible-xs' />
       </div>
     );
   },
@@ -69,7 +73,7 @@ const UserProfileWorkArea  = React.createClass({
 
   getTagsSection: function getTagsSection() {
     return (
-      <div className='my-tags-container work-area-section' ref='tags' tabTitle='Followed Tags' >
+      <div className='my-tags-container work-area-section' ref='tags' tabTitle='Tags' >
         <UserTags showMessage='true' />
       </div>
     );

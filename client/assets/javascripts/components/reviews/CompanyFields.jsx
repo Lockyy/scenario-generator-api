@@ -65,7 +65,7 @@ const CompanyFields  = React.createClass({
   _getNewCompanyFields: function _getNewCompanyFields() {
     return (<fieldset className='company_details'>
       <div className='form-group'>
-        <label htmlFor='product[company[url]]'>Company's website <span className='required'>*</span></label>
+        <label htmlFor='product[company[url]]'>{"Company's website "}<span className='required'>*</span></label>
         <input type='text' className='form-control' placeholder='www.' name='product[company[url]]'
           pattern="[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
           title="Include a valid url" ref='company_url' value={this.props.url}
@@ -97,8 +97,8 @@ const CompanyFields  = React.createClass({
     return (
       <div className='details'>
         <div className="header">
-          <h3 className='title'><Link to={`/app/companies/${this.props.id}`}>{this.props.name}</Link></h3>
-          <h4 className='company'><Link to={`/app/companies/${this.props.company.id}`} >{this.props.company.name}</Link></h4>
+          <h3 className='title'><Link to={`/app/companies/${this.props.id}/${this.props.slug}`}>{this.props.name}</Link></h3>
+          <h4 className='company'><Link to={`/app/companies/${this.props.company.id}/${this.props.company.slug}`} >{this.props.company.name}</Link></h4>
         </div>
 
         <Rating value={this.props.rating} name='rating'/>

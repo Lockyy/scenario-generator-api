@@ -29,11 +29,6 @@ describe 'Collection#visible' do
     @visible_collection = create(:collection, user: @user_2,
                                               products: [@product_1, @product_2],
                                               privacy: :visible)
-    # This collection is owned by @user_3 and has products 1 and 2 in it.
-    # Visible to @user_2, @user_3, and @primary_user.
-    @visible_collection = create(:collection, user: @user_2,
-                                              products: [@product_1, @product_2],
-                                              privacy: :visible)
   end
 
 
@@ -51,12 +46,34 @@ describe 'Collection#visible' do
     end
 
     describe 'when shared' do
-      before do
-        @hidden_collection.share([@primary_user.id])
+      describe 'as a viewer' do
+        before do
+          @visible_collection.share([{id: @primary_user.id, rank: 0}])
+        end
+
+        it 'are still visible to that user' do
+          expect(Collection.all.visible(@primary_user).map(&:id)).to include @visible_collection.id
+        end
       end
 
-      it 'are still visible to that user' do
-        expect(Collection.all.visible(@primary_user).map(&:id)).to include @hidden_collection.id
+      describe 'as a collaborator' do
+        before do
+          @visible_collection.share([{id: @primary_user.id, rank: 1}])
+        end
+
+        it 'are still visible to that user' do
+          expect(Collection.all.visible(@primary_user).map(&:id)).to include @visible_collection.id
+        end
+      end
+
+      describe 'as an owner' do
+        before do
+          @visible_collection.share([{id: @primary_user.id, rank: 2}])
+        end
+
+        it 'are still visible to that user' do
+          expect(Collection.all.visible(@primary_user).map(&:id)).to include @visible_collection.id
+        end
       end
     end
   end
@@ -69,16 +86,46 @@ describe 'Collection#visible' do
     end
 
     describe 'when shared' do
-      before do
-        @hidden_collection.share([@primary_user.id])
+      describe 'as a viewer' do
+        before do
+          @hidden_collection.share([{id: @primary_user.id, rank: 0}])
+        end
+
+        it 'are included when that user is passed in' do
+          expect(Collection.all.visible(@primary_user).map(&:id)).to include @hidden_collection.id
+        end
+
+        it 'are not included when a different user is passed in' do
+          expect(Collection.all.visible(@user_3).map(&:id)).to_not include @hidden_collection.id
+        end
       end
 
-      it 'are included when that user is passed in' do
-        expect(Collection.all.visible(@primary_user).map(&:id)).to include @hidden_collection.id
+      describe 'as a collaborator' do
+        before do
+          @hidden_collection.share([{id: @primary_user.id, rank: 1}])
+        end
+
+        it 'are included when that user is passed in' do
+          expect(Collection.all.visible(@primary_user).map(&:id)).to include @hidden_collection.id
+        end
+
+        it 'are not included when a different user is passed in' do
+          expect(Collection.all.visible(@user_3).map(&:id)).to_not include @hidden_collection.id
+        end
       end
 
-      it 'are not included when a different user is passed in' do
-        expect(Collection.all.visible(@user_3).map(&:id)).to_not include @hidden_collection.id
+      describe 'as an owner' do
+        before do
+          @hidden_collection.share([{id: @primary_user.id, rank: 2}])
+        end
+
+        it 'are included when that user is passed in' do
+          expect(Collection.all.visible(@primary_user).map(&:id)).to include @hidden_collection.id
+        end
+
+        it 'are not included when a different user is passed in' do
+          expect(Collection.all.visible(@user_3).map(&:id)).to_not include @hidden_collection.id
+        end
       end
     end
   end

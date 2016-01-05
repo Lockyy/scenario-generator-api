@@ -82,7 +82,7 @@ const NewReviewPage  = React.createClass({
     let reviewID = this._getCurrentUserReviewId();
 
     if(reviewID && params.reviewId != reviewID) {
-      this.context.router.transitionTo(`/app/products/${this._getProductId()}/reviews/${reviewID}`);
+      this.context.router.transitionTo(`/app/products/${this._getProductId()}/${this._getProductData().slug}/reviews/${reviewID}`);
       this._fetchReview(this._getProductId(), reviewID);
     }
   },
@@ -125,7 +125,7 @@ const NewReviewPage  = React.createClass({
 
     FluxReviewPageActions.submitReview(review,
       function(data) {
-        _this.context.router.transitionTo(`/app/products/${data.product.id}`)
+        _this.context.router.transitionTo(`/app/products/${data.product.id}/${data.product.slug}`)
         FluxNotificationsActions.showNotification({
           type: 'saved',
           subject: _.merge(data.product, {type: 'review'})
@@ -185,8 +185,7 @@ const NewReviewPage  = React.createClass({
   render: function render() {
     let info = (<div className='info'>
       <div className='instructions'>
-        If you can't find a product, please select the Add and Review <i className='add-symbol'></i> option from the drop down.
-        This will add the product to the directory when you've reviewed it.
+        If you can’t find the product you are looking for, click <i className='add-symbol'></i> to quickly add it to Fletcher <span className='internal-only'>Internal IT</span> and then rate and review.
       </div>
     </div>);
 

@@ -9,6 +9,7 @@ import PriceRating from '../PriceRating';
 import Tags from '../Tags';
 import Dropdown from '../Dropdown';
 import ReviewConstants from '../../utils/constants/ReviewConstants';
+import DropdownConstants from '../../utils/constants/DropdownConstants';
 
 const ReviewsMobileVersion = React.createClass({
   displayName: 'ReviewsMobileVersion',
@@ -98,7 +99,7 @@ const ReviewsMobileVersion = React.createClass({
 
 	getEditReviewTag: function(review) {
 		return <div className='edit-review-container'>
-			<Link to={`/app/products/${review.product.id}/reviews/${review.id}`}
+			<Link to={`/app/products/${review.product.id}/${review.product.slug}/reviews/${review.id}`}
 				className='btn btn-white'>Edit my review</Link>
 		</div>;
 	},
@@ -116,8 +117,8 @@ const ReviewsMobileVersion = React.createClass({
     let helpful = voted && userVote.helpful;
     let unhelpful = voted && !userVote.helpful;
 
-    let yesClass = `btn btn-grey ${ helpful ? 'active' : '' }`;
-    let noClass = `btn btn-grey ${ unhelpful ? 'active' : '' }`;
+    let yesClass = `btn btn-grey-inverted ${ helpful ? 'active' : '' }`;
+    let noClass = `btn btn-grey-inverted ${ unhelpful ? 'active' : '' }`;
 
     return (<div className='helpful-review-container'>
       <div className='vote-container'>
@@ -220,13 +221,7 @@ const ReviewsMobileVersion = React.createClass({
         <Dropdown
           onClick={this.changeSorting}
           active={this.currentSorting()}
-          options={{
-            latest: 'Latest',
-            highScore: 'Rating: Low to High',
-            lowScore: 'Rating: High to Low',
-            unhelpful: 'Most Helpful: Low to High',
-            helpful: 'Most Helpful: High to Low'
-          }} />
+          options={DropdownConstants.reviewSortOptions} />
       </div>
     )
   },

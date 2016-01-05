@@ -5,8 +5,6 @@ module.exports = {
   content: {
     'overflow': 'visible',
     'border': '0px',
-    'top': '100px',
-    'bottom': 'initial',
     'padding': '25px 25px 25px'
   }
 };

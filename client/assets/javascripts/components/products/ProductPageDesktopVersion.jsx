@@ -15,10 +15,11 @@ import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
 import CollectionsCollection from '../collections/CollectionsCollection';
 import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
+import CreateCollectionMixin from '../collections/CreateCollectionMixin';
 
 const ProductPageDesktopVersion = React.createClass({
   displayName: 'ProductPageDesktopVersion',
-  mixins: [ Navigation, AddToCollectionMixin ],
+  mixins: [ Navigation, AddToCollectionMixin, CreateCollectionMixin ],
 
   id: function() {
     return this.props.data.id
@@ -63,7 +64,7 @@ const ProductPageDesktopVersion = React.createClass({
             </div>
             <div className='company'>
               <Link
-                to={`/app/companies/${this.getCompanyData('slug')}`}>
+                to={`/app/companies/${this.getCompanyData('id')}/${this.getCompanyData('slug')}`}>
                 {this.getCompanyData('name')}
               </Link>
             </div>
@@ -76,13 +77,13 @@ const ProductPageDesktopVersion = React.createClass({
   renderBookmarkLink: function() {
     if(this.props.data.bookmarked) {
       return (
-        <div onClick={this.props.onUnbookmark} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onUnbookmark} className='btn btn-grey-inverted btn-round'>
           Remove Bookmark
         </div>
       )
     } else {
       return (
-        <div onClick={this.props.onBookmark} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onBookmark} className='btn btn-grey-inverted btn-round'>
           Bookmark
         </div>
       )
@@ -95,7 +96,7 @@ const ProductPageDesktopVersion = React.createClass({
         <Link to={this.props.reviewButtonURL} className='btn btn-red btn-round review-link'>
           { this.props.reviewButtonText }
         </Link>
-        <div onClick={this.props.onShare} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onShare} className='btn btn-grey-inverted btn-round'>
           Share
         </div>
         {this.renderBookmarkLink()}
@@ -176,12 +177,17 @@ const ProductPageDesktopVersion = React.createClass({
             <div className='header'>
             </div>
             <div className='placeholder-section message'>
-              Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!
+              Collections are created by users to group products they are interested in. They can even be shared or made public. Create one yourself!
             </div>
-            <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal(this.props.data)}>
-              Add product to a Collection
+            <div className='btn btn-round btn-grey-inverted' onClick={() => this.showCreateCollectionModal({products: [this.props.data]})}>
+              Create Collection
             </div>
-            <CollectionsCollection />
+            <div className='btn btn-round btn-grey-inverted' onClick={() => this.showAddToCollectionModal('', {mobile: false})}>
+              Add to existing collection
+            </div>
+            <CollectionsCollection
+              product={this.props.data}
+              emptyMessage='This product has not been added to any collections.' />
           </div>
           <div
             tabTitle='Custom Data'

@@ -20,3 +20,31 @@
     &::before
       content: "<"
       margin-right: 10px
+
+.back-button
+  display: none
+
+@media (max-width: $screen-sm)
+  .ReactModal__Overlay
+    .back-button
+      margin: -25px -25px 25px
+
+  .back-button
+    display: block
+    background: $light-grey
+    cursor: pointer
+    margin-bottom: 10px
+    padding: 15px
+    color: $blackish-grey
+    &::before
+      display: inline-block
+      content: '.'
+      color: transparent
+      background-image: url('icons/dark-grey-arrow.svg')
+      background-repeat: no-repeat
+      transform: rotate(180deg)
+      background-size: contain
+      width: 8px
+      height: 17px
+      margin-left: 10px
+      margin-right: 10px

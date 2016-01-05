@@ -3,9 +3,11 @@ import React from 'react';
 import timeago from 'timeago';
 import { Link, Navigation } from 'react-router';
 import FluxTagPageActions from '../../actions/FluxTagPageActions'
+import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import FluxCurrentUserActions from '../../actions/FluxCurrentUserActions'
 import TagStore from '../../stores/TagStore'
 import Results from '../search/Results'
+import DropdownConstants from '../../utils/constants/DropdownConstants';
 
 const TagPage = React.createClass({
   displayName: 'TagPage',
@@ -59,7 +61,13 @@ const TagPage = React.createClass({
   },
 
   fetchProducts: function(tag, page, sorting) {
-    FluxTagPageActions.fetchProducts(tag, page, sorting);
+    FluxTagPageActions.fetchProducts(tag, page, sorting, function() {
+      this.transitionTo('/app')
+      FluxNotificationsActions.showNotification({
+        type: '404',
+        text: `That tag does not exist`
+      })
+    }.bind(this));
   },
 
   onChange: function(data) {
@@ -82,7 +90,7 @@ const TagPage = React.createClass({
     FluxCurrentUserActions.removeTag({name: this.tag()});
   },
 
-  changeSort: function(newSortParams) {
+  onChangeSort: function(newSortParams) {
     this.transitionTo(`/app/tag/${this.tag()}/products/1`, { sorting: newSortParams.sorting.products });
   },
 
@@ -97,7 +105,7 @@ const TagPage = React.createClass({
       </div>);
   },
 
-  renderTagInfo: function () {
+  renderTagInfo: function() {
     return (
       <div className='col-xs-12 tag-header'>
         <div className='tag-name'>
@@ -125,16 +133,11 @@ const TagPage = React.createClass({
           topLeft='count'
 
           topRight='dropdown'
-          dropdownOptions={{
-            latest: 'Latest',
-            high_to_low: 'Rating High to Low',
-            low_to_high: 'Rating Low to High',
-            alphabetical_order: 'Alphabetical order',
-          }}
+          dropdownOptions={DropdownConstants.tagSortOptions}
           sorting={this.sorting()}
 
           onChangePage={this.changePage}
-          onSetQuery={this.changeSort} />
+          onChangeSort={this.onChangeSort} />
       </div>
     )
   },

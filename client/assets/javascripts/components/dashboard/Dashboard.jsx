@@ -8,6 +8,7 @@ import RecentlyAddedSection from './RecentlyAddedSection';
 import MostPopularSection from './MostPopularSection';
 import RecentActivitySection from './RecentActivitySection';
 import BasedOnTagsSection from './BasedOnTagsSection';
+import CollectionSection from './CollectionSection';
 
 function sumSizeFunc(item) {
   return item.props.size;
@@ -15,6 +16,18 @@ function sumSizeFunc(item) {
 
 const Dashboard = React.createClass({
   displayName: 'Dashboard',
+
+  contextTypes: {
+    currentUser: React.PropTypes.object.isRequired
+  },
+
+  childContextTypes: {
+    currentUser: React.PropTypes.object.isRequired
+  },
+
+  getChildContext: function() {
+    return {'currentUser': this.context.currentUser};
+  },
 
   getDefaultProps: function() {
     return {
@@ -31,7 +44,7 @@ const Dashboard = React.createClass({
   },
 
   componentDidMount: function() {
-    DashboardStore.listen(this.onChange.bind(this));
+    DashboardStore.listen(this.onChange);
     FluxDashboardActions.fetchData();
   },
 
@@ -58,6 +71,11 @@ const Dashboard = React.createClass({
   getBasedOnTagsData: function() {
     let basedOnTagsData = this.state.data[DashboardConstants.BASED_ON_TAGS_SECTION];
     return basedOnTagsData ? basedOnTagsData : {items: {}};
+  },
+
+  getCollectionsData: function() {
+    let collectionsData = this.state.data[DashboardConstants.COLLECTIONS_SECTION];
+    return collectionsData ? collectionsData : {items: {}};
   },
 
   getCurrentIDs: function(sectionName) {
@@ -94,7 +112,8 @@ const Dashboard = React.createClass({
       recently_added: this.refs.recently_added,
       based_on_tags: this.refs.based_on_tags,
       most_popular: this.refs.most_popular,
-      recent_activity: this.refs.recent_activity
+      recent_activity: this.refs.recent_activity,
+      collections: this.refs.collections
     }
   },
 
@@ -158,6 +177,9 @@ const Dashboard = React.createClass({
     let recentActivityData = this.getRecentActivityData();
     let addMoreRecentActivityCb = this.showMoreProducts.bind(this, DashboardConstants.RECENT_ACTIVITY_SECTION);
 
+    let collectionsData = this.getCollectionsData();
+    let collectionsSectionCb = this.showMoreProducts.bind(this, DashboardConstants.COLLECTIONS_SECTION);
+
     return (<div className='sections'>
       {_.isUndefined(basedOnTagsData) || _.isEmpty(basedOnTagsData.items) ?
         <div /> :
@@ -181,6 +203,12 @@ const Dashboard = React.createClass({
         <div /> :
         <RecentActivitySection ref={DashboardConstants.RECENT_ACTIVITY_SECTION}
           onShowMore={addMoreRecentActivityCb} {...recentActivityData}/>
+      }
+
+      {_.isUndefined(collectionsData) || !collectionsData.items.length ?
+        <div /> :
+        <CollectionSection ref={DashboardConstants.COLLECTIONS_SECTION}
+          onShowMore={collectionsSectionCb} {...collectionsData}/>
       }
 
     </div>);

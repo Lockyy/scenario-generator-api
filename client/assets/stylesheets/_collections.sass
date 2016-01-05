@@ -1,12 +1,119 @@
 @import 'variables'
+=mw
+  width: 100%
+  float: left
 
 .collections-container
   .btn
     margin-top: 10px
+
+  .placeholder-section.message
+    padding: 12px 0 20px 0
+
+.with-collection-icon, .with-preview-icon, .with-collaborator-icon
+  display: flex
+  &::before
+    display: inline-block
+    width: 20px
+    height: 20px
+    margin-right: 5px
+  &.small-icon
+    &::before
+      width: 15px
+      height: 15px
+
+.with-collection-icon::before
+  content: url("icons/icon-collections-red.svg")
+
+.with-preview-icon::before
+  content: url('icons/icon-collection-preview-blue.svg')
+
+.with-collaborator-icon::before
+  content: url('icons/icon-collaborator-count.svg')
+
+.right-arrow-after
+  display: inline-flex
+  align-items: center
+  &::after
+    display: inline-block
+    content: '.'
+    color: transparent
+    background-image: url('icons/grey-arrow.svg')
+    background-repeat: no-repeat
+    background-size: contain
+    width: 15px
+    margin-left: 10px
+    margin-right: 10px
+
+.collections-collection
+  margin-top: 30px
   .header
     border-bottom: 1px solid $light-grey
     height: 35px
     padding-bottom: 2px
+  .dropdown-container
+    padding-bottom: 25px
+  .collections-collection-row
+    @include make-row
+    padding: 15px 0px
+    border-bottom: 1px solid $grey
+    &:last-child
+      border-bottom: 0px
+    span.name:first-child
+      &::before
+        display: block
+        width: 20px
+        height: 20px
+        content: url('icons/icon-collections-red.svg')
+        position: absolute
+        top: -1px
+        left: -11px
+
+    &.header
+      color: $dark-grey
+      font-size: 13px
+      background: $light-grey
+      padding: 10px 0px
+      span.name::before
+        content: ""
+    .name
+      @include make-xs-column(8)
+      @include make-sm-column(6)
+      +mw
+    .owner
+      @include make-xs-column(4)
+      @include make-sm-column(3)
+      +mw
+      span, a
+        float: left
+        padding-right: 5px
+    .user-link
+      color: $red
+    .date
+      display: none
+      @include make-sm-column(3)
+      &.mobile
+        display: block
+        padding: 0
+    .includes
+      @include make-sm-column(12)
+      display: none
+      &.mobile
+        display: block
+      .has-n-more
+        color: $red
+      span:first-child
+        float: left
+    .product-list-link-container
+      float: left
+      &.list-expandable
+        display: none
+    .product-list-link
+      text-decoration: underline
+
+@media (max-width: $screen-sm)
+  .collections-collection
+    margin-top: 0px
 
 .form.collection
   .attached-fields
@@ -14,39 +121,80 @@
       height: 100px
 
 .results
-  .result.user
-    display: flex
-    align-items: center
-    .image-container
+  &.sharee
+    &.disabled
+      opacity: 0.7
+  .result
+    &.email
+      .name
+        padding: 3px 10px
+        background: $purple-grey
+        .remove-button
+          text-decoration: underline
+          margin-left: 10px
+    &.user, &.email
       display: flex
-      justify-content: center
-      .image
-        width: 50px
-        height: 50px
-        border-radius: 500px
-        background-size: cover
-        background-position: center
-        background-repeat: no-repeat
-    .remove-button
-      font-size: 12px
-      color: $primary-red
-      cursor: pointer
-  .result.collection-product
-    padding-top: 20px
-    padding-bottom: 20px
-    border-bottom: 1px solid $grey
-    &:first-child
-      padding-top: 5px
-    &:last-child
-      border-bottom: 0px
-    .remove
-      position: absolute
-      top: 0px
-      right: 15px
-      font-size: 12px
-      color: $primary-red
-      cursor: pointer
+      align-items: center
+      justify-content: space-between
+      padding: 10px 0px
+      border-top: 1px solid $light-grey
+      .info
+        display: flex
+        align-items: center
+    &.user
+      .remove-button
+        text-decoration: underline
+        font-size: 12px
+        color: $primary-red
+        cursor: pointer
+    &.collection-product
+      padding-top: 20px
+      padding-bottom: 20px
+      border-bottom: 1px solid $grey
+      .reviews
+        font-size: 12px
+        color: $dark-grey
+      &:first-child
+        padding-top: 5px
+      &:last-child
+        border-bottom: 0px
+      .remove
+        position: absolute
+        top: 0px
+        right: 15px
+        font-size: 12px
+        color: $primary-red
+        cursor: pointer
 
+.table-header
+  border-bottom: 1px solid $dark-grey
+  background: $light-grey
+  color: $dark-grey
+  padding: 10px
+  &.full-width
+    margin-left: -20px
+    margin-right: -20px
+    padding: 10px 20px
+
+.add-product-link
+  display: inline-flex
+  align-items: center
+  &::before
+    content: url('icons/icon-collections-new-red.svg')
+    margin-right: 5px
+    margin-top: 5px
+
+@media (max-width: $screen-sm)
+  .table-display
+    display: flex
+    flex-direction: column-reverse
+  .add-product-container
+    @include background-primary-grey
+    display: block
+    margin: 0px -15px
+    padding: 10px 15px
+    .add-product-link
+      margin: 0px
 
 .collection.form
   .attached-fields
@@ -62,7 +210,7 @@
       border-bottom-right-radius: 0
 
     textarea.form-control
-      border-top-left-radius: 0!important
+      border-top-left-radius: 0 !important
       border-top-right-radius: 0 !important
       border-top: 0px none transparent !important
       outline: 0px none transparent
@@ -83,7 +231,7 @@
 
     input
       font-style: italic
-      font-size: $default-font-size
+      font-size: $default-font-size - 1px
       border-color: $grey
       box-shadow: none !important
       color: $blackish-grey
@@ -94,3 +242,126 @@
     input:focus, textarea:focus
       box-shadow: none !important
       border: 1px solid $red
+
+#create-collection-mobile-modal
+  display: none
+
+@media (max-width: $screen-sm)
+
+  .mobile-title
+    background: none
+    width: 0
+    height: 0
+    margin-right: 0
+    padding: 20px 0
+    text-transform: uppercase
+    font-size: 14px
+
+  .app
+    .ReactModal__Overlay
+
+      .ReactModal__Content
+        .manage-collaborator-container-mobile
+          .dropdown-container
+            position: absolute
+            right: 25px
+
+            &.with-images
+              z-index: 0
+              background-color: yellow
+
+              &:not(.closed)
+                z-index: 100
+                background-color: red
+
+
+
+
+          .header.collections
+            border-bottom-color: $grey
+
+            .title
+              text-transform: uppercase
+              font-size: 14px
+              font-style: initial
+
+            .title::before
+              @extend .mobile-title
+
+          .grey.collection-products-section
+            background-color: white
+
+          .collection-products-container
+            background-color: transparent
+
+            .results
+              overflow: visible
+              max-height: none
+
+              .collection-product
+                .result.collection-product
+                  border-top: solid 1px $grey
+
+                  &:nth-child(1)
+                    border: none
+
+                  .remove
+                    position: static
+                    text-decoration: underline
+                    margin-top: 10px
+
+          .share-collection-container
+            .header.share
+              border-bottom-color: $grey
+              text-transform: uppercase
+
+              .title::before
+                @extend .mobile-title
+
+            .privacy-radios
+              span
+                font-size: 15px
+
+                &::before
+                  width: 20px
+                  height: 20px
+                  min-width: 20px
+                  max-height: 20px
+
+            .grey-description
+              font-size: 15px
+
+            .scrollable
+              max-height: none
+              overflow-y: visible
+              overflow-x: visible
+
+              .results.sharee
+                overflow: visible
+                max-height: none
+                position: relative
+
+                .sharee-emails
+                  .remove-button
+                    position: relative
+                    top: 4px
+                    background-image: url("icons/icon-modal-close.svg")
+                    background-repeat: no-repeat
+                    background-position: center
+                    opacity: 1
+                    width: 25px
+                    height: 25px
+
+          .submission-buttons-container
+            margin-top: 50px
+
+          .buttons
+            display: block
+            margin-top: 45px
+
+            button, .btn
+              width: 100%
+              margin: 0
+              font-size: 15px
+              line-height: 28px
+              margin-bottom: 30px

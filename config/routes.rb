@@ -38,12 +38,14 @@ Rails.application.routes.draw do
     ###############
     # Collections #
     ###############
-    resources :collections, only: [ :user, :create, :show,
-                                    :update, :destroy],
-                            defaults: {format: 'json'} do
+    resources :collections,
+              only: [ :user, :create, :show, :update, :destroy],
+              defaults: {format: 'json'} do
       member do
         post 'share'
-        post 'add_product'
+        post 'products', to: 'collections#add_product'
+        delete 'products/:product_id', to: 'collections#delete_product'
+        delete 'leave'
       end
     end
 
@@ -77,9 +79,10 @@ Rails.application.routes.draw do
     ##########
     # Search #
     ##########
-    get 'search', to: 'search#index', as: 'search', defaults: {format: :json}
-    get 'search/users', to: 'search#users', as: 'user_search', defaults: {format: 'json'}
+    get 'search',             to: 'search#index',       as: 'search', defaults: {format: :json}
+    get 'search/users',       to: 'search#users',       as: 'user_search', defaults: {format: 'json'}
     get 'search/collections', to: 'search#collections', as: 'collections_search', defaults: {format: 'json'}
+    get 'search/products',    to: 'search#products',    as: 'products_search', defaults: {format: 'json'}
 
     ########
     # User #

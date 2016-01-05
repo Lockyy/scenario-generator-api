@@ -99,8 +99,8 @@ const ProductFields  = React.createClass({
     return (
       <div className='details'>
         <div className="header">
-          <h3 className='title'><Link to={`/app/products/${this.props.id}`}>{this.props.name}</Link></h3>
-          <h4 className='company'><Link to={`/app/companies/${this.props.company.id}`} >{this.props.company.name}</Link></h4>
+          <h3 className='title'><Link to={`/app/products/${this.props.id}/${this.props.slug}`}>{this.props.name}</Link></h3>
+          <h4 className='company'><Link to={`/app/companies/${this.props.company.id}/${this.props.company.slug}`} >{this.props.company.name}</Link></h4>
         </div>
 
         <Rating value={this.props.rating} name='rating'/>

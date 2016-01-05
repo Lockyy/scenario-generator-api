@@ -7,8 +7,8 @@ describe "User Profile Page", js: true do
     @user = login_user
     @review = create(:review)
     @bookmark = create(:bookmark)
-    @public_collection = create(:collection, :visible, title: 'Public Collection')
-    @private_collection = create(:collection, title: 'Private Collection')
+    @public_collection = create(:collection, :visible, name: 'Public Collection')
+    @private_collection = create(:collection, name: 'Private Collection')
     @tag = create(:tag)
     @user.reviews.append @review
     @user.tags.append @tag
@@ -48,7 +48,7 @@ describe "User Profile Page", js: true do
         end
 
         it "doesn't display the other tabs" do
-          expect(page).to_not have_content('Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!')
+          expect(page).to_not have_content('Create and share lists of products you are comparing or interested in.')
           expect(page).to_not have_content('Quick access to browse your favorite products or continue where you left off.')
           expect(page).to_not have_content('Adding tags will update your News Feed with the latest news from the ones you follow')
         end
@@ -73,7 +73,7 @@ describe "User Profile Page", js: true do
         end
 
         it "doesn't display the other tabs" do
-          expect(page).to_not have_content('Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!')
+          expect(page).to_not have_content('Create and share lists of products you are comparing or interested in.')
           expect(page).to_not have_content('Quick access to browse your favorite products or continue where you left off.')
           expect(page).to_not have_content('You can browse or edit your reviews at any time, even add or delete files and images.')
         end
@@ -98,7 +98,7 @@ describe "User Profile Page", js: true do
         end
 
         it "doesn't display the other tabs" do
-          expect(page).to_not have_content('Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!')
+          expect(page).to_not have_content('Create and share lists of products you are comparing or interested in.')
           expect(page).to_not have_content('You can browse or edit your reviews at any time, even add or delete files and images.')
           expect(page).to_not have_content('Adding tags will update your News Feed with the latest news from the ones you follow')
         end
@@ -115,14 +115,15 @@ describe "User Profile Page", js: true do
         end
 
         it 'has a message informing the user about collections' do
-          expect(page).to have_content('Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!')
+          expect(page).to have_content('Create and share lists of products you are comparing or interested in.')
         end
 
         it "displays user's collections" do
-          expect(page).to have_content @public_collection.title
-          expect(page).to have_content @public_collection.description
-          expect(page).to have_content @private_collection.title
-          expect(page).to have_content @private_collection.description
+          expect(page).to have_content @public_collection.name
+          expect(page).to have_content @private_collection.name
+          expect(page).to have_content @public_collection.display_date
+          expect(page).to have_content @private_collection.display_date
+          expect(page).to have_content 'Me'
         end
 
         it "doesn't display the other tabs" do
@@ -136,9 +137,9 @@ describe "User Profile Page", js: true do
     describe "on someone else's page" do
       before do
         @user_2 = login_user
-        @shared_collection = create(:collection, title: 'Shared Collection')
+        @shared_collection = create(:collection, name: 'Shared Collection')
         @user.collections.append @shared_collection
-        @shared_collection.share([@user_2.id])
+        @shared_collection.share([{id: @user_2.id, rank: 0}])
         visit "/app/users/#{@user.id}"
         wait_for_ajax
       end
@@ -153,7 +154,7 @@ describe "User Profile Page", js: true do
         end
 
         it "doesn't display the other tabs" do
-          expect(page).to_not have_content('Collections are created by users to group products they are interested.')
+          expect(page).to_not have_content('Collections are created by users to group products they are interested in.')
         end
       end
 
@@ -168,22 +169,24 @@ describe "User Profile Page", js: true do
         end
 
         it 'has a message informing the user about collections' do
-          expect(page).to have_content('Collections are created by users to group products they are interested.')
+          expect(page).to have_content('Collections are created by users to group products they are interested in.')
         end
 
-        it "displays user's public collections" do
-          expect(page).to have_content @public_collection.title
-          expect(page).to have_content @public_collection.description
+        it "displays public collections" do
+          expect(page).to have_content @public_collection.name
+          expect(page).to have_content @public_collection.display_date
+          expect(page).to have_content @public_collection.user.name
         end
 
-        it "doesn't display user's private collections" do
-          expect(page).to_not have_content @private_collection.title
-          expect(page).to_not have_content @private_collection.description
+        it 'displays shared collections' do
+          expect(page).to have_content @shared_collection.name
+          expect(page).to have_content @shared_collection.display_date
+          expect(page).to have_content @public_collection.user.name
         end
 
-        it "displays collections shared with logged in user" do
-          expect(page).to have_content @shared_collection.title
-          expect(page).to have_content @shared_collection.description
+        it "doesn't display private collections" do
+          expect(page).to_not have_content @private_collection.name
+          expect(page).to_not have_content @private_collection.display_date
         end
       end
     end

@@ -1,11 +1,9 @@
 json.name product.name
-json.(product,  :id, :name, :description, :image, :rating,
-                :created_at, :updated_at, :author,
-                :default_image, :short_desc, :slug)
-json.bookmarked product.bookmarked?(current_user)
+json.(product,  :id, :name, :description, :rating,
+                :created_at, :updated_at, :author, :short_desc, :slug)
 
-json.company do
-  json.(product.company, :id, :name, :slug) if product.company
+json.reviews product.reviews do |review|
+  json.extract! review, :id, :title, :quality_review, :quality_score,
+                        :price_review, :price_score, :created_at, :updated_at,
+                        :review_votes, :helpful_votes, :total_votes, :display_date
 end
-
-json.reviews product.reviews, partial: 'api/reviews/review', as: :review

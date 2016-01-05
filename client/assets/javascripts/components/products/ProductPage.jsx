@@ -1,9 +1,12 @@
 import _ from 'lodash'
 import React from 'react'
 import timeago from 'timeago'
+import RenderDesktop from '../RenderDesktop'
+import RenderMobile from '../RenderMobile'
 import { Link, Navigation } from 'react-router'
 import Modal from 'react-modal'
 import FluxProductPageActions from '../../actions/FluxProductPageActions'
+import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import FluxBookmarkActions from '../../actions/FluxBookmarkActions'
 import ProductStore from '../../stores/ProductStore'
 import Reviews from './Reviews'
@@ -20,7 +23,6 @@ import { ProductLinksMixin } from './ProductLinksModal';
 var appElement = document.getElementById('content');
 
 Modal.setAppElement(appElement);
-Modal.injectCSS();
 
 const ProductPage = React.createClass({
   displayName: 'ProductPage',
@@ -45,6 +47,7 @@ const ProductPage = React.createClass({
         },
         attachments: [],
         links: [],
+        slug: ''
       },
       modalIsOpen: false
     };
@@ -60,7 +63,23 @@ const ProductPage = React.createClass({
 
   componentDidMount: function() {
     ProductStore.listen(this.onChange.bind(this));
-    FluxProductPageActions.fetchProduct(this.id());
+    FluxProductPageActions.fetchProduct(this.id(), function() {
+      this.transitionTo('/app')
+      FluxNotificationsActions.showNotification({
+        type: '404',
+        text: `That product does not exist`
+      })
+    }.bind(this));
+  },
+
+  componentWillReceiveProps: function(newProps) {
+    FluxProductPageActions.fetchProduct(newProps.params.id, function() {
+      this.transitionTo('/app')
+      FluxNotificationsActions.showNotification({
+        type: '404',
+        text: `That product does not exist`
+      })
+    }.bind(this));
   },
 
   onChange: function(data) {
@@ -95,22 +114,23 @@ const ProductPage = React.createClass({
     if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
       return 'Edit My Review'
     } else {
-      return 'Review this Product'
+      return 'Review This Product'
     }
   },
 
   reviewButtonURL: function() {
     if(this.getCurrentUserReview() && this.getCurrentUserReview().id) {
-      return `/app/products/${this.id()}/reviews/${this.getCurrentUserReview().id}`
+      return `/app/products/${this.id()}/${this.state.data.slug}/reviews/${this.getCurrentUserReview().id}`
     } else {
-      return `/app/products/${this.id()}/reviews/new`
+      return `/app/products/${this.id()}/${this.state.data.slug}/reviews/new`
     }
   },
 
   render: function() {
     return (
       <div className='product show'>
-        <ProductPageDesktopVersion
+        <RenderDesktop
+          component={ProductPageDesktopVersion}
           reviewButtonURL={this.reviewButtonURL()}
           reviewButtonText={this.reviewButtonText()}
           onBookmark={this.bookmark}
@@ -119,7 +139,8 @@ const ProductPage = React.createClass({
           showFiles={this.showProductFilesModal}
           showLinks={this.showProductLinksModal}
           {...this.state} />
-        <ProductPageMobileVersion
+        <RenderMobile
+          component={ProductPageMobileVersion}
           reviewButtonURL={this.reviewButtonURL()}
           reviewButtonText={this.reviewButtonText()}
           onBookmark={this.bookmark}

@@ -1,6 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
+import RenderMobile from '../RenderMobile';
+import Decide from '../Decide';
+import TextHelper from '../../utils/helpers/TextHelper';
 import Modal from 'react-modal';
 import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
 import ProductStore from '../../stores/ProductStore';
@@ -11,17 +14,19 @@ import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import CollectionTypeahead from './CollectionTypeahead'
 import Results from '../search/Results'
-import { CreateCollectionMixin } from './CreateCollectionModal'
+import Footer from '../Footer';
+import CreateCollectionMixin from './CreateCollectionMixin'
+import { ViewCollectionMixin } from './ViewCollectionModal'
 
 const AddToCollectionMixin = {
 
   renderAddToCollectionModal: function(product) {
     return (
       <AddToCollectionModal
-        ref='collectionShareModal'
+        ref='addToCollectionModal'
         product={product}
         close={this.closeAddToCollectionModal}
-        onAddToCollection={this.onAddToCollection} />
+        onAddToCollection={this.onAddToCollection}/>
     )
   },
 
@@ -29,51 +34,59 @@ const AddToCollectionMixin = {
     FluxModalActions.closeModal()
   },
 
-  showAddToCollectionModal: function() {
-    FluxModalActions.setVisibleModal('AddToCollectionModal')
+  showAddToCollectionModal: function(searchTerm, config) {
+    FluxCollectionActions.performSearch(searchTerm);
+    FluxModalActions.setVisibleModal('AddToCollectionModal', 0, config);
   }
 };
 
 const AddToCollectionModal = React.createClass ({
   displayName: 'AddToCollectionModal',
-  mixins: [ CreateCollectionMixin ],
+  mixins: [ViewCollectionMixin, CreateCollectionMixin],
+
+  contextTypes: {
+    router: React.PropTypes.object
+  },
 
   getInitialState: function() {
     return {
-      collection: {
-        title: '',
-        description: '',
-        products: [],
-        user: {
-          name: ""
-        }
-      },
       product: {
         name: ''
-      }
+      },
+      collections: [],
+      searchTerm: '',
+      addedCollections: [],
+      config: {}
     }
   },
 
   // Flux Methods
   // Keep track of changes that are made to the store
   componentDidMount: function() {
-    CollectionStore.listen(this.onChangeCollection);
+    CollectionStore.listen(this.onChangeCollections);
     ProductStore.listen(this.onChangeProduct);
     ModalStore.listen(this.onChangeModal);
+    FluxCollectionActions.performSearch('')
   },
-  onChangeCollection: function(data) {
-    this.setState({collection: data.data.collection});
-  },
-  onChangeModal: function(data) {
-    let visible = data.visibleModal == this.constructor.displayName;
-    this.setState({ visible: visible });
+  onChangeCollections: function(data) {
+    this.setState({
+      searchedCollections: data.data.searchedCollections,
+      searchTerm: data.data.searchTerm
+    });
   },
   onChangeProduct: function(data) {
-    this.setState({ product: data.data });
+    this.setState({product: data.data});
+  },
+
+  onChangeModal: function(data) {
+    let visible = data.visibleModal == this.constructor.displayName;
+    this.setState({ visible: visible, config: data.config });
   },
 
   close: function() {
     FluxCollectionActions.clearCollection();
+    FluxCollectionActions.performSearch('');
+    this.setState({addedCollections: []})
     this.props.close()
   },
 
@@ -85,96 +98,200 @@ const AddToCollectionModal = React.createClass ({
     $(React.findDOMNode(this.refs.fields_container)).removeClass('focus')
   },
 
-  submitForm: function(e) {
-    e.preventDefault()
-    let _this = this
-    let collection = _this.state.collection;
+  performSearchHandler: function(e) {
+    let newSearchTerm = $(e.target).val()
+    this.performSearch(newSearchTerm)
+  },
+
+  performSearch: function(searchTerm) {
+    FluxCollectionActions.performSearch(searchTerm);
+  },
+
+  previewCollection: function (collection) {
+    this.showViewCollectionModal(collection, {
+      addProductToCollection: this.addToCollection,
+      mobile: this.state.config.mobile,
+    })
+  },
+
+  productInCollection: function(collection) {
+    if (collection.products.length == 0) {
+      return false;
+    }
+    let collectionProductIDs = _.map(collection.products, function(product) {
+      return product.id
+    });
+    let productID = this.state.product.id;
+    return _.indexOf(collectionProductIDs, productID) > -1
+  },
+
+  addToCollection: function(e, collection, callback) {
     let product = this.state.product;
 
     let sendNotification = function() {
-      _this.close(_this)
-
       FluxNotificationsActions.showNotification({
         type: 'saved',
-        text: `${product.name} added to ${collection.title}`,
+        text: `You added <b>${product.name}</b> to the Collection <b>${collection.name}</b>`,
         subject: {
           id: collection.id,
           type: 'Collection',
-          name: collection.title
+          name: collection.name
         }
       })
-    }
+    };
 
-    if(product.id && collection.id) {
-      FluxCollectionActions.addProductToCollection(product.id, collection.id, sendNotification)
-    }
-  },
-
-  setCollection: function(collection, selected) {
-    if(selected) {
-      FluxCollectionActions.fetchedCollection(collection)
-    } else {
-      this.setState({collection_name: collection.title})
+    if (product.id && collection.id) {
+      FluxCollectionActions.addProductToCollection(product.id, collection.id, sendNotification);
+      let addedCollections = this.state.addedCollections;
+      addedCollections.push(collection.id);
+      this.setState({addedCollections: addedCollections})
+      if(_.isFunction(callback)) {
+        callback();
+      }
     }
   },
 
-  renderCollectionTypeahead: function() {
+  renderSearchBox: function() {
     return (
-      <CollectionTypeahead  ref='collection_typeahead'
-                            value={this.state.collection_name}
-                            helpMessage={'Add To Collection'}
-                            hideLabel={true}
-                            _onSelectCollection={this.setCollection} />
+      <input onChange={this.performSearchHandler}
+             placeholder='Search collections, products, and tags'
+             className='form-control'
+             value={this.state.searchTerm}/>
     )
   },
 
-  renderSubmissionButtons: function() {
-    return (
-      <div className='buttons'>
-        <button className='btn btn-red btn-round'
-                onClick={this.submitForm}>Add To Collection</button>
-      </div>
-    )
+  renderCollectionLists: function() {
+    return _.map(this.state.searchedCollections, function(collectionSet, setKey) {
+      return (
+        <div>
+          { this.renderCollectionList(collectionSet, setKey) }
+          <Decide
+            condition={ setKey == 'owned' }
+            success={() => this.renderCreateCollectionLink()} />
+        </div>
+      )
+    }.bind(this))
   },
 
-  addToNewCollection: function(product) {
-    this.props.close();
-    this.showCreateCollectionModalWithProduct(product);
-  },
+  renderCollectionList: function(collectionSet, setKey) {
+    if (collectionSet.total <= 0) {
+      return false;
+    }
 
-  renderNewCollectionLink: function() {
+    let collectionDOMs = _.map(collectionSet.data, function(collection) {
+      return this.renderCollectionListItem(collection)
+    }.bind(this))
+
     return (
-      <div className='new-collection-link'>
-        <div onClick={() => this.addToNewCollection(this.state.product)}>
-          Add product to a new collection
+      <div className='collection-set'>
+        <div className='title-bar'>
+          {collectionSet.title}
+        </div>
+        <div className='collections'>
+          {collectionDOMs}
         </div>
       </div>
     )
   },
 
-  renderCurrentCollection: function() {
-    if(this.state.collection.title != "") {
+  renderCreateCollectionLink: function() {
+    if (!this.state.searchTerm) {
+      return false
+    }
+
+    let onClick = function() {
+      this.close()
+      this.showCreateCollectionModal({name: this.state.searchTerm, products: [this.state.product]})
+    }.bind(this)
+
+    return (
+      <div className='collection create-collection-link' onClick={onClick}>
+        <div className='collection-info'>
+          <div className='title'>
+            <div className='add-collection-icon' />
+            Create a new collection called:
+            <div className='collection-name'>"{TextHelper.truncate(this.state.searchTerm, 30)}"</div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+
+  collectionTicked: function(collection_id) {
+    return _.indexOf(this.state.addedCollections, collection_id) > -1
+  },
+
+  renderAddButton: function(collection) {
+    // If just added
+    if(this.collectionTicked(collection.id)) {
       return (
-        <div className='collection-details'>
-          <div className="owner">
-            Collection created by {this.state.collection.user.name}
-          </div>
-          <div className='header'>
-            <div className="title">
-              {this.state.collection.title}
-            </div>
-          </div>
-          <div className='collection-description'>
-            {this.state.collection.description}
-          </div>
-          <div className='collection-products'>
-            Includes: {_.map(this.state.collection.products, function(product) {
-              return `${product.name}, `;
-            })}
-          </div>
+        <div
+          className='btn btn-round btn-red-inverted btn-add btn-list-small btn-text-normal btn-tick'>
+          Added
+        </div>
+      )
+    // If already added
+    } else if (this.productInCollection(collection)) {
+      return (
+        <div
+          className='already-in-collection only-child'>
+          Product already added to Collection
+        </div>
+      )
+    // If the product can still be added
+    } else {
+      return (
+        <div
+          className='btn btn-round btn-red-inverted btn-add btn-list-small btn-text-normal'
+          onClick={(e) => this.addToCollection(e, collection)}>
+          Add
         </div>
       )
     }
+  },
+
+  renderPreviewButton: function(collection){
+    let previewButton =<div
+      className={'btn btn-round btn-blue-inverted btn-view btn-list-small' + (this.state.config.mobile ? ' mobile' : '')}
+      onClick={() => this.previewCollection(collection)}>
+      { this.state.config.mobile ? "Preview" : null }
+    </div>;
+
+    previewButton = this.productInCollection(collection) ? '' : previewButton;
+
+    return (
+      {previewButton}
+    )
+  },
+
+  renderCollectionListItem: function(collection) {
+    let userProfileUrl = "/app/users/" + collection.user.id;
+    return (
+      <div className='collection'>
+        <div className='collection-details'>
+          <span className='collection-icon'/>
+          <span className='collection-info'>
+            <div className='title'>
+              {collection.name}
+            </div>
+            <div className='collection-details'>
+              Created by <a className='author'
+                            href={userProfileUrl}>{collection.user.name}</a><span>, {collection.display_date}</span>
+            </div>
+          </span>
+        </div>
+        <div className={`right-buttons ${this.collectionTicked(collection.id) ? 'added' : ''}`}>
+          {this.renderPreviewButton(collection)}
+          {this.renderAddButton(collection)}
+        </div>
+      </div>
+    )
+  },
+
+  hasCollectionList: function() {
+    return _.filter(this.state.searchedCollections, function(set) {
+      return set.total > 0;
+    }).length > 0;
   },
 
   renderAddToCollectionForm: function() {
@@ -182,11 +299,8 @@ const AddToCollectionModal = React.createClass ({
       <div className='row'>
         <form className='col-xs-12 form collection'
               ref='collection_form'>
-          {this.renderCollectionTypeahead()}
-          <div className='grey'>
-            {this.renderCurrentCollection()}
-            {this.renderSubmissionButtons()}
-            {this.renderNewCollectionLink()}
+          <div className='grey collections-sets'>
+            {this.renderCollectionLists()}
           </div>
         </form>
       </div>
@@ -197,16 +311,23 @@ const AddToCollectionModal = React.createClass ({
     return (
       <Modal
         isOpen={this.state.visible}
-        onRequestClose={this.props.close}
+        onRequestClose={this.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
-        <div className='header'>
+        <div className='back-button' onClick={this.close}>Back</div>
+        <div className='header collections'>
           <span className='title'>
-            Add this product to an existing collection
+            Add product to an existing collection
           </span>
-          <span onClick={this.props.close} className='close'>x</span>
+          <a href="#" onClick={this.close} className='close'></a>
         </div>
-        {this.renderAddToCollectionForm()}
+        {this.renderSearchBox()}
+
+        <Decide
+          condition={this.hasCollectionList()}
+          success={this.renderAddToCollectionForm}
+          failure={() => <span className="no-results">No results found.</span>} />
+
+        <RenderMobile component={Footer} />
       </Modal>
     )
   }

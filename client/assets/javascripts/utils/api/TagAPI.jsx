@@ -15,6 +15,7 @@ module.exports = {
 
   getProducts: function(tag, page, sorting, resolve, reject) {
     let url = `/api/tag/${tag}/products`
+
     return new Promise(function() {
       $.ajax({
         url: url,

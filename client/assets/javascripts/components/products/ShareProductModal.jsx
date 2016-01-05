@@ -75,19 +75,20 @@ const ShareProductModal = React.createClass ({
         isOpen={this.state.visible}
         onRequestClose={this.props.close}
         style={DefaultModalStyles}>
-        <div className='back-button' onClick={this.props.close}>{"< Close"}</div>
-        <div className='header'>
+        <div className='back-button' onClick={this.props.close}>Back</div>
+        <div className='header share'>
           <span className='title'>
             Share this product with other users
           </span>
-          <span onClick={this.props.close} className='close'>x</span>
+          <span onClick={this.props.close} className='close'></span>
         </div>
         <div className="input-group">
-          <input  type="text"
-                  className="form-control"
-                  aria-describedby="basic-addon2"
-                  value={this.getLink()}
-                  ref='locationLink' />
+          <input type="text"
+                 className="form-control"
+                 aria-describedby="basic-addon2"
+                 value={this.getLink()}
+                 readOnly={true}
+                 ref='locationLink' />
           <span className="input-group-addon copy-link"
                 id="basic-addon2"
                 ref='linkCopyButton'

@@ -35,7 +35,7 @@ const MyBookmarks = React.createClass ({
   },
 
   render: function() {
-    let details = <div className={`message ${this.props.messageClass}`}>{this.props.message}</div>;
+    let details = <div className='placeholder-message'>{this.props.message}</div>;
     let _this = this
 
     return (

@@ -8,6 +8,12 @@ module Fletcher
 
     private
 
+    def obtain_related_tags(data)
+      @related_tags ||= Tag
+                          .joins(:reviews)
+                          .where({reviews: { product_id: data.map(&:id) }}).uniq
+    end
+
     def search_by(attribute, terms)
       simple_search = SORT_FIELDS_SIMPLE_SEARCH.include?(@sort_description) || @match_mode == 'all'
       @search_by = simple_search ? build_search_by : build_full_text_search_by
@@ -38,7 +44,7 @@ module Fletcher
       default_sort_by = super
       default_sort_by[:relevance] = lambda { |data| data }
       default_sort_by[:latest] = lambda { |data| data.reorder('created_at ASC') }
-      default_sort_by[:alphabetical_order] = lambda { |data| data.reorder('name ASC') }
+      default_sort_by[:alphabetical_order] = lambda { |data| data.alphabetical }
       default_sort_by[:high_to_low] = lambda { |data| data.best_rating }
       default_sort_by[:low_to_high] = lambda { |data| data.worst_rating }
       default_sort_by

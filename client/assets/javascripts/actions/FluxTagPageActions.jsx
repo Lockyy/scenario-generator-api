@@ -4,7 +4,7 @@ import TagAPI from '../utils/api/TagAPI';
 
 class FluxTagPageActions {
 
-  fetchProducts(tag, page, sorting) {
+  fetchProducts(tag, page, sorting, errorCallback) {
 
     TagAPI.getProducts(
       tag,
@@ -15,6 +15,9 @@ class FluxTagPageActions {
       },
       (error) => {
         this.actions.registerError(error);
+        if(errorCallback) {
+          errorCallback();
+        }
       }
     );
   }

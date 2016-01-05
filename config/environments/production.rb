@@ -74,13 +74,13 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { :host => 'fletcher.com' }
+  config.action_mailer.default_url_options = { :host => ENV['MAILER_DOMAIN'] || 'fletcher.mx' }
   config.action_mailer.delivery_method = :smtp
   # SMTP settings for mandrill
   ActionMailer::Base.smtp_settings = {
     :port           => 587,
     :address        => "smtp.mandrillapp.com",
-    :domain         => "http://www.fletcher.com/",
+    :domain         => "http://www.fletcher.mx/",
     :user_name      => ENV["MANDRILL_USERNAME"],
     :password       => ENV["MANDRILL_API"],
     :authentication => :plain,

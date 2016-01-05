@@ -3,12 +3,16 @@ module Api
     respond_to :json
 
     def show
-      @product = Product.friendly.find(params[:id])
-      @product.increment_views!
-      @related_products = @product.related(4)
+      @product = Product.find_by(id: params[:id])
+      if @product.nil?
+        render :json => { product: {} }, :status => 404
+      else
+        @product.increment!(:views)
+        @related_products = @product.related(4)
 
-      respond_to do |format|
-        format.json { render }
+        respond_to do |format|
+          format.json { render }
+        end
       end
     end
   end

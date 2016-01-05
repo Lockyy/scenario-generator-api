@@ -8,17 +8,20 @@ import ProductStore from '../../stores/ProductStore'
 import Reviews from './ReviewsMobileVersion'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
+import MoreOptionsDropdown from '../MoreOptionsDropdown';
 import Tags from '../Tags';
 import Section from '../Section';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
 import CollectionsCollection from '../collections/CollectionsCollection';
+import CollectionStore from '../../stores/CollectionStore'
 import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
+import CreateCollectionMixin from '../collections/CreateCollectionMixin';
 
 const ProductPageMobileVersion = React.createClass({
   displayName: 'ProductPageMobileVersion',
-  mixins: [ Navigation, AddToCollectionMixin ],
+  mixins: [ Navigation, AddToCollectionMixin, CreateCollectionMixin ],
 
   id: function() {
     return this.props.data.id
@@ -63,7 +66,7 @@ const ProductPageMobileVersion = React.createClass({
             </div>
             <div className='company'>
               <Link
-                to={`/app/companies/${this.getCompanyData('slug')}`}>
+                to={`/app/companies/${this.getCompanyData('id')}/${this.getCompanyData('slug')}`}>
                 {this.getCompanyData('name')}
               </Link>
             </div>
@@ -84,7 +87,7 @@ const ProductPageMobileVersion = React.createClass({
     }
 
     return (
-      <a href="#" onClick={onClickFn} className='btn btn-grey btn-bookmark'>
+      <a href="#" onClick={onClickFn} className='btn btn-grey-inverted btn-bookmark'>
         <span className={className}>{text}</span>
       </a>
     );
@@ -98,20 +101,34 @@ const ProductPageMobileVersion = React.createClass({
     }
 
     return (
-      <a href='#' className='btn btn-grey btn-share' onClick={share}>
+      <a href='#' className='btn btn-grey-inverted btn-share' onClick={share}>
         <span className='with-icon'>Share</span>
       </a>
     );
   },
 
   renderReviewButton: function() {
+    let rows = [
+      {description: "Add to an existing collection",
+       action: () => this.showAddToCollectionModal('', {mobile: true})},
+      {description: "Create new collection",
+       action: this.showCreateModal}
+    ];
+
     return (
       <div className='links'>
         <a href={this.props.reviewButtonURL} className='btn btn-red btn-round'>
           { this.props.reviewButtonText }
         </a>
+        <MoreOptionsDropdown
+          dropdownClassName="top-dropdown"
+          rows={rows} />
       </div>
     )
+  },
+
+  showCreateModal: function() {
+    this.showCreateCollectionModal({products: [this.props.data]})
   },
 
   renderInfo: function() {
@@ -137,7 +154,7 @@ const ProductPageMobileVersion = React.createClass({
             <Rating value={this.getProductData('rating')} name='rating'/>
             {this.totalReviews()} Review(s)
           </div>
-          <PriceRating value={this.getProductData('price')} name='rating'/>
+          <PriceRating value={this.getProductData('price')} name='rating' showScoreText='true'/>
           <div className="files">
             <a className="files-link" href='#show-attachments' onClick={this.props.showFiles}
               data-toggle="modal" data-target="#files-modal" >
@@ -163,64 +180,6 @@ const ProductPageMobileVersion = React.createClass({
     )
   },
 
-  renderLinksModal: function() {
-    let links = _.collect(this.getProductData('links'), function(link) {
-      return (<li className='link'>
-        <div className='link-details'>
-          <a className="link" href={UrlHelper.addProtocol(link.url)} target='_blank'>{link.url}</a>
-        </div>
-      </li>);
-    });
-
-    return (
-      <div className="modal fade" id="links-modal">
-        <div className="modal-content links-modal-content">
-          <div className="modal-header">
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h2 className="modal-title">Links Added</h2>
-          </div>
-          <div className="modal-body">
-            <ul className="links">
-              {links}
-            </ul>
-          </div>
-        </div>
-      </div>
-    )
-  },
-
-  renderFilesModal: function() {
-    let attachments = _.collect(this.getProductData('attachments'), function(attachment) {
-      return (<li className='attachment'>
-        {FileHelper.isImage(attachment.name) ?
-          <img src={UrlHelper.addProtocol(attachment.url)} className='thumbnail' width='50px' />
-          : ''}
-
-        <div className='attachment-details'>
-          <a className="link" href={UrlHelper.addProtocol(attachment.url)} target='_blank'>{attachment.name}</a>
-          <span className='author'>{attachment.author ? `Uploaded by ${attachment.author.name}` : ''}</span>
-          <span className='created_at'>{timeago(attachment.created_at)}</span>
-        </div>
-      </li>);
-    });
-
-    return (
-      <div className="modal fade" id="files-modal">
-        <div className="modal-content files-modal-content">
-          <div className="modal-header">
-            <button type="button" className="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h2 className="modal-title">Files Added</h2>
-          </div>
-          <div className="modal-body">
-            <ul className="attachments">
-              {attachments}
-            </ul>
-          </div>
-        </div>
-      </div>
-    )
-  },
-
   renderRelatedProducts: function() {
     if(this.getProductData('related_products').length > 0) {
       return <RelatedProducts
@@ -235,10 +194,9 @@ const ProductPageMobileVersion = React.createClass({
     }
 
     let tags = this.getProductData('tags');
+
     return (
       <div className='mobile-version'>
-        {this.renderFilesModal()}
-        {this.renderLinksModal()}
         {this.renderTitle()}
         {this.renderReviewButton()}
         {this.renderInfo()}
@@ -263,10 +221,18 @@ const ProductPageMobileVersion = React.createClass({
 
           <div className='col-xs-12 tags'>
             <Section hasPagination={false} title={"Collections"}>
-              <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal(this.props.data)}>
-                Add to a Collection
+              <div className='collection-buttons'>
+                <div className='btn btn-round btn-red' onClick={this.showCreateModal}>
+                  Create New
+                </div>
+                <div className='btn btn-round btn-red' onClick={() => this.showAddToCollectionModal('', {mobile: true})}>
+                  Add to existing
+                </div>
               </div>
-              <CollectionsCollection />
+              <CollectionsCollection
+                product={this.props.data}
+                mobile="true"
+                emptyMessage='This product has not been added to any collections.' />
             </Section>
           </div>
 

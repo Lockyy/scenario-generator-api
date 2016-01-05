@@ -15,7 +15,6 @@
 /log/*
 !/log/.keep
 /tmp
-/public/assets
 client-bundle.js
 client-bundle.js.map
 .env
@@ -27,3 +26,8 @@ vendor/ruby
 
 # Ignore config files
 config/database.yml
+
+# Ignore Vim swap files
+*.swp
+*.swo
+.idea

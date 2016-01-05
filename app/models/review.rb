@@ -1,6 +1,9 @@
 class Review < ActiveRecord::Base
-  belongs_to :product
+  belongs_to :product, touch: true
   belongs_to :user
+  counter_culture :user,    :column_name => "total_reviews"
+  counter_culture :product, :column_name => "total_reviews"
+
   has_one :company, through: :product
   has_many :attachments, as: :attachable
   has_many :tag_taggables, as: :taggable
@@ -14,6 +17,9 @@ class Review < ActiveRecord::Base
   accepts_nested_attributes_for :attachments, allow_destroy: true
 
   before_save :cache_helpfulness
+  after_save do
+    product.save if product
+  end
 
   def self.sorted(sort_string)
     case sort_string
@@ -40,16 +46,8 @@ class Review < ActiveRecord::Base
     (quality_review.nil? or quality_review.empty?) ? "" : ApplicationController.helpers.simple_format(quality_review)
   end
 
-  def helpful_votes
-    review_votes.where(helpful: true).size
-  end
-
-  def total_votes
-    review_votes.size
-  end
-
-  validates :quality_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, allow_nil: true
-  validates :price_score, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }, allow_nil: true
+  validates :quality_score, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }, allow_nil: true
+  validates :price_score, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }, allow_nil: true
   validates :user_id, uniqueness: { scope: :product_id }, presence: true
   validate :has_at_least_one_field
 
@@ -60,13 +58,7 @@ class Review < ActiveRecord::Base
   end
 
   def calculate_helpfulness
-    helpfulness = 0
-    review_votes.each do |vote|
-      helpfulness -= 1
-      helpfulness += 2 if vote.helpful
-    end
-
-    helpfulness
+    review_votes.helpful.size - review_votes.unhelpful.size
   end
 
   def has_at_least_one_field

@@ -13,8 +13,8 @@ class User < ActiveRecord::Base
   has_many :products
   has_many :collections, dependent: :destroy
   has_many :notifications, dependent: :destroy
-  has_many :collection_users, dependent: :destroy
-  has_many :shared_collections, through: :collection_users
+  has_many :collection_users, dependent: :destroy, foreign_key: :sharee_id
+  has_many :shared_collections, through: :collection_users, foreign_key: :sharee_id
 
   has_and_belongs_to_many :tags
 
@@ -24,9 +24,8 @@ class User < ActiveRecord::Base
 
   validates :name, presence: true
 
-  def total_attachments
-    attachments.size
-  end
+  after_save :check_for_invitations
+  before_validation :whitelisted?
 
   def self.generate_password
     Devise.friendly_token
@@ -34,6 +33,10 @@ class User < ActiveRecord::Base
 
   def self.find_with_oauth(provider, uid)
     with_oauth(provider, uid).first
+  end
+
+  def visible_collections(user)
+    self.collections.visible(user) + self.shared_collections.visible(user)
   end
 
   def update_oauth!(provider, uid, login_hash)
@@ -53,15 +56,24 @@ class User < ActiveRecord::Base
     return diff_minutes
   end
 
-  def total_reviews
-    self.reviews.size
-  end
-
-  def total_products
-    self.products.size
-  end
-
   def recent_activity(sorting)
     reviews.sorted(sorting)
+  end
+
+  def check_for_invitations
+    invites = CollectionUser.invites.where(email: self.email)
+    invites.each do |invite|
+      invite.update_attributes(email: nil, sharee: self)
+    end
+  end
+
+  def whitelisted?
+    return true unless ENV['ENABLE_WHITELIST']
+
+    # If no AllowedUser is found the user is not whitelisted
+    allowed = !AllowedUser.find_by(email: self.email.downcase).nil?
+    # Add an error to tell the user they aren't whitelisted
+    self.errors.add :email, 'is not whitelisted' unless allowed
+    allowed
   end
 end

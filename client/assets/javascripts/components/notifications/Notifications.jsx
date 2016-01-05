@@ -1,17 +1,14 @@
 import                        _ from 'lodash'
 import                    React from 'react'
 import                  timeago from 'timeago'
-import           { Navigation } from 'react-router'
 import       NotificationSystem from 'react-notification-system';
 import       NotificationsStore from '../../stores/NotificationsStore'
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
-import       NotificationStyles from './NotificationStyles'
 import  { ViewCollectionMixin } from '../collections/ViewCollectionModal'
-
 
 const Notifications = React.createClass({
   displayName: 'Notifications',
-  mixins: [ Navigation, ViewCollectionMixin ],
+  mixins: [ ViewCollectionMixin ],
 
   _notificationSystem: null,
 
@@ -26,7 +23,7 @@ const Notifications = React.createClass({
   },
 
   componentDidMount: function() {
-    NotificationsStore.listen(this.onChange.bind(this));
+    NotificationsStore.listen(this.onChange);
     FluxNotificationsActions.fetchNotifications();
     this._notificationSystem = this.refs.notificationSystem;
 
@@ -43,7 +40,7 @@ const Notifications = React.createClass({
   },
 
   getAction: function(notification) {
-    if(notification.subject && notification.type !== 'delete' && notification.show_button !== false) {
+    if(notification.subject && notification.type !== 'deleted' && notification.show_button !== false) {
       let label, action, link;
       let _this = this;
 
@@ -58,11 +55,13 @@ const Notifications = React.createClass({
               _this.props.router.transitionTo(link);
             }
           }
+          break;
         case 'Collection':
+          link = `/app/collections/${notification.subject.id}`
           return {
             label: label,
             callback: function() {
-              _this.showViewCollectionModal(notification.subject);
+              _this.props.router.transitionTo(link);
             }
           }
           break;
@@ -104,9 +103,7 @@ const Notifications = React.createClass({
   },
 
   render: function() {
-    return <NotificationSystem
-              style={NotificationStyles}
-              ref="notificationSystem" />
+    return <NotificationSystem allowHTML={true} style={false} ref="notificationSystem" />
   }
 })
 

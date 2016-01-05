@@ -2,17 +2,26 @@ $primary-grey: #EEEEEE
 
 $primary-red: #B2141A
 
+$jll-gold: #daca83
+$jll-internal-blue: #3D5560
+$jll-petrol: #7A77B5
+$jll-orange: #e36307
+
 $shadow-grey: #F2F2F2
+$light-grey-shadow: #3c3c3b
+$light-grey: #f6f6f6
 $grey: #DBDCDD
 $dark-grey: #929497
 
-$font-grey: #969595
+$font-grey: #50504f
 $header-font-grey: #3C3C3B
+
 
 $orange: #e36307
 
 $blue: rgb(49, 60, 65)
 $dark-blue: #162832
+$highlight-blue: #318EAF
 
 $serif-font-family: "adobe-garamond-pro", serif
 $sans-serif-font-family: 'Open Sans', sans-serif
@@ -38,3 +47,26 @@ $default_rounded_amount: 5px
   border-radius: $amount
   -moz-border-radius: $amount
   -webkit-border-radius: $amount
+
+@mixin vertical-padding($times: 1)
+  padding-top: 10px * $times
+  padding-bottom: 10px * $times
+@mixin horizontal-padding($times: 1)
+  padding-left: 15px * $times
+  padding-right: 15px * $times
+
+@mixin background-grey
+  background: $grey
+@mixin background-primary-grey
+  background: $primary-grey
+
+@mixin grey-top-border
+  border-top: 1px solid $grey
+@mixin grey-bottom-border
+  border-bottom: 1px solid $grey
+@mixin light-grey-bottom-border
+  border-bottom: 1px solid $light-grey
+@mixin dark-grey-bottom-border
+  border-bottom: 1px solid $dark-grey
+@mixin red-bottom-border
+  border-bottom: 1px solid $primary-red

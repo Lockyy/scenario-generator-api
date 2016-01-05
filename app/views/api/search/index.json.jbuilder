@@ -8,13 +8,27 @@ json.match_mode    @results[:match_mode]
 json.products do
   json.total @results[:products][:total]
   json.pages @results[:products][:pages]
-  json.data  @results[:products][:data], partial: 'api/products/product', as: :product
+  json.data  @results[:products][:data], partial: 'api/search/product', as: :product
 end
 
 json.companies do
   json.total @results[:companies][:total]
   json.pages @results[:companies][:pages]
   json.data  @results[:companies][:data], partial: 'api/companies/company', as: :company
+end
+
+json.collections do
+  json.total @results[:collections][:total]
+  json.pages @results[:collections][:pages]
+  json.data  @results[:collections][:data] do |collection|
+    json.id collection.id
+    json.name collection.name
+    json.display_date collection.display_date
+    json.user do
+      json.name collection.user.name
+      json.id collection.user.id
+    end
+  end
 end
 
 
@@ -27,9 +41,23 @@ end
 
 
 json.related_tags do
-  json.total @results[:related_tags][:total]
-  json.data  @results[:related_tags][:data] do |tag|
-    json.(tag, :id, :name, :slug)
+  json.companies do
+    json.total @results[:related_tags][:companies][:total]
+    json.data  @results[:related_tags][:companies][:data] do |tag|
+      json.(tag, :id, :name, :slug)
+    end
+  end
+  json.products do
+    json.total @results[:related_tags][:products][:total]
+    json.data  @results[:related_tags][:products][:data] do |tag|
+      json.(tag, :id, :name, :slug)
+    end
+  end
+  json.collections do
+    json.total @results[:related_tags][:collections][:total]
+    json.data  @results[:related_tags][:collections][:data] do |tag|
+      json.(tag, :id, :name, :slug)
+    end
   end
 end
 

@@ -3,6 +3,7 @@ class Attachment < ActiveRecord::Base
 
   belongs_to :attachable, polymorphic: true
   belongs_to :product
+  counter_culture [:product, :user], :column_name => "total_attachments"
 
   scope :with_images, -> do
     where(content_type: @@IMAGE_TYPES)
@@ -26,7 +27,7 @@ class Attachment < ActiveRecord::Base
       "application/x-mspublisher", "application/msword",
       "application/x-mswrite", "application/vnd.ms-works"
     ],
-    message: "%{value} is not a valid attachment type"
+    message: "You are trying to upload an invalid file type"
   }
 
   def author

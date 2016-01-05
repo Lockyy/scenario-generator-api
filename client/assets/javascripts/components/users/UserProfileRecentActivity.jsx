@@ -33,10 +33,15 @@ const UserProfileRecentActivity  = React.createClass({
         ref='collections'
         tabTitle='Collections' >
         <div className='placeholder-section message'>
-          Collections are created by users to group products they are interested.
+          Collections are created by users to group products they are interested in.
         </div>
         <CollectionsCollection
-          collections={this.props.collections} />
+          className='hidden-xs'
+          emptyMessage='This user does not collaborate on any collections.' />
+        <CollectionsCollection
+          mobile="true"
+          className='horizontal-padding-2 visible-xs'
+          emptyMessage='This user does not collaborate on any collections.' />
       </div>
     );
   },

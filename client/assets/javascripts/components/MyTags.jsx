@@ -28,7 +28,7 @@ const MyTags = React.createClass ({
   },
 
   render: function() {
-    let details = <div className={`message ${this.props.messageClass}`}>{this.props.message}</div>;
+    let details = <div className='placeholder-message'>{this.props.message}</div>;
 
     return (
       <div className={`my-tags ${this.props.className || ''}`}>
