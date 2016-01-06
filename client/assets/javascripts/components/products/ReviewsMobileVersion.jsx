@@ -8,6 +8,7 @@ import Rating from '../Rating';
 import PriceRating from '../PriceRating';
 import Tags from '../Tags';
 import Dropdown from '../Dropdown';
+import DateHelper from '../../utils/helpers/DateHelper';
 import ReviewConstants from '../../utils/constants/ReviewConstants';
 import DropdownConstants from '../../utils/constants/DropdownConstants';
 
@@ -160,12 +161,6 @@ const ReviewsMobileVersion = React.createClass({
     attachments = _.isEmpty(attachments) ? '' : (<ul className='attachments'>{attachments}</ul>);
     links = _.isEmpty(links) ? '' : (<ul className='links'>{links}</ul>);
 
-    let wroteByCurrentUser = this.context.currentUser.id == review.user.id;
-
-    let productId = review.product.id;
-    let reviewId = review.id;
-
-    let title = _.isEmpty(review.title) ? '' : (<div className="title"> {review.title} </div>);
     let reviewText = _.isEmpty(review.formatted_quality_review) ?
       '' :
       (<div className="review-text" dangerouslySetInnerHTML={{__html: review.formatted_quality_review}} />);
@@ -179,7 +174,7 @@ const ReviewsMobileVersion = React.createClass({
           <div className='author'>
             By <Link to={`/app/users/${review.user.id}`}>{review.user.name}</Link>
           &nbsp;&#8226;&nbsp;
-            <span className="created_at"> {review.display_date} </span>
+            <span className="created_at"> {DateHelper.getStrDateInDefaultFormat(review.created_at) } </span>
           </div>
 
           {reviewText}

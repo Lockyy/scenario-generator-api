@@ -17,6 +17,7 @@ import { UserListMixin } from '../modals/UserListModal'
 import Avatar from '../Avatar';
 import Results from '../search/Results';
 import Footer from '../Footer';
+import DateHelper from '../../utils/helpers/DateHelper';
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
@@ -209,7 +210,7 @@ const ViewCollectionModal = React.createClass ({
                 href={this.userProfileUrl()}>
                 {this.state.collection.user.name}
               </a>
-            ), {this.state.collection.display_date}
+            ), {DateHelper.getStrDateInDefaultFormat(this.state.collection.created_at)}
           </div>
           { this.renderShareesMobile() }
         </div>
@@ -235,7 +236,7 @@ const ViewCollectionModal = React.createClass ({
                 href={this.userProfileUrl()}>
                 {this.state.collection.user.name}
               </a>
-            ), {this.state.collection.display_date}
+            ), {DateHelper.getStrDateInDefaultFormat(this.state.collection.created_at)}
           </div>
           { this.renderShareesDesktop() }
           <div className='collection-description'>

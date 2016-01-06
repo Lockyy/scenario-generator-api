@@ -15,6 +15,7 @@ import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import CollectionTypeahead from './CollectionTypeahead'
 import Results from '../search/Results'
 import Footer from '../Footer';
+import DateHelper from '../../utils/helpers/DateHelper';
 import CreateCollectionMixin from './CreateCollectionMixin'
 import { ViewCollectionMixin } from './ViewCollectionModal'
 
@@ -276,7 +277,8 @@ const AddToCollectionModal = React.createClass ({
             </div>
             <div className='collection-details'>
               Created by <a className='author'
-                            href={userProfileUrl}>{collection.user.name}</a><span>, {collection.display_date}</span>
+                            href={userProfileUrl}>{collection.user.name}</a><span>,
+              {DateHelper.getStrDateInDefaultFormat(collection.created_at)}</span>
             </div>
           </span>
         </div>
