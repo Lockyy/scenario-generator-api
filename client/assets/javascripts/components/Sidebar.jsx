@@ -76,7 +76,7 @@ const Sidebar = React.createClass ({
           disableHover={true}
           size={31}
           user={this.context.currentUser} />
-        Profile
+        My Profile
       </Link>
     )
   },
