@@ -10,6 +10,7 @@ import Rating from '../Rating'
 import Avatar from '../Avatar'
 import Decide from '../Decide';
 import RenderDesktop from '../RenderDesktop';
+import { ConfirmDeleteProductFromCollectionMixin } from './ConfirmDeleteProductFromCollectionModal';
 import RenderMobile from '../RenderMobile';
 import TableDisplay from '../TableDisplay'
 import TabbedArea from '../TabbedArea'
@@ -27,7 +28,8 @@ const CollectionPage = React.createClass({
     EditCollectionMixin,
     ShareCollectionMixin,
     ManageCollaboratorCollectionMixin,
-    UserListMixin,
+    ConfirmDeleteProductFromCollectionMixin,
+    UserListMixin
   ],
 
   avatarSize: 30,
@@ -145,7 +147,7 @@ const CollectionPage = React.createClass({
   },
 
   removeProduct: function(product) {
-    FluxCollectionActions.deleteProduct(this.id(), product.id)
+    ConfirmDeleteProductFromCollectionMixin.showConfirmDeleteProductFromCollectionModal(product)
   },
 
   renderProductsTable: function(products) {
@@ -439,7 +441,6 @@ const CollectionPage = React.createClass({
   getMoreOptionsRows: function() {
     let rows = []
 
-
     if(this.state.data.collection.owned) {
       rows.push({
         description: "Add Collaborators",
@@ -489,8 +490,6 @@ const CollectionPage = React.createClass({
   render: function() {
     let actionList = [];
     let isOwned = this.ownedByUser();
-    let canLeave = (this.state.data.collection.editable ||
-                    this.state.data.collection.viewer);
 
     if (isOwned) {
       actionList.push(
