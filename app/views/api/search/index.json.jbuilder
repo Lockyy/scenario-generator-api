@@ -23,7 +23,8 @@ json.collections do
   json.data  @results[:collections][:data] do |collection|
     json.id collection.id
     json.name collection.name
-    json.display_date collection.display_date
+    json.created_at collection.created_at
+
     json.user do
       json.name collection.user.name
       json.id collection.user.id

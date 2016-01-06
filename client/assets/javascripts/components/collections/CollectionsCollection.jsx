@@ -9,6 +9,7 @@ import TableDisplay from '../TableDisplay';
 import CollectionStore from '../../stores/CollectionStore';
 import DropdownConstants from '../../utils/constants/DropdownConstants';
 import CollectionConstants from '../../utils/constants/CollectionConstants';
+import DateHelper from '../../utils/helpers/DateHelper';
 import Dropdown from '../Dropdown';
 
 const CollectionsCollection = React.createClass ({
@@ -112,7 +113,7 @@ const CollectionsCollection = React.createClass ({
                     failure={() => ` ${collection.user.name},`} />
                 </Link>
                 <span className={'date mobile'}>
-                  {collection.display_date}
+                  {DateHelper.getStrDateInDefaultFormat(collection.created_at)}
                 </span>
               </span>
               <span className='includes mobile'>
@@ -199,7 +200,7 @@ const CollectionsCollection = React.createClass ({
               dataColumn: 'name',
               className: 'with-collection-icon',
               sortByColumn: 'name',
-              width: 6,
+              width: 6
             },
             {
               title: 'Owner',
@@ -207,13 +208,14 @@ const CollectionsCollection = React.createClass ({
               dataColumnAttribute: 'name',
               sortByColumn: 'user',
               sortByColumnAttribute: 'name',
-              width: 3,
+              width: 3
             },
             {
               title: 'Last modified',
-              dataColumn: 'display_date',
+              dataColumn: 'updated_at',
               width: 3,
-              sortByColumn: 'updated_at'
+              sortByColumn: 'updated_at',
+              date: true
             }
           ]}/>
 
@@ -223,6 +225,6 @@ const CollectionsCollection = React.createClass ({
       </div>
     )
   }
-})
+});
 
 export default CollectionsCollection;
