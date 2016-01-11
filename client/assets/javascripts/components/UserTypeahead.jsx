@@ -36,8 +36,11 @@ const UserTypeahead  = React.createClass({
         header: _this._getHeaderTemplate,
         empty: function(data) {
           let query = data.query;
-          if(_this._validateEmail(query)) {
+          if(_this._validateJLLEmail(query)) {
             return `<p class='tt-no-results tt-empty' data-query='${query}'>“${query}”<span class='tt-help'>Invite via email <i class="add-symbol"> + </i></span></p>`
+          }
+          if(_this._validateEmail(query)) {
+            return `<p class='tt-no-results' data-query='${query}'>Not a valid JLL email address</p>`
           }
           return `<p class='tt-no-results' data-query='${query}'>No Results for “${query}”</p>`
         },
@@ -102,7 +105,12 @@ const UserTypeahead  = React.createClass({
     }
   },
 
-  _validateEmail: function _validateEmail(email) {
+  _validateJLLEmail: function _validateJLLEmail(email) {
+    var re = /\b\S+@{1}(am\.|eu\.|ap\.)?jll\.com\b/;
+    return re.test(email);
+  },
+
+   _validateEmail: function _validateEmail(email) {
     var re = /\S+@\S+\.\S+/;
     return re.test(email);
   },
