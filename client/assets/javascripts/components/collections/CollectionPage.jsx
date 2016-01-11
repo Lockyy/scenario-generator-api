@@ -10,7 +10,6 @@ import Rating from '../Rating'
 import Avatar from '../Avatar'
 import Decide from '../Decide';
 import RenderDesktop from '../RenderDesktop';
-import { ConfirmDeleteProductFromCollectionMixin } from './ConfirmDeleteProductFromCollectionModal';
 import RenderMobile from '../RenderMobile';
 import TableDisplay from '../TableDisplay'
 import TabbedArea from '../TabbedArea'
@@ -29,7 +28,6 @@ const CollectionPage = React.createClass({
     EditCollectionMixin,
     ShareCollectionMixin,
     ManageCollaboratorCollectionMixin,
-    ConfirmDeleteProductFromCollectionMixin,
     UserListMixin
   ],
 
@@ -148,7 +146,17 @@ const CollectionPage = React.createClass({
   },
 
   removeProduct: function(product) {
-    ConfirmDeleteProductFromCollectionMixin.showConfirmDeleteProductFromCollectionModal(product)
+    FluxAlertActions.showAlert({
+      title: 'Remove this product?',
+      headerIconClass: 'collections',
+      showClose: true,
+      message: `Removing "${product.name}" will also delete it for all of "${this.state.data.collection.name}'s" collaborators.`,
+      success: 'Remove product',
+      cancel: 'Cancel',
+      successCallback: function() {
+        FluxCollectionActions.deleteProduct(this.id(), product.id)
+      },
+    })
   },
 
   renderProductsTable: function(products) {

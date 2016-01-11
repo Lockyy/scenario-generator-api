@@ -5,7 +5,6 @@ import Modal from 'react-modal';
 import AlertModal from './AlertModal';
 import  CreateCollectionMixin from './collections/CreateCollectionMixin';
 import { ShareCollectionMixin } from './collections/ShareCollectionModal';
-import { ConfirmDeleteProductFromCollectionMixin } from './collections/ConfirmDeleteProductFromCollectionModal.jsx';
 import { AddToCollectionMixin } from './collections/AddToCollectionModal';
 import { ViewCollectionMixin } from './collections/ViewCollectionModal';
 import { EditCollectionMixin } from './collections/EditCollectionModal';
@@ -31,8 +30,7 @@ const ModalManager = React.createClass ({
     ProductFilesMixin,
     ProductLinksMixin,
     ManageCollaboratorCollectionMixin,
-    ConfirmDeleteProductFromCollectionMixin,
-    UserListMixin
+    UserListMixin,
   ],
 
   childContextTypes: {
@@ -50,7 +48,6 @@ const ModalManager = React.createClass ({
         { this.renderCreateCollectionModal() }
         { this.renderShareCollectionModal() }
         { this.renderAddToCollectionModal() }
-        { this.renderConfirmDeleteProductFromCollectionModal() }
         { this.renderViewCollectionModal() }
         { this.renderEditCollectionModal() }
         { this.renderShareProductModal() }
