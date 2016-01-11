@@ -68,7 +68,7 @@ const ManageCollaboratorCollectionModalDesktop = React.createClass ({
           className='sharee'
           onRemove={this.props.removeUser}
           onUpdate={this.props.updateUser}
-          data={{data: this.props.displayedUsers}} />
+          data={{data: this.props.unsaved_collection.users}} />
       )
     }
   },
