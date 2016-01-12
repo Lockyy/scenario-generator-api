@@ -13,6 +13,12 @@ class CollectionUser < ActiveRecord::Base
   validates_uniqueness_of :email, :scope => :collection_id,
     unless: Proc.new { |a| a.email.blank? }
 
+  validates_presence_of :shared_collection
+
+  validates_format_of :email, with: /\b\S+@{1}(am\.|eu\.|ap\.)?jll\.com\b/,
+                              allow_nil: true,
+                              message: 'is not a valid JLL email'
+
   scope :invites, -> { where.not(email: nil) }
   scope :with_registered_user, -> { where.not(sharee_id: nil) }
 

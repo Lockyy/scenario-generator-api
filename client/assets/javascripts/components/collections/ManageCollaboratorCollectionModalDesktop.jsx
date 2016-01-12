@@ -46,6 +46,7 @@ const ManageCollaboratorCollectionModalDesktop = React.createClass ({
               <Avatar
                 user={user}
                 disableLink={true}
+                disableHover={true}
                 styles={{backgroundColor: 'white'}} />
               <span>
                 <div className='name color-red'>

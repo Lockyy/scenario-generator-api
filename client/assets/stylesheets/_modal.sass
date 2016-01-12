@@ -345,6 +345,46 @@ $modal-padding: 25px
             .created_at
               text-align: right
 
+.hover-tooltip
+  display: inline-block
+  position: relative
+  color: white
+  width: 13px
+  height: 13px
+  margin-left: 5px
+  background-image: url('icons/icon-info.svg')
+  background-size: contain
+  background-position: center
+  background-repeat: no-repeat
+  .tooltip
+    display: none
+  &:hover
+    background-image: url('icons/icon-info-filled.svg')
+    .tooltip
+      display: block
+      position: absolute
+      top: 19px
+      background: $font-grey
+      width: 200px
+      z-index: 999
+      opacity: 0.90
+      padding: 10px
+      font-style: initial
+      &::before
+        display: block
+        content: ''
+        width: 0px
+        border-bottom: 7px solid $font-grey
+        border-left: 7px solid transparent
+        border-right: 7px solid transparent
+        position: absolute
+        top: -6px
+        left: 0px
+  &.inverted
+    background-image: url('icons/icon-info-filled.svg')
+    &:hover
+      background-image: url('icons/icon-info.svg')
+
 @media (max-width: $screen-sm)
   .app
     .ReactModal__Overlay
