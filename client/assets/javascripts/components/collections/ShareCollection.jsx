@@ -233,7 +233,7 @@ const ShareCollection = React.createClass ({
       return (
         <label className='results-list-padding grey'>
           <input type='checkbox' name='emails' onClick={this.setSendEmailInvites}
-                 checked={this.state.collection.send_email_invites}/>
+                 checked={this.state.unsaved_collection.send_email_invites}/>
           Notify users via email
         </label>
       )
