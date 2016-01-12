@@ -332,7 +332,13 @@ const ShareCollection = React.createClass ({
           condition={this.state.config.noGreyDescription}
           success={() => (
             <div className='grey-description'>
-              Add collaborators and set their access level accordingly.
+              Add collaborators and set their access level below. You can add more collaborators and manage them afterwards as well. Search users, or enter their emails if they are not on Fletcher yet.
+              <span className='hover-tooltip'>
+                <span className='tooltip'>
+                  <b>You will only be able to add users whose email domains have been registered in Fletcher. </b>
+                  The following domains have been registered: @am.jll.com<br />@eu.jll.com<br />@ap.jll.com<br />@jll.com
+                </span>
+              </span>
             </div>
           )} />
 

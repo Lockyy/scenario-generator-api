@@ -40,7 +40,20 @@ const UserTypeahead  = React.createClass({
             return `<p class='tt-no-results tt-empty' data-query='${query}'>“${query}”<span class='tt-help'>Invite via email <i class="add-symbol"> + </i></span></p>`
           }
           if(_this._validateEmail(query)) {
-            return `<p class='tt-no-results' data-query='${query}'>Not a valid JLL email address</p>`
+            return (
+              `<p class='tt-no-results tt-empty' data-query='${query}'>
+                “${query}”
+                <span class='tt-help'>
+                  Not a valid email domain
+                  <span class='hover-tooltip'>
+                    <span class='tooltip'>
+                      <b>You will only be able to add users whose email domains have been registered in Fletcher.</b>
+                      The following domains have been registered: @am.jll.com<br>@eu.jll.com<br>@ap.jll.com<br>@jll.com
+                    </span>
+                  </span>
+                </span>
+              </p>`
+            )
           }
           return `<p class='tt-no-results' data-query='${query}'>No Results for “${query}”</p>`
         },
@@ -63,7 +76,7 @@ const UserTypeahead  = React.createClass({
   },
 
   _onSelectEmail: function _onSelectEmail(query) {
-    if(this._validateEmail(query)) {
+    if(this._validateJLLEmail(query)) {
       this.props.onSetEmail(query)
     }
   },
