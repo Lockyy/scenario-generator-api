@@ -39,6 +39,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
   - Info: https://github.com/codelittinc/fletcher/wiki/Themes
 - Add whitelist system for logging in users
   - Info: https://github.com/codelittinc/fletcher/wiki/Whitelist
+- Add Slacked gem to log to Slack whenever a review is made.
 
 ### Changes
 - Attachments now have a filetype whitelist.
