@@ -31,6 +31,8 @@ const CompanyProfilePage  = React.createClass({
   },
 
   componentWillReceiveProps: function(newProps) {
+    if(_.isUndefined(newProps.params.id)){ return; }
+
     FluxCompanyActions.fetchData(newProps.params.id, function() {
       this.transitionTo('/app')
       FluxNotificationsActions.showNotification({

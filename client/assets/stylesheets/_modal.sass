@@ -17,7 +17,7 @@ $modal-padding: 25px
 
 .app
   .ReactModal__Overlay
-    z-index: 999999
+    z-index: 900
     background-color: rgba(33,33,33,0.7)
     position: relative
     display: flex
@@ -143,6 +143,12 @@ $modal-padding: 25px
           overflow-x: hidden
         .collection-products
           margin-bottom: 20px
+
+      .grey-description
+        font-size: 12px
+        margin-bottom: 15px
+        color: $dark-grey
+
       .grey
         background: $light-grey
         margin-left: (0px - $modal-padding)
@@ -155,10 +161,6 @@ $modal-padding: 25px
         .grey-title
           font-size: 16px
           margin-bottom: 10px
-        .grey-description
-          font-size: 12px
-          margin-bottom: 15px
-          color: $dark-grey
         &.header
           margin-top: (0px - $modal-padding)
           border-radius: 0px
@@ -177,6 +179,7 @@ $modal-padding: 25px
           &:first-child
             border-top: 0px
             padding-top: 0px
+            margin-top: 0px
           &:last-child
             border-bottom: 0px
             padding-bottom: 0px
@@ -341,6 +344,46 @@ $modal-padding: 25px
               display: inline-block
             .created_at
               text-align: right
+
+.hover-tooltip
+  display: inline-block
+  position: relative
+  color: white
+  width: 13px
+  height: 13px
+  margin-left: 5px
+  background-image: url('icons/icon-info.svg')
+  background-size: contain
+  background-position: center
+  background-repeat: no-repeat
+  .tooltip
+    display: none
+  &:hover
+    background-image: url('icons/icon-info-filled.svg')
+    .tooltip
+      display: block
+      position: absolute
+      top: 19px
+      background: $font-grey
+      width: 200px
+      z-index: 999
+      opacity: 0.90
+      padding: 10px
+      font-style: initial
+      &::before
+        display: block
+        content: ''
+        width: 0px
+        border-bottom: 7px solid $font-grey
+        border-left: 7px solid transparent
+        border-right: 7px solid transparent
+        position: absolute
+        top: -6px
+        left: 0px
+  &.inverted
+    background-image: url('icons/icon-info-filled.svg')
+    &:hover
+      background-image: url('icons/icon-info.svg')
 
 @media (max-width: $screen-sm)
   .app

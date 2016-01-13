@@ -20,6 +20,8 @@ Modal.setAppElement(appElement);
 //    successCallback: function() {_this.context.router.transitionTo('/app')},
 //    cancelCallback: function() {},
 //  })
+//
+// READ THESE DOCS: https://github.com/codelittinc/fletcher/wiki/Alerts-and-Confirmations
 
 const AlertModal = React.createClass({
   displayName: 'AlertModal',

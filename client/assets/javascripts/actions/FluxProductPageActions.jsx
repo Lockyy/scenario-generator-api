@@ -12,6 +12,7 @@ class FluxProductPageActions {
       id,
       (data) => {
         this.actions.updateData(data);
+
         FluxCollectionActions.fetchedCollections(data.collections);
       },
       (error) => {

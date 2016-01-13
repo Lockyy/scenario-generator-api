@@ -5,53 +5,68 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 
 ### v1.1.0
 
-####Features
-- Add collections. A user can create a group of products with a name and description.
-  - Collections can be added, edited, and created on a user's profile, a product's page.
-  - Collections appear on the user page collections tab.
-  - Collections can be private or public.
-  - If public, collections appear on the product's collections tab.
-    - Collection visibility can be changed via dropdown on collection box.
-  - After creation user is asked to share collection with other users.
-  - Shared, public, and owned collections visible on product/user/collection pages.
-  - Emails are sent to the user who has a collection shared with them.
-  - Collections are also listed in the Hamburger Menu
-- Add user search API endpoint for use with collection sharing. Will also be used for product sharing.
-- Add notifications system.
-  - Notifications can be generated on either the frontend or backend.
-    - Frontend notifications are not stored in the database and are purely alerts to tell the user that a save succeeded etc.
-    - Notifications generated on the front end are created via FluxNotificationsActions.showNotification
-    - Notifications generated on the back end are automatically fetched by the front end and displayed 3 at a time every 10 seconds.
-  - Uses https://github.com/igorprado/react-notification-system module for displaying notifications.
-- Support/Contact form now correctly sends emails to Americas.TechnologyInnovation@am.jll.com
-  - We now have a mandrill subaccount set up for sending emails. Can use this for sharing products later.
-- Add google analytics to site and app
+### Features
+- Adds collections. Users can now create groups of products and share them with other users.
+  - Collections are created on product and user pages.
+  - They are edited, added to, and deleted from the collection page.
+  - Collections can be public or private as well as shared specifically with other users.
+  - Collections visible to the current user are listed on user, product, and collection pages.
+  - Collections added to search results.
+  - More info: https://github.com/codelittinc/fletcher/wiki/Collections
+- Overhauls hamburger menu. All functionality and information removed in place of dedicated links to relevant pages. Moved into react.
+- Adds notification system.
+  - Can be created on front or back end. Only backend are stored long term.
+  - Notifications are fetched 3 at a time every 10 seconds from the backend. Frontend notifications are displayed immediately.
+  - More info: https://github.com/codelittinc/fletcher/wiki/Notifications
+- Support/Contact form now sends emails to Americas.TechnologyInnovation@am.jll.com
+- Add Google Analytics.
 - Logins now expire after 8 hours.
-- Add independent ModalManager system for rendering and displaying the various modals around the app. This
-is currently primarily used for the Collections system but is also used for various product page modals.
+- Modals now handled by ModalManager system.
+  - Info: https://github.com/codelittinc/fletcher/wiki/ModalManager
+  - Includes Alert system. Info: https://github.com/codelittinc/fletcher/wiki/Alerts-and-Confirmations
+- Add Table Display Component for easily displaying groups of data.
+  - Info: https://github.com/codelittinc/fletcher/wiki/TableDisplay
+- Add Decide component for handling decision inside JSX code without resorting to ternary operators or function calls.
+  - Info: https://github.com/codelittinc/fletcher/wiki/Decide-Component
+- Add RenderMobile and RenderDesktop components for responsive component rendering.
+  - Info: https://github.com/codelittinc/fletcher/wiki/RenderDesktop-and-RenderMobile
+- Add TabbedArea component.
+  - Info: https://github.com/codelittinc/fletcher/wiki/TabbedArea
+- Add Avatar component.
+  - Info: https://github.com/codelittinc/fletcher/wiki/Avatar
+- Add system for themeing the site.
+  - Adds InternalIT theme.
+  - Info: https://github.com/codelittinc/fletcher/wiki/Themes
+- Add whitelist system for logging in users
+  - Info: https://github.com/codelittinc/fletcher/wiki/Whitelist
+- Add Slacked gem to log to Slack whenever a review is made.
 
-####Changes
-- Files uploaded to reviews are now checked against a whitelist. Only docs and mediafiles will now be accepted.
-  - File mimetypes that are allowed can be viewed in app/models/attachment.rb
+### Changes
+- Attachments now have a filetype whitelist.
+  - Mimetypes whitelist viewable in app/models/attachment.rb
 - Add footer to App
-- Images on the dashboard are no longer stretched to their container, they now maintain their original aspect ratio and the rest of the container is filled with a blurred, expanded version of the image. Background image is semi-transparent.
-- ActiveAdmin header title now links to the main app.
-- Landing page now displays correct testimonials.
-- Add correct favicons.
-- Ensure all required fields on reviews page have error messages when left blank.
-- Hitting the landing page whilst logged in automatically redirects the user to /app.
-- Field validation now occurs on new review page for fields preceeding the one clicked by the user. Errors also now appear at the end of the form.
-- Remove old Auth Token based authentication. The site now relies solely on Devise authentication.
-- Spin the common tabbed area that is on the product and user profiles into its own react component. This now makes it easy to add these tabs to a number of elements.
-- Move hamburger menu into its own dedicated react component which renders all the sub-components, rather than rendering them each separately in app.jsx
+- Images on Dashboard no longer stretch to cover their container, they now display fully and fill the rest of their container with a stretched blurred expansion of themselves.
+- ActiveAdmin header title now links to main app.
+- Correct testimonials on landing page.
+- Add correct Favicons.
+- Going to the landing page whilst logged in redirects to /app.
+- Add field validation to new review page as the user advances through fields.
+- Replace old Auth Token based authentication with Devise authentication.
 
-####Bugfixes
-- Fix a number of issues that were generating console warnings related to interated components not having unique IDs.
-- Ensure welcome message is hidden when the user leaves the dashboard.
-- Add icon for collections to sidebar on product and user page.
-- Hamburger menu now scrolls independently of the main page
+### Bugfixes
+- Fix error messages on reviews page.
+- Fix a number of issues that were generating console warnings.
+- Fix welcome message not hiding when user leaves dashboard.
 - Fix issue where only 4 stars showed on small/medium product boxes on dashboard.
 - Fix issue with text overflow caused by long review titles.
+- Various other fixes.
+
+### v1.0.1
+
+#### Bugfixes
+- Tags no longer display when no reviews or companies are associated with them.
+- Tags are now all displayed on the tags directory.
+- The tag directory is now sorted alphabetically within sections.
 
 ### v1.0.1
 

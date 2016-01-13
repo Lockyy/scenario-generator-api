@@ -14,6 +14,7 @@ import RenderMobile from '../RenderMobile';
 import TableDisplay from '../TableDisplay'
 import TabbedArea from '../TabbedArea'
 import MoreOptionsDropdown from '../MoreOptionsDropdown';
+import DateHelper from '../../utils/helpers/DateHelper';
 import { EditCollectionMixin } from './EditCollectionModal'
 import { ShareCollectionMixin } from './ShareCollectionModal'
 import { ManageCollaboratorCollectionMixin } from './ManageCollaboratorCollectionModal'
@@ -27,7 +28,7 @@ const CollectionPage = React.createClass({
     EditCollectionMixin,
     ShareCollectionMixin,
     ManageCollaboratorCollectionMixin,
-    UserListMixin,
+    UserListMixin
   ],
 
   avatarSize: 30,
@@ -145,7 +146,17 @@ const CollectionPage = React.createClass({
   },
 
   removeProduct: function(product) {
-    FluxCollectionActions.deleteProduct(this.id(), product.id)
+    FluxAlertActions.showAlert({
+      title: 'Remove this product?',
+      headerIconClass: 'collections',
+      showClose: true,
+      message: `Removing "${product.name}" will also delete it for all of "${this.state.data.collection.name}'s" collaborators.`,
+      success: 'Remove product',
+      cancel: 'Cancel',
+      successCallback: function() {
+        FluxCollectionActions.deleteProduct(this.id(), product.id)
+      },
+    })
   },
 
   renderProductsTable: function(products) {
@@ -172,12 +183,13 @@ const CollectionPage = React.createClass({
             },
             {
               title: 'Date Added',
-              dataColumn: 'added_on',
+              dataColumn: 'added_on_raw',
               secondaryDataType: 'string',
               secondaryDataColumn: 'added_by',
               sortByColumn: 'added_on_raw',
               width: 3,
-              hiddenOn: 'mobile',
+              date: true,
+              hiddenOn: 'mobile'
             },
             {
               title: '',
@@ -439,7 +451,6 @@ const CollectionPage = React.createClass({
   getMoreOptionsRows: function() {
     let rows = []
 
-
     if(this.state.data.collection.owned) {
       rows.push({
         description: "Add Collaborators",
@@ -475,7 +486,7 @@ const CollectionPage = React.createClass({
                         to={`/app/users/${this.state.data.collection.user.id}`}
                         className='link'>
             {this.state.data.collection.user.name}
-          </Link>, {this.state.data.collection.display_date}
+          </Link>, {DateHelper.getStrDateInDefaultFormat(this.state.data.collection.created_at) }
         </div>
         <div className='color-dark-grey'>
           {this.totalCollaborators()} collaborator(s)
@@ -489,8 +500,6 @@ const CollectionPage = React.createClass({
   render: function() {
     let actionList = [];
     let isOwned = this.ownedByUser();
-    let canLeave = (this.state.data.collection.editable ||
-                    this.state.data.collection.viewer);
 
     if (isOwned) {
       actionList.push(

@@ -11,6 +11,7 @@ import Dropdown from '../Dropdown';
 import DropdownConstants from '../../utils/constants/DropdownConstants';
 import Avatar from '../Avatar';
 import ReviewConstants from '../../utils/constants/ReviewConstants';
+import DateHelper from '../../utils/helpers/DateHelper'
 
 const Reviews = React.createClass({
   displayName: 'Reviews',
@@ -176,12 +177,9 @@ const Reviews = React.createClass({
                                   data-helpful='false' onClick={this.voteOnReview}> No </button>
                         </div>;
 
-    let userEditAction =   wroteByCurrentUser ? editMyReview
-      : itWasHelpful;
-
     let job_title = _.isEmpty(review.user.job_title) ?
       (_.isEmpty(review.user.department) ? '' : review.user.department )
-      : review.user.job_title
+      : review.user.job_title;
 
     return (
       <div className="row review">
@@ -207,7 +205,7 @@ const Reviews = React.createClass({
             : ''
           }
           <div className="created_at">
-            {review.display_date}
+            {DateHelper.getStrDateInDefaultFormat(review.created_at)}
           </div>
           { review.total_votes > 0 ?
             <span className="rating">

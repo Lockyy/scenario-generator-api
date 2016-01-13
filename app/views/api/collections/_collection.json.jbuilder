@@ -47,5 +47,5 @@ if(collection.owned_by?(current_user))
     json.rank invited_sharee.rank
   end
 
-  json.send_email_invites collection.send_email_invites
+  json.send_email_invites false
 end

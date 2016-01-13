@@ -1,10 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
+import dateutil from 'date-util';
 import { Link, Navigation } from 'react-router';
 import RenderDesktop from './RenderDesktop';
+import DateHelper from '../utils/helpers/DateHelper';
 import Rating from './Rating'
 
-// https://github.com/codelittinc/fletcher/wiki/TableDisplay
+// More Info: https://github.com/codelittinc/fletcher/wiki/TableDisplay
 
 const TableDisplay = React.createClass ({
 
@@ -27,9 +29,8 @@ const TableDisplay = React.createClass ({
   },
 
   componentWillReceiveProps: function(nextProps) {
-    let sortColumn = this.state.sortByColumn || nextProps.defaultSortColumn
-    let sortColumnAttribyute = this.state.sortByColumnAttribute || nextProps.defaultSortColumnAttribute
-    let sortDirection = this.state.sortDirection || 'desc'
+    let sortColumn = this.state.sortByColumn || nextProps.defaultSortColumn;
+    let sortDirection = this.state.sortDirection || 'desc';
 
     this.performSort(nextProps.data, sortColumn, nextProps.defaultSortColumnAttribute, sortDirection)
   },
@@ -40,7 +41,7 @@ const TableDisplay = React.createClass ({
   onSortClick: function(column) {
     if(this.clickableColumn(column)) {
       let sortByColumn = column.sortByColumn;
-      let sortByColumnAttribute = column.sortByColumnAttribute
+      let sortByColumnAttribute = column.sortByColumnAttribute;
       let newSortDirection = this.newSortDirection(sortByColumn);
 
       this.performSort(this.state.data, sortByColumn, sortByColumnAttribute, newSortDirection)
@@ -54,7 +55,7 @@ const TableDisplay = React.createClass ({
         value = value[columnAttribute];
       }
       return value
-    })
+    });
 
     if(direction == 'desc') {
       sortedData = sortedData.reverse()
@@ -193,10 +194,14 @@ const TableDisplay = React.createClass ({
         <div
           className={`${column.className} ${column.onClick ? 'clickable' : ''}`}
           onClick={() => column.onClick ? column.onClick(row) : null}>
-          {rowValue}
+          {this.formatColumnValue(rowValue, column)}
         </div>
       )
     }
+  },
+
+  formatColumnValue: function(rowValue, column){
+    return column.date ? DateHelper.getStrDateInDefaultFormat(rowValue) : rowValue;
   },
 
   renderRowSecondaryData: function(row, column) {

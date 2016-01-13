@@ -21,5 +21,9 @@ module.exports = {
   },
   module: {
     loaders: []
+  },
+  watchOptions: {
+    poll: true,
+    number: 100
   }
 };

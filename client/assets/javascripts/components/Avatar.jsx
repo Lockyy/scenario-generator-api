@@ -1,6 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 
+// More info: https://github.com/codelittinc/fletcher/wiki/Avatar
+
 const Avatar = React.createClass({
   displayName: 'Avatar',
 

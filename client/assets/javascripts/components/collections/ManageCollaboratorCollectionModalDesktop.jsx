@@ -46,6 +46,7 @@ const ManageCollaboratorCollectionModalDesktop = React.createClass ({
               <Avatar
                 user={user}
                 disableLink={true}
+                disableHover={true}
                 styles={{backgroundColor: 'white'}} />
               <span>
                 <div className='name color-red'>
@@ -68,7 +69,7 @@ const ManageCollaboratorCollectionModalDesktop = React.createClass ({
           className='sharee'
           onRemove={this.props.removeUser}
           onUpdate={this.props.updateUser}
-          data={{data: this.props.displayedUsers}} />
+          data={{data: this.props.unsaved_collection.users}} />
       )
     }
   },

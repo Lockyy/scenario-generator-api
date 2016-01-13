@@ -3,6 +3,8 @@ import _ from 'lodash';
 import MediaQuery from 'react-responsive';
 import MediaQueryConstants from '../utils/constants/MediaQueryConstants';
 
+// More Info: https://github.com/codelittinc/fletcher/wiki/RenderDesktop-and-RenderMobile
+
 const RenderDesktop = React.createClass ({
 
   getDefaultProps: function() {

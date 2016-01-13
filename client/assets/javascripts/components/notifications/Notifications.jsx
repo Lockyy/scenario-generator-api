@@ -6,6 +6,8 @@ import       NotificationsStore from '../../stores/NotificationsStore'
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
 import  { ViewCollectionMixin } from '../collections/ViewCollectionModal'
 
+// More info: https://github.com/codelittinc/fletcher/wiki/Notifications
+
 const Notifications = React.createClass({
   displayName: 'Notifications',
   mixins: [ ViewCollectionMixin ],

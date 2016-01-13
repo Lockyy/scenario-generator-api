@@ -7,6 +7,7 @@ import Dropdown from '../Dropdown';
 import Avatar from '../Avatar';
 import AutoFitPicture from '../AutoFitPicture';
 import DropdownConstants from '../../utils/constants/DropdownConstants';
+import DateHelper from '../../utils/helpers/DateHelper';
 
 const Results = React.createClass ({
 
@@ -76,7 +77,7 @@ const Results = React.createClass ({
             </div>
             <div className='small-text'>
               Created by <Link  className='link'
-                                to={`/app/users/${result.user.id}`}>{result.user.name}</Link> {result.display_date}
+                                to={`/app/users/${result.user.id}`}>{result.user.name}</Link> {DateHelper.getStrDateInDefaultFormat(result.created_at)}
             </div>
           </div>
         </div>
@@ -201,7 +202,7 @@ const Results = React.createClass ({
           <div className='name'>
             { result.email }
             { this.props.onRemove ? (
-                <span className='remove-button' onClick={() => this.props.onRemove(result.email)}></span>
+                <span className='x-button' onClick={() => this.props.onRemove(result.email)}></span>
               ) : null }
           </div>
           <Dropdown

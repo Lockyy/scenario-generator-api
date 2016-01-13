@@ -111,9 +111,6 @@ const ManageCollaboratorCollectionModal = React.createClass ({
     let collection = this.state.unsaved_collection
     collection.users = users
     this.setState({ unsaved_collection: collection })
-    if(this.refs.filterInput) {
-      this.filterCollaborators($(this.refs.filterInput.getDOMNode()).val())
-    }
   },
 
   updateEmails: function(emails) {
@@ -152,24 +149,6 @@ const ManageCollaboratorCollectionModal = React.createClass ({
       return email_obj.email !== email;
     });
     this.updateEmails(updatedEmails);
-  },
-
-  filterCollaborators: function(val) {
-    let displayedUsers = _.filter(this.state.unsaved_collection.users, function(user) {
-      if(_.indexOf(['owner', 'co-owner', 'coowner', 'is co-owner', 'is coowner'], val.toLowerCase()) > -1) {
-        if(user.rank == 'owner') { return true }
-      }
-      if(_.indexOf(['edit', 'edito', 'editor', 'collaborator', 'add products', 'can add products'], val.toLowerCase()) > -1) {
-        if(user.rank == 'collaborator') { return true }
-      }
-      if(_.indexOf(['viewer', 'viewe', 'can view', 'view'], val.toLowerCase()) > -1) {
-        if(user.rank == 'viewer') { return true }
-      }
-      if(val.length == 0) { return true }
-      return new RegExp(val.toLowerCase() + "+").test(user.name.toLowerCase())
-    })
-
-    this.setState({displayedUsers: displayedUsers})
   },
 
   submitForm: function(e) {
@@ -249,7 +228,6 @@ const ManageCollaboratorCollectionModal = React.createClass ({
 
         <RenderDesktop
           component={ManageCollaboratorCollectionModalDesktop}
-          displayedUsers={this.state.unsaved_collection.users}
           collection={this.state.collection}
           unsaved_collection={this.state.unsaved_collection}
           close={this.close}
@@ -257,12 +235,10 @@ const ManageCollaboratorCollectionModal = React.createClass ({
           removeUser={this.removeUser}
           updateEmail={this.updateEmail}
           removeEmail={this.removeEmail}
-          submitForm={this.submitForm}
-          filterCollaborators={this.filterCollaborators} />
+          submitForm={this.submitForm} />
 
         <RenderMobile
           component={ManageCollaboratorCollectionModalMobile}
-          displayedUsers={this.state.displayedUsers}
           collection={this.state.collection}
           unsaved_collection={this.state.unsaved_collection}
           close={this.close}

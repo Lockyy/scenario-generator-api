@@ -2,6 +2,8 @@ import React from 'react/addons';
 import _ from 'lodash';
 import { Link } from 'react-router';
 
+// More info: https://github.com/codelittinc/fletcher/wiki/TabbedArea
+
 const TabbedArea = React.createClass({
   displayName: 'TabbedArea',
 

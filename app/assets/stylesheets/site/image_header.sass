@@ -6,7 +6,7 @@
     background-image: image_url('backgrounds/header@2x.jpg')
 
 .image-header
-  background-image: image_url('backgrounds/header.jpg')
+  background-image: image_url('backgrounds/welcome_background/default/header.jpg')
   background-size: cover
   background-position: 100%
   color: white
@@ -22,13 +22,22 @@
   .header
     font-size: 35px
 
+.internal
+  .image-header
+    background-image: image_url('backgrounds/welcome_background/internal/header.jpg')
+
+
 @media only screen and (max-width : 768px)
   @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (-moz-min-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)
     .image-header
-      background-image: image_url('backgrounds/header-mobile@2x.jpg')
+      background-image: image_url('backgrounds/welcome_background/default/header-mobile@2x.jpg')
+
+      .internal
+        .image-header
+          background-image: image_url('backgrounds/welcome_background/internal/header-mobile@2x.jpg')
 
   .image-header
-    background-image: image_url('backgrounds/header-mobile.jpg')
+    background-image: image_url('backgrounds/welcome_background/default/header-mobile.jpg')
     background-position: bottom
     .text
       padding-top: 35px
@@ -36,3 +45,7 @@
       text-align: center
       .row
         margin-top: 15px
+
+  .internal
+    .image-header
+      background-image: image_url('backgrounds/welcome_background/internal/header.jpg')

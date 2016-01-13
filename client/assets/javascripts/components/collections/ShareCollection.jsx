@@ -18,18 +18,19 @@ const ShareCollection = React.createClass ({
 
   getInitialState: function () {
     let collection = this.props.collection || {
-        name: '',
-        description: '',
-        products: [],
-        owner: this.context.currentUser,
-        users: [],
-        privacy: "hidden"
-      };
+      name: '',
+      description: '',
+      products: [],
+      owner: this.context.currentUser,
+      users: [],
+      privacy: "hidden"
+    };
     collection['emails'] = [];
+
     return {
       collection: collection,
       config: this.props.config || {},
-      unsaved_collection: collection
+      unsaved_collection: jQuery.extend(true, {}, collection)
     }
   },
 
@@ -162,7 +163,7 @@ const ShareCollection = React.createClass ({
     };
 
     FluxCollectionActions.shareCollection(id, data, function () {
-      _this.props.close();
+      _this.close();
 
       FluxNotificationsActions.showNotification({
         type: 'shared',
@@ -233,7 +234,7 @@ const ShareCollection = React.createClass ({
       return (
         <label className='results-list-padding grey'>
           <input type='checkbox' name='emails' onClick={this.setSendEmailInvites}
-                 checked={this.state.collection.send_email_invites}/>
+                 checked={this.state.unsaved_collection.send_email_invites}/>
           Notify users via email
         </label>
       )
@@ -246,7 +247,7 @@ const ShareCollection = React.createClass ({
         <button className='btn btn-red-inverted btn-round'
                 onClick={this.submitForm}>{this.state.config.confirm || 'Save'}</button>
         <button className='btn btn-grey-inverted btn-round'
-                onClick={this.props.close}>{this.state.config.cancel || 'Skip'}</button>
+                onClick={this.close}>{this.state.config.cancel || 'Skip'}</button>
       </div>
     )
   },
@@ -317,6 +318,12 @@ const ShareCollection = React.createClass ({
     }
   },
 
+  close: function() {
+    debugger
+    this.setState({unsaved_collection: this.state.collection});
+    this.props.close()
+  },
+
   render: function () {
     return (
       <div className='share-collection-container'>
@@ -324,7 +331,7 @@ const ShareCollection = React.createClass ({
           <span className='title'>
             {this.state.config.title || 'Privacy & Sharing'}
           </span>
-          <a onClick={this.props.close} className='close'></a>
+          <a onClick={this.close} className='close'></a>
         </div>
         {this.renderPrivacyToggle()}
 
@@ -332,7 +339,13 @@ const ShareCollection = React.createClass ({
           condition={this.state.config.noGreyDescription}
           success={() => (
             <div className='grey-description'>
-              Add collaborators and set their access level accordingly.
+              Add collaborators and set their access level below. You can add more collaborators and manage them afterwards as well. Search users, or enter their emails if they are not on Fletcher yet.
+              <span className='hover-tooltip'>
+                <span className='tooltip'>
+                  <b>You will only be able to add users whose email domains have been registered in Fletcher. </b>
+                  The following domains have been registered: @am.jll.com<br />@eu.jll.com<br />@ap.jll.com<br />@jll.com
+                </span>
+              </span>
             </div>
           )} />
 
