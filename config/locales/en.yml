@@ -21,3 +21,4 @@
 
 en:
   hello: "Hello world"
+  internal_error_login_message: 'This is a private instance of Fletcher, please contact Am.TechInnovation@am.jll.com if you require access'

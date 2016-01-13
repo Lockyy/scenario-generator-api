@@ -12,7 +12,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         redirect_to stored_location_for(:user) || app_path
       end
     else
-      flash[:error] = 'This is a private instance of Fletcher, please contact Am.TechInnovation@am.jll.com if you require access'
+      flash[:error] = t(:internal_error_login_message)
       redirect_to root_path
     end
   end
