@@ -36,6 +36,14 @@ gem 'will_paginate'
 gem 'friendly_id', '~> 5.1.0'
 gem 'lodash-rails'
 gem 'es5-shim-rails'
+gem 'counter_culture', '~> 0.1.33'
+gem 'slacked'
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'rack-mini-profiler'
+end
 
 group :development, :test do
   gem 'byebug'
@@ -51,10 +59,9 @@ group :development, :test do
   gem 'bundler-audit', require: false
   gem 'rainbow'
   gem 'quiet_assets'
-  gem "better_errors"
-  gem "binding_of_caller"
   gem 'pry-rails'
   gem 'rspec-rails'
+  gem 'letter_opener'
 end
 
 group :test  do

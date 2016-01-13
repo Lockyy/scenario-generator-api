@@ -12,7 +12,10 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to image_tag('logos/logo-black.svg'), '/', class: 'brand' %>
+      <div class='brand'>
+        <%= link_to image_tag('logos/logo-black.svg'), '/' %>
+        <%= link_to image_tag('logos/logo-black-internal.svg'), '/app', class: 'internal-only inline-block' %>
+      </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
@@ -34,3 +37,10 @@
     </div>
   </div>
 </nav>
+
+<% if flash[:error] %>
+  <div class='flash'>
+    <%= image_tag "icons/warning-orange.svg", alt:"Internal warning icon" %>
+    <%= flash[:error] %>
+  </div>
+<% end %>

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import alt from '../FluxAlt';
 import FluxUserActions from '../actions/FluxUserActions'
+import FluxCollectionActions from '../actions/FluxCollectionActions'
 
 class UserStore {
   constructor() {

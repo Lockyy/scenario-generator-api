@@ -17,11 +17,11 @@ class Api::UsersController < AppController
   end
 
   def tags
-    @update_user_tags = Fletcher::User::UpdateUserTags.new(@user, params[:tags])
+    @update_user_tags = Fletcher::User::UpdateUserTags.new(current_user, params[:tags])
 
     respond_to do |format|
       if @update_user_tags.update!
-        format.json { render :show, status: :ok, location: tags_api_user_url(@user) }
+        format.json { render :show, status: :ok, location: tags_api_user_url(current_user) }
       else
         format.json { render json: @update_user_tags.errors, status: :unprocessable_entity }
       end

@@ -5,6 +5,9 @@ $blue-ish: #4dbcc6
 $default-font-size: 15px
 
 .product.new
+  .button-errors, .submission-errors
+    color: #a94442
+
   .remove-link
     font-size: 10px
     margin-left: 5px
@@ -94,7 +97,7 @@ $default-font-size: 15px
           height: 45px
           background-color: $grey
           border-color: $grey
-          color: $white
+          color: white
           opacity: 1
 
         &.company-name
@@ -122,6 +125,10 @@ $default-font-size: 15px
                 cursor: pointer
 
         &.quality-review
+          .form-group
+            margin-top: 0px
+            margin-bottom: 0px
+
           .fields_container
             input.form-control:focus, textarea.form-control:focus
               box-shadow: none
@@ -174,7 +181,7 @@ $default-font-size: 15px
             .btn
               background-color: $orange
               border-color:  $orange
-              color: $white
+              color: white
 
 
       .actions
@@ -190,7 +197,7 @@ $default-font-size: 15px
 
           &:hover, &:active, &:focus
             outline: none
-            color: $white
+            color: white
             background: $dark-grey
 
         .submit
@@ -198,7 +205,7 @@ $default-font-size: 15px
 
           &:hover, &:active, &:focus
             outline: none
-            color: $white
+            color: white
             background: $red
 
           &:disabled, &.disabled
@@ -208,16 +215,19 @@ $default-font-size: 15px
     .instructions
       font-size: $default-font-size + 2px
       background: $blue-ish image-url('icons/cant-find-product.svg') no-repeat center 40px
-      color: $white
+      color: white
       text-align: center
       padding: 80px 15px 40px
       margin-top: 120px
       @include border-radius(3px)
 
       .add-symbol
-        width: 50px
-        padding: 0 10px
-        margin-right: 3px
+        background-size: contain
+        display: inline-block
+        width: 20px
+        height: 20px
+        position: relative
+        top: 4px
 
 @media only screen and (max-width: $screen-sm-max)
   .product.new
@@ -247,7 +257,7 @@ $default-font-size: 15px
           padding: 30px 0
 
           .btn
-            color: $white
+            color: white
             margin: 10px 0
             width: 100%
             background: $dark-grey

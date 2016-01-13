@@ -1,4 +1,8 @@
 @import 'variables'
+=tag-og-inverted
+  color: white
+  background-color: $orange
+  border-color: white
 
 .tags-manager
   padding: 20px
@@ -6,13 +10,15 @@
   .item.tag
     display: inline-block
     color: $orange
-    background: $white
+    background: white
     border: 1px solid $orange
     margin: 5px
     border-radius: 2px
     cursor: pointer
     border-radius: 0px
     padding: 5px 15px
+    &:hover
+      +tag-og-inverted
     span::after
       display: inline-block
       margin-left: 10px
@@ -23,19 +29,8 @@
     padding: 20px
     margin: 10px
 
-    .btn.btn-white.btn-round
-      color: $orange
-      border-color:  $orange
-      font-weight: bold
-      padding: 10px 15px
-
-      &:hover
-        color: $white
-        border-color:  $orange
-        background-color: $orange
-
   .tags-manager-container
-    background: $white
+    background: white
     padding: 20px
     margin-top: 20px
     width: 100%
@@ -75,7 +70,7 @@
         margin: 0 10px
 
       .btn.btn-white.btn-round.cancel
-        background: $white !important
+        background: white !important
         color: $blackish-grey !important
         border-color: $blackish-grey !important
 

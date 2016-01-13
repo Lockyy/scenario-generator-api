@@ -1,0 +1,155 @@
+@import 'variables'
+@import 'common'
+
+$default-font-size: 15px
+
+$color-darkred: #b8141a
+$color-darkgrey: #929497
+$color-orange: #e36307
+$color-lightgrey: #f6f6f6
+$color-blackcharcoal: #3c3c3b
+
+.tabbed-area
+  margin-top: 50px
+  border-top: 2px solid $red
+  &.no-border
+    border-top: 0px
+  &.no-margin
+    margin-top: 0px
+  &.no-child-padding
+    .child-tabbed-area
+      padding-top: 0px
+  .placeholder-message
+    margin: 10px 0 20px 0
+    color: $dark-grey
+    font-size: 12px
+    font-style: italic
+  .child-tabbed-area
+    padding-top: 20px
+    &.reviews, &.recent_activity
+      padding-top: 0px
+  .section
+    margin: 0
+    padding: 0
+    .header
+      padding: 6px 0px
+      .section-title
+        display: none
+      .customHeaderTag
+        padding: 0
+        text-align: left
+
+  .tabbed-area-sidebar
+    padding: 0
+    padding-right: 20px
+    text-transform: uppercase
+
+    .sidebar-element
+      display: block
+      padding: 15px 25px
+      border-bottom: 1px solid $color-grey
+      background: no-repeat center left
+      background-size: 20px
+      color: $blackish-grey
+      font-size: 10px
+      cursor: pointer
+
+      &.active, &:hover
+        color: $primary-red
+
+
+      &.reviews, &.recent_activity
+        background-image: img-url('icons/icon-review-grey.svg')
+
+        &.active
+          background-image: img-url('icons/icon-review-red.svg')
+
+      &.tags
+        background-image: img-url('icons/icon-tags-grey.svg')
+
+        &.active
+          background-image: img-url('icons/icon-tags-red.svg')
+
+      &.lists
+        background-image: img-url('icons/icon-lists-grey.svg')
+
+        &.active
+          background-image: img-url('icons/icon-lists-red.svg')
+
+      &.bookmarks
+        background-image: img-url('icons/icon-bookmarks-grey.svg')
+
+        &.active
+          background-image: img-url('icons/icon-bookmarks-red.svg')
+
+      &.collections
+        background-image: img-url('icons/icon-collections-grey.svg')
+
+        &.active
+          background-image: img-url('icons/icon-collections-red.svg')
+
+      &.action
+        display: none
+        &.active
+          &.leave-collection
+            background-image: img-url('icons/icon-end-collab.svg')
+          &.delete-form
+            text-transform: capitalize
+            padding: 22.5px 25px
+            background-image: img-url('icons/icon-delete-collection-form.svg')
+
+          display: block
+          color: $jll-petrol
+          text-decoration: underline
+          &::after
+            display: none
+
+      &.active
+        font-weight: bold
+        color: $color-darkred
+        position: relative
+
+        &::after
+          display: block
+          content: ""
+          position: absolute
+          top: 15px
+          right: 0px
+          background-image: img-url('icons/red-arrow.svg')
+          background-repeat: no-repeat
+          height: 10px
+          width: 10px
+
+.product.show
+  .tabbed-area
+    padding-top: 20px
+
+@media only screen and (max-width: $screen-xs-max)
+  .tabbed-area
+    border-top: none
+    .tabbed-area-sidebar
+      padding-right: 0px
+      margin-bottom: 15px
+      text-transform: uppercase
+      display: flex
+      .sidebar-element
+        border-top: 2px solid $grey
+        border-bottom: 2px solid transparent
+        display: inline-block
+        padding: 5px
+        font-size: 10px
+        cursor: pointer
+        height: 50px
+        flex: 1
+        display: flex
+        justify-content: center
+        align-items: flex-end
+        background-position: center 10%
+        background-size: 15px
+        color: transparent
+        &.active
+          border-top: 2px solid $primary-red
+          border-bottom: 2px solid $primary-red
+          background-color: $light-grey
+          &::after
+            display: none

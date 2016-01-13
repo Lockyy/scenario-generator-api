@@ -4,6 +4,7 @@ import timeago from 'timeago';
 import { Link, Navigation } from 'react-router';
 import FluxProductPageActions from '../../actions/FluxProductPageActions'
 import FluxBookmarkActions from '../../actions/FluxBookmarkActions'
+import TabbedArea from '../TabbedArea'
 import ProductStore from '../../stores/ProductStore'
 import Reviews from './Reviews'
 import Rating from '../Rating';
@@ -12,10 +13,13 @@ import Tags from '../Tags';
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import FileHelper from '../../utils/helpers/FileHelper'
 import RelatedProducts from './RelatedProducts'
+import CollectionsCollection from '../collections/CollectionsCollection';
+import { AddToCollectionMixin } from '../collections/AddToCollectionModal';
+import CreateCollectionMixin from '../collections/CreateCollectionMixin';
 
 const ProductPageDesktopVersion = React.createClass({
   displayName: 'ProductPageDesktopVersion',
-  mixins: [ Navigation ],
+  mixins: [ Navigation, AddToCollectionMixin, CreateCollectionMixin ],
 
   id: function() {
     return this.props.data.id
@@ -60,7 +64,7 @@ const ProductPageDesktopVersion = React.createClass({
             </div>
             <div className='company'>
               <Link
-                to={`/app/companies/${this.getCompanyData('slug')}`}>
+                to={`/app/companies/${this.getCompanyData('id')}/${this.getCompanyData('slug')}`}>
                 {this.getCompanyData('name')}
               </Link>
             </div>
@@ -73,15 +77,15 @@ const ProductPageDesktopVersion = React.createClass({
   renderBookmarkLink: function() {
     if(this.props.data.bookmarked) {
       return (
-        <a href="#unbookmark" onClick={this.props.onUnbookmark} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onUnbookmark} className='btn btn-grey-inverted btn-round'>
           Remove Bookmark
-        </a>
+        </div>
       )
     } else {
       return (
-        <a href="#bookmark" onClick={this.props.onBookmark} className='btn btn-grey btn-round'>
+        <div onClick={this.props.onBookmark} className='btn btn-grey-inverted btn-round'>
           Bookmark
-        </a>
+        </div>
       )
     }
   },
@@ -89,27 +93,15 @@ const ProductPageDesktopVersion = React.createClass({
   renderTopButtons: function() {
     return (
       <div className='links'>
-        <a href={this.props.reviewButtonURL} className='btn btn-red btn-round review-link'>
+        <Link to={this.props.reviewButtonURL} className='btn btn-red btn-round review-link'>
           { this.props.reviewButtonText }
-        </a>
-        <a href='#share' onClick={this.props.onShare} className='btn btn-grey btn-round'>
+        </Link>
+        <div onClick={this.props.onShare} className='btn btn-grey-inverted btn-round'>
           Share
-        </a>
+        </div>
         {this.renderBookmarkLink()}
       </div>
     )
-  },
-
-  showFiles: function(e) {
-    e.preventDefault();
-
-    $('#files-modal').modal();
-  },
-
-  showLinks: function(e) {
-    e.preventDefault();
-
-    $('#links-modal').modal();
   },
 
   renderInfo: function() {
@@ -127,14 +119,12 @@ const ProductPageDesktopVersion = React.createClass({
           </div>
           <PriceRating value={this.getProductData('price')} name='rating'/>
           <div className="files">
-            <a className="files-link" href='#show-attachments' onClick={this.showFiles}
-              data-toggle="modal" data-target="#files-modal" >
+            <a className="files-link" href='#show-attachments' onClick={this.props.showFiles}>
               {this.getProductData('attachments').length} File{attachments.length > 1 || attachments.length == 0 ? 's' : ''} Added
             </a>
           </div>
           <div className="more-links">
-            <a className="links-link" href='#show-links' onClick={this.showLinks}
-              data-toggle="modal" data-target="#links-modal" >
+            <a className="links-link" href='#show-links' onClick={this.props.showLinks}>
               {this.getProductData('links').length} Link{links.length > 1 || links.length == 0 ? 's' : ''} Added
             </a>
           </div>
@@ -159,30 +149,6 @@ const ProductPageDesktopVersion = React.createClass({
     )
   },
 
-   onSelectSection: function onSelectSection(e, section) {
-    e.preventDefault();
-
-    let $el = $(React.findDOMNode(e.target));
-    $el.siblings('.active').removeClass('active')
-    $el.addClass('active');
-
-    let $section = $(React.findDOMNode(this.refs[section]));
-    $section.removeClass('hide')
-    $section.siblings().addClass('hide')
-  },
-
-  onSelectReviewsSection: function onSelectReviewsSection(e) {
-    this.onSelectSection(e, 'reviews')
-  },
-
-  onSelectListsSection: function onSelectListsSection(e) {
-    this.onSelectSection(e, 'lists')
-  },
-
-  onSelectCustomSection: function onSelectCustomSection(e) {
-    this.onSelectSection(e, 'custom')
-  },
-
   renderRelatedProducts: function() {
     if(this.getProductData('related_products').length > 0) {
       return <RelatedProducts
@@ -202,25 +168,34 @@ const ProductPageDesktopVersion = React.createClass({
         {this.renderTitle()}
         {this.renderTopButtons()}
         {this.renderInfo()}
-        <div className='row'>
-          <div className='col-xs-3 reviews-sidebar'>
-            <div  className='sidebar-element user-reviews active'
-                  onClick={this.onSelectReviewsSection}>User Reviews</div>
-            <div className='sidebar-element lists'
-                  onClick={this.onSelectListsSection}>Lists</div>
-            <div className='sidebar-element custom-data'
-                  onClick={this.onSelectCustomSection}>Custom Data</div>
-          </div>
-          <div className='col-xs-9'>
-            <Reviews productID={this.id()} ref='reviews' />
-            <div className='placeholder-section hide' ref='lists'>
-              Feature Coming Soon
+        <TabbedArea>
+          <Reviews productID={this.id()} tabTitle='User Reviews' ref='reviews' />
+          <div
+            tabTitle='Collections'
+            className='collections-container'
+            ref='collections'>
+            <div className='header'>
             </div>
-            <div className='placeholder-section hide' ref='custom'>
-              Feature Coming Soon
+            <div className='placeholder-section message'>
+              Collections are created by users to group products they are interested in. They can even be shared or made public. Create one yourself!
             </div>
+            <div className='btn btn-round btn-grey-inverted' onClick={() => this.showCreateCollectionModal({products: [this.props.data]})}>
+              Create Collection
+            </div>
+            <div className='btn btn-round btn-grey-inverted' onClick={() => this.showAddToCollectionModal('', {mobile: false})}>
+              Add to existing collection
+            </div>
+            <CollectionsCollection
+              product={this.props.data}
+              emptyMessage='This product has not been added to any collections.' />
           </div>
-        </div>
+          <div
+            tabTitle='Custom Data'
+            className='placeholder-section'
+            ref='custom'>
+            Feature Coming Soon
+          </div>
+        </TabbedArea>
         {this.renderRelatedProducts()}
       </div>
     );

@@ -67,20 +67,6 @@ describe OmniauthCallbacksController do
       expect(user_oauth.last_login_hash).to be_eql(@oauth_hash)
     end
 
-    it 'creates a new user token' do
-      user = User.find_with_oauth(@oauth_hash.provider, @oauth_hash.uid)
-
-      expect(user.tokens.size).to be_eql(1)
-    end
-
-    it 'sets the auth_token' do
-      expect(cookies['auth_token']).not_to be_nil
-    end
-
-    it 'encodes the auth_token' do
-      expect(cookies['auth_token']).not_to be_eql(@oauth_hash.credentials.token)
-    end
-
     it { is_expected.to redirect_to app_path }
   end
 end

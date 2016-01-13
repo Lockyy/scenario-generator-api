@@ -1,14 +1,19 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def yammer
     result = Omniauth::Result.new(env['omniauth.auth'])
-    user = authenticate_user!(result)
 
-    if user.nil?
-      redirect_to root_url
+    if AllowedUser.whitelisted? result.email
+      user = authenticate_user!(result)
+
+      if user.nil?
+        redirect_to root_url
+      else
+        sign_in user
+        redirect_to stored_location_for(:user) || app_path
+      end
     else
-      generate_token!(user, result)
-      sign_in user
-      redirect_to stored_location_for(:user) || app_path
+      flash[:error] = 'This is a private instance of Fletcher, please contact ed.bialozewski@am.jll.com if you require access'
+      redirect_to root_path
     end
   end
 
@@ -29,12 +34,5 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
 
     user_auth.user
-  end
-
-  def generate_token!(user, result)
-    secret = Rails.application.secrets.secret_key_base
-    token = Fletcher::AuthToken.new(user, result.token, secret).create!
-    cookies['auth_token'] = { value: token.try(:encode!), expires: 24.hours.from_now }
-    token
   end
 end

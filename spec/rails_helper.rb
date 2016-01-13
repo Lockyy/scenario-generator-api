@@ -10,7 +10,6 @@ require 'capybara/poltergeist'
 require 'shoulda/matchers'
 require 'devise'
 
-
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
@@ -28,13 +27,11 @@ RSpec.configure do |config|
 
   #Turn off stupid js errors
   Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, {:debug => false} )
+    Capybara::Poltergeist::Driver.new(app, {:debug => false, :inspector => true} )
   end
 
   #User poltergeist headless
   Capybara.javascript_driver = :poltergeist
-
-
 
   # config taken directly from RSpec example in the DatabaseCleaner README
   config.before(:suite) do
@@ -50,6 +47,10 @@ RSpec.configure do |config|
 
   config.after(:each) do
     DatabaseCleaner.clean
+  end
+
+  config.after(:suite) do
+    ActiveRecord::Base.connection.execute("DEALLOCATE ALL")
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures

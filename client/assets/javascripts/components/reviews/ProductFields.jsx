@@ -41,11 +41,32 @@ const ProductFields  = React.createClass({
   _updateProductUrl: function _updateProductUrl(e) {
     let url = e.target.value;
     ReviewPageProductFieldsPageActions.updateProductUrl(url);
+    this.triggerValidation(e);
   },
 
   _updateProductDescription: function _updateProductUrl(e) {
     let description = e.target.value;
     ReviewPageProductFieldsPageActions.updateProductDescription(description);
+    this.triggerValidation(e);
+  },
+
+  triggerValidation: function triggerValidation(e) {
+    let target = $(e.target)
+    // Set timeout so validation runs after react.js refresh.
+    setTimeout(function() {
+      // Run validation
+      let validator = target.parents('.form.review.new').validator('validate');
+      // Clear errors from fields after the current one since validation should only
+      // appear on fields above the one clicked.
+      target.parents('.form-group').nextAll().children('.help-block.with-errors').empty();
+      let hasErrors = validator.has('.has-error').length;
+      // If there are any errors tell the user to go fill out the correct fields.
+      if (hasErrors) {
+        validator.find('.button-errors').html('Please fill out required fields.')
+      } else {
+        validator.find('.button-errors').html('')
+      }
+    }, 100);
   },
 
   _getNewProductFields: function _getNewProductFields() {
@@ -59,7 +80,7 @@ const ProductFields  = React.createClass({
         <input type='text' className='form-control' placeholder='www.' name='product[url]'
           pattern={RegexConstants.URL_PATTERN}
           title="Include a valid url" ref='product_url' value={this.props.url}
-          onChange={this._updateProductUrl} onKeyPress={this._onKeyPress} required/>
+          onChange={this._updateProductUrl} onKeyPress={this._onKeyPress} onBlur={this.triggerValidation} required/>
         <span className="help-block with-errors"></span>
       </div>
 
@@ -67,7 +88,7 @@ const ProductFields  = React.createClass({
         <label htmlFor='product[description]'>Description <span className='required'>*</span></label>
         <textarea type='text' className='form-control' placeholder='Write a brief description of the product'
           name='product[description]' rows='10' ref='product_description' value={this.props.description}
-          onChange={this._updateProductDescription} required/>
+          onChange={this._updateProductDescription} onBlur={this.triggerValidation} required/>
         <span className="help-block with-errors"></span>
       </div>
 
@@ -78,8 +99,8 @@ const ProductFields  = React.createClass({
     return (
       <div className='details'>
         <div className="header">
-          <h3 className='title'><Link to={`/app/products/${this.props.id}`}>{this.props.name}</Link></h3>
-          <h4 className='company'><Link to={`/app/companies/${this.props.company.id}`} >{this.props.company.name}</Link></h4>
+          <h3 className='title'><Link to={`/app/products/${this.props.id}/${this.props.slug}`}>{this.props.name}</Link></h3>
+          <h4 className='company'><Link to={`/app/companies/${this.props.company.id}/${this.props.company.slug}`} >{this.props.company.name}</Link></h4>
         </div>
 
         <Rating value={this.props.rating} name='rating'/>

@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Fletcher</title>
-<%= stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track' => true %>
-<%= csrf_meta_tags %>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body class="app <%= params[:action] %>">
+  <head>
+    <title>Fletcher</title>
+    <%= stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+    <%= render 'layouts/favicon' %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  </head>
+  <body class="app <%= params[:action] %> <%= theme_class %>">
+    <div id="loading-bar">
+      <div class="bar"></div>
+    </div>
+    <div id="wrapper">
 
-<%= render 'app/header' %>
+      <%= render 'app/header' %>
 
-<%= render 'app/menu' %>
+      <%= yield %>
 
-<%= yield %>
+      <div id='notifications'></div>
+      <div id='modals'></div>
 
-<%= javascript_include_tag 'app', 'data-turbolinks-track' => true %>
-</body>
+      <%= javascript_include_tag 'app', 'data-turbolinks-track' => true %>
+
+      <div id="analytics"></div>
+
+    </div>
+
+    <footer id='footer'></footer>
+  </body>
 </html>

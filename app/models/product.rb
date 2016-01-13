@@ -2,19 +2,25 @@ gem 'faker'
 
 class Product < ActiveRecord::Base
   extend FriendlyId
-  friendly_id :name, use: :slugged
+  friendly_id :name, use: [:slugged, :history]
 
   belongs_to :company
+  belongs_to :user
+  counter_culture :user, :column_name => "total_products"
+
+  has_one :notification, as: :notification_subject
   has_many :reviews
   has_many :custom_attachments, as: :attachable, source: :attachments, class_name: 'Attachment'
   has_many :attachments, through: :reviews, source: :attachments
   has_many :reviews_images, -> { with_images }, through: :reviews, source: :attachments
   has_many :links, through: :reviews
   has_many :tags, through: :reviews
+  has_many :related_products, through: :tags, source: :products
   has_many :bookmarks
+  has_many :collection_products, dependent: :destroy
+  has_many :collections, through: :collection_products
 
   has_one :default_image, class_name: 'Attachment'
-  belongs_to :user
 
   include SearchableByNameAndDescription
   include SearchableByTag
@@ -22,9 +28,13 @@ class Product < ActiveRecord::Base
   accepts_nested_attributes_for :reviews
   accepts_nested_attributes_for :custom_attachments
 
+  default_scope { includes(:reviews) }
+
   validates :name, presence: true, uniqueness: { scope: :company_id, case_sensitive: false }
   validates :description, presence: true
   validates :company, presence: true
+
+  before_save :cache_scores
 
   scope :alphabetical, -> do
     order('name asc')
@@ -43,7 +53,7 @@ class Product < ActiveRecord::Base
   end
 
   scope :with_tags, ->(tags_names) do
-    joins(:tags).where('tags.name in (?)', tags_names)
+    joins(:tags).where('tags.name in (?)', tags_names).uniq
   end
 
   scope :rating, -> rating_order do
@@ -91,16 +101,19 @@ products.url, company_id, products.views, products.created_at, products.updated_
     image.try(:url)
   end
 
-  def total_reviews
-    reviews.size
+  def cache_scores
+    average_quality = self.reviews.map(&:quality_score).compact.average
+    average_price = self.reviews.map(&:price_score).compact.average
+    self.quality_score_cache = average_quality.nan? ? 0 : average_quality
+    self.price_score_cache = average_price.nan? ? 0 : average_price
   end
 
   def rating
-    self.reviews.map(&:quality_score).compact.average || 0
+    quality_score_cache
   end
 
   def price
-    self.reviews.map(&:price_score).compact.average || 0
+    price_score_cache
   end
 
   def author
@@ -109,11 +122,6 @@ products.url, company_id, products.views, products.created_at, products.updated_
 
   def short_desc
     description.split[0...9].join(' ') if description
-  end
-
-  def increment_views!
-    self.views = self.views + 1
-    self.save
   end
 
   def reviewed_by_user?(user)
@@ -125,7 +133,6 @@ products.url, company_id, products.views, products.created_at, products.updated_
   end
 
   def related(quantity)
-    product_ids = tags.map(&:products).flatten.map(&:id).uniq - [self.id]
-    Product.where(id: product_ids).sample(quantity)
+    related_products.where.not(id: self.id).sample(quantity)
   end
 end

@@ -25,11 +25,14 @@ module Api
     # POST /reviews
     # POST /reviews.json
     def create
-      review = Fletcher::NewReview.new(@user, @product, create_params)
+      review = Fletcher::NewReview.new(current_user, @product, create_params)
 
       respond_to do |format|
         if (review.save!)
           @review = review.review
+          product = review.product
+          message = "A new review was created for the product '#{product.name}' with the title '#{@review.title}' you can see it at: #{request.base_url}/app/products/#{product.id}/#{product.slug}"
+          Slacked.post_async(message)
           format.json { render :show, status: :created, location: api_review_url(@review) }
         else
           format.json { render json: review.errors, status: :unprocessable_entity }
@@ -40,7 +43,7 @@ module Api
     # PATCH/PUT /reviews/1
     # PATCH/PUT /reviews/1.json
     def update
-      @review = @user.reviews.find(params[:id])
+      @review = current_user.reviews.find(params[:id])
       review = Fletcher::UpdateReview.new(@review, review_params)
 
       respond_to do |format|
@@ -77,26 +80,26 @@ module Api
       params[:review].permit(
           :id, :quality_score, :quality_review, :title, :price_review, :price_score,
           :attachable_id, :attachable_type,
-          { attachments: [:name, :url, :content_type, :size, :id] },
-          { links: [:url, :id] },
-          { tags: [:name, :id] },
-          { product: [:id, :name, { company: [:name, :id] }, :url, :description] }
+          {attachments: [:name, :url, :content_type, :size, :id]},
+          {links: [:url, :id]},
+          {tags: [:name, :id]},
+          {product: [:id, :name, {company: [:name, :id]}, :url, :description]}
       )
     end
 
     def create_params
       params[:review].permit(
-        :id, :quality_score, :quality_review, :title, :price_review, :price_score,
-        :attachable_id, :attachable_type,
-        { attachments: [:name, :url, :content_type, :size, :id] },
-        { links: [:url, :id] },
-        { tags: [:name, :id] },
-        { product: [:id, :name, :url, :description,
-          { company: [:name, :id, :tags, :url, :description,
-            { tags: [:name, :id] },
-            { avatar: [:name, :url, :content_type, :size] }]
-          }]
-        }
+          :id, :quality_score, :quality_review, :title, :price_review, :price_score,
+          :attachable_id, :attachable_type,
+          {attachments: [:name, :url, :content_type, :size, :id]},
+          {links: [:url, :id]},
+          {tags: [:name, :id]},
+          {product: [:id, :name, :url, :description,
+                     {company: [:name, :id, :tags, :url, :description,
+                                {tags: [:name, :id]},
+                                {avatar: [:name, :url, :content_type, :size]}]
+                     }]
+          }
       )
     end
   end

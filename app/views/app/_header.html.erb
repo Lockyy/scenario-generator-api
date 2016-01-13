@@ -1,6 +1,9 @@
 <nav class="navbar navbar-default">
   <div class="container">
-    <%= link_to image_tag('logos/logo-white-2.svg'), '/app', class: 'brand' %>
+    <div class="brand">
+      <%= link_to image_tag('logos/logo-white-2.svg'), '/app' %>
+      <%= link_to image_tag('logos/logo-white-2-internal.svg'), '/app', class: 'internal-only' %>
+    </div>
 
     <div class="search-container"></div>
 
@@ -12,7 +15,29 @@
       <li class="toggle-search">
         <%= link_to image_tag('icons/icon-search-white.svg', width: '30px'), '/app/search',class: 'hidden-md hidden-lg' %>
       </li>
-      <li class="show-hamburger-menu text-hide"><%= link_to 'Menu', '#' %></li>
+      <div id="hamburger-menu"></div>
     </ul>
   </div>
 </nav>
+
+<% if theme_class == 'internal' || flash[:error] %>
+  <div class="flash">
+
+    <% if flash[:error] %>
+      <div class='message'>
+        <%= image_tag "icons/warning-orange.svg", alt:"Internal warning icon" %>
+        <%= flash[:error] %>
+      </div>
+    <% end %>
+
+    <div class="internal-only">
+      <%= image_tag "icons/warning.svg", alt:"Internal warning icon" %>
+      <div class="hidden-xs hidden-sm">
+        This is a private instance of Fletcher for the Internal IT team. Reviews, products and companies submitted in this platform will not be accessible to the public.
+      </div>
+      <div class="visible-xs visible-sm">
+        This is a private instance of Fletcher. Anything submitted in this platform will not be accessible to the public.
+      </div>
+    </div>
+  </div>
+<% end %>

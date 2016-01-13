@@ -5,7 +5,7 @@ function _setBackgroundImage() {
   let picture = $(component).find('img');
 
   picture.hide();
-  component.css('background-image', `url(${picture.attr('src')})`);
+  component.children().css('background-image', `url(${picture.attr('src')})`);
 }
 
 class AutoFitPicture extends React.Component {
@@ -18,23 +18,52 @@ class AutoFitPicture extends React.Component {
   }
 
   render() {
+    let backgroundContainerStyle = this.props.backgroundContainerStyle;
     let containerStyle = this.props.containerStyle;
     let containerClasses = `.autofit-picture-container ${this.props.containerClass}`;
     let img = <img src={this.props.src}/>;
 
-    return (<div className={containerClasses} style={containerStyle}>
-      {img}
-    </div>);
+    return (
+      <div className={containerClasses}>
+        <div style={backgroundContainerStyle}>
+          {img}
+        </div>
+        <div style={containerStyle}>
+          {img}
+        </div>
+      </div>
+    );
   }
 }
 
 AutoFitPicture.displayName = 'AutoFitPicture';
 
 AutoFitPicture.defaultProps = {
-  containerStyle: {
+  backgroundContainerStyle: {
     overflow: 'hidden',
     backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat'
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    '-webkit-filter': 'blur(7px)',
+    '-moz-filter': 'blur(7px)',
+    '-o-filter': 'blur(7px)',
+    '-ms-filter': 'blur(7px)',
+    'filter': 'blur(7px)',
+    width: '100%',
+    height: '100%',
+    opacity: '0.5'
+  },
+
+  containerStyle: {
+    overflow: 'hidden',
+    backgroundSize: 'contain',
+    backgroundRepeat: 'no-repeat',
+    backgroundPosition: 'center',
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    top: '0px',
+    left: '0px'
   }
 };
 

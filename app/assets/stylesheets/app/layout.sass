@@ -1,7 +1,17 @@
+body.no-scroll
+  max-height: 100%
+  overflow: hidden
+
+@media only screen and (max-width: 768px)
+  body.no-scroll
+    position: fixed
+    .navbar
+      margin-top: 0px !important
+
 html, body.app
   height: 100%
 
-  & > .container
+  & #wrapper > .container
     padding-left: 0
     padding-right: 0
 
@@ -9,8 +19,12 @@ html, body.app
 /* Custom, iPhone Retina */
 @media only screen and (min-width : 320px)
   body.app
-    & > .container
+    & #wrapper > .container
       width: 100%
+
+// Extra Small Devices, Phones
+@media only screen and (min-width : 480px)
+
 
 // Extra Small Devices, Phones
 @media only screen and (min-width : 480px)
@@ -18,24 +32,24 @@ html, body.app
 // Small Devices, Tablets
 @media only screen and (min-width : 768px)
   body.app
-    & > .container
+    & #wrapper > .container
       width: 750px
 
 // Medium Devices, Desktop
 @media only screen and (min-width : 992px)
   body.app
-    & > .container
+    & #wrapper > .container
       width: 980px
 
 // Large Devices, Wide Screens
 @media only screen and (min-width : 1200px)
   body.app
-    & > .container
+    & #wrapper > .container
       width: 1200px
 
 @media (min-width: 1330px)
   body.app
-    & > .container
+    & #wrapper > .container
       width: 1300px
 
 a, a:link, a:hover, a:visited, a:active

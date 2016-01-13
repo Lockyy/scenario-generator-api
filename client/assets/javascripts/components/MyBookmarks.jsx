@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Link, Navigation } from 'react-router';
+import { Navigation } from 'react-router';
 import ProductBox from './ProductBox'
 
 const MyBookmarks = React.createClass ({
@@ -35,7 +35,7 @@ const MyBookmarks = React.createClass ({
   },
 
   render: function() {
-    let details = <div className={`message ${this.props.messageClass}`}>{this.props.message}</div>;
+    let details = <div className='placeholder-message'>{this.props.message}</div>;
     let _this = this
 
     return (

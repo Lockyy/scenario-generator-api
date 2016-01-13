@@ -1,0 +1,32 @@
+<%= provide :header, 'dark' %>
+
+<div class="contact-form">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="title"><%= @title %></div>
+      <div class="text">Completing this form will send an email to</div>
+      <div class="email"><%= link_to SUPPORT_EMAIL, "mailto:#{SUPPORT_EMAIL}" %></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-8 col-xs-offset-2 col-sm-4 col-sm-offset-4">
+      <%= form_tag support_path do %>
+        <%= label_tag 'Full name*' %>
+        <%= text_field 'contact', 'name', class: 'form-control', required: true %>
+        <%= label_tag 'Department*' %>
+        <%= text_field 'contact', 'department', class: 'form-control', required: true %>
+        <%= label_tag 'Email Address*' %>
+        <%= text_field 'contact', 'email', class: 'form-control', required: true %>
+        <%= label_tag 'Enquiry*' %>
+        <%= text_area 'contact', 'enquiry', class: 'form-control', required: true %>
+        <div class="row">
+          <div class="col-xs-6 col-xs-offset-3">
+            <%= button_tag 'Send', class: 'btn btn-red' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render 'site/footer' %>

@@ -57,8 +57,8 @@ class BasedOnTagsSection extends React.Component {
       row.push(products.shift());
     }
 
-    return sectionRows.map(function mapRows(sectionRow) {
-      return (<SectionRow items={sectionRow}/>);
+    return sectionRows.map(function mapRows(sectionRow, index) {
+      return (<SectionRow key={`based_on_tags_row_${index}`} items={sectionRow}/>);
     });
   }
 
@@ -81,8 +81,11 @@ class BasedOnTagsSection extends React.Component {
       _.each(products, function(product) {
         let tag = _.sample(product.user_tags);
 
-        items.push(<ProductBox size={_this.getCurrentBoxSize(items, product)}
-          onCustomizeDetail={_this.getCustomizeProductBoxDetailFn(tag)} {...product} />);
+        items.push(<ProductBox
+                    key={`based_on_tags_product_box_${product.id}`}
+                    size={_this.getCurrentBoxSize(items, product)}
+                    onCustomizeDetail={_this.getCustomizeProductBoxDetailFn(tag)}
+                    {...product} />);
       });
     });
 
@@ -113,7 +116,7 @@ BasedOnTagsSection.defaultProps = {
 
 BasedOnTagsSection.propTypes = {
   cols: React.PropTypes.number.isRequired,
-  items: React.PropTypes.array.isRequired,
+  items: React.PropTypes.object.isRequired,
   title: React.PropTypes.string.isRequired,
   itemsClass: React.PropTypes.string
 };

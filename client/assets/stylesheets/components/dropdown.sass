@@ -1,0 +1,115 @@
+@import "common/variables"
+
+.dropdown-container
+  color: #333333
+  font-size: 14px
+  display: inline-block
+  position: relative
+  &.with-images
+    img
+      display: none
+
+  &:not(.no-arrow)::before
+    content: '.'
+    pointer-events: none
+    color: transparent
+    display: block
+    background: url('icons/grey-arrow.svg') center no-repeat
+    width: 15px
+    height: 15px
+    transform: rotate(90deg)
+    position: absolute
+    top: 8px
+    left: 5px
+    z-index: 99
+  .dropdown-label
+    margin-right: 20px
+
+  .dropdown-links
+    width: 200px
+    border: 1px solid $grey
+    display: inline-block
+    position: relative
+    &.red
+      border: 1px solid $primary-red
+      .dropdown
+        border: 1px solid $primary-red
+        border-top: none
+    .dropdown
+      display: none
+      width: 200px
+      position: absolute
+      left: -1px
+      border: 1px solid $grey
+      border-top: none
+    .dropdown-link
+      z-index: 99
+    .active-dropdown-link
+      z-index: 98
+    .dropdown-link, .active-dropdown-link
+      position: relative
+      background: white
+      padding: 5px 25px 5px 25px
+      cursor: pointer
+    &.active
+      border-bottom: 1px solid white
+      .dropdown
+        display: block
+    &.small
+      font-size: 12px
+      width: 100px
+      .dropdown
+        width: 100px
+
+
+@media (max-width: $screen-sm)
+  .dropdown-container
+    &.with-images
+      img
+        display: inline-block
+      &.closed
+        max-width: 85px
+        overflow: hidden
+        .dropdown-links
+          width: unset
+          .active-dropdown-link-with-image
+            .dropdown-text
+              display: none
+
+      &::before
+        content: ''
+        width: 0
+        height: 0
+      &::after
+        content: "."
+        pointer-events: none
+        color: transparent
+        display: block
+        width: 15px
+        height: 15px
+        position: absolute
+        top: 22px
+        right: 10px
+        background: url("icons/dropdown-arrow.svg") center no-repeat
+        z-index: 99
+
+      .dropdown-links
+        .active-dropdown-link-with-image
+          padding-left: 15px
+          img
+            width: 45px
+
+          &.closed
+            width: 100px
+
+        .dropdown-link-with-image
+          padding-left: 15px
+
+          img
+            width: 35px
+            height: 35px
+
+        .active-dropdown-link-with-image,.dropdown-link-with-image
+          .dropdown-text
+            color: grey
+            padding-right: 0

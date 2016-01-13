@@ -4,6 +4,9 @@ import { Link } from 'react-router';
 import Rating from '../Rating';
 import SearchConstants from '../../utils/constants/SearchConstants';
 import Dropdown from '../Dropdown';
+import Avatar from '../Avatar';
+import AutoFitPicture from '../AutoFitPicture';
+import DropdownConstants from '../../utils/constants/DropdownConstants';
 
 const Results = React.createClass ({
 
@@ -13,10 +16,27 @@ const Results = React.createClass ({
     return { data: [] }
   },
 
+  getDefaultProps: function() {
+    return {
+      data: {
+        total: 0,
+        data: []
+      }
+    }
+  },
+
+  contextTypes: {
+    router: React.PropTypes.object
+  },
+
   getMaxDisplayedData: function() {
     let data = this.props.data.data;
     let dataMax = data ? data.length : 0;
     return Math.min(dataMax, (this.props.per_page || SearchConstants.PER_PAGE))
+  },
+
+  totalElements: function() {
+    return this.props.data.total
   },
 
   renderCompany: function(result) {
@@ -26,18 +46,37 @@ const Results = React.createClass ({
           <div className='col-xs-12'>
             {
               _.isEmpty(result.image) ? '' : (
-                <div className='picture'>
-                  <img href={result.image} className='picture' />
-                </div>
+                <AutoFitPicture src={result.image} containerClass='picture'/>
               )
             }
             <div className='name'>
-              <a href={`/app/${this.props.type}/${result.id}`}>
+              <a href={`/app/companies/${result.id}/${result.slug}`}>
                 { result.name }
               </a>
             </div>
             <div className='description'>
               { result.short_desc }
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  },
+
+  renderCollection: function(result) {
+    let url = '/app/collections/'+result.id;
+    return (
+      <div className='result'>
+        <div className='row'>
+          <div className='col-xs-12'>
+            <div className='name'>
+              <a href={url}  onClick={this.props.onClick}>
+                { result.name }
+              </a>
+            </div>
+            <div className='small-text'>
+              Created by <Link  className='link'
+                                to={`/app/users/${result.user.id}`}>{result.user.name}</Link> {result.display_date}
             </div>
           </div>
         </div>
@@ -52,9 +91,7 @@ const Results = React.createClass ({
   renderImage: function(result) {
     if(this.showImageForProduct(result)) {
       return (
-        <div className='image-container col-xs-5'>
-          <img src={result.image} />
-        </div>
+        <AutoFitPicture src={result.image} containerClass='image-container col-xs-5'/>
       )
     }
   },
@@ -73,12 +110,12 @@ const Results = React.createClass ({
           { this.renderImage(result) }
           <div className={ this.productContentClass(result) }>
             <div className='name'>
-              <a href={`/app/${this.props.type}/${result.id}`}>
+              <a href={`/app/products/${result.id}/${result.slug}`}>
                 { result.name }
               </a>
             </div>
             <div className='company'>
-              <a href={`/app/company/${result.company.id}`}>
+              <a href={`/app/companies/${result.company.id}/${result.company.slug}`}>
                 { result.company.name }
               </a>
             </div>
@@ -92,13 +129,144 @@ const Results = React.createClass ({
     )
   },
 
-  getRenderResultFunction: function(result) {
+  renderUser: function(result) {
+    if(result) {
+      return (
+        <div className='result user row'>
+          <div className='col-xs-2'>
+            <Avatar
+              user={result}
+              disableHover={true}
+              disableLink={true}
+              styles={{backgroundColor: 'white'}} />
+          </div>
+          <div className='col-xs-7'>
+            <div className='name'>
+              { result.name }
+            </div>
+          </div>
+          {
+            this.props.onRemove ? (
+              <div className='col-xs-2'>
+                <div className='remove-button' onClick={() => this.props.onRemove(result.id)}>
+                  Remove
+                </div>
+              </div>
+            ) : null
+          }
+        </div>
+      )
+    }
+  },
+
+  renderShareeUser: function(result) {
+    if(result) {
+      return (
+        <div className='result user sharee'>
+          <div className='info'>
+            <Avatar
+              user={result}
+              disableHover={true}
+              disableLink={true}
+              styles={{backgroundColor: 'white'}} />
+            <span>
+              <div className='name'>
+                { result.name }
+              </div>
+              {
+                this.props.onRemove ? (
+                  <div className='remove-button' onClick={() => this.props.onRemove(result.id)}>
+                    Remove
+                  </div>
+                ) : null
+              }
+            </span>
+          </div>
+          <Dropdown
+            onClick={(rank) => this.props.onUpdate(result.id, rank)}
+            active={result.rank}
+            showText={false}
+            native={false}
+            with_images={true}
+            options={DropdownConstants.shareOptions} />
+        </div>
+      )
+    }
+  },
+
+  renderShareeEmail: function(result) {
+    if(result) {
+      return (
+        <div className='result email sharee'>
+          <div className='name'>
+            { result.email }
+            { this.props.onRemove ? (
+                <span className='remove-button' onClick={() => this.props.onRemove(result.email)}></span>
+              ) : null }
+          </div>
+          <Dropdown
+            onClick={(rank) => this.props.onUpdate(result.email, rank)}
+            active={result.rank}
+            showText={false}
+            native={false}
+            with_images={true}
+            options={DropdownConstants.shareOptions} />
+        </div>
+      )
+    }
+  },
+
+  renderCollectionProduct: function(result) {
+    return (
+      <div className='result collection-product'>
+        <div className='row'>
+          <div className={ this.productContentClass(result) }>
+            <div className='name'>
+              { result.name }
+            </div>
+
+            <div className='review'>
+              <Rating
+                value={result.rating}
+                name='rating' />
+              <span className='reviews'>/ {result.reviews.length} review(s)</span>
+            </div>
+
+            {
+              this.props.onRemove ? (
+                <div className='remove' onClick={() => this.props.onRemove(result.id)}>
+                  Remove
+                </div>
+              ) : null
+            }
+          </div>
+        </div>
+      </div>
+    )
+  },
+
+  getRenderResultFunction: function() {
     switch(this.props.type) {
       case 'companies':
         return this.renderCompany
         break;
       case 'products':
         return this.renderProduct
+        break;
+      case 'collection-product':
+        return this.renderCollectionProduct
+        break;
+      case 'collections':
+        return this.renderCollection
+        break;
+      case 'users':
+        return this.renderUser
+        break;
+      case 'sharee-users':
+        return this.renderShareeUser
+        break;
+      case 'sharee-emails':
+        return this.renderShareeEmail
         break;
     }
   },
@@ -120,6 +288,8 @@ const Results = React.createClass ({
       }
 
       return <div className={this.props.type}>{resultTags}</div>;
+    } else {
+      return <div>{this.props.noResults}</div>
     }
   },
 
@@ -128,7 +298,7 @@ const Results = React.createClass ({
 
     return (
       <div className='show-more'>
-        <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='btn btn-grey btn-round'>
+        <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`} className='btn btn-grey-inverted btn-round'>
           Show More
         </a>
       </div>
@@ -208,61 +378,57 @@ const Results = React.createClass ({
     let query = { sorting: {}, match_mode: {} }
     query.sorting[this.props.type] = sortDescription
     query.match_mode[this.props.type] = match_mode
-    this.props.onSetQuery(query)
+    this.props.onChangeSort(query)
   },
 
   getCountResultsMessage: function(className) {
-    let total = this.props.data.total;
-    return (
-      <div className={className ? className : ''}>
-        { total ? total : 'No'  } result{total > 1 || total == 0 ? 's' : ''} found
-      </div>);
-  },
-
-  dropdownOptions: function() {
-    return this.props.dropdownOptions || {
-      relevance: 'Relevance',
-      latest: 'Latest',
-      high_to_low: 'Rating High to Low',
-      low_to_high: 'Rating Low to High',
-      alphabetical_order: 'Alphabetical order',
+    if(this.props.data) {
+      let total = this.totalElements();
+      return (
+        <div className={className ? className : ''}>
+          { total ? total : 'No'  } result{total > 1 || total == 0 ? 's' : ''} found
+        </div>);
     }
   },
 
+  dropdownOptions: function() {
+    return this.props.dropdownOptions || DropdownConstants.genericSortOptions
+  },
+
   renderTopRight: function() {
+    let closeMethod = this.props.close ? this.props.close: function(){} ;
     switch(this.props.topRight) {
       case 'link':
-        if(this.props.data.total > 0) {
+        if(this.totalElements() > 0) {
           return (
-            <div className='top-right'>
-              <a href={`/app/search/${this.props.type}/${this.props.searchTerm}/1`}>More</a>
-            </div>
-          )
+            <Link onClick={closeMethod} className='top-right' to={`/app/search/${this.props.type}/${this.props.searchTerm}/1`}>
+              View all matching {this.props.type} ({this.totalElements()})
+            </Link>
+          );
         }
       case 'dropdown':
-        if(this.props.data.total > 0) {
+        if(this.totalElements() > 0) {
           return(
             <div className='top-right'>
               <Dropdown
                 onClick={this.addSortParam}
                 active={this.props.sorting}
-                options={this.dropdownOptions()}
-                containerClass={'red'} />
+                options={this.dropdownOptions()} />
               </div>
           )
         }
       case 'count':
-        if(this.getMaxDisplayedData() < this.props.data.total) {
+        if(this.getMaxDisplayedData() < this.totalElements()) {
           return (
             <div className='top-right'>
-                <span> Showing <span className='value'>{ this.getMaxDisplayedData() }</span> of <span className='value'>{this.props.data.total}</span> results found </span>
+                <span> Showing <span className='value'>{ this.getMaxDisplayedData() }</span> of <span className='value'>{this.totalElements()}</span> results found </span>
             </div>
           )
         }
       case 'size':
         return (
           <div className='top-right'>
-            { this.props.data.total } result(s) found
+            { this.totalElements() } result{this.totalElements() == 1 ? '' : 's'} found
           </div>
         )
         break;
@@ -275,14 +441,14 @@ const Results = React.createClass ({
         return this.getCountResultsMessage('top-left');
         break;
       case 'type':
-        return <div className='top-left'>{ this.props.type }</div>
+        return <div className='top-left titlecase'>{ this.props.type }</div>
         break;
     }
   },
 
   renderTop: function() {
     return (
-      <div className='top'>
+      <div className={`top ${this.props.topClass}`}>
         { this.renderTopLeft() }
         { this.renderTopRight() }
       </div>
@@ -300,12 +466,23 @@ const Results = React.createClass ({
     }
   },
 
+  renderBottomLink: function() {
+    if(this.props.bottomLink && this.props.linkText) {
+      return (
+        <Link to={this.props.bottomLink} className='small-text right vertical-padding'>
+          {this.props.linkText}
+        </Link>
+      )
+    }
+  },
+
   render: function() {
     return (
-      <div className={`results ${this.props.containerClass || ''}`}>
+      <div className={`results ${this.props.className || ''}`}>
         { this.renderTop() }
         { this.renderResults() }
         { this.renderBottom() }
+        { this.renderBottomLink() }
       </div>
     )
   }

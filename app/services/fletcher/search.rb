@@ -4,7 +4,8 @@ module Fletcher
     MAX_PER_PAGE = 100
     DEFAULT_PAGE = 1
 
-    def initialize(params)
+    def initialize(params, user)
+      @user = user
       @params = default_params.merge(params).with_indifferent_access
       @terms = get_terms
       @page = @params[:page]
@@ -13,8 +14,8 @@ module Fletcher
       @filter_tags = filtered_tags(@params[:filtered_tags])
       @products = products(@terms)
       @companies = companies(@terms)
+      @collections = collections(@terms)
       @tags = tags(@terms)
-      @related_tags = related_tags
     end
 
     def results
@@ -23,20 +24,33 @@ module Fletcher
           page: @page,
           per_page: @per_page,
           sorting: {
-            companies:  @params[:sorting][:companies],
-            products:   @params[:sorting][:products],
-            tags:       @params[:sorting][:tags],
+            companies: @params[:sorting][:companies],
+            products: @params[:sorting][:products],
+            tags: @params[:sorting][:tags],
+            collections: @params[:sorting][:collections],
           },
           match_mode: {
-            companies:  @params[:match_mode][:companies],
-            products:   @params[:match_mode][:products],
-            tags:       @params[:match_mode][:tags],
+            companies: @params[:match_mode][:companies],
+            products: @params[:match_mode][:products],
+            tags: @params[:match_mode][:tags],
+            collections: @params[:match_mode][:collections],
           },
           companies: data_hash(@companies),
           products: data_hash(@products),
+          collections: data_hash(@collections),
           related_tags: {
-              total: @related_tags.size,
-              data: @related_tags
+            companies: {
+              total: @companies_related_tags.size,
+              data: @companies_related_tags
+            },
+            products: {
+              total: @products_related_tags.size,
+              data: @products_related_tags
+            },
+            collections: {
+              total: @collections_related_tags.size,
+              data: @collections_related_tags
+            }
           },
           tags: {
               total: @tags.size,
@@ -55,17 +69,19 @@ module Fletcher
 
     def default_params
       {
-        filter_by: '',
+        filter_by: 'name',
         filter_by_tags: [],
         sorting: {
-          companies:  :relevance,
-          products:   :relevance,
-          tags:       :alphabetical_order,
+          companies: :relevance,
+          products: :relevance,
+          collections: :relevance,
+          tags: :alphabetical_order,
         },
         match_mode: {
-          companies:  'all',
-          products:   'all',
-          tags:       'all',
+          companies: 'all',
+          products: 'all',
+          collections: 'all',
+          tags: 'all',
         },
         search_string: '',
         page: DEFAULT_PAGE,
@@ -85,8 +101,7 @@ module Fletcher
     end
 
     def total_results results
-      return 0 if @params[:search_string].blank?
-      [:companies, :tags, :products].inject(0) { |sum, type| sum + results[type][:total] }
+      [:companies, :tags, :products, :collections].inject(0) { |sum, type| sum + results[type][:total] }
     end
 
     def data_hash(data)
@@ -94,7 +109,7 @@ module Fletcher
     end
 
     def build_data_hash(data, data_size)
-      return default_data_hash if @params[:search_string].blank?
+      return default_data_hash if data.size == 0
       paginated_data = paginate(data)
       {
           total: data_size,
@@ -121,23 +136,15 @@ module Fletcher
       search_products.results
     end
 
+    def collections(terms)
+      search_collections = SearchCollections.new(@params[:filter_by], terms, @params[:sorting][:collections], @filter_tags, @params[:match_mode][:collections] || 'all')
+      @collections_related_tags = search_collections.related_tags
+      search_collections.results.visible(@user)
+    end
+
     def tags(terms)
       return [] if @params[:search_string].blank?
       SearchTags.new(@params[:filter_by], terms, @params[:sorting][:tags], @filter_tags, @params[:match_mode][:tags]).results
-    end
-
-    def related_tags
-      section = @params[:section]
-
-      if section == 'products'
-        @products_related_tags
-      elsif section == 'companies'
-        @companies_related_tags
-      elsif section == 'tags' || @params[:search_string].blank?
-        []
-      else
-        ((@products_related_tags || []) + (@companies_related_tags || [])).uniq
-      end
     end
 
     def filtered_tags(filtered_tags)

@@ -5,6 +5,8 @@ import  ProductFields from './ProductFields'
 import  ReviewFields from './ReviewFields'
 import  FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import  ReviewPageStore from '../../stores/ReviewPageStore'
+import  FluxNotificationsActions from '../../actions/FluxNotificationsActions'
+import  FluxAlertActions from '../../actions/FluxAlertActions'
 
 const NewReviewPage  = React.createClass({
   displayName: 'NewReviewPage',
@@ -80,7 +82,7 @@ const NewReviewPage  = React.createClass({
     let reviewID = this._getCurrentUserReviewId();
 
     if(reviewID && params.reviewId != reviewID) {
-      this.context.router.transitionTo(`/app/products/${this._getProductId()}/reviews/${reviewID}`);
+      this.context.router.transitionTo(`/app/products/${this._getProductId()}/${this._getProductData().slug}/reviews/${reviewID}`);
       this._fetchReview(this._getProductId(), reviewID);
     }
   },
@@ -123,7 +125,11 @@ const NewReviewPage  = React.createClass({
 
     FluxReviewPageActions.submitReview(review,
       function(data) {
-        _this.context.router.transitionTo(`/app/products/${data.product.id}`)
+        _this.context.router.transitionTo(`/app/products/${data.product.id}/${data.product.slug}`)
+        FluxNotificationsActions.showNotification({
+          type: 'saved',
+          subject: _.merge(data.product, {type: 'review'})
+        })
       },
       function(error) {
         console.error(error)
@@ -132,8 +138,25 @@ const NewReviewPage  = React.createClass({
   },
 
   _onCancel: function _onCancel(e) {
-    if (!window.confirm('Are you sure you want to cancel?')) {
-      e.preventDefault()
+    let _this = this
+    FluxAlertActions.showAlert({
+      title: 'Cancel review?',
+      success: 'Yes, Cancel Review',
+      cancel:  'No, Continue Review',
+      successCallback: function() {_this.context.router.transitionTo('/app')},
+      cancelCallback: function() {},
+    })
+  },
+
+  renderErrors: function renderErrors() {
+    if(this.state.error && this.state.error.responseJSON) {
+      return (
+        <ul>
+          {_.map(this.state.error.responseJSON.product, function(value, key) {
+            return <li>{value}</li>
+          })}
+        </ul>
+      )
     }
   },
 
@@ -141,12 +164,19 @@ const NewReviewPage  = React.createClass({
     let submitText = `${this.state.mode} Review`;
 
     if (this.state.showDetails) {
-      return (<div className='actions'>
-        <Link to={'/app'} onClick={this._onCancel}>
-          <button type='button' className='btn btn-default btn-round'>Cancel</button>
-        </Link>
-        <input type='submit' className='btn btn-default submit btn-round' value={submitText} />
-      </div>);
+      return (
+        <div>
+          <div className='button-errors help-block'>
+          </div>
+          <div className='submission-errors help-block'>
+            {this.renderErrors()}
+          </div>
+          <div className='actions'>
+            <button type='button' className='btn btn-default btn-round' onClick={this._onCancel}>Cancel</button>
+            <input type='submit' className='btn btn-default submit btn-round' value={submitText} />
+          </div>
+        </div>
+      );
     } else {
       return (<div />);
     }
@@ -155,8 +185,7 @@ const NewReviewPage  = React.createClass({
   render: function render() {
     let info = (<div className='info'>
       <div className='instructions'>
-        If you can't find a product, please select the Add and Review <i className='add-symbol'></i> option from the drop down.
-        This will add the product to the directory when you've reviewed it.
+        If you can’t find the product you are looking for, click <i className='add-symbol'></i> to quickly add it to Fletcher <span className='internal-only'>Internal IT</span> and then rate and review.
       </div>
     </div>);
 

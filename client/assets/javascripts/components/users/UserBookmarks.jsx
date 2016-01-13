@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Link, Navigation } from 'react-router';
+import { Navigation } from 'react-router';
 import MyBookmarks from '../MyBookmarks'
 import FluxBookmarkActions from '../../actions/FluxBookmarkActions'
 import BookmarkStore from '../../stores/BookmarkStore'
@@ -8,6 +8,10 @@ import BookmarkStore from '../../stores/BookmarkStore'
 const UserBookmarks = React.createClass ({
   mixins: [ Navigation ],
   displayName: 'UserBookmarks',
+
+  contextTypes: {
+    router: React.PropTypes.object
+  },
 
   getInitialState: function() {
     return {
@@ -35,6 +39,7 @@ const UserBookmarks = React.createClass ({
 
   render: function() {
     return <MyBookmarks products={this.state.products}
+                        router={this.context.router}
                         {...this.props} />
   }
 })

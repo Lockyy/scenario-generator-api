@@ -4,37 +4,76 @@
   letter-spacing: 0.125em
   text-transform: uppercase
   outline: none !important
-
-  &.btn-grey
-    background: $dark-grey
-    border: 2px solid $dark-grey
-    color: white
-    &:hover, &:active, &:focus
-      text-decoration: none
-      background: $dark-grey
-      color: white
+  font-size: 9px
+  line-height: 17px
+  transition: 0.5s
+  padding: 9px 31px
+  font-weight: bold
 
   &.btn-red
     background: $primary-red
     border: 2px solid $primary-red
     color: white
-    &:hover, &:active, &:focus
+    &:hover, &:active
       color: $primary-red
+      background: transparent
+
+  &.btn-red-inverted
+    background: transparent
+    border: 2px solid $primary-red
+    color: $primary-red
+    &:hover, &:active
+      color: white
+      background: $primary-red
+      border: 2px solid transparent
+
+  &.btn-blue
+    background: $highlight-blue
+    border: 2px solid $highlight-blue
+    color: white
+    &:hover, &:active
+      color: $highlight-blue
       background: white
+
+  &.btn-blue-inverted
+    background: transparent
+    border: 2px solid $highlight-blue
+    color: $highlight-blue
+    &:hover, &:active
+      color: white
+      background: $highlight-blue
+      border-color: transparent
 
   &.btn-orange
     background: $orange
     border: 2px solid $orange
     color: white
-    &:hover, &:active, &:focus
+    &:hover, &:active
       color: $orange
-      background: white
+      background: transparent
+
+  &.btn-orange-inverted
+    background: transparent
+    border: 2px solid $orange
+    color: $orange
+    &:hover, &:active
+      color: white
+      background: $orange
 
   &.btn-grey
+    color: white
+    border: 2px solid $font-grey
+    background: $font-grey
+    &:hover, &:active, &.active
+      background: white
+      border-color: $font-grey
+      color: $font-grey
+
+  &.btn-grey-inverted
     color: $font-grey
     border: 2px solid $font-grey
-    background: white
-    &:hover, &:active, &:focus, &.active
+    background: transparent
+    &:hover, &:active, &.active
       background: $font-grey
       border-color: $font-grey
       color: white
@@ -42,12 +81,85 @@
   &.btn-white
     background: white
     color: $primary-red
-    &:hover, &:active, &:focus
+    &:hover, &:active
       color: $primary-red
 
   &.btn-round
-    border: 1px solid
+    border-width: 1px
     @include round-corners(30px)
+    &:hover, &:active
+      border-width: 1px
+    @media all and (max-width: 380px)
+      padding: 10px
+
+  &.btn-tick
+    background-color: $primary-red
+    border: 2px solid $primary-red
+    color: transparent
+    background-image: url('icons/collection-added.svg')
+    background-position: center
+    background-repeat: no-repeat
+    padding: 5px 15px
+    cursor: initial
+    &:hover, &:active
+      color: transparent
+      background-color: $primary-red
+      background-image: url('icons/collection-added.svg')
+      background-position: center
+      background-repeat: no-repeat
+      border: 2px solid $primary-red
+
+  &.btn-hover-white
+    &:hover, &:active
+      background: white
+
+  &.btn-add
+    width: 56px
 
   &.btn-full
     width: 100%
+
+  & + .btn
+    margin-left: 10px
+
+  &.btn-view
+    width: 50px
+    &::after
+      content: '.'
+      display: block
+      background-image: url('icons/icon-collection-preview-blue.svg')
+      width: 100%
+      height: 100%
+      color: transparent
+      background-position: center
+      background-repeat: no-repeat
+    &:hover
+      &::after
+        background-image: url('icons/icon-collection-preview-white.svg')
+    &.mobile
+      &::after
+        background: none
+        height: 25px
+        width: 25px
+        position: relative
+        bottom: 100%
+        display: block
+        content: url('icons/icon-collection-preview-blue.svg')
+        color: transparent
+      &:hover
+        &::after
+          background: none
+          display: block
+          content: url('icons/icon-collection-preview-white.svg')
+          color: transparent
+
+
+  &.btn-small
+    padding: 11px 20px
+
+  &.btn-list-small
+    padding: 9px 4px
+    font-size: 10px
+
+  &.btn-text-normal
+    text-transform: none

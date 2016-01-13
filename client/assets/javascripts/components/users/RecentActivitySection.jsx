@@ -6,6 +6,7 @@ import ReviewBox from './ReviewBox';
 import Section from '../Section';
 import SectionRow from '../SectionRow';
 import Dropdown from '../Dropdown';
+import DropdownConstants from '../../utils/constants/DropdownConstants';
 
 function sumSizeFunc(item) {
   return item.props.size;
@@ -92,13 +93,8 @@ const RecentActivitySection = React.createClass({
       <Dropdown
         onClick={this.changeSorting}
         active={this.currentSorting()}
-        options={{
-          latest: 'Latest',
-          highScore: 'Rating: Low to High',
-          lowScore: 'Rating: High to Low',
-          unhelpful: 'Most Helpful: Low to High',
-          helpful: 'Most Helpful: High to Low'
-        }} />
+        showText={true}
+        options={DropdownConstants.recentReviewSection} />
     )
   },
 
@@ -113,7 +109,7 @@ const RecentActivitySection = React.createClass({
       <Section hasPagination={this.props.items.length > 0}
         customHeaderTag={this.renderDropdown()} {...this.props} onShowMore={this.onShowMore}>
         {this.props.showMessage ?
-          <span className='message'>You can browse or edit your reviews at any time, even add or delete files and images.</span>
+          <span className='placeholder-message'>You can browse or edit your reviews at any time, even add or delete files and images.</span>
           : ''
         }
         {this.fetchReviews()}

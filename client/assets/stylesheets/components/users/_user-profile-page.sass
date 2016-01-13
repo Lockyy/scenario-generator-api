@@ -32,7 +32,7 @@ $color-blackcharcoal: #3c3c3b
         background-image: img-url('icons/recently-added.svg')
 
     &> .items
-      padding-top: 30px
+      padding-top: 10px
 
       .section-row
         max-height: none
@@ -124,57 +124,6 @@ $color-blackcharcoal: #3c3c3b
     margin-top: 60px
     border-top: solid 2px $color-darkred
 
-    .work-area-sidebar
-      margin-top: 20px
-      padding: 0
-      padding-right: 20px
-      text-transform: uppercase
-
-      .sidebar-element
-        display: block
-        padding: 20px 0 20px 40px
-        border-bottom: 1px solid $grey
-        background: no-repeat center left
-        background-size: 30px
-        color: $blackish-grey
-        font-size: 10px
-
-        &.active, &:hover
-          color: $primary-red
-
-        &.reviews
-          background-image: img-url('icons/icon-review-grey.svg')
-
-          &.active
-            background-image: img-url('icons/icon-review-red.svg')
-
-        &.tags
-          background-image: img-url('icons/icon-tags-grey.svg')
-
-          &.active
-            background-image: img-url('icons/icon-tags-red.svg')
-
-        &.lists
-          background-image: img-url('icons/icon-lists-grey.svg')
-
-          &.active
-            background-image: img-url('icons/icon-lists-red.svg')
-
-        &.bookmarks
-          background-image: img-url('icons/icon-bookmarks-grey.svg')
-
-          &.active
-            background-image: img-url('icons/icon-bookmarks-red.svg')
-
-        &.active
-          font-weight: bold
-          color: $color-darkred
-
-          &::after
-            content: '>'
-            float: right
-
-
     .work-area-content
       padding: 0
       padding-left: 20px
@@ -192,7 +141,7 @@ $color-blackcharcoal: #3c3c3b
 
 
     .work-area-section
-      &.my-tags-container, &.my-bookmarks-container
+      &.tags-container, &.bookmarks-container, &.collections-container
         border-top: 1px solid $grey
         margin-top: 75px
         padding-top: 30px
@@ -393,7 +342,7 @@ $color-blackcharcoal: #3c3c3b
         .work-area-section
           margin-top: 0
 
-          &.my-tags-container, &.my-bookmarks-container
+          &.tags-container, &.bookmarks-container, &.collections-container
             border-top: 0
             margin-top: 0
             padding-top: 0
@@ -413,7 +362,7 @@ $color-blackcharcoal: #3c3c3b
                   width: 100%
 
                   .content
-                    background-color: $white
+                    background-color: white
                     border-top: none
                     height: auto
 
@@ -434,7 +383,7 @@ $color-blackcharcoal: #3c3c3b
                           background: $light-grey
                           color: $red
 
-          &.my-bookmarks-container
+          &.bookmarks-container
             .product.box-2-5
               .content
                 height: auto

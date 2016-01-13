@@ -7,6 +7,7 @@
 
   .desktop-version
     display: block
+    margin-top: 50px
 
   .search-box
     border: 0
@@ -61,6 +62,13 @@
           &.selected
             color: $orange
             border-color: $orange
+            &:hover
+              color: white
+              background-color: $orange
+          &:hover
+            color: white
+            background-color: $dark-grey
+            border-color: $dark-grey
 
       .all-tags-link
         @extend .pull-right
@@ -87,17 +95,18 @@
       display: block
 
     .top
-      border-bottom: 1px solid $grey
-      margin-bottom: 10px
+      border-bottom: none
       display: flex
       justify-content: space-between
       align-items: center
       padding-bottom: 5px
 
       .top-left
-        color: $dark-grey
+        color: black
         font-size: 13px
-        text-transform: capitalize
+        font-weight: bold
+        text-transform: uppercase
+        letter-spacing: 2px
 
       .top-right
         color: $dark-grey
@@ -108,16 +117,20 @@
 
     .result
       padding: 0 !important
-      padding-top: 15px !important
-      padding-bottom: 15px !important
+      padding-top: 10px !important
+      padding-bottom: 10px !important
       border-bottom: 1px solid $grey
       & > .row
         @include flexbox-centered-children
       .name
-        font-size: 18px
+        font-size: 20px
+      .company
+        font-size: 14px
       .description
         margin-top: 5px
         margin-bottom: 5px
+        text-overflow: ellipsis
+        overflow: hidden
         &:first-letter
           text-transform: uppercase
       .image-container
@@ -133,8 +146,6 @@
 
     &.tags
       margin-bottom: 25px
-      .top
-        margin-bottom: 15px
 
     &.header
       color: black
@@ -145,6 +156,9 @@
     &.tags
       .no-results
         margin-top: -15px
+
+.search-container .results.tags
+  margin-bottom: 0px
 
 /*==========  Non-Mobile First Method  ==========*/
 
@@ -176,12 +190,13 @@
       .links
         margin-top: 20px
         .link
-          width: 33.33%
+          width: 25%
           float: left
           border-bottom: none
           border-top: 3px solid $grey
           text-transform: uppercase
           text-align: center
+          font-size: 11px
 
           &.active
             font-weight: normal
@@ -200,7 +215,6 @@
 
           .top-left, .top-right
             width: 50%
-            text-transform: none
 
           .top-left
             font-weight: bold

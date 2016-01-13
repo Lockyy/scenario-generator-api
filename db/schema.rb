@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151103160006) do
+ActiveRecord::Schema.define(version: 20160111164220) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,6 +32,12 @@ ActiveRecord::Schema.define(version: 20151103160006) do
   add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
   add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
   add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
+
+  create_table "allowed_users", force: :cascade do |t|
+    t.string   "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "attachments", force: :cascade do |t|
     t.integer  "attachable_id"
@@ -60,22 +66,26 @@ ActiveRecord::Schema.define(version: 20151103160006) do
     t.integer  "collection_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "user_id"
   end
 
   create_table "collection_users", force: :cascade do |t|
-    t.integer  "user_id"
+    t.integer  "sharee_id"
     t.integer  "collection_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.integer  "rank"
+    t.string   "email"
   end
 
   create_table "collections", force: :cascade do |t|
     t.integer  "user_id"
-    t.string   "title"
+    t.string   "name"
     t.string   "description"
-    t.integer  "privacy",     default: 0
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.integer  "privacy",            default: 0
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.boolean  "send_email_invites"
   end
 
   create_table "companies", force: :cascade do |t|
@@ -131,11 +141,14 @@ ActiveRecord::Schema.define(version: 20151103160006) do
     t.text     "description"
     t.string   "url"
     t.integer  "company_id"
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "views",       default: 0
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "views",               default: 0
     t.string   "slug"
     t.integer  "user_id"
+    t.float    "quality_score_cache"
+    t.float    "price_score_cache"
+    t.integer  "total_reviews",       default: 0, null: false
   end
 
   add_index "products", ["slug"], name: "index_products_on_slug", using: :btree
@@ -144,7 +157,7 @@ ActiveRecord::Schema.define(version: 20151103160006) do
   create_table "review_votes", force: :cascade do |t|
     t.integer  "review_id"
     t.integer  "user_id"
-    t.boolean  "helpful"
+    t.integer  "helpful"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -152,14 +165,16 @@ ActiveRecord::Schema.define(version: 20151103160006) do
   create_table "reviews", force: :cascade do |t|
     t.string   "title"
     t.text     "quality_review"
-    t.integer  "quality_score"
+    t.integer  "quality_score",      default: 0
     t.text     "price_review"
-    t.integer  "price_score"
+    t.integer  "price_score",        default: 0
     t.integer  "product_id"
-    t.datetime "created_at",         null: false
-    t.datetime "updated_at",         null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.integer  "user_id"
     t.integer  "cached_helpfulness"
+    t.integer  "helpful_votes",      default: 0
+    t.integer  "total_votes",        default: 0
   end
 
   create_table "tag_taggables", force: :cascade do |t|
@@ -185,15 +200,6 @@ ActiveRecord::Schema.define(version: 20151103160006) do
     t.integer "user_id"
     t.integer "tag_id"
   end
-
-  create_table "tokens", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "token"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  add_index "tokens", ["user_id"], name: "index_tokens_on_user_id", using: :btree
 
   create_table "user_oauths", force: :cascade do |t|
     t.integer  "user_id"
@@ -230,6 +236,9 @@ ActiveRecord::Schema.define(version: 20151103160006) do
     t.datetime "avatar_updated_at"
     t.string   "avatar_uuid"
     t.string   "department"
+    t.integer  "total_reviews",          default: 0,  null: false
+    t.integer  "total_products",         default: 0,  null: false
+    t.integer  "total_attachments",      default: 0,  null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -238,6 +247,5 @@ ActiveRecord::Schema.define(version: 20151103160006) do
   add_foreign_key "products", "users"
   add_foreign_key "review_votes", "reviews"
   add_foreign_key "review_votes", "users"
-  add_foreign_key "tokens", "users"
   add_foreign_key "user_oauths", "users"
 end

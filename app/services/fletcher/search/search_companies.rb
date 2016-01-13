@@ -12,7 +12,6 @@ module Fletcher
       @search_by[attribute].call(terms)
     end
 
-
     def build_full_text_search_by
       default_search_by = Hash.new(lambda { |terms|
         ::Company.search_by_name_and_description(terms.join(' '))
@@ -37,7 +36,7 @@ module Fletcher
       default_sort_by = super
       default_sort_by[:relevance] = lambda { |data| data }
       default_sort_by[:latest] = lambda { |data| data.reorder('created_at ASC') }
-      default_sort_by[:alphabetical_order] = lambda { |data| data.reorder('name ASC') }
+      default_sort_by[:alphabetical_order] = lambda { |data| data.reorder('LOWER(name) ASC') }
       default_sort_by
     end
   end

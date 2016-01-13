@@ -1,129 +1,170 @@
-.menu.hamburger-menu
-  width: 25%
-  height: 100%
-  display: block
-  position: fixed
-  overflow-y: scroll
-  padding-bottom: 50px
-  top: 0
-  right: 0
-  z-index: 5000
-  background: #dfdfdf
-  color: #3c3c3c
-  display: none
-  box-shadow: -5px 0px 10px 0px rgba(50, 50, 50, 0.45)
-  align-self: stretch
+@import 'common/variables'
 
-  & > .container
-    width: 90%
-    padding-top: 0
+#hamburger-menu
+  .menu.hamburger-menu
+    width: 25%
+    height: 100% !important
+    display: block
+    position: fixed
+    overflow-y: scroll
+    top: 0
+    right: 0
+    z-index: 5000
+    background: $light-grey
+    color: #3c3c3c
+    display: none
+    box-shadow: -5px 0px 10px 0px rgba(50, 50, 50, 0.45)
+    align-self: stretch
+    text-align: left
 
-    h2
-      font-size: 20px
-      font-weight: bolder
+    header
+      width: 100%
+    .container header li
+      margin-left: 0px
 
-    .menu-nav
-      padding: 0
-      margin: 20px 0 0 0
-      display: flex
-      align-items: center
-      justify-content: space-between
-      list-style: none
+    & > .container
+      width: 100%
+      margin: 0px
+      padding: 0px
+      padding-top: 0
 
-      li.close-hamburger-menu
-        a
-          width: 35px
-          height: 35px
-          display: block
-          background: image_url('icons/menu-red.svg') no-repeat center center
-          background-size: contain
-          outline: none
+      h2
+        font-size: 20px
+        font-weight: bolder
+      h3
+        margin-top: 0
+        font-weight: 600
+        font-size: 18px
+        margin-bottom: 0
+        padding: 3px 0
+        overflow: hidden
 
-      li.logout
+      .menu-nav
+        padding: 0px 40px
+        margin: 20px 0 0 0
+        display: flex
+        align-items: center
+        justify-content: space-between
+        list-style: none
+        li
+          &.close-hamburger-menu
+            a
+              width: 35px
+              height: 35px
+              display: block
+              background: image_url('icons/menu-red.svg') no-repeat center center
+              background-size: contain
+              outline: none
+
+          &.logout
+            a, a:link, a:hover, a:visited
+              color: #3c3c3c
+              text-transform: uppercase
+              text-decoration: none
+              margin: 0 auto
+              padding: 10px 20px
+              font-weight: bolder
+              font-size: 12px
+              border: 1px solid
+              outline: none
+              @include round-corners(30px)
+
+      .profile-container, .sidebar-row
+        border-bottom: 1px solid $grey
+
+        .no-content, .content
+          margin: 15px 0px
+          color: #999898
+          font-size: 15px
+          font-style: italic
+          .content
+            margin: 0px
+            height: auto
+          .data
+            padding: 0px
+
+      .profile-container
+        .avatar
+          margin: 15px 0px
+          width: 60px
+          @extend .img-circle
+
         a, a:link, a:hover, a:visited
           color: #3c3c3c
-          text-transform: uppercase
           text-decoration: none
           margin: 0 auto
+          padding: 10px 20px
+          font-weight: bolder
+          font-size: 20px
+          outline: none
+
+        .admin-container
+          text-align: center
+          padding: 20px
+
+          .btn
+            text-transform: none
+            font-size: 12px
+
+        .btn-add-edit-tags
+          color: $orange
+          background: white
+          margin: 40px auto
           padding: 10px 20px
           font-weight: bolder
           font-size: 12px
           border: 1px solid
           outline: none
           @include round-corners(30px)
+          display: block
+          max-width: 170px
 
-    .profile-container, .my-tags-container, .my-bookmarks-container, .my-recent-activity-container
-      border-bottom: 2px solid #e5e6e7
-
-      .no-content, .content
-        margin: 30px 0
-        color: #999898
-        font-size: 15px
-        font-style: italic
-
-    .my-bookmarks-container
-      .my-bookmarks
-        .product
-          .picture
-            display: none
-
-          .content
-            margin: 0px
-            height: auto
-
-            .data
-              padding-left: 15px
-              padding-right: 15px
-
-    .profile-container
-      .avatar
-        margin: 35px 0
-        width: 60px
-        @extend .img-circle
-
-      a, a:link, a:hover, a:visited
-        color: #3c3c3c
-        text-decoration: none
-        margin: 0 auto
-        padding: 10px 20px
-        font-weight: bolder
+      .sidebar-row
+        padding: 1.5em 83px
         font-size: 20px
-        outline: none
-
-      .admin-container
-        text-align: center
-        padding: 20px
-
-        .btn
-          text-transform: none
-          font-size: 12px
-
-    .my-tags-container
-      .btn-add-edit-tags
-        color: $orange
-        background: white
-        margin: 40px auto
-        padding: 10px 20px
+        color: #3c3c3c
         font-weight: bolder
-        font-size: 12px
-        border: 1px solid
-        outline: none
-        @include round-corners(30px)
+        background-repeat: no-repeat
+        background-position: 10% center
+        background-size: 25px
         display: block
-        max-width: 170px
+        text-decoration: none !important
+        position: relative
+        &::after
+          background-image: url("icons/grey-arrow.svg")
+          width: 15px
+          height: 15px
+          display: block
+          content: ''
+          background-size: contain
+          background-repeat: no-repeat
+          position: absolute
+          right: 40px
+          top: 37px
+        &.profile
+          border-top: 1px solid $grey
+          margin-top: 50px
+        &.reviews
+          background-image: image_url('icons/icon-review-red.svg')
+        &.tags
+          background-image: image_url('icons/icon-tags-red.svg')
+        &.bookmarks
+          background-image: image_url('icons/icon-bookmarks-red.svg')
+        &.collections
+          background-image: image_url('icons/icon-collections-red.svg')
+        .avatar
+          position: absolute
+          left: 26px
 
-    .my-recent-activity-container
-      border: none
+  @media only screen and (max-width: $screen-md-max)
+    .menu.hamburger-menu
+      width: 30%
 
-@media only screen and (max-width: $screen-md-max)
-  .menu.hamburger-menu
-    width: 40%
-
-@media only screen and (max-width: $screen-sm-max)
-  .menu.hamburger-menu
-    width: 95%
-    box-shadow: -55px 0px 70px 0px rgba(50, 50, 50, 0.85)
-
-    .container
-      margin: 0 auto
+  @media only screen and (max-width: $screen-sm-max)
+    .menu.hamburger-menu
       width: 95%
+      box-shadow: -55px 0px 70px 0px rgba(50, 50, 50, 0.85)
+
+      .container
+        margin: 0 auto
+        width: 95%

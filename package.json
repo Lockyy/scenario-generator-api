@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/justin808/react-webpack-rails-tutorial/issues"
   },
-  "homepage": "https://github.com/justin808/react-webpack-rails-tutorial"
+  "homepage": "https://github.com/justin808/react-webpack-rails-tutorial",
+  "devDependencies": {
+    "gulp-sass": "^2.1.0"
+  }
 }

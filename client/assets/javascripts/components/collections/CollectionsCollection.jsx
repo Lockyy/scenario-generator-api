@@ -1,0 +1,228 @@
+import React from 'react';
+import _ from 'lodash';
+import { Link, Navigation } from 'react-router';
+import CollectionBox from './CollectionBox';
+import Decide from '../Decide';
+import RenderDesktop from '../RenderDesktop';
+import RenderMobile from '../RenderMobile';
+import TableDisplay from '../TableDisplay';
+import CollectionStore from '../../stores/CollectionStore';
+import DropdownConstants from '../../utils/constants/DropdownConstants';
+import CollectionConstants from '../../utils/constants/CollectionConstants';
+import Dropdown from '../Dropdown';
+
+const CollectionsCollection = React.createClass ({
+  displayName: 'CollectionsCollection',
+  mixins: [Navigation],
+
+  contextTypes: {
+    currentUser: React.PropTypes.object
+  },
+
+  getInitialState: function () {
+    return {
+      data: {
+        collections: CollectionStore.state.data.collections,
+        products: CollectionStore.state.data.products
+      },
+      prodLists: [],
+      filter: CollectionConstants.DEFAULT_FILTER
+    };
+  },
+
+  getDefaultProps: function () {
+    return {
+      mobile: false
+    };
+  },
+
+  componentDidMount: function () {
+    CollectionStore.listen(this.onChange);
+  },
+
+  onChange: function (data) {
+    this.setState(data);
+  },
+
+  handleClick: function (e) {
+    let callee = $(e.target);
+    let container = callee.parent().parent();
+    container.find('*').removeClass('hidden');
+    callee.remove();
+  },
+
+  renderCollectionProductsList: function (collection) {
+    let count = (collection.products.length - 8);
+    let hasMore = count > 0;
+    let current = 0;
+    return (
+      <div className={"product-list-container"}>
+        {_.map(collection.products, function(product) {
+          current++;
+
+          return (
+            <div className={"product-list-link-container" + (current > 8 ?  " hidden" : "")}>
+
+              <Link
+                className="product-list-link"
+                to={`/app/products/${product.id}/${product.slug}`}>
+                {product.name}
+              </Link>
+
+              <Decide
+                condition={current != collection.products.length}
+                success={() => ', '} />
+
+              <Decide
+                condition={hasMore && current == 8}
+                success={() => (
+                  <a
+                    className="has-n-more"
+                    onClick={ this.handleClick }>
+                    {`(${count} more)`}
+                  </a>)} />
+            </div>
+          );
+        }.bind(this))}
+      </div>
+    );
+  },
+
+  renderCollections: function (collections) {
+    let params = '';
+
+    if (this.context.router.state.components[0].displayName == 'ProductPage') {
+      params = `?name=${this.props.product.name}&link=${window.location.pathname}`
+    }
+
+    return (
+      <div>
+        {_.map(collections, function(collection) {
+          return (
+            <div className='collections-collection-row'>
+              <span className={'name mobile'}>
+                <Link to={`/app/collections/${collection.id}${params}`}>{collection.name}</Link>
+              </span>
+              <span className={'owner mobile'}>
+                Created by
+                <Link className='user-link' to={`/app/users/${collection.user.id}`}>
+                  <Decide
+                    condition={collection.user.id == this.context.currentUser.id}
+                    success={() => ' You,'}
+                    failure={() => ` ${collection.user.name},`} />
+                </Link>
+                <span className={'date mobile'}>
+                  {collection.display_date}
+                </span>
+              </span>
+              <span className='includes mobile'>
+                Includes:&nbsp;{this.renderCollectionProductsList(collection)}
+              </span>
+            </div>
+          )
+        }.bind(this))}
+      </div>
+    )
+  },
+
+  currentFilter: function () {
+    return this.state.filter
+  },
+
+  setFilter: function (filter) {
+    this.setState({filter: filter})
+  },
+
+  filter: function () {
+    let data = this.state.data;
+    let collections = data.collections;
+    let filteredCollections = [];
+    let filter = this.currentFilter();
+    if (filter == 'owner') {
+      filteredCollections = _.select(collections, function (collection) {
+        return collection.owned
+      })
+    } else if (filter == 'collaborator') {
+      filteredCollections = _.select(collections, function (collection) {
+        return collection.viewer
+      })
+    } else if (filter == 'public') {
+      filteredCollections = _.select(collections, function (collection) {
+        return collection.privacy == 'visible'
+      })
+    } else {
+      filteredCollections = collections
+    }
+    return filteredCollections;
+  },
+
+  getFilterDropdown: function () {
+    return <Dropdown
+      showText={true}
+      onClick={this.setFilter}
+      active={this.currentFilter()}
+      text="Show:"
+      options={DropdownConstants.collectionFilterOptions}/>
+  },
+
+  render: function () {
+    let filteredCollections = this.filter();
+    let collections = this.state.data.collections
+    let noCollectionsTag = (
+      <span className="no-collections">
+        {this.props.emptyMessage || 'You do not collaborate on any collections. Why not create one yourself?' }
+      </span> )
+    let _this = this;
+
+    return (
+      <div className={`collections-collection ${this.props.className || ''}`}>
+
+        <Decide
+          condition={collections.length != 0}
+          success={_this.getFilterDropdown.bind(_this)}/>
+
+
+        <Decide
+          condition={collections.length == 0}
+          success={() => noCollectionsTag}/>
+
+        <RenderDesktop
+          component={TableDisplay}
+          conditional={collections.length > 0}
+          data={filteredCollections}
+          allowSorting={true}
+          defaultSortColumn='updated_at'
+          columns={[
+            {
+              title: 'Name',
+              linkTo: 'collections',
+              dataColumn: 'name',
+              className: 'with-collection-icon',
+              sortByColumn: 'name',
+              width: 6,
+            },
+            {
+              title: 'Owner',
+              dataColumn: 'user',
+              dataColumnAttribute: 'name',
+              sortByColumn: 'user',
+              sortByColumnAttribute: 'name',
+              width: 3,
+            },
+            {
+              title: 'Last modified',
+              dataColumn: 'display_date',
+              width: 3,
+              sortByColumn: 'updated_at'
+            }
+          ]}/>
+
+        <RenderMobile>
+          {this.renderCollections(filteredCollections)}
+        </RenderMobile>
+      </div>
+    )
+  }
+})
+
+export default CollectionsCollection;

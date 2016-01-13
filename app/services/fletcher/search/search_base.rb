@@ -3,7 +3,7 @@ module Fletcher
     def initialize(attribute, terms, sort_description, filter_tags, match_mode)
       @attribute = attribute
       @terms = terms
-      @sort_description = sort_description ? sort_description.to_sym: sort_description
+      @sort_description = sort_description ? sort_description.to_sym : sort_description
       @filter_tags = filter_tags
       @match_mode = match_mode || 'any'
       @results = results
@@ -23,7 +23,14 @@ module Fletcher
     private
 
     def obtain_related_tags(data)
-      @related_tags ||= data.map(&:tags).flatten.uniq
+      @related_tags ||= Tag
+                          .joins(:tag_taggables)
+                          .where({
+                            tag_taggables: {
+                              taggable_id: data.map(&:id),
+                              taggable_type: data.first.class.name
+                            }
+                          }).uniq
     end
 
     def filter_by_tags(filter_tags, data)

@@ -1,6 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
-import { Link, Navigation } from 'react-router';
+import { Navigation } from 'react-router';
 import MyTags from '../MyTags'
 import FluxCurrentUserActions from '../../actions/FluxCurrentUserActions'
 import CurrentUserStore from '../../stores/CurrentUserStore'
@@ -10,7 +10,8 @@ const UserTags = React.createClass ({
   displayName: 'UserTags',
 
   contextTypes: {
-    currentUser: React.PropTypes.object
+    currentUser: React.PropTypes.object,
+    router: React.PropTypes.object
   },
 
   getInitialState: function() {

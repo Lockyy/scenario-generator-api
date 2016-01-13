@@ -4,6 +4,42 @@
 .product
   padding: 0
 
+  &.collection
+    .content
+      height: 215px
+      .data
+        .details
+          position: relative
+          height: 100%
+          .title
+            cursor: pointer
+            font-size: 15px
+            font-weight: normal
+            display: flex
+            align-items: center
+            &:hover
+              text-decoration: underline
+          .description
+            font-size: 13px
+          .content
+            height: 300px
+          .preview-collection
+            font-size: 14px
+            display: flex
+            justify-content: flex-end
+            align-items: center
+            cursor: pointer
+            color: $highlight-blue
+            position: absolute
+            bottom: 5px
+            right: 0px
+        .footer
+          display: flex
+          justify-content: space-between
+          align-items: center
+          font-size: 11px
+          text-align: left
+
   .content
     height: $box-height
     background: $light-grey
@@ -11,6 +47,23 @@
     border-top: 3px solid $red
     display: flex
     flex-direction: column-reverse
+
+    .top
+      display: flex
+      justify-content: space-between
+      align-items: center
+    .top, .product-link
+      font-size: 11px
+    .includes
+      font-size: 10px
+
+    .product-link, .product-link > *
+      display: inline
+    .product-link
+      a
+        text-decoration: underline
+      &.see-all a
+        color: $primary-red
 
     .data
       padding: 20px 25px 10px
@@ -29,6 +82,8 @@
           margin-bottom: 0
           padding: 3px 0
           overflow: hidden
+          white-space: nowrap
+          text-overflow: ellipsis
 
         .company
           font-size: 16px
@@ -48,9 +103,11 @@
           font-size: 14px
           margin-top: 10px
           margin-bottom: 5px
+          align-items: center
 
           .reviews
             margin: 0 10px
+            font-size: 12px
 
             &:before
               content: '/'
@@ -62,6 +119,8 @@
         color: $dark-grey
         padding: 10px 0 0 0
         text-align: right
+        display: flex
+        justify-content: space-between
 
     .picture
       height: 100%
@@ -175,7 +234,7 @@
         height: 100%
 
         .description
-          max-height: 235px
+          max-height: 135px
 
       .picture
         height: 0
@@ -228,7 +287,6 @@
 
       .data
         .description
-          height: 250px
           max-height: 250px
 
 // Really Large Devices, Wide Screens

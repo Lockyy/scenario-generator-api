@@ -1,0 +1,9 @@
+Hi <%= @sharee.name %>,
+<br><br>
+<%= @sharer.name %> has shared a collection with you: <%= @collection.title %>
+<br><br>
+You can view it <%= link_to 'here', "#{root_url}app/collections/#{@collection.id}" %>.
+<br><br>
+Enjoy,
+<br>
+The Fletcher Team

@@ -3,12 +3,63 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
+### v1.1.0
+
+####Features
+- Add collections. A user can create a group of products with a name and description.
+  - Collections can be added, edited, and created on a user's profile, a product's page.
+  - Collections appear on the user page collections tab.
+  - Collections can be private or public.
+  - If public, collections appear on the product's collections tab.
+    - Collection visibility can be changed via dropdown on collection box.
+  - After creation user is asked to share collection with other users.
+  - Shared, public, and owned collections visible on product/user/collection pages.
+  - Emails are sent to the user who has a collection shared with them.
+  - Collections are also listed in the Hamburger Menu
+- Add user search API endpoint for use with collection sharing. Will also be used for product sharing.
+- Add notifications system.
+  - Notifications can be generated on either the frontend or backend.
+    - Frontend notifications are not stored in the database and are purely alerts to tell the user that a save succeeded etc.
+    - Notifications generated on the front end are created via FluxNotificationsActions.showNotification
+    - Notifications generated on the back end are automatically fetched by the front end and displayed 3 at a time every 10 seconds.
+  - Uses https://github.com/igorprado/react-notification-system module for displaying notifications.
+- Support/Contact form now correctly sends emails to Americas.TechnologyInnovation@am.jll.com
+  - We now have a mandrill subaccount set up for sending emails. Can use this for sharing products later.
+- Add google analytics to site and app
+- Logins now expire after 8 hours.
+- Add independent ModalManager system for rendering and displaying the various modals around the app. This
+is currently primarily used for the Collections system but is also used for various product page modals.
+
+####Changes
+- Files uploaded to reviews are now checked against a whitelist. Only docs and mediafiles will now be accepted.
+  - File mimetypes that are allowed can be viewed in app/models/attachment.rb
+- Add footer to App
+- Images on the dashboard are no longer stretched to their container, they now maintain their original aspect ratio and the rest of the container is filled with a blurred, expanded version of the image. Background image is semi-transparent.
+- ActiveAdmin header title now links to the main app.
+- Landing page now displays correct testimonials.
+- Add correct favicons.
+- Ensure all required fields on reviews page have error messages when left blank.
+- Hitting the landing page whilst logged in automatically redirects the user to /app.
+- Field validation now occurs on new review page for fields preceeding the one clicked by the user. Errors also now appear at the end of the form.
+- Remove old Auth Token based authentication. The site now relies solely on Devise authentication.
+- Spin the common tabbed area that is on the product and user profiles into its own react component. This now makes it easy to add these tabs to a number of elements.
+- Move hamburger menu into its own dedicated react component which renders all the sub-components, rather than rendering them each separately in app.jsx
+
+####Bugfixes
+- Fix a number of issues that were generating console warnings related to interated components not having unique IDs.
+- Ensure welcome message is hidden when the user leaves the dashboard.
+- Add icon for collections to sidebar on product and user page.
+- Hamburger menu now scrolls independently of the main page
+- Fix issue where only 4 stars showed on small/medium product boxes on dashboard.
+- Fix issue with text overflow caused by long review titles.
+
 ### v1.0.1
 
 #### Bugfixes
 - Tags no longer display when no reviews or companies are associated with them.
 - Tags are now all displayed on the tags directory.
 - The tag directory is now sorted alphabetically within sections.
+
 
 ### v1.0.0
 
