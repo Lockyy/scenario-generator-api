@@ -187,9 +187,10 @@ ActiveRecord::Schema.define(version: 20160111164220) do
 
   create_table "tags", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
     t.string   "slug"
+    t.integer  "tag_taggables_count"
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", using: :btree

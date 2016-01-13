@@ -61,6 +61,13 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 - Fix issue with text overflow caused by long review titles.
 - Various other fixes.
 
+### v1.0.1
+
+#### Bugfixes
+- Tags no longer display when no reviews or companies are associated with them.
+- Tags are now all displayed on the tags directory.
+- The tag directory is now sorted alphabetically within sections.
+
 ### v1.0.0
 
 ####Features
