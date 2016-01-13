@@ -57,7 +57,7 @@ describe "Whitelisting", js: true do
           end
 
           it 'shows an error' do
-            expect(page).to have_content 'This is a private instance of Fletcher, please contact ed.bialozewski@am.jll.com if you require access'
+            expect(page).to have_content 'This is a private instance of Fletcher, please contact Am.TechInnovation@am.jll.com if you require access'
           end
         end
 
@@ -243,7 +243,7 @@ describe "Whitelisting", js: true do
           end
 
           it 'shows an error' do
-            expect(page).to have_content 'This is a private instance of Fletcher, please contact ed.bialozewski@am.jll.com if you require access'
+            expect(page).to have_content 'This is a private instance of Fletcher, please contact Am.TechInnovation@am.jll.com if you require access'
           end
         end
 
