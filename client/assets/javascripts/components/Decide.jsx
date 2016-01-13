@@ -9,6 +9,8 @@ import _ from 'lodash';
 // </div>
 //
 // Which can become very messy very quickly. This provides some structure.
+//
+// More info: https://github.com/codelittinc/fletcher/wiki/Decide-Component
 
 const Decide = React.createClass ({
 

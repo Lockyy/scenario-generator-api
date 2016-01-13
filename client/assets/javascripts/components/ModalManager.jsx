@@ -18,6 +18,11 @@ var appElement = document.getElementById('content');
 
 Modal.setAppElement(appElement);
 
+// More Info: https://github.com/codelittinc/fletcher/wiki/ModalManager
+//
+//
+// DOCS ON MAKING ALERTS: https://github.com/codelittinc/fletcher/wiki/Alerts-and-Confirmations
+
 const ModalManager = React.createClass ({
   displayName: 'ModalManager',
   mixins: [

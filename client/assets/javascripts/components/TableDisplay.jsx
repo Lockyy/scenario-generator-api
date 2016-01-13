@@ -6,7 +6,7 @@ import RenderDesktop from './RenderDesktop';
 import DateHelper from '../utils/helpers/DateHelper';
 import Rating from './Rating'
 
-// https://github.com/codelittinc/fletcher/wiki/TableDisplay
+// More Info: https://github.com/codelittinc/fletcher/wiki/TableDisplay
 
 const TableDisplay = React.createClass ({
 

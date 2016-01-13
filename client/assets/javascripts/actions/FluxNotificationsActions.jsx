@@ -2,6 +2,8 @@ import alt from '../FluxAlt';
 import _ from 'lodash';
 import NotificationsAPI from '../utils/api/NotificationsAPI';
 
+// More info: https://github.com/codelittinc/fletcher/wiki/Notifications
+
 class FluxNotificationsActions {
 
   fetchNotifications() {
