@@ -53,6 +53,14 @@ is currently primarily used for the Collections system but is also used for vari
 - Fix issue where only 4 stars showed on small/medium product boxes on dashboard.
 - Fix issue with text overflow caused by long review titles.
 
+### v1.0.1
+
+#### Bugfixes
+- Tags no longer display when no reviews or companies are associated with them.
+- Tags are now all displayed on the tags directory.
+- The tag directory is now sorted alphabetically within sections.
+
+
 ### v1.0.0
 
 ####Features

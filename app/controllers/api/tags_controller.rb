@@ -1,7 +1,7 @@
 class Api::TagsController < AppController
 
   def index
-    @tags = Tag.all.sort_by{|tag| tag.name[0]}.group_by{|u| u.name[0]}
+    @tags = Tag.all.with_products.sort_by(&:name).group_by{|u| u.name[0]}
 
     respond_to do |format|
       format.json { render }
