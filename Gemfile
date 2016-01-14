@@ -39,9 +39,6 @@ gem 'es5-shim-rails'
 gem 'counter_culture', '~> 0.1.33'
 gem 'slacked'
 
-#CircleCI
-gem 'rspec_junit_formatter', '0.2.2'
-
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
