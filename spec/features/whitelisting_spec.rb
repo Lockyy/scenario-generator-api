@@ -8,6 +8,10 @@ describe "Whitelisting", js: true do
     @admin = create(:user, :admin)
   end
 
+  after do
+    ENV.delete 'ENABLE_WHITELIST'
+  end
+
   describe 'as a user' do
     describe 'with whitelist on' do
       before do

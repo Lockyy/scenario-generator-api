@@ -3,7 +3,7 @@ ruby '2.2.0'
 
 # Core
 gem 'rails', '4.2.3'
-gem 'pg'
+gem 'pg', '0.18.0'
 gem 'squeel', github: 'mchavarriagam/squeel'
 gem 'activeadmin', github: 'activeadmin'
 gem 'paperclip', git: 'https://github.com/CloudVLab/paperclip.git', branch: 'aws_v2'
