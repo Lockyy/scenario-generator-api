@@ -185,8 +185,7 @@ describe "User Profile Page", js: true do
         end
 
         it "doesn't display private collections" do
-          expect(page).to_not have_content @private_collection.name
-          expect(page).to_not have_content @private_collection.display_date
+          expect(page).to_not have_content(@private_collection.name)
         end
       end
     end
