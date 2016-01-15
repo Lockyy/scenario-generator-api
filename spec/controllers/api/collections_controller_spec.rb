@@ -44,7 +44,7 @@ describe Api::CollectionsController do
     end
 
     it 'returns no collection' do
-      empty_hash = {collection: {}}
+      empty_hash = {'collection' => {}}
       expect(@body).to eq empty_hash
     end
   end
@@ -55,7 +55,7 @@ describe Api::CollectionsController do
     end
 
     it 'returns no collection' do
-      empty_hash = {collection: {}}
+      empty_hash = {'collection' => {}}
       expect(@body).to eq empty_hash
     end
   end
