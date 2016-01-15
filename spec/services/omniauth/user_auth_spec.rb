@@ -31,11 +31,11 @@ RSpec.describe Omniauth::UserAuth do
     end
 
     it 'creates new user' do
-      user_params = { name: result.name, email: result.email, password: 'pass' }
+      user_params = { name: result.name, email: result.email, password: 'password' }
 
       expect(User).to receive(:find_with_oauth).and_return(nil)
-      expect(User).to receive(:generate_password).and_return('pass')
-      expect(User).to receive(:create!).with(user_params).and_return(double('new user').as_null_object)
+      expect(User).to receive(:generate_password).and_return('password')
+      expect(User).to receive(:create).with(user_params).and_return(double('new user').as_null_object)
 
       subject.authenticate!
     end
@@ -50,6 +50,7 @@ RSpec.describe Omniauth::UserAuth do
         location: 'goiania'
       }
 
+      allow(user).to receive(:valid?) { true }
       expect(User).to receive(:find_with_oauth).and_return(user)
       expect(user).to receive(:update).with(user_params)
       expect(user).to receive(:update_oauth!).with(result.provider, result.uid, result.original_oauth_info)
