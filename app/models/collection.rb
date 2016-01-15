@@ -10,7 +10,7 @@ class Collection < ActiveRecord::Base
   has_many :products, through: :collection_products
   has_many :collection_users, -> { where(email: nil) }, dependent: :destroy
   has_many :sharees, through: :collection_users
-  has_many :invited_sharees, -> { invites }, class_name: 'CollectionUser'
+  has_many :invited_sharees, -> { where.not(email: nil) }, class_name: 'CollectionUser'
   has_many :tags, through: :products
 
   validates :name, presence: true
