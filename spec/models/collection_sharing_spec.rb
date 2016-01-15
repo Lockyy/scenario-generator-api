@@ -17,7 +17,7 @@ describe 'Collection sharing' do
           expect {
             @collection.share([{id: @users[0].id, rank: 0}])
           }.to change {
-            @collection.visible_to?(@users[0])
+            CollectionUser.where(sharee: @users[0], shared_collection: @collection, rank: 'viewer').length > 0
           }.to(true)
         end
       end
@@ -98,7 +98,7 @@ describe 'Collection sharing' do
   describe '.invite' do
     describe 'with just one email' do
       before do
-        @new_email = Faker::Internet.safe_email
+        @new_email = 'example@jll.com'
       end
 
       describe 'as rank 0' do
@@ -106,7 +106,8 @@ describe 'Collection sharing' do
           expect {
             @collection.invite([{email: @new_email, rank: 0}])
           }.to change {
-            @collection.invited_sharees.map(&:email).include?(@new_email)
+            invite = @collection.invited_sharees.first
+            invite.email == @new_email && invite.rank == 'viewer' if invite
           }.to(true)
         end
 
@@ -120,7 +121,7 @@ describe 'Collection sharing' do
             expect {
               @user = create(:user, email: @new_email)
             }.to change {
-              @collection.reload.visible_to?(User.last)
+              CollectionUser.where(sharee: User.last, shared_collection: @collection, rank: 0).length > 0
             }.to true
           end
 
@@ -147,7 +148,8 @@ describe 'Collection sharing' do
           expect {
             @collection.invite([{email: @new_email, rank: 1}])
           }.to change {
-            @collection.invited_sharees.map(&:email).include?(@new_email)
+            invite = @collection.invited_sharees.first
+            invite.email == @new_email && invite.rank == 'collaborator' if invite
           }.to(true)
         end
 
@@ -188,7 +190,8 @@ describe 'Collection sharing' do
           expect {
             @collection.invite([{email: @new_email, rank: 2}])
           }.to change {
-            @collection.invited_sharees.map(&:email).include?(@new_email)
+            invite = @collection.invited_sharees.first
+            invite.email == @new_email && invite.rank == 'owner' if invite
           }.to(true)
         end
 
@@ -227,8 +230,8 @@ describe 'Collection sharing' do
 
     describe 'without an already invited user' do
       before do
-        @new_email = Faker::Internet.safe_email
-        @new_email_2 = Faker::Internet.safe_email
+        @new_email = 'example@jll.com'
+        @new_email_2 = 'example2@jll.com'
         expect {
           @collection.invite([
             {email: @new_email, rank: 0},
@@ -256,8 +259,8 @@ describe 'Collection sharing' do
           [0,1,2].each do |user_2_rank|
             describe "with email 2 at rank #{user_2_rank}" do
               it "correctly creates an invitation for email 1 at rank #{user_1_rank}" do
-                new_email = Faker::Internet.safe_email
-                new_email_2 = Faker::Internet.safe_email
+                new_email = 'example@jll.com'
+                new_email_2 = 'example2@jll.com'
                 expect {
                   @collection.invite([
                     {email: new_email, rank: user_1_rank},
@@ -270,8 +273,8 @@ describe 'Collection sharing' do
               end
 
               it "correctly creates an invitation for email 2 at rank #{user_2_rank}" do
-                new_email = Faker::Internet.safe_email
-                new_email_2 = Faker::Internet.safe_email
+                new_email = 'example@jll.com'
+                new_email_2 = 'example2@jll.com'
                 expect {
                   @collection.invite([
                     {email: new_email, rank: user_1_rank},
