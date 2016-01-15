@@ -12,9 +12,10 @@ describe Api::CollectionsController do
     @collection = create(:collection, user: @user_owner)
     @collection.products.append(create(:product, :with_reviews))
     @collection.share([
-      { 'id' => @user_editor.id, 'rank' => 1 }, # Make the editor into an editor
-      { 'id' => @user_viewer.id, 'rank' => 0 }, # Make the viewer into a viewer
-    ])
+                          {id: @user_editor.id, rank: 1}, # Make the editor into an editor
+                          {id: @user_viewer.id, rank: 0}, # Make the viewer into a viewer
+                      ])
+
   end
 
   shared_examples_for 'an API that returns a collection' do
@@ -32,7 +33,7 @@ describe Api::CollectionsController do
       expect(@body['user']['id']).to eq @user_owner.id
       expect(@body['user']['name']).to eq @user_owner.name
       [:id, :name, :description, :rating, :author, :short_desc, :slug].each do |column|
-        expect(@body['products'].map{|p| p[column.to_s]}.sort).to eq @collection.reload.products.map(&column).sort
+        expect(@body['products'].map { |p| p[column.to_s] }.sort).to eq @collection.reload.products.map(&column).sort
       end
     end
   end
@@ -43,7 +44,7 @@ describe Api::CollectionsController do
     end
 
     it 'returns no collection' do
-      empty_hash = {'collection' => {}}
+      empty_hash = {collection: {}}
       expect(@body).to eq empty_hash
     end
   end
@@ -54,7 +55,7 @@ describe Api::CollectionsController do
     end
 
     it 'returns no collection' do
-      empty_hash = {'collection' => {}}
+      empty_hash = {collection: {}}
       expect(@body).to eq empty_hash
     end
   end
@@ -71,7 +72,7 @@ describe Api::CollectionsController do
       expect(Collection.all.size).to eq 0
 
       params = FactoryGirl.attributes_for(:collection)
-                          .merge({ products: create_list(:product, 2, :with_reviews), format: :json })
+                   .merge({products: create_list(:product, 2, :with_reviews), format: :json})
       post :create, params
 
       @body = JSON.parse(response.body)
@@ -115,7 +116,7 @@ describe Api::CollectionsController do
         it_behaves_like 'an API that returns a collection'
 
         it 'adds the new product to the collection' do
-          expect(@body['products'].map{|p| p['id']}).to eq @collection.products.map(&:id)
+          expect(@body['products'].map { |p| p['id'] }).to eq @collection.products.map(&:id)
           expect(@collection.products).to include @new_product
         end
       end
@@ -173,15 +174,15 @@ describe Api::CollectionsController do
           expect(@collection.sharees.length).to eq 0
           @email_1 = Faker::Internet.safe_email
           @email_2 = Faker::Internet.safe_email
-          post(:share,  id: @collection.id,
-                        users: [
-                          { id: @user_editor.id, rank: 1 },
-                          { id: @user_viewer.id, rank: 0 },
-                        ],
-                        emails: [
-                          { email: @email_1, rank: 1 },
-                          { email: @email_2, rank: 0 },
-                        ], format: :json)
+          post(:share, id: @collection.id,
+               users: [
+                   {id: @user_editor.id, rank: 1},
+                   {id: @user_viewer.id, rank: 0},
+               ],
+               emails: [
+                   {email: @email_1, rank: 1},
+                   {email: @email_2, rank: 0},
+               ], format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -196,14 +197,14 @@ describe Api::CollectionsController do
         end
 
         it 'has the new ranks in the api response' do
-          expect(@body['users'].map {|u| {id: u['id'], rank: u['rank']}}).to eq [
-            { id: @user_editor.id, rank: 'collaborator' },
-            { id: @user_viewer.id, rank: 'viewer' },
-          ]
-          expect(@body['emails'].map {|u| {email: u['email'], rank: u['rank']}}).to eq [
-            { email: @email_1, rank: 'collaborator' },
-            { email: @email_2, rank: 'viewer' },
-          ]
+          expect(@body['users'].map { |u| {id: u['id'], rank: u['rank']} }).to eq [
+                                                                                      {id: @user_editor.id, rank: 'collaborator'},
+                                                                                      {id: @user_viewer.id, rank: 'viewer'},
+                                                                                  ]
+          expect(@body['emails'].map { |u| {email: u['email'], rank: u['rank']} }).to eq [
+                                                                                             {email: @email_1, rank: 'collaborator'},
+                                                                                             {email: @email_2, rank: 'viewer'},
+                                                                                         ]
         end
       end
     end
@@ -236,7 +237,7 @@ describe Api::CollectionsController do
         it_behaves_like 'an API that returns a collection'
 
         it 'adds the new product to the collection' do
-          expect(@body['products'].map{|p| p['id']}).to eq @collection.products.map(&:id)
+          expect(@body['products'].map { |p| p['id'] }).to eq @collection.products.map(&:id)
           expect(@collection.products).to include @new_product
         end
       end
@@ -288,10 +289,10 @@ describe Api::CollectionsController do
 
       describe 'POST #share' do
         before do
-          post(:share,  id: @collection.id,
-                        users: [
-                          { id: @user_viewer.id, rank: 0 },
-                        ], format: :json)
+          post(:share, id: @collection.id,
+               users: [
+                   {id: @user_viewer.id, rank: 0},
+               ], format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -354,10 +355,10 @@ describe Api::CollectionsController do
 
       describe 'POST #share' do
         before do
-          post(:share,  id: @collection.id,
-                        users: [
-                          { id: @user_editor.id, rank: 0 },
-                        ], format: :json)
+          post(:share, id: @collection.id,
+               users: [
+                   {id: @user_editor.id, rank: 0},
+               ], format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -420,10 +421,10 @@ describe Api::CollectionsController do
 
       describe 'POST #share' do
         before do
-          post(:share,  id: @collection.id,
-                        users: [
-                          { id: @user_editor.id, rank: 0 },
-                        ], format: :json)
+          post(:share, id: @collection.id,
+               users: [
+                   {id: @user_editor.id, rank: 0},
+               ], format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -469,7 +470,7 @@ describe Api::CollectionsController do
         it_behaves_like 'an API that returns a collection'
 
         it 'adds the new product to the collection' do
-          expect(@body['products'].map{|p| p['id']}).to eq @collection.products.map(&:id)
+          expect(@body['products'].map { |p| p['id'] }).to eq @collection.products.map(&:id)
           expect(@collection.products).to include @new_product
         end
       end
@@ -525,11 +526,11 @@ describe Api::CollectionsController do
         before do
           CollectionUser.all.destroy_all
           expect(@collection.sharees.length).to eq 0
-          post(:share,  id: @collection.id,
-                        users: [
-                          { id: @user_editor.id, rank: 1 },
-                          { id: @user_viewer.id, rank: 0 },
-                        ], format: :json)
+          post(:share, id: @collection.id,
+               users: [
+                   {id: @user_editor.id, rank: 1},
+                   {id: @user_viewer.id, rank: 0},
+               ], format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -540,10 +541,10 @@ describe Api::CollectionsController do
         end
 
         it 'has the new ranks in the api response' do
-          expect(@body['users'].map {|u| {id: u['id'], rank: u['rank']}}).to eq [
-            { id: @user_editor.id, rank: 'collaborator' },
-            { id: @user_viewer.id, rank: 'viewer' },
-          ]
+          expect(@body['users'].map { |u| {id: u['id'], rank: u['rank']} }).to eq [
+                                                                                      {id: @user_editor.id, rank: 'collaborator'},
+                                                                                      {id: @user_viewer.id, rank: 'viewer'},
+                                                                                  ]
         end
       end
     end
@@ -576,7 +577,7 @@ describe Api::CollectionsController do
         it_behaves_like 'an API that returns a collection'
 
         it 'adds the new product to the collection' do
-          expect(@body['products'].map{|p| p['id']}).to eq @collection.products.map(&:id)
+          expect(@body['products'].map { |p| p['id'] }).to eq @collection.products.map(&:id)
           expect(@collection.products).to include @new_product
         end
       end
@@ -628,10 +629,10 @@ describe Api::CollectionsController do
 
       describe 'POST #share' do
         before do
-          post(:share,  id: @collection.id,
-                        users: [
-                          { id: @user_viewer.id, rank: 0 },
-                        ], format: :json)
+          post(:share, id: @collection.id,
+               users: [
+                   {id: @user_viewer.id, rank: 0},
+               ], format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -694,10 +695,10 @@ describe Api::CollectionsController do
 
       describe 'POST #share' do
         before do
-          post(:share,  id: @collection.id,
-                        users: [
-                          { id: @user_editor.id, rank: 0 },
-                        ], format: :json)
+          post(:share, id: @collection.id,
+               users: [
+                   {id: @user_editor.id, rank: 0},
+               ], format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -760,10 +761,10 @@ describe Api::CollectionsController do
 
       describe 'POST #share' do
         before do
-          post(:share,  id: @collection.id,
-                        users: [
-                          { id: @user_editor.id, rank: 0 },
-                        ], format: :json)
+          post(:share, id: @collection.id,
+               users: [
+                   {id: @user_editor.id, rank: 0},
+               ], format: :json)
           @body = JSON.parse(response.body)
         end
 
