@@ -62,7 +62,7 @@ describe "Product page", js: true do
       end
 
       it "doesn't display the other tabs" do
-        expect(page).to_not have_content('Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!')
+        expect(page).to_not have_content('Collections are created by users to group products they are interested in. They can even be shared or made public. Create one yourself!')
         expect(page).to_not have_content('Feature Coming Soon')
       end
     end
@@ -78,24 +78,21 @@ describe "Product page", js: true do
       end
 
       it 'has a message informing the user about collections' do
-        expect(page).to have_content('Collections are created by users to group products they are interested. They can even be shared or made public. Create one yourself!')
+        expect(page).to have_content('Collections are created by users to group products they are interested in. They can even be shared or made public. Create one yourself!')
       end
 
       it "displays public collections" do
         expect(page).to have_content @public_collection.name
-        expect(page).to have_content @public_collection.display_date
         expect(page).to have_content @public_collection.user.name
       end
 
       it 'displays owned collections' do
         expect(page).to have_content @owned_collection.name
-        expect(page).to have_content @owned_collection.display_date
         expect(page).to have_content 'Me'
       end
 
       it "doesn't display private collections" do
         expect(page).to_not have_content @private_collection.name
-        expect(page).to_not have_content @private_collection.display_date
         expect(page).to_not have_content @private_collection.user.name
       end
 
