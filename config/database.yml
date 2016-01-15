@@ -1,15 +1,15 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: <%= ENV['DB_PORT_5432_TCP_ADDR'] %>
   pool: 5
   reaping_frequency: 10
-  user: <%= ENV['FLETCHER_DATABASE_USER'] %>
-  password: <%= ENV['FLETCHER_DATABASE_PASSWORD'] %>
 
 development:
   <<: *default
   database: fletcher_development
+  user: <%= ENV['FLETCHER_DATABASE_USER'] %>
+  password: <%= ENV['FLETCHER_DATABASE_PASSWORD'] %>
+  host: <%= ENV['DB_PORT_5432_TCP_ADDR'] %>
 
 test:
   <<: *default
@@ -18,3 +18,6 @@ test:
 production:
   <<: *default
   database: <%= ENV['FLETCHER_DATABASE_NAME'] %>
+  user: <%= ENV['FLETCHER_DATABASE_USER'] %>
+  password: <%= ENV['FLETCHER_DATABASE_PASSWORD'] %>
+  host: <%= ENV['DB_PORT_5432_TCP_ADDR'] %>
