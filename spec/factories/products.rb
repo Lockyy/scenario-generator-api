@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :product do
-    name { Faker::Company.name }
+    name { "#{Faker::Company.name}#{rand(10000)}" }
     description { Faker::Lorem.paragraph }
     url { Faker::Internet.url }
     user_id @user
