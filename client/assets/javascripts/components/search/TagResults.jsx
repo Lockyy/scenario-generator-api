@@ -94,6 +94,7 @@ const TagResults = React.createClass ({
             </div>
           )
         }
+        break
       case 'size':
         return this.getCountResultsMessage('top-right');
     }

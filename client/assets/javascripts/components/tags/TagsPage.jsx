@@ -80,7 +80,7 @@ const TagsPage = React.createClass({
           title={letter}
           topRight={topRight}
           topLeft={'link'}
-          containerClass={containerClass}
+          className={containerClass}
           link={`/app/tags/${letter}`} />
       )
     }

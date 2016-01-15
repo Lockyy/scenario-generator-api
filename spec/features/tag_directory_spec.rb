@@ -7,6 +7,8 @@ describe "Tag Directory", js: true do
     @user = login_user
     @tags_a = create_list(:tag, 12, :name_a)
     @tags_b = create_list(:tag, 13, :name_b)
+    create(:review, tags: @tags_a)
+    create(:review, tags: @tags_b)
     visit "/app/tags"
     wait_for_ajax
   end
