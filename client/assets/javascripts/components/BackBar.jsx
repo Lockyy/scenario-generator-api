@@ -8,13 +8,13 @@ const BackBar = React.createClass ({
 
   render: function() {
     return (
-      <div className='back-bar visible-xs'>
+      <RenderMobile component='div' className='back-bar'>
         <Link to='/app/tags'>
-          Back
+           Back
         </Link>
-      </div>
+      </RenderMobile>
     )
   }
-})
+});
 
 export default BackBar;
