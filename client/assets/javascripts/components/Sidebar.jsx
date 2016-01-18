@@ -93,14 +93,17 @@ const Sidebar = React.createClass ({
     return _.map(sideSections, function(section) {
       let sectionName = section.toLowerCase();
       let sectionNameDisplay = "My " + section;
+      let href = "/app/users/current#" + sectionName;
 
       return (
         <a
           className={'sidebar-link sidebar-row ' + sectionName}
           key={sectionName}
-          onClick={function() {
+          href={'#'}
+          onClick={function(e) {
+            e.preventDefault()
             _this.closeHamburgerMenu();
-            window.location.href = "/app/users/current#" + sectionName;
+            window.location.href = href;
             if(window.location.pathname == '/app/users/current') {
               window.location.reload();
             }

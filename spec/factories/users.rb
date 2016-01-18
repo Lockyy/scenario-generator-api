@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :user do
-    name { Faker::Name.name }
-    email { Faker::Internet.safe_email }
+    name { "#{Faker::Name.name}#{rand(10000)}" }
+    email { "#{rand(10000)}#{Faker::Internet.safe_email}" }
     job_title { Faker::Company.bs }
     location { Faker::Address.city }
     avatar_url { Faker::Company.logo }

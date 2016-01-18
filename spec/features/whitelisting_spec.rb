@@ -39,8 +39,8 @@ describe "Whitelisting", js: true do
             visit '/admin'
           end
 
-          it 'redirects the user back to the landing page' do
-            expect(page.current_path).to eq '/'
+          it 'redirects the user back to the app' do
+            expect(page.current_path).to eq '/app'
           end
         end
       end
@@ -61,7 +61,7 @@ describe "Whitelisting", js: true do
           end
 
           it 'shows an error' do
-            expect(page).to have_content t(:internal_error_login_message)
+            expect(page).to have_content I18n.t(:internal_error_login_message)
           end
         end
 
@@ -103,8 +103,8 @@ describe "Whitelisting", js: true do
             visit '/admin'
           end
 
-          it 'redirects the user to the landing page' do
-            expect(page.current_path).to eq '/'
+          it 'redirects the user to the app' do
+            expect(page.current_path).to eq '/app'
           end
         end
       end
@@ -130,8 +130,8 @@ describe "Whitelisting", js: true do
             visit '/admin'
           end
 
-          it 'redirects the user to the landing page' do
-            expect(page.current_path).to eq '/admin'
+          it 'redirects the user to the app' do
+            expect(page.current_path).to eq '/app'
           end
         end
       end
@@ -244,10 +244,6 @@ describe "Whitelisting", js: true do
 
           it 'works' do
             expect(page.current_path).to eq '/app'
-          end
-
-          it 'shows an error' do
-            expect(page).to have_content t(:internal_error_login_message)
           end
         end
 

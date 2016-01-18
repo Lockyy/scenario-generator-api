@@ -41,19 +41,69 @@ describe "Hamburger Menu", js: true do
       expect(first('.menu.hamburger-menu')).to have_link 'Log out'
     end
 
-    it 'shows reviews' do
-      expect(first('.menu.hamburger-menu')).to have_content 'My recent reviews'
-      expect(first('.menu.hamburger-menu')).to have_content @review.product.name
+    describe 'My Profile button' do
+      it 'takes you to your profile' do
+        expect(first('.menu.hamburger-menu')).to have_link 'My Profile'
+        expect {
+          click_link('My Profile')
+          wait_for_ajax
+        }.to change {
+          uri = URI.parse(current_url)
+          uri.fragment ? "#{uri.path}##{uri.fragment}" : uri.path
+        }.from('/app').to('/app/users/current')
+      end
     end
 
-    it 'shows bookmarks' do
-      expect(first('.menu.hamburger-menu')).to have_content 'My bookmarks'
-      expect(first('.menu.hamburger-menu')).to have_content @bookmark.product.name
+    describe 'My Reviews link' do
+      it 'takes you to your reviews' do
+        expect(first('.menu.hamburger-menu')).to have_link 'My Reviews'
+        expect {
+          click_link('My Reviews')
+          wait_for_ajax
+        }.to change {
+          uri = URI.parse(current_url)
+          uri.fragment ? "#{uri.path}##{uri.fragment}" : uri.path
+        }.from('/app').to('/app/users/current#reviews')
+      end
     end
 
-    it 'shows collections' do
-      expect(first('.menu.hamburger-menu')).to have_content 'My Collections'
-      expect(first('.menu.hamburger-menu')).to have_content @collection.name
+    describe 'My Tags link' do
+      it 'takes you to your tags' do
+        expect(first('.menu.hamburger-menu')).to have_link 'My Tags'
+        expect {
+          click_link('My Tags')
+          wait_for_ajax
+        }.to change {
+          uri = URI.parse(current_url)
+          uri.fragment ? "#{uri.path}##{uri.fragment}" : uri.path
+        }.from('/app').to('/app/users/current#tags')
+      end
+    end
+
+    describe 'My Bookmarks link' do
+      it 'takes you to your bookmarks' do
+        expect(first('.menu.hamburger-menu')).to have_link 'My Bookmarks'
+        expect {
+          click_link('My Bookmarks')
+          wait_for_ajax
+        }.to change {
+          uri = URI.parse(current_url)
+          uri.fragment ? "#{uri.path}##{uri.fragment}" : uri.path
+        }.from('/app').to('/app/users/current#bookmarks')
+      end
+    end
+
+    describe 'My Collections link' do
+      it 'takes you to your collections' do
+        expect(first('.menu.hamburger-menu')).to have_link 'My Collections'
+        expect {
+          click_link('My Collections')
+          wait_for_ajax
+        }.to change {
+          uri = URI.parse(current_url)
+          uri.fragment ? "#{uri.path}##{uri.fragment}" : uri.path
+        }.from('/app').to('/app/users/current#collections')
+      end
     end
 
     describe 'clicking the close hamburger menu button' do

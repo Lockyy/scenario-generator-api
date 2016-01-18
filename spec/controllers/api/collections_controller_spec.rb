@@ -44,7 +44,7 @@ describe Api::CollectionsController do
     end
 
     it 'returns no collection' do
-      empty_hash = {collection: {}}
+      empty_hash = {'collection' => {}}
       expect(@body).to eq empty_hash
     end
   end
@@ -55,7 +55,7 @@ describe Api::CollectionsController do
     end
 
     it 'returns no collection' do
-      empty_hash = {collection: {}}
+      empty_hash = {'collection' => {}}
       expect(@body).to eq empty_hash
     end
   end
@@ -172,16 +172,16 @@ describe Api::CollectionsController do
         before do
           CollectionUser.all.destroy_all
           expect(@collection.sharees.length).to eq 0
-          @email_1 = Faker::Internet.safe_email
-          @email_2 = Faker::Internet.safe_email
+          @email_1 = 'example@jll.com'
+          @email_2 = 'example2@jll.com'
           post(:share, id: @collection.id,
                users: [
-                   {id: @user_editor.id, rank: 1},
-                   {id: @user_viewer.id, rank: 0},
+                 { id: @user_editor.id, rank: 1 },
+                 { id: @user_viewer.id, rank: 0 },
                ],
                emails: [
-                   {email: @email_1, rank: 1},
-                   {email: @email_2, rank: 0},
+                 { email: @email_1, rank: 1 },
+                 { email: @email_2, rank: 0 },
                ], format: :json)
           @body = JSON.parse(response.body)
         end
@@ -205,6 +205,45 @@ describe Api::CollectionsController do
                                                                                              {email: @email_1, rank: 'collaborator'},
                                                                                              {email: @email_2, rank: 'viewer'},
                                                                                          ]
+        end
+
+        describe 'email domain filtering' do
+          before do
+            CollectionUser.all.destroy_all
+            expect(@collection.sharees.length).to eq 0
+          end
+
+          describe 'sending a non-jll email' do
+            before do
+              @email_1 = 'example@notjll.com'
+              post(:share,  id: @collection.id,
+                            emails: [
+                              { email: @email_1, rank: 1 },
+                            ], format: :json)
+              @body = JSON.parse(response.body)
+            end
+
+            it 'does not create any invites' do
+              expect(@collection.reload.invited_sharees.length).to eq 0
+            end
+          end
+
+          ['am.jll.com', 'eu.jll.com', 'ap.jll.com', 'jll.com'].each do |domain|
+            describe "sending a #{domain} email" do
+              before do
+                @email_1 = "example@#{domain}"
+                post(:share,  id: @collection.id,
+                              emails: [
+                                { email: @email_1, rank: 1 },
+                              ], format: :json)
+                @body = JSON.parse(response.body)
+              end
+
+              it 'creates an invite for that email' do
+                expect(@collection.reload.invited_sharees.length).to eq 1
+              end
+            end
+          end
         end
       end
     end
