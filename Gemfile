@@ -65,6 +65,7 @@ group :development, :test do
 end
 
 group :test  do
+  gem 'connection_pool'
   gem 'shoulda-matchers'
   gem 'capybara'
   gem 'capybara-screenshot'
