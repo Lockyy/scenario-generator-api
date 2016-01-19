@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Link } from 'react-router';
 import FluxProductReviewsActions from '../../actions/FluxProductReviewsActions'
 import ReviewsStore from '../../stores/ReviewsStore'
+import ProductStore from '../../stores/ProductStore'
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
@@ -21,8 +22,13 @@ const Reviews = React.createClass({
   },
 
   componentDidMount: function() {
+    ProductStore.listen(this.onChangeProduct);
     ReviewsStore.listen(this.onChange.bind(this));
     FluxProductReviewsActions.fetchReviews(this.props.productID, this.currentSorting());
+  },
+
+  onChangeProduct: function (data) {
+      this.setState({data:{product_id: data.data.id, reviews: data.data.reviews}})
   },
 
   onChange: function(data) {
