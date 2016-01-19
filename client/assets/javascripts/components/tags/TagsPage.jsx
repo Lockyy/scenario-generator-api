@@ -6,7 +6,6 @@ import TagsPageStore from '../../stores/TagsPageStore'
 import TagResults from '../search/TagResults'
 import BackBar from '../BackBar'
 import RenderDesktop from '../RenderDesktop';
-import RenderMobile from '../RenderMobile';
 import Decide from '../Decide';
 
 
