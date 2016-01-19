@@ -69,7 +69,9 @@ const Dropdown = React.createClass({
   },
 
   getMobileImage: function(src){
-    return (<RenderMobile> <img src={src}/> </RenderMobile>);
+    return (
+        <RenderMobile> <img src={src}/> </RenderMobile>
+    );
   },
 
   renderActiveOption: function() {
