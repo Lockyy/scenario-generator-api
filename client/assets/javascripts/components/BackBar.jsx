@@ -9,7 +9,7 @@ const BackBar = React.createClass ({
 
   render: function() {
     return (
-      <RenderMobile component='div' className='back-bar'>
+      <RenderMobile className='back-bar'>
         <Link to='/app/tags'>
            Back
         </Link>
