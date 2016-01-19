@@ -41,10 +41,11 @@ const UserProfileRecentActivity  = React.createClass({
             component={CollectionsCollection}
             emptyMessage='This user does not collaborate on any collections.'/>
 
-        <RenderMobile component={CollectionsCollection}
-                      mobile="true"
-                      className='horizontal-padding-2'
-                      emptyMessage='This user does not collaborate on any collections.'/>
+        <RenderMobile
+            component={CollectionsCollection}
+            mobile="true"
+            className='horizontal-padding-2'
+            emptyMessage='This user does not collaborate on any collections.'/>
       </div>
     );
   },
