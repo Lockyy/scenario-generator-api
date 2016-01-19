@@ -63,8 +63,8 @@ const TagsPage = React.createClass({
   renderTagSection: function(letter) {
     let topRight = this.getLetter() ? 'size' : 'hide';
     let tagSection = this.state.data.tags[letter];
-    let tagsResults =
-        (<TagResults
+    let tagsResults = (
+        <TagResults
             data={{
             total: tagSection.total,
             data: tagSection.tags}}
@@ -72,7 +72,8 @@ const TagsPage = React.createClass({
             topRight={topRight}
             topLeft={'link'}
             className={letter}
-            link={`/app/tags/${letter}`} />);
+            link={`/app/tags/${letter}`} />
+    );
 
     if(!this.getLetter() || (this.getLetter() && this.getLetter() == letter)){
       return (
