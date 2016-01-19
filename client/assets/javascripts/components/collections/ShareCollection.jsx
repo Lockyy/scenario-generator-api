@@ -319,7 +319,6 @@ const ShareCollection = React.createClass ({
   },
 
   close: function() {
-    debugger
     this.setState({unsaved_collection: this.state.collection});
     this.props.close()
   },
