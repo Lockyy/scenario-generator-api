@@ -5,6 +5,7 @@ import TabbedArea from '../TabbedArea';
 import CollectionsCollection from '../collections/CollectionsCollection';
 import RecentActivitySection from './RecentActivitySection';
 import RenderMobile from '../RenderMobile';
+import RenderDesktop from '../RenderDesktop';
 
 const UserProfileRecentActivity  = React.createClass({
   displayName: 'UserProfilePage',
@@ -36,16 +37,14 @@ const UserProfileRecentActivity  = React.createClass({
         <div className='placeholder-section message'>
           Collections are created by users to group products they are interested in.
         </div>
-        <CollectionsCollection
-          className='hidden-xs'
-          emptyMessage='This user does not collaborate on any collections.' />
+        <RenderDesktop
+            component={CollectionsCollection}
+            emptyMessage='This user does not collaborate on any collections.'/>
 
-        <RenderMobile>
-          <CollectionsCollection
-              mobile="true"
-              className='horizontal-padding-2'
-              emptyMessage='This user does not collaborate on any collections.' />
-        </RenderMobile>
+        <RenderMobile component={CollectionsCollection}
+                      mobile="true"
+                      className='horizontal-padding-2'
+                      emptyMessage='This user does not collaborate on any collections.'/>
       </div>
     );
   },
