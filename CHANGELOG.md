@@ -3,7 +3,18 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
-### v1.1.0
+## v1.1.2
+
+### Changes
+- Migrate from using visible-xs and hidden-xs throughout the app to using the RenderMobile and RenderDesktop components.
+- Add user to the Slacked message sent on Review creation
+
+## v1.1.1
+
+### Bugfix
+- Change email on Internal website warning from Ed's email address to Americas.TechnologyInnovation@am.jll.com
+
+## v1.1.0
 
 ### Features
 - Adds collections. Users can now create groups of products and share them with other users.
@@ -61,14 +72,14 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 - Fix issue with text overflow caused by long review titles.
 - Various other fixes.
 
-### v1.0.1
+## v1.0.1
 
 #### Bugfixes
 - Tags no longer display when no reviews or companies are associated with them.
 - Tags are now all displayed on the tags directory.
 - The tag directory is now sorted alphabetically within sections.
 
-### v1.0.0
+## v1.0.0
 
 ####Features
 - User login via Yammer
