@@ -4,6 +4,7 @@ import ReviewBox from './ReviewBox';
 import TabbedArea from '../TabbedArea';
 import CollectionsCollection from '../collections/CollectionsCollection';
 import RecentActivitySection from './RecentActivitySection';
+import RenderMobile from '../RenderMobile';
 
 const UserProfileRecentActivity  = React.createClass({
   displayName: 'UserProfilePage',
@@ -38,10 +39,13 @@ const UserProfileRecentActivity  = React.createClass({
         <CollectionsCollection
           className='hidden-xs'
           emptyMessage='This user does not collaborate on any collections.' />
-        <CollectionsCollection
-          mobile="true"
-          className='horizontal-padding-2 visible-xs'
-          emptyMessage='This user does not collaborate on any collections.' />
+
+        <RenderMobile>
+          <CollectionsCollection
+              mobile="true"
+              className='horizontal-padding-2'
+              emptyMessage='This user does not collaborate on any collections.' />
+        </RenderMobile>
       </div>
     );
   },
