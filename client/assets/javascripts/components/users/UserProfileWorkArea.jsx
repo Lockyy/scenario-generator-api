@@ -50,14 +50,12 @@ const UserProfileWorkArea  = React.createClass({
         <div className='btn btn-round btn-grey-inverted bottom-margin-2' onClick={this.showCreateCollectionModal}>
           Create Collection
         </div>
-        <CollectionsCollection
-          className='hidden-xs' />
 
-        <RenderMobile>
-          <CollectionsCollection
-              mobile="true"
-              className='horizontal-padding-2' />
-        </RenderMobile>
+        <RenderDesktop component={CollectionsCollection} />
+
+        <RenderMobile component={CollectionsCollection}
+                      mobile="true"
+                      className='horizontal-padding-2'/>
       </div>
     );
   },
