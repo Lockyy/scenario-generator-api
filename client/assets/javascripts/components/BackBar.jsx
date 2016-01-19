@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import RenderMobile from './RenderMobile';
 import { Link, Navigation } from 'react-router';
 
 const BackBar = React.createClass ({
