@@ -94,7 +94,7 @@ const UserListModal = React.createClass ({
 
   renderHeader: function() {
     return (
-    <RenderDesktop component='div' className='header'>
+    <RenderDesktop className='header'>
       <span className='title'>
         {this.state.title}
       </span>
