@@ -432,9 +432,7 @@ const CollectionPage = React.createClass({
     let link = this.getPreviousLink();
 
     return (
-    <RenderDesktop
-        component='div'
-        className={'vertical-padding red-bottom-border bottom-margin color-dark-grey'}>
+    <RenderDesktop className={'vertical-padding red-bottom-border bottom-margin color-dark-grey'}>
       {this.renderFilePathLink(name, link)}
       {this.renderFilePathLink('Collections', link + '#collections')}
       <span className='color-red'>{this.state.data.collection.name}</span>
@@ -523,9 +521,7 @@ const CollectionPage = React.createClass({
           { this.renderProductsTable(this.state.data.collection.products) }
           { this.renderCollaboratorInfo() }
         </RenderDesktop>
-        <RenderMobile
-            component='div'
-            className='row background-light-grey'>
+        <RenderMobile className='row background-light-grey'>
           <div className='col-xs-12'>
             { this.renderProductsTable(this.state.data.collection.products) }
           </div>
