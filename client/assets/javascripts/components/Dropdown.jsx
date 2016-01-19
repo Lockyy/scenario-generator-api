@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import RenderMobile from './RenderMobile';
 import { Link } from 'react-router';
 
 const Dropdown = React.createClass({
@@ -30,7 +31,7 @@ const Dropdown = React.createClass({
   },
 
   renderSortOption: function(option) {
-    let image = option.image ? <img class="visible-xs" src={option.image}/> : null;
+    let image = option.image ? this.getMobileImage(option.image) : null;
 
     if(option.option != this.props.active) {
       return (
@@ -67,10 +68,16 @@ const Dropdown = React.createClass({
     }
   },
 
+  getMobileImage: function(src){
+    return (
+        <RenderMobile> <img src={src}/> </RenderMobile>
+    );
+  },
+
   renderActiveOption: function() {
     let self = this;
     let active = _.find(this.props.options, function(op){return op.option == self.props.active });
-    let image = active.image ? <img class="visible-xs" src={active.image}/> : '';
+    let image = active.image ? this.getMobileImage(active.image) : '';
     return (
       <div  className={`active-dropdown-link  ${image ? 'active-dropdown-link-with-image' : ''}`}
             onClick={ this.activeClicked } >

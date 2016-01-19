@@ -7,6 +7,8 @@ import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
 import FluxModalActions from '../../actions/FluxModalActions';
 import Avatar from '../Avatar';
 import Footer from '../Footer';
+import RenderMobile from '../RenderMobile';
+import RenderDesktop from '../RenderDesktop';
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
@@ -92,12 +94,12 @@ const UserListModal = React.createClass ({
 
   renderHeader: function() {
     return (
-      <div className='header hidden-xs'>
-        <span className='title'>
-          {this.state.title}
-        </span>
-        <a onClick={this.close} className='close'></a>
-      </div>
+    <RenderDesktop className='header'>
+      <span className='title'>
+        {this.state.title}
+      </span>
+      <a onClick={this.close} className='close'></a>
+    </RenderDesktop>
     )
   },
 
@@ -114,8 +116,7 @@ const UserListModal = React.createClass ({
 
         {this.renderHeader()}
         {this.renderUsers()}
-
-        <Footer className='visible-xs' />
+        <RenderMobile component={Footer} />
       </Modal>
     )
   }

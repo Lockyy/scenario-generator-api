@@ -8,7 +8,6 @@ import FluxNotificationsActions from '../../actions/FluxNotificationsActions';
 import CollectionStore from '../../stores/CollectionStore'
 import Rating from '../Rating'
 import Avatar from '../Avatar'
-import Decide from '../Decide';
 import RenderDesktop from '../RenderDesktop';
 import RenderMobile from '../RenderMobile';
 import TableDisplay from '../TableDisplay'
@@ -429,15 +428,15 @@ const CollectionPage = React.createClass({
   },
 
   renderFilePath: function() {
-    let name = this.getPreviousName()
-    let link = this.getPreviousLink()
+    let name = this.getPreviousName();
+    let link = this.getPreviousLink();
 
     return (
-      <div className='vertical-padding red-bottom-border bottom-margin color-dark-grey hidden-xs'>
-        {this.renderFilePathLink(name, link)}
-        {this.renderFilePathLink('Collections', link + '#collections')}
-        <span className='color-red'>{this.state.data.collection.name}</span>
-      </div>
+    <RenderDesktop className={'vertical-padding red-bottom-border bottom-margin color-dark-grey'}>
+      {this.renderFilePathLink(name, link)}
+      {this.renderFilePathLink('Collections', link + '#collections')}
+      <span className='color-red'>{this.state.data.collection.name}</span>
+    </RenderDesktop>
     )
   },
 
@@ -515,20 +514,21 @@ const CollectionPage = React.createClass({
         {this.renderFilePath()}
         {this.renderBackButton()}
         {this.renderHeader()}
-        <TabbedArea
-          containerClass={'no-border no-margin no-child-padding hidden-xs'}
-          actions={actionList}>
+        <RenderDesktop
+            component={TabbedArea}
+            containerClass={'no-border no-margin no-child-padding'}
+            actions={actionList}>
           { this.renderProductsTable(this.state.data.collection.products) }
           { this.renderCollaboratorInfo() }
-        </TabbedArea>
-        <div className='visible-xs row background-light-grey'>
+        </RenderDesktop>
+        <RenderMobile className='row background-light-grey'>
           <div className='col-xs-12'>
             { this.renderProductsTable(this.state.data.collection.products) }
           </div>
-        </div>
+        </RenderMobile>
       </div>
     );
   }
-})
+});
 
 export default CollectionPage;

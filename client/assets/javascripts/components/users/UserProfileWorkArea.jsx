@@ -6,6 +6,8 @@ import UserTags from './UserTags';
 import UserBookmarks from './UserBookmarks';
 import CollectionsCollection from '../collections/CollectionsCollection';
 import CreateCollectionMixin from '../collections/CreateCollectionMixin'
+import RenderMobile from '../RenderMobile';
+import RenderDesktop from '../RenderDesktop';
 
 const UserProfileWorkArea  = React.createClass({
   displayName: 'UserProfileWorkArea',
@@ -49,11 +51,8 @@ const UserProfileWorkArea  = React.createClass({
         <div className='btn btn-round btn-grey-inverted bottom-margin-2' onClick={this.showCreateCollectionModal}>
           Create Collection
         </div>
-        <CollectionsCollection
-          className='hidden-xs' />
-        <CollectionsCollection
-          mobile="true"
-          className='horizontal-padding-2 visible-xs' />
+        <RenderDesktop component={CollectionsCollection} />
+        <RenderMobile component={CollectionsCollection} mobile="true" className='horizontal-padding-2'/>
       </div>
     );
   },

@@ -3,20 +3,21 @@ import FluxModalActions from '../../actions/FluxModalActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import CreateCollectionDesktopModal from './CreateCollectionDesktopModal'
 import CreateCollectionMobileModal from './CreateCollectionMobileModal'
+import RenderMobile from '../RenderMobile'
+import RenderDesktop from '../RenderDesktop'
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
 const CreateCollectionMixin = {
   renderCreateCollectionModal: function () {
-    let mobileModal = <CreateCollectionMobileModal
-      close={this.closeCreateCollectionModal}/>;
-
-    let desktopModal = <CreateCollectionDesktopModal
-      close={this.closeCreateCollectionModal}/>;
-
-    let modal = $(window).width() <= 768 ? mobileModal : desktopModal;
-    return {modal}
-  },
+    return (
+        <div>
+          <RenderMobile component={CreateCollectionMobileModal} close={this.closeCreateCollectionModal} />
+          <RenderDesktop component={CreateCollectionDesktopModal} close={this.closeCreateCollectionModal} />
+        </div>
+    )
+  }
+  ,
 
   closeCreateCollectionModal: function () {
     FluxModalActions.closeModal();

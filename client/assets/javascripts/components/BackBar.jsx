@@ -1,5 +1,6 @@
 import React from 'react';
 import _ from 'lodash';
+import RenderMobile from './RenderMobile';
 import { Link, Navigation } from 'react-router';
 
 const BackBar = React.createClass ({
@@ -8,13 +9,13 @@ const BackBar = React.createClass ({
 
   render: function() {
     return (
-      <div className='back-bar visible-xs'>
+      <RenderMobile className='back-bar'>
         <Link to='/app/tags'>
-          Back
+           Back
         </Link>
-      </div>
+      </RenderMobile>
     )
   }
-})
+});
 
 export default BackBar;
