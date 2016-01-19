@@ -5,6 +5,10 @@ import FluxTagsPageActions from '../../actions/FluxTagsPageActions'
 import TagsPageStore from '../../stores/TagsPageStore'
 import TagResults from '../search/TagResults'
 import BackBar from '../BackBar'
+import RenderDesktop from '../RenderDesktop';
+import RenderMobile from '../RenderMobile';
+import Decide from '../Decide';
+
 
 const TagsPage = React.createClass({
   mixins: [ Navigation ],
@@ -39,50 +43,45 @@ const TagsPage = React.createClass({
 
   renderLeftBar: function() {
     if(this.state.data.tags) {
-      let containerClass = 'col-xs-12 col-sm-3 left-bar';
-      if(this.getLetter()) {
-        containerClass = `${containerClass} hidden-xs`
-      }
-
-      return (
-        <div>
-          <div className={containerClass}>
+      let leftBar = (
+          <div className='col-xs-12 col-sm-3 left-bar'>
             <Link to='/app/tags' className='tagged-in'>
               All Tags
             </Link>
             { _.map(Object.keys(this.state.data.tags), this.tagLinks) }
           </div>
-        </div>
+      );
+
+      return (
+          <Decide
+              condition={this.getLetter()}
+              success={() => <RenderDesktop> {leftBar} </RenderDesktop>}
+              failure={() => leftBar } />
       )
     }
   },
 
   renderTagSection: function(letter) {
-    let topRight;
-    let containerClass;
-
-    if(this.getLetter()) {
-      topRight = 'size';
-      containerClass = `${letter}`
-    } else {
-      topRight = 'hide';
-      containerClass = `${letter} hidden-xs`
-    }
-
+    let topRight = this.getLetter() ? 'size' : 'hide';
     let tagSection = this.state.data.tags[letter];
-
-    if(!this.getLetter() || (this.getLetter() && this.getLetter() == letter)) {
-      return (
-        <TagResults
-          data={{
+    let tagsResults =
+        (<TagResults
+            data={{
             total: tagSection.total,
             data: tagSection.tags}}
-          title={letter}
-          topRight={topRight}
-          topLeft={'link'}
-          className={containerClass}
-          link={`/app/tags/${letter}`} />
-      )
+            title={letter}
+            topRight={topRight}
+            topLeft={'link'}
+            className={letter}
+            link={`/app/tags/${letter}`} />);
+
+    if(!this.getLetter() || (this.getLetter() && this.getLetter() == letter)){
+      return (
+          <Decide
+              condition={this.getLetter()}
+              success={() => tagsResults}
+              failure={() => <RenderDesktop> {tagsResults} </RenderDesktop> } />
+      );
     }
   },
 
