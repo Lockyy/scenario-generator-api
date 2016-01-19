@@ -7,6 +7,7 @@ import UserBookmarks from './UserBookmarks';
 import CollectionsCollection from '../collections/CollectionsCollection';
 import CreateCollectionMixin from '../collections/CreateCollectionMixin'
 import RenderMobile from '../RenderMobile';
+import RenderDesktop from '../RenderDesktop';
 
 const UserProfileWorkArea  = React.createClass({
   displayName: 'UserProfileWorkArea',
