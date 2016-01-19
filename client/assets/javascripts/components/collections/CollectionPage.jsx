@@ -521,14 +521,14 @@ const CollectionPage = React.createClass({
           { this.renderProductsTable(this.state.data.collection.products) }
           { this.renderCollaboratorInfo() }
         </TabbedArea>
-        <div className='visible-xs row background-light-grey'>
+        <RenderMobile component='div' className='row background-light-grey'>
           <div className='col-xs-12'>
             { this.renderProductsTable(this.state.data.collection.products) }
           </div>
-        </div>
+        </RenderMobile>
       </div>
     );
   }
-})
+});
 
 export default CollectionPage;
