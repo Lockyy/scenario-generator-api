@@ -8,7 +8,6 @@ import FluxNotificationsActions from '../../actions/FluxNotificationsActions';
 import CollectionStore from '../../stores/CollectionStore'
 import Rating from '../Rating'
 import Avatar from '../Avatar'
-import Decide from '../Decide';
 import RenderDesktop from '../RenderDesktop';
 import RenderMobile from '../RenderMobile';
 import TableDisplay from '../TableDisplay'
