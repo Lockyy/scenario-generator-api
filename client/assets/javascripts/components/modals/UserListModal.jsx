@@ -7,6 +7,7 @@ import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
 import FluxModalActions from '../../actions/FluxModalActions';
 import Avatar from '../Avatar';
 import Footer from '../Footer';
+import RenderMobile from '../RenderMobile';
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
@@ -114,8 +115,7 @@ const UserListModal = React.createClass ({
 
         {this.renderHeader()}
         {this.renderUsers()}
-
-        <Footer className='visible-xs' />
+        <RenderMobile component={Footer} />
       </Modal>
     )
   }
