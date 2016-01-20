@@ -276,7 +276,11 @@ describe Api::CollectionsController do
         it_behaves_like 'an API that returns a collection'
 
         it 'adds the new product to the collection' do
-          expect(@body['products'].map { |p| p['id'] }).to eq @collection.products.map(&:id)
+          result_ids = @body['products'].map { |p| p['id'] }
+          collection_products_ids = @collection.products.map(&:id)
+          result_ids.each do |id|
+            expect(collection_products_ids).to include(id)
+          end
           expect(@collection.products).to include @new_product
         end
       end

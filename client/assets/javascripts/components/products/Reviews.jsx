@@ -3,6 +3,7 @@ import _ from 'lodash';
 import { Link } from 'react-router';
 import FluxProductReviewsActions from '../../actions/FluxProductReviewsActions'
 import ReviewsStore from '../../stores/ReviewsStore'
+import ProductStore from '../../stores/ProductStore'
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import Rating from '../Rating';
 import PriceRating from '../PriceRating';
@@ -21,8 +22,13 @@ const Reviews = React.createClass({
   },
 
   componentDidMount: function() {
+    ProductStore.listen(this.onChangeProduct);
     ReviewsStore.listen(this.onChange.bind(this));
     FluxProductReviewsActions.fetchReviews(this.props.productID, this.currentSorting());
+  },
+
+  onChangeProduct: function (data) {
+      this.setState({data:{product_id: data.data.id, reviews: data.data.reviews}})
   },
 
   onChange: function(data) {
@@ -114,7 +120,6 @@ const Reviews = React.createClass({
     let productId = review.product.id;
     let reviewId = review.id;
 
-    let string;
     let voted = !_.isUndefined(userVote);
     let helpful = voted && userVote.helpful;
     let unhelpful = voted && !userVote.helpful;
@@ -160,22 +165,6 @@ const Reviews = React.createClass({
         <a className="link" href={UrlHelper.addProtocol(link.url)} target='_blank'>{UrlHelper.addProtocol(link.url)}</a>
       </li>);
     });
-    let wroteByCurrentUser = this.context.currentUser.id == review.user.id;
-
-    let editMyReview =  <div className='edit-review-container'>
-                          <Link to={`/app/products/${review.product.id}/${review.product.slug}/reviews/${review.id}`}
-                               className='btn btn-white btn-round'>Edit my review</Link>
-                        </div>;
-
-    let productId = review.product.id;
-    let reviewId = review.id;
-    let itWasHelpful = <div className='helpful-review-container'>
-                          <span className='helpful-reviews-text'> Was this review helpful to you?</span>
-                          <button className='btn btn-grey-inverted btn-round' data-product-id={productId} data-review-id={reviewId}
-                                  data-helpful='true' onClick={this.voteOnReview}> Yes </button>
-                          <button className='btn btn-grey-inverted btn-round' data-product-id={productId} data-review-id={reviewId}
-                                  data-helpful='false' onClick={this.voteOnReview}> No </button>
-                        </div>;
 
     let job_title = _.isEmpty(review.user.job_title) ?
       (_.isEmpty(review.user.department) ? '' : review.user.department )

@@ -77,12 +77,16 @@ const Dropdown = React.createClass({
   renderActiveOption: function() {
     let self = this;
     let active = _.find(this.props.options, function(op){return op.option == self.props.active });
-    let image = active.image ? this.getMobileImage(active.image) : '';
+    let isValidActive = active != undefined;
+    let image = isValidActive && active.image ? this.getMobileImage(active.image) : '';
+    let option = isValidActive && active.option ? active.option : '';
+    let display = isValidActive && active.display ? active.display : '';
+
     return (
       <div  className={`active-dropdown-link  ${image ? 'active-dropdown-link-with-image' : ''}`}
             onClick={ this.activeClicked } >
         {image}
-        <span value={active.option} className="dropdown-text">{active.display}</span>
+        <span value={option} className="dropdown-text">{display}</span>
       </div>
     )
   },
