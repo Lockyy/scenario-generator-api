@@ -53,6 +53,30 @@ class Collection < ActiveRecord::Base
     joins(:tags).where('tags.name in (?)', tags_names).uniq
   end
 
+  def export(type, opts = {})
+    return export_to_ppt if type == 'ppt'
+    products.to_export(type, opts)
+  end
+
+  def export_to_ppt(opts = {})
+    deck = PPTX::OPC::Package.new
+
+    slide = PPTX::Slide.new(deck)
+    slide.add_textbox PPTX::cm(2, 1, 22, 2), name, sz: 45*PPTX::POINT
+    slide.add_textbox PPTX::cm(2, 6, 22, 10), description
+    deck.presentation.add_slide(slide)
+
+    products.each do |product|
+      slide = PPTX::Slide.new(deck)
+      slide.add_textbox PPTX::cm(2, 1, 22, 2), name, sz: 45*PPTX::POINT
+      productContent = "#{product.description}\n\nTotal Reviews: #{product.reviews.length}\nQuality Score: #{product.rating}\nPrice Score: #{product.price}"
+      slide.add_textbox PPTX::cm(2, 6, 22, 11), productContent
+      deck.presentation.add_slide(slide)
+    end
+
+    return deck.to_zip, 'application/vnd.ms-powerpointtd>'
+  end
+
   def capitalize_name
     self.name = self.name.slice(0,1).capitalize + self.name.slice(1..-1)
   end

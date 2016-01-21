@@ -1,5 +1,5 @@
 class Api::V1::CollectionsController < AppController
-  before_action :setup_collection, only: [:show, :add_product, :update, :destroy, :share, :leave, :delete_product]
+  before_action :setup_collection, only: [:show, :add_product, :update, :destroy, :share, :leave, :delete_product, :export]
   before_action :require_editor, only: [:add_product, :update]
   before_action :require_owner, only: [:destroy, :share, :delete_product]
 
@@ -76,7 +76,23 @@ class Api::V1::CollectionsController < AppController
     respond_to { |format| format.json { returnJSON } }
   end
 
+  def export
+    respond_to do |format|
+      format.csv { respond_with('csv') }
+      format.xls { respond_with('xls') }
+      format.ppt { respond_with('ppt')}
+    end
+  end
+
   private
+
+  def respond_with(filetype)
+    export_data, data_type = @collection.export(filetype)
+    send_data(export_data, {
+      :type => data_type,
+      :disposition => 'attachment',
+      :filename => "#{@collection.name}.#{filetype}" })
+  end
 
   def update_share_options
     _params = share_params

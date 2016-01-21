@@ -36,6 +36,14 @@ GIT
       cocaine (~> 0.5.5)
       mime-types
 
+GIT
+  remote: https://github.com/codelittinc/ruby-pptx
+  revision: 1bf77d14f5eb560bdd22b9bb54413eab1433939c
+  specs:
+    pptx (0.0.1)
+      nokogiri (~> 1.6)
+      rubyzip (= 1.1.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -232,6 +240,8 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    make_exportable (1.1.0)
+      rails
     method_source (0.8.2)
     mime-types (2.99)
     mini_portile2 (2.0.0)
@@ -354,7 +364,7 @@ GEM
       sexp_processor (~> 4.0)
     ruby_parser (3.7.3)
       sexp_processor (~> 4.1)
-    rubyzip (1.1.7)
+    rubyzip (1.1.2)
     safe_yaml (1.0.4)
     sass (3.4.21)
     sass-rails (5.0.4)
@@ -457,12 +467,14 @@ DEPENDENCIES
   launchy
   letter_opener
   lodash-rails
+  make_exportable
   omniauth
   omniauth-yammer
   paperclip!
   pg (= 0.18.0)
   pg_search
   poltergeist
+  pptx!
   pry-rails
   puma
   quiet_assets

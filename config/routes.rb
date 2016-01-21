@@ -42,6 +42,7 @@ Rails.application.routes.draw do
                 only: [ :user, :create, :show, :update, :destroy],
                 defaults: {format: 'json'} do
         member do
+          get 'export'
           post 'share'
           post 'products', to: 'collections#add_product'
           delete 'products/:product_id', to: 'collections#delete_product'

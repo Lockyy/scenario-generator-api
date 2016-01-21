@@ -4,6 +4,12 @@ class Product < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: [:slugged, :history]
 
+  make_exportable only: [
+    :name, :url, :company,
+    :rating, :price,
+    :total_reviews
+  ]
+
   belongs_to :company
   belongs_to :user
   counter_culture :user, :column_name => "total_products"
@@ -71,6 +77,10 @@ products.url, company_id, products.views, products.created_at, products.updated_
 
   scope :worst_rating, -> do
     rating('asc')
+  end
+
+  def company_export
+    company.name
   end
 
   # Returns any tags for this product that are followed by the given user
