@@ -124,12 +124,16 @@ const Sidebar = React.createClass ({
             <a>Show Menu</a>
           </li>
           <nav className='menu hamburger-menu' ref='menu'>
-            <div className='hamburguer-menu-content container'>
-              <header>
-                { this.renderTopButtons() }
-                { this.renderCurrentUserInfo() }
-                { this.renderSideLinks() }
-              </header>
+            <div className='hamburguer-menu-fake-overlay'></div>
+
+            <div className='hamburguer-menu-container'>
+              <div className='hamburguer-menu-content container'>
+                <header>
+                  { this.renderTopButtons() }
+                  { this.renderCurrentUserInfo() }
+                  { this.renderSideLinks() }
+                </header>
+              </div>
             </div>
           </nav>
         </div>
