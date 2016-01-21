@@ -8,6 +8,7 @@ import Avatar from '../Avatar';
 import AutoFitPicture from '../AutoFitPicture';
 import DropdownConstants from '../../utils/constants/DropdownConstants';
 import DateHelper from '../../utils/helpers/DateHelper';
+import HighlightText from './../HighlightText';
 
 const Results = React.createClass ({
 
@@ -249,25 +250,25 @@ const Results = React.createClass ({
   getRenderResultFunction: function() {
     switch(this.props.type) {
       case 'companies':
-        return this.renderCompany
+        return this.renderCompany;
         break;
       case 'products':
-        return this.renderProduct
+        return this.renderProduct;
         break;
       case 'collection-product':
-        return this.renderCollectionProduct
+        return this.renderCollectionProduct;
         break;
       case 'collections':
-        return this.renderCollection
+        return this.renderCollection;
         break;
       case 'users':
-        return this.renderUser
+        return this.renderUser;
         break;
       case 'sharee-users':
-        return this.renderShareeUser
+        return this.renderShareeUser;
         break;
       case 'sharee-emails':
-        return this.renderShareeEmail
+        return this.renderShareeEmail;
         break;
     }
   },
@@ -280,12 +281,12 @@ const Results = React.createClass ({
   renderResults: function() {
     if(this.hasData()) {
       let resultTags = [];
-      let renderResult = this.getRenderResultFunction()
-
+      let renderResult = this.getRenderResultFunction();
+      let searchTerm = this.props.searchTerm;
       for (let i = 0; i < this.getMaxDisplayedData(); i++) {
-        let result = renderResult(this.props.data.data[i])
-
-        resultTags.push(result);
+        let obj =this.props.data.data[i];
+        obj.name = <HighlightText text={obj.name} highlight={searchTerm} />;
+        resultTags.push(renderResult(obj));
       }
 
       return <div className={this.props.type}>{resultTags}</div>;
