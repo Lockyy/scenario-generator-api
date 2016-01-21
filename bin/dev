@@ -62,8 +62,8 @@ run_project_container(){
       -e $UPPERCASE_PROJECT_NAME'_DATABASE_PASSWORD'=postgres \
       -e $UPPERCASE_PROJECT_NAME'_DATABASE_USER'=postgres \
       -v $(pwd):/share \
-      -p 9018:3000 \
-      -p 9019:8080 \
+      -p 3000:3000 \
+      -p 4000:4000 \
       --link $DB_CONTAINER_NAME:db codelittinc/$PROJECT_NAME /bin/bash -l
 
     docker_id=$(find_docker_id $PROJECT_CONTAINER_NAME)
