@@ -2,13 +2,13 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-describe "User Profile Page", js: true do
+describe 'User Profile Page', js: true do
   before do
     @user = login_user
     @review = create(:review)
     @bookmark = create(:bookmark)
     @public_collection = create(:collection, :visible, name: 'Public Collection')
-    @private_collection = create(:collection, name: 'Private Collection')
+    @private_collection = create(:collection, name: 'My Private Collection')
     @tag = create(:tag)
     @user.reviews.append @review
     @user.tags.append @tag
@@ -172,7 +172,7 @@ describe "User Profile Page", js: true do
           expect(page).to have_content('Collections are created by users to group products they are interested in.')
         end
 
-        it "displays public collections" do
+        it 'displays public collections' do
           expect(page).to have_content @public_collection.name
           expect(page).to have_content @public_collection.display_date
           expect(page).to have_content @public_collection.user.name
