@@ -44,8 +44,8 @@ describe Api::V1::CollectionsController do
     end
 
     it 'returns no collection' do
-      empty_hash = {'collection' => {}}
-      expect(@body).to eq empty_hash
+      responses = [{'collection' => {}}, nil]
+      expect(responses.include? @body).to eq true
     end
   end
 
@@ -95,6 +95,60 @@ describe Api::V1::CollectionsController do
     describe "as the collection's owner" do
       before do
         sign_in(@user_owner)
+      end
+
+      describe 'GET #export' do
+        describe 'csv' do
+          before do
+            get :export, id: @collection.id, format: :csv
+          end
+
+          it 'returns a csv file' do
+            expect(response['Content-Type']).to include 'text/csv'
+          end
+
+          it 'returns a csv file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'xls' do
+          before do
+            get :export, id: @collection.id, format: :xls
+          end
+
+          it 'returns a xls file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
+          end
+
+          it 'returns a xls file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'ppt' do
+          before do
+            get :export, id: @collection.id, format: :ppt
+          end
+
+          it 'returns a ppt file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
+          end
+        end
       end
 
       describe 'GET #show' do
@@ -257,6 +311,60 @@ describe Api::V1::CollectionsController do
         sign_in(@user_editor)
       end
 
+      describe 'GET #export' do
+        describe 'csv' do
+          before do
+            get :export, id: @collection.id, format: :csv
+          end
+
+          it 'returns a csv file' do
+            expect(response['Content-Type']).to include 'text/csv'
+          end
+
+          it 'returns a csv file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'xls' do
+          before do
+            get :export, id: @collection.id, format: :xls
+          end
+
+          it 'returns a xls file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
+          end
+
+          it 'returns a xls file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'ppt' do
+          before do
+            get :export, id: @collection.id, format: :ppt
+          end
+
+          it 'returns a ppt file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
+          end
+        end
+      end
+
       describe 'GET #show' do
         before do
           get :show, id: @collection.id, format: :json
@@ -348,6 +456,60 @@ describe Api::V1::CollectionsController do
         sign_in(@user_viewer)
       end
 
+      describe 'GET #export' do
+        describe 'csv' do
+          before do
+            get :export, id: @collection.id, format: :csv
+          end
+
+          it 'returns a csv file' do
+            expect(response['Content-Type']).to include 'text/csv'
+          end
+
+          it 'returns a csv file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'xls' do
+          before do
+            get :export, id: @collection.id, format: :xls
+          end
+
+          it 'returns a xls file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
+          end
+
+          it 'returns a xls file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'ppt' do
+          before do
+            get :export, id: @collection.id, format: :ppt
+          end
+
+          it 'returns a ppt file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
+          end
+        end
+      end
+
       describe 'GET #show' do
         before do
           get :show, id: @collection.id, format: :json
@@ -412,6 +574,32 @@ describe Api::V1::CollectionsController do
     describe "as a collection bystander" do
       before do
         sign_in(@user_bystander)
+      end
+
+      describe 'GET #export' do
+        describe 'csv' do
+          before do
+            get :export, id: @collection.id, format: :csv
+          end
+
+          it_behaves_like 'an API request that returns a 404'
+        end
+
+        describe 'xls' do
+          before do
+            get :export, id: @collection.id, format: :xls
+          end
+
+          it_behaves_like 'an API request that returns a 404'
+        end
+
+        describe 'ppt' do
+          before do
+            get :export, id: @collection.id, format: :ppt
+          end
+
+          it_behaves_like 'an API request that returns a 404'
+        end
       end
 
       describe 'GET #show' do
@@ -488,6 +676,60 @@ describe Api::V1::CollectionsController do
     describe "as the collection's owner" do
       before do
         sign_in(@user_owner)
+      end
+
+      describe 'GET #export' do
+        describe 'csv' do
+          before do
+            get :export, id: @collection.id, format: :csv
+          end
+
+          it 'returns a csv file' do
+            expect(response['Content-Type']).to include 'text/csv'
+          end
+
+          it 'returns a csv file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'xls' do
+          before do
+            get :export, id: @collection.id, format: :xls
+          end
+
+          it 'returns a xls file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
+          end
+
+          it 'returns a xls file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'ppt' do
+          before do
+            get :export, id: @collection.id, format: :ppt
+          end
+
+          it 'returns a ppt file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
+          end
+        end
       end
 
       describe 'GET #show' do
@@ -597,6 +839,60 @@ describe Api::V1::CollectionsController do
         sign_in(@user_editor)
       end
 
+      describe 'GET #export' do
+        describe 'csv' do
+          before do
+            get :export, id: @collection.id, format: :csv
+          end
+
+          it 'returns a csv file' do
+            expect(response['Content-Type']).to include 'text/csv'
+          end
+
+          it 'returns a csv file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'xls' do
+          before do
+            get :export, id: @collection.id, format: :xls
+          end
+
+          it 'returns a xls file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
+          end
+
+          it 'returns a xls file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'ppt' do
+          before do
+            get :export, id: @collection.id, format: :ppt
+          end
+
+          it 'returns a ppt file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
+          end
+        end
+      end
+
       describe 'GET #show' do
         before do
           get :show, id: @collection.id, format: :json
@@ -688,6 +984,60 @@ describe Api::V1::CollectionsController do
         sign_in(@user_viewer)
       end
 
+      describe 'GET #export' do
+        describe 'csv' do
+          before do
+            get :export, id: @collection.id, format: :csv
+          end
+
+          it 'returns a csv file' do
+            expect(response['Content-Type']).to include 'text/csv'
+          end
+
+          it 'returns a csv file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'xls' do
+          before do
+            get :export, id: @collection.id, format: :xls
+          end
+
+          it 'returns a xls file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
+          end
+
+          it 'returns a xls file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'ppt' do
+          before do
+            get :export, id: @collection.id, format: :ppt
+          end
+
+          it 'returns a ppt file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
+          end
+        end
+      end
+
       describe 'GET #show' do
         before do
           get :show, id: @collection.id, format: :json
@@ -752,6 +1102,60 @@ describe Api::V1::CollectionsController do
     describe "as a collection bystander" do
       before do
         sign_in(@user_bystander)
+      end
+
+      describe 'GET #export' do
+        describe 'csv' do
+          before do
+            get :export, id: @collection.id, format: :csv
+          end
+
+          it 'returns a csv file' do
+            expect(response['Content-Type']).to include 'text/csv'
+          end
+
+          it 'returns a csv file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'xls' do
+          before do
+            get :export, id: @collection.id, format: :xls
+          end
+
+          it 'returns a xls file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
+          end
+
+          it 'returns a xls file containing the correct data' do
+            @collection.products.each do |product|
+              expect(response.body).to include product.name
+              expect(response.body).to include product.url
+              expect(response.body).to include product.company.name
+              expect(response.body).to include product.rating.to_s
+              expect(response.body).to include product.price.to_s
+              expect(response.body).to include product.total_reviews.to_s
+            end
+          end
+        end
+
+        describe 'ppt' do
+          before do
+            get :export, id: @collection.id, format: :ppt
+          end
+
+          it 'returns a ppt file' do
+            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
+          end
+        end
       end
 
       describe 'GET #show' do
