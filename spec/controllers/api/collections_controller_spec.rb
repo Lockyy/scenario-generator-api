@@ -116,7 +116,7 @@ describe Api::CollectionsController do
         it_behaves_like 'an API that returns a collection'
 
         it 'adds the new product to the collection' do
-          expect(@body['products'].map { |p| p['id'] }).to eq @collection.products.map(&:id)
+          expect(products_ids_from_body).to include *products_ids_from_collection
           expect(@collection.products).to include @new_product
         end
       end
@@ -176,12 +176,12 @@ describe Api::CollectionsController do
           @email_2 = 'example2@jll.com'
           post(:share, id: @collection.id,
                users: [
-                 { id: @user_editor.id, rank: 1 },
-                 { id: @user_viewer.id, rank: 0 },
+                   {id: @user_editor.id, rank: 1},
+                   {id: @user_viewer.id, rank: 0},
                ],
                emails: [
-                 { email: @email_1, rank: 1 },
-                 { email: @email_2, rank: 0 },
+                   {email: @email_1, rank: 1},
+                   {email: @email_2, rank: 0},
                ], format: :json)
           @body = JSON.parse(response.body)
         end
@@ -216,10 +216,10 @@ describe Api::CollectionsController do
           describe 'sending a non-jll email' do
             before do
               @email_1 = 'example@notjll.com'
-              post(:share,  id: @collection.id,
-                            emails: [
-                              { email: @email_1, rank: 1 },
-                            ], format: :json)
+              post(:share, id: @collection.id,
+                   emails: [
+                       {email: @email_1, rank: 1},
+                   ], format: :json)
               @body = JSON.parse(response.body)
             end
 
@@ -232,10 +232,10 @@ describe Api::CollectionsController do
             describe "sending a #{domain} email" do
               before do
                 @email_1 = "example@#{domain}"
-                post(:share,  id: @collection.id,
-                              emails: [
-                                { email: @email_1, rank: 1 },
-                              ], format: :json)
+                post(:share, id: @collection.id,
+                     emails: [
+                         {email: @email_1, rank: 1},
+                     ], format: :json)
                 @body = JSON.parse(response.body)
               end
 
@@ -276,11 +276,7 @@ describe Api::CollectionsController do
         it_behaves_like 'an API that returns a collection'
 
         it 'adds the new product to the collection' do
-          result_ids = @body['products'].map { |p| p['id'] }
-          collection_products_ids = @collection.products.map(&:id)
-          result_ids.each do |id|
-            expect(collection_products_ids).to include(id)
-          end
+          expect(products_ids_from_collection).to include(*products_ids_from_body)
           expect(@collection.products).to include @new_product
         end
       end
@@ -513,7 +509,7 @@ describe Api::CollectionsController do
         it_behaves_like 'an API that returns a collection'
 
         it 'adds the new product to the collection' do
-          expect(@body['products'].map { |p| p['id'] }).to eq @collection.products.map(&:id)
+          expect(products_ids_from_body).to include(*products_ids_from_collection)
           expect(@collection.products).to include @new_product
         end
       end
@@ -620,7 +616,7 @@ describe Api::CollectionsController do
         it_behaves_like 'an API that returns a collection'
 
         it 'adds the new product to the collection' do
-          expect(@body['products'].map { |p| p['id'] }).to eq @collection.products.map(&:id)
+          expect(products_ids_from_body).to include *products_ids_from_collection
           expect(@collection.products).to include @new_product
         end
       end
@@ -816,4 +812,12 @@ describe Api::CollectionsController do
     end
   end
 
+  private
+  def products_ids_from_body
+    @body['products'].map { |p| p['id'] }
+  end
+
+  def products_ids_from_collection
+    @collection.products.map(&:id)
+  end
 end
