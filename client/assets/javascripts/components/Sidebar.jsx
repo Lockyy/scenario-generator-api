@@ -31,9 +31,10 @@ const Sidebar = React.createClass ({
   showHamburgerMenu: function() {
     let _this = this;
 
-    return this.getHamburgerMenuDom().stop().toggle("slide", {
+    return this.getHamburgerMenuDom().stop().toggle('slide', {
       direction: 'right'
     }, 600, function() {
+      $('.hamburguer-menu-fake-overlay').fadeIn();
       return _this.getHamburgerMenuDom().on('clickoutside', _.throttle(function(outsideE) {
         if (_.include($(outsideE.target).attr('class'), 'TagSuggestion') ||
           _.include($(outsideE.target).data('role'), 'remove')) {
@@ -45,7 +46,8 @@ const Sidebar = React.createClass ({
   },
 
   closeHamburgerMenu: function() {
-    return this.getHamburgerMenuDom().stop().toggle("slide", {
+    $('.hamburguer-menu-fake-overlay').hide();
+    return this.getHamburgerMenuDom().stop().toggle('slide', {
       direction: 'right'
     }, 'slow', function() {
       return this.getHamburgerMenuDom().off('clickoutside');
