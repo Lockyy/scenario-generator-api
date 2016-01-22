@@ -39,7 +39,7 @@ const Sidebar = React.createClass ({
           _.include($(outsideE.target).data('role'), 'remove')) {
           return;
         }
-        return closeHamburgerMenu();
+        return _this.closeHamburgerMenu();
       }));
     });
   },
