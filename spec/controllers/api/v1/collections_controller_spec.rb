@@ -60,6 +60,46 @@ describe Api::V1::CollectionsController do
     end
   end
 
+  shared_examples_for 'an API that returns a csv file' do
+    it 'returns a csv file' do
+      expect(response['Content-Type']).to include 'text/csv'
+    end
+
+    it 'returns a csv file containing the correct data' do
+      @collection.products.each do |product|
+        expect(response.body).to include product.name
+        expect(response.body).to include product.url
+        expect(response.body).to include product.company.name
+        expect(response.body).to include product.rating.to_s
+        expect(response.body).to include product.price.to_s
+        expect(response.body).to include product.total_reviews.to_s
+      end
+    end
+  end
+
+  shared_examples_for 'an API that returns an xls file' do
+    it 'returns an xls file' do
+      expect(response['Content-Type']).to include 'application/vnd.ms-excel'
+    end
+
+    it 'returns an xls file containing the correct data' do
+      @collection.products.each do |product|
+        expect(response.body).to include product.name
+        expect(response.body).to include product.url
+        expect(response.body).to include product.company.name
+        expect(response.body).to include product.rating.to_s
+        expect(response.body).to include product.price.to_s
+        expect(response.body).to include product.total_reviews.to_s
+      end
+    end
+  end
+
+  shared_examples_for 'an API that returns a ppt file' do
+    it 'returns a ppt file' do
+      expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
+    end
+  end
+
   ##########
   # CREATE #
   ##########
@@ -103,20 +143,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :csv
           end
 
-          it 'returns a csv file' do
-            expect(response['Content-Type']).to include 'text/csv'
-          end
-
-          it 'returns a csv file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns a csv file'
         end
 
         describe 'xls' do
@@ -124,20 +151,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :xls
           end
 
-          it 'returns a xls file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
-          end
-
-          it 'returns a xls file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns an xls file'
         end
 
         describe 'ppt' do
@@ -145,9 +159,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :ppt
           end
 
-          it 'returns a ppt file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
-          end
+          it_behaves_like 'an API that returns a ppt file'
         end
       end
 
@@ -317,20 +329,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :csv
           end
 
-          it 'returns a csv file' do
-            expect(response['Content-Type']).to include 'text/csv'
-          end
-
-          it 'returns a csv file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns a csv file'
         end
 
         describe 'xls' do
@@ -338,20 +337,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :xls
           end
 
-          it 'returns a xls file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
-          end
-
-          it 'returns a xls file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns an xls file'
         end
 
         describe 'ppt' do
@@ -359,9 +345,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :ppt
           end
 
-          it 'returns a ppt file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
-          end
+          it_behaves_like 'an API that returns a ppt file'
         end
       end
 
@@ -462,20 +446,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :csv
           end
 
-          it 'returns a csv file' do
-            expect(response['Content-Type']).to include 'text/csv'
-          end
-
-          it 'returns a csv file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns a csv file'
         end
 
         describe 'xls' do
@@ -483,20 +454,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :xls
           end
 
-          it 'returns a xls file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
-          end
-
-          it 'returns a xls file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns an xls file'
         end
 
         describe 'ppt' do
@@ -504,9 +462,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :ppt
           end
 
-          it 'returns a ppt file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
-          end
+          it_behaves_like 'an API that returns a ppt file'
         end
       end
 
@@ -684,20 +640,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :csv
           end
 
-          it 'returns a csv file' do
-            expect(response['Content-Type']).to include 'text/csv'
-          end
-
-          it 'returns a csv file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns a csv file'
         end
 
         describe 'xls' do
@@ -705,20 +648,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :xls
           end
 
-          it 'returns a xls file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
-          end
-
-          it 'returns a xls file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns an xls file'
         end
 
         describe 'ppt' do
@@ -726,9 +656,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :ppt
           end
 
-          it 'returns a ppt file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
-          end
+          it_behaves_like 'an API that returns a ppt file'
         end
       end
 
@@ -845,20 +773,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :csv
           end
 
-          it 'returns a csv file' do
-            expect(response['Content-Type']).to include 'text/csv'
-          end
-
-          it 'returns a csv file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns a csv file'
         end
 
         describe 'xls' do
@@ -866,20 +781,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :xls
           end
 
-          it 'returns a xls file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
-          end
-
-          it 'returns a xls file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns an xls file'
         end
 
         describe 'ppt' do
@@ -887,9 +789,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :ppt
           end
 
-          it 'returns a ppt file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
-          end
+          it_behaves_like 'an API that returns a ppt file'
         end
       end
 
@@ -990,20 +890,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :csv
           end
 
-          it 'returns a csv file' do
-            expect(response['Content-Type']).to include 'text/csv'
-          end
-
-          it 'returns a csv file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns a csv file'
         end
 
         describe 'xls' do
@@ -1011,20 +898,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :xls
           end
 
-          it 'returns a xls file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
-          end
-
-          it 'returns a xls file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns an xls file'
         end
 
         describe 'ppt' do
@@ -1032,9 +906,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :ppt
           end
 
-          it 'returns a ppt file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
-          end
+          it_behaves_like 'an API that returns a ppt file'
         end
       end
 
@@ -1110,20 +982,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :csv
           end
 
-          it 'returns a csv file' do
-            expect(response['Content-Type']).to include 'text/csv'
-          end
-
-          it 'returns a csv file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns a csv file'
         end
 
         describe 'xls' do
@@ -1131,20 +990,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :xls
           end
 
-          it 'returns a xls file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-excel'
-          end
-
-          it 'returns a xls file containing the correct data' do
-            @collection.products.each do |product|
-              expect(response.body).to include product.name
-              expect(response.body).to include product.url
-              expect(response.body).to include product.company.name
-              expect(response.body).to include product.rating.to_s
-              expect(response.body).to include product.price.to_s
-              expect(response.body).to include product.total_reviews.to_s
-            end
-          end
+          it_behaves_like 'an API that returns an xls file'
         end
 
         describe 'ppt' do
@@ -1152,9 +998,7 @@ describe Api::V1::CollectionsController do
             get :export, id: @collection.id, format: :ppt
           end
 
-          it 'returns a ppt file' do
-            expect(response['Content-Type']).to include 'application/vnd.ms-powerpointtd>'
-          end
+          it_behaves_like 'an API that returns a ppt file'
         end
       end
 
