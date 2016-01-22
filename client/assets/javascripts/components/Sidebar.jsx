@@ -5,6 +5,7 @@ import UserBookmarks from './users/UserBookmarks';
 import { ViewCollectionMixin } from './collections/ViewCollectionModal';
 import RecentActivity from './menu/RecentActivity';
 import Avatar from './Avatar';
+import Swipeable from 'react-swipeable';
 import { Link } from 'react-router';
 
 const Sidebar = React.createClass ({
@@ -38,7 +39,7 @@ const Sidebar = React.createClass ({
           _.include($(outsideE.target).data('role'), 'remove')) {
           return;
         }
-        return closeHamburgerMenu();
+        return _this.closeHamburgerMenu();
       }));
     });
   },
@@ -116,21 +117,23 @@ const Sidebar = React.createClass ({
 
   render: function() {
     return (
-      <div>
-        <li className="show-hamburger-menu text-hide"
-            onClick={this.showHamburgerMenu}>
-          <a>Show Menu</a>
-        </li>
-        <nav className='menu hamburger-menu' ref='menu'>
-          <div className='container'>
-            <header>
-              { this.renderTopButtons() }
-              { this.renderCurrentUserInfo() }
-              { this.renderSideLinks() }
-            </header>
-          </div>
-        </nav>
-      </div>
+      <Swipeable onSwipedRight={this.closeHamburgerMenu}>
+        <div>
+          <li className="show-hamburger-menu text-hide"
+              onClick={this.showHamburgerMenu}>
+            <a>Show Menu</a>
+          </li>
+          <nav className='menu hamburger-menu' ref='menu'>
+            <div className='container'>
+              <header>
+                { this.renderTopButtons() }
+                { this.renderCurrentUserInfo() }
+                { this.renderSideLinks() }
+              </header>
+            </div>
+          </nav>
+        </div>
+      </Swipeable>
     )
   }
 })
