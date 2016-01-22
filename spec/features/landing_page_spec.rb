@@ -69,5 +69,25 @@ feature "Landing Page", js: true do
         end
       end
     end
+
+    feature 'visit any internal url is redirect to /short' do
+      ['/app/products', '/app/collections'].each do |path|
+        feature "visiting #{path}" do
+          background do
+            visit_and_wait(path)
+          end
+
+          scenario 'redirect to /short' do
+            expect(current_path).to eq '/short'
+          end
+        end
+      end
+    end
+  end
+
+  private
+  def visit_and_wait(path)
+    visit path
+    wait_for_ajax
   end
 end

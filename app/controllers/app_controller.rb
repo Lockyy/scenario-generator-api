@@ -3,11 +3,16 @@ class AppController < ApplicationController
 
   before_filter :authenticate_user!
   before_filter :check_whitelist
+  before_filter :app_redirect
 
   def index
   end
 
   private
+
+  def app_redirect
+    redirect_to short_path unless current_user
+  end
 
   def check_whitelist
     unless current_user.whitelisted?
