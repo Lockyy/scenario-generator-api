@@ -15,7 +15,7 @@ class Section extends React.Component {
       let visibleLink = component.find('.toggle-section:visible');
 
       visibleLink.stop().fadeToggle('fast', function() {
-        items.stop().slideToggle('slow', function() {
+        items.stop().slideToggle('fast', function() {
           hiddenLink.stop().fadeToggle('fast');
         });
       });
