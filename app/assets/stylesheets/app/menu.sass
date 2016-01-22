@@ -22,7 +22,7 @@
     .container header li
       margin-left: 0px
 
-    & > .container
+    .hamburguer-menu-content
       width: 100%
       margin: 0px
       padding: 0px
@@ -162,9 +162,22 @@
 
   @media only screen and (max-width: $screen-sm-max)
     .menu.hamburger-menu
-      width: 95%
-      box-shadow: -55px 0px 70px 0px rgba(50, 50, 50, 0.85)
+      width: 100%
+      .hamburguer-menu-fake-overlay
+        width: 5%
+        height: 100%
+        background-color: black
+        opacity: 0.7
+        position: absolute
+        left: 0
+        display: none
 
-      .container
-        margin: 0 auto
+      .hamburguer-menu-container
         width: 95%
+        background-color: #f6f6f6
+        position: absolute
+        right: 0
+
+        .hamburguer-menu-content
+          margin: 0 auto
+          width: 95%
