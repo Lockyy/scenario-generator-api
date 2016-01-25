@@ -61,12 +61,8 @@ const TagPage = React.createClass({
   },
 
   fetchProducts: function(tag, page, sorting) {
-    FluxTagPageActions.fetchProducts(tag, page, sorting, function() {
-      this.transitionTo('/app')
-      FluxNotificationsActions.showNotification({
-        type: '404',
-        text: `That tag does not exist`
-      })
+    FluxTagPageActions.fetchProducts(tag, page, sorting, function(error) {
+      this.transitionTo(`/app/error/tag/${error}`)
     }.bind(this));
   },
 

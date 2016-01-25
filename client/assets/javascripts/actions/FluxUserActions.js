@@ -13,7 +13,7 @@ class FluxUserActions {
       (error) => {
         this.actions.registerError(error);
         if(errorCallback) {
-          errorCallback();
+          errorCallback(error.status);
         }
       }
     );

@@ -3,19 +3,19 @@ import _ from 'lodash';
 import CompanyAPI from '../utils/api/CompanyAPI';
 
 class FluxCompanyActions {
-  fetchData(paginationParams, errorCallback) {
+  fetchData(id, errorCallback) {
     let _this = this;
     _this.dispatch();
 
     CompanyAPI.getData(
-      paginationParams || {},
+      id,
       (data) => {
         _this.actions.updateData(data);
       },
       (error) => {
         _this.actions.registerError(error);
         if(errorCallback) {
-          errorCallback();
+          errorCallback(error.status);
         }
       }
     );
