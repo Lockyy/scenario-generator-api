@@ -23,6 +23,8 @@ module Fletcher
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
+    config.autoload_paths = %W(#{config.root}/lib)
+
     # Add client/assets/stylesheets to asset pipeline's search path.
     config.assets.paths << Rails.root.join('client', 'assets', 'stylesheets')
 

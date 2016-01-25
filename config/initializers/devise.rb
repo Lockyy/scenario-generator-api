@@ -17,6 +17,12 @@ Devise.setup do |config|
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
 
+  config.warden do |manager|
+    #   manager.intercept_401 = false
+    #   manager.default_strategies(:scope => :user).unshift :some_external_strategy
+    manager.failure_app = CustomRedirection
+  end
+
   # ==> ORM configuration
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
