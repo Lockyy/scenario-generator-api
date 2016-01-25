@@ -564,7 +564,7 @@ describe Api::V1::CollectionsController do
           @body = JSON.parse(response.body)
         end
 
-        it_behaves_like 'an API request that returns a 404'
+        it_behaves_like 'an API request that returns a 401'
       end
 
       describe 'POST #add_product' do
@@ -574,7 +574,7 @@ describe Api::V1::CollectionsController do
           @body = JSON.parse(response.body)
         end
 
-        it_behaves_like 'an API request that returns a 404'
+        it_behaves_like 'an API request that returns a 401'
       end
 
       describe 'PATCH #update' do
@@ -590,7 +590,7 @@ describe Api::V1::CollectionsController do
           @body = JSON.parse(response.body)
         end
 
-        it_behaves_like 'an API request that returns a 404'
+        it_behaves_like 'an API request that returns a 401'
       end
 
       describe 'DELETE #destroy' do
@@ -599,7 +599,7 @@ describe Api::V1::CollectionsController do
           @body = JSON.parse(response.body)
         end
 
-        it_behaves_like 'an API request that returns a 404'
+        it_behaves_like 'an API request that returns a 401'
       end
 
       describe 'POST #share' do
@@ -611,7 +611,7 @@ describe Api::V1::CollectionsController do
           @body = JSON.parse(response.body)
         end
 
-        it_behaves_like 'an API request that returns a 404'
+        it_behaves_like 'an API request that returns a 401'
       end
     end
   end

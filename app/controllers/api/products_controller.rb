@@ -3,6 +3,8 @@ class Api::V1::ProductsController < AppController
   before_action :set_product
 
   def show
+    @product = Product.friendly.find_by(id: params[:id])
+
     @product.increment!(:views)
     @related_products = @product.related(4)
 

@@ -31,3 +31,4 @@ vendor/ruby
 *.swp
 *.swo
 .idea
+.byebug_history

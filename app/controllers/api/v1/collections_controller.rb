@@ -121,10 +121,13 @@ class Api::V1::CollectionsController < AppController
 
   def setup_collection
     @collection = Collection.find_by(id: params[:id])
-    unless @collection && @collection.visible_to?(current_user)
-      render :json => { collection: {} }, :status => 404
-      false
+    if @collection
+      status = 401 unless @collection.visible_to?(current_user)
+    else
+      status = Collection.deleted?(params[:id]) ? 410 : 404
     end
+
+    render :json => { collection: {} }, :status => status if status
   end
 
   def require_editor
