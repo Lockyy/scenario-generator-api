@@ -5,19 +5,19 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 
 ## v1.1.2
 
-### Bugfix
-- Redirect to /short when trying to access a internal url winthout being logged in
-- Swiping from left to right dismiss the sidebar menu
-- Sidebar overlay on mobile
-- Private/public icons on collection page
-- Load views for related product
+### Features
+- Highlight text in search dropdowns that matches search terms
 
 ### Changes
-- Migrate from using visible-xs and hidden-xs throughout the app to using the RenderMobile and RenderDesktop components.
+- Migrate from using visible-xs and hidden-xs throughout the app to using the RenderMobile and RenderDesktop components
 - Add user to the Slacked message sent on Review creation
+- Add private/public icons to collection page
 
-### Features
-- Bold text that matches search query on searchbar
+### Bugfix
+- Fix redirect to /short when trying to access /app when not logged in
+- Add swipe to dismiss to hamburger menu
+- Fix sidebar overlay on mobile
+- Fix bug where clicking on a related product did not update reviews
 
 ## v1.1.1
 
