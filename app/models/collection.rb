@@ -1,6 +1,9 @@
 class Collection < ActiveRecord::Base
   include SearchableByNameAndDescription
 
+  extend FriendlyId
+  friendly_id :name, use: [:slugged, :history], dependent: false
+
   enum privacy: [:hidden, :visible]
 
   belongs_to :user
