@@ -2,7 +2,7 @@ gem 'faker'
 
 class Product < ActiveRecord::Base
   extend FriendlyId
-  friendly_id :name, use: [:slugged, :history]
+  friendly_id :name, use: [:slugged, :history], dependent: false
 
   make_exportable only: [
     :name, :url, :company,
@@ -15,14 +15,14 @@ class Product < ActiveRecord::Base
   counter_culture :user, :column_name => "total_products"
 
   has_one :notification, as: :notification_subject
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
   has_many :custom_attachments, as: :attachable, source: :attachments, class_name: 'Attachment'
   has_many :attachments, through: :reviews, source: :attachments
   has_many :reviews_images, -> { with_images }, through: :reviews, source: :attachments
   has_many :links, through: :reviews
   has_many :tags, through: :reviews
   has_many :related_products, through: :tags, source: :products
-  has_many :bookmarks
+  has_many :bookmarks, dependent: :destroy
   has_many :collection_products, dependent: :destroy
   has_many :collections, through: :collection_products
 
@@ -81,6 +81,13 @@ products.url, company_id, products.views, products.created_at, products.updated_
 
   def company_export
     company.name
+  end
+
+  def self.deleted?(id)
+    return  find_by(id: id).nil? &&
+            !FriendlyIDSlug.find_by(sluggable_id: id, sluggable_type: 'Product').nil? if id.to_i > 0
+    slug = FriendlyIDSlug.find_by(slug: id)
+    find_by(slug: id).nil? && !slug.nil? && slug.sluggable.nil?
   end
 
   # Returns any tags for this product that are followed by the given user

@@ -1,6 +1,6 @@
 class Company < ActiveRecord::Base
   extend FriendlyId
-  friendly_id :name, use: [:slugged, :history]
+  friendly_id :name, use: [:slugged, :history], dependent: false
 
   has_many :products
   has_many :tag_taggables, as: :taggable
@@ -32,6 +32,13 @@ class Company < ActiveRecord::Base
                                             :tsearch => {:any_word => true, :prefix => true},
                                             :dmetaphone => {:any_word => true, :sort_only => true}
                                         }
+
+  def self.deleted?(id)
+    return  find_by(id: id).nil? &&
+            !FriendlyIDSlug.find_by(sluggable_id: id, sluggable_type: 'Company').nil? if id.to_i > 0
+    slug = FriendlyIDSlug.find_by(slug: id)
+    find_by(slug: id).nil? && !slug.nil? && slug.sluggable.nil?
+  end
 
   def image_url
     avatar.try(:url)

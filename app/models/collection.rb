@@ -80,6 +80,13 @@ class Collection < ActiveRecord::Base
     return deck.to_zip, 'application/vnd.ms-powerpointtd>'
   end
 
+  def self.deleted?(id)
+    return  find_by(id: id).nil? &&
+            !FriendlyIDSlug.find_by(sluggable_id: id, sluggable_type: 'Collection').nil? if id.to_i > 0
+    slug = FriendlyIDSlug.find_by(slug: id)
+    find_by(slug: id).nil? && !slug.nil? && slug.sluggable.nil?
+  end
+
   def capitalize_name
     self.name = self.name.slice(0,1).capitalize + self.name.slice(1..-1)
   end
