@@ -15,7 +15,7 @@ class NotificationsStore {
     let notifications
 
     if(this.data) {
-      notifications = _.unique( this.data.notifications.concat(data.notifications),
+      notifications = _.uniq( this.data.notifications.concat(data.notifications),
                                 function(obj) {  return obj.id; });
     } else {
       notifications = data.notifications
