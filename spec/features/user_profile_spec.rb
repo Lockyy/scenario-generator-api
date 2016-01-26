@@ -145,7 +145,7 @@ describe 'User Profile Page', js: true do
       end
 
       describe 'by default' do
-        it 'highlights the reviews tab' do
+        it 'highlights the reviews tab', unreliable: true do
           expect(page).to have_selector('.sidebar-element.recent_activity.active')
         end
 
@@ -168,7 +168,7 @@ describe 'User Profile Page', js: true do
           expect(page).to have_selector('.sidebar-element.collections.active')
         end
 
-        it 'has a message informing the user about collections' do
+        it 'has a message informing the user about collections', unreliable: true do
           expect(page).to have_content('Collections are created by users to group products they are interested in.')
         end
 
