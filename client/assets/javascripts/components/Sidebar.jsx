@@ -134,9 +134,7 @@ const Sidebar = React.createClass ({
         link = '';
       }
 
-      return (
-      {link}
-      );
+      return link
     });
   },
 
