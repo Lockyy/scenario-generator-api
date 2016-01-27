@@ -44,14 +44,15 @@ const TypeAhead  = React.createClass({
   },
 
   _onChange: function _onChange(e) {
-    this.props.onChange(e.target.value);
+    this.props.onChange((this._getVal(e)));
   },
 
   _onKeyPress: function _onKeyPress(e) {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      this.props.onPressEnter(e.target.value);
-    }
+    this.props.onPressEnter(this._getVal(e));
+  },
+
+  _getVal: function(e){
+    return e && e.target && e.target.val ? e.target.val() : e.target.value;
   },
 
   _getBloodhoundProps: function _getBloodhoundProps() {
@@ -88,7 +89,8 @@ const TypeAhead  = React.createClass({
 
   render: function render() {
     return (
-      <input type='text' id={this.props.id} className={this.props.className} name={this.props.name}
+      <input
+        type='text' id={this.props.id} className={this.props.className} name={this.props.name}
         placeholder={this.props.placeholder} ref='typeahead_input' value={this.props.value}
         onChange={this._onChange} onFocus={this.props.onFocus} onBlur={this.props.onBlur}
         required={this.props.required} disabled={this.props.disabled} onKeyPress={this._onKeyPress} />
