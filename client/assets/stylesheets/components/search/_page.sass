@@ -1,12 +1,7 @@
 @import "variables"
 
 .search-page, .search-container, .tags-page
-
-  .mobile-version
-    display: none
-
   .desktop-version
-    display: block
     margin-top: 50px
 
   .search-box
@@ -169,8 +164,6 @@
 @media only screen and (max-width : 992px)
   .search-page, .search-container
     .mobile-version
-      display: block
-
       .row
         margin: 0
 
@@ -250,10 +243,6 @@
 
           &:first-child
             border-top: 1px solid $grey
-
-    .desktop-version
-      display: none
-
 
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px)
