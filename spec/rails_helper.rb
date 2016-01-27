@@ -25,6 +25,11 @@ RSpec.configure do |config|
   config.include SharedConnection, type: :feature
   config.include Warden::Test::Helpers
 
+  config.verbose_retry       = true # show retry status in spec process
+  retry_count                = ENV['RSPEC_RETRY_COUNT']
+  config.default_retry_count = retry_count.try(:to_i) || 3
+  puts "RSpec retry count is #{config.default_retry_count}"
+
   #Turn off stupid js errors
   Capybara.register_driver :poltergeist do |app|
     Capybara::Poltergeist::Driver.new(app, {:debug => false, :inspector => true} )

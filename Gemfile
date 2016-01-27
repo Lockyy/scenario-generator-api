@@ -65,6 +65,7 @@ group :development, :test do
 end
 
 group :test  do
+  gem 'rspec-retry'
   gem 'connection_pool'
   gem 'shoulda-matchers', '~> 2.8.0'
   gem 'capybara'
