@@ -3,7 +3,7 @@ import { Promise } from 'es6-promise';
 module.exports = {
 
   getTags: function(resolve, reject) {
-    let url = `/api/tags`
+    let url = `/api/v1/tags`
     return new Promise(function() {
       $.ajax({
         url: url,
@@ -14,7 +14,7 @@ module.exports = {
   },
 
   getProducts: function(tag, page, sorting, resolve, reject) {
-    let url = `/api/tag/${tag}/products`
+    let url = `/api/v1/tag/${tag}/products`
 
     return new Promise(function() {
       $.ajax({
@@ -27,7 +27,7 @@ module.exports = {
   },
 
   follow: function(tag, resolve, reject) {
-    let url = `/api/tag/${tag}/follow`
+    let url = `/api/v1/tag/${tag}/follow`
     return new Promise(function() {
       $.ajax({
         method: 'post',
@@ -39,7 +39,7 @@ module.exports = {
   },
 
   unfollow: function(tag, resolve, reject) {
-    let url = `/api/tag/${tag}/unfollow`
+    let url = `/api/v1/tag/${tag}/unfollow`
     return new Promise(function() {
       $.ajax({
         method: 'post',

@@ -20,7 +20,7 @@ const CollectionTypeahead  = React.createClass({
   _getBloodhoundProps: function _getBloodhoundProps() {
     return {
       remote: {
-        url: '/api/search/collections?search_string=%QUERY',
+        url: '/api/v1/search/collections?search_string=%QUERY',
         wildcard: '%QUERY',
         transform: function(data) { return data.collections.data }
       }

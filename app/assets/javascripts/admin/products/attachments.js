@@ -67,7 +67,7 @@ function ready() {
     var file = e.target.files[0];
 
     return $.ajax({
-      url:      '/api/uploads',
+      url:      '/api/v1/uploads',
       method:     'POST',
       dataType: 'json',
       data: {
