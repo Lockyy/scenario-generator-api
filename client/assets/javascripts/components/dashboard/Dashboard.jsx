@@ -129,7 +129,7 @@ const Dashboard = React.createClass({
             // The old values will sometimes contain more products than are displayed,
             // but the offset we sent was based upon the amount displayed, so we remove
             // any products that might be in the old and new data.
-            return _.unique(a.concat(b), function(obj) {
+            return _.uniq(a.concat(b), function(obj) {
               // If it's an array of products, check the objects name attribute.
               if(typeof a[0] === 'object') { return `${obj.name}${obj.id}` }
               // If it's an array of tags, just check the tag directly.
