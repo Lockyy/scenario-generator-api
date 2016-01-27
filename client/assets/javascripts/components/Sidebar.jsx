@@ -106,29 +106,29 @@ const Sidebar = React.createClass ({
       let sectionName = section.section_name || title.toLowerCase();
       let sectionNameDisplay = "My " + title;
       let href = section.href || "/app/users/current#" + sectionName;
-      let clazz = 'sidebar-link sidebar-row ' + sectionName;
+      let classes = 'sidebar-link sidebar-row ' + sectionName;
 
 
       let link = undefined;
       if(!section.conditional || section.conditional && section.conditional(current_user)) {
         if(section.href){
           link = <a
-            href={href} className={clazz}> {sectionNameDisplay}</a>
+            href={href} className={classes}> {sectionNameDisplay}</a>
         } else {
           link = <a
-            className={clazz}
-            key={sectionName}
-            href={'#'}
-            onClick={function(e) {
-              e.preventDefault();
-              _this.closeHamburgerMenu();
-              window.location.href = href;
-              if(window.location.pathname == '/app/users/current') {
-                window.location.reload();
-              }
-            }}>
-            {sectionNameDisplay}
-          </a>
+                   className={classes}
+                   key={sectionName}
+                   href={'#'}
+                   onClick={function(e) {
+                     e.preventDefault();
+                     _this.closeHamburgerMenu();
+                     window.location.href = href;
+                     if(window.location.pathname == '/app/users/current') {
+                       window.location.reload();
+                     }
+                   }}>
+                   {sectionNameDisplay}
+                 </a>
         }
       } else{
         link = '';
