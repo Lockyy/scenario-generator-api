@@ -10,7 +10,6 @@ import FluxAlertActions from '../../actions/FluxAlertActions';
 import FluxModalActions from '../../actions/FluxModalActions';
 import FluxCollectionActions from '../../actions/FluxCollectionActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions'
-import UserTypeahead from '../UserTypeahead'
 import Results from '../search/Results'
 import ShareCollection from './ShareCollection'
 import Footer from '../Footer';
