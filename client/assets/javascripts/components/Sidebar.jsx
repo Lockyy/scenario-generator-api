@@ -84,36 +84,57 @@ const Sidebar = React.createClass ({
     )
   },
 
+  getSideSections: function(){
+    return [
+      {title: 'Reviews'},
+      {title:  'Tags'},
+      {title:  'Bookmarks'},
+      {title:  'Collections'},
+      {title:  'Admin Panel', href: '/admin', section_name: 'admin-panel', conditional: function(current_user) {
+        return current_user.admin;
+      }}
+    ]
+  },
+
   renderSideLinks: function() {
     let _this = this;
-    let sideSections = [
-      'Reviews',
-      'Tags',
-      'Bookmarks',
-      'Collections',
-    ];
+    let sideSections = _this.getSideSections();
+    let current_user = this.context.currentUser;
 
     return _.map(sideSections, function(section) {
-      let sectionName = section.toLowerCase();
-      let sectionNameDisplay = "My " + section;
-      let href = "/app/users/current#" + sectionName;
+      let title = section.title;
+      let sectionName = section.section_name || title.toLowerCase();
+      let sectionNameDisplay = "My " + title;
+      let href = section.href || "/app/users/current#" + sectionName;
+      let classes = 'sidebar-link sidebar-row ' + sectionName;
 
-      return (
-        <a
-          className={'sidebar-link sidebar-row ' + sectionName}
-          key={sectionName}
-          href={'#'}
-          onClick={function(e) {
-            e.preventDefault()
-            _this.closeHamburgerMenu();
-            window.location.href = href;
-            if(window.location.pathname == '/app/users/current') {
-              window.location.reload();
-            }
-          }}>
-          {sectionNameDisplay}
-        </a>
-      );
+
+      let link = undefined;
+      if(!section.conditional || section.conditional && section.conditional(current_user)) {
+        if(section.href){
+          link = <a
+            href={href} className={classes}> {sectionNameDisplay}</a>
+        } else {
+          link = <a
+                   className={classes}
+                   key={sectionName}
+                   href={'#'}
+                   onClick={function(e) {
+                     e.preventDefault();
+                     _this.closeHamburgerMenu();
+                     window.location.href = href;
+                     if(window.location.pathname == '/app/users/current') {
+                       window.location.reload();
+                     }
+                   }}>
+                   {sectionNameDisplay}
+                 </a>
+        }
+      } else{
+        link = '';
+      }
+
+      return link
     });
   },
 
