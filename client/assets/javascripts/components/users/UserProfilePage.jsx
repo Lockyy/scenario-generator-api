@@ -64,7 +64,7 @@ const UserProfilePage  = React.createClass({
           // to concatinate the arrays and remove non-unique elements.
           // This is so that the show more button properly appends them.
           if(property == 'recent_activity') {
-            return _.unique(a.concat(b), function(obj) {
+            return _.uniq(a.concat(b), function(obj) {
               return (typeof a[0] === 'object') ? obj.id : obj;
             })
           // Everything else is entirely new data and should just return the new array.

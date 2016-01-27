@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '2.2.0'
 
 # Core
-gem 'rails', '4.2.3'
+gem 'rails', '~> 4.2.5'
 gem 'pg', '0.18.0'
 gem 'squeel', github: 'mchavarriagam/squeel'
 gem 'activeadmin', github: 'activeadmin'
@@ -65,12 +65,13 @@ group :development, :test do
 end
 
 group :test  do
+  gem 'rspec-retry'
   gem 'connection_pool'
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', '~> 2.8.0'
   gem 'capybara'
   gem 'capybara-screenshot'
   gem 'capybara-webkit'
-  gem 'database_cleaner'
+  gem 'database_cleaner', '~> 1.4.1'
   gem 'launchy'
   gem 'poltergeist'
   gem 'selenium-webdriver'
