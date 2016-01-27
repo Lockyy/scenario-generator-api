@@ -536,25 +536,28 @@ describe Api::V1::CollectionsController do
         describe 'csv' do
           before do
             get :export, id: @collection.id, format: :csv
+            @body = JSON.parse(response.body)
           end
 
-          it_behaves_like 'an API request that returns a 404'
+          it_behaves_like 'an API request that returns a 401'
         end
 
         describe 'xls' do
           before do
             get :export, id: @collection.id, format: :xls
+            @body = JSON.parse(response.body)
           end
 
-          it_behaves_like 'an API request that returns a 404'
+          it_behaves_like 'an API request that returns a 401'
         end
 
         describe 'ppt' do
           before do
             get :export, id: @collection.id, format: :ppt
+            @body = JSON.parse(response.body)
           end
 
-          it_behaves_like 'an API request that returns a 404'
+          it_behaves_like 'an API request that returns a 401'
         end
       end
 
