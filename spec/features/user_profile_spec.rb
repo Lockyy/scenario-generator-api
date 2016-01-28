@@ -184,7 +184,7 @@ describe 'User Profile Page', js: true do
           expect(page).to have_content @public_collection.user.name
         end
 
-        it "doesn't display private collections" do
+        it "doesn't display private collections", unreliable: true do
           expect(page).to_not have_content(@private_collection.name)
         end
       end
