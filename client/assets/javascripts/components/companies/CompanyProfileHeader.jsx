@@ -9,6 +9,8 @@ import  ProductBox from '../ProductBox'
 import  FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import  ReviewPageStore from '../../stores/ReviewPageStore'
 import UrlHelper from '../../utils/helpers/UrlHelper'
+import RenderDesktop from './../RenderDesktop';
+import RenderMobile from './../RenderMobile';
 
 const CompanyProfileHeader  = React.createClass({
   displayName: 'CompanyProfileHeader',
@@ -139,8 +141,12 @@ const CompanyProfileHeader  = React.createClass({
     return (
       <div id='company-main-info-container'>
         {this.renderShareModal()}
-        {this._getMobileVersion()}
-        {this._getDesktopVersion()}
+          <RenderDesktop>
+            {this._getDesktopVersion()}
+          </RenderDesktop>
+          <RenderMobile>
+            {this._getMobileVersion()}
+          </RenderMobile>
       </div>
     );
   }
