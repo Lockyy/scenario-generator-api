@@ -133,6 +133,6 @@ products.url, company_id, products.views, products.created_at, products.updated_
   end
 
   def related(quantity)
-    related_products.where.not(id: self.id).sample(quantity)
+    related_products.where.not(id: self.id).uniq.sample(quantity)
   end
 end
