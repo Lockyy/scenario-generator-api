@@ -27,7 +27,7 @@ const HighlightText = React.createClass ({
         <span dangerouslySetInnerHTML={markup} />
       )
     } else{
-      return <span/>
+      return <span>{text}</span>
     }
   }
 });
