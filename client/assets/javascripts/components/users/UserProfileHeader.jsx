@@ -9,6 +9,8 @@ import ProductBox from '../ProductBox'
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import ReviewPageStore from '../../stores/ReviewPageStore'
 import UrlHelper from '../../utils/helpers/UrlHelper'
+import RenderDesktop from './../RenderDesktop';
+import RenderMobile from './../RenderMobile';
 
 const UserProfileHeader  = React.createClass({
   displayName: 'UserProfileHeader',
@@ -82,8 +84,12 @@ const UserProfileHeader  = React.createClass({
   render: function render() {
     return (
       <div id='user-main-info-container'>
-        {this._getContent('mobile')}
-        {this._getContent('desktop')}
+        <RenderDesktop>
+          {this._getContent('desktop')}
+        </RenderDesktop>
+        <RenderMobile>
+          {this._getContent('mobile')}
+        </RenderMobile>
       </div>
     );
   }
