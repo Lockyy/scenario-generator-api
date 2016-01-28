@@ -1,6 +1,7 @@
 import React from 'react';
 import _ from 'lodash';
 import { Navigation } from 'react-router';
+import HighlightText from './HighlightText';
 
 // This component takes in an array of strings (the tags) and optionally a link, name, and max.
 // The component will then display the tags as little orange buttons.
@@ -58,14 +59,24 @@ const Tags = React.createClass({
     let selectedTags = this.getSelectedTags();
     let max = _.min([tags.length, this.getMax()]);
 
-    for (let i = 0; i < max; i++) {
-      let tag = tags[i];
+    let tagElements = _.map(tags, function(tag, index) {
       let isSelected = _.includes(selectedTags, tag.name) ;
       let classes = "tag " + ( isSelected ? 'selected': '');
-      tagTags.push(<span key={`tag_${i}`} className={classes} data-slug={tag.slug} onClick={ (e) => this.onClick(e) }>{tag.name}</span>);
-    }
 
-    return <div className={`tags ${this.getContainerName()}`}>{tagTags}</div>;
+      return (
+        <span
+          key={`tag_${index}`}
+          className={classes}
+          data-slug={tag.slug}
+          onClick={ (e) => this.onClick(e) }>
+          <HighlightText
+            text={tag.name}
+            highlight={this.props.highlight} />
+        </span>
+      );
+    }.bind(this))
+
+    return <div className={`tags ${this.getContainerName()}`}>{tagElements}</div>;
 
   },
 
