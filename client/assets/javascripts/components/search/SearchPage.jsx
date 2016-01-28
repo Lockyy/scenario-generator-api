@@ -9,6 +9,8 @@ import SearchPageMobileVersion from './SearchPageMobileVersion'
 import TagResults from './TagResults'
 import Tags from '../Tags'
 import TagsBox from '../TagsBox'
+import RenderDesktop from './../RenderDesktop';
+import RenderMobile from './../RenderMobile';
 
 const SearchPage = React.createClass({
   mixins: [ Navigation ],
@@ -221,30 +223,34 @@ const SearchPage = React.createClass({
     return (
       <div className='search-page'>
         <form onSubmit={this.onSubmit}>
-          <SearchPageDesktopVersion {...data}
-            searchString={this.getSearchString()}
-            query={this.context.router.state.location.query}
-            onSearchInput={this.onSearchInput}
-            onSubmit={this.onSubmit}
-            onPerformSearch={this.performSearch}
-            onChangePage={this.onChangePage}
-            activeSection={this.getSection()}
-            onChangeSort={this.onChangeSort}
-            onChangeTab={this.onChangeTab}
-            onClickFilterTag={this.onClickFilterTag}
-            performSearch={this.performSearch} />
-          <SearchPageMobileVersion {...data}
-            searchString={this.getSearchString()}
-            query={this.context.router.state.location.query}
-            onSearchInput={this.onSearchInput}
-            onSubmit={this.onSubmit}
-            onPerformSearch={this.performSearch}
-            onChangePage={this.onChangePage}
-            activeSection={this.getSection()}
-            onChangeSort={this.onChangeSort}
-            onChangeTab={this.onChangeTab}
-            onClickFilterTag={this.onClickFilterTag}
-            performSearch={this.performSearch} />
+          <RenderDesktop>
+            <SearchPageDesktopVersion {...data}
+              searchString={this.getSearchString()}
+              query={this.context.router.state.location.query}
+              onSearchInput={this.onSearchInput}
+              onSubmit={this.onSubmit}
+              onPerformSearch={this.performSearch}
+              onChangePage={this.onChangePage}
+              activeSection={this.getSection()}
+              onChangeSort={this.onChangeSort}
+              onChangeTab={this.onChangeTab}
+              onClickFilterTag={this.onClickFilterTag}
+              performSearch={this.performSearch} />
+          </RenderDesktop>
+          <RenderMobile>
+            <SearchPageMobileVersion {...data}
+              searchString={this.getSearchString()}
+              query={this.context.router.state.location.query}
+              onSearchInput={this.onSearchInput}
+              onSubmit={this.onSubmit}
+              onPerformSearch={this.performSearch}
+              onChangePage={this.onChangePage}
+              activeSection={this.getSection()}
+              onChangeSort={this.onChangeSort}
+              onChangeTab={this.onChangeTab}
+              onClickFilterTag={this.onClickFilterTag}
+              performSearch={this.performSearch} />
+          </RenderMobile>
         </form>
       </div>
     );
