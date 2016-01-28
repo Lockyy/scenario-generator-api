@@ -41,7 +41,7 @@ const Results = React.createClass ({
     return this.props.data.total
   },
 
-  renderCompany: function(result) {
+  renderCompany: function(result, searchTerm) {
     return (
       <div className='result'>
         <div className='row'>
@@ -53,7 +53,9 @@ const Results = React.createClass ({
             }
             <div className='name'>
               <a href={`/app/companies/${result.id}/${result.slug}`}>
-                { result.name }
+                <HighlightText
+                  text={result.name}
+                  highlight={searchTerm} />
               </a>
             </div>
             <div className='description'>
@@ -65,7 +67,7 @@ const Results = React.createClass ({
     )
   },
 
-  renderCollection: function(result) {
+  renderCollection: function(result, searchTerm) {
     let url = '/app/collections/'+result.id;
     return (
       <div className='result'>
@@ -73,7 +75,9 @@ const Results = React.createClass ({
           <div className='col-xs-12'>
             <div className='name'>
               <a href={url}  onClick={this.props.onClick}>
-                { result.name }
+                <HighlightText
+                  text={result.name}
+                  highlight={searchTerm} />
               </a>
             </div>
             <div className='small-text'>
@@ -105,7 +109,7 @@ const Results = React.createClass ({
     return 'col-xs-12'
   },
 
-  renderProduct: function(result) {
+  renderProduct: function(result, searchTerm) {
     return (
       <div className='result'>
         <div className='row'>
@@ -113,7 +117,9 @@ const Results = React.createClass ({
           <div className={ this.productContentClass(result) }>
             <div className='name'>
               <a href={`/app/products/${result.id}/${result.slug}`}>
-                { result.name }
+                <HighlightText
+                  text={result.name}
+                  highlight={searchTerm} />
               </a>
             </div>
             <div className='company'>
@@ -284,9 +290,8 @@ const Results = React.createClass ({
       let renderResult = this.getRenderResultFunction();
       let searchTerm = this.props.searchTerm;
       for (let i = 0; i < this.getMaxDisplayedData(); i++) {
-        let obj =this.props.data.data[i];
-        obj.name = <HighlightText text={obj.name} highlight={searchTerm} />;
-        resultTags.push(renderResult(obj));
+        let obj = this.props.data.data[i];
+        resultTags.push(renderResult(obj, searchTerm));
       }
 
       return <div className={this.props.type}>{resultTags}</div>;

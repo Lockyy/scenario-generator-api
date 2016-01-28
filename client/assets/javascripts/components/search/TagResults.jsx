@@ -151,10 +151,13 @@ const TagResults = React.createClass ({
   renderTags: function() {
     let data = this.getTags()
     if(data && data.length > 0){
-      return <Tags
-        tags={data}
-        onClick={this.props.onClick}
-        selected={this.getTagNames(this.props.selected)} />
+      return (
+        <Tags
+          tags={data}
+          onClick={this.props.onClick}
+          selected={this.getTagNames(this.props.selected)}
+          highlight={this.props.searchTerm} />
+      )
     } else {
       return <div>{this.props.emptyResults}</div>
     }
