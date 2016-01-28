@@ -90,7 +90,7 @@ const Sidebar = React.createClass ({
       {title:  'Tags'},
       {title:  'Bookmarks'},
       {title:  'Collections'},
-      {title:  'Admin Panel', href: '/admin', section_name: 'admin-panel', conditional: function(current_user) {
+      {title:  'Admin', href: '/admin', section_name: 'admin', conditional: function(current_user) {
         return current_user.admin;
       }}
     ]
