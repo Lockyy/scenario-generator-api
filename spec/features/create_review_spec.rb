@@ -11,9 +11,10 @@ feature "Create reviews", js: true do
 
   def new_product_review
     click_link "Write a Review"
-    fill_in_typeahead("product[name]", "Ubuntu Phone")
+    fill_in_typeahead('product[name]', '#product_name', "Ubuntu Phone")
     choose_typeahead(".tt-no-results","Ubuntu Phone")
-    fill_in "product[company[name]]", with: "Ubuntu"
+    fill_in_typeahead('product[company[name]]', '#product_company_name', "Canonical")
+    choose_typeahead(".tt-no-results","Canonical")
     fill_in "product[url]", with: "http://www.ubuntu.com/phone"
     fill_in "product[description]", with: Faker::Lorem.paragraph
     first('#name_5').trigger('click')
@@ -25,15 +26,15 @@ feature "Create reviews", js: true do
 
   describe "without previous existing product" do
 
-    scenario "creates new review", unreliable: true do
+    scenario "creates new review" do
       expect{new_product_review}.to change{Review.count}.by 1
     end
 
-    scenario "creates a new product", unreliable: true do
+    scenario "creates a new product" do
       expect{new_product_review}.to change{Product.count}.by 1
     end
 
-    scenario "creates a new company", unreliable: true do
+    scenario "creates a new company" do
       expect{new_product_review}.to change{Company.count}.by 1
     end
   end
