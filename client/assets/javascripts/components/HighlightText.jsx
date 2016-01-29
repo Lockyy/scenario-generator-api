@@ -24,10 +24,12 @@ const HighlightText = React.createClass ({
     if(text && highlight) {
       let markup = this.createMarkup(text, highlight);
       return (
-        <span dangerouslySetInnerHTML={markup} />
+        <span dangerouslySetInnerHTML={markup} {...this.props}/>
       )
     } else{
-      return <span>{text}</span>
+      return (
+          <span {...this.props}>{text}</span>
+      )
     }
   }
 });
