@@ -44,7 +44,7 @@ const UserProfilePage  = React.createClass({
   },
 
   componentWillReceiveProps(newProps) {
-    if(newProps.params.userId != this.context.router.state.params.userId) {
+    if(newProps.params.userId != this.props.params.userId) {
       FluxUserActions.fetchData(newProps.params.userId, function() {
         this.transitionTo('/app')
         FluxNotificationsActions.showNotification({
