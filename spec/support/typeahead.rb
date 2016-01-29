@@ -1,5 +1,5 @@
-def fill_in_typeahead(selector, value)
-  fill_in selector, with: value
+def fill_in_typeahead(field_selector, selector, value)
+  fill_in field_selector, with: value
   page.execute_script %Q{ $('#{selector}').trigger('focus') }
   page.execute_script %Q{ $('#{selector}').trigger('keydown') }
 end
