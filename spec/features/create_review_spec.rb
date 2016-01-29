@@ -25,15 +25,15 @@ feature "Create reviews", js: true do
 
   describe "without previous existing product" do
 
-    scenario "creates new review" do
+    scenario "creates new review", unreliable: true do
       expect{new_product_review}.to change{Review.count}.by 1
     end
 
-    scenario "creates a new product" do
+    scenario "creates a new product", unreliable: true do
       expect{new_product_review}.to change{Product.count}.by 1
     end
 
-    scenario "creates a new company" do
+    scenario "creates a new company", unreliable: true do
       expect{new_product_review}.to change{Company.count}.by 1
     end
   end
