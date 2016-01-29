@@ -12,12 +12,19 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 - Migrate from using visible-xs and hidden-xs throughout the app to using the RenderMobile and RenderDesktop components
 - Add user to the Slacked message sent on Review creation
 - Add private/public icons to collection page
+- Change copy on /short
 
 ### Bugfix
 - Fix redirect to /short when trying to access /app when not logged in
 - Add swipe to dismiss to hamburger menu
 - Fix sidebar overlay on mobile
-- Fix bug where clicking on a related product did not update reviews
+- Fix bug where clicking on a related product on product page did not update reviews
+- Fix TableDisplay not rendering correctly when it receives props
+- Fix user profile not re-rendering correctly when the url params change. i.e. Moving from someone's profile to your own via the Hamburger menu.
+- Fix redirect to /short when accessing internal content when not logged in
+- Improve testing setup and coverage
+- Fix RenderMobile and RenderDesktop on resized browser windows
+- Fix issue with typeaheads not letting you type correctly
 
 ## v1.1.1
 
