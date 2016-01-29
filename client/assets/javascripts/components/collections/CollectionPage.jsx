@@ -145,6 +145,7 @@ const CollectionPage = React.createClass({
   },
 
   removeProduct: function(product) {
+    let _this = this;
     FluxAlertActions.showAlert({
       title: 'Remove this product?',
       headerIconClass: 'collections',
@@ -153,7 +154,7 @@ const CollectionPage = React.createClass({
       success: 'Remove product',
       cancel: 'Cancel',
       successCallback: function() {
-        FluxCollectionActions.deleteProduct(this.id(), product.id)
+        FluxCollectionActions.deleteProduct(_this.id(), product.id)
       },
     })
   },
