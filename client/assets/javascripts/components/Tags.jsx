@@ -54,23 +54,20 @@ const Tags = React.createClass({
   },
 
   renderTags: function() {
-    let tagTags = [];
     let tags = this.getTags() || [];
     let selectedTags = this.getSelectedTags();
-    let max = _.min([tags.length, this.getMax()]);
 
     let tagElements = _.map(tags, function(tag, index) {
       let isSelected = _.includes(selectedTags, tag.name) ;
       let classes = "tag " + ( isSelected ? 'selected': '');
-
       return (
         <span
           key={`tag_${index}`}
           className={classes}
-          data-slug={tag.slug}
           onClick={ (e) => this.onClick(e) }>
           <HighlightText
             text={tag.name}
+            data-slug={tag.slug}
             highlight={this.props.highlight} />
         </span>
       );
