@@ -28,7 +28,15 @@ const TableDisplay = React.createClass ({
     }
   },
 
+  componentDidMount: function() {
+    this.updateState(this.props)
+  },
+
   componentWillReceiveProps: function(nextProps) {
+    this.updateState(nextProps)
+  },
+
+  updateState: function(nextProps) {
     let sortColumn = this.state.sortByColumn || nextProps.defaultSortColumn;
     let sortDirection = this.state.sortDirection || 'desc';
 
