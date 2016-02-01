@@ -24,7 +24,7 @@ class Tag < ActiveRecord::Base
     where { tag_taggables_count > 0 }
   end
 
-  default_scope { where { tag_taggables_count > 0 } }
+  default_scope { where.not(tag_taggables_count: 0) }
 
   before_validation :downcase_name!
 
