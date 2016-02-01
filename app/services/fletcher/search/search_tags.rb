@@ -15,7 +15,7 @@ module Fletcher
     end
 
     def build_search_by
-      default_search_by = Hash.new(lambda { |terms| Tag.where { (name.like_any(terms)) } }).with_indifferent_access
+      default_search_by = Hash.new(lambda { |terms| Tag.with_products.where { (name.like_any(terms)) } }).with_indifferent_access
     end
 
     def build_sort_by

@@ -6,10 +6,10 @@ class Review < ActiveRecord::Base
 
   has_one :company, through: :product
   has_many :attachments, as: :attachable
-  has_many :tag_taggables, as: :taggable
+  has_many :tag_taggables, as: :taggable, dependent: :destroy
   has_many :tags, through: :tag_taggables
-  has_many :links
-  has_many :review_votes
+  has_many :links, dependent: :destroy
+  has_many :review_votes, dependent: :destroy
 
   accepts_nested_attributes_for :product
   accepts_nested_attributes_for :tags
