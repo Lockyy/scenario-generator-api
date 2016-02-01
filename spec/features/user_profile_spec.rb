@@ -10,7 +10,8 @@ describe 'User Profile Page', js: true do
     @public_collection = create(:collection, :visible, name: 'Public Collection')
     @private_collection = create(:collection, name: 'My Private Collection')
     @tag = create(:tag)
-    @user.reviews.append @review
+    @tag.reviews.append(@review)
+    @user.reviews.append(@review)
     @user.tags.append @tag
     @user.collections.append @public_collection
     @user.collections.append @private_collection
