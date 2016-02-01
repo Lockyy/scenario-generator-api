@@ -64,6 +64,7 @@ const Tags = React.createClass({
         <span
           key={`tag_${index}`}
           className={classes}
+          data-slug={tag.slug}
           onClick={ (e) => this.onClick(e) }>
           <HighlightText
             text={tag.name}
@@ -71,7 +72,7 @@ const Tags = React.createClass({
             highlight={this.props.highlight} />
         </span>
       );
-    }.bind(this))
+    }.bind(this));
 
     return <div className={`tags ${this.getContainerName()}`}>{tagElements}</div>;
 
