@@ -62,7 +62,7 @@ module Fletcher
 
     def most_popular_tags
       params = pagination_params(@params[MOST_POPULAR_SECTION].try(:[], 'tags'), DEFAULTS[MOST_POPULAR_SECTION][:tags])
-      Tag.most_popular.limit(params[:limit]).offset(params[:offset]).map{ |tag| { name: tag.name, slug: tag.slug } }
+      Tag.with_products.most_popular.limit(params[:limit]).offset(params[:offset]).map{ |tag| { name: tag.name, slug: tag.slug } }
     end
 
     def most_popular_products
