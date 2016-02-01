@@ -1,6 +1,98 @@
 @import 'functions'
+@import 'variables'
+
+$orange: #e36308
 
 .section
   &.recently-added-products
-    h2
-      background-image: img-url('icons/recently-added.svg')
+    & > .header
+      & > h2
+        background-image: img-url('icons/recently-added.svg')
+
+    .tag-box
+      @extend .col-md-3
+      @extend .col-xs-12
+      padding: 0
+      margin-top: 10px
+      margin-bottom: 10px
+
+      .tag-holder
+        overflow: hidden
+        margin-top: 10px
+
+      & > .content
+        color: white
+        height: $box-height
+        background: $orange img-url('backgrounds/most-popular-tags-bg.svg')
+        display: flex
+        flex-direction: column
+        justify-content: space-between
+        overflow: hidden
+        padding: 30px 10px
+
+        .header
+          h2
+            font-size: 20px
+            background: img-url('icons/popular-tags.svg') no-repeat left bottom
+            font-style: italic
+            margin: 0
+            padding-left: 50px
+
+        .items
+          padding: 0 30px
+          max-height: 220px
+          overflow: hidden
+
+          ul
+            @extend .list-inline
+
+            li
+              background: $orange
+              padding: 8px 12px
+              margin: 8px 5px
+              font-size: 15px
+              border: 1px solid
+
+        .see-all-tags-container
+          text-align: center
+          padding: 20px 0 20px 0
+
+          .btn, .btn:hover, .btn:active, .btn:link, .btn:visited
+            color: white
+            background: $orange
+            border: 1px solid white
+            font-weight: bold
+            text-transform: uppercase
+            @include border-radius(30px)
+
+// ==========  Mobile First Method  ==========
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px)
+
+// Extra Small Devices, Phones
+@media only screen and (min-width : 480px)
+
+// Small Devices, Tablets
+@media only screen and (min-width : 768px)
+  .section
+    &.recently-added-products
+      .section-row
+        .tag-box
+          padding: 10px
+
+// Medium Devices, Desktop
+@media only screen and (min-width : 992px)
+
+// Large Devices, Wide Screens
+@media only screen and (min-width : 1200px)
+
+// Really Large Devices, Wide Screens
+@media (min-width: 1330px)
+  .section
+    &.recently-added-products
+      .section-row
+        .tag-box
+          padding: 20px
+
+          & > .content
+            padding: 30px

@@ -4,6 +4,7 @@ import _ from 'lodash';
 import ProductBox from '../ProductBox';
 import SectionRow from '../SectionRow';
 import Section from '../Section';
+import TagsBox from '../TagsBox';
 
 function sumSizeFunc(item) {
   return item.props.size;
@@ -30,7 +31,7 @@ class RecentlyAddedSection extends React.Component {
   }
 
   getCurrentBoxSize(products, product) {
-    let gridSize = this.props.cols;
+    let gridSize = products.length == 1 ? this.props.cols - 1 : this.props.cols ;
     let boxSize = gridSize - 1;
     let countBoxSizes = _.countBy(_.map(products, 'props.size'));
 
@@ -46,26 +47,6 @@ class RecentlyAddedSection extends React.Component {
     return boxSize === 0 ? 0.5 : boxSize;
   }
 
-  buildRows(products) {
-    let sectionRows = [];
-    let row;
-
-    while (products.length > 0) {
-      row = _.last(sectionRows);
-
-      if (!row || _.sum(row, sumSizeFunc) >= this.props.cols) {
-        row = [];
-        sectionRows.push(row);
-      }
-
-      row.push(products.shift());
-    }
-
-    return sectionRows.map(function mapRows(sectionRow, index) {
-      return (<SectionRow key={`recently_added_section_row_${index}`} items={sectionRow}/>);
-    });
-  }
-
   fetchProducts() {
     let product;
     let products = [];
@@ -73,18 +54,24 @@ class RecentlyAddedSection extends React.Component {
     let needsItem;
     let sumItems;
     let currentItem = 0;
+    let tagsBox = false;
 
-    if (!this.props.items) return [];
+    if (!this.props.items || !this.props.items.products) return [];
 
     do {
-      product = this.props.items[currentItem++];
+      product = this.props.items.products[currentItem++];
 
       products.push(<ProductBox
                       size={this.getCurrentBoxSize(products, product)}
                       key={`recently_added_tags_product_box_${product.id}`}
                       {...product} />);
 
-      hasItems = this.props.items.length > currentItem;
+      if(!tagsBox && _.sum(products, sumSizeFunc) == 3) {
+        tagsBox = true
+        products.push(this.fetchTags())
+      }
+
+      hasItems = this.props.items.products.length > currentItem;
       sumItems = _.sum(products, sumSizeFunc);
       needsItem = sumItems < this.state.rows * this.props.cols;
     } while (hasItems && needsItem);
@@ -93,9 +80,10 @@ class RecentlyAddedSection extends React.Component {
     return products;
   }
 
+  fetchTags() {
+    if (!this.props.items || !this.props.items.tags) return '';
 
-  fetchRows() {
-    return this.buildRows(this.fetchProducts());
+    return (<TagsBox key={`most_popular_tags_box`} size={1} title={'Popular tags'} tags={this.props.items.tags} />);
   }
 
   render() {

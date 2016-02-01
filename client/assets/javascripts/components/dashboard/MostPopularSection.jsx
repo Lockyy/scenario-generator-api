@@ -26,7 +26,7 @@ class MostPopularSection extends React.Component {
 
   getMax() {
     // TODO: add smart method to calculate
-    return 2;
+    return 3;
   }
 
   getCurrentBoxSize(products, product) {
@@ -74,19 +74,19 @@ class MostPopularSection extends React.Component {
     let needsItem;
     let sumItems;
     let currentItem = 0;
-    let gridSize = this.props.cols - 1;
+    let gridSize = this.props.cols;
 
-    if (!this.props.items || !this.props.items.products) return [];
+    if (!this.props.items) return [];
 
     do {
-      product = this.props.items.products[currentItem++];
+      product = this.props.items[currentItem++];
 
       products.push(<ProductBox
                       key={`most_popular_product_box_${product.id}`}
                       size={this.getCurrentBoxSize(products, product)}
                       {...product} />);
 
-      hasItems = this.props.items.products.length > currentItem;
+      hasItems = this.props.items.length > currentItem;
       sumItems = _.sum(products, sumSizeFunc);
       needsItem = sumItems < this.state.rows * gridSize;
     } while (hasItems && needsItem);
@@ -95,15 +95,8 @@ class MostPopularSection extends React.Component {
     return products;
   }
 
-  fetchTags() {
-    if (!this.props.items || !this.props.items.tags) return '';
-
-    return (<TagsBox key={`most_popular_tags_box`} title={'Popular tags'} tags={this.props.items.tags} />);
-  }
-
   fetchItems() {
     let items = this.fetchProducts();
-    items.push(this.fetchTags());
     return this.buildRows(items);
   }
 
