@@ -17,12 +17,7 @@ RSpec.describe Fletcher::NewReview do
       quality_score: 5,
       price_review: Faker::Lorem.paragraph,
       price_score: '4',
-      attachments: [{
-        name: 'header.png',
-        size: 12364,
-        content_type: 'image/png',
-        url: 'http://img.fletcher.mx/random_seq/header.png'
-      }],
+      attachments: [Rack::Test::UploadedFile.new('spec/support/assets/images/front.png', 'image/png')],
       product: {
         name: 'product',
         description: 'description',
