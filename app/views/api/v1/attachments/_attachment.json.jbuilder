@@ -1,0 +1,10 @@
+json.id attachment.id
+json.created_at attachment.created_at
+json.updated_at attachment.updated_at
+json.product_id attachment.product_id
+json.author attachment.author
+json.attachable_id attachment.attachable_id
+json.attachable_type attachment.attachable_type
+json.name attachment.attachment_file_name
+json.content_type attachment.attachment_content_type
+json.size attachment.attachment_file_size

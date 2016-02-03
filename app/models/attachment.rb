@@ -11,15 +11,11 @@ class Attachment < ActiveRecord::Base
           application/x-mswrite application/vnd.ms-works
       ] + @@IMAGE_TYPES
 
-  counter_culture [:product, :user], :column_name => "total_attachments"
-
-  scope :with_images, -> do
-    where(content_type: @@IMAGE_TYPES)
-  end
-
   belongs_to :attachable, polymorphic: true
   belongs_to :product
+
   counter_culture [:product, :user], column_name: 'total_attachments'
+
   scope :with_images, -> do
     where(attachment_content_type: @@IMAGE_TYPES)
   end
@@ -34,6 +30,7 @@ class Attachment < ActiveRecord::Base
                                     content_type: @@VALID_TYPES,
                                     message: 'You are trying to upload an invalid file type'
   validates_attachment_presence :attachment
+
   before_validation :ensure_attachment_uuid_has_a_value
 
   def author
@@ -41,6 +38,7 @@ class Attachment < ActiveRecord::Base
   end
 
   private
+
   def ensure_attachment_uuid_has_a_value
     self.attachment_uuid = SecureRandom.uuid if !self.attachment_uuid && self.attachment_file_name
   end

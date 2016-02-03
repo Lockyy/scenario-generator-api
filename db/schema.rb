@@ -42,6 +42,7 @@ ActiveRecord::Schema.define(version: 20160202164947) do
   create_table "attachments", force: :cascade do |t|
     t.integer  "attachable_id"
     t.string   "attachable_type"
+    t.string   "url"
     t.string   "attachment_file_name"
     t.string   "attachment_content_type"
     t.integer  "attachment_file_size"

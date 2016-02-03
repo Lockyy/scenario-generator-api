@@ -11,23 +11,43 @@ const UploadManager = React.createClass({
       uploadText: 'Upload a file',
       uploadingText: 'Uploading...',
       onAddFile: function(file) {},
-      onValidateFile: function(file) {},
+      onValidateFile: function(file) {return true},
       onPressEnter: function() {}
     }
   },
 
   _handleUploadFiles: function _handleUploadFiles(e) {
+    File.prototype.convertToBase64 = function(callback) {
+        var reader = new FileReader();
+        reader.onload = function(readerEvt) {
+          var binaryString = readerEvt.target.result;
+          callback(btoa(binaryString))
+        };
+        reader.readAsBinaryString(this);
+    };
+
     let _this = this;
     let uploads = _.compact(_.map(e.target.files, function(file) {
-      if(!_this.props.onValidateFile(file)) { return }
-      return { name: file.name, size: file.size, loaded: 0, file: file }
+      let onValidateFile = _this.props.onValidateFile;
+      if(!onValidateFile || onValidateFile && onValidateFile(file)) {
+        return {
+          name: file.name,
+          attachment: {
+            file: file,
+            filename: file.name,
+            content_type: file.type
+        }}
+      }
     }));
 
     _.each(uploads, function(file) {
       let $input = $(React.findDOMNode(_this.refs.input_file_placeholder));
       let $button = $(React.findDOMNode(_this.refs.input_file_button));
 
-      _this.props.onAddFile(file, $input, $button);
+      file.attachment.file.convertToBase64(function(base64) {
+        file.attachment.content = base64;
+        _this.props.onAddFile(file, $input, $button);
+      });
     });
   },
 
@@ -46,20 +66,18 @@ const UploadManager = React.createClass({
   },
 
   render: function render() {
-    let that = this
-
+    let that = this;
     return (
       <div className='upload-manager items-manager'>
         <ul className='files items' ref='files'>
           {_.map(this.props.attachments, function(file) {
             let id = Math.floor((Math.random() * 1000000) + 1);
-
-            return <li className={`file ${file.id}`} id={`file_${id}`} ref={`file_${id}`}>
-              <div className=''>
-                <a href={UrlHelper.addProtocol(file.url)} target='_blank'>{file.name}</a>
-                <span className='remove-link' data-id={file.id} onClick={that._handleRemoveAttachment}>(remove)</span>
-              </div>
-            </li>
+            return (
+              <li className={`file ${file.id}`} id={`file_${id}`} ref={`file_${id}`}>
+                <span>{file.name}</span>
+                <span className='remove-link' onClick={that._handleRemoveAttachment}>(remove)</span>
+              </li>
+            )
           })}
         </ul>
 

@@ -1,2 +1,2 @@
 web: rails s -p 4000 -b `hostname --ip-address`
-client: cd client && $(npm bin)/webpack -w --config webpack.rails.config.js
+client: cd client && $(npm bin)/webpack -w --config webpack.rails.config.js &

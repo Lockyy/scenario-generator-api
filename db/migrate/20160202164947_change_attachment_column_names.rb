@@ -4,6 +4,5 @@ class ChangeAttachmentColumnNames < ActiveRecord::Migration
     rename_column :attachments, :content_type, :attachment_content_type
     rename_column :attachments, :size, :attachment_file_size
     add_column    :attachments, :attachment_uuid, :string
-    remove_column :attachments, :url
   end
 end

@@ -12,32 +12,28 @@ RSpec.describe Fletcher::NewReview do
 
   let(:params) {
     {
-      title: Faker::Company.bs,
-      quality_review: Faker::Lorem.paragraph,
-      quality_score: 5,
-      price_review: Faker::Lorem.paragraph,
-      price_score: '4',
-      attachments: [{attachment: Rack::Test::UploadedFile.new('spec/support/assets/images/front.png', 'image/png')}],
-      product: {
-        name: 'product',
-        description: 'description',
-        url: 'http://url.com',
-        company: {
-          name: 'company name',
-          url: 'test',
-          avatar: {
-            url: 'http://img.fletcher.mx/random_seq/logo.png'
-          }
+        title: Faker::Company.bs,
+        quality_review: Faker::Lorem.paragraph,
+        quality_score: 5,
+        price_review: Faker::Lorem.paragraph,
+        price_score: '4',
+        attachments: [{attachment: Rack::Test::UploadedFile.new('spec/support/assets/images/front.png', 'image/png')}],
+        product: {
+            name: 'product',
+            description: 'description',
+            url: 'http://url.com',
+            company: {
+                name: 'company name',
+                url: 'test',
+                avatar: {
+                    url: 'http://img.fletcher.mx/random_seq/logo.png'
+                }
+            }
         }
-      }
     }.with_indifferent_access
   }
 
   subject { Fletcher::NewReview.new(user, product, params) }
-
-  before do
-    Paperclip::Attachment.any_instance.stub(:save).and_return(true)
-  end
 
   describe '#save!' do
     context 'with an existing product' do
@@ -45,7 +41,7 @@ RSpec.describe Fletcher::NewReview do
         product_params = {}.merge(params[:product]).with_indifferent_access
         product_params[:company] = Company.create(name: params[:product][:company][:name])
         expect { Product.create(product_params) }.to change { Product.count }
-        expect { subject.save! }.to_not change{ Product.count }
+        expect { subject.save! }.to_not change { Product.count }
       end
     end
 

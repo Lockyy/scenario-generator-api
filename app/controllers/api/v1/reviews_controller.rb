@@ -27,6 +27,7 @@ class Api::V1::ReviewsController < AppController
     review = Fletcher::NewReview.new(current_user, @product, create_params)
 
     respond_to do |format|
+      binding.pry
       if review.save!
         @review = review.review
         product = review.product
@@ -91,7 +92,7 @@ class Api::V1::ReviewsController < AppController
     params[:review].permit(
         :id, :quality_score, :quality_review, :title, :price_review, :price_score,
         :attachable_id, :attachable_type,
-        {attachments: [:name, :url, :content_type, :size, :id]},
+        {attachments: [{attachment: [:filename, :content_type, :content]}]},
         {links: [:url, :id]},
         {tags: [:name, :id]},
         {product: [:id, :name, :url, :description,
@@ -102,4 +103,11 @@ class Api::V1::ReviewsController < AppController
         }
     )
   end
+
+  # def clean_tempfile
+  #   if @tempfile
+  #     @tempfile.close
+  #     @tempfile.unlink
+  #   end
+  # end
 end
