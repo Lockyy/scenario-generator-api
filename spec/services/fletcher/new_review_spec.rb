@@ -35,6 +35,10 @@ RSpec.describe Fletcher::NewReview do
 
   subject { Fletcher::NewReview.new(user, product, params) }
 
+  before do
+    Paperclip::Attachment.any_instance.stub(:save).and_return(true)
+  end
+
   describe '#save!' do
     context 'with an existing product' do
       it 'does not create a new one' do
