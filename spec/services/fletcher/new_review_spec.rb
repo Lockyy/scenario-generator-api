@@ -17,7 +17,7 @@ RSpec.describe Fletcher::NewReview do
       quality_score: 5,
       price_review: Faker::Lorem.paragraph,
       price_score: '4',
-      attachments: [Rack::Test::UploadedFile.new('spec/support/assets/images/front.png', 'image/png')],
+      attachments: [{attachment: Rack::Test::UploadedFile.new('spec/support/assets/images/front.png', 'image/png')}],
       product: {
         name: 'product',
         description: 'description',
@@ -51,6 +51,14 @@ RSpec.describe Fletcher::NewReview do
       it 'creates a new product' do
         Company.create(name: params[:product][:company][:name])
         expect { subject.save! }.to change { Product.count }
+      end
+
+      it 'the created product has an image' do
+        Company.create(name: params[:product][:company][:name])
+        expect { subject.save! }.to change { Product.count }
+        images = subject.product.images
+        expect(images.count).to eql(1)
+        expect(images.first.attachment_file_name).to eql('front.png')
       end
 
       context 'without an existing company' do
