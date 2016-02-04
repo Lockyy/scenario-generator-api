@@ -37,6 +37,10 @@ class Attachment < ActiveRecord::Base
     attachable.user
   end
 
+  def url
+    attachment.url
+  end
+
   private
 
   def ensure_attachment_uuid_has_a_value
