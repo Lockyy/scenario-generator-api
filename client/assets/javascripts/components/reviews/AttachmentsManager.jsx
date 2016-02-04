@@ -19,7 +19,7 @@ const AttachmentsManager = React.createClass({
 
   _removeFile: function _removeFile(e, callbacks) {
     let fileName = $(e.target).siblings().text();
-    let attachments = _.remove(this.props.attachments, function(a){ return a.file.name == fileName} );
+    let attachments = _.remove(this.props.attachments, function(a){ return a.name == fileName} );
     this.setState({attachments: attachments})
   },
 
