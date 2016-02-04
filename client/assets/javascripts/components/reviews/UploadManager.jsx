@@ -67,15 +67,17 @@ const UploadManager = React.createClass({
 
   render: function render() {
     let that = this;
+    let attachments = _.filter(this.props.attachments, function(att){return !att.deleted});
+
     return (
       <div className='upload-manager items-manager'>
         <ul className='files items' ref='files'>
-          {_.map(this.props.attachments, function(file) {
+          {_.map(attachments, function(file) {
             let id = Math.floor((Math.random() * 1000000) + 1);
             return (
               <li className={`file ${file.id}`} id={`file_${id}`} ref={`file_${id}`}>
                 <span>{file.name}</span>
-                <span className='remove-link' onClick={that._handleRemoveAttachment}>(remove)</span>
+                <span className='remove-link' data-id={file.id} onClick={that._handleRemoveAttachment}>(remove)</span>
               </li>
             )
           })}

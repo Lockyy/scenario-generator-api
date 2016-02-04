@@ -27,7 +27,6 @@ class Api::V1::ReviewsController < AppController
     review = Fletcher::NewReview.new(current_user, @product, create_params)
 
     respond_to do |format|
-      binding.pry
       if review.save!
         @review = review.review
         product = review.product
@@ -45,7 +44,7 @@ class Api::V1::ReviewsController < AppController
   # PATCH/PUT /reviews/1.json
   def update
     @review = current_user.reviews.find(params[:id])
-    review = Fletcher::UpdateReview.new(@review, review_params)
+    review = Fletcher::UpdateReview.new(@review, update_params)
 
     respond_to do |format|
       if review.save!
@@ -77,11 +76,11 @@ class Api::V1::ReviewsController < AppController
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
-  def review_params
+  def update_params
     params[:review].permit(
         :id, :quality_score, :quality_review, :title, :price_review, :price_score,
         :attachable_id, :attachable_type,
-        {attachments: [:name, :url, :content_type, :size, :id]},
+        {attachments: [:id, :deleted, {attachment: [:filename, :content_type, :content]}]},
         {links: [:url, :id]},
         {tags: [:name, :id]},
         {product: [:id, :name, {company: [:name, :id]}, :url, :description]}
@@ -103,11 +102,4 @@ class Api::V1::ReviewsController < AppController
         }
     )
   end
-
-  # def clean_tempfile
-  #   if @tempfile
-  #     @tempfile.close
-  #     @tempfile.unlink
-  #   end
-  # end
 end

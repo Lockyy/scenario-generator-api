@@ -1,12 +1,9 @@
-class FileService
-
+module Fletcher::FileService
   def self.encoded_attached_files_to_normal_attached_files(encoded_files = [])
-    encoded_files.each { |encoded_file|
+    encoded_files.each do |encoded_file|
       encoded_file[:attachment] = encoded_file_to_file(encoded_file[:attachment])
-    }
+    end
   end
-
-  private
 
   def self.encoded_file_to_file(encoded_file)
     temp_file = base64_to_file(encoded_file[:content])
@@ -19,6 +16,7 @@ class FileService
     uploaded_file
   end
 
+  private
 
   def self.base64_to_file(base64)
     temp_file = Tempfile.new('item_image')
