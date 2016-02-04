@@ -5,7 +5,9 @@ Paperclip::Attachment.default_options[:s3_credentials] = {
   :s3_region => ENV['AWS_REGION']
 }
 
+# To use this interpolation the instance needs to have an attribute which name finishes with 'uuid'
 Paperclip.interpolates :instance_uuid do |attachment, style|
   instance = attachment.instance
-  instance.attribute_present?('avatar_uuid') ? instance.avatar_uuid : instance.attachment_uuid
+  uuid_column_name = instance.class.column_names.find{|obj| obj.ends_with?'uuid'}
+  attachment.instance[uuid_column_name]
 end
