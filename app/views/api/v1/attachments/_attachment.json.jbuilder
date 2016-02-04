@@ -8,3 +8,4 @@ json.attachable_type attachment.attachable_type
 json.name attachment.attachment_file_name
 json.content_type attachment.attachment_content_type
 json.size attachment.attachment_file_size
+json.url attachment.url
