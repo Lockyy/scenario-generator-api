@@ -22,7 +22,7 @@ module Fletcher
 
     private
 
-    def attachments
+    def review_attachments
       FileService.encoded_attached_files_to_normal_attached_files @review_params[:attachments]
     end
 
@@ -41,7 +41,7 @@ module Fletcher
 
     def build_review
       _review_params = review_params
-      _review_params[:attachments] = attachments
+      _review_params[:attachments] = review_attachments
       params = {}.merge(_review_params).with_indifferent_access
 
       params.delete(:product)
