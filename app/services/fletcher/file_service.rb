@@ -1,5 +1,6 @@
 module Fletcher::FileService
   def self.encoded_attached_files_to_normal_attached_files(encoded_files = [])
+    return if encoded_files.nil?
     encoded_files.each do |encoded_file|
       encoded_file[:attachment] = encoded_file_to_file(encoded_file[:attachment])
     end

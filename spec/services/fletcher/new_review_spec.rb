@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'base64'
 
 #TODO: ADD TESTS
 RSpec.describe Fletcher::NewReview do
@@ -17,7 +18,11 @@ RSpec.describe Fletcher::NewReview do
         quality_score: 5,
         price_review: Faker::Lorem.paragraph,
         price_score: '4',
-        attachments: [{attachment: Rack::Test::UploadedFile.new('spec/support/assets/images/front.png', 'image/png')}],
+        attachments: [{attachment:{
+            content: Base64.encode64(File.open('spec/support/assets/images/front.png', "rb").read),
+            filename: 'front.png',
+            content_type: 'image/png'
+        }}],
         product: {
             name: 'product',
             description: 'description',
@@ -34,6 +39,10 @@ RSpec.describe Fletcher::NewReview do
   }
 
   subject { Fletcher::NewReview.new(user, product, params) }
+
+  before do
+    Paperclip::Attachment.any_instance.stub(:save).and_return(true)
+  end
 
   describe '#save!' do
     context 'with an existing product' do
