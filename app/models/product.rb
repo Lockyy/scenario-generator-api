@@ -4,11 +4,15 @@ class Product < ActiveRecord::Base
   extend FriendlyId
   friendly_id :name, use: [:slugged, :history], dependent: false
 
-  make_exportable only: [
-    :name, :url, :company,
-    :rating, :price,
-    :total_reviews
-  ]
+  begin
+    make_exportable only: [
+      :name, :url, :company,
+      :rating, :price,
+      :total_reviews
+    ]
+  rescue
+    puts "make_exportable in product.rb was unable to set up. If you are precompiling in the Dockerfile this is fine, the database isn't loaded and we just need to handle this error. If not, something has gone wrong."
+  end
 
   belongs_to :company
   belongs_to :user
