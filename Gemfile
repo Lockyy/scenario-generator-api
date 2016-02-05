@@ -11,6 +11,7 @@ gem 'aws-sdk', '~> 2'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.1'
 gem 'pg_search'
+gem 'data_migrate'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
@@ -26,6 +27,7 @@ gem 'jbuilder', '~> 2.0'
 # Functionality
 gem 'autoprefixer-rails'
 gem 'devise'
+
 # Use Rails Html Sanitizer for HTML sanitization
 gem 'rails-html-sanitizer'
 gem 'omniauth'

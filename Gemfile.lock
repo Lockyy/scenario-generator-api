@@ -170,6 +170,8 @@ GEM
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
       after_commit_action (~> 1.0.0)
+    data_migrate (1.2.0)
+      rails (>= 3.0.0)
     database_cleaner (1.4.1)
     debug_inspector (0.0.2)
     devise (3.5.5)
@@ -458,6 +460,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   connection_pool
   counter_culture (~> 0.1.33)
+  data_migrate
   database_cleaner (~> 1.4.1)
   devise
   es5-shim-rails
