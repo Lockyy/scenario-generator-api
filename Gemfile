@@ -47,11 +47,11 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'rack-mini-profiler'
+  gem 'web-console', '~> 2.0'
 end
 
 group :development, :test do
   gem 'byebug'
-  gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'foreman'
