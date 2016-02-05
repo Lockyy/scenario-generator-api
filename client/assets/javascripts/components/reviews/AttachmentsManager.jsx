@@ -1,5 +1,4 @@
 import React from 'react'
-import ReviewPageReviewFieldsActions from '../../actions/reviews/ReviewPageReviewFieldsActions'
 import UrlHelper from '../../utils/helpers/UrlHelper'
 import UploadManager from './UploadManager'
 
