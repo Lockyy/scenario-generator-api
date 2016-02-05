@@ -20,25 +20,18 @@ const CompanyProfilePage  = React.createClass({
 
   componentDidMount() {
     CompanyStore.listen(this.onChange.bind(this));
-    let params = this.context.router.state.params;
-    FluxCompanyActions.fetchData(params, function() {
-      this.transitionTo('/app')
-      FluxNotificationsActions.showNotification({
-        type: '404',
-        text: `That company does not exist`
-      })
-    }.bind(this));
+    this.fetchCompany(this.props.params.id)
   },
 
   componentWillReceiveProps: function(newProps) {
-    if(_.isUndefined(newProps.params.id)){ return; }
+    if(newProps.params.id != this.props.params.id){
+      this.fetchCompany(newProps.params.id)
+    }
+  },
 
-    FluxCompanyActions.fetchData(newProps.params.id, function() {
-      this.transitionTo('/app')
-      FluxNotificationsActions.showNotification({
-        type: '404',
-        text: `That company does not exist`
-      })
+  fetchCompany: function(id) {
+    FluxCompanyActions.fetchData(id, function(error) {
+      this.transitionTo(`/app/error/company/${error}`)
     }.bind(this));
   },
 

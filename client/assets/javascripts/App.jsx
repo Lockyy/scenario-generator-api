@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import TagPage from './components/tags/TagPage';
 import TagsPage from './components/tags/TagsPage';
 import SearchPage from './components/search/SearchPage';
+import PageNotFoundPage from './components/errors/PageNotFoundPage';
 import CollectionPage from './components/collections/CollectionPage';
 import CollectionsPage from './components/collections/CollectionsPage';
 import SearchBox from './components/header/SearchBox';
@@ -57,8 +58,8 @@ $(function onLoad() {
             <Route path="app/products/:productId/:slug/reviews/new" component={NewReviewPage} />
             <Route path="app/products/:productId/reviews/:reviewId" component={NewReviewPage} />
             <Route path="app/products/:productId/:slug/reviews/:reviewId" component={NewReviewPage} />
-            <Route name="company" path="app/companies/:companyId" component={CompanyProfilePage} />
-            <Route name="company" path="app/companies/:companyId/:slug" component={CompanyProfilePage} />
+            <Route name="company" path="app/companies/:id" component={CompanyProfilePage} />
+            <Route name="company" path="app/companies/:id/:slug" component={CompanyProfilePage} />
             <Route name="user" path="app/users/:userId" component={UserProfilePage} />
             <Route name="search" path="app/search/:section/:search_string/:page" component={SearchPage} />
             <Route name="search" path="app/search/:section" component={SearchPage} />
@@ -67,7 +68,9 @@ $(function onLoad() {
             <Route path="app/tags" component={TagsPage} />
             <Route path="app/tags/:letter" component={TagsPage} />
             <Route path="app/directory/collections" component={CollectionsPage} />
-            <Route name='CollectionPage' path="app/collections/:id" component={CollectionPage} />
+            <Route name="CollectionPage" path="app/collections/:id" component={CollectionPage} />
+            <Route name="error" path="app/error/:subject/:error" component={PageNotFoundPage} />
+            <Route name="404" path="*" component={PageNotFoundPage} />
           </Router>
         ), document.getElementById('content'));
 

@@ -33,27 +33,21 @@ const UserProfilePage  = React.createClass({
 
   componentDidMount() {
     UserStore.listen(this.onChange);
-    FluxUserActions.fetchData(this.context.router.state.params.userId, function() {
-      this.transitionTo('/app')
-      FluxNotificationsActions.showNotification({
-        type: '404',
-        text: `That user does not exist`
-      })
-    }.bind(this));
+    this.fetchUser(this.props.params.userId)
     FluxUserActions.fetchRecentActivity(this.context.router.state.params.userId);
   },
 
   componentWillReceiveProps(newProps) {
     if(newProps.params.userId != this.props.params.userId) {
-      FluxUserActions.fetchData(newProps.params.userId, function() {
-        this.transitionTo('/app')
-        FluxNotificationsActions.showNotification({
-          type: '404',
-          text: `That user does not exist`
-        })
-      }.bind(this));
+      this.fetchUser(newProps.params.userId)
     }
     FluxUserActions.fetchRecentActivity(newProps.params.userId);
+  },
+
+  fetchUser: function(id) {
+    FluxUserActions.fetchData(id, function(error) {
+      this.transitionTo(`/app/error/user/${error}`)
+    }.bind(this));
   },
 
   onChange(data) {

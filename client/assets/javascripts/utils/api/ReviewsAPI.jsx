@@ -4,7 +4,7 @@ import ReviewConstants from '../constants/ReviewConstants';
 module.exports = {
   getReviews: function(productID, sorting, resolve, reject) {
     if (productID) {
-      let url = `/api/products/${productID}/reviews`;
+      let url = `/api/v1/products/${productID}/reviews`;
       return new Promise(function() {
         $.ajax({
           url: url,
@@ -17,7 +17,7 @@ module.exports = {
 
   voteOnReview: function(productID, reviewId, helpful, resolve, reject) {
     if (productID) {
-      let url = `/api/products/${productID}/reviews/${reviewId}/review_votes`;
+      let url = `/api/v1/products/${productID}/reviews/${reviewId}/review_votes`;
       return new Promise(function() {
         $.ajax({
           type: 'POST',
@@ -31,7 +31,7 @@ module.exports = {
 
   cancelVoteOnReview: function(productID, reviewId, resolve, reject) {
     if (productID) {
-      let url = `/api/products/${productID}/reviews/${reviewId}/review_votes`;
+      let url = `/api/v1/products/${productID}/reviews/${reviewId}/review_votes`;
       return new Promise(function() {
         $.ajax({
           type: 'delete',

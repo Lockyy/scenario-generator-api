@@ -3,7 +3,7 @@ import { Promise } from 'es6-promise';
 module.exports = {
 
   fetchBookmarkedProducts: function(resolve, reject) {
-    let url = `/api/bookmarks`
+    let url = `/api/v1/bookmarks`
     return new Promise(function() {
       $.ajax({
         url: url,
@@ -14,7 +14,7 @@ module.exports = {
   },
 
   createBookmark: function(id, resolve, reject) {
-    let url = `/api/products/${id}/bookmark`
+    let url = `/api/v1/products/${id}/bookmark`
     return new Promise(function() {
       $.ajax({
         url: url,
@@ -26,7 +26,7 @@ module.exports = {
   },
 
   deleteBookmark: function(id, resolve, reject) {
-    let url = `/api/products/${id}/bookmark`
+    let url = `/api/v1/products/${id}/bookmark`
     return new Promise(function() {
       $.ajax({
         url: url,

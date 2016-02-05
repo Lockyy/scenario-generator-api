@@ -63,22 +63,18 @@ const ProductPage = React.createClass({
 
   componentDidMount: function() {
     ProductStore.listen(this.onChange.bind(this));
-    FluxProductPageActions.fetchProduct(this.id(), function() {
-      this.transitionTo('/app')
-      FluxNotificationsActions.showNotification({
-        type: '404',
-        text: `That product does not exist`
-      })
-    }.bind(this));
+    this.fetchProduct(this.id());
   },
 
   componentWillReceiveProps: function(newProps) {
-    FluxProductPageActions.fetchProduct(newProps.params.id, function() {
-      this.transitionTo('/app')
-      FluxNotificationsActions.showNotification({
-        type: '404',
-        text: `That product does not exist`
-      })
+    if(newProps.params.id != this.id()) {
+      this.fetchProduct(newProps.params.id);
+    }
+  },
+
+  fetchProduct: function(id) {
+    FluxProductPageActions.fetchProduct(id, function(error) {
+      this.transitionTo(`/app/error/product/${error}`)
     }.bind(this));
   },
 

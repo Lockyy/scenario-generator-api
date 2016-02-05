@@ -35,7 +35,7 @@ module.exports = {
   },
 
   fetchReview: function fetchReview(productId, reviewId, resolve, reject) {
-    let url = `/api/products/${productId}/reviews/${reviewId}`
+    let url = `/api/v1/products/${productId}/reviews/${reviewId}`
 
     return new Promise(function() {
       $.ajax({

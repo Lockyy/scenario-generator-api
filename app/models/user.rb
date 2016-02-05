@@ -6,9 +6,9 @@ class User < ActiveRecord::Base
          :omniauthable, omniauth_providers: [:yammer]
 
   has_many :user_oauths, dependent: :destroy
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
   has_many :attachments, through: :reviews
-  has_many :bookmarks
+  has_many :bookmarks, dependent: :destroy
   has_many :bookmarked_products, through: :bookmarks, source: :product
   has_many :products
   has_many :collections, dependent: :destroy

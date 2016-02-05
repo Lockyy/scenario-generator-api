@@ -1,19 +1,27 @@
-module Api
-  class ProductsController < AppController
-    respond_to :json
+class Api::V1::ProductsController < AppController
+  respond_to :json
+  before_action :set_product
 
-    def show
-      @product = Product.find_by(id: params[:id])
-      if @product.nil?
-        render :json => { product: {} }, :status => 404
-      else
-        @product.increment!(:views)
-        @related_products = @product.related(4)
+  def show
+    @product = Product.friendly.find_by(id: params[:id])
 
-        respond_to do |format|
-          format.json { render }
-        end
-      end
+    @product.increment!(:views)
+    @related_products = @product.related(4)
+
+    respond_to do |format|
+      format.json { render }
+    end
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product
+    @product = Product.friendly.find_by(id: params[:id])
+    if @product.nil?
+      status = Product.deleted?(params[:id]) ? 410 : 404
+      render  :json => { product: {} },
+              :status => status
     end
   end
 end

@@ -20,7 +20,7 @@ const UserTypeahead  = React.createClass({
   _getBloodhoundProps: function _getBloodhoundProps() {
     return {
       remote: {
-        url: '/api/search/users?search_string=%QUERY',
+        url: '/api/v1/search/users?search_string=%QUERY',
         wildcard: '%QUERY',
         transform: function(data) { return data.users.data }
       }
