@@ -1,40 +1,12 @@
 import _ from 'lodash';
 import alt from '../../FluxAlt';
 import NewReviewPageAPI from '../../utils/api/NewReviewPageAPI';
-import S3API from '../../utils/api/S3API';
+
 
 class ReviewPageReviewFieldsActions {
-  addFile(file, callbacks) {
-    callbacks = _.merge({success: new Function(), error: new Function()}, callbacks)
-    let _this = this;
+  addFile(file, callbacks) {}
 
-    NewReviewPageAPI.getSignedUploadUrl(file)
-    .then(function(data) {
-        return S3API.uploadFileToS3(file, data.upload.url, data.upload.content_type, callbacks);
-    }).then(function(downloadUrl) {
-      let file_data = {
-        name: file.name,
-        url: downloadUrl,
-        content_type: file.type,
-        size: file.size
-      };
-
-      callbacks.success(file_data, downloadUrl);
-      _this.dispatch(file_data);
-    })
-    .fail(function(error) {
-      //TODO
-      callbacks.error(error);
-      _this.registerError('error uploading file to s3');
-    });
-  }
-
-  removeFile(id, callbacks) {
-    callbacks = _.merge({success: new Function()}, callbacks)
-
-    this.dispatch(id);
-    callbacks.success(id)
-  }
+  removeFile(id, callbacks) {}
 
   addLink(link, callbacks) {
     callbacks = _.merge({success: new Function()}, callbacks)
