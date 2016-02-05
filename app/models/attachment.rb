@@ -37,7 +37,7 @@ class Attachment < ActiveRecord::Base
     attachable.user
   end
 
-  def url
+  def file_url
     attachment.url
   end
 
