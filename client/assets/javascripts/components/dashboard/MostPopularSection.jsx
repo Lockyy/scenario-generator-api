@@ -31,7 +31,7 @@ class MostPopularSection extends React.Component {
 
   getCurrentBoxSize(products, product) {
     let gridSize = this.props.cols - 1;
-    let boxSize = gridSize;
+    let boxSize = gridSize - 1;
     let countBoxSizes = _.countBy(_.map(products, 'props.size'));
 
     if (products.length > 0) {
