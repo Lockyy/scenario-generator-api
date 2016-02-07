@@ -66,6 +66,8 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'letter_opener'
+  gem 'rubocop'
+  gem 'rubocop-checkstyle_formatter', require: false
 end
 
 group :test  do
@@ -79,6 +81,7 @@ group :test  do
   gem 'launchy'
   gem 'poltergeist'
   gem 'selenium-webdriver'
+  gem 'simplecov', require: false
 end
 
 group :production do
