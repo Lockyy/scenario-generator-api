@@ -85,4 +85,8 @@ Rails.application.configure do
     password:       ENV['MANDRILL_API'],
     authentication: :plain,
   }
+
+  config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
+  config.assets.enabled = true
+  config.assets.prefix = "/assets"
 end
