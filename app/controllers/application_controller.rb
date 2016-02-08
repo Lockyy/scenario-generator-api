@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  include AssetHelper
   force_ssl if: :ssl_configured?
 
   def ssl_configured?

@@ -6,24 +6,18 @@ class AssetsController < ApplicationController
                                               :app_css,
                                             ]
 
-  def s3_attachments
+  def attachments
     sign_and_send_file(@attachment.path)
   end
 
-  def app_js
-    sign_and_send_file ENV['APP_JS_PATH']
+  def s3_js
+    path = ActionController::Base.helpers.asset_path("#{params[:path]}.js")
+    sign_and_send_file(path)
   end
 
-  def app_css
-    sign_and_send_file ENV['APP_CSS_PATH']
-  end
-
-  def site_js
-    sign_and_send_file ENV['SITE_JS_PATH']
-  end
-
-  def site_css
-    sign_and_send_file ENV['SITE_CSS_PATH']
+  def s3_css
+    path = ActionController::Base.helpers.asset_path("#{params[:path]}.css")
+    sign_and_send_file(path)
   end
 
   private
@@ -32,8 +26,8 @@ class AssetsController < ApplicationController
     @attachment = Attachment.find_by(id: params[:id])
   end
 
-  def sign_and_send_file(url)
-    signer = Fletcher::Assets::S3Signer.new
+  def sign_and_send_file(path)
+    signer = Fletcher::Assets::Signer.new
     url = signer.sign_url(path)
     data = open(url)
     send_data data.read,

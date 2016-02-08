@@ -14,11 +14,14 @@ Rails.application.routes.draw do
     get '*route', to: 'app#index'
   end
 
-  ###############
-  # Attachments #
-  ###############
+  ######
+  # S3 #
+  ######
 
-  get 's3/uploads/:id', to: 'assets#s3_attachments_redirect', as: :attachment_asset
+  get 's3/uploads/:id', to: 'assets#attachments', as: :attachment
+
+  get 's3/js/*path', to: 'assets#s3_js', as: :s3_js
+  get 's3/css/*path', to: 'assets#s3_css', as: :s3_css
 
   #######
   # API #
