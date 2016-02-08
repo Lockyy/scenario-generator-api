@@ -11,10 +11,11 @@ RSpec.describe Fletcher::Dashboard do
 
   let(:params) {
       {
-        recently_added: { limit: 10, offset: 3 },
+        recently_added: { limit: 10, offset: 3,
+                          tags: { limit: 25, offset: 7 }
+        },
         most_popular: {
-          products: { limit: 3, offset: 8 },
-          tags: { limit: 25, offset: 7 }
+          products: { limit: 3, offset: 8 }
         }
       }.with_indifferent_access
     }
@@ -69,6 +70,49 @@ RSpec.describe Fletcher::Dashboard do
         subject.recently_added
       end
     end
+
+    context 'tags' do
+      before(:each) { allow(Product).to receive_message_chain(:most_popular, :limit, :offset).and_return([]) }
+
+      context 'with params' do
+        it 'adds limit' do
+          mocked_scope = double.as_null_object
+          expect(mocked_scope).to receive(:limit).with(params[:recently_added][:tags][:limit])
+          allow(Tag).to receive(:most_popular).and_return(mocked_scope)
+
+          subject.recently_added
+        end
+
+        it 'adds offset' do
+          mocked_scope = double.as_null_object
+          expect(mocked_scope).to receive(:offset).with(params[:recently_added][:tags][:offset])
+          allow(Tag).to receive_message_chain(:most_popular, :limit).and_return(mocked_scope)
+
+          subject.recently_added
+        end
+      end
+
+      context 'without params' do
+        subject { Fletcher::Dashboard.new(user, existing_ids) }
+
+        it 'adds default limit 2' do
+          mocked_scope = double.as_null_object
+          expect(mocked_scope).to receive(:limit).with(20)
+          expect(Tag).to receive(:most_popular).and_return(mocked_scope)
+
+          subject.recently_added
+        end
+
+        it 'adds default offset 0' do
+          mocked_scope = double.as_null_object
+          allow(mocked_scope).to receive(:limit).and_return(mocked_scope)
+          expect(mocked_scope).to receive(:offset).with(0)
+          expect(Tag).to receive(:most_popular).and_return(mocked_scope)
+
+          subject.recently_added
+        end
+      end
+    end
   end
 
   describe '#most_popular' do
@@ -118,49 +162,6 @@ RSpec.describe Fletcher::Dashboard do
           allow(mocked_scope).to receive(:limit).and_return(mocked_scope)
           expect(mocked_scope).to receive(:offset).with(0).and_return([])
           expect(Product).to receive(:most_popular).and_return(mocked_scope)
-
-          subject.most_popular
-        end
-      end
-    end
-
-    context 'tags' do
-      before(:each) { allow(Product).to receive_message_chain(:most_popular, :limit, :offset).and_return([]) }
-
-      context 'with params' do
-        it 'adds limit' do
-          mocked_scope = double.as_null_object
-          expect(mocked_scope).to receive(:limit).with(params[:most_popular][:tags][:limit])
-          allow(Tag).to receive(:most_popular).and_return(mocked_scope)
-
-          subject.most_popular
-        end
-
-        it 'adds offset' do
-          mocked_scope = double.as_null_object
-          expect(mocked_scope).to receive(:offset).with(params[:most_popular][:tags][:offset])
-          allow(Tag).to receive_message_chain(:most_popular, :limit).and_return(mocked_scope)
-
-          subject.most_popular
-        end
-      end
-
-      context 'without params' do
-        subject { Fletcher::Dashboard.new(user, existing_ids) }
-
-        it 'adds default limit 2' do
-          mocked_scope = double.as_null_object
-          expect(mocked_scope).to receive(:limit).with(20)
-          expect(Tag).to receive(:most_popular).and_return(mocked_scope)
-
-          subject.most_popular
-        end
-
-        it 'adds default offset 0' do
-          mocked_scope = double.as_null_object
-          allow(mocked_scope).to receive(:limit).and_return(mocked_scope)
-          expect(mocked_scope).to receive(:offset).with(0)
-          expect(Tag).to receive(:most_popular).and_return(mocked_scope)
 
           subject.most_popular
         end
