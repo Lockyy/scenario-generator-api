@@ -33,4 +33,4 @@ config/database.yml
 .idea
 .byebug_history
 
-public/assets/*
+compiled/*

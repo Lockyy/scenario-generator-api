@@ -5,7 +5,7 @@ module AssetHelper
       return tag( 'link',
                   media: 'all',
                   :'data-turbolinks-track' => 'true',
-                  href: "/s3/css/#{path}")
+                  href: "/assets/#{path}.css")
     else
       return stylesheet_link_tag path, media: 'all', 'data-turbolinks-track' => true
     end
@@ -15,7 +15,7 @@ module AssetHelper
     if serve_via_s3?
       return tag( 'script',
                   :'data-turbolinks-track' => 'true',
-                  src: "/s3/js/#{path}")
+                  src: "/assets/#{path}.js")
     else
       javascript_include_tag path, 'data-turbolinks-track' => true
     end

@@ -7,7 +7,7 @@ class Fletcher::Assets::Signer
     @signer.presigned_url(:get_object,
                           bucket: ENV['S3_BUCKET_NAME'],
                           key: path(url),
-                          expires_in: 900,
+                          expires_in: 3,
                           secure: true)
   end
 

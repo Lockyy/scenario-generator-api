@@ -19,9 +19,7 @@ Rails.application.routes.draw do
   ######
 
   get 's3/uploads/:id', to: 'assets#attachments', as: :attachment
-
-  get 's3/js/*path', to: 'assets#s3_js', as: :s3_js
-  get 's3/css/*path', to: 'assets#s3_css', as: :s3_css
+  get 'assets/*path', to: 'assets#asset', as: :image
 
   #######
   # API #
