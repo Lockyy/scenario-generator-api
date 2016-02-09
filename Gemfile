@@ -42,7 +42,6 @@ gem 'counter_culture', '~> 0.1.33'
 gem 'slacked'
 gem 'make_exportable'
 gem 'pptx', git: 'https://github.com/codelittinc/ruby-pptx'
-gem "asset_sync", '~> 1.1.0'
 
 group :development do
   gem 'better_errors'

@@ -35,6 +35,8 @@ Rails.application.configure do
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
 
+  config.assets.prefix = "../compiled"
+
   # `config.assets.precompile` and `config.assets.version` have moved to config/initializers/assets.rb
 
   # Specifies the header that your server uses for sending files.
@@ -85,8 +87,4 @@ Rails.application.configure do
     password:       ENV['MANDRILL_API'],
     authentication: :plain,
   }
-
-  config.action_controller.asset_host = "//#{ENV['FOG_DIRECTORY']}.s3.amazonaws.com"
-  config.assets.enabled = true
-  config.assets.prefix = "/assets"
 end
