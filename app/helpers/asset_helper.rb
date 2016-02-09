@@ -4,6 +4,8 @@ module AssetHelper
     if serve_via_s3?
       return tag( 'link',
                   media: 'all',
+                  rel: "stylesheet",
+                  type: "text/css",
                   :'data-turbolinks-track' => 'true',
                   href: "/assets/#{path}.css")
     else
@@ -19,6 +21,10 @@ module AssetHelper
     else
       javascript_include_tag path, 'data-turbolinks-track' => true
     end
+  end
+
+  def compiled_image_tag(path, opts = {})
+    image_tag(image_path(path), opts)
   end
 
   private
