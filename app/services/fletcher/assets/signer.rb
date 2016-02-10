@@ -3,17 +3,11 @@ class Fletcher::Assets::Signer
     @signer = signer
   end
 
-  def sign_url(url)
+  def sign_url(path)
     @signer.presigned_url(:get_object,
                           bucket: ENV['S3_BUCKET_NAME'],
-                          key: path(url),
+                          key: path,
                           expires_in: 3,
                           secure: true)
   end
-
-  private
-
-    def path(url)
-      url.split('.com/')[1]
-    end
 end
