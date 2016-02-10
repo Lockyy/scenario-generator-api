@@ -44,12 +44,12 @@ class Attachment < ActiveRecord::Base
     attachable.user
   end
 
-  def path
-    attachment.path
+  def path(size_type = :original)
+    attachment.path(size_type)
   end
 
   def file_url(size_type = :original)
-    attachment.url(size_type)
+    attachment_path(id: attachment.id, size: size_type)
   end
 
   def file_urls

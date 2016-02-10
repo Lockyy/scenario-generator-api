@@ -6,7 +6,7 @@ class AssetsController < ApplicationController
     authenticate_user!
     @attachment = Attachment.find_by(id: params[:id])
     if @attachment
-      sign_and_send_file(@attachment.path, @attachment.attachment_file_name)
+      sign_and_send_file(@attachment.path(params[:size], @attachment.attachment_file_name)
     else
       render file: "#{Rails.root}/public/404.html", status: 404
     end
