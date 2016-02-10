@@ -32,6 +32,11 @@ class Attachment < ActiveRecord::Base
   validates_attachment_presence :attachment
 
   before_validation :ensure_attachment_uuid_has_a_value
+  before_attachment_post_process :only_process_images
+
+  def only_process_images
+    @@IMAGE_TYPES.include? attachment.content_type
+  end
 
   def author
     attachable.user
