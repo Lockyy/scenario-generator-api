@@ -61,6 +61,11 @@ run_project_container(){
       --name $PROJECT_CONTAINER_NAME \
       -e $UPPERCASE_PROJECT_NAME'_DATABASE_PASSWORD'=postgres \
       -e $UPPERCASE_PROJECT_NAME'_DATABASE_USER'=postgres \
+      -e AWS_ACCESS_KEY_ID="AKIAIHZJZRFS2OIDQLQQ" \
+      -e AWS_SECRET_ACCESS_KEY="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" \
+      -e AWS_REGION="us-west-2" \
+      -e AWS_HOST_NAME='s3-us-west-2.amazonaws.com' \
+      -e S3_BUCKET_NAME="fletcher-qa" \
       -v $(pwd):/share \
       -p 3000:3000 \
       -p 4000:4000 \

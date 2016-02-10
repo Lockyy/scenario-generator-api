@@ -10,6 +10,7 @@ module.exports = {
       NewReviewPageConstants.CREATE_URL;
     let method = (review_id ? 'PUT' : 'POST');
 
+
     return new Promise(function() {
       $.ajax({
         url: url,

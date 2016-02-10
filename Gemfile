@@ -11,6 +11,7 @@ gem 'aws-sdk', '~> 2'
 gem 'sass-rails', '~> 5.0'
 gem 'bootstrap-sass', '~> 3.3.1'
 gem 'pg_search'
+gem 'data_migrate'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
@@ -26,6 +27,7 @@ gem 'jbuilder', '~> 2.0'
 # Functionality
 gem 'autoprefixer-rails'
 gem 'devise'
+
 # Use Rails Html Sanitizer for HTML sanitization
 gem 'rails-html-sanitizer'
 gem 'omniauth'
@@ -45,11 +47,11 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'rack-mini-profiler'
+  gem 'web-console', '~> 2.0'
 end
 
 group :development, :test do
   gem 'byebug'
-  gem 'web-console', '~> 2.0'
   gem 'spring'
   gem 'spring-commands-rspec'
   gem 'foreman'
@@ -64,6 +66,8 @@ group :development, :test do
   gem 'pry-rails'
   gem 'rspec-rails'
   gem 'letter_opener'
+  gem 'rubocop'
+  gem 'rubocop-checkstyle_formatter', require: false
 end
 
 group :test  do
@@ -77,6 +81,7 @@ group :test  do
   gem 'launchy'
   gem 'poltergeist'
   gem 'selenium-webdriver'
+  gem 'simplecov', require: false
 end
 
 group :production do

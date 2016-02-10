@@ -21,7 +21,22 @@ module Fletcher
       params = {}.merge(review_params).with_indifferent_access
 
       params.delete(:attachments)
-      params[:attachments_attributes] = attachments_params
+      new_attachments = []
+      actual_attachments = @review.attachments
+
+      attachments_params.each do |att|
+        id = att[:id]
+        deleted = att[:deleted]
+        if id && deleted
+          Attachment.find(id).destroy
+        elsif id
+          new_attachments << actual_attachments.find{|c| c.id == id}
+        else
+          converted_file = FileService.encoded_file_to_file(att[:attachment])
+          new_attachments << Attachment.new(attachment: converted_file)
+        end
+      end
+      params[:attachments] = new_attachments
 
       params.delete(:links)
       params[:links_attributes] = links_params
@@ -34,7 +49,6 @@ module Fletcher
 
       @review.tags = tags_params.empty? ? [] : tags_params.map { |tag| Tag.where(name: tag[:name]).first_or_create }
       remove_unlisted!(@review.links, params[:links_attributes])
-      remove_unlisted!(@review.attachments, params[:attachments_attributes])
       @review.update!(params)
     end
 

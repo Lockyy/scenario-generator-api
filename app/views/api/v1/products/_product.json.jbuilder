@@ -10,11 +10,9 @@ json.review(product.reviews.find_by(user: current_user), :id) if product.reviews
 
 json.links product.links, :id, :url, :created_at, :updated_at, :author
 
-json.attachments product.attachments, :id, :attachable_id, :attachable_type, :url, :name, :content_type, :size, :created_at,
-:updated_at, :product_id, :author
+json.attachments product.attachments, partial: 'api/v1/attachments/attachment', as: :attachment
 
-json.images product.images, :id, :attachable_id, :attachable_type, :url, :name, :content_type, :size, :created_at,
-:updated_at, :product_id, :author
+json.images product.images, partial: 'api/v1/attachments/attachment', as: :attachment
 
 json.reviews product.reviews, partial: 'api/v1/reviews/review', as: :review
 

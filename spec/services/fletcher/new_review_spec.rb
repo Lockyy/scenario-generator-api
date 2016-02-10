@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'base64'
 
 #TODO: ADD TESTS
 RSpec.describe Fletcher::NewReview do
@@ -12,33 +13,36 @@ RSpec.describe Fletcher::NewReview do
 
   let(:params) {
     {
-      title: Faker::Company.bs,
-      quality_review: Faker::Lorem.paragraph,
-      quality_score: 5,
-      price_review: Faker::Lorem.paragraph,
-      price_score: '4',
-      attachments: [{
-        name: 'header.png',
-        size: 12364,
-        content_type: 'image/png',
-        url: 'http://img.fletcher.mx/random_seq/header.png'
-      }],
-      product: {
-        name: 'product',
-        description: 'description',
-        url: 'http://url.com',
-        company: {
-          name: 'company name',
-          url: 'test',
-          avatar: {
-            url: 'http://img.fletcher.mx/random_seq/logo.png'
-          }
+        title: Faker::Company.bs,
+        quality_review: Faker::Lorem.paragraph,
+        quality_score: 5,
+        price_review: Faker::Lorem.paragraph,
+        price_score: '4',
+        attachments: [{attachment:{
+            content: Base64.encode64(File.open('spec/support/assets/images/front.png', "rb").read),
+            filename: 'front.png',
+            content_type: 'image/png'
+        }}],
+        product: {
+            name: 'product',
+            description: 'description',
+            url: 'http://url.com',
+            company: {
+                name: 'company name',
+                url: 'test',
+                avatar: {
+                    url: 'http://img.fletcher.mx/random_seq/logo.png'
+                }
+            }
         }
-      }
     }.with_indifferent_access
   }
 
   subject { Fletcher::NewReview.new(user, product, params) }
+
+  before do
+    Paperclip::Attachment.any_instance.stub(:save).and_return(true)
+  end
 
   describe '#save!' do
     context 'with an existing product' do
@@ -46,7 +50,7 @@ RSpec.describe Fletcher::NewReview do
         product_params = {}.merge(params[:product]).with_indifferent_access
         product_params[:company] = Company.create(name: params[:product][:company][:name])
         expect { Product.create(product_params) }.to change { Product.count }
-        expect { subject.save! }.to_not change{ Product.count }
+        expect { subject.save! }.to_not change { Product.count }
       end
     end
 
@@ -56,6 +60,14 @@ RSpec.describe Fletcher::NewReview do
       it 'creates a new product' do
         Company.create(name: params[:product][:company][:name])
         expect { subject.save! }.to change { Product.count }
+      end
+
+      it 'the created product has an image' do
+        Company.create(name: params[:product][:company][:name])
+        expect { subject.save! }.to change { Product.count }
+        images = subject.product.images
+        expect(images.count).to eql(1)
+        expect(images.first.attachment_file_name).to eql('front.png')
       end
 
       context 'without an existing company' do

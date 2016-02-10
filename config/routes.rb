@@ -20,7 +20,6 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get 'dashboard(.:format)', action: :index, controller: 'dashboard', defaults: {format: 'json'}
-      post 'uploads(.:format)', action: :create, controller: 's3_upload', defaults: {format: 'json'}
 
       ############
       # Products #
