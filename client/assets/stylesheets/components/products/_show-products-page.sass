@@ -18,7 +18,7 @@
   .attachments, .links
     padding-left: 10px
     margin: 0
-    list-style-image: image-url('icons/attachment-red.svg')
+    list-style-image: image-url('/assets/icons/attachment-red.svg')
 
     .attachment, .link
       text-align: left
@@ -34,7 +34,7 @@
         color: $dark-grey
 
   .links
-    list-style-image: image-url('icons/link-red.svg')
+    list-style-image: image-url('/assets/icons/link-red.svg')
     padding-left: 14px
 
     .link
@@ -61,10 +61,10 @@
           outline: none
           color: $dark-grey
           padding-left: 20px
-          background: image-url('icons/attachment-red.svg') no-repeat center left
+          background: image-url('/assets/icons/attachment-red.svg') no-repeat center left
 
         .links-link
-          background: image-url('icons/link-red.svg') no-repeat center left
+          background: image-url('/assets/icons/link-red.svg') no-repeat center left
 
       .stars
         .total-reviews
@@ -153,11 +153,11 @@
                 position: relative
                 top: 2px
             .job::before
-              background-image: img-url('icons/title.svg')
+              background-image: image-url('/assets/icons/title.svg')
             .location::before
-              background-image: img-url('icons/location.svg')
+              background-image: image-url('/assets/icons/location.svg')
             .total-reviews::before
-              background-image: img-url('icons/reviews.svg')
+              background-image: image-url('/assets/icons/reviews.svg')
         .review-content
           .helpful-reviews-container
             background-color: red
@@ -324,13 +324,13 @@
                 border-right: none
 
                 .with-icon
-                  background-image: image-url('icons/icon-bookmarks-red.svg')
+                  background-image: image-url('/assets/icons/icon-bookmarks-red.svg')
 
               &.btn-share
                 border-left: 1px solid $grey
 
                 .with-icon
-                  background-image: image-url('icons/icon-share.svg')
+                  background-image: image-url('/assets/icons/icon-share.svg')
 
             &::after
               content: ''
