@@ -66,21 +66,20 @@ class Product < ActiveRecord::Base
     joins(:tags).where('tags.name in (?)', tags_names).uniq
   end
 
-  scope :rating, -> (rating_order) do
+  scope :rating, -> do
     joins('LEFT JOIN reviews rev ON products.id = rev.product_id')
       .select('sum(COALESCE(rev.quality_score, 0)) / GREATEST(count(rev.quality_score), 1) as total_quality_score, products.id, products.name, products.description,
 products.url, company_id, products.views, products.created_at, products.updated_at, products.slug')
       .group('products.id, products.name, products.description,
 products.url, company_id, products.views, products.created_at, products.updated_at, products.slug')
-      .order("total_quality_score #{rating_order}")
   end
 
   scope :best_rating, -> do
-    rating('desc')
+    rating.order("total_quality_score desc")
   end
 
   scope :worst_rating, -> do
-    rating('asc')
+    rating.order("total_quality_score asc")
   end
 
   def company_export
