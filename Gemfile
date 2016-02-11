@@ -56,7 +56,6 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'foreman'
   gem 'factory_girl_rails'
-  gem 'rubocop', require: false
   gem 'ruby-lint', require: false
   gem 'scss-lint', require: false
   gem 'brakeman', require: false
