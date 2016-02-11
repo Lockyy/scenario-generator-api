@@ -26,9 +26,22 @@ const NewReviewPage  = React.createClass({
     }
   },
 
+  componentWillReceiveProps: function(newProps) {
+    this.mountComponent(newProps.params);
+  },
+
   componentDidMount: function componentDidMount() {
     ReviewPageStore.listen(this._onChange);
     let params = this.context.router.state.params;
+    this.mountComponent(params);
+  },
+
+  componentDidUpdate: function componentDidUpdate() {
+    $(this.refs.new_review_form.getDOMNode()).validator('destroy');
+    $(this.refs.new_review_form.getDOMNode()).validator();
+  },
+
+  mountComponent: function(params){
     FluxReviewPageActions.clearReview();
 
     if (params.productId) {
@@ -38,11 +51,6 @@ const NewReviewPage  = React.createClass({
       }
     }
 
-    $(this.refs.new_review_form.getDOMNode()).validator();
-  },
-
-  componentDidUpdate: function componentDidUpdate() {
-    $(this.refs.new_review_form.getDOMNode()).validator('destroy');
     $(this.refs.new_review_form.getDOMNode()).validator();
   },
 
@@ -186,10 +194,11 @@ const NewReviewPage  = React.createClass({
   onSelectProductEvent: function(product, callback){
     const reviews = this.context.currentUser.reviews;
     let reviewAlreadyExists = false;
+    const _this = this;
     _.each(reviews, function(review) {
-      if(review.product_id == product.id){
+      if(review.product.id == product.id){
         reviewAlreadyExists = true;
-        window.location = '/app/products/' + product.id+ '/' + product.slug + '/reviews/' + review.id;
+        _this.transitionTo(`/app/products/${product.id}/${product.slug}/reviews/${review.id}`);
       }
     });
     if(!reviewAlreadyExists && callback){
