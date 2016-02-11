@@ -15,7 +15,7 @@ class AssetsController < ApplicationController
   def asset
     path = ASSET_HANDLER.get_path(params)
     render file: "#{Rails.root}/public/404.html", status: 404 unless path
-    authenticate_user! if path[:restricted]
+    authenticate_user! if path && path[:restricted]
     send_data_to_client(path[:path], path[:mimetype], "#{params[:path]}.#{params[:format]}")
   end
 

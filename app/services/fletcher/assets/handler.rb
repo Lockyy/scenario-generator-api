@@ -14,8 +14,8 @@ class Fletcher::Assets::Handler
     @assets.include?(path)
   end
 
-  def restricted?(params)
-    false
+  def restricted?(params, path)
+    params[:path].split('/')[0] == 'app'
   end
 
   def register_asset(path)
@@ -32,11 +32,12 @@ class Fletcher::Assets::Handler
 
   def get_path(params)
     format = params[:format] || params[:action]
-    path = ActionController::Base.helpers.asset_path(build_path_for_search(params[:path], format)).split('../')[1]
+    path_for_search = build_path_for_search(params[:path], format)
+    path = ActionController::Base.helpers.asset_path(path_for_search).split('../')[1]
 
     return {
       path: path,
-      restricted: restricted?(path),
+      restricted: restricted?(params, path),
       mimetype: Rack::Mime.mime_type(".#{format}")
     } if allowed?(path)
 
@@ -45,6 +46,6 @@ class Fletcher::Assets::Handler
 
   def build_path_for_search(path, format)
     path = "bootstrap/#{BOOTSTRAP_EXCEPTION}" if path.include? BOOTSTRAP_EXCEPTION
-    return "#{path}.#{format}"
+    "#{path}.#{format}"
   end
 end
