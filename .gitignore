@@ -25,7 +25,7 @@ npm-debug.log
 vendor/ruby
 
 # Ignore config files
-# config/database.yml
+config/database.yml
 
 # Ignore Vim swap files
 *.swp

@@ -3,6 +3,17 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
+## v1.2
+
+### Features
+- Add API versioning
+  - The API schema now follows the pattern /api/v1/:endpoint. Future versions will iterate the version number.
+- Add API for exporting collections
+- Add error page for 401/404/410 errors
+  - 401: Permission denied
+  - 404: Not Found
+  - 410: Gone
+
 ## v1.1.2
 
 ### Features
