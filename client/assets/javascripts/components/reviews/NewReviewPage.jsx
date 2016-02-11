@@ -13,7 +13,8 @@ const NewReviewPage  = React.createClass({
   mixins: [ Navigation ],
 
   contextTypes: {
-    router: React.PropTypes.object
+    router: React.PropTypes.object,
+    currentUser: React.PropTypes.object
   },
 
   getInitialState: function getInitialState() {
@@ -25,9 +26,22 @@ const NewReviewPage  = React.createClass({
     }
   },
 
+  componentWillReceiveProps: function(newProps) {
+    this.mountComponent(newProps.params);
+  },
+
   componentDidMount: function componentDidMount() {
     ReviewPageStore.listen(this._onChange);
     let params = this.context.router.state.params;
+    this.mountComponent(params);
+  },
+
+  componentDidUpdate: function componentDidUpdate() {
+    $(this.refs.new_review_form.getDOMNode()).validator('destroy');
+    $(this.refs.new_review_form.getDOMNode()).validator();
+  },
+
+  mountComponent: function(params){
     FluxReviewPageActions.clearReview();
 
     if (params.productId) {
@@ -37,11 +51,6 @@ const NewReviewPage  = React.createClass({
       }
     }
 
-    $(this.refs.new_review_form.getDOMNode()).validator();
-  },
-
-  componentDidUpdate: function componentDidUpdate() {
-    $(this.refs.new_review_form.getDOMNode()).validator('destroy');
     $(this.refs.new_review_form.getDOMNode()).validator();
   },
 
@@ -182,6 +191,21 @@ const NewReviewPage  = React.createClass({
     }
   },
 
+  onSelectProductEvent: function(product, callback){
+    const reviews = this.context.currentUser.reviews;
+    let reviewAlreadyExists = false;
+    const _this = this;
+    _.each(reviews, function(review) {
+      if(review.product.id == product.id){
+        reviewAlreadyExists = true;
+        _this.transitionTo(`/app/products/${product.id}/${product.slug}/reviews/${review.id}`);
+      }
+    });
+    if(!reviewAlreadyExists && callback){
+      callback();
+    }
+  },
+
   render: function render() {
     let info = (<div className='info'>
       <div className='instructions'>
@@ -198,7 +222,7 @@ const NewReviewPage  = React.createClass({
       <div className='main-content'>
         <form className='form review new' ref='new_review_form' onSubmit={this._onSubmit}>
           <ProductFields ref='product_fields' canChangeProduct={this.state.canChangeProduct} mode={this.state.mode}
-            showDetails={this.state.showDetails} {...this._getProductData()} />
+            showDetails={this.state.showDetails} onSelectProductEvent={this.onSelectProductEvent} {...this._getProductData()} />
           <ReviewFields ref='review_fields' showDetails={this.state.showDetails} {...this.state.review} />
 
           {this._getActionsContent()}
