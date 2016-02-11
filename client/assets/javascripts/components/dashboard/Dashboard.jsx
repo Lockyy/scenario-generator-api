@@ -55,12 +55,12 @@ const Dashboard = React.createClass({
 
   getRecentlyAddedData: function() {
     let recentlyAddedData = this.state.data[DashboardConstants.RECENTLY_ADDED_SECTION];
-    return recentlyAddedData ? recentlyAddedData : {items: []};
+    return recentlyAddedData ? recentlyAddedData : {items: {products: [], tags: []}};
   },
 
   getMostPopularData: function() {
     let mostPopularData = this.state.data[DashboardConstants.MOST_POPULAR_SECTION];
-    return mostPopularData ? mostPopularData : {items: {products: [], tags: []}};
+    return mostPopularData ? mostPopularData : {items: []};
   },
 
   getRecentActivityData: function() {
@@ -181,19 +181,20 @@ const Dashboard = React.createClass({
     let collectionsSectionCb = this.showMoreProducts.bind(this, DashboardConstants.COLLECTIONS_SECTION);
 
     return (<div className='sections'>
+
+      {_.isUndefined(recentlyAddedData) || !recentlyAddedData.items.products.length ?
+        <div /> :
+        <RecentlyAddedSection ref={DashboardConstants.RECENTLY_ADDED_SECTION}
+          onShowMore={addMoreRecentlyAddedCb} {...recentlyAddedData}/>
+      }
+
       {_.isUndefined(basedOnTagsData) || _.isEmpty(basedOnTagsData.items) ?
         <div /> :
         <BasedOnTagsSection ref={DashboardConstants.BASED_ON_TAGS_SECTION}
           onShowMore={addMoreBasedOnTagsCb} {...basedOnTagsData}/>
       }
 
-      {_.isUndefined(recentlyAddedData) || !recentlyAddedData.items.length ?
-        <div /> :
-        <RecentlyAddedSection ref={DashboardConstants.RECENTLY_ADDED_SECTION}
-          onShowMore={addMoreRecentlyAddedCb} {...recentlyAddedData}/>
-      }
-
-      {_.isUndefined(mostPopularData) || !mostPopularData.items.products.length ?
+      {_.isUndefined(mostPopularData) || !mostPopularData.items.length ?
         <div /> :
         <MostPopularSection ref={DashboardConstants.MOST_POPULAR_SECTION}
           {...mostPopularData}/>
