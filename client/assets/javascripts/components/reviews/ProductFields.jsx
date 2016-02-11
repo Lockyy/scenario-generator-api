@@ -29,8 +29,10 @@ const ProductFields  = React.createClass({
   },
 
   _setProduct: function _setProduct(product, showDetails) {
-    FluxReviewPageActions.setShowDetails(showDetails);
-    FluxReviewPageActions.setProduct(product);
+    this.props.onSelectProductEvent(product,function(){
+      FluxReviewPageActions.setShowDetails(showDetails);
+      FluxReviewPageActions.setProduct(product);
+    });
   },
 
   _updateProduct: function _updateProduct(product, showDetails) {
