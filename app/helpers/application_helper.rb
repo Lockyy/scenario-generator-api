@@ -13,6 +13,6 @@ module ApplicationHelper
   end
 
   def images_path(folder)
-    "#{folder}/#{theme_class}"
+    "site/#{folder}/#{theme_class}"
   end
 end

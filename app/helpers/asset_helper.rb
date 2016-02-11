@@ -24,7 +24,7 @@ module AssetHelper
   end
 
   def compiled_image_tag(path, opts = {})
-    image_tag(image_path(path), opts)
+    image_tag(asset_path(path), opts)
   end
 
   private

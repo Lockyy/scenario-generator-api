@@ -56,7 +56,7 @@ $modal-padding: 25px
         .close
           position: relative
           top: 4px
-          background-image: image-url('/assets/icons/icon-modal-close.svg')
+          background-image: image-url('/assets/app/icons/icon-modal-close.svg')
           background-repeat: no-repeat
           background-position: center
           opacity: 1
@@ -65,16 +65,16 @@ $modal-padding: 25px
         &.collections
           .title::before
             +before-title
-            background-image: image-url('/assets/icons/icon-collections-red.svg')
+            background-image: image-url('/assets/app/icons/icon-collections-red.svg')
         &.share
           .title::before
             +before-title
-            background-image: image-url('/assets/icons/icon-share.svg')
+            background-image: image-url('/assets/app/icons/icon-share.svg')
         &.previewing
           border-bottom: 2px solid $highlight-blue
           .title::before
             +before-title
-            background-image: image-url('/assets/icons/icon-collection-preview-blue.svg')
+            background-image: image-url('/assets/app/icons/icon-collection-preview-blue.svg')
         .title
           display: flex
           align-items: center
@@ -208,7 +208,7 @@ $modal-padding: 25px
             .collection-details
               display: flex
               .collection-icon
-                background-image: image-url('/assets/icons/icon-collections-red.svg')
+                background-image: image-url('/assets/app/icons/icon-collections-red.svg')
                 width: 15px
                 height: 15px
                 background-repeat: no-repeat
@@ -237,7 +237,7 @@ $modal-padding: 25px
                 align-items: center
                 max-width: initial
                 .add-collection-icon
-                  background-image: image-url('/assets/icons/icon-collections-new-red.svg')
+                  background-image: image-url('/assets/app/icons/icon-collections-new-red.svg')
                   width: 25px
                   height: 25px
                   margin-right: 10px
@@ -249,7 +249,7 @@ $modal-padding: 25px
                   margin-left: 5px
               &:hover
                 .add-collection-icon
-                  background-image: image-url('/assets/icons/icon-collections-new-white.svg')
+                  background-image: image-url('/assets/app/icons/icon-collections-new-white.svg')
             &:hover
               .right-buttons
                 display: flex
@@ -352,14 +352,14 @@ $modal-padding: 25px
   width: 13px
   height: 13px
   margin-left: 5px
-  background-image: image-url('/assets/icons/icon-info.svg')
+  background-image: image-url('/assets/app/icons/icon-info.svg')
   background-size: contain
   background-position: center
   background-repeat: no-repeat
   .tooltip
     display: none
   &:hover
-    background-image: image-url('/assets/icons/icon-info-filled.svg')
+    background-image: image-url('/assets/app/icons/icon-info-filled.svg')
     .tooltip
       display: block
       position: absolute
@@ -381,9 +381,9 @@ $modal-padding: 25px
         top: -6px
         left: 0px
   &.inverted
-    background-image: image-url('/assets/icons/icon-info-filled.svg')
+    background-image: image-url('/assets/app/icons/icon-info-filled.svg')
     &:hover
-      background-image: image-url('/assets/icons/icon-info.svg')
+      background-image: image-url('/assets/app/icons/icon-info.svg')
 
 @media (max-width: $screen-sm)
   .app
