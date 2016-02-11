@@ -71,17 +71,16 @@ class BasedOnTagsSection extends React.Component {
   }
 
   fetchProducts() {
-    let item;
     let items = [];
-    let currentItem = 0;
     let _this = this;
 
     if (_.isEmpty(this.props.items)) return [];
-    _.each(this.props.items, function(products, tagName) {
+    _.each(this.props.items, function(products) {
       _.each(products, function(product) {
         let tag = _.sample(product.user_tags);
 
         items.push(<ProductBox
+                    typeSizeImage="medium_height"
                     key={`based_on_tags_product_box_${product.id}`}
                     size={_this.getCurrentBoxSize(items, product)}
                     onCustomizeDetail={_this.getCustomizeProductBoxDetailFn(tag)}

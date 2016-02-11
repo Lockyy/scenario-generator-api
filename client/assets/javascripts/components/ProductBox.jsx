@@ -30,7 +30,7 @@ const ProductBox = React.createClass ({
     let boxSize = isHalfBox ? 0 : this.props.size;
     let boxClass = `box-${boxSize}`;
     let picture = this.hasPicture() ?
-      <AutoFitPicture src={this.props.image} containerClass='picture'/> : '';
+      <AutoFitPicture src={this.props.image} typeSizeImage={this.props.typeSizeImage} containerClass='picture'/> : '';
     if (!this.props.image || isHalfBox) {
       boxClass += ' no-pic-box';
     }
@@ -91,7 +91,9 @@ ProductBox.propTypes = {
   rating: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
   size: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]).isRequired,
   image: React.PropTypes.string,
+  image_size: React.PropTypes.string,
   reviews: React.PropTypes.array
 };
 
 export default ProductBox;
+

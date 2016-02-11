@@ -1,9 +1,13 @@
 module Avatarable
+  @@PAPERCLIP_SIZES = {large: '900x900', medium: '294x360',medium_height:'294x135',  thumb: '40x40'}
+
   extend ActiveSupport::Concern
   included do
-    has_attached_file :avatar, :styles => { :large => "900x900", :medium => "300x300>", :thumb => "100x100>" },
-                      :path => "uploads/:instance_uuid/:style/:basename.:extension",
-                      :default_url => "", :url => ":s3_domain_url"
+    has_attached_file :avatar,
+                      styles:  @@PAPERCLIP_SIZES,
+                      path: "uploads/:instance_uuid/:style/:basename.:extension",
+                      default_url: "",
+                      url: ":s3_domain_url"
 
     before_validation :ensure_avatar_uuid_has_a_value
 

@@ -64,6 +64,7 @@ class RecentlyAddedSection extends React.Component {
       products.push(<ProductBox
                       size={this.getCurrentBoxSize(products, product)}
                       key={`recently_added_tags_product_box_${product.id}`}
+                      typeSizeImage="medium"
                       {...product} />);
 
       if(!tagsBox && _.sum(products, sumSizeFunc) == 3) {

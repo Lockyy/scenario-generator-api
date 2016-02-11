@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageMixin from './ImageMixin';
 
 function _setBackgroundImage() {
   let component = $(React.findDOMNode(this));
@@ -9,6 +10,7 @@ function _setBackgroundImage() {
 }
 
 class AutoFitPicture extends React.Component {
+
   componentDidMount() {
     _setBackgroundImage.call(this);
   }
@@ -21,7 +23,8 @@ class AutoFitPicture extends React.Component {
     let backgroundContainerStyle = this.props.backgroundContainerStyle;
     let containerStyle = this.props.containerStyle;
     let containerClasses = `.autofit-picture-container ${this.props.containerClass}`;
-    let img = <img src={this.props.src}/>;
+    let url = ImageMixin.getRightImageUrl(this.props.src, this.props.typeSizeImage);
+    let img = <img src={url}/>;
 
     return (
       <div className={containerClasses}>
@@ -69,6 +72,7 @@ AutoFitPicture.defaultProps = {
 
 AutoFitPicture.propTypes = {
   src: React.PropTypes.string.isRequired,
+  typeSizeImage: React.PropTypes.string.isRequired,
   containerClass: React.PropTypes.string,
   containerStyle: React.PropTypes.object
 };

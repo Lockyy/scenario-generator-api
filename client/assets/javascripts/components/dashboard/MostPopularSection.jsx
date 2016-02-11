@@ -82,6 +82,7 @@ class MostPopularSection extends React.Component {
       product = this.props.items[currentItem++];
 
       products.push(<ProductBox
+                      typeSizeImage="medium"
                       key={`most_popular_product_box_${product.id}`}
                       size={this.getCurrentBoxSize(products, product)}
                       {...product} />);
