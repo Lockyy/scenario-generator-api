@@ -23,10 +23,11 @@ class Attachment < ActiveRecord::Base
   end
 
   has_attached_file :attachment,
-                    styles:      @@PAPERCLIP_SIZES,
-                    path:        "uploads/:instance_uuid/:style/:basename.:extension",
-                    default_url: '',
-                    url:         ':s3_domain_url'
+                    styles:         @@PAPERCLIP_SIZES,
+                    path:           "uploads/:instance_uuid/:style/:basename.:extension",
+                    default_url:    '',
+                    url:            ":s3_domain_url",
+                    s3_permissions: :private
 
   validates_attachment_content_type :attachment,
                                     content_type: @@VALID_TYPES,
