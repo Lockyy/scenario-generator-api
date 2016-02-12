@@ -50,7 +50,8 @@ class Attachment < ActiveRecord::Base
   end
 
   def file_url(size_type = :original)
-    attachment_path(id: attachment.id, size: size_type)
+    attachment_path(id:   attachment.id,
+                    size: size_type) + Rack::Mime::MIME_TYPES.invert[attachment.attachment_content_type]
   end
 
   def file_urls
