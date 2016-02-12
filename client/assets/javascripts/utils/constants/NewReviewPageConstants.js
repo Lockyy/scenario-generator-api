@@ -1,5 +1,4 @@
 module.exports = {
   CREATE_URL: '/api/v1/reviews',
-  NESTED_CREATE_URL: '/api/v1/products/<%= product_id %>/reviews/<%= review_id ? review_id : "" %>',
-  CREATE_UPLOAD_URL: '/api/v1/uploads'
+  NESTED_CREATE_URL: '/api/v1/products/<%= product_id %>/reviews/<%= review_id ? review_id : "" %>'
 };
