@@ -6,7 +6,9 @@ class AssetsController < ApplicationController
     authenticate_user!
     @attachment = Attachment.find_by(id: params[:id])
     if @attachment
-      sign_and_send_file(@attachment.path(params[:size], @attachment.attachment_file_name)
+      sign_and_send_file( @attachment.path(params[:size]),
+                          @attachment.attachment_content_type,
+                          @attachment.attachment_file_name)
     else
       render file: "#{Rails.root}/public/404.html", status: 404
     end
@@ -21,13 +23,14 @@ class AssetsController < ApplicationController
 
   private
 
-  def sign_and_send_file(path, name)
+  def sign_and_send_file(path, mimetype, name)
     signer = Fletcher::Assets::Signer.new
     url = signer.sign_url(path)
-    send_data_to_client(url, 'application/octet-stream', name)
+    send_data_to_client(url, mimetype, name)
   end
 
   def send_data_to_client(url, mimetype, name)
+    mimetype ||= 'application/octet-stream'
     data = open(url)
     begin
       send_data data.read,
