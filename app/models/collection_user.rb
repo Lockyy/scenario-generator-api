@@ -1,5 +1,4 @@
 class CollectionUser < ActiveRecord::Base
-
   belongs_to :shared_collection, class_name: 'Collection', foreign_key: 'collection_id', touch: true
   belongs_to :sharee, class_name: 'User', foreign_key: 'sharee_id'
 
@@ -8,16 +7,16 @@ class CollectionUser < ActiveRecord::Base
   after_create :send_email
   after_destroy :destroyed_notification
 
-  validates_uniqueness_of :sharee_id, :scope => :collection_id,
-    unless: Proc.new { |a| a.sharee_id.blank? }
-  validates_uniqueness_of :email, :scope => :collection_id,
-    unless: Proc.new { |a| a.email.blank? }
+  validates_uniqueness_of :sharee_id, scope:  :collection_id,
+                                      unless: proc { |a| a.sharee_id.blank? }
+  validates_uniqueness_of :email, scope:  :collection_id,
+                                  unless: proc { |a| a.email.blank? }
 
   validates_presence_of :shared_collection
 
-  validates_format_of :email, with: /\b\S+@{1}(am\.|eu\.|ap\.)?jll\.com\b/,
+  validates_format_of :email, with:      /\b\S+@{1}(am\.|eu\.|ap\.)?jll\.com\b/,
                               allow_nil: true,
-                              message: 'is not a valid JLL email'
+                              message:   'is not a valid JLL email'
 
   scope :invites, -> { where.not(email: nil) }
   scope :with_registered_user, -> { where.not(sharee_id: nil) }
@@ -25,26 +24,26 @@ class CollectionUser < ActiveRecord::Base
   enum rank: [:viewer, :collaborator, :owner]
 
   def create_notification
-    Notification.create(sender: shared_collection.user,
-                        user: sharee,
-                        notification_type: 'share',
+    Notification.create(sender:               shared_collection.user,
+                        user:                 sharee,
+                        notification_type:    'share',
                         notification_subject: shared_collection)
   end
 
   def updated_notification
-    return unless self.rank_changed?
-    Notification.create(sender: shared_collection.user,
-                        user: sharee,
-                        notification_type: 'updated_permissions',
-                        text: "Your access level in #{shared_collection.name} has been changed to #{self.rank}",
+    return unless rank_changed?
+    Notification.create(sender:               shared_collection.user,
+                        user:                 sharee,
+                        notification_type:    'updated_permissions',
+                        text:                 "Your access level in #{shared_collection.name} has been changed to #{rank}",
                         notification_subject: shared_collection)
   end
 
   def destroyed_notification
-    Notification.create(sender: shared_collection.user,
-                        user: sharee,
-                        notification_type: 'deleted',
-                        text: "Your access to #{shared_collection.name} has been removed",
+    Notification.create(sender:               shared_collection.user,
+                        user:                 sharee,
+                        notification_type:    'deleted',
+                        text:                 "Your access to #{shared_collection.name} has been removed",
                         notification_subject: shared_collection)
   end
 
@@ -56,5 +55,4 @@ class CollectionUser < ActiveRecord::Base
       ShareMailer.share(shared_collection.user, sharee, shared_collection).deliver_now
     end
   end
-
 end

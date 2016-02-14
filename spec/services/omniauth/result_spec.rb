@@ -3,18 +3,18 @@ require 'rails_helper'
 RSpec.describe Omniauth::Result do
   let(:oauth_provider_response) do
     Hashie::Mash.new(
-      info: {
+      info:        {
         email: 'us@fletch.er',
-        name: 'Fl. Etcher',
-        image: 'http://ima.g.es/so.me-img.jpg'
+        name:  'Fl. Etcher',
+        image: 'http://ima.g.es/so.me-img.jpg',
       },
       credentials: {
-        token: 'r4nd0m7ok3n'
+        token: 'r4nd0m7ok3n',
       },
-      extra: {
+      extra:       {
         raw_info: {
-          mugshot_url_template: 'http://ima.g.es/{width}x{height}/so.me-img.jpg'
-        }
+          mugshot_url_template: 'http://ima.g.es/{width}x{height}/so.me-img.jpg',
+        },
       })
   end
 

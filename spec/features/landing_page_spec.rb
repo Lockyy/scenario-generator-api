@@ -2,9 +2,8 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-feature "Landing Page", js: true do
-
-  feature "when logged in" do
+feature 'Landing Page', js: true do
+  feature 'when logged in' do
     background do
       @user = login_user
     end
@@ -36,7 +35,7 @@ feature "Landing Page", js: true do
     end
   end
 
-  feature "after logging out" do
+  feature 'after logging out' do
     background do
       @user = login_user
       logout(:user)
@@ -56,7 +55,7 @@ feature "Landing Page", js: true do
     end
   end
 
-  feature "when not logged in" do
+  feature 'when not logged in' do
     ['/', '/short', '/contact', '/support'].each do |path|
       feature "visiting #{path}" do
         background do
@@ -86,6 +85,7 @@ feature "Landing Page", js: true do
   end
 
   private
+
   def visit_and_wait(path)
     visit path
     wait_for_ajax

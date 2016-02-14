@@ -12,10 +12,9 @@ describe Api::V1::CollectionsController do
     @collection = create(:collection, user: @user_owner)
     @collection.products.append(create(:product, :with_reviews))
     @collection.share([
-                          {id: @user_editor.id, rank: 1}, # Make the editor into an editor
-                          {id: @user_viewer.id, rank: 0}, # Make the viewer into a viewer
+                          { id: @user_editor.id, rank: 1 }, # Make the editor into an editor
+                          { id: @user_viewer.id, rank: 0 }, # Make the viewer into a viewer
                       ])
-
   end
 
   shared_examples_for 'an API that returns a collection' do
@@ -44,7 +43,7 @@ describe Api::V1::CollectionsController do
     end
 
     it 'returns no collection' do
-      responses = [{'collection' => {}}, nil]
+      responses = [{ 'collection' => {} }, nil]
       expect(responses.include? @body).to eq true
     end
   end
@@ -55,7 +54,7 @@ describe Api::V1::CollectionsController do
     end
 
     it 'returns no collection' do
-      empty_hash = {'collection' => {}}
+      empty_hash = { 'collection' => {} }
       expect(@body).to eq empty_hash
     end
   end
@@ -112,7 +111,7 @@ describe Api::V1::CollectionsController do
       expect(Collection.all.size).to eq 0
 
       params = FactoryGirl.attributes_for(:collection)
-                   .merge({products: create_list(:product, 2, :with_reviews), format: :json})
+                          .merge(products: create_list(:product, 2, :with_reviews), format: :json)
       post :create, params
 
       @body = JSON.parse(response.body)
@@ -127,7 +126,6 @@ describe Api::V1::CollectionsController do
   ###########
 
   describe 'when the collection is private' do
-
     #########
     # OWNER #
     #########
@@ -182,7 +180,7 @@ describe Api::V1::CollectionsController do
         it_behaves_like 'an API that returns a collection'
 
         it 'adds the new product to the collection' do
-          expect(products_ids_from_body).to include *products_ids_from_collection
+          expect(products_ids_from_body).to include(*products_ids_from_collection)
           expect(@collection.products).to include @new_product
         end
       end
@@ -191,12 +189,12 @@ describe Api::V1::CollectionsController do
         before do
           @new_product = create(:product, :with_reviews)
           patch(:update,
-                id: @collection.id,
-                products: [@new_product.id],
-                name: 'New Title',
+                id:          @collection.id,
+                products:    [@new_product.id],
+                name:        'New Title',
                 description: 'New Description',
-                privacy: 'hidden',
-                format: :json)
+                privacy:     'hidden',
+                format:      :json)
           @body = JSON.parse(response.body)
         end
 
@@ -230,7 +228,7 @@ describe Api::V1::CollectionsController do
         end
 
         it 'returns json that just contains success: true' do
-          expect(@body).to eq({'success' => true})
+          expect(@body).to eq('success' => true)
         end
       end
 
@@ -241,13 +239,13 @@ describe Api::V1::CollectionsController do
           @email_1 = 'example@jll.com'
           @email_2 = 'example2@jll.com'
           post(:share, id: @collection.id,
-               users: [
-                   {id: @user_editor.id, rank: 1},
-                   {id: @user_viewer.id, rank: 0},
+                       users: [
+                   { id: @user_editor.id, rank: 1 },
+                   { id: @user_viewer.id, rank: 0 },
                ],
-               emails: [
-                   {email: @email_1, rank: 1},
-                   {email: @email_2, rank: 0},
+                       emails: [
+                   { email: @email_1, rank: 1 },
+                   { email: @email_2, rank: 0 },
                ], format: :json)
           @body = JSON.parse(response.body)
         end
@@ -263,14 +261,10 @@ describe Api::V1::CollectionsController do
         end
 
         it 'has the new ranks in the api response' do
-          expect(@body['users'].map { |u| {id: u['id'], rank: u['rank']} }).to eq [
-                                                                                      {id: @user_editor.id, rank: 'collaborator'},
-                                                                                      {id: @user_viewer.id, rank: 'viewer'},
-                                                                                  ]
-          expect(@body['emails'].map { |u| {email: u['email'], rank: u['rank']} }).to eq [
-                                                                                             {email: @email_1, rank: 'collaborator'},
-                                                                                             {email: @email_2, rank: 'viewer'},
-                                                                                         ]
+          users_params = [{ id: @user_editor.id, rank: 'collaborator' }, { id: @user_viewer.id, rank: 'viewer' }]
+          emails_params = [{ email: @email_1, rank: 'collaborator' }, { email: @email_2, rank: 'viewer' }]
+          expect(@body['users'].map { |u| { id: u['id'], rank: u['rank'] } }).to eq(users_params)
+          expect(@body['emails'].map { |u| { email: u['email'], rank: u['rank'] } }).to eq(emails_params)
         end
 
         describe 'email domain filtering' do
@@ -282,10 +276,8 @@ describe Api::V1::CollectionsController do
           describe 'sending a non-jll email' do
             before do
               @email_1 = 'example@notjll.com'
-              post(:share, id: @collection.id,
-                   emails: [
-                       {email: @email_1, rank: 1},
-                   ], format: :json)
+              emails_params = [{ email: @email_1, rank: 1 }]
+              post(:share, id: @collection.id, emails: emails_params, format: :json)
               @body = JSON.parse(response.body)
             end
 
@@ -298,10 +290,8 @@ describe Api::V1::CollectionsController do
             describe "sending a #{domain} email" do
               before do
                 @email_1 = "example@#{domain}"
-                post(:share, id: @collection.id,
-                     emails: [
-                         {email: @email_1, rank: 1},
-                     ], format: :json)
+                emails_params = [{ email: @email_1, rank: 1 }]
+                post(:share, id: @collection.id, emails: emails_params, format: :json)
                 @body = JSON.parse(response.body)
               end
 
@@ -318,7 +308,7 @@ describe Api::V1::CollectionsController do
     # EDITOR #
     ##########
 
-    describe "as a collection editor" do
+    describe 'as a collection editor' do
       before do
         sign_in(@user_editor)
       end
@@ -379,12 +369,12 @@ describe Api::V1::CollectionsController do
           @old_name = @collection.name
           @old_description = @collection.description
           patch(:update,
-                id: @collection.id,
-                products: [@new_product.id],
-                name: 'New Title',
+                id:          @collection.id,
+                products:    [@new_product.id],
+                name:        'New Title',
                 description: 'New Description',
-                privacy: 'visible',
-                format: :json)
+                privacy:     'visible',
+                format:      :json)
           @body = JSON.parse(response.body)
         end
 
@@ -420,10 +410,8 @@ describe Api::V1::CollectionsController do
 
       describe 'POST #share' do
         before do
-          post(:share, id: @collection.id,
-               users: [
-                   {id: @user_viewer.id, rank: 0},
-               ], format: :json)
+          users_params = [{ id: @user_viewer.id, rank: 0 }]
+          post(:share, id: @collection.id, users: users_params, format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -435,7 +423,7 @@ describe Api::V1::CollectionsController do
     # Viewer #
     ##########
 
-    describe "as a collection viewer" do
+    describe 'as a collection viewer' do
       before do
         sign_in(@user_viewer)
       end
@@ -489,12 +477,12 @@ describe Api::V1::CollectionsController do
         before do
           @new_product = create(:product, :with_reviews)
           patch(:update,
-                id: @collection.id,
-                products: [@new_product.id],
-                name: 'New Title',
+                id:          @collection.id,
+                products:    [@new_product.id],
+                name:        'New Title',
                 description: 'New Description',
-                privacy: 'visible',
-                format: :json)
+                privacy:     'visible',
+                format:      :json)
           @body = JSON.parse(response.body)
         end
 
@@ -512,10 +500,8 @@ describe Api::V1::CollectionsController do
 
       describe 'POST #share' do
         before do
-          post(:share, id: @collection.id,
-               users: [
-                   {id: @user_editor.id, rank: 0},
-               ], format: :json)
+          users_params = [{ id: @user_editor.id, rank: 0 }]
+          post(:share, id: @collection.id, users: users_params, format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -527,7 +513,7 @@ describe Api::V1::CollectionsController do
     # Bystander #
     #############
 
-    describe "as a collection bystander" do
+    describe 'as a collection bystander' do
       before do
         sign_in(@user_bystander)
       end
@@ -584,12 +570,12 @@ describe Api::V1::CollectionsController do
         before do
           @new_product = create(:product, :with_reviews)
           patch(:update,
-                id: @collection.id,
-                products: [@new_product.id],
-                name: 'New Title',
+                id:          @collection.id,
+                products:    [@new_product.id],
+                name:        'New Title',
                 description: 'New Description',
-                privacy: 'visible',
-                format: :json)
+                privacy:     'visible',
+                format:      :json)
           @body = JSON.parse(response.body)
         end
 
@@ -607,10 +593,8 @@ describe Api::V1::CollectionsController do
 
       describe 'POST #share' do
         before do
-          post(:share, id: @collection.id,
-               users: [
-                   {id: @user_editor.id, rank: 0},
-               ], format: :json)
+          users_params = [{ id: @user_editor.id, rank: 0 }]
+          post(:share, id: @collection.id, users: users_params, format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -691,12 +675,12 @@ describe Api::V1::CollectionsController do
         before do
           @new_product = create(:product, :with_reviews)
           patch(:update,
-                id: @collection.id,
-                products: [@new_product.id],
-                name: 'New Title',
+                id:          @collection.id,
+                products:    [@new_product.id],
+                name:        'New Title',
                 description: 'New Description',
-                privacy: 'hidden',
-                format: :json)
+                privacy:     'hidden',
+                format:      :json)
           @body = JSON.parse(response.body)
         end
 
@@ -730,7 +714,7 @@ describe Api::V1::CollectionsController do
         end
 
         it 'returns json that just contains success: true' do
-          expect(@body).to eq({'success' => true})
+          expect(@body).to eq('success' => true)
         end
       end
 
@@ -738,11 +722,8 @@ describe Api::V1::CollectionsController do
         before do
           CollectionUser.all.destroy_all
           expect(@collection.sharees.length).to eq 0
-          post(:share, id: @collection.id,
-               users: [
-                   {id: @user_editor.id, rank: 1},
-                   {id: @user_viewer.id, rank: 0},
-               ], format: :json)
+          users_params = [{ id: @user_editor.id, rank: 1 }, { id: @user_viewer.id, rank: 0 }]
+          post(:share, id: @collection.id, users: users_params, format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -753,10 +734,12 @@ describe Api::V1::CollectionsController do
         end
 
         it 'has the new ranks in the api response' do
-          expect(@body['users'].map { |u| {id: u['id'], rank: u['rank']} }).to eq [
-                                                                                      {id: @user_editor.id, rank: 'collaborator'},
-                                                                                      {id: @user_viewer.id, rank: 'viewer'},
-                                                                                  ]
+          users_params = [
+                           { id: @user_editor.id, rank: 'collaborator' },
+                           { id: @user_viewer.id, rank: 'viewer' },
+                         ]
+
+          expect(@body['users'].map { |u| { id: u['id'], rank: u['rank'] } }).to eq users_params
         end
       end
     end
@@ -765,7 +748,7 @@ describe Api::V1::CollectionsController do
     # EDITOR #
     ##########
 
-    describe "as a collection editor" do
+    describe 'as a collection editor' do
       before do
         sign_in(@user_editor)
       end
@@ -815,7 +798,7 @@ describe Api::V1::CollectionsController do
         it_behaves_like 'an API that returns a collection'
 
         it 'adds the new product to the collection' do
-          expect(products_ids_from_body).to include *products_ids_from_collection
+          expect(products_ids_from_body).to include(*products_ids_from_collection)
           expect(@collection.products).to include @new_product
         end
       end
@@ -826,12 +809,12 @@ describe Api::V1::CollectionsController do
           @old_name = @collection.name
           @old_description = @collection.description
           patch(:update,
-                id: @collection.id,
-                products: [@new_product.id],
-                name: 'New Title',
+                id:          @collection.id,
+                products:    [@new_product.id],
+                name:        'New Title',
                 description: 'New Description',
-                privacy: 'hidden',
-                format: :json)
+                privacy:     'hidden',
+                format:      :json)
           @body = JSON.parse(response.body)
         end
 
@@ -867,10 +850,8 @@ describe Api::V1::CollectionsController do
 
       describe 'POST #share' do
         before do
-          post(:share, id: @collection.id,
-               users: [
-                   {id: @user_viewer.id, rank: 0},
-               ], format: :json)
+          users_params = [{ id: @user_viewer.id, rank: 0 }]
+          post(:share, id: @collection.id, users: users_params, format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -882,7 +863,7 @@ describe Api::V1::CollectionsController do
     # Viewer #
     ##########
 
-    describe "as a collection viewer" do
+    describe 'as a collection viewer' do
       before do
         sign_in(@user_viewer)
       end
@@ -936,12 +917,12 @@ describe Api::V1::CollectionsController do
         before do
           @new_product = create(:product, :with_reviews)
           patch(:update,
-                id: @collection.id,
-                products: [@new_product.id],
-                name: 'New Title',
+                id:          @collection.id,
+                products:    [@new_product.id],
+                name:        'New Title',
                 description: 'New Description',
-                privacy: 'visible',
-                format: :json)
+                privacy:     'visible',
+                format:      :json)
           @body = JSON.parse(response.body)
         end
 
@@ -959,10 +940,8 @@ describe Api::V1::CollectionsController do
 
       describe 'POST #share' do
         before do
-          post(:share, id: @collection.id,
-               users: [
-                   {id: @user_editor.id, rank: 0},
-               ], format: :json)
+          users_params = [{ id: @user_editor.id, rank: 0 }]
+          post(:share, id: @collection.id, users: users_params, format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -974,7 +953,7 @@ describe Api::V1::CollectionsController do
     # Bystander #
     #############
 
-    describe "as a collection bystander" do
+    describe 'as a collection bystander' do
       before do
         sign_in(@user_bystander)
       end
@@ -1028,12 +1007,12 @@ describe Api::V1::CollectionsController do
         before do
           @new_product = create(:product, :with_reviews)
           patch(:update,
-                id: @collection.id,
-                products: [@new_product.id],
-                name: 'New Title',
+                id:          @collection.id,
+                products:    [@new_product.id],
+                name:        'New Title',
                 description: 'New Description',
-                privacy: 'visible',
-                format: :json)
+                privacy:     'visible',
+                format:      :json)
           @body = JSON.parse(response.body)
         end
 
@@ -1051,10 +1030,8 @@ describe Api::V1::CollectionsController do
 
       describe 'POST #share' do
         before do
-          post(:share, id: @collection.id,
-               users: [
-                   {id: @user_editor.id, rank: 0},
-               ], format: :json)
+          users_params = [{ id: @user_editor.id, rank: 0 }]
+          post(:share, id: @collection.id, users: users_params, format: :json)
           @body = JSON.parse(response.body)
         end
 
@@ -1064,6 +1041,7 @@ describe Api::V1::CollectionsController do
   end
 
   private
+
   def products_ids_from_body
     @body['products'].map { |p| p['id'] }
   end

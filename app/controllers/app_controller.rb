@@ -1,9 +1,9 @@
 class AppController < ApplicationController
   layout 'app'
 
-  before_filter :authenticate_user!
-  before_filter :check_whitelist
-  before_filter :app_redirect
+  before_action :authenticate_user!
+  before_action :check_whitelist
+  before_action :app_redirect
 
   def index
   end

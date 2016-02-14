@@ -23,14 +23,11 @@ module Fletcher
     private
 
     def obtain_related_tags(data)
-      @related_tags ||= Tag
-                          .joins(:tag_taggables)
-                          .where({
-                            tag_taggables: {
-                              taggable_id: data.map(&:id),
-                              taggable_type: data.first.class.name
-                            }
-                          }).uniq
+      @related_tags ||= Tag.joins(:tag_taggables)
+                           .where(tag_taggables: {
+                                    taggable_id:   data.map(&:id),
+                                    taggable_type: data.first.class.name,
+                                  }).uniq
     end
 
     def filter_by_tags(filter_tags, data)
@@ -45,7 +42,7 @@ module Fletcher
 
     # to be overridden
     def build_search_by
-      default_search_by = Hash.new(lambda { |terms| [] } ).with_indifferent_access
+      default_search_by = Hash.new(->(_terms) { [] }).with_indifferent_access
     end
 
     def sort_by(sort_description, data)
@@ -54,7 +51,7 @@ module Fletcher
 
     # to be overridden
     def build_sort_by
-      default_sort_by = Hash.new(lambda { |data| data.order(name: :asc) } ).with_indifferent_access
+      default_sort_by = Hash.new(->(data) { data.order(name: :asc) }).with_indifferent_access
     end
   end
 end

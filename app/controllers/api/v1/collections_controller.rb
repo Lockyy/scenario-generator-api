@@ -24,13 +24,13 @@ class Api::V1::CollectionsController < AppController
 
   def add_product
     product = Product.find_by(id: params[:product])
-    @collection.collection_products.create({product: product, user: current_user}) if product
+    @collection.collection_products.create(product: product, user: current_user) if product
 
     respond_to { |format| format.json { render_success } }
   end
 
   def delete_product
-    collection_product = @collection.collection_products.find_by({product_id: params[:product_id]})
+    collection_product = @collection.collection_products.find_by(product_id: params[:product_id])
 
     collection_product.destroy if collection_product
 
@@ -46,23 +46,24 @@ class Api::V1::CollectionsController < AppController
   end
 
   def destroy
-    if @collection.destroy
-      returnJSON = render json: {success: true}
-    else
-      returnJSON = render_error
-    end
+    returnJSON = if @collection.destroy
+                   render json: { success: true }
+                 else
+                   render_error
+                 end
 
     respond_to { |format| format.json { returnJSON } }
   end
 
   def leave
-    collection_user = @collection.collection_users.find_by({sharee: current_user})
+    collection_user = @collection.collection_users.find_by(sharee: current_user)
+    returnJSON = if collection_user.destroy
+                   render json: { success: true }
+                 else
+                   render_error
+                 end
 
-    if collection_user.destroy
-      returnJSON = render json: {success: true}
-    else
-      returnJSON = render_error
-    end
+    respond_to { |format| format.json { returnJSON } }
   end
 
   def share
@@ -80,7 +81,7 @@ class Api::V1::CollectionsController < AppController
     respond_to do |format|
       format.csv { respond_with('csv') }
       format.xls { respond_with('xls') }
-      format.ppt { respond_with('ppt')}
+      format.ppt { respond_with('ppt') }
     end
   end
 
@@ -88,19 +89,16 @@ class Api::V1::CollectionsController < AppController
 
   def respond_with(filetype)
     export_data, data_type = @collection.export(filetype)
-    send_data(export_data, {
-      :type => data_type,
-      :disposition => 'attachment',
-      :filename => "#{@collection.name}.#{filetype}" })
+    send_data(export_data, type:        data_type,
+                           disposition: 'attachment',
+                           filename:    "#{@collection.name}.#{filetype}")
   end
 
   def update_share_options
-    _params = share_params
-    @collection.update_attributes({
-                                      privacy: _params[:privacy],
-                                      send_email_invites: _params[:send_email_invites]
-                                  })
-    @collection.share_and_invite(_params[:users], _params[:emails])
+    params = share_params
+    @collection.update_attributes(privacy:            params[:privacy],
+                                  send_email_invites: params[:send_email_invites])
+    @collection.share_and_invite(params[:users], params[:emails])
   end
 
   def render_success
@@ -112,7 +110,7 @@ class Api::V1::CollectionsController < AppController
   end
 
   def share_params
-    params.permit(:privacy, :send_email_invites, users:[:id, :rank], emails: [:email, :rank])
+    params.permit(:privacy, :send_email_invites, users: [:id, :rank], emails: [:email, :rank])
   end
 
   def collection_params
@@ -127,19 +125,19 @@ class Api::V1::CollectionsController < AppController
       status = Collection.deleted?(params[:id]) ? 410 : 404
     end
 
-    render :json => { collection: {} }, :status => status if status
+    render json: { collection: {} }, status: status if status
   end
 
   def require_editor
     unless @collection && @collection.editable_by?(current_user)
-      render :json => { collection: {} }, :status => 401
+      render json: { collection: {} }, status: 401
       false
     end
   end
 
   def require_owner
     unless @collection && @collection.owned_by?(current_user)
-      render :json => { collection: {} }, :status => 401
+      render json: { collection: {} }, status: 401
       false
     end
   end

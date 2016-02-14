@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Product, type: :model do
-
   UUID_REGEX = /[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}/
 
   it { expect(subject).to validate_presence_of :name }
@@ -13,8 +12,8 @@ RSpec.describe Product, type: :model do
   it { expect(subject).to have_many :reviews }
   it { should have_many :collections }
 
-  def convert_to_slug string
-    string.downcase.gsub(' ', '-').gsub("'", '-').gsub(/[^a-zA-Z0-9\-]/, '')
+  def convert_to_slug(string)
+    string.downcase.tr(' ', '-').tr("'", '-').gsub(/[^a-zA-Z0-9\-]/, '')
   end
 
   describe 'slugs' do
@@ -23,7 +22,7 @@ RSpec.describe Product, type: :model do
       @p2 = create(:product)
     end
 
-    it "creates a slug matching each product's name" do
+    it 'creates a slug matching each product\'s name' do
       [@p1, @p2].each do |subject|
         expect(subject.slug).to eq convert_to_slug(subject.name)
       end
@@ -35,7 +34,7 @@ RSpec.describe Product, type: :model do
       end
     end
 
-    describe "when a product's name is set to the same as another product" do
+    describe 'when a product\'s name is set to the same as another product' do
       before do
         @product = @p2
         @other_product = @p1
@@ -57,20 +56,20 @@ RSpec.describe Product, type: :model do
         expect(suffix =~ UUID_REGEX).to eq 0
       end
 
-      it "still lets you look up the other product by it's slug" do
+      it 'still lets you look up the other product by it\'s slug' do
         expect(Product.friendly.find(@other_product.slug).id).to eq @other_product.id
       end
 
-      it "lets you look up the product by it's old slug" do
+      it 'lets you look up the product by it\'s old slug' do
         expect(Product.friendly.find(@old_slug).id).to eq @product.id
       end
 
-      it "lets you look up the product by it's new slug" do
+      it 'lets you look up the product by it\'s new slug' do
         expect(Product.friendly.find(@product.slug).id).to eq @product.id
       end
     end
 
-    describe "when a product's name is changed" do
+    describe 'when a product\'s name is changed' do
       before do
         @product = @p1
         @old_slug = @product.slug
