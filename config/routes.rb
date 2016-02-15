@@ -18,9 +18,10 @@ Rails.application.routes.draw do
   # S3 #
   ######
 
+  get 's3/uploads/:id',       to: 'assets#attachments', as: :attachment
+  get 's3/uploads/:id/:size', to: 'assets#attachments', as: :attachment_size
+
   if ASSET_COMPILATION_ENABLED
-    get 's3/uploads/:id',       to: 'assets#attachments', as: :attachment
-    get 's3/uploads/:id/:size', to: 'assets#attachments', as: :attachment_size
     get 'assets/*path',         to: 'assets#asset',       as: :asset
     get 'compiled/*path',       to: 'assets#asset',       as: :compiled
   end
