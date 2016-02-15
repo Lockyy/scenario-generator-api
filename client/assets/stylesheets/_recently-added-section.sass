@@ -12,31 +12,38 @@ $orange: #e36308
     .tag-box
       @extend .col-md-3
       @extend .col-xs-12
-      padding: 0
-      margin-top: 10px
-      margin-bottom: 10px
-
-      .tag-holder
-        overflow: hidden
-        margin-top: 10px
+      padding: 20px
+      margin: 0
 
       & > .content
         color: white
         height: $box-height
-        background: $orange img-url('backgrounds/most-popular-tags-bg.svg')
+        background: #f6f6f6 img-url('backgrounds/most-popular-tags-bg.svg')
         display: flex
         flex-direction: column
         justify-content: space-between
         overflow: hidden
-        padding: 30px 10px
+        padding: 30px 20px
 
         .header
           h2
-            font-size: 20px
             background: img-url('icons/popular-tags.svg') no-repeat left bottom
-            font-style: italic
-            margin: 0
+            color: black
             padding-left: 50px
+            font-size: 20px
+            font-style: italic
+            line-height: 31px
+            margin: 0
+
+        .tag-holder
+          overflow: hidden
+          margin-top: 25px
+
+          .tags
+            .tag
+              background-color: white
+              border-color: $orange
+              color: $orange
 
         .items
           padding: 0 30px
