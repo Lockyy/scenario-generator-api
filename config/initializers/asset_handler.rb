@@ -1,3 +1,5 @@
+ASSET_COMPILATION_ENABLED = Rails.env.production?.freeze
+
 ASSET_HANDLER = Fletcher::Assets::Handler.instance
 
 Dir.glob("compiled/**/*").each do |path|

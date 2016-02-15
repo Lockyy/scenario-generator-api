@@ -46,6 +46,7 @@ class Fletcher::Assets::Handler
 
   def build_path_for_search(path, format)
     path = "bootstrap/#{BOOTSTRAP_EXCEPTION}" if path.include? BOOTSTRAP_EXCEPTION
+    path = "active_admin" if path.include? 'active_admin'
     "#{path}.#{format}"
   end
 end

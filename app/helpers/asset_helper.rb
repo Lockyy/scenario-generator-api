@@ -1,7 +1,7 @@
 module AssetHelper
 
   def css(path)
-    if Rails.env.production?
+    if ASSET_COMPILATION_ENABLED
       "<link media='all' rel='stylesheet' type='text/css'
              data-turbolinks-track='true' href='/assets/#{path}.css'>".html_safe
     else
@@ -10,7 +10,7 @@ module AssetHelper
   end
 
   def js(path)
-    if serve_via_s3?
+    if ASSET_COMPILATION_ENABLED
       "<script data-turbolinks-track='true' src='/assets/#{path}.js'></script>".html_safe
     else
       javascript_include_tag path, 'data-turbolinks-track' => true
