@@ -1,5 +1,5 @@
 ActiveAdmin.register Review do
-  permit_params :user_id, :title, :quality_review, :quality_score, :price_review, :price_score,
+  permit_params :user_id, :title, :quality_review, :quality_score, :price_review, :price_score, :custom_attachment,
                 :tags, :product_id, links_attributes: [:url, :id, :_destroy]
 
   actions :index, :show

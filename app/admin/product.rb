@@ -7,7 +7,14 @@ ActiveAdmin.register Product do
   before_filter only: [:update, :create] do
     attachment_id = params[:product][:default_image].try(:[], :id)
     @default_image = Attachment.find(attachment_id) if attachment_id
+    custom_attachment = params[:product][:custom_attachment]
+    if custom_attachment
+      @custom_attachment =  Attachment.new
+      @custom_attachment.attachment = params[:product][:custom_attachment]
+    end
+
     params[:product].delete(:default_image)
+    params[:product].delete(:custom_attachment)
     @reviews = Admin::ReviewService.reviews params[:product][:reviews_attributes], current_user
     params[:product].delete(:reviews_attributes)
   end
@@ -20,8 +27,9 @@ ActiveAdmin.register Product do
     end
 
     def update_resource(object, attributes)
-      attributes[0][:default_image] = @default_image
-      attributes[0][:reviews] = @reviews
+      attributes[0].merge!({default_image: @default_image})
+      attributes[0].merge!({custom_attachments: [@custom_attachment]}) if @custom_attachment
+      attributes[0].merge!({reviews: @reviews})
       super(object, attributes)
     end
 
@@ -52,11 +60,11 @@ ActiveAdmin.register Product do
     end unless f.object.new_record?
 
     f.inputs 'Default Image', for: [:default_image, f.object.default_image || Attachment.new], class: 'inputs default_image' do |image_f|
-      image_f.input :id, as:           :radio,
-                         collection:   f.object.images,
-                         label:        '',
-                         member_label: proc { |obj| image_tag(obj.url, class: 'custom-image') },
-                         wrapper_html: { class: 'thumbnail' }
+      image_f.input :id, as: :radio,
+        collection: f.object.images,
+        label: '',
+        member_label: proc { |obj| image_tag(obj.attachment.url, class: 'custom-image') },
+        wrapper_html: {class: 'thumbnail'}
     end unless f.object.new_record?
 
     f.inputs 'Reviews' do
@@ -104,7 +112,7 @@ ActiveAdmin.register Product do
         reviews_links(ad.reviews)
       end
       row :default_image do
-        image_tag(ad.default_image.url, class: 'custom-image')
+        image_tag(ad.default_image.attachment.url, class: 'custom-image')
       end unless ad.default_image.nil?
     end
   end
