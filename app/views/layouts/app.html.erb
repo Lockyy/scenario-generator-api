@@ -2,7 +2,7 @@
 <html>
   <head>
     <title>Fletcher</title>
-    <%= stylesheet_link_tag    'app', media: 'all', 'data-turbolinks-track' => true %>
+    <%= css('app') %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/favicon' %>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -20,12 +20,13 @@
       <div id='notifications'></div>
       <div id='modals'></div>
 
-      <%= javascript_include_tag 'app', 'data-turbolinks-track' => true %>
-
       <div id="analytics"></div>
+
 
     </div>
 
     <footer id='footer'></footer>
+
+    <%= js('app') %>
   </body>
 </html>

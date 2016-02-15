@@ -13,8 +13,8 @@
         <span class="icon-bar"></span>
       </button>
       <div class='brand'>
-        <%= link_to image_tag('logos/logo-black.svg'), '/' %>
-        <%= link_to image_tag('logos/logo-black-internal.svg'), '/app', class: 'internal-only inline-block' %>
+        <%= link_to compiled_image_tag('site/logos/logo-black.svg'), '/' %>
+        <%= link_to compiled_image_tag('site/logos/logo-black-internal.svg'), '/app', class: 'internal-only inline-block' %>
       </div>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
@@ -33,14 +33,14 @@
 <nav class="navbar navbar-<%= yield :header %> visible-xs">
   <div class="container">
     <div class="navbar-header">
-      <%= link_to image_tag('logos/logo-white.svg'), '/', class: 'brand' %>
+      <%= link_to compiled_image_tag('site/logos/logo-white.svg'), '/', class: 'brand' %>
     </div>
   </div>
 </nav>
 
 <% if flash[:error] %>
   <div class='flash'>
-    <%= image_tag "icons/warning-orange.svg", alt:"Internal warning icon" %>
+    <%= compiled_image_tag "site/icons/warning-orange.svg", alt:"Internal warning icon" %>
     <%= flash[:error] %>
   </div>
 <% end %>

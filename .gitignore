@@ -32,3 +32,5 @@ config/database.yml
 *.swo
 .idea
 .byebug_history
+
+compiled/*

@@ -10,7 +10,6 @@ json.review(product.reviews.find_by(user: current_user), :id) if product.reviews
 
 json.attachments product.attachments, partial: 'api/v1/attachments/attachment', as: :attachment
 
-
 json.reviews product.reviews, partial: 'api/v1/reviews/review', as: :review
 
 json.company do

@@ -14,7 +14,7 @@ class CollectionUser < ActiveRecord::Base
 
   validates_presence_of :shared_collection
 
-  validates_format_of :email, with:      /\b\S+@{1}(am\.|eu\.|ap\.)?jll\.com\b/,
+  validates_format_of :email, with:      /\A\S+@{1}(am\.|eu\.|ap\.)?jll\.com\z/,
                               allow_nil: true,
                               message:   'is not a valid JLL email'
 

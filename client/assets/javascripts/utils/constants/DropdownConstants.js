@@ -1,17 +1,17 @@
 module.exports = {
   shareOptions: [
     {
-      image: "/assets/icons/share/icon-share-coowner.png",
+      image: "/assets/app/icons/share/icon-share-coowner.png",
       option: 'owner',
       display: 'Co-owner'
     },
     {
-      image: "/assets/icons/share/icon-share-plus.png",
+      image: "/assets/app/icons/share/icon-share-plus.png",
       option: 'collaborator',
       display: 'Can add products'
     },
     {
-      image: "/assets/icons/share/icon-share-view.png",
+      image: "/assets/app/icons/share/icon-share-view.png",
       option: 'viewer',
       display: 'Can View'
     }
