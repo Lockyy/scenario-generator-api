@@ -118,7 +118,7 @@ products.url, company_id, products.views, products.created_at, products.updated_
   end
 
   def image
-    image = default_image || images.first
+    image = default_image || images.sort_by{ |i| i.created_at }.first
     image.try(:file_url)
   end
 
