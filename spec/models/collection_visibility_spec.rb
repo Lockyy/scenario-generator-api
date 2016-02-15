@@ -15,22 +15,21 @@ describe 'Collection#visible' do
     # This collection is owned by @primary_user and has products 1 and 2 in it.
     # Visible to @primary_user.
     # Not visible to @user_2.
-    @owned_collection = create(:collection, user: @primary_user,
+    @owned_collection = create(:collection, user:     @primary_user,
                                             products: [@product_1, @product_2],
-                                            privacy: :hidden)
+                                            privacy:  :hidden)
     # This collection is owned by @user_2 and has products 1 and 2 in it.
     # Visible to @user_2.
     # Not visible to @primary_user.
-    @hidden_collection = create(:collection,  user: @user_2,
+    @hidden_collection = create(:collection,  user:     @user_2,
                                               products: [@product_1, @product_2],
-                                              privacy: :hidden)
+                                              privacy:  :hidden)
     # This collection is owned by @user_2 and has products 1 and 2 in it.
     # Visible to @user_2, @user_3, and @primary_user.
-    @visible_collection = create(:collection, user: @user_2,
+    @visible_collection = create(:collection, user:     @user_2,
                                               products: [@product_1, @product_2],
-                                              privacy: :visible)
+                                              privacy:  :visible)
   end
-
 
   describe 'owned collections' do
     it 'are included for the owner' do
@@ -48,7 +47,7 @@ describe 'Collection#visible' do
     describe 'when shared' do
       describe 'as a viewer' do
         before do
-          @visible_collection.share([{id: @primary_user.id, rank: 0}])
+          @visible_collection.share([{ id: @primary_user.id, rank: 0 }])
         end
 
         it 'are still visible to that user' do
@@ -58,7 +57,7 @@ describe 'Collection#visible' do
 
       describe 'as a collaborator' do
         before do
-          @visible_collection.share([{id: @primary_user.id, rank: 1}])
+          @visible_collection.share([{ id: @primary_user.id, rank: 1 }])
         end
 
         it 'are still visible to that user' do
@@ -68,7 +67,7 @@ describe 'Collection#visible' do
 
       describe 'as an owner' do
         before do
-          @visible_collection.share([{id: @primary_user.id, rank: 2}])
+          @visible_collection.share([{ id: @primary_user.id, rank: 2 }])
         end
 
         it 'are still visible to that user' do
@@ -88,7 +87,7 @@ describe 'Collection#visible' do
     describe 'when shared' do
       describe 'as a viewer' do
         before do
-          @hidden_collection.share([{id: @primary_user.id, rank: 0}])
+          @hidden_collection.share([{ id: @primary_user.id, rank: 0 }])
         end
 
         it 'are included when that user is passed in' do
@@ -102,7 +101,7 @@ describe 'Collection#visible' do
 
       describe 'as a collaborator' do
         before do
-          @hidden_collection.share([{id: @primary_user.id, rank: 1}])
+          @hidden_collection.share([{ id: @primary_user.id, rank: 1 }])
         end
 
         it 'are included when that user is passed in' do
@@ -116,7 +115,7 @@ describe 'Collection#visible' do
 
       describe 'as an owner' do
         before do
-          @hidden_collection.share([{id: @primary_user.id, rank: 2}])
+          @hidden_collection.share([{ id: @primary_user.id, rank: 2 }])
         end
 
         it 'are included when that user is passed in' do

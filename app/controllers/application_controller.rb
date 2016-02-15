@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   def authenticate_active_admin_user!
     authenticate_user!
     unless current_user.admin? && current_user.whitelisted?
-      flash[:error] = "Unauthorized Access!"
+      flash[:error] = 'Unauthorized Access!'
       redirect_to root_path
     end
   end

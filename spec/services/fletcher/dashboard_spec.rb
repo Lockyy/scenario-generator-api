@@ -10,15 +10,17 @@ RSpec.describe Fletcher::Dashboard do
   }
 
   let(:params) {
-      {
-        recently_added: { limit: 10, offset: 3,
-                          tags: { limit: 25, offset: 7 }
-        },
-        most_popular: {
-          products: { limit: 3, offset: 8 }
-        }
-      }.with_indifferent_access
-    }
+    {
+      recently_added: {
+        limit:  10,
+        offset: 3,
+        tags:   { limit: 25, offset: 7 },
+      },
+      most_popular:   {
+        products: { limit: 3, offset: 8 },
+      },
+    }.with_indifferent_access
+  }
 
   subject { Fletcher::Dashboard.new(user, existing_ids, params) }
 
@@ -28,7 +30,7 @@ RSpec.describe Fletcher::Dashboard do
       allow(mocked_scope).to receive_message_chain(:limit, :offset).and_return([])
       expect(Product).to receive(:recently_added).and_return(mocked_scope)
       expect(Tag).to receive_message_chain(:most_popular, :limit, :offset).and_return([])
-      expect(subject.recently_added).to be_eql({products: [], tags: []})
+      expect(subject.recently_added).to be_eql(products: [], tags: [])
     end
 
     context 'with params' do
@@ -126,7 +128,6 @@ RSpec.describe Fletcher::Dashboard do
       before(:each) { allow(Tag).to receive_message_chain(:most_popular, :limit, :offset).and_return([]) }
 
       context 'with params' do
-
         it 'adds limit' do
           mocked_scope = double.as_null_object
           allow(mocked_scope).to receive(:offset).and_return([])

@@ -31,9 +31,8 @@ ActiveAdmin.register User do
       row :email
       row :admin
       row :avatar do
-        image_tag(ad.avatar_url, :class => "custom-image")
+        image_tag(ad.avatar_url, class: 'custom-image')
       end
     end
   end
 end
-

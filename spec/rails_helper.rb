@@ -30,12 +30,12 @@ RSpec.configure do |config|
   config.default_retry_count = retry_count.try(:to_i) || 3
   puts "RSpec retry count is #{config.default_retry_count}"
 
-  #Turn off stupid js errors
+  # Turn off stupid js errors
   Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, {:debug => false, :inspector => true} )
+    Capybara::Poltergeist::Driver.new(app, debug: false, inspector: true)
   end
 
-  #User poltergeist headless
+  # User poltergeist headless
   Capybara.javascript_driver = :poltergeist
 
   # config taken directly from RSpec example in the DatabaseCleaner README
@@ -55,7 +55,7 @@ RSpec.configure do |config|
   end
 
   config.after(:suite) do
-    ActiveRecord::Base.connection.execute("DEALLOCATE ALL")
+    ActiveRecord::Base.connection.execute('DEALLOCATE ALL')
   end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -83,5 +83,5 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  config.order = "random"
+  config.order = 'random'
 end

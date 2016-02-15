@@ -3,11 +3,9 @@ ActiveAdmin.register Company do
 
   controller do
     def find_resource
-      begin
-        scoped_collection.where(slug: params[:id]).first!
-      rescue ActiveRecord::RecordNotFound
-        scoped_collection.find(params[:id])
-      end
+      scoped_collection.where(slug: params[:id]).first!
+    rescue ActiveRecord::RecordNotFound
+      scoped_collection.find(params[:id])
     end
   end
 
@@ -17,9 +15,9 @@ ActiveAdmin.register Company do
       input :name
       input :url
       input :description
-      input :avatar, :as => :file, :hint => f.object.avatar.present? \
-     ? image_tag(f.object.avatar.url(:thumb), :class => "custom-image")
-                   : content_tag(:span, "no cover page yet")
+      input :avatar, as: :file, hint: f.object.avatar.present? \
+        ? image_tag(f.object.avatar.url(:thumb), class: 'custom-image')
+        : content_tag(:span, 'no cover page yet')
     end
     f.actions
   end
@@ -38,7 +36,7 @@ ActiveAdmin.register Company do
       row :url
       row :description
       row :avatar do
-        image_tag(ad.avatar.url(:thumb), :class => "custom-image")
+        image_tag(ad.avatar.url(:thumb), class: 'custom-image')
       end
     end
   end

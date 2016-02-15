@@ -21,11 +21,9 @@ ActiveAdmin.register Product do
 
   controller do
     def find_resource
-      begin
-        scoped_collection.where(slug: params[:id]).first!
-      rescue ActiveRecord::RecordNotFound
-        scoped_collection.find(params[:id])
-      end
+      scoped_collection.where(slug: params[:id]).first!
+    rescue ActiveRecord::RecordNotFound
+      scoped_collection.find(params[:id])
     end
 
     def update_resource(object, attributes)
@@ -51,14 +49,14 @@ ActiveAdmin.register Product do
       input :company
     end
 
-  f.inputs 'Add custom attachment', class: 'test' do
+    f.inputs 'Add custom attachment', class: 'test' do
       li class: 'input loading hide', value: 'Loading' do
         span class: 'label' do
           'Loading'
         end
       end
 
-      f.input :custom_attachment, as: :file, input_html: { :class => 'custom_attachment', data: { product_id: f.object.id } }
+      f.input :custom_attachment, as: :file, input_html: { class: 'custom_attachment', data: { product_id: f.object.id } }
     end unless f.object.new_record?
 
     f.inputs 'Default Image', for: [:default_image, f.object.default_image || Attachment.new], class: 'inputs default_image' do |image_f|
@@ -110,7 +108,7 @@ ActiveAdmin.register Product do
       row :description
       row :company
       row :views
-      row 'Reviews' do |n|
+      row 'Reviews' do |_n|
         reviews_links(ad.reviews)
       end
       row :default_image do

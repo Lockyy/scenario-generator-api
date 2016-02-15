@@ -16,7 +16,7 @@ describe 'User Profile Page', js: true do
     @user.collections.append @public_collection
     @user.collections.append @private_collection
     @user.bookmarks.append @bookmark
-    visit "/app/users/current"
+    visit '/app/users/current'
     wait_for_ajax
   end
 
@@ -33,6 +33,22 @@ describe 'User Profile Page', js: true do
     expect(page).to have_content @user.attachments.count
   end
 
+  let(:create_and_share_message) {
+    'Create and share lists of products you are comparing or interested in.'
+  }
+
+  let(:browse_or_edit_message) {
+    'You can browse or edit your reviews at any time, even add or delete files and images.'
+  }
+
+  let(:quick_access_message) {
+    'Quick access to browse your favorite products or continue where you left off.'
+  }
+
+  let(:adding_tags_message) {
+    'Adding tags will update your News Feed with the latest news from the ones you follow'
+  }
+
   describe 'Tabbed Area' do
     describe 'on your own page' do
       describe 'by default' do
@@ -41,17 +57,17 @@ describe 'User Profile Page', js: true do
         end
 
         it 'has a message informing the user about reviews' do
-          expect(page).to have_content('You can browse or edit your reviews at any time, even add or delete files and images.')
+          expect(page).to have_content(browse_or_edit_message)
         end
 
-        it "displays user's reviews" do
+        it 'displays user\'s reviews' do
           expect(page).to have_content @review.title
         end
 
-        it "doesn't display the other tabs" do
-          expect(page).to_not have_content('Create and share lists of products you are comparing or interested in.')
-          expect(page).to_not have_content('Quick access to browse your favorite products or continue where you left off.')
-          expect(page).to_not have_content('Adding tags will update your News Feed with the latest news from the ones you follow')
+        it 'doesn\'t display the other tabs' do
+          expect(page).to_not have_content(create_and_share_message)
+          expect(page).to_not have_content(quick_access_message)
+          expect(page).to_not have_content(adding_tags_message)
         end
       end
 
@@ -66,17 +82,17 @@ describe 'User Profile Page', js: true do
         end
 
         it 'has a message informing the user about followed tags' do
-          expect(page).to have_content 'Adding tags will update your News Feed with the latest news from the ones you follow'
+          expect(page).to have_content adding_tags_message
         end
 
-        it "displays user's followed tags" do
+        it 'displays user\'s followed tags' do
           expect(page).to have_content @tag.name
         end
 
-        it "doesn't display the other tabs" do
-          expect(page).to_not have_content('Create and share lists of products you are comparing or interested in.')
-          expect(page).to_not have_content('Quick access to browse your favorite products or continue where you left off.')
-          expect(page).to_not have_content('You can browse or edit your reviews at any time, even add or delete files and images.')
+        it 'doesn\'t display the other tabs' do
+          expect(page).to_not have_content(create_and_share_message)
+          expect(page).to_not have_content(quick_access_message)
+          expect(page).to_not have_content(browse_or_edit_message)
         end
       end
 
@@ -91,17 +107,17 @@ describe 'User Profile Page', js: true do
         end
 
         it 'has a message informing the user about bookmarks' do
-          expect(page).to have_content 'Quick access to browse your favorite products or continue where you left off.'
+          expect(page).to have_content quick_access_message
         end
 
-        it "displays user's bookmarks" do
+        it 'displays user\'s bookmarks' do
           expect(page).to have_content @bookmark.product.name
         end
 
-        it "doesn't display the other tabs" do
-          expect(page).to_not have_content('Create and share lists of products you are comparing or interested in.')
-          expect(page).to_not have_content('You can browse or edit your reviews at any time, even add or delete files and images.')
-          expect(page).to_not have_content('Adding tags will update your News Feed with the latest news from the ones you follow')
+        it 'doesn\'t display the other tabs' do
+          expect(page).to_not have_content(create_and_share_message)
+          expect(page).to_not have_content(browse_or_edit_message)
+          expect(page).to_not have_content(adding_tags_message)
         end
       end
 
@@ -116,10 +132,10 @@ describe 'User Profile Page', js: true do
         end
 
         it 'has a message informing the user about collections' do
-          expect(page).to have_content('Create and share lists of products you are comparing or interested in.')
+          expect(page).to have_content(create_and_share_message)
         end
 
-        it "displays user's collections" do
+        it 'displays user\'s collections' do
           expect(page).to have_content @public_collection.name
           expect(page).to have_content @private_collection.name
           expect(page).to have_content @public_collection.display_date
@@ -127,20 +143,20 @@ describe 'User Profile Page', js: true do
           expect(page).to have_content 'Me'
         end
 
-        it "doesn't display the other tabs" do
-          expect(page).to_not have_content('Quick access to browse your favorite products or continue where you left off.')
-          expect(page).to_not have_content('You can browse or edit your reviews at any time, even add or delete files and images.')
-          expect(page).to_not have_content('Adding tags will update your News Feed with the latest news from the ones you follow')
+        it 'doesn\'t display the other tabs' do
+          expect(page).to_not have_content(quick_access_message)
+          expect(page).to_not have_content(browse_or_edit_message)
+          expect(page).to_not have_content(adding_tags_message)
         end
       end
     end
 
-    describe "on someone else's page" do
+    describe 'on someone else\'s page' do
       before do
         @user_2 = login_user
         @shared_collection = create(:collection, name: 'Shared Collection')
         @user.collections.append @shared_collection
-        @shared_collection.share([{id: @user_2.id, rank: 0}])
+        @shared_collection.share([{ id: @user_2.id, rank: 0 }])
         visit "/app/users/#{@user.id}"
         wait_for_ajax
       end
@@ -150,11 +166,11 @@ describe 'User Profile Page', js: true do
           expect(page).to have_selector('.sidebar-element.recent_activity.active')
         end
 
-        it "displays user's reviews" do
+        it 'displays user\'s reviews' do
           expect(page).to have_content @review.title
         end
 
-        it "doesn't display the other tabs" do
+        it 'doesn\'t display the other tabs' do
           expect(page).to_not have_content('Collections are created by users to group products they are interested in.')
         end
       end
@@ -185,7 +201,7 @@ describe 'User Profile Page', js: true do
           expect(page).to have_content @public_collection.user.name
         end
 
-        it "doesn't display private collections", unreliable: true do
+        it 'doesn\'t display private collections', unreliable: true do
           expect(page).to_not have_content(@private_collection.name)
         end
       end

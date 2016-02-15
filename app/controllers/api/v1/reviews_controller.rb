@@ -65,6 +65,7 @@ class Api::V1::ReviewsController < AppController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_review
     @review = Review.find(params[:id])
@@ -78,28 +79,27 @@ class Api::V1::ReviewsController < AppController
   # Never trust parameters from the scary internet, only allow the white list through.
   def update_params
     params[:review].permit(
-        :id, :quality_score, :quality_review, :title, :price_review, :price_score,
-        :attachable_id, :attachable_type,
-        {attachments: [:id, :deleted, {attachment: [:filename, :content_type, :content]}]},
-        {links: [:url, :id]},
-        {tags: [:name, :id]},
-        {product: [:id, :name, {company: [:name, :id]}, :url, :description]}
+      :id, :quality_score, :quality_review, :title, :price_review, :price_score,
+      :attachable_id, :attachable_type,
+      { attachments: [:id, :deleted, { attachment: [:filename, :content_type, :content] }] },
+      { links: [:url, :id] },
+      { tags: [:name, :id] },
+      product: [:id, :name, { company: [:name, :id] }, :url, :description]
     )
   end
 
   def create_params
     params[:review].permit(
-        :id, :quality_score, :quality_review, :title, :price_review, :price_score,
-        :attachable_id, :attachable_type,
-        {attachments: [{attachment: [:filename, :content_type, :content]}]},
-        {links: [:url, :id]},
-        {tags: [:name, :id]},
-        {product: [:id, :name, :url, :description,
-                   {company: [:name, :id, :tags, :url, :description,
-                              {tags: [:name, :id]},
-                              {avatar: [:name, :url, :content_type, :size]}]
-                   }]
-        }
+      :id, :quality_score, :quality_review, :title, :price_review, :price_score,
+      :attachable_id, :attachable_type,
+      { attachments: [{ attachment: [:filename, :content_type, :content] }] },
+      { links: [:url, :id] },
+      { tags: [:name, :id] },
+      product: [:id, :name, :url, :description,
+                { company: [:name, :id, :tags, :url, :description,
+                            { tags: [:name, :id] },
+                            { avatar: [:name, :url, :content_type, :size] }],
+                }]
     )
   end
 end

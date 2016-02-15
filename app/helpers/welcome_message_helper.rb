@@ -7,6 +7,7 @@ module WelcomeMessageHelper
   end
 
   private
+
   # The welcome message should be displayed everytime the user signs in and access the dashboard.
   def show_welcome_message?
     # Verifies if the cookie has already been saved and if it matches the sign_in_count
