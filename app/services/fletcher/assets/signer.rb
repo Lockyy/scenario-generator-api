@@ -9,9 +9,9 @@ class Fletcher::Assets::Signer
   # last for 20 seconds.
   def sign_url(path)
     @signer.presigned_url(:get_object,
-                          bucket: ENV['S3_BUCKET_NAME'],
-                          key: path,
+                          bucket:     ENV['S3_BUCKET_NAME'],
+                          key:        path,
                           expires_in: 120,
-                          secure: true)
+                          secure:     true)
   end
 end

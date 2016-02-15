@@ -3,7 +3,7 @@ require 'singleton'
 class Fletcher::Assets::Handler
   include Singleton
 
-  BOOTSTRAP_EXCEPTION = 'glyphicons-halflings-regular'
+  BOOTSTRAP_EXCEPTION = 'glyphicons-halflings-regular'.freeze
 
   def initialize
     @assets = []
@@ -14,7 +14,7 @@ class Fletcher::Assets::Handler
     @assets.include?(path)
   end
 
-  def restricted?(params, path)
+  def restricted?(params, _path)
     params[:path].split('/')[0] == 'app'
   end
 
@@ -36,9 +36,9 @@ class Fletcher::Assets::Handler
     path = ActionController::Base.helpers.asset_path(path_for_search).split('../')[1]
 
     return {
-      path: path,
+      path:       path,
       restricted: restricted?(params, path),
-      mimetype: Rack::Mime.mime_type(".#{format}")
+      mimetype:   Rack::Mime.mime_type(".#{format}"),
     } if allowed?(path)
 
     false
@@ -46,7 +46,7 @@ class Fletcher::Assets::Handler
 
   def build_path_for_search(path, format)
     path = "bootstrap/#{BOOTSTRAP_EXCEPTION}" if path.include? BOOTSTRAP_EXCEPTION
-    path = "active_admin" if path.include? 'active_admin'
+    path = 'active_admin' if path.include? 'active_admin'
     "#{path}.#{format}"
   end
 end

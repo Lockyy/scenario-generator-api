@@ -1,5 +1,4 @@
 module AssetHelper
-
   def css(path)
     if ASSET_COMPILATION_ENABLED
       "<link media='all' rel='stylesheet' type='text/css'

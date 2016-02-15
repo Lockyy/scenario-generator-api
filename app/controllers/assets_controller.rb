@@ -6,9 +6,9 @@ class AssetsController < ApplicationController
     authenticate_user!
     @attachment = Attachment.find_by(id: params[:id])
     if @attachment
-      sign_and_send_file( @attachment.path(params[:size]),
-                          @attachment.attachment_content_type,
-                          @attachment.attachment_file_name)
+      sign_and_send_file(@attachment.path(params[:size]),
+                         @attachment.attachment_content_type,
+                         @attachment.attachment_file_name)
     else
       render file: "#{Rails.root}/public/404.html", status: 404
     end
@@ -34,14 +34,13 @@ class AssetsController < ApplicationController
     data = open(url)
     begin
       send_data data.read,
-                filename: name,
+                filename:    name,
                 disposition: 'inline',
-                type: mimetype,
-                stream: 'true',
+                type:        mimetype,
+                stream:      'true',
                 buffer_size: '4096'
     ensure
       data.close
     end
   end
-
 end
