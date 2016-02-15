@@ -2,9 +2,9 @@ class AssetsController < ApplicationController
   protect_from_forgery except: :js
 
   def attachments
+    authenticate_user!
     @attachment = Attachment.find_by(id: params[:id])
     if @attachment
-      authenticate_user!
       sign_and_send_file(@attachment.path(params[:size]),
                          @attachment.attachment_content_type,
                          @attachment.attachment_file_name)
