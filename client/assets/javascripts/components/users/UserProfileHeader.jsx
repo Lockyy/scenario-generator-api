@@ -5,7 +5,6 @@ import Section from '../Section'
 import TagsBox from '../TagsBox'
 import Avatar from '../Avatar';
 import SectionRow from '../SectionRow'
-import ProductBox from '../ProductBox'
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import ReviewPageStore from '../../stores/ReviewPageStore'
 import UrlHelper from '../../utils/helpers/UrlHelper'

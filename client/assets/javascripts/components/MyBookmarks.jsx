@@ -31,7 +31,7 @@ const MyBookmarks = React.createClass ({
   },
 
   renderProductBox: function(product, boxSize) {
-    return ( <ProductBox size={boxSize} {...product} /> );
+    return ( <ProductBox typeSizeImage="medium_height" size={boxSize} {...product} /> );
   },
 
   render: function() {

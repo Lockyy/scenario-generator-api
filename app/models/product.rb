@@ -119,7 +119,7 @@ products.url, company_id, products.views, products.created_at, products.updated_
 
   def image
     image = default_image || images.sort_by{ |i| i.created_at }.first
-    image.try(:file_url)
+    image.try(:file_urls)
   end
 
   def cache_scores
