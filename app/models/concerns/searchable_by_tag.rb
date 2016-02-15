@@ -4,12 +4,10 @@ module SearchableByTag
     include PgSearch
 
     pg_search_scope :with_tags,
-      :associated_against => {
-          :tags => [:name]
-      }, :using => {
-          :tsearch => {:any_word => true}
-      }
+                    associated_against: {
+                      tags: [:name],
+                    }, using: {
+                      tsearch: { any_word: true },
+                    }
   end
 end
-
-

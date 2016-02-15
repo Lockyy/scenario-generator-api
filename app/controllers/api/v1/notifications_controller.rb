@@ -1,5 +1,4 @@
 class Api::V1::NotificationsController < AppController
-
   def index
     @notification_ids = current_user.notifications.unviewed.map(&:id)
     @notifications = Notification.where(id: @notification_ids)
@@ -9,7 +8,5 @@ class Api::V1::NotificationsController < AppController
     respond_to do |format|
       format.json { render }
     end
-
   end
-
 end

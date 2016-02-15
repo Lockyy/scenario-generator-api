@@ -19,27 +19,27 @@ Rails.application.routes.draw do
   #######
   namespace :api do
     namespace :v1 do
-      get 'dashboard(.:format)', action: :index, controller: 'dashboard', defaults: {format: 'json'}
+      get 'dashboard(.:format)', action: :index, controller: 'dashboard', defaults: { format: 'json' }
 
       ############
       # Products #
       ############
-      resources :products, defaults: {format: :json} do
-        resources :reviews, only: [:index, :create, :show, :update], defaults: {format: :json} do
-          resources :review_votes, only: [:create, :show], defaults: {format: :json}
+      resources :products, defaults: { format: :json } do
+        resources :reviews, only: [:index, :create, :show, :update], defaults: { format: :json } do
+          resources :review_votes, only: [:create, :show], defaults: { format: :json }
           delete 'review_votes', to: 'review_votes#destroy'
         end
         post 'bookmark', to: 'bookmarks#create'
         delete 'bookmark', to: 'bookmarks#destroy'
       end
-      resources :bookmarks, only: [:index], defaults: {format: :json}
+      resources :bookmarks, only: [:index], defaults: { format: :json }
 
       ###############
       # Collections #
       ###############
       resources :collections,
-                only: [ :user, :create, :show, :update, :destroy],
-                defaults: {format: 'json'} do
+                only:     [:user, :create, :show, :update, :destroy],
+                defaults: { format: 'json' } do
         member do
           get 'export'
           post 'share'
@@ -52,12 +52,12 @@ Rails.application.routes.draw do
       ###########
       # Reviews #
       ###########
-      resources :reviews, except: [:index, :update, :new, :edit], defaults: {format: :json}
+      resources :reviews, except: [:index, :update, :new, :edit], defaults: { format: :json }
 
       #############
       # Companies #
       #############
-      resources :companies, defaults: {format: 'json'} do
+      resources :companies, defaults: { format: 'json' } do
         member do
           patch 'tags'
         end
@@ -66,8 +66,8 @@ Rails.application.routes.draw do
       ########
       # Tags #
       ########
-      resources :tags, only: [:index], defaults: {format: 'json'}
-      resources :tag, controller: 'tags', defaults: {format: 'json'} do
+      resources :tags, only: [:index], defaults: { format: 'json' }
+      resources :tag, controller: 'tags', defaults: { format: 'json' } do
         member do
           get :products
           post :follow
@@ -79,15 +79,15 @@ Rails.application.routes.draw do
       ##########
       # Search #
       ##########
-      get 'search',             to: 'search#index',       as: 'search', defaults: {format: :json}
-      get 'search/users',       to: 'search#users',       as: 'user_search', defaults: {format: 'json'}
-      get 'search/collections', to: 'search#collections', as: 'collections_search', defaults: {format: 'json'}
-      get 'search/products',    to: 'search#products',    as: 'products_search', defaults: {format: 'json'}
+      get 'search',             to: 'search#index',       as: 'search', defaults: { format: :json }
+      get 'search/users',       to: 'search#users',       as: 'user_search', defaults: { format: 'json' }
+      get 'search/collections', to: 'search#collections', as: 'collections_search', defaults: { format: 'json' }
+      get 'search/products',    to: 'search#products',    as: 'products_search', defaults: { format: 'json' }
 
       ########
       # User #
       ########
-      resources 'users', only: [:show], defaults: {format: :json} do
+      resources 'users', only: [:show], defaults: { format: :json } do
         member do
           get 'recent_activity'
           patch 'tags'
@@ -97,15 +97,15 @@ Rails.application.routes.draw do
       #################
       # Notifications #
       #################
-      resources 'notifications', only: [:index], defaults: {format: :json}
+      resources 'notifications', only: [:index], defaults: { format: :json }
     end
   end
 
   ##########
   # Devise #
   ##########
-  devise_for  :users, only: [:omniauth_callbacks],
-              controllers: { omniauth_callbacks: 'omniauth_callbacks' }
+  devise_for :users, only:        [:omniauth_callbacks],
+                     controllers: { omniauth_callbacks: 'omniauth_callbacks' }
 
   devise_scope :user do
     get 'sign_out', to: 'users/sessions#destroy'
@@ -126,5 +126,4 @@ Rails.application.routes.draw do
   scope :app do
     get '*route', to: 'app#index'
   end
-
 end

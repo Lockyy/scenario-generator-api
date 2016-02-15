@@ -19,76 +19,70 @@ module Fletcher
     end
 
     def results
-      _results = {
-          search_string: @params[:search_string],
-          page: @page,
-          per_page: @per_page,
-          sorting: {
-            companies: @params[:sorting][:companies],
-            products: @params[:sorting][:products],
-            tags: @params[:sorting][:tags],
-            collections: @params[:sorting][:collections],
-          },
-          match_mode: {
-            companies: @params[:match_mode][:companies],
-            products: @params[:match_mode][:products],
-            tags: @params[:match_mode][:tags],
-            collections: @params[:match_mode][:collections],
-          },
-          companies: data_hash(@companies),
-          products: data_hash(@products),
-          collections: data_hash(@collections),
-          related_tags: {
-            companies: {
-              total: @companies_related_tags.size,
-              data: @companies_related_tags
-            },
-            products: {
-              total: @products_related_tags.size,
-              data: @products_related_tags
-            },
-            collections: {
-              total: @collections_related_tags.size,
-              data: @collections_related_tags
-            }
-          },
-          tags: {
-              total: @tags.size,
-              data: @tags
-          },
-          filtered_tags: {
-              total: @filter_tags.size,
-              data: @filter_tags
-          }
+      sorting = {
+        tags:        @params[:sorting][:tags],
+        products:    @params[:sorting][:products],
+        companies:   @params[:sorting][:companies],
+        collections: @params[:sorting][:collections],
       }
-      _results[:total_results] = total_results _results
-      _results
+      match_mode = {
+        tags:        @params[:match_mode][:tags],
+        products:    @params[:match_mode][:products],
+        companies:   @params[:match_mode][:companies],
+        collections: @params[:match_mode][:collections],
+      }
+      related_tags = {
+        products:    { data: @products_related_tags,    total: @products_related_tags.size },
+        companies:   { data: @companies_related_tags,   total: @companies_related_tags.size },
+        collections: { data: @collections_related_tags, total: @collections_related_tags.size },
+      }
+      tags = { data:  @tags, total: @tags.size }
+      filtered_tags = { data:  @filter_tags, total: @filter_tags.size }
+
+      results = {
+        search_string: @params[:search_string],
+
+        page:          @page,
+        per_page:      @per_page,
+
+        sorting:       sorting,
+        match_mode:    match_mode,
+
+        tags:          tags,
+        products:      data_hash(@products),
+        companies:     data_hash(@companies),
+        collections:   data_hash(@collections),
+        related_tags:  related_tags,
+        filtered_tags: filtered_tags,
+      }
+
+      results[:total_results] = total_results(results)
+      results
     end
 
     private
 
     def default_params
       {
-        filter_by: 'name',
+        filter_by:      'name',
         filter_by_tags: [],
-        sorting: {
-          companies: :relevance,
-          products: :relevance,
+        sorting:        {
+          companies:   :relevance,
+          products:    :relevance,
           collections: :relevance,
-          tags: :alphabetical_order,
+          tags:        :alphabetical_order,
         },
-        match_mode: {
-          companies: 'all',
-          products: 'all',
+        match_mode:     {
+          companies:   'all',
+          products:    'all',
           collections: 'all',
-          tags: 'all',
+          tags:        'all',
         },
-        search_string: '',
-        page: DEFAULT_PAGE,
-        per_page: DEFAULT_PER_PAGE
+        search_string:  '',
+        page:           DEFAULT_PAGE,
+        per_page:       DEFAULT_PER_PAGE,
       }
     end
-
 
     def calculate_per_page(sent_per_page)
       per_page = sent_per_page || DEFAULT_PER_PAGE
@@ -97,10 +91,10 @@ module Fletcher
     end
 
     def paginate(data)
-      data.paginate(:page => @page, :per_page => @per_page)
+      data.paginate(page: @page, per_page: @per_page)
     end
 
-    def total_results results
+    def total_results(results)
       [:companies, :tags, :products, :collections].inject(0) { |sum, type| sum + results[type][:total] }
     end
 
@@ -112,14 +106,14 @@ module Fletcher
       return default_data_hash if data.size == 0
       paginated_data = paginate(data)
       {
-          total: data_size,
-          pages: paginated_data.total_pages,
-          data: paginated_data
+        total: data_size,
+        pages: paginated_data.total_pages,
+        data:  paginated_data,
       }
     end
 
     def default_data_hash
-      {total: 0, pages: 0, data: []}
+      { total: 0, pages: 0, data: [] }
     end
 
     def companies(terms)
@@ -150,7 +144,7 @@ module Fletcher
     def filtered_tags(filtered_tags)
       tags_names = filtered_tags[:data] if filtered_tags
       return [] if tags_names.nil? || tags_names.empty?
-      tags_names.collect { |index, tag| Tag.where({name: tag[:name]}).first }
+      tags_names.collect { |_index, tag| Tag.where(name: tag[:name]).first }
     end
 
     # We're going to take the search string the user input, split it up into words and then

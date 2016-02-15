@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe Collection, type: :model do
-
   it { should have_many :products }
   it { should belong_to :user }
 
@@ -65,5 +64,4 @@ RSpec.describe Collection, type: :model do
       end
     end
   end
-
 end

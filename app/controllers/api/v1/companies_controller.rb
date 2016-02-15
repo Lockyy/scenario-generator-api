@@ -59,7 +59,6 @@ class Api::V1::CompaniesController < ApplicationController
     end
   end
 
-
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -67,8 +66,8 @@ class Api::V1::CompaniesController < ApplicationController
     @company = Company.friendly.find_by(id: params[:id])
     if @company.nil?
       status = Company.deleted?(params[:id]) ? 410 : 404
-      render  :json => { company: {} },
-              :status => status
+      render json:   { company: {} },
+             status: status
     end
   end
 

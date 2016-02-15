@@ -1,8 +1,8 @@
 class Review < ActiveRecord::Base
   belongs_to :product, touch: true
   belongs_to :user
-  counter_culture :user,    :column_name => "total_reviews"
-  counter_culture :product, :column_name => "total_reviews"
+  counter_culture :user,    column_name: 'total_reviews'
+  counter_culture :product, column_name: 'total_reviews'
 
   has_one :company, through: :product
   has_many :attachments, as: :attachable
@@ -43,7 +43,7 @@ class Review < ActiveRecord::Base
   end
 
   def formatted_quality_review
-    (quality_review.nil? or quality_review.empty?) ? "" : ApplicationController.helpers.simple_format(quality_review)
+    (quality_review.nil? || quality_review.empty?) ? '' : ApplicationController.helpers.simple_format(quality_review)
   end
 
   validates :quality_score, numericality: { only_integer: true, greater_than_or_equal_to: 0, less_than_or_equal_to: 5 }, allow_nil: true
@@ -71,11 +71,12 @@ class Review < ActiveRecord::Base
     invalid_tags = tags.nil? || tags.empty?
     invalid_links = links.nil? || links.empty?
 
-    if invalid_title && invalid_quality_review && invalid_quality_score && invalid_price_review && invalid_price_score &&
-      invalid_attachments && invalid_tags && invalid_links
+    review_missing_field = invalid_title && invalid_quality_review && invalid_quality_score &&
+                           invalid_price_review && invalid_price_score && invalid_attachments &&
+                           invalid_tags && invalid_links
 
-      errors.add(:review, "at least one field is required")
+    if review_missing_field
+      errors.add(:review, 'at least one field is required')
     end
   end
-
 end

@@ -2,18 +2,18 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-describe "Tag Directory", js: true do
+describe 'Tag Directory', js: true do
   before :each do
     @user = login_user
     @tags_a = create_list(:tag, 12, :name_a)
     @tags_b = create_list(:tag, 13, :name_b)
     create(:review, tags: @tags_a)
     create(:review, tags: @tags_b)
-    visit "/app/tags"
+    visit '/app/tags'
     wait_for_ajax
   end
 
-  describe "sidebar" do
+  describe 'sidebar' do
     it 'has links to the sections of the directory' do
       ('a'..'z').to_a.each do |letter|
         expect(find('.left-bar')).to have_link letter
@@ -21,7 +21,7 @@ describe "Tag Directory", js: true do
     end
   end
 
-  describe "each section" do
+  describe 'each section' do
     it 'has a link to that section of the directory' do
       ('a'..'z').to_a.each do |letter|
         expect(find(".results.tags.#{letter}")).to have_link letter
@@ -29,7 +29,7 @@ describe "Tag Directory", js: true do
     end
   end
 
-  it "has links to the sections of the directory in the header for each section" do
+  it 'has links to the sections of the directory in the header for each section' do
     ('a'..'z').to_a.each do |letter|
       expect(find('.left-bar')).to have_link letter
     end
@@ -75,7 +75,6 @@ describe "Tag Directory", js: true do
       expect(page).to have_content 'TAGGED IN'
     end
   end
-
 
   describe 'When displaying all tags' do
     it 'shows all tags' do

@@ -16,7 +16,7 @@ class Product < ActiveRecord::Base
 
   belongs_to :company
   belongs_to :user
-  counter_culture :user, :column_name => "total_products"
+  counter_culture :user, column_name: 'total_products'
 
   has_one :notification, as: :notification_subject
   has_many :reviews, dependent: :destroy
@@ -66,13 +66,13 @@ class Product < ActiveRecord::Base
     joins(:tags).where('tags.name in (?)', tags_names).uniq
   end
 
-  scope :rating, -> rating_order do
+  scope :rating, -> (rating_order) do
     joins('LEFT JOIN reviews rev ON products.id = rev.product_id')
-        .select('sum(COALESCE(rev.quality_score, 0)) / GREATEST(count(rev.quality_score), 1) as total_quality_score, products.id, products.name, products.description,
+      .select('sum(COALESCE(rev.quality_score, 0)) / GREATEST(count(rev.quality_score), 1) as total_quality_score, products.id, products.name, products.description,
 products.url, company_id, products.views, products.created_at, products.updated_at, products.slug')
-        .group('products.id, products.name, products.description,
+      .group('products.id, products.name, products.description,
 products.url, company_id, products.views, products.created_at, products.updated_at, products.slug')
-        .order("total_quality_score #{rating_order}")
+      .order("total_quality_score #{rating_order}")
   end
 
   scope :best_rating, -> do
@@ -101,11 +101,11 @@ products.url, company_id, products.views, products.created_at, products.updated_
   end
 
   def bookmark(user)
-    self.bookmarks.first_or_create(user: user)
+    bookmarks.first_or_create(user: user)
   end
 
   def unbookmark(user)
-    bookmark = self.bookmarks.find_by(user: user)
+    bookmark = bookmarks.find_by(user: user)
     bookmark.destroy if bookmark
   end
 
@@ -123,8 +123,8 @@ products.url, company_id, products.views, products.created_at, products.updated_
   end
 
   def cache_scores
-    average_quality = self.reviews.map(&:quality_score).compact.average
-    average_price = self.reviews.map(&:price_score).compact.average
+    average_quality = reviews.map(&:quality_score).compact.average
+    average_price = reviews.map(&:price_score).compact.average
     self.quality_score_cache = average_quality.nan? ? 0 : average_quality
     self.price_score_cache = average_price.nan? ? 0 : average_price
   end
@@ -154,6 +154,6 @@ products.url, company_id, products.views, products.created_at, products.updated_
   end
 
   def related(quantity)
-    related_products.where.not(id: self.id).uniq.sample(quantity)
+    related_products.where.not(id: id).uniq.sample(quantity)
   end
 end

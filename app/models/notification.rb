@@ -1,11 +1,10 @@
 class Notification < ActiveRecord::Base
-
   belongs_to :user
   belongs_to :sender, class_name: 'User'
 
   belongs_to :notification_subject, polymorphic: true
 
-  enum notification_type: [ :share, :updated_permissions, :deleted ]
+  enum notification_type: [:share, :updated_permissions, :deleted]
 
   default_scope -> { order('created_at ASC') }
 
@@ -18,5 +17,4 @@ class Notification < ActiveRecord::Base
       notification.update_attributes(viewed: true)
     end
   end
-
 end

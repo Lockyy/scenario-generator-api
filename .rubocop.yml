@@ -16,8 +16,31 @@ AllCops:
     - 'bin/**/*'
     - !ruby/regexp /old_and_unused\.rb$/
 
+Rails:
+  Enabled: true
+
 Metrics/LineLength:
   Max: 120
 
 Style/Documentation:
   Enabled: false
+
+Style/BlockDelimiters:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 15
+
+Style/IndentArray:
+  Enabled: false
+
+Style/Lambda:
+  Enabled: false
+
+Style/TrailingCommaInLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Style/AlignHash:
+  Enabled: true
+  EnforcedColonStyle: table

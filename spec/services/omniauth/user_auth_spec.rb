@@ -3,20 +3,20 @@ require 'rails_helper'
 RSpec.describe Omniauth::UserAuth do
   let(:oauth_response) do
     Hashie::Mash.new(
-      info: {
-        email: 'us@fletch.er',
-        name: 'Fl. Etcher',
-        image: 'http://ima.g.es/so.me-img.jpg',
-        location: 'goiania'
+      info:        {
+        email:    'us@fletch.er',
+        name:     'Fl. Etcher',
+        image:    'http://ima.g.es/so.me-img.jpg',
+        location: 'goiania',
       },
       credentials: {
-        token: 'r4nd0m7ok3n'
+        token: 'r4nd0m7ok3n',
       },
-      extra: {
+      extra:       {
         raw_info: {
-          department: 'awesomeness',
-          mugshot_url_template: 'http://ima.g.es/{width}x{height}/so.me-img.jpg'
-        }
+          department:           'awesomeness',
+          mugshot_url_template: 'http://ima.g.es/{width}x{height}/so.me-img.jpg',
+        },
       })
   end
 
@@ -43,11 +43,11 @@ RSpec.describe Omniauth::UserAuth do
     it "updates the user's info" do
       user = double('user')
       user_params = {
-        name: result.name,
-        email: result.email,
+        name:       result.name,
+        email:      result.email,
         avatar_url: 'http://ima.g.es/150x150/so.me-img.jpg',
         department: 'awesomeness',
-        location: 'goiania'
+        location:   'goiania',
       }
 
       allow(user).to receive(:valid?) { true }

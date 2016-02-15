@@ -1,10 +1,10 @@
 module Fletcher
   class UpdateReview
-    attr_reader :review
+    attr_reader :review, :review_params
 
     def initialize(review, params)
       @review = review
-      @review_params = (params || {} )
+      @review_params = (params || {})
     end
 
     def save!
@@ -30,7 +30,7 @@ module Fletcher
         if id && deleted
           Attachment.find(id).destroy
         elsif id
-          new_attachments << actual_attachments.find{|c| c.id == id}
+          new_attachments << actual_attachments.find { |c| c.id == id }
         else
           converted_file = FileService.encoded_file_to_file(att[:attachment])
           new_attachments << Attachment.new(attachment: converted_file)
@@ -62,10 +62,6 @@ module Fletcher
 
     def links_params
       @links_params ||= (review_params[:links] || [])
-    end
-
-    def review_params
-      @review_params
     end
 
     # Takes in a collection and an array of objects.

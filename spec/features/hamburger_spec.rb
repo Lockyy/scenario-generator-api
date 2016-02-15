@@ -4,13 +4,13 @@ Warden.test_mode!
 
 # expect(menu).to have_content 'Cheese Burger'
 # expect(menu).to have_content 'Fries'
-describe "Hamburger Menu", js: true do
+describe 'Hamburger Menu', js: true do
   before do
     @user = login_user
     @review = create(:review, user: @user)
     @collection = create(:collection, user: @user)
     @bookmark = create(:bookmark, user: @user)
-    visit "/app"
+    visit '/app'
     wait_for_ajax
   end
 
@@ -22,7 +22,7 @@ describe "Hamburger Menu", js: true do
 
   describe 'clicking the hamburger menu button' do
     it 'makes the hamburger menu visible' do
-      expect{
+      expect {
         first('.show-hamburger-menu a').trigger('click')
         wait_for_ajax
       }.to change {
@@ -108,7 +108,7 @@ describe "Hamburger Menu", js: true do
 
     describe 'clicking the close hamburger menu button' do
       it 'hides the hamburger menu' do
-        expect{
+        expect {
           first('.show-hamburger-menu a').trigger('click')
           wait_for_ajax
         }.to change {
@@ -119,7 +119,7 @@ describe "Hamburger Menu", js: true do
 
     describe 'clicking outside the hamburger menu ' do
       it 'hides the hamburger menu' do
-        expect{
+        expect {
           first('.navbar.navbar-default').trigger('click')
           wait_for_ajax
         }.to change {

@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe 'Collection sharing' do
-
   rank_functions = [:visible_to?, :editable_by?, :owned_by?]
 
   before do
@@ -15,7 +14,7 @@ describe 'Collection sharing' do
       describe 'as rank 0' do
         it 'makes that user into a viewer' do
           expect {
-            @collection.share([{id: @users[0].id, rank: 0}])
+            @collection.share([{ id: @users[0].id, rank: 0 }])
           }.to change {
             CollectionUser.where(sharee: @users[0], shared_collection: @collection, rank: 'viewer').length > 0
           }.to(true)
@@ -25,7 +24,7 @@ describe 'Collection sharing' do
       describe 'as rank 1' do
         it 'makes that user into a editor' do
           expect {
-            @collection.share([{id: @users[0].id, rank: 1}])
+            @collection.share([{ id: @users[0].id, rank: 1 }])
           }.to change {
             @collection.editable_by?(@users[0])
           }.to(true)
@@ -35,7 +34,7 @@ describe 'Collection sharing' do
       describe 'as rank 2' do
         it 'makes that user into a owner' do
           expect {
-            @collection.share([{id: @users[0].id, rank: 2}])
+            @collection.share([{ id: @users[0].id, rank: 2 }])
           }.to change {
             @collection.owned_by?(@users[0])
           }.to(true)
@@ -46,16 +45,16 @@ describe 'Collection sharing' do
     describe 'without an already shared user' do
       before do
         @collection.share([
-          {id: @users[0].id, rank: 1},
-          {id: @users[1].id, rank: 1},
-        ])
+                              { id: @users[0].id, rank: 1 },
+                              { id: @users[1].id, rank: 1 },
+                          ])
       end
 
       it 'removes the excluded users privleges' do
-        expect{
-          @collection.reload .share([
-            {id: @users[0].id, rank: 1}
-          ])
+        expect {
+          @collection.reload.share([
+                                       { id: @users[0].id, rank: 1 },
+                                   ])
         }.to change {
           @collection.editable_by?(@users[1])
         }.to(false).from(true)
@@ -63,16 +62,16 @@ describe 'Collection sharing' do
     end
 
     describe 'along with another user' do
-      [0,1,2].each do |user_1_rank|
+      [0, 1, 2].each do |user_1_rank|
         describe "with user 1 at rank #{user_1_rank}" do
-          [0,1,2].each do |user_2_rank|
+          [0, 1, 2].each do |user_2_rank|
             describe "with user 2 at rank #{user_2_rank}" do
               it "correctly sets user 1 to rank #{user_1_rank}" do
                 expect {
                   @collection.share([
-                    {id: @users[0].id, rank: user_1_rank},
-                    {id: @users[1].id, rank: user_2_rank},
-                  ])
+                                        { id: @users[0].id, rank: user_1_rank },
+                                        { id: @users[1].id, rank: user_2_rank },
+                                    ])
                 }.to change {
                   @collection.method(rank_functions[user_1_rank]).call(@users[0])
                 }.to(true)
@@ -81,9 +80,9 @@ describe 'Collection sharing' do
               it "correctly sets user 2 to rank #{user_2_rank}" do
                 expect {
                   @collection.share([
-                    {id: @users[0].id, rank: user_1_rank},
-                    {id: @users[1].id, rank: user_2_rank},
-                  ])
+                                        { id: @users[0].id, rank: user_1_rank },
+                                        { id: @users[1].id, rank: user_2_rank },
+                                    ])
                 }.to change {
                   @collection.method(rank_functions[user_2_rank]).call(@users[1])
                 }.to(true)
@@ -104,7 +103,7 @@ describe 'Collection sharing' do
       describe 'as rank 0' do
         it 'creates a collection_user with that email at rank 0' do
           expect {
-            @collection.invite([{email: @new_email, rank: 0}])
+            @collection.invite([{ email: @new_email, rank: 0 }])
           }.to change {
             invite = @collection.invited_sharees.first
             invite.email == @new_email && invite.rank == 'viewer' if invite
@@ -113,7 +112,7 @@ describe 'Collection sharing' do
 
         describe 'once an account with that email is added' do
           before do
-            @collection.invite([{email: @new_email, rank: 0}])
+            @collection.invite([{ email: @new_email, rank: 0 }])
             @invitation = @collection.invited_sharees.find_by(email: @new_email)
           end
 
@@ -146,7 +145,7 @@ describe 'Collection sharing' do
       describe 'as rank 1' do
         it 'creates a collection_user with that email at rank 1' do
           expect {
-            @collection.invite([{email: @new_email, rank: 1}])
+            @collection.invite([{ email: @new_email, rank: 1 }])
           }.to change {
             invite = @collection.invited_sharees.first
             invite.email == @new_email && invite.rank == 'collaborator' if invite
@@ -155,7 +154,7 @@ describe 'Collection sharing' do
 
         describe 'once an account with that email is added' do
           before do
-            @collection.invite([{email: @new_email, rank: 1}])
+            @collection.invite([{ email: @new_email, rank: 1 }])
             @invitation = @collection.invited_sharees.find_by(email: @new_email)
           end
 
@@ -188,7 +187,7 @@ describe 'Collection sharing' do
       describe 'as rank 2' do
         it 'creates a collection_user with that email at rank 2' do
           expect {
-            @collection.invite([{email: @new_email, rank: 2}])
+            @collection.invite([{ email: @new_email, rank: 2 }])
           }.to change {
             invite = @collection.invited_sharees.first
             invite.email == @new_email && invite.rank == 'owner' if invite
@@ -197,7 +196,7 @@ describe 'Collection sharing' do
 
         describe 'once an account with that email is added' do
           before do
-            @collection.invite([{email: @new_email, rank: 2}])
+            @collection.invite([{ email: @new_email, rank: 2 }])
             @invitation = @collection.invited_sharees.find_by(email: @new_email)
           end
 
@@ -234,19 +233,19 @@ describe 'Collection sharing' do
         @new_email_2 = 'example2@jll.com'
         expect {
           @collection.invite([
-            {email: @new_email, rank: 0},
-            {email: @new_email_2, rank: 0},
-          ])
+                                 { email: @new_email, rank: 0 },
+                                 { email: @new_email_2, rank: 0 },
+                             ])
         }.to change {
           @collection.invited_sharees.map(&:email).include?(@new_email)
         }.to(true)
       end
 
       it 'removes the excluded users invitation' do
-        expect{
+        expect {
           @collection.reload.invite([
-            {email: @new_email, rank: 1}
-          ])
+                                        { email: @new_email, rank: 1 },
+                                    ])
         }.to change {
           @collection.reload.invited_sharees.map(&:email).include?(@new_email_2)
         }.to(false).from(true)
@@ -254,18 +253,18 @@ describe 'Collection sharing' do
     end
 
     describe 'with more than one email' do
-      [0,1,2].each do |user_1_rank|
+      [0, 1, 2].each do |user_1_rank|
         describe "with email 1 at rank #{user_1_rank}" do
-          [0,1,2].each do |user_2_rank|
+          [0, 1, 2].each do |user_2_rank|
             describe "with email 2 at rank #{user_2_rank}" do
               it "correctly creates an invitation for email 1 at rank #{user_1_rank}" do
                 new_email = 'example@jll.com'
                 new_email_2 = 'example2@jll.com'
                 expect {
                   @collection.invite([
-                    {email: new_email, rank: user_1_rank},
-                    {email: new_email_2, rank: user_2_rank},
-                  ])
+                                         { email: new_email, rank: user_1_rank },
+                                         { email: new_email_2, rank: user_2_rank },
+                                     ])
                 }.to change {
                   invited_sharee = @collection.invited_sharees.find_by(email: new_email)
                   invited_sharee && invited_sharee[:rank] == user_1_rank
@@ -277,9 +276,9 @@ describe 'Collection sharing' do
                 new_email_2 = 'example2@jll.com'
                 expect {
                   @collection.invite([
-                    {email: new_email, rank: user_1_rank},
-                    {email: new_email_2, rank: user_2_rank},
-                  ])
+                                        { email: new_email, rank: user_1_rank },
+                                        { email: new_email_2, rank: user_2_rank },
+                                     ])
                 }.to change {
                   invited_sharee = @collection.invited_sharees.find_by(email: new_email_2)
                   invited_sharee && invited_sharee[:rank] == user_2_rank
@@ -291,5 +290,4 @@ describe 'Collection sharing' do
       end
     end
   end
-
 end
