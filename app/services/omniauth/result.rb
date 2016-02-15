@@ -8,17 +8,11 @@ module Omniauth
       @original_oauth_info = original_oauth_info
     end
 
-    def email
-      info.email
-    end
+    delegate :email, to: :info
 
-    def name
-      info.name
-    end
+    delegate :name, to: :info
 
-    def location
-      info.location
-    end
+    delegate :location, to: :info
 
     def avatar_url
       original_oauth_info.extra.raw_info.mugshot_url_template.gsub(/(\{width\})|(\{height\})/, '150')
@@ -28,9 +22,7 @@ module Omniauth
       original_oauth_info.credentials.token
     end
 
-    def department
-      raw_info.department
-    end
+    delegate :department, to: :raw_info
 
     private
 

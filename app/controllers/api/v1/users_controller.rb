@@ -1,5 +1,5 @@
 class Api::V1::UsersController < AppController
-  before_filter :set_current_user_id, :set_user
+  before_action :set_current_user_id, :set_user
 
   def show
     respond_to do |format|
@@ -9,7 +9,7 @@ class Api::V1::UsersController < AppController
 
   def recent_activity
     @recent_activity = @user.recent_activity(params[:sorting])
-      .paginate(:page => params[:page] || 1 , :per_page => params[:per_page] || 4)
+                            .paginate(page: params[:page] || 1, per_page: params[:per_page] || 4)
 
     respond_to do |format|
       format.json { render }

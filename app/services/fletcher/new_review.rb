@@ -1,11 +1,11 @@
 module Fletcher
   class NewReview
-    attr_reader :product, :review
+    attr_reader :product, :review, :review_params
 
     def initialize(user, product, params)
       @user = user
       @product = product
-      @review_params = (params || {} )
+      @review_params = (params || {})
     end
 
     def save!
@@ -77,7 +77,7 @@ module Fletcher
     end
 
     def extract_uuid_from_url(url)
-      url.gsub(/.*?\/uploads\//, "").gsub(/\/.*/,"") if url
+      url.gsub(/.*?\/uploads\//, '').gsub(/\/.*/, '') if url
     end
 
     def fetch_tags(tags_params)
@@ -110,10 +110,6 @@ module Fletcher
 
     def product_params
       @product_params ||= (review_params[:product] || {})
-    end
-
-    def review_params
-      @review_params
     end
   end
 end

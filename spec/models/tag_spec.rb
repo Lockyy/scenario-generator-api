@@ -14,7 +14,7 @@ RSpec.describe Tag, type: :model do
       expect(@tag_2.products.length).to eq 1
     end
 
-    it "includes tags with products" do
+    it 'includes tags with products' do
       expect(Tag.with_products).to include @tag_2
     end
 

@@ -9,8 +9,8 @@ module Fletcher::FileService
   def self.encoded_file_to_file(encoded_file)
     temp_file = base64_to_file(encoded_file[:content])
     uploaded_file = ActionDispatch::Http::UploadedFile.new(
-        tempfile: temp_file,
-        filename: encoded_file[:filename]
+      tempfile: temp_file,
+      filename: encoded_file[:filename]
     )
 
     uploaded_file.content_type = encoded_file[:content_type]
