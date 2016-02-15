@@ -32,7 +32,9 @@ class RelatedProducts extends React.Component {
     do {
       product = this.props.items[currentItem++];
 
-      products.push(<ProductBox size={this.props.size} {...product} />);
+      products.push(<ProductBox
+          typeSizeImage="medium_height"
+          size={this.props.size} {...product} />);
 
       hasItems = this.props.items.length > currentItem;
       sumItems = _.sum(products, sumSizeFunc);

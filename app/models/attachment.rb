@@ -11,6 +11,8 @@ class Attachment < ActiveRecord::Base
                      application/x-mswrite application/vnd.ms-works
       ) + @@IMAGE_TYPES
 
+  @@PAPERCLIP_SIZES = {large: '900x900', medium: '294x360', medium_height:'294x135',  thumb: '40x40'}
+
   belongs_to :attachable, polymorphic: true
   belongs_to :product
 
@@ -21,8 +23,8 @@ class Attachment < ActiveRecord::Base
   end
 
   has_attached_file :attachment,
-                    styles:      { large: '900x900', medium: '300x300>', thumb: '100x100>' },
-                    path:        'uploads/:instance_uuid/:style/:basename.:extension',
+                    styles:      @@PAPERCLIP_SIZES,
+                    path:        "uploads/:instance_uuid/:style/:basename.:extension",
                     default_url: '',
                     url:         ':s3_domain_url'
 
@@ -42,8 +44,14 @@ class Attachment < ActiveRecord::Base
     attachable.user
   end
 
-  def file_url
-    attachment.url
+  def file_url(size_type = :original)
+    attachment.url(size_type)
+  end
+
+  def file_urls
+    sizes = @@PAPERCLIP_SIZES.keys
+    sizes << :original
+    sizes.collect{|key| {type_size: key, url: file_url(key)}}
   end
 
   private

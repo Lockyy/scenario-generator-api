@@ -107,7 +107,7 @@ const CompanyProfileHeader  = React.createClass({
 
   _getFormatedProducts: function(){
     return  _.map(this.props.products, function(item){
-      return <ProductBox {...item} size={1}/>
+      return <ProductBox typeSizeImage="medium_height" {...item} size={1} />
     });
   },
 

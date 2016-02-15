@@ -9,6 +9,7 @@ import FluxModalActions from '../../actions/FluxModalActions';
 import FileHelper from '../../utils/helpers/FileHelper';
 import UrlHelper from '../../utils/helpers/UrlHelper';
 import timeago from 'timeago';
+import ImageMixin from './../ImageMixin';
 
 // This mixin is included wherever we want this modal.
 // It let's you render, show, and close the modal.
@@ -29,7 +30,7 @@ const ProductFilesMixin = {
 
 const ProductFilesModal = React.createClass ({
   displayName: 'ProductFilesModal',
-  mixins: [ ProductFilesMixin ],
+  mixins: [ ProductFilesMixin, ImageMixin ],
 
   getInitialState: function() {
     return {
@@ -63,13 +64,15 @@ const ProductFilesModal = React.createClass ({
 
   getAttachments: function() {
     return _.collect(this.getProductData('attachments'), function(attachment) {
+      const url = ImageMixin.getRightImageUrl(attachment.urls, 'thumb') ;
       return (<li className='attachment'>
         {FileHelper.isImage(attachment.name) ?
-          <img src={UrlHelper.addProtocol(attachment.url)} className='thumbnail' width='50px' />
+          <img src={UrlHelper.addProtocol(url)} className='thumbnail' width='50px' />
           : ''}
 
+
         <div className='attachment-details'>
-          <a className="attachment-link" href={UrlHelper.addProtocol(attachment.url)} target='_blank'>{attachment.name}</a>
+          <a className="attachment-link" href={UrlHelper.addProtocol(url)} target='_blank'>{attachment.name}</a>
           <span className='author'>{attachment.author ? `Uploaded by ${attachment.author.name}` : ''}</span>
           <span className='created_at'>{timeago(attachment.created_at)}</span>
         </div>
