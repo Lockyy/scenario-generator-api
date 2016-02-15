@@ -1,11 +1,10 @@
 class AssetsController < ApplicationController
   protect_from_forgery except: :js
-  before_action :get_path_and_send_file, only: [:js, :css, :image]
 
   def attachments
-    authenticate_user!
     @attachment = Attachment.find_by(id: params[:id])
     if @attachment
+      authenticate_user!
       sign_and_send_file(@attachment.path(params[:size]),
                          @attachment.attachment_content_type,
                          @attachment.attachment_file_name)
@@ -16,9 +15,12 @@ class AssetsController < ApplicationController
 
   def asset
     path = ASSET_HANDLER.get_path(params)
-    render file: "#{Rails.root}/public/404.html", status: 404 unless path
-    authenticate_user! if path && path[:restricted]
-    send_data_to_client(path[:path], path[:mimetype], "#{params[:path]}.#{params[:format]}")
+    if path
+      authenticate_user! if path[:restricted]
+      send_data_to_client(path[:path], path[:mimetype], "#{params[:path]}.#{params[:format]}")
+    else
+      render file: "#{Rails.root}/public/404.html", status: 404
+    end
   end
 
   private
