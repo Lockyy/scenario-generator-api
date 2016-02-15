@@ -2,7 +2,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-describe "Whitelisting", js: true do
+describe 'Whitelisting', js: true do
   before do
     @user = create(:user)
     @admin = create(:user, :admin)
@@ -70,7 +70,7 @@ describe "Whitelisting", js: true do
             visit '/admin'
           end
 
-          it "redirects the user back to the landing page" do
+          it 'redirects the user back to the landing page' do
             expect(page.current_path).to eq '/'
           end
         end
@@ -109,7 +109,7 @@ describe "Whitelisting", js: true do
         end
       end
 
-      describe "with the user not whitelisted" do
+      describe 'with the user not whitelisted' do
         before do
           AllowedUser.destroy_all
           login_as(@user, scope: :user)
@@ -171,7 +171,7 @@ describe "Whitelisting", js: true do
         end
       end
 
-      describe "with the admin not whitelisted" do
+      describe 'with the admin not whitelisted' do
         before do
           AllowedUser.destroy_all
           login_as(@admin, scope: :user)
@@ -192,7 +192,7 @@ describe "Whitelisting", js: true do
             visit '/admin'
           end
 
-          it "redirects the admin back to the landing page" do
+          it 'redirects the admin back to the landing page' do
             expect(page.current_path).to eq '/'
           end
         end
@@ -231,7 +231,7 @@ describe "Whitelisting", js: true do
         end
       end
 
-      describe "with the admin not whitelisted" do
+      describe 'with the admin not whitelisted' do
         before do
           AllowedUser.destroy_all
           login_as(@admin, scope: :user)
@@ -259,5 +259,4 @@ describe "Whitelisting", js: true do
       end
     end
   end
-
 end

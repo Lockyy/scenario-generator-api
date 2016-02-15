@@ -2,8 +2,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-describe "Product page", js: true do
-
+describe 'Product page', js: true do
   before do
     @user = login_user
     @product = create(:product, :with_reviews)
@@ -13,6 +12,11 @@ describe "Product page", js: true do
     visit "/app/products/#{@product.id}/#{@product.slug}"
     wait_for_ajax
   end
+
+  let(:collection_message) {
+    'Collections are created by users to group products they are interested in.'\
+    ' They can even be shared or made public. Create one yourself!'
+  }
 
   it 'displays product info' do
     expect(page).to have_content @product.name
@@ -31,8 +35,8 @@ describe "Product page", js: true do
     end
 
     it 'takes you to review form' do
-      expect(page).to have_field("product[name]", with: "#{@product.name}", disabled: true)
-      expect(page).to have_field("product[review[quality_review]]")
+      expect(page).to have_field('product[name]', with: @product.name, disabled: true)
+      expect(page).to have_field('product[review[quality_review]]')
     end
   end
 
@@ -42,10 +46,10 @@ describe "Product page", js: true do
     end
 
     it 'changes review votes' do
-      expect{
+      expect {
         first('button.yes-button').trigger('click')
         wait_for_ajax
-      }.to change{@review.review_votes.count}.by 1
+      }.to change { @review.review_votes.count }.by 1
     end
   end
 
@@ -55,14 +59,14 @@ describe "Product page", js: true do
         expect(page).to have_selector('.sidebar-element.reviews.active')
       end
 
-      it "displays user reviews" do
+      it 'displays user reviews' do
         @product.reviews.each do |review|
           expect(page).to have_content review.title
         end
       end
 
-      it "doesn't display the other tabs" do
-        expect(page).to_not have_content('Collections are created by users to group products they are interested in. They can even be shared or made public. Create one yourself!')
+      it 'doesn\'t display the other tabs' do
+        expect(page).to_not have_content(collection_message)
         expect(page).to_not have_content('Feature Coming Soon')
       end
     end
@@ -78,10 +82,10 @@ describe "Product page", js: true do
       end
 
       it 'has a message informing the user about collections' do
-        expect(page).to have_content('Collections are created by users to group products they are interested in. They can even be shared or made public. Create one yourself!')
+        expect(page).to have_content(collection_message)
       end
 
-      it "displays public collections" do
+      it 'displays public collections' do
         expect(page).to have_content @public_collection.name
         expect(page).to have_content @public_collection.user.name
       end
@@ -91,12 +95,12 @@ describe "Product page", js: true do
         expect(page).to have_content 'Me'
       end
 
-      it "doesn't display private collections" do
+      it 'doesn\'t display private collections' do
         expect(page).to_not have_content @private_collection.name
         expect(page).to_not have_content @private_collection.user.name
       end
 
-      it "doesn't display the other tabs" do
+      it 'doesn\'t display the other tabs' do
         expect(page).to_not have_content('Feature Coming Soon')
       end
     end

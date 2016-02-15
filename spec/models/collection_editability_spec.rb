@@ -15,23 +15,22 @@ describe 'Collection#editable' do
     # This collection is owned by @primary_user and has products 1 and 2 in it.
     # Editable by @primary_user.
     # Not editable by @user_2 or @user_3.
-    @owned_collection = create(:collection, user: @primary_user,
+    @owned_collection = create(:collection, user:     @primary_user,
                                             products: [@product_1, @product_2],
-                                            privacy: :hidden)
+                                            privacy:  :hidden)
     # This collection is owned by @user_2 and has products 1 and 2 in it.
     # Editable by @user_2.
     # Not editable by @primary_user or @user_3.
-    @hidden_collection = create(:collection,  user: @user_2,
+    @hidden_collection = create(:collection,  user:     @user_2,
                                               products: [@product_1, @product_2],
-                                              privacy: :hidden)
+                                              privacy:  :hidden)
     # This collection is owned by @user_2 and has products 1 and 2 in it.
     # Editable by @user_2.
     # Not editable by @primary_user or @user_3
-    @visible_collection = create(:collection, user: @user_2,
+    @visible_collection = create(:collection, user:     @user_2,
                                               products: [@product_1, @product_2],
-                                              privacy: :visible)
+                                              privacy:  :visible)
   end
-
 
   describe 'owned collections' do
     it 'are included for the owner' do
@@ -48,7 +47,7 @@ describe 'Collection#editable' do
     describe 'when shared' do
       describe 'as a viewer' do
         before do
-          @visible_collection.share([{id: @primary_user.id, rank: 0}])
+          @visible_collection.share([{ id: @primary_user.id, rank: 0 }])
         end
 
         it 'are not editable to that user' do
@@ -58,7 +57,7 @@ describe 'Collection#editable' do
 
       describe 'as a collaborator' do
         before do
-          @visible_collection.share([{id: @primary_user.id, rank: 1}])
+          @visible_collection.share([{ id: @primary_user.id, rank: 1 }])
         end
 
         it 'are editable to that user' do
@@ -68,7 +67,7 @@ describe 'Collection#editable' do
 
       describe 'as an owner' do
         before do
-          @visible_collection.share([{id: @primary_user.id, rank: 2}])
+          @visible_collection.share([{ id: @primary_user.id, rank: 2 }])
         end
 
         it 'are editable to that user' do
@@ -88,7 +87,7 @@ describe 'Collection#editable' do
     describe 'when shared' do
       describe 'as a viewer' do
         before do
-          @hidden_collection.share([{id: @primary_user.id, rank: 0}])
+          @hidden_collection.share([{ id: @primary_user.id, rank: 0 }])
         end
 
         it 'are not included when that user is passed in' do
@@ -98,7 +97,7 @@ describe 'Collection#editable' do
 
       describe 'as a collaborator' do
         before do
-          @hidden_collection.share([{id: @primary_user.id, rank: 1}])
+          @hidden_collection.share([{ id: @primary_user.id, rank: 1 }])
         end
 
         it 'are included when that user is passed in' do
@@ -112,7 +111,7 @@ describe 'Collection#editable' do
 
       describe 'as an owner' do
         before do
-          @hidden_collection.share([{id: @primary_user.id, rank: 2}])
+          @hidden_collection.share([{ id: @primary_user.id, rank: 2 }])
         end
 
         it 'are included when that user is passed in' do
@@ -128,7 +127,7 @@ describe 'Collection#editable' do
 
   describe "when running on a user's collections" do
     before do
-      @user_2.collections.first.share([{id: @primary_user.id, rank: 1}])
+      @user_2.collections.first.share([{ id: @primary_user.id, rank: 1 }])
     end
 
     it 'does not return any collections owned by other users' do

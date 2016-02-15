@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   end
 
   def visible_collections(user)
-    self.collections.visible(user) + self.shared_collections.visible(user)
+    collections.visible(user) + shared_collections.visible(user)
   end
 
   def update_oauth!(provider, uid, login_hash)
@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
   def signed_in_minutes
     diff_seconds = (Time.now - current_sign_in_at).round
     diff_minutes = diff_seconds / 60
-    return diff_minutes
+    diff_minutes
   end
 
   def recent_activity(sorting)
@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   end
 
   def check_for_invitations
-    invites = CollectionUser.invites.where(email: self.email)
+    invites = CollectionUser.invites.where(email: email)
     invites.each do |invite|
       invite.update_attributes(email: nil, sharee: self)
     end
@@ -71,9 +71,9 @@ class User < ActiveRecord::Base
     return true unless ENV['ENABLE_WHITELIST']
 
     # If no AllowedUser is found the user is not whitelisted
-    allowed = !AllowedUser.find_by(email: self.email.downcase).nil?
+    allowed = !AllowedUser.find_by(email: email.downcase).nil?
     # Add an error to tell the user they aren't whitelisted
-    self.errors.add :email, 'is not whitelisted' unless allowed
+    errors.add :email, 'is not whitelisted' unless allowed
     allowed
   end
 end

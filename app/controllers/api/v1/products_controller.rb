@@ -18,8 +18,8 @@ class Api::V1::ProductsController < AppController
     @product = Product.friendly.find_by(id: params[:id])
     if @product.nil?
       status = Product.deleted?(params[:id]) ? 410 : 404
-      render  :json => { product: {} },
-              :status => status
+      render json:   { product: {} },
+             status: status
     end
   end
 end

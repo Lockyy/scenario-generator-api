@@ -1,21 +1,21 @@
 module Fletcher
   class Dashboard
-    RECENTLY_ADDED_SECTION = 'recently_added'
-    MOST_POPULAR_SECTION = 'most_popular'
-    RECENT_ACTIVITY_SECTION = 'recent_activity'
-    BASED_ON_TAGS_SECTION = 'based_on_tags'
-    COLLECTIONS_SECTION = 'collections'
-    SECTIONS = [BASED_ON_TAGS_SECTION, RECENTLY_ADDED_SECTION, MOST_POPULAR_SECTION, RECENT_ACTIVITY_SECTION, COLLECTIONS_SECTION]
+    RECENTLY_ADDED_SECTION = 'recently_added'.freeze
+    MOST_POPULAR_SECTION = 'most_popular'.freeze
+    RECENT_ACTIVITY_SECTION = 'recent_activity'.freeze
+    BASED_ON_TAGS_SECTION = 'based_on_tags'.freeze
+    COLLECTIONS_SECTION = 'collections'.freeze
+    SECTIONS = [BASED_ON_TAGS_SECTION, RECENTLY_ADDED_SECTION, MOST_POPULAR_SECTION, RECENT_ACTIVITY_SECTION, COLLECTIONS_SECTION].freeze
     DEFAULTS = {
       RECENTLY_ADDED_SECTION => {
         products: { limit: 8, offset: 0 },
-        tags: { limit: 20, offset: 0 }
+        tags:     { limit: 20, offset: 0 },
       },
       BASED_ON_TAGS_SECTION => { limit: 8, offset: 0 },
       MOST_POPULAR_SECTION => { limit: 3, offset: 0 },
       RECENT_ACTIVITY_SECTION => { limit: 4, offset: 0 },
-      COLLECTIONS_SECTION => { limit: 4, offset: 0 }
-    }
+      COLLECTIONS_SECTION => { limit: 4, offset: 0 },
+    }.freeze
 
     def initialize(user, existing_ids, params = {})
       @user = user
@@ -62,7 +62,7 @@ module Fletcher
 
     def most_popular_tags
       params = pagination_params(@params[RECENTLY_ADDED_SECTION].try(:[], 'tags'), DEFAULTS[RECENTLY_ADDED_SECTION][:tags])
-      Tag.with_products.most_popular.limit(params[:limit]).offset(params[:offset]).map{ |tag| { name: tag.name, slug: tag.slug } }
+      Tag.with_products.most_popular.limit(params[:limit]).offset(params[:offset]).map { |tag| { name: tag.name, slug: tag.slug } }
     end
 
     def most_popular_products

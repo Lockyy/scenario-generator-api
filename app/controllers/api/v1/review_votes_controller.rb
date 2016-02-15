@@ -20,8 +20,8 @@ class Api::V1::ReviewVotesController < AppController
   end
 
   def destroy
-    review_vote = ReviewVote.find_by( review_id: params[:review_id],
-                        user_id: current_user.id)
+    review_vote = ReviewVote.find_by(review_id: params[:review_id],
+                                     user_id:   current_user.id)
     review_vote.destroy if review_vote
 
     respond_to do |format|

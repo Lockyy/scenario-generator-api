@@ -4,24 +4,24 @@ describe OmniauthCallbacksController do
   def stub_env_for_omniauth(provider: 'yammer', uid: '1234567', email: 'bob@contoso.com', name: 'John Doe')
     env = {
       'omniauth.auth' => Hashie::Mash.new(
-        provider: provider,
-        uid: uid,
-        info: {
-          email: 'us@fletch.er',
-          name: 'Fl. Etcher',
-          image: 'http://ima.g.es/so.me-img.jpg',
-          location: 'goiania'
+        provider:    provider,
+        uid:         uid,
+        info:        {
+          email:    'us@fletch.er',
+          name:     'Fl. Etcher',
+          image:    'http://ima.g.es/so.me-img.jpg',
+          location: 'goiania',
         },
         credentials: {
-          token: 'r4nd0m7ok3n'
+          token: 'r4nd0m7ok3n',
         },
-        extra: {
+        extra:       {
           raw_info: {
-            department: 'awesomeness',
-            mugshot_url_template: 'http://ima.g.es/{width}x{height}/so.me-img.jpg'
-          }
+            department:           'awesomeness',
+            mugshot_url_template: 'http://ima.g.es/{width}x{height}/so.me-img.jpg',
+          },
         }
-      )
+      ),
     }
     allow(@controller).to receive(:env).and_return(env)
     env

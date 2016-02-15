@@ -5,7 +5,7 @@ class Tag < ActiveRecord::Base
 
   has_and_belongs_to_many :users
   has_many :tag_taggables
-  has_many :reviews, through: :tag_taggables, :source => :taggable, :source_type => 'Review'
+  has_many :reviews, through: :tag_taggables, source: :taggable, source_type: 'Review'
   has_many :products, through: :reviews
   has_many :companies, through: :reviews
 
@@ -47,6 +47,6 @@ class Tag < ActiveRecord::Base
   private
 
   def downcase_name!
-    self.name = self.name.downcase if self.name
+    self.name = name.downcase if name
   end
 end

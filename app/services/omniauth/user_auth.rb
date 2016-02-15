@@ -21,11 +21,11 @@ module Omniauth
 
     def update_info!
       params = {
-        name: @result.name,
-        email: @result.email,
+        name:       @result.name,
+        email:      @result.email,
         avatar_url: @result.avatar_url,
         department: @result.department,
-        location: @result.location
+        location:   @result.location,
       }
 
       @user.update(params)

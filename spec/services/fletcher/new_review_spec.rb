@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'base64'
 
-#TODO: ADD TESTS
+# TODO: ADD TESTS
 RSpec.describe Fletcher::NewReview do
   let(:user) {
     double(:user).as_null_object
@@ -13,28 +13,28 @@ RSpec.describe Fletcher::NewReview do
 
   let(:params) {
     {
-        title: Faker::Company.bs,
-        quality_review: Faker::Lorem.paragraph,
-        quality_score: 5,
-        price_review: Faker::Lorem.paragraph,
-        price_score: '4',
-        attachments: [{attachment:{
-            content: Base64.encode64(File.open('spec/support/assets/images/front.png', "rb").read),
-            filename: 'front.png',
-            content_type: 'image/png'
-        }}],
-        product: {
-            name: 'product',
-            description: 'description',
-            url: 'http://url.com',
-            company: {
-                name: 'company name',
-                url: 'test',
-                avatar: {
-                    url: 'http://img.fletcher.mx/random_seq/logo.png'
-                }
-            }
-        }
+      title:          Faker::Company.bs,
+      quality_review: Faker::Lorem.paragraph,
+      quality_score:  5,
+      price_review:   Faker::Lorem.paragraph,
+      price_score:    '4',
+      attachments:    [{ attachment: {
+        content:      Base64.encode64(File.open('spec/support/assets/images/front.png', 'rb').read),
+        filename:     'front.png',
+        content_type: 'image/png',
+      } }],
+      product:        {
+        name:        'product',
+        description: 'description',
+        url:         'http://url.com',
+        company:     {
+          name:   'company name',
+          url:    'test',
+          avatar: {
+            url: 'http://img.fletcher.mx/random_seq/logo.png',
+          },
+        },
+      },
     }.with_indifferent_access
   }
 
@@ -104,7 +104,7 @@ RSpec.describe Fletcher::NewReview do
     end
 
     it 'saves the product' do
-      product = double().as_null_object
+      product = double.as_null_object
       expect(product).to receive(:save).and_return(true)
       expect(Product).to receive_message_chain(:where, :first).and_return(product)
 
@@ -112,7 +112,7 @@ RSpec.describe Fletcher::NewReview do
     end
 
     it 'add the product to the user' do
-      product = double().as_null_object
+      product = double.as_null_object
       expect(user).to receive_message_chain(:reviews, :<<)
       expect(product).to receive(:save).and_return(true)
       expect(product).to receive(:persisted?).and_return(true)

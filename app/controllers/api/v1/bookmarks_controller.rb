@@ -1,7 +1,7 @@
 class Api::V1::BookmarksController < AppController
   respond_to :json
 
-  before_filter :setup_product, only: [:create, :destroy]
+  before_action :setup_product, only: [:create, :destroy]
 
   def index
     @products = current_user.bookmarked_products

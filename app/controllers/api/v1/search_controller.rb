@@ -10,7 +10,7 @@ class Api::V1::SearchController < AppController
   end
 
   def products
-    @products = Product.ransack({name_cont: params[:search_string]}).result
+    @products = Product.ransack(name_cont: params[:search_string]).result
 
     respond_to do |format|
       format.json { render }
@@ -18,7 +18,7 @@ class Api::V1::SearchController < AppController
   end
 
   def users
-    @q = User.ransack({name_cont: params[:search_string]})
+    @q = User.ransack(name_cont: params[:search_string])
     @users = @q.result.where.not(id: current_user.id)
 
     respond_to do |format|
@@ -27,16 +27,16 @@ class Api::V1::SearchController < AppController
   end
 
   def collections
-    @q = Collection.ransack({name_cont: params[:search_string]})
+    @q = Collection.ransack(name_cont: params[:search_string])
     @owned_collections = @q.result.editable(current_user)
 
-    if(params[:search_string].blank?)
+    if params[:search_string].blank?
       @tag_collections = []
       @product_collections = []
     else
-      @q = Collection.ransack({products_name_cont: params[:search_string]})
+      @q = Collection.ransack(products_name_cont: params[:search_string])
       @product_collections = @q.result.editable(current_user) - @owned_collections
-      @q = Collection.ransack({tags_name_cont: params[:search_string]})
+      @q = Collection.ransack(tags_name_cont: params[:search_string])
       @tag_collections = @q.result.editable(current_user) - @owned_collections - @product_collections
     end
 

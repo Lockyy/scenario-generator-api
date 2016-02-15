@@ -2,7 +2,7 @@ require 'rails_helper'
 include Warden::Test::Helpers
 Warden.test_mode!
 
-feature "Errors", js: true do
+feature 'Errors', js: true do
   background do
     @user = login_user
   end
@@ -46,7 +46,7 @@ feature "Errors", js: true do
     describe 'when a product does not exist for the id passed in' do
       before do
         @product.destroy
-        visit "/app/products/123123123"
+        visit '/app/products/123123123'
         wait_for_ajax
       end
 
@@ -75,7 +75,7 @@ feature "Errors", js: true do
 
     describe 'when a company does not exist for the id passed in' do
       before do
-        visit "/app/companies/123123123"
+        visit '/app/companies/123123123'
         wait_for_ajax
       end
 
@@ -116,7 +116,7 @@ feature "Errors", js: true do
 
     describe 'when a collection does not exist for the id passed in' do
       before do
-        visit "/app/collections/123123123"
+        visit '/app/collections/123123123'
         wait_for_ajax
       end
 
@@ -132,7 +132,7 @@ feature "Errors", js: true do
     end
 
     it 'shows a 404 page' do
-      expect(page).to have_content "The page you are looking for does not exist"
+      expect(page).to have_content 'The page you are looking for does not exist'
     end
   end
 end

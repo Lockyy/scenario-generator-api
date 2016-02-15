@@ -12,12 +12,12 @@ ActiveAdmin.register Review do
 
   controller do
     def update_resource(object, attributes)
-      attributes[0].merge!({tags: @tags})
+      attributes[0][:tags] = @tags
       super(object, attributes)
     end
 
     def create_resource(object)
-      object.tags= @tags
+      object.tags = @tags
       super(object)
     end
   end
@@ -38,11 +38,11 @@ ActiveAdmin.register Review do
       row :price_score
       row :product_id
       row :user
-      row 'Tags' do |n|
-        ad.tags.map(&:name).join("<br />").html_safe
+      row 'Tags' do |_n|
+        ad.tags.map(&:name).join('<br />').html_safe
       end
-      row 'Links' do |n|
-        ad.links.map(&:url).join("<br />").html_safe
+      row 'Links' do |_n|
+        ad.links.map(&:url).join('<br />').html_safe
       end
     end
   end
