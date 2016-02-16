@@ -31,8 +31,8 @@ class RecentlyAddedSection extends React.Component {
   }
 
   getCurrentBoxSize(products, product) {
-    let gridSize = this.props.cols - 1;
-    let boxSize = gridSize - 1;
+    let gridSize = products.length == 1 ? this.props.cols - 1 : this.props.cols;
+    let boxSize = gridSize - 2;
     let countBoxSizes = _.countBy(_.map(products, 'props.size'));
     if (products.length > 0) {
       boxSize = _.min([_.last(products).props.size, gridSize - (_.last(products).props.size || 0)]);
