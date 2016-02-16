@@ -40,7 +40,7 @@ gem 'lodash-rails'
 gem 'es5-shim-rails'
 gem 'counter_culture', '~> 0.1.33'
 gem 'slacked'
-gem 'make_exportable'
+gem 'make_exportable', git: 'https://github.com/lockyy/make_exportable'
 gem 'pptx', git: 'https://github.com/codelittinc/ruby-pptx'
 
 group :development do
