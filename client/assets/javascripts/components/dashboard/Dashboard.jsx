@@ -9,10 +9,6 @@ import MostPopularSection from './MostPopularSection';
 import RecentActivitySection from './RecentActivitySection';
 import CollectionSection from './CollectionSection';
 
-function sumSizeFunc(item) {
-  return item.props.size;
-}
-
 const Dashboard = React.createClass({
   displayName: 'Dashboard',
 
@@ -67,11 +63,6 @@ const Dashboard = React.createClass({
     return recentActivityData ? recentActivityData : {items: []};
   },
 
-  getBasedOnTagsData: function() {
-    let basedOnTagsData = this.state.data[DashboardConstants.BASED_ON_TAGS_SECTION];
-    return basedOnTagsData ? basedOnTagsData : {items: {}};
-  },
-
   getCollectionsData: function() {
     let collectionsData = this.state.data[DashboardConstants.COLLECTIONS_SECTION];
     return collectionsData ? collectionsData : {items: {}};
@@ -80,8 +71,7 @@ const Dashboard = React.createClass({
   getCurrentIDs: function(sectionName) {
     let sectionsToExclude = [
       DashboardConstants.MOST_POPULAR_SECTION,
-      DashboardConstants.RECENTLY_ADDED_SECTION,
-      DashboardConstants.BASED_ON_TAGS_SECTION
+      DashboardConstants.RECENTLY_ADDED_SECTION
     ];
 
     let sectionToExclude, products, sectionIDs;
