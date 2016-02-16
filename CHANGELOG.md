@@ -3,6 +3,16 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
+## v1.2.3
+
+### Bugfixes
+- Fix empty tile spot on dashboard
+
+## v1.2.2
+
+### Bugfixes
+- Remove 3 column box on dashboard properly
+
 ## v1.2
 
 ### Features
