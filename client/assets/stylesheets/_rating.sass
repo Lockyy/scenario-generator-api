@@ -2,20 +2,20 @@
 @import 'variables'
 
 @mixin icon($image)
-  background: img-url($image) no-repeat
+  background: image-url($image) no-repeat
   background-size: contain
 
 @mixin star-on
-  @include icon('icons/star-on.svg')
+  @include icon('/assets/app/icons/star-on.svg')
 
 @mixin star-off
-  @include icon('icons/star-off.svg')
+  @include icon('/assets/app/icons/star-off.svg')
 
 @mixin price-on
-  @include icon('icons/price-on.svg')
+  @include icon('/assets/app/icons/price-on.svg')
 
 @mixin price-off
-  @include icon('icons/price-off.svg')
+  @include icon('/assets/app/icons/price-off.svg')
 
 .rating-container
   display: -ms-flexbox
@@ -76,7 +76,7 @@
     &::before
       content: 'Average pricing: '
       color: $dark-grey
-      @media all 
+      @media all
         @media (max-width: 380px)
           content: 'Avg. price: '
         @media (max-width: 320px)
@@ -91,4 +91,4 @@
       input[type='radio']:checked + label
         @include price-on
 
-  
+

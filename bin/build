@@ -2,11 +2,30 @@
 
 set -e
 
+echo Removing ./tmp
 rm -rf tmp
+
+echo Removing logs
 rm -f log/development.log
 rm -f log/test.log
+
+echo Removing Dockerfile
 rm -f Dockerfile
+
+echo Copying Dockerfile.production to Dockerfile
 cp Dockerfile.production Dockerfile
+
+echo Copying database.yml.example to database.yml
 cp config/database.yml.example config/database.yml
+
+echo Compiling assets for production
+RAILS_ENV=production SECRET_KEY_BASE=asdasd rake assets:precompile
+
+echo Building Container
 docker build -t codelittinc/fletcher-ruby .
+
+echo Removing compiled assets
+rm -rf compiled
+
+echo Removing Dockerfile
 rm Dockerfile

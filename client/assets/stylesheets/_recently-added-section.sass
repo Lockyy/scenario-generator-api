@@ -7,27 +7,29 @@ $orange: #e36308
   &.recently-added-products
     & > .header
       & > h2
-        background-image: img-url('icons/recently-added.svg')
+        background-image: image-url('/assets/app/icons/recently-added.svg')
 
     .tag-box
       @extend .col-md-3
       @extend .col-xs-12
       padding: 20px
       margin: 0
+      height: 440px
 
       & > .content
         color: white
         height: $box-height
-        background: #f6f6f6 img-url('backgrounds/most-popular-tags-bg.svg')
+        background: #f6f6f6 image-url('/assets/app/backgrounds/most-popular-tags-bg.svg')
         display: flex
         flex-direction: column
         justify-content: space-between
         overflow: hidden
         padding: 30px 20px
+        margin-top: -10px
 
         .header
           h2
-            background: img-url('icons/popular-tags.svg') no-repeat left bottom
+            background: image-url('/assets/app/icons/popular-tags.svg') no-repeat left bottom
             color: black
             padding-left: 50px
             font-size: 20px
@@ -89,17 +91,21 @@ $orange: #e36308
 
 // Medium Devices, Desktop
 @media only screen and (min-width : 992px)
+  .section
+    &.recently-added-products
+      .tag-box
+        padding: 20px 10px
 
 // Large Devices, Wide Screens
 @media only screen and (min-width : 1200px)
+  .section
+    &.recently-added-products
+      .tag-box
+        padding: 20px 10px
 
 // Really Large Devices, Wide Screens
 @media (min-width: 1330px)
   .section
     &.recently-added-products
-      .section-row
-        .tag-box
-          padding: 20px
-
-          & > .content
-            padding: 30px
+      .tag-box
+        padding: 30px 20px

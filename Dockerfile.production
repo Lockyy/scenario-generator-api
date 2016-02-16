@@ -33,5 +33,4 @@ ENV RAILS_ENV production
 ENV NODE_ENV production
 ENV SECRET_KEY_BASE ghuoim20873mjcs092jimclkxwemc9k230kpodzl
 RUN cd client && npm install && node_modules/webpack/bin/webpack.js --config webpack.rails.config.js && cd ..
-RUN rake assets:precompile
 CMD rails s Puma -b 0.0.0.0 -e production -p 4000

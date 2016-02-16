@@ -9,7 +9,7 @@ ActiveAdmin.register Product do
     @default_image = Attachment.find(attachment_id) if attachment_id
     custom_attachment = params[:product][:custom_attachment]
     if custom_attachment
-      @custom_attachment =  Attachment.new
+      @custom_attachment = Attachment.new
       @custom_attachment.attachment = params[:product][:custom_attachment]
     end
 
@@ -27,9 +27,9 @@ ActiveAdmin.register Product do
     end
 
     def update_resource(object, attributes)
-      attributes[0].merge!({default_image: @default_image})
-      attributes[0].merge!({custom_attachments: [@custom_attachment]}) if @custom_attachment
-      attributes[0].merge!({reviews: @reviews})
+      attributes[0][:default_image] = @default_image
+      attributes[0][:custom_attachments] = [@custom_attachment] if @custom_attachment
+      attributes[0][:reviews] = @reviews
       super(object, attributes)
     end
 
@@ -60,11 +60,11 @@ ActiveAdmin.register Product do
     end unless f.object.new_record?
 
     f.inputs 'Default Image', for: [:default_image, f.object.default_image || Attachment.new], class: 'inputs default_image' do |image_f|
-      image_f.input :id, as: :radio,
-        collection: f.object.images,
-        label: '',
-        member_label: proc { |obj| image_tag(obj.attachment.url, class: 'custom-image') },
-        wrapper_html: {class: 'thumbnail'}
+      image_f.input :id, as:           :radio,
+                         collection:   f.object.images,
+                         label:        '',
+                         member_label: proc { |obj| image_tag(obj.attachment.url, class: 'custom-image') },
+                         wrapper_html: { class: 'thumbnail' }
     end unless f.object.new_record?
 
     f.inputs 'Reviews' do

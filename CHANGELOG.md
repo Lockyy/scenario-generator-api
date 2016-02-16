@@ -13,6 +13,16 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
   - 401: Permission denied
   - 404: Not Found
   - 410: Gone
+- Add asset authentication
+  - All images, css, js, and attachments go through this new authentication system.
+    - This does not include images, css, and js for the landing pages.
+- Reorganise Dashboard
+  - Move the most popular tags box up into recently added products
+  - Remove 3 column box
+  - Ensure recently added products is always the top box
+- Process images on upload and use smaller versions of images around the site
+- Add version number of site to admin page
+
 
 ## v1.1.2
 
