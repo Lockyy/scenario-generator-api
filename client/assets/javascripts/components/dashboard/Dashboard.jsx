@@ -7,12 +7,7 @@ import FluxDashboardActions from '../../actions/FluxDashboardActions'
 import RecentlyAddedSection from './RecentlyAddedSection';
 import MostPopularSection from './MostPopularSection';
 import RecentActivitySection from './RecentActivitySection';
-import BasedOnTagsSection from './BasedOnTagsSection';
 import CollectionSection from './CollectionSection';
-
-function sumSizeFunc(item) {
-  return item.props.size;
-}
 
 const Dashboard = React.createClass({
   displayName: 'Dashboard',
@@ -68,11 +63,6 @@ const Dashboard = React.createClass({
     return recentActivityData ? recentActivityData : {items: []};
   },
 
-  getBasedOnTagsData: function() {
-    let basedOnTagsData = this.state.data[DashboardConstants.BASED_ON_TAGS_SECTION];
-    return basedOnTagsData ? basedOnTagsData : {items: {}};
-  },
-
   getCollectionsData: function() {
     let collectionsData = this.state.data[DashboardConstants.COLLECTIONS_SECTION];
     return collectionsData ? collectionsData : {items: {}};
@@ -81,8 +71,7 @@ const Dashboard = React.createClass({
   getCurrentIDs: function(sectionName) {
     let sectionsToExclude = [
       DashboardConstants.MOST_POPULAR_SECTION,
-      DashboardConstants.RECENTLY_ADDED_SECTION,
-      DashboardConstants.BASED_ON_TAGS_SECTION
+      DashboardConstants.RECENTLY_ADDED_SECTION
     ];
 
     let sectionToExclude, products, sectionIDs;
@@ -166,9 +155,6 @@ const Dashboard = React.createClass({
 
   render: function() {
 
-    let basedOnTagsData = this.getBasedOnTagsData();
-    let addMoreBasedOnTagsCb = this.showMoreProducts.bind(this, DashboardConstants.BASED_ON_TAGS_SECTION);
-
     let recentlyAddedData = this.getRecentlyAddedData();
     let addMoreRecentlyAddedCb = this.showMoreProducts.bind(this, DashboardConstants.RECENTLY_ADDED_SECTION);
 
@@ -186,12 +172,6 @@ const Dashboard = React.createClass({
         <div /> :
         <RecentlyAddedSection ref={DashboardConstants.RECENTLY_ADDED_SECTION}
           onShowMore={addMoreRecentlyAddedCb} {...recentlyAddedData}/>
-      }
-
-      {_.isUndefined(basedOnTagsData) || _.isEmpty(basedOnTagsData.items) ?
-        <div /> :
-        <BasedOnTagsSection ref={DashboardConstants.BASED_ON_TAGS_SECTION}
-          onShowMore={addMoreBasedOnTagsCb} {...basedOnTagsData}/>
       }
 
       {_.isUndefined(mostPopularData) || !mostPopularData.items.length ?
