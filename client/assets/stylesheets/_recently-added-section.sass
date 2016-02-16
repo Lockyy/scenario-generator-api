@@ -14,6 +14,7 @@ $orange: #e36308
       @extend .col-xs-12
       padding: 20px
       margin: 0
+      height: 440px
 
       & > .content
         color: white
@@ -90,17 +91,21 @@ $orange: #e36308
 
 // Medium Devices, Desktop
 @media only screen and (min-width : 992px)
+  .section
+    &.recently-added-products
+      .tag-box
+        padding: 20px 10px
 
 // Large Devices, Wide Screens
 @media only screen and (min-width : 1200px)
+  .section
+    &.recently-added-products
+      .tag-box
+        padding: 20px 10px
 
 // Really Large Devices, Wide Screens
 @media (min-width: 1330px)
   .section
     &.recently-added-products
-      .section-row
-        .tag-box
-          padding: 20px
-
-          & > .content
-            padding: 30px
+      .tag-box
+        padding: 30px 20px
