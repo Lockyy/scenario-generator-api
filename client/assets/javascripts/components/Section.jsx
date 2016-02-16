@@ -48,27 +48,29 @@ class Section extends React.Component {
     let sectionClass = this.props.title.toLowerCase().replace(/\s+/g, '-');
     let sectionClasses = _.compact(['section', sectionClass]).join(' ');
     sectionClasses = `${sectionClasses} ${this.props.containerClass || ''}`;
-
-    return (<div className={sectionClasses}>
-      <div className='header'>
-        <h2 className='section-title'>{this.props.title}</h2>
-
-        <div className='customHeaderTag'>
-          {this.customHeaderTag()}
+    const showMore = this.props.hasPagination ? (
+        <div className='show-more-container'>
+          <button type='button' className='show-more' onClick={this.showMore.bind(this)}>Show More</button>
         </div>
+    ) : '' ;
 
-      </div>
 
-      <div className={itemClasses}>
-        {this.props.children}
+    return (
+        <div className={sectionClasses}>
+          <div className='header'>
+            <h2 className='section-title'>{this.props.title}</h2>
 
-        {this.props.hasPagination ? (<div className='show-more-container'>
-          <button type='button' className='show-more' onClick={this.showMore.bind(this)}>Show More
-          </button>
-        </div>) : ''}
+            <div className='customHeaderTag'>
+              {this.customHeaderTag()}
+            </div>
+          </div>
 
-      </div>
-    </div>);
+          <div className={itemClasses}>
+            {this.props.children}
+          </div>
+          {showMore}
+        </div>
+    );
   }
 }
 
