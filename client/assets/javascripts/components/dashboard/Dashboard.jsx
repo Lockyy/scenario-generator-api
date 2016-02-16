@@ -7,7 +7,6 @@ import FluxDashboardActions from '../../actions/FluxDashboardActions'
 import RecentlyAddedSection from './RecentlyAddedSection';
 import MostPopularSection from './MostPopularSection';
 import RecentActivitySection from './RecentActivitySection';
-import BasedOnTagsSection from './BasedOnTagsSection';
 import CollectionSection from './CollectionSection';
 
 function sumSizeFunc(item) {
@@ -166,9 +165,6 @@ const Dashboard = React.createClass({
 
   render: function() {
 
-    let basedOnTagsData = this.getBasedOnTagsData();
-    let addMoreBasedOnTagsCb = this.showMoreProducts.bind(this, DashboardConstants.BASED_ON_TAGS_SECTION);
-
     let recentlyAddedData = this.getRecentlyAddedData();
     let addMoreRecentlyAddedCb = this.showMoreProducts.bind(this, DashboardConstants.RECENTLY_ADDED_SECTION);
 
@@ -186,12 +182,6 @@ const Dashboard = React.createClass({
         <div /> :
         <RecentlyAddedSection ref={DashboardConstants.RECENTLY_ADDED_SECTION}
           onShowMore={addMoreRecentlyAddedCb} {...recentlyAddedData}/>
-      }
-
-      {_.isUndefined(basedOnTagsData) || _.isEmpty(basedOnTagsData.items) ?
-        <div /> :
-        <BasedOnTagsSection ref={DashboardConstants.BASED_ON_TAGS_SECTION}
-          onShowMore={addMoreBasedOnTagsCb} {...basedOnTagsData}/>
       }
 
       {_.isUndefined(mostPopularData) || !mostPopularData.items.length ?
