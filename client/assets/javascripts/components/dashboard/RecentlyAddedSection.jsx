@@ -90,7 +90,7 @@ class RecentlyAddedSection extends React.Component {
         <Section hasPagination={this.state.hasPagination} {...this.props}>
           <ReactCSSTransitionGroup transitionName="section-row">
             {this.fetchProducts()}
-            </ReactCSSTransitionGroup >
+          </ReactCSSTransitionGroup >
         </Section>);
   }
 }
