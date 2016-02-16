@@ -42,6 +42,7 @@ gem 'counter_culture', '~> 0.1.33'
 gem 'slacked'
 gem 'make_exportable', git: 'https://github.com/lockyy/make_exportable'
 gem 'pptx', git: 'https://github.com/codelittinc/ruby-pptx'
+gem 'ruby-progressbar'
 
 group :development do
   gem 'better_errors'
