@@ -58,7 +58,7 @@ RSpec.describe Fletcher::Dashboard do
       it 'adds default limit 8' do
         mocked_scope = double.as_null_object
         allow(mocked_scope).to receive(:offset).and_return([])
-        expect(mocked_scope).to receive(:limit).with(8).and_return(mocked_scope)
+        expect(mocked_scope).to receive(:limit).with(9).and_return(mocked_scope)
         allow(Product).to receive(:recently_added).and_return(mocked_scope)
 
         subject.recently_added
@@ -152,7 +152,7 @@ RSpec.describe Fletcher::Dashboard do
         it 'adds default limit 3' do
           mocked_scope = double.as_null_object
           allow(mocked_scope).to receive(:offset).and_return([])
-          expect(mocked_scope).to receive(:limit).with(3).and_return(mocked_scope)
+          expect(mocked_scope).to receive(:limit).with(5).and_return(mocked_scope)
           expect(Product).to receive(:most_popular).and_return(mocked_scope)
 
           subject.most_popular
