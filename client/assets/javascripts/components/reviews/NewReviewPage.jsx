@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { Link, Navigation } from 'react-router';
+import  Decide from '../Decide'
 import  ProductFields from './ProductFields'
 import  ReviewFields from './ReviewFields'
 import  FluxReviewPageActions from '../../actions/FluxReviewPageActions'
@@ -206,6 +207,10 @@ const NewReviewPage  = React.createClass({
     }
   },
 
+  editingReview: function() {
+    return this.state.mode == 'update'
+  },
+
   render: function render() {
     let info = (<div className='info'>
       <div className='instructions'>
@@ -214,22 +219,42 @@ const NewReviewPage  = React.createClass({
     </div>);
 
     return (
-    <div className='product new'>
-      <div className='help'>
-        <h1 className='title'>Write a Review</h1>
-        <p className='instructions'>Search and select the product you want to rate and review.</p>
-      </div>
-      <div className='main-content'>
-        <form className='form review new' ref='new_review_form' onSubmit={this._onSubmit}>
-          <ProductFields ref='product_fields' canChangeProduct={this.state.canChangeProduct} mode={this.state.mode}
-            showDetails={this.state.showDetails} onSelectProductEvent={this.onSelectProductEvent} {...this._getProductData()} />
-          <ReviewFields ref='review_fields' showDetails={this.state.showDetails} {...this.state.review} />
+      <div className='product new'>
+        <div className='help'>
+          <h1 className='title'>
+            <Decide
+              condition={this.editingReview()}
+              success={() => 'Edit Review'}
+              failure={() => 'Write a Review'} />
+          </h1>
+          <Decide
+            condition={this.editingReview()}
+            failure={() => (
+              <p
+                className='instructions'>
+                Search and select the product you want to rate and review.
+              </p>
+            )} />
+        </div>
+        <div className='main-content'>
+          <form className='form review new' ref='new_review_form' onSubmit={this._onSubmit}>
+            <ProductFields
+              ref='product_fields'
+              canChangeProduct={this.state.canChangeProduct}
+              mode={this.state.mode}
+              showDetails={this.state.showDetails}
+              onSelectProductEvent={this.onSelectProductEvent}
+              {...this._getProductData()} />
+            <ReviewFields
+              ref='review_fields'
+              showDetails={this.state.showDetails}
+              {...this.state.review} />
 
-          {this._getActionsContent()}
-        </form>
+            {this._getActionsContent()}
+          </form>
+        </div>
+        {this.state.showDetails ? '' : info}
       </div>
-      {this.state.showDetails ? '' : info}
-    </div>
     );
   }
 });

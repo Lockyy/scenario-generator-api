@@ -3,6 +3,14 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
+## v1.2.4
+
+### Changes
+- Visually distinguish between edit and create review pages
+
+### Bugfixes
+- Fix bug where dropdown does not disappear when you select a product to review that you have already reviewed.
+
 ## v1.2.3
 
 ### Bugfixes
