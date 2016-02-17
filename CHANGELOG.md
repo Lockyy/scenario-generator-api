@@ -3,6 +3,11 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
+## v1.2.5
+
+### Bugfixes
+- Fix css not loading correctly on certain admin pages
+
 ## v1.2.4
 
 ### Changes
