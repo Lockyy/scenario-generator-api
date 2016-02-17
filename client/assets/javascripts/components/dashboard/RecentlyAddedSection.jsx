@@ -31,8 +31,9 @@ class RecentlyAddedSection extends React.Component {
   }
 
   getCurrentBoxSize(products, product) {
+    //This needs to be refactored
     let gridSize = products.length == 1 ? this.props.cols - 1 : this.props.cols;
-    let boxSize = gridSize - 2;
+    let boxSize = gridSize - 1;
     let countBoxSizes = _.countBy(_.map(products, 'props.size'));
     if (products.length > 0) {
       boxSize = _.min([_.last(products).props.size, gridSize - (_.last(products).props.size || 0)]);
@@ -42,6 +43,8 @@ class RecentlyAddedSection extends React.Component {
     } else if (!product.image) {
       boxSize = _.max([0, boxSize - 1]);
     }
+
+    boxSize = boxSize == 3 ? boxSize - 1 : boxSize;
     return boxSize === 0 ? 0.5 : boxSize;
   }
 

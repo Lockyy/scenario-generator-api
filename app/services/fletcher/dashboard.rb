@@ -8,11 +8,11 @@ module Fletcher
     SECTIONS = [BASED_ON_TAGS_SECTION, RECENTLY_ADDED_SECTION, MOST_POPULAR_SECTION, RECENT_ACTIVITY_SECTION, COLLECTIONS_SECTION].freeze
     DEFAULTS = {
       RECENTLY_ADDED_SECTION => {
-        products: { limit: 8, offset: 0 },
+        products: { limit: 9, offset: 0 },
         tags:     { limit: 20, offset: 0 },
       },
       BASED_ON_TAGS_SECTION => { limit: 8, offset: 0 },
-      MOST_POPULAR_SECTION => { limit: 3, offset: 0 },
+      MOST_POPULAR_SECTION => { limit: 5, offset: 0 },
       RECENT_ACTIVITY_SECTION => { limit: 4, offset: 0 },
       COLLECTIONS_SECTION => { limit: 4, offset: 0 },
     }.freeze
