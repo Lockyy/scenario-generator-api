@@ -7,7 +7,6 @@ import Avatar from '../Avatar';
 import SectionRow from '../SectionRow'
 import FluxReviewPageActions from '../../actions/FluxReviewPageActions'
 import ReviewPageStore from '../../stores/ReviewPageStore'
-import UrlHelper from '../../utils/helpers/UrlHelper'
 import RenderDesktop from './../RenderDesktop';
 import RenderMobile from './../RenderMobile';
 

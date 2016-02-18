@@ -1,5 +1,4 @@
 import React from 'react'
-import UrlHelper from '../../utils/helpers/UrlHelper'
 import UploadManager from './UploadManager'
 
 const AttachmentsManager = React.createClass({

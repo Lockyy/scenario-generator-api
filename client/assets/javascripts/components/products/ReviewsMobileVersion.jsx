@@ -149,7 +149,7 @@ const ReviewsMobileVersion = React.createClass({
   renderReview: function(review) {
     let attachments = _.collect(review.attachments, function(attachment) {
       return (<li className='attachment'>
-        <a className="link" href={UrlHelper.addProtocol(attachment.url)} target='_blank'>{attachment.name}</a>
+        <a className="link" href={attachment.url} target='_blank'>{attachment.name}</a>
       </li>);
     });
     let links = _.collect(review.links, function(link) {
