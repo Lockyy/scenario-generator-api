@@ -15,7 +15,12 @@ module Omniauth
     delegate :location, to: :info
 
     def avatar_url
-      original_oauth_info.extra.raw_info.mugshot_url_template.gsub(/(\{width\})|(\{height\})/, '150')
+      template = original_oauth_info.extra.raw_info.mugshot_url_template
+      if template.include?('no_photo')
+        return template.gsub('/{width}x{height}','')
+      else
+        return template.gsub(/(\{width\})|(\{height\})/, '150')
+      end
     end
 
     def token
