@@ -7,12 +7,16 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 
 ### Changes
 - Increase padding between stats on reviews.
+- Compress assets before sending to user using Rack::Deflater
 
 ### Bugfixes
 - Fix modal title and close button on share company page.
 - Fix attachment links.
 - Fix product slugs in recent activity urls
 - Fix urls returned from Yammer oauth api
+- Add explicit primary key to collection_users to solve test issue
+- Fix doubled close button on company share modal
+- Fix title on company share modal
 
 ## v1.2.5
 
