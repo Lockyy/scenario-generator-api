@@ -100,7 +100,7 @@ products.url, company_id, products.views, products.created_at, products.updated_
   end
 
   def bookmark(user)
-    bookmarks.first_or_create(user: user)
+    bookmarks.find_or_create_by(user: user)
   end
 
   def unbookmark(user)

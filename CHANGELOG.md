@@ -3,6 +3,11 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
+## v1.2.9
+
+### Bugfixes
+- Fix issue where multiple users could not bookmark the same product
+
 ## v1.2.8
 
 ### Bugfixes
