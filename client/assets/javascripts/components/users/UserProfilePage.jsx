@@ -5,7 +5,6 @@ import FluxUserActions from '../../actions/FluxUserActions';
 import FluxBookmarkActions from '../../actions/FluxBookmarkActions';
 import FluxNotificationsActions from '../../actions/FluxNotificationsActions';
 import UserStore from '../../stores/UserStore';
-import UrlHelper from '../../utils/helpers/UrlHelper'
 import Section from '../Section'
 import SectionRow from '../SectionRow'
 import UserProfileHeader from './UserProfileHeader';
