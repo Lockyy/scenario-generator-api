@@ -7,7 +7,6 @@ import ModalStore from '../../stores/ModalStore';
 import DefaultModalStyles from '../../utils/constants/DefaultModalStyles';
 import FluxModalActions from '../../actions/FluxModalActions';
 import FileHelper from '../../utils/helpers/FileHelper';
-import UrlHelper from '../../utils/helpers/UrlHelper';
 import timeago from 'timeago';
 import ImageMixin from './../ImageMixin';
 
@@ -67,12 +66,12 @@ const ProductFilesModal = React.createClass ({
       const url = ImageMixin.getRightImageUrl(attachment.urls, 'thumb') ;
       return (<li className='attachment'>
         {FileHelper.isImage(attachment.name) ?
-          <img src={UrlHelper.addProtocol(url)} className='thumbnail' width='50px' />
+          <img src={url} className='thumbnail' width='50px' />
           : ''}
 
 
         <div className='attachment-details'>
-          <a className="attachment-link" href={UrlHelper.addProtocol(url)} target='_blank'>{attachment.name}</a>
+          <a className="attachment-link" href={url} target='_blank'>{attachment.name}</a>
           <span className='author'>{attachment.author ? `Uploaded by ${attachment.author.name}` : ''}</span>
           <span className='created_at'>{timeago(attachment.created_at)}</span>
         </div>

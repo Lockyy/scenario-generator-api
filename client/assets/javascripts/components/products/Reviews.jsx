@@ -11,6 +11,7 @@ import Tags from '../Tags';
 import Dropdown from '../Dropdown';
 import DropdownConstants from '../../utils/constants/DropdownConstants';
 import Avatar from '../Avatar';
+import ImageMixin from '../ImageMixin';
 import ReviewConstants from '../../utils/constants/ReviewConstants';
 import DateHelper from '../../utils/helpers/DateHelper'
 
@@ -155,8 +156,9 @@ const Reviews = React.createClass({
 
   renderReview: function(review) {
     let attachments = _.collect(review.attachments, function(attachment) {
+      let url = ImageMixin.getRightImageUrl(attachment.urls);
       return (<li className='attachment'>
-        <a className="link" href={UrlHelper.addProtocol(attachment.url)} target='_blank'>{attachment.name}</a>
+        <a className="link" href={url} target='_blank'>{attachment.name}</a>
       </li>);
     });
 
