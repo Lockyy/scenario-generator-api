@@ -32,5 +32,7 @@ module Fletcher
 
     # add app/services/**/* to autoload_path
     config.autoload_paths += Dir[Rails.root.join('app', 'services', '{**/}')]
+
+    config.middleware.use Rack::Deflater
   end
 end
