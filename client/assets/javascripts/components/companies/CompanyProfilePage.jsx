@@ -49,7 +49,10 @@ const CompanyProfilePage  = React.createClass({
     <div className='company profile show'>
       <div className='main-content'>
         <h1 className='title'>Company Profile</h1>
-        <CompanyProfileHeader onShare={this.openSharePageModal} onCloseShareModal={this.closeSharePageModal} {...company}/>
+        <CompanyProfileHeader
+          onShare={this.openSharePageModal}
+          onCloseShareModal={this.closeSharePageModal}
+          {...company} />
       </div>
     </div>
     );

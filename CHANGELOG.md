@@ -3,6 +3,17 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
+## v1.2.6
+
+### Changes
+- Increase padding between stats on reviews.
+
+### Bugfixes
+- Fix modal title and close button on share company page.
+- Fix attachment links.
+- Fix product slugs in recent activity urls
+- Fix urls returned from Yammer oauth api
+
 ## v1.2.5
 
 ### Bugfixes
