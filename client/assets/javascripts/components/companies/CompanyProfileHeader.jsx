@@ -118,9 +118,11 @@ const CompanyProfileHeader  = React.createClass({
         onRequestClose={this.props.onCloseShareModal} >
         <div className='header'>
           <span className='title'>
-            Share this product with other users
+            Share this company with other users
           </span>
-          <span onClick={this.props.onCloseShareModal} className='close'>x</span>
+          <span
+            onClick={this.props.onCloseShareModal}
+            className='close' />
         </div>
         <div className="input-group">
           <input  type="text"
