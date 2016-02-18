@@ -31,6 +31,6 @@ ADD ./ /share
 CMD cp config/database.yml.example config/database.yml
 ENV RAILS_ENV production
 ENV NODE_ENV production
-ENV SECRET_KEY_BASE ghuoim20873mjcs092jimclkxwemc9k230kpodzl
+ENV SECRET_KEY_BASE c2291c2d63b4acb27bb6b08d9b7f36de68b519a3d55de7fed564b890021356fc8d703c1e494efd0ce0525e607e52a182064ed5ffc266114a992eb0b45bf9cc77
 RUN cd client && npm install && node_modules/webpack/bin/webpack.js --config webpack.rails.config.js && cd ..
 CMD rails s Puma -b 0.0.0.0 -e production -p 4000
