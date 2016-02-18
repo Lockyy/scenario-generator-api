@@ -3,6 +3,11 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
+## v1.2.7
+
+### Bugfixes
+- Fix url generation bug in Attachment.file_url
+
 ## v1.2.6
 
 ### Changes
