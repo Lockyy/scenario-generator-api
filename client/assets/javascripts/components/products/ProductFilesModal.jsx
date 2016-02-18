@@ -63,15 +63,16 @@ const ProductFilesModal = React.createClass ({
 
   getAttachments: function() {
     return _.collect(this.getProductData('attachments'), function(attachment) {
-      const url = ImageMixin.getRightImageUrl(attachment.urls, 'thumb') ;
+      const thumb_url = ImageMixin.getRightImageUrl(attachment.urls, 'thumb') ;
+      const link_url = ImageMixin.getRightImageUrl(attachment.urls, 'original') ;
       return (<li className='attachment'>
         {FileHelper.isImage(attachment.name) ?
-          <img src={url} className='thumbnail' width='50px' />
+          <img src={thumb_url} className='thumbnail' width='50px' />
           : ''}
 
 
         <div className='attachment-details'>
-          <a className="attachment-link" href={url} target='_blank'>{attachment.name}</a>
+          <a className="attachment-link" href={link_url} target='_blank'>{attachment.name}</a>
           <span className='author'>{attachment.author ? `Uploaded by ${attachment.author.name}` : ''}</span>
           <span className='created_at'>{timeago(attachment.created_at)}</span>
         </div>
