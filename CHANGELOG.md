@@ -3,6 +3,11 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
+## v1.2.8
+
+### Bugfixes
+- Fix file modal links linking to thumb instead of original file
+
 ## v1.2.7
 
 ### Bugfixes
