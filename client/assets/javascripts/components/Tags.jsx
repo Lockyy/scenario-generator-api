@@ -30,13 +30,13 @@ const Tags = React.createClass({
   // pageWidth - (elementWidth + elementLeft) < 0
   hideTagOverflow: function() {
     let tagHolder = $(this.refs.tags.getDOMNode())
-    let tagHolderHeight = tagHolder.height()
-    let tagHolderBottom = tagHolderHeight - parseInt(tagHolder.css('margin'))
     let tags = tagHolder.children('.tag')
     tags.show()
 
     for (var i = tags.length - 1; i >= 0; i--) {
       let tag = $(tags[i]);
+      let tagHolderHeight = tagHolder.height()
+      let tagHolderBottom = tagHolderHeight
       let tagBottom = tag.height() + tag.position().top + parseInt(tag.css('margin')) + parseInt(tag.css('padding'))
       if(tagHolderBottom <= tagBottom) {
         tag.hide();
