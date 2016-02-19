@@ -5,6 +5,8 @@ import ProductBox from '../ProductBox';
 import SectionRow from '../SectionRow';
 import Section from '../Section';
 import TagsBox from '../TagsBox';
+import RenderMobile from '../RenderMobile';
+import RenderDesktop from '../RenderDesktop';
 
 function sumSizeFunc(item) {
   return item.props.size;
@@ -48,9 +50,34 @@ class RecentlyAddedSection extends React.Component {
     return boxSize === 0 ? 0.5 : boxSize;
   }
 
+  getProductBoxDesktopComponent(products, product){
+    return (
+      <RenderDesktop
+        component={ProductBox}
+        size={this.getCurrentBoxSize(products, product)}
+        key={`recently_added_tags_desktop_product_box_${product.id}`}
+        typeSizeImage="medium"
+        {...product}
+      />
+    )
+  }
+
+  getProductBoxMobileComponent(product){
+    return (
+      <RenderMobile
+        component={ProductBox}
+        size="1"
+        key={`recently_added_tags_mobile_product_box_${product.id}`}
+        typeSizeImage="medium"
+        {...product}
+      />
+    )
+  }
+
   fetchProducts() {
     let product;
-    let products = [];
+    let desktopProducts = [];
+    let mobileProducts = [];
     let hasItems;
     let needsItem;
     let sumItems;
@@ -62,24 +89,30 @@ class RecentlyAddedSection extends React.Component {
     do {
       product = this.props.items.products[currentItem++];
 
-      products.push(<ProductBox
-                      size={this.getCurrentBoxSize(products, product)}
-                      key={`recently_added_tags_product_box_${product.id}`}
-                      typeSizeImage="medium"
-                      {...product} />);
+      desktopProducts.push(this.getProductBoxDesktopComponent(desktopProducts, product));
+      mobileProducts.push(this.getProductBoxMobileComponent(product));
 
-      if(!tagsBox && _.sum(products, sumSizeFunc) == 3) {
-        tagsBox = true
-        products.push(this.fetchTags())
+      if(!tagsBox && _.sum(desktopProducts, sumSizeFunc) == 3) {
+        tagsBox = true;
+        desktopProducts.push(this.fetchTags());
+        mobileProducts.push(this.fetchTags());
       }
 
       hasItems = this.props.items.products.length > currentItem;
-      sumItems = _.sum(products, sumSizeFunc);
+      sumItems = _.sum(desktopProducts, sumSizeFunc);
       needsItem = sumItems < this.state.rows * this.props.cols;
     } while (hasItems && needsItem);
 
     this.state.offset = currentItem;
-    return products;
+
+
+    let allProducts = [];
+    for(let i = 0; i < desktopProducts.length; i++){
+      allProducts.push(desktopProducts[i])
+      allProducts.push(mobileProducts[i])
+    }
+
+    return allProducts;
   }
 
   fetchTags() {
