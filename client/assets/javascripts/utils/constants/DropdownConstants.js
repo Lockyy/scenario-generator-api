@@ -36,11 +36,11 @@ module.exports = {
       display: 'Latest'
     },
     {
-      option: 'highScore',
+      option: 'low_to_high',
       display: 'Rating: Low to High'
     },
     {
-      option: 'lowScore',
+      option: 'high_to_low',
       display: 'Rating: High to Low'
     },
     {
@@ -66,11 +66,11 @@ module.exports = {
       display: 'Alphabetical order'
     },
     {
-      option: 'highScore',
+      option: 'low_to_high',
       display: 'Rating: Low to High'
     },
     {
-      option: 'lowScore',
+      option: 'high_to_low',
       display: 'Rating: High to Low'
     }
   ],
@@ -84,11 +84,11 @@ module.exports = {
       display: 'Alphabetical order'
     },
     {
-      option: 'highScore',
+      option: 'low_to_high',
       display: 'Rating: Low to High'
     },
     {
-      option: 'lowScore',
+      option: 'high_to_low',
       display: 'Rating: High to Low'
     }
   ],
@@ -98,11 +98,11 @@ module.exports = {
       display: 'Latest'
     },
     {
-      option: 'highScore',
+      option: 'low_to_high',
       display: 'Rating: Low to High'
     },
     {
-      option: 'lowScore',
+      option: 'high_to_low',
       display: 'Rating: High to Low'
     },
     {

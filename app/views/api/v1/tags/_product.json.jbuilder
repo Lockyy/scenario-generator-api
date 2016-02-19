@@ -7,3 +7,5 @@ json.description product.description
 json.image product.image
 json.rating product.rating
 json.total_reviews product.total_reviews
+json.quality_score product.quality_score_cache
+json.price_score product.price_score_cache

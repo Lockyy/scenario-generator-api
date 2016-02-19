@@ -13,6 +13,7 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 - Prevent tags from displaying that overflow Tags containe
 - Remove ./tmp after building image
 - Display descriptions on all tiles on mobile dashboard
+- Fix sorting on tag page.
 
 ## v1.2.9
 
