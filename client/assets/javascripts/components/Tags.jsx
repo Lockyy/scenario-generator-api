@@ -31,14 +31,14 @@ const Tags = React.createClass({
   hideTagOverflow: function() {
     let tagHolder = $(this.refs.tags.getDOMNode())
     let tagHolderHeight = tagHolder.height()
+    let tagHolderBottom = tagHolderHeight - parseInt(tagHolder.css('margin'))
     let tags = tagHolder.children('.tag')
     tags.show()
 
     for (var i = tags.length - 1; i >= 0; i--) {
       let tag = $(tags[i]);
-
-      if( tagHolderHeight - parseInt(tagHolder.css('margin')) <=
-          tag.height() + tag.position().top + parseInt(tag.css('margin')) + parseInt(tag.css('padding'))) {
+      let tagBottom = tag.height() + tag.position().top + parseInt(tag.css('margin')) + parseInt(tag.css('padding'))
+      if(tagHolderBottom <= tagBottom) {
         tag.hide();
       } else {
         // We're sorting from bottom to top, if we find a tag that isn't
