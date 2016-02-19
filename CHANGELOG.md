@@ -3,6 +3,17 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
+## v1.2.10
+
+### Bugfixes
+- Show full description on tag page
+- Remove rating from review page
+- Don't change cursor to pointer unless rating component is enabled
+- Fix text overflow on Dashboard tiles
+- Prevent tags from displaying that overflow Tags containe
+- Remove ./tmp after building image
+- Display descriptions on all tiles on mobile dashboard
+
 ## v1.2.9
 
 ### Bugfixes

@@ -5,20 +5,21 @@
   border-color: white
 
 .tag-holder
-  .tags
+  &, .tag
+    position: relative
+  .tag
+    display: inline-block
+    color: $orange
+    border: 1px solid $orange
+    padding: 3px 5px
+    margin: 5px 10px 5px 10px
+    border-radius: 2px
+    cursor: pointer
+    &:hover
+      +tag-og-inverted
+  &.white
     .tag
-      display: inline-block
-      color: $orange
-      border: 1px solid $orange
-      padding: 3px 5px
-      margin: 5px 10px 5px 10px
-      border-radius: 2px
-      cursor: pointer
-      &:hover
-        +tag-og-inverted
-    &.white
-      .tag
-        +tag-og-inverted
+      +tag-og-inverted
 
   .product-name
     font-weight: bold

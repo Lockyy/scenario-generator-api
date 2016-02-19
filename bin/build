@@ -29,3 +29,6 @@ rm -rf compiled
 
 echo Removing Dockerfile
 rm Dockerfile
+
+echo Removing ./tmp
+rm -rf tmp

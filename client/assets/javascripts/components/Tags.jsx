@@ -18,6 +18,36 @@ const Tags = React.createClass({
     }
   },
 
+  componentDidMount: function() {
+    this.hideTagOverflow()
+    window.onresize = _.debounce(this.hideTagOverflow, 300)
+  },
+
+  componentDidUpdate: function() {
+    this.hideTagOverflow()
+  },
+
+  // pageWidth - (elementWidth + elementLeft) < 0
+  hideTagOverflow: function() {
+    let tagHolder = $(this.refs.tags.getDOMNode())
+    let tags = tagHolder.children('.tag')
+    tags.show()
+
+    for (var i = tags.length - 1; i >= 0; i--) {
+      let tag = $(tags[i]);
+      let tagHolderHeight = tagHolder.height()
+      let tagHolderBottom = tagHolderHeight
+      let tagBottom = tag.height() + tag.position().top + parseInt(tag.css('margin')) + parseInt(tag.css('padding'))
+      if(tagHolderBottom <= tagBottom) {
+        tag.hide();
+      } else {
+        // We're sorting from bottom to top, if we find a tag that isn't
+        // overflowing then we know nothing else is.
+        break;
+      }
+    }
+  },
+
   getMax: function() {
     if(this.props.max) {
       return this.props.max
@@ -74,8 +104,7 @@ const Tags = React.createClass({
       );
     }.bind(this));
 
-    return <div className={`tags ${this.getContainerName()}`}>{tagElements}</div>;
-
+    return tagElements
   },
 
   linkRequired: function() {
@@ -92,7 +121,7 @@ const Tags = React.createClass({
 
   render: function() {
     return (
-      <div className='tag-holder'>
+      <div className={`tag-holder ${this.getContainerName()}`} ref='tags'>
         {this.renderTags()}
         {this.renderLink()}
       </div>

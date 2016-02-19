@@ -244,9 +244,7 @@
         height: 0
         display: none
 
-// ==========  Mobile First Method  ==========
-/* Custom, iPhone Retina */
-@media only screen and (min-width : 320px)
+@media only screen and (max-width : 767px)
   .product
     &.box-0, &.box-1, &.box-2, &.box-2-5, &.box-3, &.box-4-5
       padding: 10px 0
@@ -256,6 +254,10 @@
 
       .data
         height: 60%
+
+        .details
+          max-height: 164px
+          overflow: hidden
 
       .picture
         height: 40%
