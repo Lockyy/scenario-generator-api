@@ -128,7 +128,7 @@ const Results = React.createClass ({
               </a>
             </div>
             <div className='description'>
-              { result.short_desc }
+              { this.props.fullDescription ? result.description : result.short_desc}
             </div>
             <Rating value={result.rating} name='rating' />
           </div>
