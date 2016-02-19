@@ -5,6 +5,9 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 
 ## v1.2.10
 
+### Changes
+- Increase amount of description text that is visible on dashboard tiles
+
 ### Bugfixes
 - Show full description on tag page
 - Remove rating from review page
