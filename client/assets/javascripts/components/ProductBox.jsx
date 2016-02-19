@@ -36,7 +36,7 @@ const ProductBox = React.createClass ({
     }
     let classes = _.compact(['product', boxClass]).join(' ');
     let company = this.props.company;
-    let description = TextHelper.truncate(this.props.description, this.props.lengthDescription);
+    let description = this.props.description
 
     return (<div className={classes}>
       <div className='content'>
