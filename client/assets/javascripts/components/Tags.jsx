@@ -37,7 +37,9 @@ const Tags = React.createClass({
       let tag = $(tags[i]);
       let tagHolderHeight = tagHolder.height()
       let tagHolderBottom = tagHolderHeight
-      let tagBottom = tag.height() + tag.position().top + parseInt(tag.css('margin')) + parseInt(tag.css('padding'))
+      let tagMargin = 5
+      let tagPadding = 3
+      let tagBottom = tag.height() + tag.position().top + tagMargin + tagPadding
       if(tagHolderBottom <= tagBottom) {
         tag.hide();
       } else {

@@ -5,6 +5,9 @@ import Section from '../Section';
 import SectionRow from '../SectionRow';
 import ProductBox from '../ProductBox';
 import TagsBox from '../TagsBox';
+import RenderMobile from '../RenderMobile';
+import RenderDesktop from '../RenderDesktop';
+
 
 function sumSizeFunc(item) {
   return item.props.size;
@@ -46,30 +49,10 @@ class MostPopularSection extends React.Component {
     return boxSize === 0 ? 0.5 : boxSize;
   }
 
-  buildRows(products) {
-    let sectionRows = [];
-    let gridSize = this.props.cols;
-    let row;
-
-    while (products.length > 0) {
-      row = _.last(sectionRows);
-
-      if (!row || _.sum(row, sumSizeFunc) >= gridSize) {
-        row = [];
-        sectionRows.push(row);
-      }
-
-      row.push(products.shift());
-    }
-
-    return sectionRows.map(function mapRows(sectionRow, index) {
-      return (<SectionRow key={`most_popular_row_${index}`} items={sectionRow}/>);
-    });
-  }
-
   fetchProducts() {
     let product;
-    let products = [];
+    let desktopProducts = [];
+    let mobileProducts = [];
     let hasItems;
     let needsItem;
     let sumItems;
@@ -81,24 +64,51 @@ class MostPopularSection extends React.Component {
     do {
       product = this.props.items[currentItem++];
 
-      products.push(<ProductBox
-                      typeSizeImage="medium"
-                      key={`most_popular_product_box_${product.id}`}
-                      size={this.getCurrentBoxSize(products, product)}
-                      {...product} />);
+      desktopProducts.push(this.getProductBoxDesktopComponent(desktopProducts, product));
+      mobileProducts.push(this.getProductBoxMobileComponent(product));
 
       hasItems = this.props.items.length > currentItem;
-      sumItems = _.sum(products, sumSizeFunc);
+      sumItems = _.sum(desktopProducts, sumSizeFunc);
       needsItem = sumItems < this.state.rows * gridSize;
     } while (hasItems && needsItem);
 
     this.state.offset = currentItem;
-    return products;
+
+    let allProducts = [];
+    for(let i = 0; i < desktopProducts.length; i++){
+      allProducts.push(desktopProducts[i])
+      allProducts.push(mobileProducts[i])
+    }
+
+    return allProducts;
+  }
+
+  getProductBoxDesktopComponent(products, product){
+    return (
+      <RenderDesktop
+        component={ProductBox}
+        size={this.getCurrentBoxSize(products, product)}
+        key={`most_popular_product_desktop_box_${product.id}`}
+        typeSizeImage="medium"
+        {...product}
+      />
+    )
+  }
+
+  getProductBoxMobileComponent(product){
+    return (
+      <RenderMobile
+        component={ProductBox}
+        size="1"
+        key={`most_popular_product_mobile_box_${product.id}`}
+        typeSizeImage="medium"
+        {...product}
+      />
+    )
   }
 
   fetchItems() {
-    let items = this.fetchProducts();
-    return this.buildRows(items);
+    return this.fetchProducts();
   }
 
   render() {

@@ -256,7 +256,7 @@
         height: 60%
 
         .details
-          max-height: 200px
+          max-height: 210px
           overflow: hidden
 
       .picture
@@ -279,15 +279,83 @@
       .picture, .data
         height: 100%
 
+    &.box-0
+      .content
+        flex-direction: column-reverse
+        justify-content: space-between
+        overflow: none
+        height: $box-height
+
+        .data
+          height: 100%
+
+          .description
+            max-height: 120px
+            display: block
+
+    &.box-1:not(.no-pic-box), &.box-0:not(.no-pic-box)
+      padding: 0
+
+      .content
+        flex-direction: row
+        justify-content: flex-start
+        overflow: visible
+
+        .data
+          height: 100%
+          width: 50%
+
+          .description
+            max-height: none
+
+        .picture
+          height: 100%
+          padding: 0
+          width: 50%
+
+
 // Medium Devices, Desktop
 @media only screen and (min-width : 992px)
   .product
     .content
       font-size: 20px
 
+    &.box-0
+      padding: 10
+
+      .content
+        height: ($box-height / 2) - 10
+
+        .data
+          .description
+            display: none
+
+    &.box-1:not(.no-pic-box), &.box-0:not(.no-pic-box)
+      padding: 10px
+
+      .content
+        flex-direction: column-reverse
+        justify-content: space-between
+        overflow: none
+
+        .data
+          height: 70%
+          width: 100%
+
+          .description
+            max-height: 120px
+
+        .picture
+          height: 30%
+          padding: 0
+          width: 100%
 // Large Devices, Wide Screens
 @media only screen and (min-width : 1200px)
   .product
+    &.box-1:not(.no-pic-box), &.box-0:not(.no-pic-box)
+      padding: 20px
+
+
     .content
       font-size: 25px
 

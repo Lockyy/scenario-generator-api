@@ -9,12 +9,13 @@ class Section extends React.Component {
   componentDidMount() {
     let component = $(React.findDOMNode(this));
     let items = $(component).find('> .items');
-
+    let showMoreButton = component.find('.show-more-container');
     let _toggleSection = _.throttle(function(e) {
       let hiddenLink = component.find('.toggle-section:hidden');
       let visibleLink = component.find('.toggle-section:visible');
 
       visibleLink.stop().fadeToggle('fast', function() {
+        showMoreButton.stop().fadeToggle('fast');
         items.stop().slideToggle('fast', function() {
           hiddenLink.stop().fadeToggle('fast');
         });
@@ -33,14 +34,16 @@ class Section extends React.Component {
   }
 
   customHeaderTag() {
-    return this.props.customHeaderTag ? this.props.customHeaderTag : (<div className='toggle-section-container'>
+    return this.props.customHeaderTag ? this.props.customHeaderTag : (
+      <div className='toggle-section-container'>
         <a href='#' className='toggle-section show-section' style={{display: 'none'}}>
           <i className='glyphicon glyphicon-chevron-down'></i>SHOW
         </a>
         <a href='#' className='toggle-section hide-section'>
           <i className='glyphicon glyphicon-chevron-up'></i>HIDE
         </a>
-      </div>);
+      </div>
+    );
   }
 
   render() {
