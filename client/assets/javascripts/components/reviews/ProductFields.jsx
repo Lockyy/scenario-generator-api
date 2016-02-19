@@ -127,8 +127,6 @@ const ProductFields  = React.createClass({
           <h4 className='company'><Link to={`/app/companies/${this.props.company.id}/${this.props.company.slug}`} >{this.props.company.name}</Link></h4>
         </div>
 
-        <Rating value={this.props.rating} name='rating'/>
-
         <p className='description'>{this.props.description}</p>
       </div>
     );
