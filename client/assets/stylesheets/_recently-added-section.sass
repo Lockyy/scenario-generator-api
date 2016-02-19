@@ -40,12 +40,10 @@ $orange: #e36308
         .tag-holder
           overflow: hidden
           margin-top: 25px
-
-          .tags
-            .tag
-              background-color: white
-              border-color: $orange
-              color: $orange
+          .tag
+            background-color: white
+            border-color: $orange
+            color: $orange
 
         .items
           padding: 0 30px
@@ -81,6 +79,10 @@ $orange: #e36308
 // Extra Small Devices, Phones
 @media only screen and (min-width : 480px)
 
+@media only screen and (min-width : 673px)
+  .section.recently-added-products .tag-box > .content .tag-holder
+    margin-top: 24px
+
 // Small Devices, Tablets
 @media only screen and (min-width : 768px)
   .section
@@ -95,6 +97,8 @@ $orange: #e36308
     &.recently-added-products
       .tag-box
         padding: 20px 10px
+        & > .content .tag-holder
+          margin-top: 25px
 
 // Large Devices, Wide Screens
 @media only screen and (min-width : 1200px)
