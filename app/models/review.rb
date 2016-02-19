@@ -23,9 +23,9 @@ class Review < ActiveRecord::Base
 
   def self.sorted(sort_string)
     case sort_string
-    when 'highScore'
+    when 'low_to_high'
       order('quality_score ASC NULLS LAST, id DESC')
-    when 'lowScore'
+    when 'high_to_low'
       order('quality_score DESC NULLS LAST, id DESC')
     when 'helpful'
       order('cached_helpfulness DESC NULLS LAST, id DESC')
