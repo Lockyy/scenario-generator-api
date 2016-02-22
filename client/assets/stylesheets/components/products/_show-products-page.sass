@@ -196,8 +196,8 @@
                 color: $light-grey
 
           .helpful-review-container
-            @extend .row
             margin: 0
+            display: flex
 
             .vote-container, .feedback
               margin-top: 25px
@@ -216,11 +216,9 @@
                 font-size: 10px
 
             .vote-container
-              @extend .col-xs-7
+              display: inline-block
 
             .feedback
-              @extend .col-xs-4
-
               display: none
               color: #318eaf
               background-color: white
