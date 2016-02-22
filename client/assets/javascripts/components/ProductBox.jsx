@@ -21,7 +21,7 @@ const ProductBox = React.createClass ({
   applyOverflowEllipsis: function() {
     let el = this.refs.description.getDOMNode();
     let wordArray = el.innerHTML.split(' ');
-    while(el.scrollHeight > el.offsetHeight && wordArray.length > 0) {
+    while($(el).height() < $(el).children().height() && wordArray.length > 0) {
       wordArray.pop();
       el.innerHTML = wordArray.join(' ') + '...';
     }
