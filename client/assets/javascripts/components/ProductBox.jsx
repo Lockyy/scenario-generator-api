@@ -2,7 +2,6 @@ import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import timeago from 'timeago';
-import Ellipsis from 'ftellipsis'
 import TextHelper from '../utils/helpers/TextHelper';
 import AutoFitPicture from './AutoFitPicture';
 import Rating from './Rating';
@@ -16,15 +15,16 @@ const ProductBox = React.createClass ({
 
   componentDidMount: function() {
     this.applyOverflowEllipsis();
-    window.onresize = this.applyOverflowEllipsis;
+    window.onresize = _.debounce(this.applyOverflowEllipsis, 300);
   },
 
   applyOverflowEllipsis: function() {
-    let element = this.refs.description.getDOMNode();
-    let ellipsis = new Ellipsis(element);
-
-    ellipsis.calc();
-    ellipsis.set();
+    let el = this.refs.description.getDOMNode();
+    let wordArray = el.innerHTML.split(' ');
+    while(el.scrollHeight > el.offsetHeight && wordArray.length > 0) {
+      wordArray.pop();
+      el.innerHTML = wordArray.join(' ') + '...';
+    }
   },
 
   hasPicture: function() {

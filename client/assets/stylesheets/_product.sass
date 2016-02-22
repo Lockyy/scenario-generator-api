@@ -91,7 +91,6 @@
           margin-bottom: 0px
 
         .description
-          overflow: hidden
           font-size: 14px
           line-height: 1.25em
 
@@ -319,6 +318,9 @@
   .product
     .content
       font-size: 20px
+      .data
+        .description
+          max-height: 240px
 
     &.box-0
       padding: 10
@@ -349,25 +351,19 @@
           height: 30%
           padding: 0
           width: 100%
+
 // Large Devices, Wide Screens
 @media only screen and (min-width : 1200px)
   .product
-    &.box-1:not(.no-pic-box), &.box-0:not(.no-pic-box)
-      padding: 20px
-
-
     .content
       font-size: 25px
-
-      .data
-        .description
-          max-height: 240px
 
 // Really Large Devices, Wide Screens
 @media (min-width: 1330px)
   .product
     &.box-0, &.box-1, &.box-2, &.box-2-5, &.box-3, &.box-4-5
-      padding: 20px
+      &, &:not(.no-pic-box)
+        padding: 20px
 
     &.box-0
       .content
