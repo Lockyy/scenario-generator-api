@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router';
 import timeago from 'timeago';
+import Ellipsis from 'ftellipsis'
 import TextHelper from '../utils/helpers/TextHelper';
 import AutoFitPicture from './AutoFitPicture';
 import Rating from './Rating';
@@ -11,6 +12,19 @@ const ProductBox = React.createClass ({
 
   contextTypes: {
     router: React.PropTypes.object
+  },
+
+  componentDidMount: function() {
+    this.applyOverflowEllipsis();
+    window.onresize = _.debounce(this.applyOverflowEllipsis, 300).bind(this);
+  },
+
+  applyOverflowEllipsis: function() {
+    let element = this.refs.description.getDOMNode();
+    let ellipsis = new Ellipsis(element);
+
+    ellipsis.calc();
+    ellipsis.set();
   },
 
   hasPicture: function() {
@@ -66,7 +80,7 @@ const ProductBox = React.createClass ({
               <span className='reviews'>{this.props.reviews.length} review(s)</span>
             </div>
 
-            <p className='description'>{description}</p>
+            <div className='description' ref='description'><p>{description}</p></div>
           </div>
 
           <div className='footer'>
