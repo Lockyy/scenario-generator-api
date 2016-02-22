@@ -8,6 +8,9 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 ### Changes
 - Add ellipsis to end of truncated text on desktop
 
+### Bugfixes
+- Fix width of helpful question that is after all product reviews.
+
 ## v1.2.10
 
 ### Changes
