@@ -3,6 +3,11 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
+## v1.2.11
+
+### Changes
+- Add ellipsis to end of truncated text on desktop
+
 ## v1.2.10
 
 ### Changes

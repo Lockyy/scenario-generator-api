@@ -16,7 +16,7 @@ const ProductBox = React.createClass ({
 
   componentDidMount: function() {
     this.applyOverflowEllipsis();
-    window.onresize = _.debounce(this.applyOverflowEllipsis, 300).bind(this);
+    window.onresize = this.applyOverflowEllipsis;
   },
 
   applyOverflowEllipsis: function() {
