@@ -15,15 +15,17 @@ const ProductBox = React.createClass ({
 
   componentDidMount: function() {
     this.applyOverflowEllipsis();
-    window.onresize = _.debounce(this.applyOverflowEllipsis, 300);
+    $(window).resize(_.debounce(this.applyOverflowEllipsis, 300));
   },
 
   applyOverflowEllipsis: function() {
-    let el = this.refs.description.getDOMNode();
-    let wordArray = el.innerHTML.split(' ');
-    while($(el).height() < $(el).children().height() && wordArray.length > 0) {
-      wordArray.pop();
-      el.innerHTML = wordArray.join(' ') + '...';
+    if(this.refs.description) {
+      let el = this.refs.description.getDOMNode();
+      let wordArray = el.innerHTML.split(' ');
+      while($(el).height() < $(el).children().height() && wordArray.length > 0) {
+        wordArray.pop();
+        el.innerHTML = wordArray.join(' ') + '...';
+      }
     }
   },
 
