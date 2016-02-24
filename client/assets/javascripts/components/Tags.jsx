@@ -20,7 +20,7 @@ const Tags = React.createClass({
 
   componentDidMount: function() {
     this.hideTagOverflow()
-    window.onresize = _.debounce(this.hideTagOverflow, 300)
+    $(window).resize(_.debounce(this.hideTagOverflow, 300));
   },
 
   componentDidUpdate: function() {
