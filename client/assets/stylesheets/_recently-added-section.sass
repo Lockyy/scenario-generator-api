@@ -12,9 +12,8 @@ $orange: #e36308
     .tag-box
       @extend .col-md-3
       @extend .col-xs-12
-      padding: 20px
+      padding: 20px 0px 10px
       margin: 0
-      height: 440px
 
       & > .content
         color: white
@@ -24,7 +23,7 @@ $orange: #e36308
         flex-direction: column
         justify-content: space-between
         overflow: hidden
-        padding: 30px 20px
+        padding: 30px 20px 0px
         margin-top: -10px
 
         .header
@@ -85,11 +84,6 @@ $orange: #e36308
 
 // Small Devices, Tablets
 @media only screen and (min-width : 768px)
-  .section
-    &.recently-added-products
-      .section-row
-        .tag-box
-          padding: 10px
 
 // Medium Devices, Desktop
 @media only screen and (min-width : 992px)
@@ -102,10 +96,6 @@ $orange: #e36308
 
 // Large Devices, Wide Screens
 @media only screen and (min-width : 1200px)
-  .section
-    &.recently-added-products
-      .tag-box
-        padding: 20px 10px
 
 // Really Large Devices, Wide Screens
 @media (min-width: 1330px)

@@ -269,7 +269,7 @@
 @media only screen and (min-width : 768px)
   .product
     &.box-0, &.box-1, &.box-2, &.box-2-5, &.box-3, &.box-4-5
-      padding: 10px
+      padding: 10px 0px
 
     .content
       display: flex
@@ -293,8 +293,6 @@
             display: block
 
     &.box-1:not(.no-pic-box), &.box-0:not(.no-pic-box)
-      padding: 0
-
       .content
         flex-direction: row
         justify-content: flex-start
@@ -316,6 +314,9 @@
 // Medium Devices, Desktop
 @media only screen and (min-width : 992px)
   .product
+    &.box-0, &.box-1, &.box-2, &.box-2-5, &.box-3, &.box-4-5
+      padding: 10px
+
     .content
       font-size: 20px
       .data
@@ -323,8 +324,6 @@
           max-height: 240px
 
     &.box-0
-      padding: 10
-
       .content
         height: ($box-height / 2) - 10
 
@@ -333,8 +332,6 @@
             display: none
 
     &.box-1:not(.no-pic-box), &.box-0:not(.no-pic-box)
-      padding: 10px
-
       .content
         flex-direction: column-reverse
         justify-content: space-between
