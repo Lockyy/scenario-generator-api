@@ -50,7 +50,7 @@ const Avatar = React.createClass({
   //////////
 
   defaultStyles: function defaultStyles() {
-    if(this.props.user.avatar_url) {
+    if(this.props.user && this.props.user.avatar_url) {
       return AvatarStyles.avatar;
     } else {
       return AvatarStyles.numbers;
@@ -148,6 +148,8 @@ const AvatarStyles = {
     display: 'inline-flex',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
+    top: -15,
   },
   hoverBox: {
     position: 'absolute',
