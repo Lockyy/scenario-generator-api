@@ -18,6 +18,11 @@ cp Dockerfile.production Dockerfile
 echo Copying database.yml.example to database.yml
 cp config/database.yml.example config/database.yml
 
+echo Compiling assets from ./client for use in asset pipeline
+cd client
+$(npm bin)/webpack --config webpack.rails.config.js
+cd ../
+
 echo Compiling assets for production
 RAILS_ENV=production SECRET_KEY_BASE=asdasd rake assets:precompile
 
