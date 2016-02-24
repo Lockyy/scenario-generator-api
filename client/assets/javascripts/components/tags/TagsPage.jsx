@@ -43,19 +43,19 @@ const TagsPage = React.createClass({
   renderLeftBar: function() {
     if(this.state.data.tags) {
       let leftBar = (
-          <div className='col-xs-12 col-sm-3 left-bar'>
-            <Link to='/app/tags' className='tagged-in'>
-              All Tags
-            </Link>
-            { _.map(Object.keys(this.state.data.tags), this.tagLinks) }
-          </div>
+        <div className='col-xs-12 col-sm-3 left-bar'>
+          <Link to='/app/tags' className='tagged-in'>
+            All Tags
+          </Link>
+          { _.map(Object.keys(this.state.data.tags), this.tagLinks) }
+        </div>
       );
 
       return (
-          <Decide
-              condition={this.getLetter()}
-              success={() => <RenderDesktop> {leftBar} </RenderDesktop>}
-              failure={() => leftBar } />
+        <Decide
+          condition={this.getLetter()}
+          success={() => <RenderDesktop> {leftBar} </RenderDesktop>}
+          failure={() => leftBar } />
       )
     }
   },
@@ -64,23 +64,23 @@ const TagsPage = React.createClass({
     let topRight = this.getLetter() ? 'size' : 'hide';
     let tagSection = this.state.data.tags[letter];
     let tagsResults = (
-        <TagResults
-            data={{
-            total: tagSection.total,
-            data: tagSection.tags}}
-            title={letter}
-            topRight={topRight}
-            topLeft={'link'}
-            className={letter}
-            link={`/app/tags/${letter}`} />
+      <TagResults
+        data={{
+        total: tagSection.total,
+        data: tagSection.tags}}
+        title={letter}
+        topRight={topRight}
+        topLeft={'link'}
+        className={letter}
+        link={`/app/tags/${letter}`} />
     );
 
     if(!this.getLetter() || (this.getLetter() && this.getLetter() == letter)){
       return (
-          <Decide
-              condition={this.getLetter()}
-              success={() => tagsResults}
-              failure={() => <RenderDesktop> {tagsResults} </RenderDesktop> } />
+        <Decide
+          condition={this.getLetter()}
+          success={() => tagsResults}
+          failure={() => <RenderDesktop> {tagsResults} </RenderDesktop> } />
       );
     }
   },
@@ -88,7 +88,7 @@ const TagsPage = React.createClass({
   renderTags: function() {
     if(this.state.data.tags) {
       return (
-        <div className='col-xs-12 col-md-6'>
+        <div className='col-xs-12 col-sm-6'>
           { _.map(Object.keys(this.state.data.tags), this.renderTagSection) }
         </div>
       )
