@@ -5,28 +5,16 @@ import timeago from 'timeago';
 import TextHelper from '../utils/helpers/TextHelper';
 import AutoFitPicture from './AutoFitPicture';
 import Rating from './Rating';
+import RenderDesktop from './RenderDesktop'
+import RenderMobile from './RenderMobile'
+import MediaQuery from 'react-responsive';
+import MediaQueryConstants from '../utils/constants/MediaQueryConstants';
 
 const ProductBox = React.createClass ({
   displayName: 'ProductBox',
 
   contextTypes: {
     router: React.PropTypes.object
-  },
-
-  componentDidMount: function() {
-    this.applyOverflowEllipsis();
-    $(window).resize(_.debounce(this.applyOverflowEllipsis, 300));
-  },
-
-  applyOverflowEllipsis: function() {
-    if(this.refs.description) {
-      let el = this.refs.description.getDOMNode();
-      let wordArray = el.innerHTML.split(' ');
-      while($(el).height() < $(el).children().height() && wordArray.length > 0) {
-        wordArray.pop();
-        el.innerHTML = wordArray.join(' ') + '...';
-      }
-    }
   },
 
   hasPicture: function() {
@@ -47,12 +35,22 @@ const ProductBox = React.createClass ({
     let boxClass = `box-${boxSize}`;
     let picture = this.hasPicture() ?
       <AutoFitPicture src={this.props.image} typeSizeImage={this.props.typeSizeImage} containerClass='picture'/> : '';
-    if (!this.props.image || isHalfBox) {
+    let hidingImage = !this.props.image || isHalfBox
+    if (hidingImage) {
       boxClass += ' no-pic-box';
     }
     let classes = _.compact(['product', boxClass]).join(' ');
     let company = this.props.company;
-    let description = this.props.description
+
+    let maxLengthLG = boxSize == 1 ? 200 : 450
+    let maxLengthMD = boxSize == 1 ? 150 : 300
+    let maxLengthSM = boxSize == 1 ? 600 : 600
+    let maxLengthXS = boxSize == 1 ? 300 : 300
+
+    let descriptionLG = TextHelper.truncate(this.props.description, hidingImage ? 1300 : maxLengthLG)
+    let descriptionMD = TextHelper.truncate(this.props.description, hidingImage ? 1300 : maxLengthMD)
+    let descriptionSM = TextHelper.truncate(this.props.description, hidingImage ? 1300 : maxLengthSM)
+    let descriptionXS = TextHelper.truncate(this.props.description, hidingImage ? 1300 : maxLengthXS)
 
     return (<div className={classes}>
       <div className='content'>
@@ -82,7 +80,32 @@ const ProductBox = React.createClass ({
               <span className='reviews'>{this.props.reviews.length} review(s)</span>
             </div>
 
-            <div className='description' ref='description'><p>{description}</p></div>
+            <MediaQuery
+              query={MediaQueryConstants.SM}
+              className='description sm'
+              ref='description'>
+              <p>{descriptionSM}</p>
+            </MediaQuery>
+
+            <MediaQuery
+              query={MediaQueryConstants.MD}
+              className='description md'
+              ref='description'>
+              <p>{descriptionMD}</p>
+            </MediaQuery>
+
+            <MediaQuery
+              query={MediaQueryConstants.LG}
+              className='description lg'
+              ref='description'>
+              <p>{descriptionLG}</p>
+            </MediaQuery>
+
+            <RenderMobile
+              className='description xs'
+              ref='description'>
+              <p>{descriptionXS}</p>
+            </RenderMobile>
           </div>
 
           <div className='footer'>
