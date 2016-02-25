@@ -7,9 +7,12 @@ To read more on Semantic Versioning, please see [specs here](http://semver.org/s
 
 ### Changes
 - Add ellipsis to end of truncated text on desktop
+- Move whole push to dockerhub build process into one file ./bin/build-and-push
 
 ### Bugfixes
 - Fix width of helpful question that is after all product reviews.
+- Various responsive bugfixes
+- Fix Avatar component's number mode
 
 ## v1.2.10
 
