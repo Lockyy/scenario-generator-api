@@ -46,11 +46,14 @@
         align-items: center
         justify-content: space-between
         list-style: none
+        overflow: visible
         li
           &.close-hamburger-menu
+            &, & div
+              overflow: visible
             a
-              width: 35px
-              height: 35px
+              width: 42px
+              height: 26px
               display: block
               background: image-url('/assets/app/icons/menu-red.svg') no-repeat center center
               background-size: contain

@@ -32,7 +32,6 @@ const Tags = React.createClass({
     let tagHolder = $(this.refs.tags.getDOMNode())
     let tags = tagHolder.children('.tag')
     tags.show()
-
     for (var i = tags.length - 1; i >= 0; i--) {
       let tag = $(tags[i]);
       let tagHolderHeight = tagHolder.height()
