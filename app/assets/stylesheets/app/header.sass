@@ -13,12 +13,12 @@
   .container
     width: 95%
     padding: 5px
-    @include flexbox-centered-children
+    display: flex
+    align-items: center
+    justify-content: space-between
 
     .brand
       @extend .col-sm-3
-      float: left
-      display: flex
       img
         width: 120px
 
@@ -29,8 +29,10 @@
       color: $primary-grey
 
     .search-container
-      @extend .col-sm-5
+      @extend .col-md-5
       @extend .col-sm-offset-1
+      @extend .col-sm-4
+      @extend .col-xs-2
 
       padding: 0
 
@@ -44,15 +46,15 @@
           border-radius: 45px
 
     .main-nav
-      @extend .col-xs-8
+      @extend .col-xs-5
       @extend .col-sm-3
-      @extend .col-sm-offset-1
       display: flex
-      justify-content: space-between
+      align-items: center
+      justify-content: flex-end
+      -ms-flex-pack: center
       list-style:none
       margin-bottom: 0
       padding: 0
-      text-align: right
 
 
       li
@@ -69,9 +71,10 @@
           margin-right: 5px
 
         &.show-hamburger-menu
+          overflow: visible
           a
-            width: 35px
-            height: 35px
+            width: 42px
+            height: 26px
             display: block
             background: image-url('/assets/app/icons/menu-white.svg') no-repeat center center
             background-size: contain
@@ -81,12 +84,23 @@
     color: $primary-grey
     border-bottom: 1px solid darken($primary-red, 10)
 
-@media only screen and (max-width: $screen-xs-max)
+@media only screen and (max-width: $screen-sm-max)
   .navbar.navbar-default
     z-index: 901
     .container
-      .search-container
+      .search-container *
         display: none
       .main-nav
-        -webkit-justify-content: flex-start
-        justify-content: flex-end
+        -ms-flex-pack: start
+
+@media only screen and (max-width: 450px) and (max-width: $screen-sm-max)
+  .navbar.navbar-default
+    .container
+      .main-nav
+        -ms-flex-pack: center
+
+@media only screen and (max-width: 400px)
+  .navbar.navbar-default
+    .container
+      .search-container
+        display: none
