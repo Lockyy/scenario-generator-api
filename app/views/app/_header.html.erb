@@ -13,10 +13,10 @@
     <ul class="main-nav pull-right">
       <li class="write-a-review">
         <%= link_to compiled_image_tag('app/icons/review.svg'), '/app/reviews/new' %>
-        <%= link_to "Write a Review", '/app/reviews/new', class: 'hidden-xs' %>
+        <%= link_to "Write a Review", '/app/reviews/new', class: 'hidden-xs hidden-sm' %>
       </li>
       <li class="toggle-search">
-        <%= link_to compiled_image_tag('app/icons/icon-search-white.svg', width: '30px'), '/app/search',class: 'visible-xs' %>
+        <%= link_to compiled_image_tag('app/icons/icon-search-white.svg', width: '30px'), '/app/search',class: 'visible-xs visible-sm' %>
       </li>
       <div id="hamburger-menu"></div>
     </ul>
