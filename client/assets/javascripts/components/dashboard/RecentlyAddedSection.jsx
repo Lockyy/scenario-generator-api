@@ -118,7 +118,14 @@ class RecentlyAddedSection extends React.Component {
   fetchTags() {
     if (!this.props.items || !this.props.items.tags) return '';
 
-    return (<TagsBox key={`most_popular_tags_box`} size={1} title={'Popular tags'} tags={this.props.items.tags} />);
+    return (
+      <TagsBox
+        key={`most_popular_tags_box`}
+        size={1}
+        title={'Popular tags'}
+        tags={this.props.items.tags}
+        hideOverflow={true} />
+    );
   }
 
   render() {

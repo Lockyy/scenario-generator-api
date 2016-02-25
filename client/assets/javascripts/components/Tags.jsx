@@ -29,22 +29,24 @@ const Tags = React.createClass({
 
   // pageWidth - (elementWidth + elementLeft) < 0
   hideTagOverflow: function() {
-    let tagHolder = $(this.refs.tags.getDOMNode())
-    let tags = tagHolder.children('.tag')
-    tags.show()
-    for (var i = tags.length - 1; i >= 0; i--) {
-      let tag = $(tags[i]);
-      let tagHolderHeight = tagHolder.height()
-      let tagHolderBottom = tagHolderHeight
-      let tagMargin = 5
-      let tagPadding = 3
-      let tagBottom = tag.height() + tag.position().top + tagMargin + tagPadding
-      if(tagHolderBottom <= tagBottom) {
-        tag.hide();
-      } else {
-        // We're sorting from bottom to top, if we find a tag that isn't
-        // overflowing then we know nothing else is.
-        break;
+    if(this.props.hideOverflow) {
+      let tagHolder = $(this.refs.tags.getDOMNode())
+      let tags = tagHolder.children('.tag')
+      tags.show()
+      for (var i = tags.length - 1; i >= 0; i--) {
+        let tag = $(tags[i]);
+        let tagHolderHeight = tagHolder.height()
+        let tagHolderBottom = tagHolderHeight
+        let tagMargin = 5
+        let tagPadding = 3
+        let tagBottom = tag.height() + tag.position().top + tagMargin + tagPadding
+        if(tagHolderBottom <= tagBottom) {
+          tag.hide();
+        } else {
+          // We're sorting from bottom to top, if we find a tag that isn't
+          // overflowing then we know nothing else is.
+          break;
+        }
       }
     }
   },

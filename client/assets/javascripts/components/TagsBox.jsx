@@ -14,6 +14,7 @@ class TagsBox extends React.Component {
         <Tags
           tags={this.props.tags}
           containerClass='white'
+          hideOverflow={this.props.hideOverflow}
           max={max} />
         <div className='see-all-tags-container'>
           <a href='/app/tags' className='btn all-tags'>See all tags</a>
@@ -26,7 +27,8 @@ class TagsBox extends React.Component {
 TagsBox.displayName = 'TagsBox';
 
 TagsBox.defaultProps = {
-  tags: []
+  tags: [],
+  hideOverflow: false,
 };
 
 TagsBox.propTypes = {};
