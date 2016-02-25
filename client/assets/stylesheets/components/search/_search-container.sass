@@ -4,6 +4,8 @@
   .form-group
     position: relative
     .results-dropdown
+      position: absolute
+      left: 50%
       &::before
         display: block
         position: absolute
@@ -11,7 +13,8 @@
         left: 40%
         content: image-url('/assets/app/icons/icon-dropdown-tri.svg')
       .results-holder
-        position: absolute
+        position: relative
+        left: -50%
         z-index: 100
         overflow: auto
         max-height: 75vh
