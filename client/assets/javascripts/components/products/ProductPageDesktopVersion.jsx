@@ -110,7 +110,7 @@ const ProductPageDesktopVersion = React.createClass({
 
     return (
       <div className='row info-row'>
-        <div className='col-xs-3 stats'>
+        <div className='col-xs-4 col-md-3 stats'>
           <div className='stars'>
             <Rating value={this.getProductData('rating')} name='rating'/>
             <div className='total-reviews'>
@@ -129,7 +129,7 @@ const ProductPageDesktopVersion = React.createClass({
             </a>
           </div>
         </div>
-        <div className='col-xs-6 information'>
+        <div className='col-xs-5 col-md-6 information'>
           <div className='link'>
             <a href={UrlHelper.addProtocol(this.getProductData('url'))} className='red' target='_blank'>
               {UrlHelper.addProtocol(this.getProductData('url'))}

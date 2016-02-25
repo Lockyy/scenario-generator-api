@@ -89,10 +89,17 @@
           font-size: 16px
           margin-top: 3px
           margin-bottom: 0px
+          a
+            overflow: hidden
+            white-space: nowrap
+            text-overflow: ellipsis
+            display: block
 
         .description
           font-size: 14px
           line-height: 1.25em
+          max-height: 120px
+          overflow: hidden
 
         .review
           display: flex
@@ -156,9 +163,6 @@
         @extend .col-xs-12
         @extend .col-md-12
         height: 70%
-
-        .description
-          max-height: 120px
 
       .picture
         @extend .col-xs-12
@@ -277,6 +281,9 @@
 
       .picture, .data
         height: 100%
+        .details
+          .description
+            max-height: 240px
 
     &.box-0
       .content
@@ -287,10 +294,9 @@
 
         .data
           height: 100%
-
-          .description
-            max-height: 120px
-            display: block
+          .details
+            .description
+              display: block
 
     &.box-1:not(.no-pic-box), &.box-0:not(.no-pic-box)
       .content
@@ -301,9 +307,6 @@
         .data
           height: 100%
           width: 50%
-
-          .description
-            max-height: none
 
         .picture
           height: 100%
@@ -319,17 +322,15 @@
 
     .content
       font-size: 20px
-      .data
-        .description
-          max-height: 240px
 
     &.box-0
       .content
         height: ($box-height / 2) - 10
 
         .data
-          .description
-            display: none
+          .details
+            .description
+              display: none
 
     &.box-1:not(.no-pic-box), &.box-0:not(.no-pic-box)
       .content
@@ -340,9 +341,9 @@
         .data
           height: 70%
           width: 100%
-
-          .description
-            max-height: 120px
+          .details
+            .description
+              max-height: 120px
 
         .picture
           height: 30%

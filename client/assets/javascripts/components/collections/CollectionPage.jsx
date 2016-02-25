@@ -175,7 +175,7 @@ const CollectionPage = React.createClass({
               secondaryDataType: 'rating',
               secondaryDataColumn: 'rating',
               sortByColumn: 'name',
-              width: 8,
+              width: 7,
             },
             {
               title: 'Date Added',
@@ -194,7 +194,7 @@ const CollectionPage = React.createClass({
               className: 'link underlined small-text',
               onClick: this.removeProduct,
               display: this.ownedByUser(),
-              width: 1
+              width: 2
             }
           ]} />
 

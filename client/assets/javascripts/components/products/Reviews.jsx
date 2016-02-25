@@ -142,7 +142,7 @@ const Reviews = React.createClass({
           No
         </button>
       </div>
-      <div className='feedback' data-review-id={reviewId} >
+      <div className='feedback hidden-md' data-review-id={reviewId} >
         Thanks for your vote!
       </div>
     </div>);

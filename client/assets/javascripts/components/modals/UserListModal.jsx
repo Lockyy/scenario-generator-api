@@ -98,7 +98,7 @@ const UserListModal = React.createClass ({
       <span className='title'>
         {this.state.title}
       </span>
-      <a onClick={this.close} className='close'></a>
+      <a onClick={this.props.close} className='close'></a>
     </RenderDesktop>
     )
   },
