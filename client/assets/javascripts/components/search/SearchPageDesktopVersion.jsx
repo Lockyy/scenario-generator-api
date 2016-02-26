@@ -1,6 +1,8 @@
 import React from 'react';
 import _ from 'lodash';
 import { Link, Navigation } from 'react-router';
+import MediaQuery from 'react-responsive'
+import MediaQueryConstants from '../../utils/constants/MediaQueryConstants'
 import Results from './Results'
 import TagResults from './TagResults'
 import Tags from '../Tags'
@@ -289,11 +291,27 @@ const SearchPageDesktopVersion = React.createClass({
       <div className='desktop-version'>
         <div className='row'>
           <div className='col-xs-12'>
-            <input
-              className='search-box'
-              ref='inputBox'
-              value={ this.props.searchString }
-              onChange={ this.props.onSearchInput } disabled/>
+
+            <MediaQuery
+              maxWidth={992}>
+              <input
+                className='search-box grey-bottom-border'
+                ref='inputBox'
+                value={ this.props.searchString }
+                placeholder='Type to search'
+                onChange={ this.props.onSearchInput } />
+            </MediaQuery>
+
+            <MediaQuery
+              minWidth={992}>
+              <input
+                className='search-box'
+                ref='inputBox'
+                value={ this.props.searchString }
+                onChange={ this.props.onSearchInput }
+                disabled />
+            </MediaQuery>
+
           </div>
         </div>
         <div className='row'>
