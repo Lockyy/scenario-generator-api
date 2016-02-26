@@ -3,6 +3,11 @@ Changelog
 
 To read more on Semantic Versioning, please see [specs here](http://semver.org/spec/v2.0.0.html)
 
+## v1.2.12
+
+### Bugfixes
+- Fix search on screensizes between 768px and 992px
+
 ## v1.2.11
 
 ### Changes
