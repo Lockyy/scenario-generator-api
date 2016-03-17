@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     get 'assets/*path',         to: 'assets#asset', as: :asset
     get 'compiled/*path',       to: 'assets#asset', as: :compiled
     get 'admin/compiled/*path', to: 'assets#asset', as: :admin_compiled
+    get 'admin(/:resource)/compiled/*path', to: 'assets#asset', as: :admin_resource_compiled
   end
 
   #######
