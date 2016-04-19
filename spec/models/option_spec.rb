@@ -10,8 +10,9 @@ describe Option do
   it { should have_many :right_exclusions }
 
   before do
-    @option_one = create(:option)
-    @option_two = create(:option)
+    options = create_list(:option, 2, column: create(:column))
+    @option_one = options[0]
+    @option_two = options[1]
   end
 
   describe '.exclusions' do
@@ -55,7 +56,7 @@ describe Option do
       create(:option_exclusion, left_option: @option_one,
                                 right_option: @option_two)
       @options = Option.all
-      @without_exclusions = @options.without_exclusions
+      @without_exclusions = Option.without_exclusions(@options)
     end
 
     it 'removes exclusions' do

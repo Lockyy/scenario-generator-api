@@ -34,8 +34,8 @@ class Option < ActiveRecord::Base
   # because the all_options used by the each is not the same as the one we remove from.
   # If the code was set up like that then every time there was an exclusion both sides of the exclusion would be
   # removed, instead of just one.
-  def self.without_exclusions
-    all_options = all
+  def self.without_exclusions(options)
+    all_options = options
     for i in 0..all_options.length
       option = all_options[i]
       break unless option

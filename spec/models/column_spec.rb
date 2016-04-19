@@ -24,47 +24,146 @@ describe Column do
     end
   end
 
-  describe '.absolute_max_options' do
+  describe '.pick' do
     before do
-      @column = create(:column)
+      @column = create(:column, min: 1, max: 3, chance_of_multiple: 5)
+      @options = create_list(:option, 3, column: @column)
+    end
+
+    describe 'with a chance_of_multiple 0' do
+      before { @column.update_attributes(chance_of_multiple: 0) }
+
+      it 'returns min options' do
+        100.times { expect(@column.pick.length).to be == 1 }
+      end
+    end
+
+    describe 'with a chance_of_multiple 100' do
+      before { @column.update_attributes(chance_of_multiple: 100) }
+      it 'returns max options' do
+        100.times { expect(@column.pick.length).to be == 3 }
+      end
+    end
+
+    describe 'with a chance_of_multiple between 0 and 100' do
+      before { @column.update_attributes(chance_of_multiple: 50) }
+
+      it 'has a chance to return all values between min and max (inclusive)' do
+        vals_appeared = []
+        100.times do
+          amount_to_pick = @column.amount_to_pick
+          expect(amount_to_pick >= @column.min && amount_to_pick <= @column.max).to eq true
+          vals_appeared << amount_to_pick
+        end
+        vals_appeared.uniq!.sort!
+        expect(vals_appeared).to eq [1,2,3]
+      end
+    end
+
+    describe 'when returning multiple options' do
+      before { @column.update_attributes(min: 3, max: 3) }
+
+      it 'returns no duplicates' do
+        picks = @column.pick
+        expect(picks.length == picks.uniq.length).to be true
+      end
+    end
+
+    describe 'when supplied a quantity' do
+      before { @quantity = 2 }
+      it 'returns that amount of results' do
+        100.times { expect(@column.pick(@quantity).length).to eq 2 }
+      end
+    end
+
+    describe 'when there are exclusions' do
+      before do
+        @exclusive_one = @options.first
+        @exclusive_two = @options.last
+        create(:option_exclusion, left_option: @exclusive_one, right_option: @exclusive_two)
+      end
+
+      it 'does not return options that conflict' do
+        100.times do
+          picks = @column.pick
+          expect(picks.include?(@exclusive_one) && picks.include?(@exclusive_two)).to eq false
+        end
+      end
+
+      # If you have 3 options, and one exclusion pair then you'll only be able to pick 2 options.
+      # Example:
+      # Options a, b, c
+      # b and c exclude each other.
+      # You can only ever get a, b and a, c. Even if you need to pick 3 you can't, there aren't enough
+      # non-exclusive options.
+      describe 'that prevent picking max values' do
+        before do
+          @column.update_attributes(min: 3, max: 3)
+        end
+
+        it 'will return the most it can' do
+          expect(@column.pick.length).to eq 2
+        end
+      end
+    end
+  end
+
+  describe '.max_options' do
+    before do
+      @column = create(:column, max: 5)
       create_list(:option, 5, column: @column)
     end
 
     describe 'with no exclusions' do
-      it 'returns options.length' do
-        expect(@column.absolute_max_options).to eq @column.options.length
+      it 'returns column.max' do
+        expect(@column.max_options).to eq @column.max
       end
     end
 
-    describe 'with one exclusions' do
-      before do
-        create(:option_exclusion, left_option: @column.options[0], right_option: @column.options[1])
+    describe 'with exclusions' do
+      describe "that don't affect the max amount of pickable options" do
+        before do
+          create_list(:option, 10, column: @column)
+        end
+
+        it 'returns column.max' do
+          expect(@column.max_options).to eq @column.max
+        end
       end
 
-      it 'returns options.length minus one' do
-        expect(@column.absolute_max_options).to eq @column.options.length - 1
-      end
-    end
+      describe "that reduce the max amount of pickable options" do
+        describe 'on 5 options with a max pickable of 5' do
+          describe 'one exclusion' do
+            before { create(:option_exclusion, left_option: @column.options[0], right_option: @column.options[1]) }
+            it 'returns 4' do
+              expect(@column.max_options).to eq 4
+            end
+          end
 
-    describe 'with two separate exclusions' do
-      before do
-        create(:option_exclusion, left_option: @column.options[0], right_option: @column.options[1])
-        create(:option_exclusion, left_option: @column.options[2], right_option: @column.options[3])
-      end
+          describe 'two exclusions' do
+            describe "that don't overlap" do
+              before do
+                create(:option_exclusion, left_option: @column.options[0], right_option: @column.options[1])
+                create(:option_exclusion, left_option: @column.options[2], right_option: @column.options[3])
+              end
 
-      it 'returns options.length minus two' do
-        expect(@column.absolute_max_options).to eq @column.options.length - 2
-      end
-    end
+              it 'returns 3' do
+                expect(@column.max_options).to eq 3
+              end
+            end
 
-    describe 'with two exclusions with an overlapping option' do
-      before do
-        create(:option_exclusion, left_option: @column.options[0], right_option: @column.options[1])
-        create(:option_exclusion, left_option: @column.options[0], right_option: @column.options[2])
-      end
+            describe "that overlap" do
+              before do
+                create(:option_exclusion, left_option: @column.options[0], right_option: @column.options[1])
+                create(:option_exclusion, left_option: @column.options[0], right_option: @column.options[3])
+              end
 
-      it 'returns options.length minus two' do
-        expect(@column.absolute_max_options).to eq @column.options.length - 2
+              it 'returns 3' do
+                expect(@column.max_options).to eq 3
+              end
+            end
+          end
+        end
       end
     end
   end
