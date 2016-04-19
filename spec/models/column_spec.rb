@@ -209,4 +209,64 @@ describe Column do
       end
     end
   end
+
+  describe '.enforce_rules_amount' do
+    before do
+      @column = create(:column, min: 1, max: 3)
+      @options = create_list(:option, 3, column: @column)
+    end
+
+    describe 'when passed a number below min' do
+      it 'returns min' do
+        expect(@column.enforce_amount_rules(@column.min - 1)).to eq @column.min
+      end
+
+      describe 'when there is an exclusion' do
+        before do
+          create(:option_exclusion, left_option: @options.first, right_option: @options.last)
+        end
+
+        describe 'that brings the total available below the min' do
+          before do
+            @column.update_attributes(min: 3)
+          end
+
+          it 'returns max_options' do
+            expect(@column.enforce_amount_rules(@column.min - 1)).to eq @column.max_options
+          end
+
+          it 'does not return min' do
+            expect(@column.enforce_amount_rules(@column.min - 1)).to_not eq @column.min
+          end
+        end
+      end
+    end
+
+    describe 'when passed a number above max' do
+      it 'returns max' do
+        expect(@column.enforce_amount_rules(@column.max + 1)).to eq @column.max
+      end
+
+      describe 'when there is an exclusion' do
+        before do
+          create(:option_exclusion, left_option: @options.first, right_option: @options.last)
+        end
+
+        describe 'that brings the total available below the max' do
+          it 'returns max_options' do
+            expect(@column.enforce_amount_rules(@column.max + 1)).to eq @column.max_options
+          end
+
+          it 'does not return min' do
+            expect(@column.enforce_amount_rules(@column.max + 1)).to_not eq @column.max
+          end
+        end
+      end
+    end
+  end
 end
+
+
+def enforce_amount_rules(amount)
+    [max_options, [amount, min].max].min
+  end

@@ -3,7 +3,7 @@ FactoryGirl.define do
     parent { create(:generator) }
     min 1
     max 1
-    chance_of_multiple 0
+    chance_of_multiple 5
     name { Faker::Lorem.sentence(3) }
     spoilers false
 
