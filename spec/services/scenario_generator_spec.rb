@@ -23,6 +23,70 @@ describe Scenario::Generator do
         expect(Scenario::Generator.new(@generator.id).generate_scenario).to eq [@expected_column_result]
       end
 
+      describe 'that has multiple options to pick from' do
+        before { @option = create(:option, column: @column) }
+
+        describe 'with a max of 1' do
+          before do
+            @returned_options = Scenario::Generator.new(@generator.id).generate_scenario[0][:options]
+          end
+
+          it 'returns one of the options' do
+            expect((@column.options.map(&:id) | @returned_options.map(&:id)).length).to be > 0
+          end
+
+          it 'returns max quantity one options' do
+            expect(@returned_options.length).to eq 1
+          end
+        end
+
+        describe 'with a max of 2' do
+          describe 'and a min of 2' do
+            before do
+              @column.max = 2
+              @column.min = 2
+              @column.save
+              @returned_options = Scenario::Generator.new(@generator.id).generate_scenario[0][:options]
+            end
+
+            it "returns options from the column's option list" do
+              expect((@column.options.map(&:id) | @returned_options.map(&:id)).length).to be > 0
+            end
+
+            it 'returns max quantity two options' do
+              expect(@returned_options.length).to eq 2
+            end
+
+            it 'returns unique options' do
+              expect(@returned_options.uniq.length).to eq 2
+            end
+          end
+
+          describe 'and a min of 1' do
+            before do
+              @column.min = 1
+              @column.max = 2
+              @column.save
+              @returned_options = Scenario::Generator.new(@generator.id).generate_scenario[0][:options]
+            end
+
+            it "returns options from the column's option list" do
+              expect((@column.options.map(&:id) | @returned_options.map(&:id)).length).to be > 0
+            end
+
+            it 'returns max quantity one or two options' do
+              expect([1,2].include? @returned_options.length).to eq true
+            end
+
+            it 'returns one or two options randomly' do
+              returned_options = []
+              100.times { returned_options << Scenario::Generator.new(@generator.id).generate_scenario[0][:options].length }
+              expect(returned_options.uniq.sort).to eq [1, 2]
+            end
+          end
+        end
+      end
+
       describe 'where an option picked has a child column' do
         before do
           @option_child_column = create(:column, min: 1, max: 1, parent: @option)
