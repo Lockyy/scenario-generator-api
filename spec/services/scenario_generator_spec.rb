@@ -23,8 +23,8 @@ describe Scenario::Generator do
         expect(Scenario::Generator.new(@generator.id).generate_scenario).to eq [@expected_column_result]
       end
 
-      describe 'that has multiple options to pick from' do
-        before { @option = create(:option, column: @column) }
+      describe 'that has two options to pick from' do
+        before { @option_new = create(:option, column: @column) }
 
         describe 'with a max of 1' do
           before do
@@ -37,6 +37,21 @@ describe Scenario::Generator do
 
           it 'returns max quantity one options' do
             expect(@returned_options.length).to eq 1
+          end
+
+          describe 'with exclusions' do
+            before do
+              @exclusion = OptionExclusion.create(left_option: @option_new, right_option: @option)
+              @returned_options = Scenario::Generator.new(@generator.id).generate_scenario[0][:options]
+            end
+
+            it 'returns one of the options' do
+              expect((@column.options.map(&:id) | @returned_options.map(&:id)).length).to be > 0
+            end
+
+            it 'returns max quantity one options' do
+              expect(@returned_options.length).to eq 1
+            end
           end
         end
 
@@ -60,6 +75,18 @@ describe Scenario::Generator do
             it 'returns unique options' do
               expect(@returned_options.uniq.length).to eq 2
             end
+
+            describe 'with exclusions' do
+              before do
+                @exclusion = OptionExclusion.create(left_option: @option_new, right_option: @option)
+                @returned_options = Scenario::Generator.new(@generator.id).generate_scenario[0][:options]
+              end
+
+              # Because there aren't enough options available to fulfill the requested amount
+              it "will only return 1" do
+                expect(@returned_options.length).to eq 1
+              end
+            end
           end
 
           describe 'and a min of 1' do
@@ -82,6 +109,48 @@ describe Scenario::Generator do
               returned_options = []
               100.times { returned_options << Scenario::Generator.new(@generator.id).generate_scenario[0][:options].length }
               expect(returned_options.uniq.sort).to eq [1, 2]
+            end
+
+            describe 'with exclusions' do
+              before do
+                @exclusion = OptionExclusion.create(left_option: @option_new, right_option: @option)
+              end
+
+              # Because there aren't enough options available to fulfill the requested amount
+              it "will only return 1" do
+                100.times { expect(Scenario::Generator.new(@generator.id).generate_scenario[0][:options].length).to eq 1 }
+              end
+            end
+          end
+        end
+      end
+
+      describe 'that has 5 options' do
+        before do
+          @options = create_list(:option, 4, column: @column)
+        end
+
+        describe 'and a max and min of two' do
+          before do
+            @column.max = @column.min = 2
+            @column.save
+          end
+
+          describe 'with exclusions' do
+            before do
+              @exlcusion_options = [@options.last, @option]
+              @exclusion = OptionExclusion.create(left_option: @exlcusion_options[0], right_option: @exlcusion_options[1])
+            end
+
+            it "won't return options that conflict" do
+              100.times do
+                options = Scenario::Generator.new(@generator.id).generate_scenario[0][:options]
+                expect(options.include?(@exlcusion_options[0]) && options.include?(@exlcusion_options[1])).to_not eq true
+              end
+            end
+
+            it "will return two options" do
+              expect(Scenario::Generator.new(@generator.id).generate_scenario[0][:options].length).to eq 2
             end
           end
         end
