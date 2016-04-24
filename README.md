@@ -1,5 +1,7 @@
 ## Scenario Generator API
 
+![](https://circleci.com/gh/Lockyy/scenario-generator-api.png?style=shield&circle-token=:circle-token)
+
 This API is intended to be the replacement for the backend of the website currently up at [scenariogenerator.net](http://www.scenariogenerator.net)
 
 It allows you to specify a branching scenario and then have the generate pick a random set of results from that scenario for you.
