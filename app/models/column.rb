@@ -52,4 +52,10 @@ class Column < ActiveRecord::Base
   def enforce_amount_rules(amount)
     [max_options, [amount, min].max].min
   end
+
+  def exclusion_array
+    option_exclusions.map do |exclusion|
+      [exclusion.left_option.id, exclusion.right_option.id]
+    end
+  end
 end
