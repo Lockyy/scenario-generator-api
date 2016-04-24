@@ -25,11 +25,7 @@ This allows users to be given a random challenge, equipment loadout, or story pa
   - Right now were're at a bit of a mix, a Generator can only have one column but a column can have_many columns. We need to pick one and stick to it.
 - Add API endpoints for creating, editing, and deleting generators/subjects/options/columns.
 - Add user login
-- Add user ownership of generators
-- Add tests for API endpoints
-- Add more tests for Scenario::Generator
-  - For when a column has multiple options
-  - For when there are exclusions
+- Add user ownership of generatorsx
 - Other stuff that needs listing
 
 ## Contributing
