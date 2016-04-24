@@ -107,7 +107,7 @@ describe Scenario::Generator do
 
             it 'returns one or two options randomly' do
               returned_options = []
-              100.times { returned_options << Scenario::Generator.new(@generator.id).generate_scenario[0][:options].length }
+              1000.times { returned_options << Scenario::Generator.new(@generator.id).generate_scenario[0][:options].length }
               expect(returned_options.uniq.sort).to eq [1, 2]
             end
 
@@ -118,7 +118,7 @@ describe Scenario::Generator do
 
               # Because there aren't enough options available to fulfill the requested amount
               it "will only return 1" do
-                100.times { expect(Scenario::Generator.new(@generator.id).generate_scenario[0][:options].length).to eq 1 }
+                1000.times { expect(Scenario::Generator.new(@generator.id).generate_scenario[0][:options].length).to eq 1 }
               end
             end
           end
@@ -143,7 +143,7 @@ describe Scenario::Generator do
             end
 
             it "won't return options that conflict" do
-              100.times do
+              1000.times do
                 options = Scenario::Generator.new(@generator.id).generate_scenario[0][:options]
                 expect(options.include?(@exlcusion_options[0]) && options.include?(@exlcusion_options[1])).to_not eq true
               end
