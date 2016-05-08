@@ -8,7 +8,7 @@ describe Api::V1::SubjectsController do
   #   json.(subject, :id, :name)
   #   json.total_generators subject.generators.length
   # end
-  describe "GET index" do
+  describe 'GET index' do
     describe 'with subjects' do
       SUBJECTS_TO_CREATE = 10
       before do
@@ -23,14 +23,14 @@ describe Api::V1::SubjectsController do
         @json = JSON.parse(response.body).with_indifferent_access
       end
 
-      it "returns a list of all subjects" do
+      it 'returns a list of all subjects' do
         expect(@json[:subjects].length).to eq SUBJECTS_TO_CREATE
       end
 
       it 'includes id, name, and total_generators for each subject' do
         @json[:subjects].each do |subject|
           [:id, :name, :total_generators].each do |key|
-            expect(subject.has_key?(key))
+            expect(subject.key?(key))
           end
         end
       end
@@ -54,7 +54,7 @@ describe Api::V1::SubjectsController do
         @json = JSON.parse(response.body).with_indifferent_access
       end
 
-      it "returns an empty list of subjects" do
+      it 'returns an empty list of subjects' do
         expect(@json[:subjects].length).to eq 0
       end
 
@@ -70,7 +70,7 @@ describe Api::V1::SubjectsController do
   # json.generators @subject.generators do |generator|
   #   json.(generator, :id, :name)
   # end
-  describe "GET show" do
+  describe 'GET show' do
     describe 'with a subject that exists' do
       GENERATORS_TO_CREATE = 2
       before do
@@ -93,7 +93,7 @@ describe Api::V1::SubjectsController do
       it 'includes id, name, and total_generators for each subject' do
         @json[:generators].each do |generator|
           [:id, :name].each do |key|
-            expect(generator.has_key?(key))
+            expect(generator.key?(key))
           end
         end
       end

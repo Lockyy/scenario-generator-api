@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 describe Scenario::Generator do
-
   before do
     @generator = create(:generator)
     @column = create(:column, min: 1, max: 1, parent: @generator)
@@ -83,7 +82,7 @@ describe Scenario::Generator do
               end
 
               # Because there aren't enough options available to fulfill the requested amount
-              it "will only return 1" do
+              it 'will only return 1' do
                 expect(@returned_options.length).to eq 1
               end
             end
@@ -102,7 +101,7 @@ describe Scenario::Generator do
             end
 
             it 'returns max quantity one or two options' do
-              expect([1,2].include? @returned_options.length).to eq true
+              expect([1, 2].include? @returned_options.length).to eq true
             end
 
             it 'returns one or two options randomly' do
@@ -117,7 +116,7 @@ describe Scenario::Generator do
               end
 
               # Because there aren't enough options available to fulfill the requested amount
-              it "will only return 1" do
+              it 'will only return 1' do
                 1000.times { expect(Scenario::Generator.new(@generator.id).generate_scenario[0][:options].length).to eq 1 }
               end
             end
@@ -149,7 +148,7 @@ describe Scenario::Generator do
               end
             end
 
-            it "will return two options" do
+            it 'will return two options' do
               expect(Scenario::Generator.new(@generator.id).generate_scenario[0][:options].length).to eq 2
             end
           end

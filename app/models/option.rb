@@ -16,14 +16,14 @@ class Option < ActiveRecord::Base
   # To make a bi-directional has_and_belongs_to_many with the same model you need to do this.
   # For more details you can read:
   # http://cobwwweb.com/bi-directional-has-and-belongs-to-many-on-a-single-model-in-rails
-  has_many :left_option_exclusions, :foreign_key => :left_option_id,
-           :class_name => 'OptionExclusion'
-  has_many :left_exclusions, :through => :left_option_exclusions,
-           :source => :right_option
-  has_many :right_option_exclusions, :foreign_key => :right_option_id,
-           :class_name => 'OptionExclusion'
-  has_many :right_exclusions, :through => :right_option_exclusions,
-           :source => :left_option
+  has_many :left_option_exclusions, foreign_key: :left_option_id,
+                                    class_name:  'OptionExclusion'
+  has_many :left_exclusions, through: :left_option_exclusions,
+                             source:  :right_option
+  has_many :right_option_exclusions, foreign_key: :right_option_id,
+                                     class_name:  'OptionExclusion'
+  has_many :right_exclusions, through: :right_option_exclusions,
+                              source:  :left_option
 
   # We do it this way instead of like this:
   # ```
@@ -41,7 +41,7 @@ class Option < ActiveRecord::Base
       break unless option
       all_options -= option.exclusions
     end
-    return all_options
+    all_options
   end
 
   # If an option appears in exclusions then it cannot be included in the same column as this one.

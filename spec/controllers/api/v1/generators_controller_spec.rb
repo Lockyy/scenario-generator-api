@@ -11,7 +11,7 @@ describe Api::V1::GeneratorsController do
   #     json.(generator.subject, :id, :name)
   #   end
   # end
-  describe "GET index" do
+  describe 'GET index' do
     describe 'with generators' do
       GENERATORS_TO_CREATE = 10
       before do
@@ -21,14 +21,14 @@ describe Api::V1::GeneratorsController do
         @json = JSON.parse(response.body).with_indifferent_access
       end
 
-      it "returns a list of all generators" do
+      it 'returns a list of all generators' do
         expect(@json[:generators].length).to eq GENERATORS_TO_CREATE
       end
 
       it 'includes id, name, and total_generators for each generator' do
         @json[:generators].each do |generator|
           [:id, :name, :subject].each do |key|
-            expect(generator.has_key?(key)).to eq true
+            expect(generator.key?(key)).to eq true
           end
         end
       end
@@ -36,7 +36,7 @@ describe Api::V1::GeneratorsController do
       it 'includes details on generator subject' do
         @json[:generators].each do |generator|
           [:id, :name].each do |key|
-            expect(generator[:subject].has_key?(key)).to eq true
+            expect(generator[:subject].key?(key)).to eq true
           end
         end
       end
@@ -60,7 +60,7 @@ describe Api::V1::GeneratorsController do
         @json = JSON.parse(response.body).with_indifferent_access
       end
 
-      it "returns an empty list of generators" do
+      it 'returns an empty list of generators' do
         expect(@json[:generators].length).to eq 0
       end
 
@@ -116,7 +116,7 @@ describe Api::V1::GeneratorsController do
             'id' => @option_two.id,
             'text' => @option_two.text,
             'columns' => [],
-          }
+          },
         ],
         'exclusions' => [[@exclusion.left_option.id, @exclusion.right_option.id]],
         'columns' => [
@@ -139,7 +139,7 @@ describe Api::V1::GeneratorsController do
             'options' => [],
             'exclusions' => [],
             'columns' => [],
-          }
+          },
         ],
       }
     end

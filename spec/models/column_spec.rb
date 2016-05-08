@@ -56,7 +56,7 @@ describe Column do
           vals_appeared << amount_to_pick
         end
         vals_appeared.uniq!.sort!
-        expect(vals_appeared).to eq [1,2,3]
+        expect(vals_appeared).to eq [1, 2, 3]
       end
     end
 
@@ -131,7 +131,7 @@ describe Column do
         end
       end
 
-      describe "that reduce the max amount of pickable options" do
+      describe 'that reduce the max amount of pickable options' do
         describe 'on 5 options with a max pickable of 5' do
           describe 'one exclusion' do
             before { create(:option_exclusion, left_option: @column.options[0], right_option: @column.options[1]) }
@@ -152,7 +152,7 @@ describe Column do
               end
             end
 
-            describe "that overlap" do
+            describe 'that overlap' do
               before do
                 create(:option_exclusion, left_option: @column.options[0], right_option: @column.options[1])
                 create(:option_exclusion, left_option: @column.options[0], right_option: @column.options[3])
@@ -205,7 +205,7 @@ describe Column do
           vals_appeared << amount_to_pick
         end
         vals_appeared.uniq!.sort!
-        expect(vals_appeared).to eq [1,2,3]
+        expect(vals_appeared).to eq [1, 2, 3]
       end
     end
   end
@@ -266,7 +266,6 @@ describe Column do
   end
 end
 
-
 def enforce_amount_rules(amount)
-    [max_options, [amount, min].max].min
+  [max_options, [amount, min].max].min
   end

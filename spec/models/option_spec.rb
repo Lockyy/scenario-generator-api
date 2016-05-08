@@ -24,7 +24,7 @@ describe Option do
 
     describe 'with an exclusion' do
       before do
-        create(:option_exclusion, left_option: @option_one,
+        create(:option_exclusion, left_option:  @option_one,
                                   right_option: @option_two)
       end
 
@@ -53,7 +53,7 @@ describe Option do
   describe '#without_exclusions' do
     before do
       create(:option)
-      create(:option_exclusion, left_option: @option_one,
+      create(:option_exclusion, left_option:  @option_one,
                                 right_option: @option_two)
       @options = Option.all
       @without_exclusions = Option.without_exclusions(@options)

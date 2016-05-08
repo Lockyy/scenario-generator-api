@@ -103,7 +103,7 @@ describe Api::V1::GeneratorsController do
               end
 
               # Because there aren't enough options available to fulfill the requested amount
-              it "will only return 1" do
+              it 'will only return 1' do
                 expect(@returned_options.length).to eq 1
               end
             end
@@ -125,7 +125,7 @@ describe Api::V1::GeneratorsController do
             end
 
             it 'returns max quantity one or two options' do
-              expect([1,2].include? @returned_options.length).to eq true
+              expect([1, 2].include? @returned_options.length).to eq true
             end
 
             it 'returns one or two options randomly' do
@@ -145,7 +145,7 @@ describe Api::V1::GeneratorsController do
               end
 
               # Because there aren't enough options available to fulfill the requested amount
-              it "will only return 1" do
+              it 'will only return 1' do
                 1000.times do
                   get :scenario, generator_id: @generator.id, format: :json
                   @json = JSON.parse(response.body).with_indifferent_access
@@ -185,7 +185,7 @@ describe Api::V1::GeneratorsController do
               end
             end
 
-            it "will return two options" do
+            it 'will return two options' do
               get :scenario, generator_id: @generator.id, format: :json
               @json = JSON.parse(response.body).with_indifferent_access
               @scenario = @json[:scenario][:columns]
