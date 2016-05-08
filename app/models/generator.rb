@@ -11,5 +11,9 @@
 class Generator < ActiveRecord::Base
   belongs_to :subject
 
-  has_one :column, as: :parent
+  has_many :columns, as: :parent
+
+  def generate
+    columns.map(&:process)
+  end
 end

@@ -10,7 +10,7 @@ class Api::V1::GeneratorsController < ApplicationController
   end
 
   def scenario
-    @scenario = Scenario::Generator.new(@generator.id).generate_scenario
+    @scenario = @generator.generate
   end
 
   private
