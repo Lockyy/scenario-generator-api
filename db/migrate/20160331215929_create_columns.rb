@@ -8,8 +8,10 @@ class CreateColumns < ActiveRecord::Migration
       t.boolean :spoilers, default: :false
       t.integer :min, default: 1
       t.integer :max, default: 1
+      t.integer :max_per
       t.string  :help
       t.integer :chance_of_multiple, default: 0
+      t.string  :type, default: :'Column::Options'
 
       t.timestamps null: false
     end

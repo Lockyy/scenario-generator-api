@@ -21,71 +21,45 @@ class Column < ActiveRecord::Base
   has_many :option_exclusions, through: :options, source: :left_option_exclusions
 
   validates :min, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validates :max, presence: true, numericality: { only_integer: true, :greater_than => Proc.new { |column| (column.min || 1) - 1 } }
+  validates :max, presence: true, numericality: { only_integer: true, greater_than: proc { |column| (column.min || 1) - 1 } }
   validates :chance_of_multiple, presence: true, numericality: { only_integer: true, greater_than: -1 }
 
-  # This is the max amount of options available
-  # If we have three options but two of them exclude each other then we will actually only
-  # be able to pick two options, because if you try to go to three you'll always get a conflict.
-  def max_options
-    [options.length - option_exclusions.length, max].min
-  end
+  before_save :set_generator
 
- # Recursively generate a scenario using the passed in column
-  def process(column)
-    columns = []
+  # Recursively generate a scenario for this column
+  def process
+    column_hash = {
+      column:        self,
+      options:       pick,
+      child_columns: [],
+    }
 
-    options = column.pick
-
-    child_columns = []
     # If the options we picked have columns then we need to recursively add their columns to the array
     # Doing it here ensures that it appears in the correct place in the scenario
-    options.each do |option|
-      option.columns.each do |column|
-        child_columns += process_column(column)
+    column_hash[:options].each do |option|
+      columns = option[:columns] || option.columns
+      columns.each do |column|
+        column_hash[:child_columns] << column.process
       end
     end
 
     # If this column has any child columns, recursively add them to the array as well
-    column.columns.each do |column|
-      child_columns += process_column(column)
+    columns.each do |column|
+      column_hash[:child_columns] << column.process
     end
 
-    # Add the current column, it's options, and any child columns to the array
-    columns << {
-      column: column,
-      options: options,
-      child_columns: child_columns,
-    }
-
-    return columns
+    column_hash
   end
 
-  def pick(amount = nil)
-    amount = amount ? enforce_amount_rules(amount) : amount_to_pick
-
-    picks = Option.without_exclusions(options.sample(amount))
-    while picks.length < amount
-      new_picks = (options - picks).sample(amount - picks.length)
-      picks = Option.without_exclusions(picks + new_picks)
-    end
-    picks
+  def create_options(option_strings)
+    options.create(option_strings.map { |os| {text: os} })
   end
 
-  def amount_to_pick
-    amount = min
-    return amount if chance_of_multiple == 0
-    amount += 1 while rand(100) <= chance_of_multiple && amount < max_options
-    enforce_amount_rules(amount)
-  end
+  private
 
-  def enforce_amount_rules(amount)
-    [max_options, [amount, min].max].min
-  end
-
-  def exclusion_array
-    option_exclusions.map do |exclusion|
-      [exclusion.left_option.id, exclusion.right_option.id]
-    end
+  def set_generator
+    p = parent
+    p = p.class.name == 'Option' ? p.column : p.parent while p.class.name != 'Generator'
+    self.generator = p
   end
 end
