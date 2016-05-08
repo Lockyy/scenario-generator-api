@@ -1,7 +1,7 @@
 class Api::V1::GeneratorsController < ApplicationController
   before_action :setup_subject
   before_action :setup_generators
-  before_action :setup_generator, only: [:show, :scenario]
+  before_action :setup_generator, except: [:index]
 
   def index
   end
@@ -11,6 +11,13 @@ class Api::V1::GeneratorsController < ApplicationController
 
   def scenario
     @scenario = @generator.generate
+  end
+
+  def column
+    @column = Column.find_by(id: params[:column_id], generator_id: params[:generator_id])
+    @scenario = [@column.process]
+
+    render :scenario
   end
 
   private
