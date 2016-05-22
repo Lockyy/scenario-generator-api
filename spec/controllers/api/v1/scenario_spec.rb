@@ -16,6 +16,19 @@ describe Api::V1::GeneratorsController do
   end
 
   describe '.generate_scenario' do
+    describe 'when passed random as generator id' do
+      before do
+        @generator_two = create(:generator)
+        get :scenario, generator_id: 'random', format: :json
+        @json = JSON.parse(response.body).with_indifferent_access
+      end
+
+      it 'will return a random generator' do
+        generator_id = @json[:generator][:id]
+        expect([@generator.id, @generator_two.id]).to include generator_id
+      end
+    end
+
     describe 'with one column' do
       before do
         @generator = create(:generator)

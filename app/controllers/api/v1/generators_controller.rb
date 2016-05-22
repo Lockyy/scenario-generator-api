@@ -39,7 +39,11 @@ class Api::V1::GeneratorsController < ApplicationController
 
   def setup_generator
     id = params[:id] || params[:generator_id]
-    @generator = @generators.find_by(id: id)
+    if id == 'random'
+      @generator = @generators.sample
+    else
+      @generator = @generators.find_by(id: id)
+    end
     render status: :not_found, json: { response: 'Generator not found' } unless @generator
   end
 end
