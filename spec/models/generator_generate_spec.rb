@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Scenario::Generator do
+describe Generator do
   before do
     @generator = create(:generator)
     @column = create(:column, min: 1, max: 1, parent: @generator)
@@ -9,17 +9,67 @@ describe Scenario::Generator do
     @options_for_column_two = create_list(:option, 2, column: @column_two)
   end
 
-  describe '.generate_scenario' do
+  describe '.generate' do
+    before do
+      @generator = create(:generator)
+    end
+
+    describe 'with a stats column' do
+      before do
+        @column = create(:stats_column, min: 1, max: 2, max_per: 2, parent: @generator)
+      end
+
+      describe 'with enough options to assign all points' do
+        before do
+          @column.create_options([:perception, :agility, :strength])
+          @stats = @generator.reload.generate[0][:options]
+          @stat_values = @stats.map do |option|
+            option[:text].split(': ')[1].to_i
+          end
+        end
+
+        it 'assigns all points correctly' do
+          total_assigned_points = @stat_values.sum - (@stat_values.length * @column.min)
+          expect(total_assigned_points).to eq @column.max
+        end
+
+        it "applies up to max_per per option" do
+          expect(@stat_values.max).to be <= @column.max_per
+        end
+
+        it 'returns strings containing the stat names' do
+          stat_strings = @stats.map do |option|
+            option[:text].split(': ')[0]
+          end
+          @column.options.each do |option|
+            expect(stat_strings).to include option.text
+          end
+        end
+      end
+
+      describe 'with less options than are required to assign all points' do
+        before do
+          @column.create_options([:perception])
+          @stat_values = @generator.reload.generate[0][:options].map do |option|
+            option[:text].split(': ')[1].to_i
+          end
+        end
+
+        it 'will apply as many as possible' do
+          expect(@stat_values.uniq).to eq [@column.max_per]
+        end
+      end
+    end
+
     describe 'with one column' do
       before do
-        @generator = create(:generator)
-        @column = create(:column, min: 1, max: 1, parent: @generator)
+        @column = create(:options_column, min: 1, max: 1, parent: @generator)
         @option = create(:option, column: @column)
-        @expected_column_result = { column: @column, options: [@option] }
+        @expected_column_result = { column: @column, options: [@option], child_columns: [] }
       end
 
       it 'returns a scenario containing that column' do
-        expect(Scenario::Generator.new(@generator.id).generate_scenario).to eq [@expected_column_result]
+        expect(@generator.reload.generate).to eq [@expected_column_result]
       end
 
       describe 'that has two options to pick from' do
@@ -27,7 +77,7 @@ describe Scenario::Generator do
 
         describe 'with a max of 1' do
           before do
-            @returned_options = Scenario::Generator.new(@generator.id).generate_scenario[0][:options]
+            @returned_options = @generator.reload.generate[0][:options]
           end
 
           it 'returns one of the options' do
@@ -41,7 +91,7 @@ describe Scenario::Generator do
           describe 'with exclusions' do
             before do
               @exclusion = OptionExclusion.create(left_option: @option_new, right_option: @option)
-              @returned_options = Scenario::Generator.new(@generator.id).generate_scenario[0][:options]
+              @returned_options = @generator.reload.generate[0][:options]
             end
 
             it 'returns one of the options' do
@@ -60,7 +110,7 @@ describe Scenario::Generator do
               @column.max = 2
               @column.min = 2
               @column.save
-              @returned_options = Scenario::Generator.new(@generator.id).generate_scenario[0][:options]
+              @returned_options = @generator.reload.generate[0][:options]
             end
 
             it "returns options from the column's option list" do
@@ -77,8 +127,9 @@ describe Scenario::Generator do
 
             describe 'with exclusions' do
               before do
-                @exclusion = OptionExclusion.create(left_option: @option_new, right_option: @option)
-                @returned_options = Scenario::Generator.new(@generator.id).generate_scenario[0][:options]
+                @exclusion = create(:option_exclusion, left_option:  @option_new,
+                                                       right_option: @option)
+                @returned_options = @generator.reload.generate[0][:options]
               end
 
               # Because there aren't enough options available to fulfill the requested amount
@@ -93,7 +144,7 @@ describe Scenario::Generator do
               @column.min = 1
               @column.max = 2
               @column.save
-              @returned_options = Scenario::Generator.new(@generator.id).generate_scenario[0][:options]
+              @returned_options = @generator.reload.generate[0][:options]
             end
 
             it "returns options from the column's option list" do
@@ -105,9 +156,13 @@ describe Scenario::Generator do
             end
 
             it 'returns one or two options randomly' do
-              returned_options = []
-              1000.times { returned_options << Scenario::Generator.new(@generator.id).generate_scenario[0][:options].length }
-              expect(returned_options.uniq.sort).to eq [1, 2]
+              # We're going to set the random number generator with two different seeds
+              # and then test the output. These keys are preset yes, but they show that with different
+              # rng output you get the different results.
+              srand(100)
+              expect(@generator.reload.generate[0][:options].length).to eq 1
+              srand(100018925718975)
+              expect(@generator.reload.generate[0][:options].length).to eq 2
             end
 
             describe 'with exclusions' do
@@ -117,7 +172,7 @@ describe Scenario::Generator do
 
               # Because there aren't enough options available to fulfill the requested amount
               it 'will only return 1' do
-                1000.times { expect(Scenario::Generator.new(@generator.id).generate_scenario[0][:options].length).to eq 1 }
+                10.times { expect(@generator.reload.generate[0][:options].length).to eq 1 }
               end
             end
           end
@@ -142,14 +197,14 @@ describe Scenario::Generator do
             end
 
             it "won't return options that conflict" do
-              1000.times do
-                options = Scenario::Generator.new(@generator.id).generate_scenario[0][:options]
+              10.times do
+                options = @generator.reload.generate[0][:options]
                 expect(options.include?(@exlcusion_options[0]) && options.include?(@exlcusion_options[1])).to_not eq true
               end
             end
 
             it 'will return two options' do
-              expect(Scenario::Generator.new(@generator.id).generate_scenario[0][:options].length).to eq 2
+              expect(@generator.reload.generate[0][:options].length).to eq 2
             end
           end
         end
@@ -157,47 +212,49 @@ describe Scenario::Generator do
 
       describe 'where an option picked has a child column' do
         before do
-          @option_child_column = create(:column, min: 1, max: 1, parent: @option)
+          @option_child_column = create(:options_column, min: 1, max: 1, parent: @option)
           @option_child_column_option = create(:option, column: @option_child_column)
-          @expected_option_child_column_result = { column: @option_child_column, options: [@option_child_column_option] }
+          @expected_column_result[:child_columns] << {
+            column: @option_child_column,
+            options: [@option_child_column_option],
+            child_columns: [],
+          }
         end
 
         it 'returns a scenario with the child column' do
-          expect(Scenario::Generator.new(@generator.id).generate_scenario).to eq [
-            @expected_column_result,
-            @expected_option_child_column_result,
-          ]
+          expect(@generator.reload.generate).to eq [@expected_column_result]
         end
 
         describe 'and then a column attached to the original column' do
           before do
-            @child_column = create(:column, min: 1, max: 1, parent: @column)
+            @child_column = create(:options_column, min: 1, max: 1, parent: @column)
             @child_column_option = create(:option, column: @child_column)
-            @expected_child_column_result = { column: @child_column, options: [@child_column_option] }
+            @expected_column_result[:child_columns] << {
+              column: @child_column,
+              options: [@child_column_option],
+              child_columns: [],
+            }
           end
 
           it 'returns a scenario with the child column' do
-            expect(Scenario::Generator.new(@generator.id).generate_scenario).to eq [
-              @expected_column_result,
-              @expected_option_child_column_result,
-              @expected_child_column_result,
-            ]
+            expect(@generator.reload.generate).to eq [@expected_column_result]
           end
         end
       end
 
       describe 'that has a child column' do
         before do
-          @child_column = create(:column, min: 1, max: 1, parent: @column)
+          @child_column = create(:options_column, min: 1, max: 1, parent: @column)
           @child_column_option = create(:option, column: @child_column)
-          @expected_child_column_result = { column: @child_column, options: [@child_column_option] }
+          @expected_column_result[:child_columns] << {
+            column: @child_column,
+            options: [@child_column_option],
+            child_columns: [],
+          }
         end
 
         it 'returns a scenario with the child column' do
-          expect(Scenario::Generator.new(@generator.id).generate_scenario).to eq [
-            @expected_column_result,
-            @expected_child_column_result,
-          ]
+          expect(@generator.reload.generate).to eq [@expected_column_result]
         end
       end
     end

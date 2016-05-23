@@ -30,7 +30,7 @@ class Column::Stats < Column
     # in the results even if it has no points put into it.
     stats = {}
     available_stats.each{ |stat| stats[stat] = min }
-    max.times do
+    points_to_assign.times do
       stat = nil
       loop do
         stat = available_stats[rand(available_stats.length)]
@@ -49,9 +49,15 @@ class Column::Stats < Column
     end.sort { |x, y| x[:text] <=> y[:text] } # Ensure the stats always come out in the same order
   end
 
+  private
+
   # This is the max points we could assign if we could assign as many as we wanted.
   # If we had 5 options and each had a max_per of 10 and min of 1 then our max assignable points would be 45
   def max_assignable_points
     options.length * (max_per - min)
+  end
+
+  def points_to_assign
+    [max, max_assignable_points].min
   end
 end

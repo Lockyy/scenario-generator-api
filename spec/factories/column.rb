@@ -23,4 +23,10 @@ FactoryGirl.define do
       column { create(:column) }
     end
   end
+
+  factory :options_column, parent: :column, class: 'Column::Options' do
+  end
+
+  factory :stats_column, parent: :column, class: 'Column::Stats' do
+  end
 end

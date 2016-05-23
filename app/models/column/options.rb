@@ -23,6 +23,12 @@ class Column::Options < Column
     picks
   end
 
+  def exclusion_array
+    option_exclusions.map do |exclusion|
+      [exclusion.left_option.id, exclusion.right_option.id]
+    end
+  end
+
   private
 
   # This is the max amount of options available
@@ -41,11 +47,5 @@ class Column::Options < Column
 
   def enforce_amount_rules(amount)
     [max_options, [amount, min].max].min
-  end
-
-  def exclusion_array
-    option_exclusions.map do |exclusion|
-      [exclusion.left_option.id, exclusion.right_option.id]
-    end
   end
 end

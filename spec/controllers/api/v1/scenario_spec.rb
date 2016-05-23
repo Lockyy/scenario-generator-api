@@ -12,7 +12,12 @@ describe Api::V1::GeneratorsController do
   end
 
   def generate_expected_column_result(column, options)
-    { 'id' => column.id, 'name' => column.name, 'options' => options.map { |option| { 'id' => option.id, 'text' => option.text } } }
+    {
+      'id' => column.id,
+      'name' => column.name,
+      'options' => options.map { |option| { 'id' => option.id, 'text' => option.text } },
+      'columns' => [],
+    }
   end
 
   describe '.generate_scenario' do
@@ -143,7 +148,7 @@ describe Api::V1::GeneratorsController do
 
             it 'returns one or two options randomly' do
               returned_options = []
-              1000.times do
+              50.times do
                 get :scenario, generator_id: @generator.id, format: :json
                 @json = JSON.parse(response.body).with_indifferent_access
                 @scenario = @json[:scenario][:columns]
@@ -159,7 +164,7 @@ describe Api::V1::GeneratorsController do
 
               # Because there aren't enough options available to fulfill the requested amount
               it 'will only return 1' do
-                1000.times do
+                10.times do
                   get :scenario, generator_id: @generator.id, format: :json
                   @json = JSON.parse(response.body).with_indifferent_access
                   @scenario = @json[:scenario][:columns]
@@ -189,7 +194,7 @@ describe Api::V1::GeneratorsController do
             end
 
             it "won't return options that conflict" do
-              1000.times do
+              10.times do
                 get :scenario, generator_id: @generator.id, format: :json
                 @json = JSON.parse(response.body).with_indifferent_access
                 @scenario = @json[:scenario][:columns]
@@ -212,35 +217,28 @@ describe Api::V1::GeneratorsController do
         before do
           @option_child_column = create(:column, min: 1, max: 1, parent: @option)
           @option_child_column_option = create(:option, column: @option_child_column)
-          @expected_option_child_column_result = generate_expected_column_result(@option_child_column, [@option_child_column_option])
+          @expected_column_result['columns'] << generate_expected_column_result(@option_child_column, [@option_child_column_option])
         end
 
         it 'returns a scenario with the child column' do
           get :scenario, generator_id: @generator.id, format: :json
           @json = JSON.parse(response.body).with_indifferent_access
           @scenario = @json[:scenario][:columns]
-          expect(@scenario).to eq [
-            @expected_column_result,
-            @expected_option_child_column_result,
-          ]
+          expect(@scenario).to eq [@expected_column_result]
         end
 
         describe 'and then a column attached to the original column' do
           before do
             @child_column = create(:column, min: 1, max: 1, parent: @column)
             @child_column_option = create(:option, column: @child_column)
-            @expected_child_column_result = generate_expected_column_result(@child_column, [@child_column_option])
+            @expected_column_result['columns'] << generate_expected_column_result(@child_column, [@child_column_option])
           end
 
           it 'returns a scenario with the child column' do
             get :scenario, generator_id: @generator.id, format: :json
             @json = JSON.parse(response.body).with_indifferent_access
             @scenario = @json[:scenario][:columns]
-            expect(@scenario).to eq [
-              @expected_column_result,
-              @expected_option_child_column_result,
-              @expected_child_column_result,
-            ]
+            expect(@scenario).to eq [@expected_column_result]
           end
         end
       end
@@ -249,17 +247,14 @@ describe Api::V1::GeneratorsController do
         before do
           @child_column = create(:column, min: 1, max: 1, parent: @column)
           @child_column_option = create(:option, column: @child_column)
-          @expected_child_column_result = generate_expected_column_result(@child_column, [@child_column_option])
+          @expected_column_result['columns'] << generate_expected_column_result(@child_column, [@child_column_option])
         end
 
         it 'returns a scenario with the child column' do
           get :scenario, generator_id: @generator.id, format: :json
           @json = JSON.parse(response.body).with_indifferent_access
           @scenario = @json[:scenario][:columns]
-          expect(@scenario).to eq [
-            @expected_column_result,
-            @expected_child_column_result,
-          ]
+          expect(@scenario).to eq [@expected_column_result]
         end
       end
     end

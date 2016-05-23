@@ -13,16 +13,16 @@ describe Api::V1::GeneratorsController do
   # end
   describe 'GET index' do
     describe 'with generators' do
-      GENERATORS_TO_CREATE = 10
+      INDEX_GENERATORS_TO_CREATE = 10
       before do
-        create_list(:generator, GENERATORS_TO_CREATE)
-        expect(Generator.all.length).to eq GENERATORS_TO_CREATE
+        create_list(:generator, INDEX_GENERATORS_TO_CREATE)
+        expect(Generator.all.length).to eq INDEX_GENERATORS_TO_CREATE
         get :index, format: :json
         @json = JSON.parse(response.body).with_indifferent_access
       end
 
       it 'returns a list of all generators' do
-        expect(@json[:generators].length).to eq GENERATORS_TO_CREATE
+        expect(@json[:generators].length).to eq INDEX_GENERATORS_TO_CREATE
       end
 
       it 'includes id, name, and total_generators for each generator' do
@@ -91,7 +91,7 @@ describe Api::V1::GeneratorsController do
     end
 
     def expected_hash
-      {
+      [{
         'id' => @column.id,
         'name' => @column.name,
         'min' => @column.min,
@@ -141,7 +141,7 @@ describe Api::V1::GeneratorsController do
             'columns' => [],
           },
         ],
-      }
+      }]
     end
 
     it 'returns a generators details' do
@@ -152,7 +152,7 @@ describe Api::V1::GeneratorsController do
     end
 
     it 'returns details on the generator' do
-      expect(@json[:column]).to eq expected_hash
+      expect(@json[:columns]).to eq expected_hash
     end
   end
 end
