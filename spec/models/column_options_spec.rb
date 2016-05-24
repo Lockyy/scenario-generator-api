@@ -12,6 +12,19 @@ describe Column::Options do
   it { should validate_numericality_of(:max).is_greater_than_or_equal_to(1).only_integer }
   it { should validate_numericality_of(:chance_of_multiple).is_greater_than(-1).only_integer }
 
+  def skewness(values)
+    size = values.length
+    mean = values.inject(:+).to_f / size
+    variance = values.inject(0) { |total, value| total + ((value - mean) ** 2) } / (values.length - 1)
+    standard_deviation = Math.sqrt(variance)
+
+    cubed_deviations = []
+    values.each do |val|
+      cubed_deviations << ((val-mean)/standard_deviation)**3
+    end
+    (size.to_f/(size.to_f-1)/(size.to_f-2)*cubed_deviations.sum.to_f)
+  end
+
   describe 'minmax' do
     before do
       @column = build(:column, min: 2, max: 1)
@@ -28,6 +41,36 @@ describe Column::Options do
     before do
       @column = create(:options_column, min: 1, max: 3, chance_of_multiple: 5)
       @options = create_list(:option, 3, column: @column)
+    end
+
+    describe 'with a weighted option' do
+      before do
+        @column.update_attributes(max: 1)
+        @weighted_option = @options.last
+        @weighted_option.update_attributes(weight: 0.5)
+      end
+
+      # I'm unsure how to test this properly so I'm just going to test that the values returned skew in the correct
+      # direction by a significant amount
+      it 'skews the result' do
+        skewness = skewness(10000.times.each_with_object([]) { |_, a| a << @column.pick.first.id })
+        expect(skewness).to be <= -0.35
+      end
+    end
+
+    describe 'with allow_duplicate_options on' do
+      before do
+        @column.update_attributes(allow_duplicate_options: true, min: 4, max: 4)
+      end
+
+      it 'allows you to have more results than options' do
+        expect(@column.pick.length).to be > @column.options.length
+      end
+
+      it 'allows duplicate options' do
+        picked_options = @column.pick
+        expect(picked_options.length).to be > picked_options.uniq.length
+      end
     end
 
     describe 'with a chance_of_multiple 0' do

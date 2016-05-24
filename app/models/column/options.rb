@@ -14,8 +14,7 @@ class Column::Options < Column
     picks = []
     while picks.length < amount
       amount_to_pick = amount - picks.length
-      options_to_pick_from = options - picks
-      new_picks = sample(options_to_pick_from, amount_to_pick)
+      new_picks = sample(options, amount_to_pick)
       picks = Option.without_exclusions(picks + new_picks)
       picks.uniq! unless allow_duplicate_options
     end
@@ -69,6 +68,7 @@ class Column::Options < Column
   # If we have three options but two of them exclude each other then we will actually only
   # be able to pick two options, because if you try to go to three you'll always get a conflict.
   def max_options
+    return max if allow_duplicate_options
     [options.length - option_exclusions.length, max].min
   end
 
