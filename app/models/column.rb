@@ -16,8 +16,8 @@ class Column < ActiveRecord::Base
   belongs_to :generator
   belongs_to :parent, polymorphic: true
 
-  has_many :columns, as: :parent
-  has_many :options
+  has_many :columns, as: :parent, dependent: :destroy
+  has_many :options, dependent: :destroy
   has_many :option_exclusions, through: :options, source: :left_option_exclusions
 
   validates :min, presence: true, numericality: { only_integer: true, greater_than: -1 }

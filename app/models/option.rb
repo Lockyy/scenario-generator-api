@@ -10,18 +10,20 @@
 class Option < ActiveRecord::Base
   belongs_to :column
 
-  has_many :columns, as: :parent
+  has_many :columns, as: :parent, dependent: :destroy
 
   # These are used for column exclusions.
   # To make a bi-directional has_and_belongs_to_many with the same model you need to do this.
   # For more details you can read:
   # http://cobwwweb.com/bi-directional-has-and-belongs-to-many-on-a-single-model-in-rails
   has_many :left_option_exclusions, foreign_key: :left_option_id,
-                                    class_name:  'OptionExclusion'
+                                    class_name:  'OptionExclusion',
+                                    dependent: :destroy
   has_many :left_exclusions, through: :left_option_exclusions,
                              source:  :right_option
   has_many :right_option_exclusions, foreign_key: :right_option_id,
-                                     class_name:  'OptionExclusion'
+                                     class_name:  'OptionExclusion',
+                                     dependent: :destroy
   has_many :right_exclusions, through: :right_option_exclusions,
                               source:  :left_option
 
