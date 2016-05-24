@@ -1,0 +1,34 @@
+{
+  "name": "scenario-generator",
+  "version": "1.0.0",
+  "description": "React app for Scenario Generator front end",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lockyy/scenario-generator-api"
+  },
+  "author": "Daniel Lockhart",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lockyy/scenario-generator-api/issues"
+  },
+  "homepage": "https://github.com/Lockyy/scenario-generator-api",
+  "devDependencies": {
+    "browserify": "^10.2.4",
+    "browserify-incremental": "^3.0.1",
+    "react": "^15.0.0",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.4.1",
+    "reactify": "^1.1.1",
+    "redux": "^3.5.2",
+    "redux-devtools": "^3.3.1",
+    "redux-devtools-dock-monitor": "^1.1.1",
+    "redux-devtools-log-monitor": "^1.0.11"
+  },
+  "engines": {
+    "node": ">= 0.10"
+  }
+}

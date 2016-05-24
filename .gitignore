@@ -13,3 +13,5 @@
 /tmp
 
 .byebug_history
+node_modules/
+npm-debug.log
