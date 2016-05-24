@@ -5,6 +5,7 @@ gem 'rails', '4.2.4'
 gem 'pg'
 gem 'jbuilder', '~> 2.0'
 gem 'pry'
+gem 'devise_token_auth'
 
 group :test do
   gem 'rspec-rails', '~> 3.4.2'
