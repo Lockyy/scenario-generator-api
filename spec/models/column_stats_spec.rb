@@ -8,8 +8,8 @@ describe Column::Stats do
   it { should validate_presence_of :min }
   it { should validate_presence_of :max }
   it { should validate_presence_of :max_per }
-  it { should validate_numericality_of(:min).is_greater_than(0).only_integer }
-  it { should validate_numericality_of(:max).is_greater_than(0).only_integer }
+  it { should validate_numericality_of(:min).is_greater_than(-1).only_integer }
+  it { should validate_numericality_of(:max).is_greater_than_or_equal_to(1).only_integer }
   it { should validate_numericality_of(:max_per).is_greater_than(1).only_integer }
 
   describe 'minmax' do

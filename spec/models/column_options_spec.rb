@@ -8,8 +8,8 @@ describe Column::Options do
   it { should validate_presence_of :min }
   it { should validate_presence_of :max }
   it { should validate_presence_of :chance_of_multiple }
-  it { should validate_numericality_of(:min).is_greater_than(0).only_integer }
-  it { should validate_numericality_of(:max).is_greater_than(0).only_integer }
+  it { should validate_numericality_of(:min).is_greater_than(-1).only_integer }
+  it { should validate_numericality_of(:max).is_greater_than_or_equal_to(1).only_integer }
   it { should validate_numericality_of(:chance_of_multiple).is_greater_than(-1).only_integer }
 
   describe 'minmax' do

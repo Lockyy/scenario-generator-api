@@ -8,20 +8,11 @@
 # max_per: The max points that can be in any one stat
 #
 class Column::Stats < Column
-  validates :min, presence:     true,
-                  numericality: {
-                    only_integer: true,
-                    greater_than: 0,
-                  }
-
   validates :max_per, presence:     true,
                       numericality: {
                         only_integer: true,
                         greater_than: proc { |column| column.min },
                       }
-
-  validates :max, presence:     true,
-                  numericality: { only_integer: true }
 
   def pick(_amount = nil)
     available_stats = options

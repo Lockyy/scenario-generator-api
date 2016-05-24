@@ -12,6 +12,7 @@ class CreateColumns < ActiveRecord::Migration
       t.string  :help
       t.integer :chance_of_multiple, default: 0
       t.string  :type, default: :'Column::Options'
+      t.boolean :allow_duplicate_options, default: false
 
       t.timestamps null: false
     end

@@ -20,9 +20,8 @@ class Column < ActiveRecord::Base
   has_many :options
   has_many :option_exclusions, through: :options, source: :left_option_exclusions
 
-  validates :min, presence: true, numericality: { only_integer: true, greater_than: 0 }
-  validates :max, presence: true, numericality: { only_integer: true, greater_than: proc { |column| (column.min || 1) - 1 } }
-  validates :chance_of_multiple, presence: true, numericality: { only_integer: true, greater_than: -1 }
+  validates :min, presence: true, numericality: { only_integer: true, greater_than: -1 }
+  validates :max, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: proc { |column| (column.min || 1) } }
 
   before_save :set_generator
 
@@ -53,6 +52,10 @@ class Column < ActiveRecord::Base
 
   def create_options(option_strings)
     options.create(option_strings.map { |os| {text: os} })
+  end
+
+  def exclusion_array
+    false
   end
 
   private

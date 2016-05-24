@@ -21,15 +21,16 @@ ActiveRecord::Schema.define(version: 20160331220259) do
     t.integer  "generator_id"
     t.integer  "parent_id"
     t.string   "parent_type"
-    t.boolean  "spoilers",           default: false
-    t.integer  "min",                default: 1
-    t.integer  "max",                default: 1
+    t.boolean  "spoilers",                default: false
+    t.integer  "min",                     default: 1
+    t.integer  "max",                     default: 1
     t.integer  "max_per"
     t.string   "help"
-    t.integer  "chance_of_multiple", default: 0
-    t.string   "type",               default: "Column::Options"
-    t.datetime "created_at",                                     null: false
-    t.datetime "updated_at",                                     null: false
+    t.integer  "chance_of_multiple",      default: 0
+    t.string   "type",                    default: "Column::Options"
+    t.boolean  "allow_duplicate_options", default: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
   end
 
   create_table "generators", force: :cascade do |t|
@@ -51,12 +52,14 @@ ActiveRecord::Schema.define(version: 20160331220259) do
   create_table "options", force: :cascade do |t|
     t.string   "text"
     t.integer  "column_id"
+    t.float    "weight"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "subjects", force: :cascade do |t|
     t.string   "name"
+    t.string   "ad_link"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
