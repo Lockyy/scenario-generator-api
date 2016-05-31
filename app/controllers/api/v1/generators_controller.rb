@@ -1,4 +1,4 @@
-class Api::V1::GeneratorsController < ApplicationController
+class Api::V1::GeneratorsController < ApiController
   before_action :setup_subject
   before_action :setup_generators
   before_action :setup_generator, except: [:index]

@@ -5,9 +5,7 @@ gem 'rails', '4.2.4'
 gem 'pg'
 gem 'jbuilder', '~> 2.0'
 gem 'pry'
-gem 'react-rails', '~> 1.7.0'
 gem 'devise_token_auth'
-gem "browserify-rails"
 
 group :test do
   gem 'rspec-rails', '~> 3.4.2'

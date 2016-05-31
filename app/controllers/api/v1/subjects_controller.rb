@@ -1,4 +1,4 @@
-class Api::V1::SubjectsController < ApplicationController
+class Api::V1::SubjectsController < ApiController
   def index
     @subjects = Subject.all
   end
