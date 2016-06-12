@@ -8,6 +8,7 @@
 # max_per: The max points that can be in any one stat
 #
 class Column::Stats < Column
+  # Greater than min because we have to be able to assign at least 1 point
   validates :max_per, presence:     true,
                       numericality: {
                         only_integer: true,

@@ -110,16 +110,18 @@ class Importer
   end
 
   def create_column_params(key, params)
-    {
+    column_param_hash = {
       min:                     params[:min],
       max:                     params[:max] || params[:min],
-      max_per:                 params[:max_per],
-      chance_of_multiple:      params[:chance_of_multiple],
+      max_per:                 params[:max_per] || (params[:min] + 1),
       allow_duplicate_options: params[:allow_duplicate_options],
       name:                    params[:title] || key_to_string(key),
       help:                    params[:help],
       spoilers:                params[:spoilers],
       type:                    params[:type],
     }.delete_if { |k, v| v.nil? }
+    # This ensures that it'll default to zero as per the database schema if none is set
+    column_param_hash[:chance_of_multiple] = params[:chance_of_multiple] if params[:chance_of_multiple]
+    column_param_hash
   end
 end
