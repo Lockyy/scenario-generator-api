@@ -6,7 +6,7 @@
 # If there isn't enough space across all the stats to distrubute the total points, it'll return 0 for
 # all stats.
 class Column::Options < Column
-  validates :chance_of_multiple, presence: true, numericality: { only_integer: true, greater_than: -1 }
+  validates :chance_of_multiple, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: -1 }
 
   def pick(amount = nil)
     amount = amount ? enforce_amount_rules(amount) : amount_to_pick

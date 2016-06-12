@@ -172,7 +172,7 @@ GAMES[:civilization_v] = {
             ]
         },
         opponents: {
-            chance_of_multiple: :even,
+            chance_of_multiple: -1,
             min: 1,
             max: 12,
             options: civs

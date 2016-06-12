@@ -30,7 +30,7 @@ class Importer
   def process_column(column_key, column_hash, parent)
     column_params = create_column_params(column_key, column_hash)
     column = parent.columns.create(column_params)
-    byebug unless column.persisted?
+    raise RuntimeError unless column.persisted?
     process_options(column_hash[:options], column)
     column
   end
@@ -111,17 +111,32 @@ class Importer
 
   def create_column_params(key, params)
     column_param_hash = {
-      min:                     params[:min],
-      max:                     params[:max] || params[:min],
-      max_per:                 params[:max_per] || (params[:min] + 1),
-      allow_duplicate_options: params[:allow_duplicate_options],
       name:                    params[:title] || key_to_string(key),
       help:                    params[:help],
       spoilers:                params[:spoilers],
       type:                    params[:type],
+      allow_duplicate_options: params[:allow_duplicate_options],
+      chance_of_multiple:      params[:chance_of_multiple],
     }.delete_if { |k, v| v.nil? }
-    # This ensures that it'll default to zero as per the database schema if none is set
-    column_param_hash[:chance_of_multiple] = params[:chance_of_multiple] if params[:chance_of_multiple]
+
+    column_param_hash[:min] =     calculate_min(params)
+    column_param_hash[:max] =     calculate_max(params, column_param_hash)
+    column_param_hash[:max_per] = calculate_max_per(params, column_param_hash)
     column_param_hash
+  end
+
+  def calculate_min(params)
+    return params[:min] if params[:min]
+    0
+  end
+
+  def calculate_max(params, calculated_params)
+    return params[:max] if params[:max] && params[:max] >= calculated_params[:min]
+    calculated_params[:min]
+  end
+
+  def calculate_max_per(params, calculated_params)
+    return params[:max_per] if params[:max_per] && params[:max_per] > calculated_params[:min]
+    calculated_params[:min] + 1
   end
 end
