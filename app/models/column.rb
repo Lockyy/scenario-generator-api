@@ -21,7 +21,11 @@ class Column < ActiveRecord::Base
   has_many :option_exclusions, through: :options, source: :left_option_exclusions
 
   validates :min, presence: true, numericality: { only_integer: true, greater_than: -1 }
-  validates :max, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: proc { |column| (column.min || 1) } }
+  # In this validation we want max to always be greater than min.
+  # We use (column.min || 0) because of how rspec checks that validations are set up correctly. Because during the min validation check
+  # it sets min to nil and then tries to save we get this validation failing as well as the one we want to fail. To prevent that we ensure that
+  # there is always a value for max to check by using || 0.
+  validates :max, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: proc { |column| (column.min || 0) } }
 
   before_save :set_generator
 
