@@ -11,21 +11,9 @@ class Option < ActiveRecord::Base
   belongs_to :column
 
   has_many :columns, as: :parent, dependent: :destroy
-
-  # These are used for column exclusions.
-  # To make a bi-directional has_and_belongs_to_many with the same model you need to do this.
-  # For more details you can read:
-  # http://cobwwweb.com/bi-directional-has-and-belongs-to-many-on-a-single-model-in-rails
-  has_many :left_option_exclusions, foreign_key: :left_option_id,
-                                    class_name:  'OptionExclusion',
-                                    dependent: :destroy
-  has_many :left_exclusions, through: :left_option_exclusions,
-                             source:  :right_option
-  has_many :right_option_exclusions, foreign_key: :right_option_id,
-                                     class_name:  'OptionExclusion',
-                                     dependent: :destroy
-  has_many :right_exclusions, through: :right_option_exclusions,
-                              source:  :left_option
+  has_many :option_exclusions, dependent: :destroy
+  has_many :exclusion_sets, through: :option_exclusions
+  has_many :excluded_options, through: :exclusion_sets, class_name: 'Option', source: :options
 
   # We do it this way instead of like this:
   # ```
@@ -48,6 +36,8 @@ class Option < ActiveRecord::Base
 
   # If an option appears in exclusions then it cannot be included in the same column as this one.
   def exclusions
-    (right_exclusions + left_exclusions).flatten.uniq
+    all_exclusions = excluded_options.to_a
+    all_exclusions.delete self
+    all_exclusions
   end
 end

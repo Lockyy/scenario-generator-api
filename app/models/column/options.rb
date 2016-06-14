@@ -69,7 +69,8 @@ class Column::Options < Column
   # be able to pick two options, because if you try to go to three you'll always get a conflict.
   def max_options
     return max if allow_duplicate_options
-    [options.length - option_exclusions.length, max].min
+    options_in_exclusion_sets = exclusion_sets.map { |es| es.options.length }.sum
+    [options.length + exclusion_sets.length - options_in_exclusion_sets, max].min
   end
 
   def amount_to_pick

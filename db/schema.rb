@@ -33,6 +33,12 @@ ActiveRecord::Schema.define(version: 20160524172403) do
     t.datetime "updated_at",                                          null: false
   end
 
+  create_table "exclusion_sets", force: :cascade do |t|
+    t.integer  "column_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "generators", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "subject_id"
@@ -43,10 +49,10 @@ ActiveRecord::Schema.define(version: 20160524172403) do
   end
 
   create_table "option_exclusions", force: :cascade do |t|
-    t.integer  "left_option_id"
-    t.integer  "right_option_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "option_id"
+    t.integer  "exclusion_set_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "options", force: :cascade do |t|

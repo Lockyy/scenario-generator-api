@@ -98,11 +98,7 @@ class Importer
   # make sure they all exclude each other
   def process_exclusive_options(options_array, column_model)
     options = column_model.create_options(options_array)
-    options.each_with_index do |option, index|
-      options[(index + 1)..-1].each do |exclusive_option|
-        OptionExclusion.create(left_option: option, right_option: exclusive_option)
-      end
-    end
+    exclusion_set = column_model.exclusion_sets.create(options: options)
   end
 
   def key_to_string(key)

@@ -18,7 +18,7 @@ class Column < ActiveRecord::Base
 
   has_many :columns, as: :parent, dependent: :destroy
   has_many :options, dependent: :destroy
-  has_many :option_exclusions, through: :options, source: :left_option_exclusions
+  has_many :exclusion_sets, dependent: :destroy
 
   validates :min, presence: true, numericality: { only_integer: true, greater_than: -1 }
   # In this validation we want max to always be greater than min.
