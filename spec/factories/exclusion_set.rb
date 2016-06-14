@@ -1,4 +1,4 @@
 FactoryGirl.define do
-  factory :option_exclusion do
+  factory :exclusion_set do
   end
 end

@@ -4,10 +4,6 @@ describe Option do
   it { should belong_to :column }
 
   it { should have_many :columns }
-  it { should have_many :left_option_exclusions }
-  it { should have_many :left_exclusions }
-  it { should have_many :right_option_exclusions }
-  it { should have_many :right_exclusions }
 
   before do
     options = create_list(:option, 2, column: create(:column))
@@ -24,8 +20,7 @@ describe Option do
 
     describe 'with an exclusion' do
       before do
-        create(:option_exclusion, left_option:  @option_one,
-                                  right_option: @option_two)
+        create(:exclusion_set, options: [@option_one, @option_two])
       end
 
       describe 'where the subject is on the left' do
@@ -53,8 +48,7 @@ describe Option do
   describe '#without_exclusions' do
     before do
       create(:option)
-      create(:option_exclusion, left_option:  @option_one,
-                                right_option: @option_two)
+      create(:exclusion_set, options: [@option_one, @option_two])
       @options = Option.all
       @without_exclusions = Option.without_exclusions(@options)
     end

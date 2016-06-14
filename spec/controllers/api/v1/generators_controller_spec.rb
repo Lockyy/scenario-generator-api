@@ -82,7 +82,7 @@ describe Api::V1::GeneratorsController do
       @column = create(:column, parent: @generator)
       @option = create(:option, column: @column)
       @option_two = create(:option, column: @column, weight: 0.5)
-      @exclusion = create(:option_exclusion, left_option: @option, right_option: @option_two)
+      @exclusion_set = create(:exclusion_set, column: @column, options: [@option, @option_two])
       @option_column = create(:column, parent: @option)
       @column_column = create(:stats_column, parent: @column, max_per: 10, max: 40)
       @column_column_two = create(:column, parent: @column, allow_duplicate_options: true)
@@ -104,7 +104,6 @@ describe Api::V1::GeneratorsController do
           {
             'id' => @option.id,
             'text' => @option.text,
-            'weight' => @option.weight,
             'columns' => [{
               'id' => @option_column.id,
               'name' => @option_column.name,
@@ -115,7 +114,7 @@ describe Api::V1::GeneratorsController do
               'allow_duplicate_options' => false,
               'type' => @column.type,
               'options' => [],
-              'exclusions' => [],
+            'exclusion_sets' => [],
               'columns' => [],
             }],
           },
@@ -126,7 +125,9 @@ describe Api::V1::GeneratorsController do
             'columns' => [],
           },
         ],
-        'exclusions' => [[@exclusion.left_option.id, @exclusion.right_option.id]],
+        'exclusion_sets' => [
+          @exclusion_set.options.map(&:id)
+        ],
         'columns' => [
           {
             'id' => @column_column.id,
@@ -138,7 +139,7 @@ describe Api::V1::GeneratorsController do
             'allow_duplicate_options' => false,
             'type' => @column_column.type,
             'options' => [],
-            'exclusions' => false,
+            'exclusion_sets' => [],
             'columns' => [],
           },
           {
@@ -151,7 +152,7 @@ describe Api::V1::GeneratorsController do
             'allow_duplicate_options' => true,
             'type' => @column_column_two.type,
             'options' => [],
-            'exclusions' => [],
+            'exclusion_sets' => [],
             'columns' => [],
           },
         ],

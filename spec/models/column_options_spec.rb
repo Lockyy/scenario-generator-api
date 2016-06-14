@@ -10,7 +10,7 @@ describe Column::Options do
   it { should validate_presence_of :chance_of_multiple }
   it { should validate_numericality_of(:min).is_greater_than(-1).only_integer }
   it { should validate_numericality_of(:max).is_greater_than_or_equal_to(1).only_integer }
-  it { should validate_numericality_of(:chance_of_multiple).is_greater_than(-1).only_integer }
+  it { should validate_numericality_of(:chance_of_multiple).is_greater_than_or_equal_to(-1).only_integer }
 
   def skewness(values)
     size = values.length
@@ -123,7 +123,7 @@ describe Column::Options do
       before do
         @exclusive_one = @options.first
         @exclusive_two = @options.last
-        create(:option_exclusion, left_option: @exclusive_one, right_option: @exclusive_two)
+        @column.exclusion_sets.create(options: [@exclusive_one, @exclusive_two])
       end
 
       it 'does not return options that conflict' do

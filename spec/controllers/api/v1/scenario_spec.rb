@@ -70,7 +70,7 @@ describe Api::V1::GeneratorsController do
 
           describe 'with exclusions' do
             before do
-              @exclusion = OptionExclusion.create(left_option: @option_new, right_option: @option)
+              @exclusion = @column.exclusion_sets.create(options: [@option_new, @option])
               get :scenario, generator_id: @generator.id, format: :json
               @json = JSON.parse(response.body).with_indifferent_access
               @scenario = @json[:scenario][:columns]
@@ -113,7 +113,7 @@ describe Api::V1::GeneratorsController do
 
             describe 'with exclusions' do
               before do
-                @exclusion = OptionExclusion.create(left_option: @option_new, right_option: @option)
+                @exclusion = @column.exclusion_sets.create(options: [@option_new, @option])
                 get :scenario, generator_id: @generator.id, format: :json
                 @json = JSON.parse(response.body).with_indifferent_access
                 @scenario = @json[:scenario][:columns]
@@ -159,7 +159,7 @@ describe Api::V1::GeneratorsController do
 
             describe 'with exclusions' do
               before do
-                @exclusion = OptionExclusion.create(left_option: @option_new, right_option: @option)
+                @exclusion = @column.exclusion_sets.create(options: [@option_new, @option])
               end
 
               # Because there aren't enough options available to fulfill the requested amount
@@ -190,7 +190,7 @@ describe Api::V1::GeneratorsController do
           describe 'with exclusions' do
             before do
               @exlcusion_options = [@options.last, @option]
-              @exclusion = OptionExclusion.create(left_option: @exlcusion_options[0], right_option: @exlcusion_options[1])
+              @exclusion = @column.exclusion_sets.create(options: @exlcusion_options)
             end
 
             it "won't return options that conflict" do
