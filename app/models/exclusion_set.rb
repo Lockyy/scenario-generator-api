@@ -6,7 +6,7 @@ class ExclusionSet < ActiveRecord::Base
 
   before_save :ensure_column
 
-  validates :all_options_same_column
+  validate :all_options_same_column
   validates :option_exclusions, length: { minimum: 1 }
 
   private
