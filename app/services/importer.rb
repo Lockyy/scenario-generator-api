@@ -43,6 +43,8 @@ class Importer
       case type.name
       when 'Symbol'
         options += column_model.create_options(options)
+      when 'String'
+        options += column_model.create_options(options)
       when 'Hash'
         options += process_hash_options(options, column_model)
       when 'Array'
