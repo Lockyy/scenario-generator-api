@@ -125,7 +125,7 @@ class Importer
 
   def calculate_min(params)
     return params[:min] if params[:min]
-    0
+    1
   end
 
   def calculate_max(params, calculated_params)
