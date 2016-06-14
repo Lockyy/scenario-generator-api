@@ -12,7 +12,7 @@ class ExclusionSet < ActiveRecord::Base
   private
 
   def ensure_column
-    column = option.first.column unless column
+    column = options.first.column unless column
   end
 
   def all_options_same_column
