@@ -54,7 +54,7 @@ GAMES[:europa_universalis_IV] = {
                         options: [
                             {
                                 :'Aachen' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -68,7 +68,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Alsace' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -82,7 +82,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Anhalt' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -96,7 +96,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Ansbach' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -110,7 +110,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Aragon' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -122,7 +122,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Armagnac' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -133,7 +133,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Augsburg' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -147,7 +147,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Austria' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -161,7 +161,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Auvergne' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -172,7 +172,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Baden' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -186,7 +186,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Bavaria' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -200,7 +200,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Bohemia' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -217,7 +217,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Bourbonnais' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -228,7 +228,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Brandenburg' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -245,7 +245,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Bremen' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -259,7 +259,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Brittany' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -271,7 +271,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Brunswick' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -285,7 +285,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Burgundy' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -296,7 +296,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Castile' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -311,7 +311,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Cleves' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -325,7 +325,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Cologne' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -338,7 +338,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Connacht' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -350,7 +350,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Denmark' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -361,7 +361,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'East Frisia' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -376,7 +376,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'England' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -398,7 +398,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Ferrara' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -412,7 +412,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Foix' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -424,7 +424,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'France' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -436,7 +436,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Frankfurt' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -450,7 +450,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Friesland' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -464,7 +464,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Gelre' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -478,7 +478,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Genoa' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -492,7 +492,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Hesse' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -507,7 +507,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Holstein' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -522,7 +522,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Leinster' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -534,7 +534,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Liege' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -549,7 +549,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Livonian Order' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -560,7 +560,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Lorraine' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -575,7 +575,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Lüneburg' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -590,7 +590,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Magdeburg' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -604,7 +604,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Mainz' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -617,7 +617,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Mantua' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -632,7 +632,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Milan' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -647,7 +647,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Mecklenburg' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -661,7 +661,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Modena' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -677,7 +677,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Münster' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -692,7 +692,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Naples',
                             {
                                 :'Navarra' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -706,7 +706,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Norway' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -717,7 +717,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Oldenburg' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -732,7 +732,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Orleans',
                             {
                                 :'The Palatinate' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -750,7 +750,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'The Papal State' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -761,7 +761,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Pomerania' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -778,7 +778,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Portugal' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -791,7 +791,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Provence',
                             {
                                 :'Provence' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -806,7 +806,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Riga' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -817,7 +817,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Salzburg' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -831,7 +831,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Savoy' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -849,7 +849,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Saxe Lauenburg' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -863,7 +863,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Saxony' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -876,7 +876,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Scotland' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -889,7 +889,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Siena' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -906,7 +906,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Silesia' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -921,7 +921,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Sweden' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -933,7 +933,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Switzerland' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -951,7 +951,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'The Teutonic Order' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -962,7 +962,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'The Hansa' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -977,7 +977,7 @@ GAMES[:europa_universalis_IV] = {
                             :'The Knights',
                             {
                                 :'Thuringia' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -992,7 +992,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Trier' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1005,7 +1005,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Tuscany' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1020,7 +1020,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Tyrone' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1032,7 +1032,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Ulm' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1047,7 +1047,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Urbino',
                             {
                                 :'Utrecht' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1061,7 +1061,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Venice' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1078,7 +1078,7 @@ GAMES[:europa_universalis_IV] = {
                             :Wurzburg,
                             {
                                 :'Wurttemberg' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1105,7 +1105,7 @@ GAMES[:europa_universalis_IV] = {
                         options: [
                             {
                                 :'Albania' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1119,7 +1119,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Athens' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1130,7 +1130,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Bosnia' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1141,7 +1141,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Byzantium' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1153,7 +1153,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Corfu' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1167,7 +1167,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Hungary',
                             {
                                 :'Lithuania' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1178,7 +1178,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Mazovia' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1191,7 +1191,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Moldavia' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1205,7 +1205,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Naxos' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1216,7 +1216,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Novgorod' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1227,7 +1227,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Muscovy' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1239,7 +1239,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Perm',
                             {
                                 :'Poland' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1251,7 +1251,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Pskov' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1262,7 +1262,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Ragusa' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1275,7 +1275,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Ryazan',
                             {
                                 :'Serbia' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1288,7 +1288,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Trebizond',
                             {
                                 :'Theodoro' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1302,7 +1302,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Tver',
                             {
                                 :'Wallachia' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1347,7 +1347,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Karaman',
                             {
                                 :'The Ottomans' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1392,7 +1392,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Alodia',
                             {
                                 :'Baluchistan' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1404,7 +1404,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Djerid',
                             {
                                 :'Ethiopia' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1419,7 +1419,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Gazikumukh',
                             {
                                 :'Granada' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1436,7 +1436,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Marehan',
                             {
                                 :'The Mamluks' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1454,7 +1454,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Mzab',
                             {
                                 :'Najd' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1468,7 +1468,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Shirvan',
                             {
                                 :'Tabarestan' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1482,7 +1482,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Tripoli',
                             {
                                 :'Tunisia' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1526,7 +1526,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Baglana',
                             {
                                 :'Bahmanis' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1538,7 +1538,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Bastar',
                             {
                                 :'Bengal' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1552,7 +1552,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Chanda',
                             {
                                 :'Delhi' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1570,7 +1570,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Gondwana',
                             {
                                 :'Gujarat' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1590,7 +1590,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Kangra',
                             {
                                 :'Kashmir' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1666,7 +1666,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Arakan',
                             {
                                 :'Aceh' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1679,7 +1679,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Ayutthaya',
                             {
                                 :'Brunei' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1695,7 +1695,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Chukchi',
                             {
                                 :'Dai Viet' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1706,7 +1706,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Date' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1718,7 +1718,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Guge',
                             {
                                 :'Hatakeyama' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1729,7 +1729,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Hosokawa' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1741,7 +1741,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Hsenwi',
                             {
                                 :'Imagawa' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1752,7 +1752,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Japan' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1768,7 +1768,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Khodynt',
                             {
                                 :'Korea' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1782,7 +1782,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Lan Na',
                             {
                                 :'Lan Xang' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1795,7 +1795,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Luwu',
                             {
                                 :'Majapahit' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1807,7 +1807,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Makassar' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1818,7 +1818,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Malacca' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1829,7 +1829,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Ming' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1847,7 +1847,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Mong Yang',
                             {
                                 :'Otomo' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1858,7 +1858,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Ouchi' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1873,7 +1873,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Perak',
                             {
                                 :'Ryukyu' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1887,7 +1887,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Shan',
                             {
                                 :'Shiba' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1898,7 +1898,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Shimazu' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1911,7 +1911,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Sukhothai',
                             {
                                 :'Sunda' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1922,7 +1922,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Takeda' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1933,7 +1933,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Taungu' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1946,7 +1946,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Tidore',
                             {
                                 :'Uesugi' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -1958,7 +1958,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Utsang',
                             {
                                 :'Yamana' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -2000,7 +2000,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Chagatai',
                             {
                                 :'Crimea' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -2011,7 +2011,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Golden Horde' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -2023,7 +2023,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Haixi' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -2034,7 +2034,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Jianzhou' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -2049,7 +2049,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Manchu',
                             {
                                 :'Mongolia' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -2066,7 +2066,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Sarig Yogir',
                             {
                                 :'Timurids' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -2077,7 +2077,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Uzbek' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -2088,7 +2088,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Yeren' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -2126,7 +2126,7 @@ GAMES[:europa_universalis_IV] = {
                         options: [
                             {
                                 :'Air' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -2155,7 +2155,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Oyo',
                             {
                                 :'Songhai' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -2166,7 +2166,7 @@ GAMES[:europa_universalis_IV] = {
                             },
                             {
                                 :'Timbuktu' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -2215,7 +2215,7 @@ GAMES[:europa_universalis_IV] = {
                             :'Caddo',
                             {
                                 :'Cherokee' => {
-                                    title: 'Goals',
+                                    title: 'Country Goals',
                                     chance_of_multiple: 35,
                                     min: 1,
                                     max: 5,
@@ -2387,7 +2387,7 @@ GAMES[:europa_universalis_IV] = {
                 }
             ]
         },
-        generic_goals: {
+        goals: {
             help: 'These may be difficult for non-european powers',
             chance_of_multiple: 50,
             min: 1,
