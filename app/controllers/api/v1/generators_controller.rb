@@ -17,7 +17,7 @@ class Api::V1::GeneratorsController < ApiController
     @column = Column.find_by(id: params[:column_id], generator_id: params[:generator_id])
     @scenario = [@column.process]
 
-    render :scenario
+    render :generate
   end
 
   private
