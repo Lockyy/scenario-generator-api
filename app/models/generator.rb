@@ -13,6 +13,7 @@ class Generator < ActiveRecord::Base
   belongs_to :user
 
   has_many :columns, as: :parent, dependent: :destroy
+  has_many :scenarios
 
   def generate
     columns.map(&:process)

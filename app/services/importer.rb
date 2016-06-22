@@ -14,6 +14,7 @@ class Importer
     @subject = Subject.create({
       name: @generator_hash[:title],
       ad_link: @generator_hash[:buy_link],
+      old_name: @generator_key,
     })
     @generator = @subject.generators.create({
       name: @generator_hash[:generator_title],

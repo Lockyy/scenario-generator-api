@@ -9,7 +9,7 @@ class Api::V1::GeneratorsController < ApiController
   def show
   end
 
-  def scenario
+  def generate
     @scenario = @generator.generate
   end
 
