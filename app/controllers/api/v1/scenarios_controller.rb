@@ -1,19 +1,38 @@
 class Api::V1::ScenariosController < ApiController
-  before_action :setup_scenario
+  before_action :setup_subject, except: [:show]
+  before_action :setup_generators, except: [:show]
+  before_action :setup_generator, except: [:show]
 
   def show
+    @scenario_model = Scenario.find_by(uuid: params[:id])
     if @scenario_model
+      @scenario = @scenario_model.scenario_hash
       @generator = @scenario_model.generator
       @subject = @generator.subject
-      return render "api/v#{@scenario_model.api_version}/generators/generate"
+    else
+      render_error 404, ['Scenario not found']
     end
-    render status: :not_found, json: { response: 'Scenario not found' }
   end
 
-  private
+  def create
+    @scenario_model = Scenario.new(generator: @generator, scenario_hash: params[:scenario])
+    if @scenario_model.save
+      @scenario = @scenario_model.scenario_hash
+      @generator = @scenario_model.generator
+      @subject = @generator.subject
+      render :show
+    else
+      render_error 400, @scenario_model.errors.full_messages
+    end
+  end
 
-  def setup_scenario
-    @scenario_model = Scenario.find_by(uuid: params[:uuid])
-    @scenario = @scenario_model.scenario_hash[:columns]
+  def new
+    if params[:column_id]
+      @scenario_generator = @generator.columns.find_by(id: params[:column_id])
+    else
+      @scenario_generator = @generator
+    end
+
+    @scenario = @scenario_generator.generate
   end
 end

@@ -12,6 +12,7 @@ class Generator < ActiveRecord::Base
   belongs_to :subject
   belongs_to :user
 
+  has_many :columns
   has_many :columns, as: :parent, dependent: :destroy
   has_many :scenarios
 

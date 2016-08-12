@@ -54,6 +54,10 @@ class Column < ActiveRecord::Base
     column_hash
   end
 
+  def generate
+    [process]
+  end
+
   def create_options(option_strings)
     options.create(option_strings.map { |os| {text: os} })
   end

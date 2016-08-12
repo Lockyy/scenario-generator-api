@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-describe Api::V1::GeneratorsController do
+describe Api::V1::ScenariosController do
   render_views
 
   before do
@@ -21,11 +21,11 @@ describe Api::V1::GeneratorsController do
     }
   end
 
-  describe '.generate_scenario' do
+  describe 'GET new' do
     describe 'when passed random as generator id' do
       before do
         @generator_two = create(:generator)
-        get :generate, generator_id: 'random', format: :json
+        get :new, generator_id: 'random', format: :json
         @json = JSON.parse(response.body).with_indifferent_access
       end
 
@@ -41,7 +41,7 @@ describe Api::V1::GeneratorsController do
         @column = create(:column, min: 1, max: 1, parent: @generator)
         @option = create(:option, column: @column)
         @expected_column_result = generate_expected_column_result(@column, [@option])
-        get :generate, generator_id: @generator.id, format: :json
+        get :new, generator_id: @generator.id, format: :json
         @json = JSON.parse(response.body).with_indifferent_access
         @scenario = @json[:scenario][:columns]
       end
@@ -55,7 +55,7 @@ describe Api::V1::GeneratorsController do
 
         describe 'with a max of 1' do
           before do
-            get :generate, generator_id: @generator.id, format: :json
+            get :new, generator_id: @generator.id, format: :json
             @json = JSON.parse(response.body).with_indifferent_access
             @scenario = @json[:scenario][:columns]
             @returned_options = @scenario[0][:options]
@@ -72,7 +72,7 @@ describe Api::V1::GeneratorsController do
           describe 'with exclusions' do
             before do
               @exclusion = @column.exclusion_sets.create(options: [@option_new, @option])
-              get :generate, generator_id: @generator.id, format: :json
+              get :new, generator_id: @generator.id, format: :json
               @json = JSON.parse(response.body).with_indifferent_access
               @scenario = @json[:scenario][:columns]
               @returned_options = @scenario[0][:options]
@@ -94,7 +94,7 @@ describe Api::V1::GeneratorsController do
               @column.max = 2
               @column.min = 2
               @column.save
-              get :generate, generator_id: @generator.id, format: :json
+              get :new, generator_id: @generator.id, format: :json
               @json = JSON.parse(response.body).with_indifferent_access
               @scenario = @json[:scenario][:columns]
               @returned_options = @scenario[0][:options]
@@ -115,7 +115,7 @@ describe Api::V1::GeneratorsController do
             describe 'with exclusions' do
               before do
                 @exclusion = @column.exclusion_sets.create(options: [@option_new, @option])
-                get :generate, generator_id: @generator.id, format: :json
+                get :new, generator_id: @generator.id, format: :json
                 @json = JSON.parse(response.body).with_indifferent_access
                 @scenario = @json[:scenario][:columns]
                 @returned_options = @scenario[0][:options]
@@ -133,7 +133,7 @@ describe Api::V1::GeneratorsController do
               @column.min = 1
               @column.max = 2
               @column.save
-              get :generate, generator_id: @generator.id, format: :json
+              get :new, generator_id: @generator.id, format: :json
               @json = JSON.parse(response.body).with_indifferent_access
               @scenario = @json[:scenario][:columns]
               @returned_options = @scenario[0][:options]
@@ -150,7 +150,7 @@ describe Api::V1::GeneratorsController do
             it 'returns one or two options randomly' do
               returned_options = []
               50.times do
-                get :generate, generator_id: @generator.id, format: :json
+                get :new, generator_id: @generator.id, format: :json
                 @json = JSON.parse(response.body).with_indifferent_access
                 @scenario = @json[:scenario][:columns]
                 returned_options << @scenario[0][:options].length
@@ -166,7 +166,7 @@ describe Api::V1::GeneratorsController do
               # Because there aren't enough options available to fulfill the requested amount
               it 'will only return 1' do
                 10.times do
-                  get :generate, generator_id: @generator.id, format: :json
+                  get :new, generator_id: @generator.id, format: :json
                   @json = JSON.parse(response.body).with_indifferent_access
                   @scenario = @json[:scenario][:columns]
                   expect(@scenario[0][:options].length).to eq 1
@@ -196,7 +196,7 @@ describe Api::V1::GeneratorsController do
 
             it "won't return options that conflict" do
               10.times do
-                get :generate, generator_id: @generator.id, format: :json
+                get :new, generator_id: @generator.id, format: :json
                 @json = JSON.parse(response.body).with_indifferent_access
                 @scenario = @json[:scenario][:columns]
                 options = @scenario[0][:options]
@@ -205,7 +205,7 @@ describe Api::V1::GeneratorsController do
             end
 
             it 'will return two options' do
-              get :generate, generator_id: @generator.id, format: :json
+              get :new, generator_id: @generator.id, format: :json
               @json = JSON.parse(response.body).with_indifferent_access
               @scenario = @json[:scenario][:columns]
               expect(@scenario[0][:options].length).to eq 2
@@ -222,7 +222,7 @@ describe Api::V1::GeneratorsController do
         end
 
         it 'returns a scenario with the child column' do
-          get :generate, generator_id: @generator.id, format: :json
+          get :new, generator_id: @generator.id, format: :json
           @json = JSON.parse(response.body).with_indifferent_access
           @scenario = @json[:scenario][:columns]
           expect(@scenario).to eq [@expected_column_result]
@@ -236,7 +236,7 @@ describe Api::V1::GeneratorsController do
           end
 
           it 'returns a scenario with the child column' do
-            get :generate, generator_id: @generator.id, format: :json
+            get :new, generator_id: @generator.id, format: :json
             @json = JSON.parse(response.body).with_indifferent_access
             @scenario = @json[:scenario][:columns]
             expect(@scenario).to eq [@expected_column_result]
@@ -252,7 +252,7 @@ describe Api::V1::GeneratorsController do
         end
 
         it 'returns a scenario with the child column' do
-          get :generate, generator_id: @generator.id, format: :json
+          get :new, generator_id: @generator.id, format: :json
           @json = JSON.parse(response.body).with_indifferent_access
           @scenario = @json[:scenario][:columns]
           expect(@scenario).to eq [@expected_column_result]

@@ -7,6 +7,4 @@ json.generator do
   end
 end
 
-json.scenario do
-  json.columns @scenario, partial: 'api/v0/generators/column', as: :column
-end
+json.scenario @scenario

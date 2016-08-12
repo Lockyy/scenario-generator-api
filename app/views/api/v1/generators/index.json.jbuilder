@@ -1,3 +1,5 @@
+json.status 200
+
 json.generators @generators do |generator|
   json.(generator, :id, :name)
 
