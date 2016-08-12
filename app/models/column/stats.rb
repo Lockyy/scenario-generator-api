@@ -21,7 +21,7 @@ class Column::Stats < Column
     # stats = Hash.new(min) because this way it ensures that every stat definitely appears
     # in the results even if it has no points put into it.
     stats = {}
-    available_stats.each{ |stat| stats[stat] = min }
+    available_stats.each { |stat| stats[stat] = min }
     points_to_assign.times do
       stat = nil
       loop do

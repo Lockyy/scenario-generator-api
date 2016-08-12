@@ -59,7 +59,7 @@ class Column < ActiveRecord::Base
   end
 
   def create_options(option_strings)
-    options.create(option_strings.map { |os| {text: os} })
+    options.create(option_strings.map { |os| { text: os } })
   end
 
   def exclusion_array

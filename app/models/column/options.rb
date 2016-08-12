@@ -31,7 +31,7 @@ class Column::Options < Column
 
   def sample(options, amount)
     weighted_options = options.select { |option| !option.weight.nil? }
-    return weighted_sample(weighted_options, options - weighted_options, amount) if weighted_options.length > 0
+    return weighted_sample(weighted_options, options - weighted_options, amount) unless weighted_options.empty?
     options.sample(amount)
   end
 
@@ -39,10 +39,10 @@ class Column::Options < Column
   # More info here: https://gist.github.com/O-I/3e0654509dd8057b539a
   def weighted_sample(weighted_options, unweighted_options, amount)
     weighted_hash = option_hash_with_weights(weighted_options, unweighted_options, amount)
-    amount.times.map { weighted_hash.max_by { |_, weight| rand ** (1.0 / weight) }.first }
+    Array.new(amount) { weighted_hash.max_by { |_, weight| rand**(1.0 / weight) }.first }
   end
 
-  def option_hash_with_weights(weighted_options, unweighted_options, amount)
+  def option_hash_with_weights(weighted_options, unweighted_options, _amount)
     weights_array = []
     option_array = []
     # Add weights for weighted columns

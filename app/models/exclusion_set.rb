@@ -17,6 +17,6 @@ class ExclusionSet < ActiveRecord::Base
 
   def all_options_same_column
     columns = options.map(&:column).uniq
-    self.errors :options, 'are not all from the same column' if columns.length > 1
+    errors :options, 'are not all from the same column' if columns.length > 1
   end
 end
