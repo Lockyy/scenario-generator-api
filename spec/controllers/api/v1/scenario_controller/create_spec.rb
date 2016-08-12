@@ -11,15 +11,15 @@ describe Api::V1::ScenariosController do
     column.options << option
     @scenario_hash = {
       columns: [
-        id: column.id,
-        name: column.name,
-        help: column.help,
+        id:      column.id,
+        name:    column.name,
+        help:    column.help,
         options: [
-          id: option.id,
+          id:   option.id,
           text: option.text,
         ],
         columns: [],
-      ]
+      ],
     }.with_indifferent_access
   end
 
@@ -69,17 +69,17 @@ describe Api::V1::ScenariosController do
 
           it 'does not create a scenario' do
             expect {
-              post :create, format: :json,
+              post :create, format:       :json,
                             generator_id: @invalid_scenario_info[:generator].id,
-                            scenario: @invalid_scenario_info[:scenario_hash]
+                            scenario:     @invalid_scenario_info[:scenario_hash]
             }.to_not change { Scenario.all.length }
           end
 
           describe 'requested' do
             before do
-              post :create, format: :json,
+              post :create, format:       :json,
                             generator_id: @invalid_scenario_info[:generator].id,
-                            scenario: @invalid_scenario_info[:scenario_hash]
+                            scenario:     @invalid_scenario_info[:scenario_hash]
               @body = JSON.parse(response.body).with_indifferent_access
             end
 

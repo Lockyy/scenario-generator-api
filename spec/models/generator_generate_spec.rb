@@ -33,7 +33,7 @@ describe Generator do
           expect(total_assigned_points).to eq @column.max
         end
 
-        it "applies up to max_per per option" do
+        it 'applies up to max_per per option' do
           expect(@stat_values.max).to be <= @column.max_per
         end
 
@@ -160,7 +160,7 @@ describe Generator do
               # rng output you get the different results.
               srand(100)
               expect(@generator.reload.generate[0][:options].length).to eq 1
-              srand(100018925718975)
+              srand(100_018_925_718_975)
               expect(@generator.reload.generate[0][:options].length).to eq 2
             end
 
@@ -214,8 +214,8 @@ describe Generator do
           @option_child_column = create(:options_column, min: 1, max: 1, parent: @option)
           @option_child_column_option = create(:option, column: @option_child_column)
           @expected_column_result[:child_columns] << {
-            column: @option_child_column,
-            options: [@option_child_column_option],
+            column:        @option_child_column,
+            options:       [@option_child_column_option],
             child_columns: [],
           }
         end
@@ -229,8 +229,8 @@ describe Generator do
             @child_column = create(:options_column, min: 1, max: 1, parent: @column)
             @child_column_option = create(:option, column: @child_column)
             @expected_column_result[:child_columns] << {
-              column: @child_column,
-              options: [@child_column_option],
+              column:        @child_column,
+              options:       [@child_column_option],
               child_columns: [],
             }
           end
@@ -246,8 +246,8 @@ describe Generator do
           @child_column = create(:options_column, min: 1, max: 1, parent: @column)
           @child_column_option = create(:option, column: @child_column)
           @expected_column_result[:child_columns] << {
-            column: @child_column,
-            options: [@child_column_option],
+            column:        @child_column,
+            options:       [@child_column_option],
             child_columns: [],
           }
         end

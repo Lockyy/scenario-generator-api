@@ -114,7 +114,7 @@ describe Api::V1::GeneratorsController do
               'allow_duplicate_options' => false,
               'type' => @column.type,
               'options' => [],
-            'exclusion_sets' => [],
+              'exclusion_sets' => [],
               'columns' => [],
             }],
           },
@@ -126,7 +126,7 @@ describe Api::V1::GeneratorsController do
           },
         ],
         'exclusion_sets' => [
-          @exclusion_set.options.map(&:id)
+          @exclusion_set.options.map(&:id),
         ],
         'columns' => [
           {

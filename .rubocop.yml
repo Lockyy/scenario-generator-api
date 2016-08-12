@@ -8,6 +8,9 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
     - 'spec/fixtures/**/*'
+    - 'config/initializers/exportedScenarios.rb'
+    - 'config/initializers/constants.rb'
+    - 'config/initializers/games/**/*'
     - 'node_modules/**/*'
     - 'db/**/*'
     - 'db/schema.rb'

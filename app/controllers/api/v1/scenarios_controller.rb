@@ -27,11 +27,11 @@ class Api::V1::ScenariosController < ApiController
   end
 
   def new
-    if params[:column_id]
-      @scenario_generator = @generator.columns.find_by(id: params[:column_id])
-    else
-      @scenario_generator = @generator
-    end
+    @scenario_generator = if params[:column_id]
+                            @generator.columns.find_by(id: params[:column_id])
+                          else
+                            @generator
+                          end
 
     @scenario = @scenario_generator.generate
   end

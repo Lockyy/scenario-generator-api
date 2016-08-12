@@ -20,8 +20,8 @@ class Scenario < ActiveRecord::Base
   validate :validate_scenario_hash
   validates :api_version, inclusion: { in: [0, 1] }
 
-  ALLOWED_COLUMN_KEYS = %w(id name help options columns)
-  ALLOWED_OPTION_KEYS = %w(id text)
+  ALLOWED_COLUMN_KEYS = %w(id name help options columns).freeze
+  ALLOWED_OPTION_KEYS = %w(id text).freeze
 
   private
 
@@ -74,19 +74,19 @@ class Scenario < ActiveRecord::Base
     options = column_model.options.reverse
     option_ids = options.map(&:id)
     hash_option_ids = column_hash[:options].map { |hash| hash[:id] }
-    return invalid_scenario('invalid option ids') if (hash_option_ids - option_ids).length > 0
+    return invalid_scenario('invalid option ids') unless (hash_option_ids - option_ids).empty?
     option_texts = options.map(&:text)
     hash_option_texts = column_hash[:options].map { |hash| hash[:text] }
-    return invalid_scenario('invalid option texts') if (hash_option_texts - option_texts).length > 0
+    return invalid_scenario('invalid option texts') unless (hash_option_texts - option_texts).empty?
     return invalid_scenario('invalid help text') unless column_model.help == column_hash[:help]
     child_column_ids = column_model.columns.reverse.map(&:id)
     hash_child_column_ids = column_hash[:columns].map { |hash| hash[:id] }
-    return invalid_scenario('invalid child column') if (hash_child_column_ids - child_column_ids).length > 0
+    return invalid_scenario('invalid child column') unless (hash_child_column_ids - child_column_ids).empty?
     true
   end
 
-  def invalid_scenario(type = false)
-    self.errors.add(:scenario_hash, 'is invalid')
+  def invalid_scenario(_type = false)
+    errors.add(:scenario_hash, 'is invalid')
     false
   end
 end

@@ -11,15 +11,15 @@ describe Api::V1::ScenariosController do
     column.options << option
     @scenario_hash = {
       columns: [
-        id: column.id,
-        name: column.name,
-        help: column.help,
+        id:      column.id,
+        name:    column.name,
+        help:    column.help,
         options: [
-          id: option.id,
+          id:   option.id,
           text: option.text,
         ],
         columns: [],
-      ]
+      ],
     }.with_indifferent_access
   end
 
@@ -40,7 +40,7 @@ describe Api::V1::ScenariosController do
       describe 'with the correct generator_id' do
         before do
           create_valid_scenario_hash
-          @scenario = Scenario.create(generator: @generator,
+          @scenario = Scenario.create(generator:     @generator,
                                       scenario_hash: @scenario_hash)
           get :show, format: :json, id: @scenario.uuid, generator_id: @generator.id
           @body = JSON.parse(response.body).with_indifferent_access

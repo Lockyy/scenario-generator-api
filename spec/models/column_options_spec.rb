@@ -15,14 +15,14 @@ describe Column::Options do
   def skewness(values)
     size = values.length
     mean = values.inject(:+).to_f / size
-    variance = values.inject(0) { |total, value| total + ((value - mean) ** 2) } / (values.length - 1)
+    variance = values.inject(0) { |total, value| total + ((value - mean)**2) } / (values.length - 1)
     standard_deviation = Math.sqrt(variance)
 
     cubed_deviations = []
     values.each do |val|
-      cubed_deviations << ((val-mean)/standard_deviation)**3
+      cubed_deviations << ((val - mean) / standard_deviation)**3
     end
-    (size.to_f/(size.to_f-1)/(size.to_f-2)*cubed_deviations.sum.to_f)
+    (size.to_f / (size.to_f - 1) / (size.to_f - 2) * cubed_deviations.sum.to_f)
   end
 
   describe 'minmax' do
@@ -53,7 +53,7 @@ describe Column::Options do
       # I'm unsure how to test this properly so I'm just going to test that the values returned skew in the correct
       # direction by a significant amount
       it 'skews the result' do
-        skewness = skewness(10000.times.each_with_object([]) { |_, a| a << @column.pick.first.id })
+        skewness = skewness(10_000.times.each_with_object([]) { |_, a| a << @column.pick.first.id })
         expect(skewness).to be <= -0.35
       end
     end

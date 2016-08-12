@@ -43,7 +43,7 @@ describe Column::Stats do
         expect(total_assigned_points).to eq @column.max
       end
 
-      it "applies up to max_per per option" do
+      it 'applies up to max_per per option' do
         expect(@stat_values.max).to be <= @column.max_per
       end
 

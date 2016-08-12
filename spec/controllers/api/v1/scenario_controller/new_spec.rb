@@ -15,7 +15,7 @@ describe Api::V1::ScenariosController do
     {
       'id' => column.id,
       'name' => column.name,
-      "help" => column.help,
+      'help' => column.help,
       'options' => options.map { |option| { 'id' => option.id, 'text' => option.text } },
       'columns' => [],
     }
