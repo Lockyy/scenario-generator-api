@@ -3,7 +3,7 @@ class CreateOptions < ActiveRecord::Migration
     create_table :options do |t|
       t.string :text
       t.integer :column_id
-      t.float :weight
+      t.float :weight, default: 1
 
       t.timestamps null: false
     end

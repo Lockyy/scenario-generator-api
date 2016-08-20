@@ -138,9 +138,9 @@ GAMES[:civilization_v] = {
             min: 1,
             max: 1,
             options: [
-                [:'Tall', 0.33],
-                [:'Wide', 0.33],
-                [:'Balanced', 0.33],
+                [:'Tall', 2],
+                [:'Wide', 2],
+                [:'Balanced', 2],
                 :'One City Challenge',
             ]
         },

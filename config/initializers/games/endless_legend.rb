@@ -19,8 +19,8 @@ GAMES[:endless_legend] = {
                 :'Roving Clans',
                 :'Drakken',
                 :'Cultists',
-                [:'Free Pick', 0.05],
-                [:'Build your own faction, this cannot be identical to an existing faciton. Be creative.', 0.05],
+                [:'Free Pick', 0.25],
+                [:'Build your own faction, this cannot be identical to an existing faction. Be creative.', 0.25],
             ]
         },
         desired_minor_factions: {

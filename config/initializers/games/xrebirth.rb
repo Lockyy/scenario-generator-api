@@ -209,7 +209,7 @@ GAMES[:xrebirth] = {
             max: 1,
             options: [
                 :'On',
-                [:'Off', 0.66]
+                [:'Off', 2]
             ]
         }
     }

@@ -93,7 +93,7 @@ GAMES[:mass_effect_3] = {
             options: [
                 :'Let Samara kill herself, kill Falere',
                 :'Let Samara kill herself, do not kill Falere',
-                [:'Stop Samara from killing herself', 0.5],
+                [:'Stop Samara from killing herself', 2],
             ]
         },
         :'Omega: The Reactor' => {

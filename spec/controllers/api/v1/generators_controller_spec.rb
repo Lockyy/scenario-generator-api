@@ -104,6 +104,7 @@ describe Api::V1::GeneratorsController do
           {
             'id' => @option.id,
             'text' => @option.text,
+            'weight' => @option.weight,
             'columns' => [{
               'id' => @option_column.id,
               'name' => @option_column.name,

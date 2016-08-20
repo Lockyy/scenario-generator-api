@@ -10,11 +10,11 @@ GAMES[:xcom] = {
             min: 1,
             max: 1,
             options: [
-                [:'Normal', 0.28],
-                [:'Classic', 0.14],
-                :'Impossible',
-                [:'Ironman Normal', 0.28],
-                [:'Ironman Classic', 0.14],
+                [:'Normal', 4],
+                [:'Classic', 3],
+                [:'Impossible', 2],
+                [:'Ironman Normal', 3],
+                [:'Ironman Classic', 2],
                 :'Ironman Impossible'
             ]
         },

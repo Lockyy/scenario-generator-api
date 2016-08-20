@@ -47,7 +47,7 @@ describe Column::Options do
       before do
         @column.update_attributes(max: 1)
         @weighted_option = @options.last
-        @weighted_option.update_attributes(weight: 0.5)
+        @weighted_option.update_attributes(weight: 3)
       end
 
       # I'm unsure how to test this properly so I'm just going to test that the values returned skew in the correct

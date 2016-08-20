@@ -113,8 +113,8 @@ GAMES[:skyrim] = {
             min: 1,
             max: 1,
             options: [
-                [:'Heavy', 0.35],
-                [:'Light', 0.35],
+                [:'Heavy', 3.5],
+                [:'Light', 3.5],
                 :'Regular Clothes',
                 :'Robes',
                 :'Robes'

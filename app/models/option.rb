@@ -24,6 +24,26 @@ class Option < ActiveRecord::Base
     end
   end
 
+  def self.sample_without_exclusions(total_amount = 1, allow_duplicates = false)
+    options = []
+    while (remaining_options = total_amount - options.length) > 0
+      new_options = all.sample(remaining_options)
+      options = merge_without_exclusions(options, new_options, allow_duplicates)
+    end
+    options
+  end
+
+  def self.merge_without_exclusions(options, new_options, allow_duplicates)
+    Option.without_exclusions(options + new_options).tap do |merged_options|
+      merged_options.uniq! unless allow_duplicates
+    end
+  end
+
+  def self.sample(amount = 1)
+    option_weight_hash = all.map { |option| [option, option.weight] }.to_h
+    WeightedRandomizer.new(option_weight_hash).sample(amount)
+  end
+
   # We do it this way instead of like this:
   # ```
   # all_options.each do |option|

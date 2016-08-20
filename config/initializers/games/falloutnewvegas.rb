@@ -60,7 +60,7 @@ GAMES[:falloutnewvegas] = {
             max: 1,
             options: [
                 :'On',
-                [:'Off', 0.66]
+                [:'Off', 2]
             ]
         },
         primary_weapon: {
@@ -117,8 +117,8 @@ GAMES[:falloutnewvegas] = {
             max: 1,
             options: [
                 :"None",
-                [:'ED-E', 0.3],
-                [:'Rex', 0.3],
+                :'ED-E',
+                :'Rex',
             ]
         },
         freelance_theft: {
