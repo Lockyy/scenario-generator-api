@@ -69,8 +69,8 @@ class Column < ActiveRecord::Base
   private
 
   def set_generator
-    p = parent
-    p = p.class.name == 'Option' ? p.column : p.parent while p.class.name != 'Generator'
-    self.generator = p
+    parent_iterator = parent
+    parent_iterator = parent_iterator.parent until parent_iterator.class == Generator
+    self.generator = parent_iterator
   end
 end

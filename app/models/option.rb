@@ -15,6 +15,8 @@ class Option < ActiveRecord::Base
   has_many :exclusion_sets, through: :option_exclusions
   has_many :excluded_options, through: :exclusion_sets, class_name: 'Option', source: :options
 
+  alias parent column
+
   # We do it this way instead of like this:
   # ```
   # all_options.each do |option|
