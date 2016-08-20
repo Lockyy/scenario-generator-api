@@ -18,10 +18,7 @@ class Scenario < ActiveRecord::Base
 
   before_validation :set_uuid
   validate :validate_scenario_hash
-  validates :api_version, inclusion: { in: [0, 1] }
-
-  ALLOWED_COLUMN_KEYS = %w(id name help options columns).freeze
-  ALLOWED_OPTION_KEYS = %w(id text).freeze
+  validates :api_version, inclusion:  { in: [0, 1] }
 
   private
 
@@ -30,62 +27,7 @@ class Scenario < ActiveRecord::Base
   end
 
   def validate_scenario_hash
-    return true if api_version == 0
-    validate_keys(scenario_hash) && validate_columns(scenario_hash[:columns])
-  end
-
-  def validate_keys(scenario_hash)
-    return invalid_scenario('wrong root key') unless scenario_hash.keys == ['columns']
-    validate_column_keys(scenario_hash[:columns])
-  end
-
-  def validate_column_keys(columns)
-    columns.each do |column|
-      column.keys.each do |key|
-        return invalid_scenario('wrong column keys') unless ALLOWED_COLUMN_KEYS.include? key
-      end
-      valid_children = validate_option_keys(column[:options]) && validate_column_keys(column[:columns])
-      return false unless valid_children
-    end
-    true
-  end
-
-  def validate_option_keys(options)
-    options.each do |option|
-      option.keys.each do |key|
-        return invalid_scenario('wrong option keys') unless ALLOWED_OPTION_KEYS.include? key
-      end
-    end
-    true
-  end
-
-  def validate_columns(columns)
-    columns.each do |column_hash|
-      return false unless validate_column(column_hash)
-      return false unless validate_columns(column_hash[:columns])
-    end
-    true
-  end
-
-  def validate_column(column_hash)
-    column_model = generator.columns.find_by(id: column_hash[:id])
-    return invalid_scenario('column does not exist') unless column_model
-    return invalid_scenario('invalid column name') unless column_model.name == column_hash[:name]
-    options = column_model.options.reverse
-    option_ids = options.map(&:id)
-    hash_option_ids = column_hash[:options].map { |hash| hash[:id] }
-    return invalid_scenario('invalid option ids') unless (hash_option_ids - option_ids).empty?
-    option_texts = options.map(&:text)
-    hash_option_texts = column_hash[:options].map { |hash| hash[:text] }
-    return invalid_scenario('invalid option texts') unless (hash_option_texts - option_texts).empty?
-    return invalid_scenario('invalid help text') unless column_model.help == column_hash[:help]
-    child_column_ids = column_model.columns.reverse.map(&:id)
-    hash_child_column_ids = column_hash[:columns].map { |hash| hash[:id] }
-    return invalid_scenario('invalid child column') unless (hash_child_column_ids - child_column_ids).empty?
-    true
-  end
-
-  def invalid_scenario(_type = false)
+    return true if Validation::Scenario::Hash.valid?(self)
     errors.add(:scenario_hash, 'is invalid')
     false
   end
