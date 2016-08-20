@@ -21,12 +21,6 @@ class Column::Options < Column
     picks
   end
 
-  def exclusion_array
-    option_exclusions.map do |exclusion|
-      [exclusion.left_option.id, exclusion.right_option.id]
-    end
-  end
-
   private
 
   def sample(options, amount)

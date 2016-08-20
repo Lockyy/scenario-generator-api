@@ -52,10 +52,6 @@ class Column < ActiveRecord::Base
     options.create(option_strings.map { |os| { text: os } })
   end
 
-  def exclusion_array
-    false
-  end
-
   private
 
   def set_generator
