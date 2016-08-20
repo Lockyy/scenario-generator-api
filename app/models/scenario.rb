@@ -19,6 +19,7 @@ class Scenario < ActiveRecord::Base
   before_validation :set_uuid
   validate :validate_scenario_hash
   validates :api_version, inclusion:  { in: [0, 1] }
+  validates :uuid,        uniqueness: true
 
   private
 
