@@ -1,3 +1,5 @@
+# A set of options that are exclusive to each other.
+# If an option in an exclusion set is in a set of options then no other options from that set can be returned.
 class ExclusionSet < ActiveRecord::Base
   has_many :option_exclusions, dependent: :destroy
   has_many :options, through: :option_exclusions
