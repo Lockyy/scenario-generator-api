@@ -6,9 +6,7 @@ class Api::V1::ScenariosController < ApiController
   def show
     @scenario_model = Scenario.find_by(uuid: params[:id])
     if @scenario_model
-      @scenario = @scenario_model.scenario_hash
       @generator = @scenario_model.generator
-      @subject = @generator.subject
     else
       render_error 404, ['Scenario not found']
     end
@@ -17,9 +15,6 @@ class Api::V1::ScenariosController < ApiController
   def create
     @scenario_model = Scenario.new(generator: @generator, scenario_hash: params[:scenario])
     if @scenario_model.save
-      @scenario = @scenario_model.scenario_hash
-      @generator = @scenario_model.generator
-      @subject = @generator.subject
       render :show
     else
       render_error 400, @scenario_model.errors.full_messages
@@ -27,8 +22,8 @@ class Api::V1::ScenariosController < ApiController
   end
 
   def new
-    @scenario_generator = if params[:column_id]
-                            @generator.columns.find_by(id: params[:column_id])
+    @scenario_generator = if column_id = params[:column_id]
+                            @generator.columns.find_by(id: column_id)
                           else
                             @generator
                           end

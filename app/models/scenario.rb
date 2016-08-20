@@ -23,7 +23,7 @@ class Scenario < ActiveRecord::Base
   private
 
   def set_uuid
-    self.uuid = SecureRandom.uuid while !uuid || !!Scenario.find_by(uuid: uuid)
+    self.uuid = SecureRandom.uuid while !uuid || Scenario.find_by(uuid: uuid).present?
   end
 
   def validate_scenario_hash

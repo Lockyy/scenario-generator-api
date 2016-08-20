@@ -7,4 +7,4 @@ json.generator do
   end
 end
 
-json.scenario @scenario
+json.scenario @scenario_model.scenario_hash

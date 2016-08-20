@@ -2,8 +2,8 @@ class ApiController < ApplicationController
   private
 
   def setup_subject
-    if params[:subject_id]
-      @subject = Subject.find_by(id: params[:subject_id])
+    if subject_id = params[:subject_id]
+      @subject = Subject.find_by(id: subject_id)
       render status: :not_found, json: { response: 'Subject not found' } unless @subject
     end
   end
