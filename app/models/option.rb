@@ -17,6 +17,13 @@ class Option < ActiveRecord::Base
 
   alias parent column
 
+  def self.process_child_columns(options)
+    options.flat_map do |option|
+      columns = option[:columns] || option.columns
+      columns.process_all
+    end
+  end
+
   # We do it this way instead of like this:
   # ```
   # all_options.each do |option|

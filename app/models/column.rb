@@ -29,29 +29,19 @@ class Column < ActiveRecord::Base
 
   before_save :set_generator
 
+  def self.process_all
+    all.flat_map(&:process)
+  end
+
   # Recursively generate a scenario for this column
   def process
-    column_hash = {
+    options = pick
+    child_columns = Option.process_child_columns(options) + columns.process_all
+    {
       column:        self,
-      options:       pick,
-      child_columns: [],
+      options:       options,
+      child_columns: child_columns,
     }
-
-    # If the options we picked have columns then we need to recursively add their columns to the array
-    # Doing it here ensures that it appears in the correct place in the scenario
-    column_hash[:options].each do |option|
-      columns = option[:columns] || option.columns
-      columns.each do |column|
-        column_hash[:child_columns] << column.process
-      end
-    end
-
-    # If this column has any child columns, recursively add them to the array as well
-    columns.each do |column|
-      column_hash[:child_columns] << column.process
-    end
-
-    column_hash
   end
 
   def generate
