@@ -1,4 +1,4 @@
-class Importer
+class Importing::Generators
   class << self
     def process(generator_key, generator_hash)
       @generator_key = generator_key
@@ -35,21 +35,19 @@ class Importer
 
     # Groups options by type and then passes them along to the relevant processing function
     def process_options(options_array, column_model)
-      options = []
       option_types = options_array.group_by(&:class)
       option_types.each do |type, options|
         case type.name
         when 'Symbol'
-          options += column_model.create_options(options)
+          column_model.create_options(options)
         when 'String'
-          options += column_model.create_options(options)
+          column_model.create_options(options)
         when 'Hash'
-          options += process_hash_options(options, column_model)
+          process_hash_options(options, column_model)
         when 'Array'
-          options += process_array_options(options, column_model)
+          process_array_options(options, column_model)
         end
       end
-      options
     end
 
     # This is for processing options with sub-columns
@@ -59,7 +57,6 @@ class Importer
     # mentioned option
     def process_hash_options(hash_array, column_model)
       hash_array.each do |hash|
-        columns = []
         option = create_root_option_for_hash_options(hash, column_model)
         hash.each do |key, value|
           process_column(key, value, option)
@@ -97,7 +94,7 @@ class Importer
     # make sure they all exclude each other
     def process_exclusive_options(options_array, column_model)
       options = column_model.create_options(options_array)
-      exclusion_set = column_model.exclusion_sets.create(options: options)
+      column_model.exclusion_sets.create(options: options)
     end
 
     def key_to_string(key)

@@ -2,3 +2,5 @@ exclude_paths:
   - 'config'
   - 'spec'
   - 'db'
+  - 'app/services/importing'
+  - 'app/middleware'

@@ -16,6 +16,18 @@ class Generator < ActiveRecord::Base
   has_many :columns, as: :parent, dependent: :destroy
   has_many :scenarios
 
+  def self.find_from_name(name)
+    all.find_each do |generator|
+      return generator if generator.name_variants.include?(name)
+    end
+    raise RuntimeError
+  end
+
+  def name_variants
+    generator_name = subject.name
+    [generator_name, subject.old_name] << generator_name.downcase.gsub(/[^a-zA-Z\d]/, '')
+  end
+
   def generate
     columns.map(&:process)
   end
