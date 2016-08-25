@@ -1,3 +1,11 @@
+# Api::V1::ScenariosController
+#
+# API endpoints for Scenarios
+#
+# GET  show   - Loads saved Scenario
+# GET  new    - Generates a new Scenario
+# POST create - Saves Scenario
+#
 class Api::V1::ScenariosController < ApiController
   before_action :setup_subject, except: [:show]
   before_action :setup_generators, except: [:show]

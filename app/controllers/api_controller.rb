@@ -1,3 +1,6 @@
+# Base Controller for API endpoints.
+#
+# Holds functions for setting up records
 class ApiController < ApplicationController
   private
 
