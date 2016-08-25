@@ -30,6 +30,7 @@ group :development do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'reek'
-  gem 'mina'
+  gem 'mina', require: false
+  gem 'mina-nginx', require: false
 end
 
