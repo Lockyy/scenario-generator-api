@@ -20,15 +20,8 @@ This allows users to be given a random challenge, equipment loadout, or story pa
 
 ## TODO
 
-- Pick whether to use a linked list for columns or a have_many.
-  - Should a generator have a column that has a column etc. or should a generator have_many all of the columns (apart from option children that is)
-  - The former allows more easy insertion and rearrangement of columns.
-  - The latter makes the code a little easier to understand and reduces the amount of recursion going on.
-  - Right now were're at a bit of a mix, a Generator can only have one column but a column can have_many columns. We need to pick one and stick to it.
-- Add API endpoints for creating, editing, and deleting generators/subjects/options/columns.
 - Add user login
-- Add user ownership of generatorsx
-- Other stuff that needs listing
+- Add user ownership of generators
 
 ## Contributing
 

@@ -13,5 +13,6 @@
 /tmp
 
 .byebug_history
-node_modules/
-npm-debug.log
+
+config/deploy.rb
+config/unicorn.rb
