@@ -256,7 +256,7 @@ DEPENDENCIES
   rubocop-checkstyle_formatter
   shoulda-matchers (~> 3.1)
   spring
-  unicorn
+  unicorn (~> 5.1.0)
   web-console (~> 2.0)
   weighted_randomizer
 

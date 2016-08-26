@@ -6,10 +6,7 @@ gem 'pg'
 gem 'jbuilder', '~> 2.0'
 gem 'pry'
 gem 'weighted_randomizer'
-
-group :production do
-  gem 'unicorn'
-end
+gem 'unicorn', '~> 5.1.0'
 
 group :test do
   gem 'rspec-rails', '~> 3.4.2'
