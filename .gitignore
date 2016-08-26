@@ -16,3 +16,4 @@
 
 config/deploy.rb
 config/unicorn.rb
+config/database.yml

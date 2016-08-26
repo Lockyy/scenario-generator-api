@@ -92,6 +92,7 @@ GEM
       activesupport (>= 3.0.0, < 5.1)
       multi_json (~> 1.2)
     json (1.8.3)
+    kgio (2.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
     letter_opener (1.4.1)
@@ -153,6 +154,7 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rainbow (2.1.0)
+    raindrops (0.16.0)
     rake (11.1.2)
     reek (4.0.3)
       codeclimate-engine-rb (~> 0.3.1)
@@ -214,6 +216,9 @@ GEM
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
     unicode-display_width (1.0.3)
+    unicorn (5.1.0)
+      kgio (~> 2.6)
+      raindrops (~> 0.7)
     virtus (1.0.5)
       axiom-types (~> 0.1)
       coercible (~> 1.0)
@@ -251,6 +256,7 @@ DEPENDENCIES
   rubocop-checkstyle_formatter
   shoulda-matchers (~> 3.1)
   spring
+  unicorn
   web-console (~> 2.0)
   weighted_randomizer
 
