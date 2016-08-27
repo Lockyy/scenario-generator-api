@@ -34,5 +34,12 @@ module ScenarioGeneratorApi
 
     config.action_dispatch.default_headers.merge!('Access-Control-Allow-Origin' => '*',
                                                   'Access-Control-Request-Method' => '*')
+
+    config.middleware.insert_before 0, 'Rack::Cors' do
+      allow do
+        origins /^https:\/\/([a-zA-Z\.]+\.|())scenariogenerator.net$/, 'http://localhost:3000'
+        resource '*', headers: :any, methods: [:get, :post, :options]
+      end
+    end
   end
 end

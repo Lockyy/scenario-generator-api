@@ -8,6 +8,7 @@ gem 'pry'
 gem 'weighted_randomizer'
 gem 'unicorn', '~> 5.1.0'
 gem 'dotenv-rails', '~> 2.1.1'
+gem 'rack-cors', :require => 'rack/cors'
 
 group :test do
   gem 'rspec-rails', '~> 3.4.2'
