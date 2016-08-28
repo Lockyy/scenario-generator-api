@@ -45,7 +45,7 @@ class Validation::Scenario::Keys
 
     def column_children_keys_valid?(column)
       column[:options].map { |child_option| options_keys_valid?(child_option) }.exclude?(false) &&
-        column[:columns].map { |child_column| column_keys_valid?(child_column) }.exclude?(false)
+        ( column[:columns].nil? || column[:columns].map { |child_column| column_keys_valid?(child_column) }.exclude?(false) )
     end
 
     def options_keys_valid?(option)

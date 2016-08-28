@@ -31,12 +31,12 @@ class Validation::Scenario::Columns
     end
 
     def validate_column
-      @column = @scenario.generator.columns.find_by(id: @column_hash[:id])
+      @column = @scenario.generator.owned_columns.find_by(id: @column_hash[:id])
       column_valid? && children_valid?
     end
 
     def children_valid?
-      Validation::Scenario::Columns.valid?(@scenario, @column_hash[:columns]) &&
+      (@column_hash[:columns].nil? || Validation::Scenario::Columns.valid?(@scenario, @column_hash[:columns])) &&
         Validation::Scenario::Options.valid?(@scenario, @column, @column_hash[:options])
     end
 
@@ -50,7 +50,12 @@ class Validation::Scenario::Columns
     end
 
     def child_columns_exist?
-      child_column_ids = @column.columns.reverse.map(&:id)
+      return true if @column_hash[:columns].nil? && @column.columns.empty?
+
+      direct_child_column_ids = @column.columns.reverse.map(&:id)
+      options_child_column_ids = @column.option_columns.reverse.map(&:id)
+      child_column_ids = direct_child_column_ids.concat options_child_column_ids
+
       hash_child_column_ids = @column_hash[:columns].map { |hash| hash[:id] }
 
       (hash_child_column_ids - child_column_ids).empty?

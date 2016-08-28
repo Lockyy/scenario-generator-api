@@ -17,6 +17,7 @@ class Column < ActiveRecord::Base
   belongs_to :parent, polymorphic: true
 
   has_many :columns, as: :parent, dependent: :destroy
+  has_many :option_columns, through: :options, source: :columns
   has_many :options, dependent: :destroy
   has_many :exclusion_sets, dependent: :destroy
 
