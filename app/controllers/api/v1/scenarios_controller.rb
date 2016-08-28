@@ -7,12 +7,12 @@
 # POST create - Saves Scenario
 #
 class Api::V1::ScenariosController < ApiController
-  before_action :setup_subject, except: [:show]
-  before_action :setup_generators, except: [:show]
-  before_action :setup_generator, except: [:show]
+  before_action :setup_subject
+  before_action :setup_generators
+  before_action :setup_generator
 
   def show
-    @scenario_model = Scenario.find_by(uuid: params[:id])
+    @scenario_model = @generator.scenarios.find_by(uuid: params[:id])
     if @scenario_model
       @generator = @scenario_model.generator
     else
@@ -21,7 +21,7 @@ class Api::V1::ScenariosController < ApiController
   end
 
   def create
-    @scenario_model = Scenario.new(generator: @generator, scenario_hash: params[:scenario])
+    @scenario_model = @generator.scenarios.new(scenario_hash: params[:scenario])
     if @scenario_model.save
       render :show
     else
