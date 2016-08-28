@@ -6,7 +6,6 @@
 # GET  index  - Shows all generators
 #
 class Api::V1::GeneratorsController < ApiController
-  before_action :setup_subject
   before_action :setup_generators
   before_action :setup_generator, except: [:index]
 

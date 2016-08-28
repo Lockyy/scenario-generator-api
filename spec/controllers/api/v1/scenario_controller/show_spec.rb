@@ -24,9 +24,21 @@ describe Api::V1::ScenariosController do
   end
 
   describe 'GET show' do
-    describe 'for a scenario that doesn\'t exist' do
+    describe 'for a generator that doesn\'t exist' do
       before do
         get :show, format: :json, id: 100, generator_id: 500
+        @body = JSON.parse(response.body).with_indifferent_access
+      end
+
+      it 'returns status 404' do
+        expect(response.status).to eq 404
+        expect(@body[:status]).to eq 404
+      end
+    end
+
+    describe 'for a scenario that doesn\'t exist' do
+      before do
+        get :show, format: :json, id: 100, generator_id: create(:generator).id
         @body = JSON.parse(response.body).with_indifferent_access
       end
 

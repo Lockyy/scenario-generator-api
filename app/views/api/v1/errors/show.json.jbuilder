@@ -1,2 +1,2 @@
-json.status code
+json.status status
 json.errors errors

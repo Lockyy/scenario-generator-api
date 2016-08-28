@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :generator do
-    subject { create(:subject) }
     spoilers false
     name { Faker::Lorem.sentence(3) }
 

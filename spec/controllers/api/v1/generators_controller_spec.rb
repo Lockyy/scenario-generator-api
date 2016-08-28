@@ -5,11 +5,7 @@ describe Api::V1::GeneratorsController do
 
   # GET index
   # json.generators @generators do |generator|
-  #   json.(generator, :id, :name)
-  #
-  #   json.subject do
-  #     json.(generator.subject, :id, :name)
-  #   end
+  #   json.(generator, :id, :name, :slug, :ad_link, :type)
   # end
   describe 'GET index' do
     describe 'with generators' do
@@ -27,16 +23,8 @@ describe Api::V1::GeneratorsController do
 
       it 'includes id, name, and total_generators for each generator' do
         @json[:generators].each do |generator|
-          [:id, :name, :subject].each do |key|
+          [:id, :name, :slug, :ad_link, :type].each do |key|
             expect(generator.key?(key)).to eq true
-          end
-        end
-      end
-
-      it 'includes details on generator subject' do
-        @json[:generators].each do |generator|
-          [:id, :name].each do |key|
-            expect(generator[:subject].key?(key)).to eq true
           end
         end
       end
@@ -44,7 +32,6 @@ describe Api::V1::GeneratorsController do
       it 'has correct data' do
         @json[:generators].each do |generator|
           expect(Generator.find_by(id: generator[:id]).name).to eq generator[:name]
-          expect(Subject.find_by(id: generator[:subject][:id]).name).to eq generator[:subject][:name]
         end
       end
 
@@ -71,10 +58,7 @@ describe Api::V1::GeneratorsController do
   end
 
   # GET show
-  # json.(@generator, :id, :name)
-  # json.subject do
-  #   json.(@generator.subject, :id, :name)
-  # end
+  # json.(@generator, :id, :name, :slug, :ad_link, :type)
   # json.columns @generator.columns, partial: 'api/v1/generators/column', as: :column
   describe 'GET show' do
     before do
@@ -163,8 +147,9 @@ describe Api::V1::GeneratorsController do
     it 'returns a generators details' do
       expect(@json[:id]).to eq @generator.id
       expect(@json[:name]).to eq @generator.name
-      expect(@json[:subject][:id]).to eq @generator.subject.id
-      expect(@json[:subject][:name]).to eq @generator.subject.name
+      expect(@json[:slug]).to eq @generator.slug
+      expect(@json[:ad_link]).to eq @generator.ad_link
+      expect(@json[:type]).to eq @generator.type
     end
 
     it 'returns details on the generator' do

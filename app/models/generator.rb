@@ -2,14 +2,12 @@
 #
 # id
 # user_id
-# subject_id
 # spoilers
 # name
 # created_at
 # updated_at
 #
 class Generator < ActiveRecord::Base
-  belongs_to :subject
   belongs_to :user
 
   has_many :owned_columns, class_name: 'Column'
@@ -24,8 +22,8 @@ class Generator < ActiveRecord::Base
   end
 
   def name_variants
-    generator_name = subject.name
-    [generator_name, subject.old_name] << generator_name.downcase.gsub(/[^a-zA-Z\d]/, '')
+    generator_name = self.name
+    [generator_name, self.old_name] << generator_name.downcase.gsub(/[^a-zA-Z\d]/, '')
   end
 
   def generate

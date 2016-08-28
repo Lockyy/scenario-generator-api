@@ -41,9 +41,11 @@ ActiveRecord::Schema.define(version: 20160619201933) do
 
   create_table "generators", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "subject_id"
     t.boolean  "spoilers"
     t.string   "name"
+    t.string   "ad_link"
+    t.string   "kind"
+    t.string   "slug"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -70,14 +72,6 @@ ActiveRecord::Schema.define(version: 20160619201933) do
     t.integer  "api_version",   default: 1
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
-  end
-
-  create_table "subjects", force: :cascade do |t|
-    t.string   "name"
-    t.string   "ad_link"
-    t.string   "old_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
 end

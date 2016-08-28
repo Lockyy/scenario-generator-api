@@ -1,9 +1,5 @@
 json.status 200
 
 json.generators @generators do |generator|
-  json.(generator, :id, :name)
-
-  json.subject do
-    json.(generator.subject, :id, :name)
-  end
+  json.(generator, :id, :name, :slug, :ad_link, :kind)
 end

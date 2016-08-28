@@ -8,14 +8,14 @@ class Importing::Generators
 
     private
 
-    # Creates subject and generator records and then iterates over columns
+    # Creates generator record and then iterates over columns
     # to produce column records
     # Returns generator
     def process_generator
-      @subject = Subject.create(name:     @generator_hash[:title],
-                                ad_link:  @generator_hash[:buy_link],
-                                old_name: @generator_key)
-      @generator = @subject.generators.create(name: @generator_hash[:generator_title])
+      @generator = Generator.create(name:     @generator_hash[:title],
+                                    slug:     @generator_key,
+                                    kind:     @generator_hash[:generator_title],
+                                    ad_link:  @generator_hash[:buy_link])
 
       @generator_hash[:columns].each do |column_key, column_hash|
         process_column(column_key, column_hash, @generator)

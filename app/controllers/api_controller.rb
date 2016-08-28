@@ -4,19 +4,8 @@
 class ApiController < ApplicationController
   private
 
-  def setup_subject
-    if subject_id = params[:subject_id]
-      @subject = Subject.find_by(id: subject_id)
-      render status: :not_found, json: { response: 'Subject not found' } unless @subject
-    end
-  end
-
   def setup_generators
-    @generators = if @subject
-                    @subject.generators
-                  else
-                    Generator.all
-                  end
+    @generators = Generator.all
   end
 
   def setup_generator
@@ -26,7 +15,7 @@ class ApiController < ApplicationController
                  else
                    @generators.find_by(id: id)
                  end
-    render status: :not_found, json: { response: 'Generator not found' } unless @generator
+    render_error(404, ['Generator not found']) unless @generator
   end
 
   def render_error(status, errors)
@@ -34,7 +23,7 @@ class ApiController < ApplicationController
             template: 'api/v1/errors/show',
             locals:   {
               errors: errors,
-              code:   status,
+              status: status,
             }
   end
 end

@@ -7,7 +7,6 @@
 # POST create - Saves Scenario
 #
 class Api::V1::ScenariosController < ApiController
-  before_action :setup_subject
   before_action :setup_generators
   before_action :setup_generator
 
