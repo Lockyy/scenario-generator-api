@@ -38,4 +38,14 @@ class Api::V1::ScenariosController < ApiController
 
     @scenario = @scenario_generator.generate
   end
+
+  def update
+    @scenario_model = @generator.scenarios.find_by(uuid: params[:id])
+
+    if @scenario_model && @scenario_model.update_attributes(scenario_hash: params[:scenario])
+      render :show
+    else
+      render_error 400, @scenario_model.errors.full_messages
+    end
+  end
 end

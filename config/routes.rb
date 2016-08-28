@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :subjects, only: [:index, :show]
       resources :generators, only: [:index, :show] do
-        resources :scenarios, only: [:show, :create, :new]
+        resources :scenarios, only: [:show, :create, :new, :update]
         resources :columns, only: [] do
           resources :scenarios, only: [:new]
         end
