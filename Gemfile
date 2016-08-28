@@ -9,6 +9,7 @@ gem 'weighted_randomizer'
 gem 'unicorn', '~> 5.1.0'
 gem 'dotenv-rails', '~> 2.1.1'
 gem 'rack-cors', :require => 'rack/cors'
+gem 'friendly_id', '~> 5.1.0'
 
 group :test do
   gem 'rspec-rails', '~> 3.4.2'

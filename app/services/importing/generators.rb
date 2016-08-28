@@ -13,10 +13,11 @@ class Importing::Generators
     # Returns generator
     def process_generator
       @generator = Generator.create(name:     @generator_hash[:title],
-                                    slug:     @generator_key,
                                     kind:     @generator_hash[:generator_title],
                                     ad_link:  @generator_hash[:buy_link])
-
+      @generator.update_attributes(slug: @generator_hash[:title].downcase.gsub(/[^a-zA-Z\d]/, ''))
+      @generator.update_attributes(slug: @generator_key)
+      @generator.update_attributes(slug: nil)
       @generator_hash[:columns].each do |column_key, column_hash|
         process_column(column_key, column_hash, @generator)
       end

@@ -8,6 +8,9 @@
 # updated_at
 #
 class Generator < ActiveRecord::Base
+  extend FriendlyId
+  friendly_id :name, use: [:slugged, :history]
+
   belongs_to :user
 
   has_many :owned_columns, class_name: 'Column'
@@ -15,15 +18,13 @@ class Generator < ActiveRecord::Base
   has_many :scenarios
 
   def self.find_from_name(name)
-    all.find_each do |generator|
-      return generator if generator.name_variants.include?(name)
-    end
-    raise RuntimeError
+    generator = friendly.find(name) || find_by(name: name)
+    raise RuntimeError unless generator
+    generator
   end
 
-  def name_variants
-    generator_name = self.name
-    [generator_name, self.old_name] << generator_name.downcase.gsub(/[^a-zA-Z\d]/, '')
+  def should_generate_new_friendly_id?
+    !slug || name_changed?
   end
 
   def generate

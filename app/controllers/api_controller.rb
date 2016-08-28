@@ -13,7 +13,7 @@ class ApiController < ApplicationController
     @generator = if id == 'random'
                    @generators.sample
                  else
-                   @generators.find_by(id: id)
+                   @generators.friendly.find(id)
                  end
     render_error(404, ['Generator not found']) unless @generator
   end
