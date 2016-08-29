@@ -5,7 +5,7 @@ class ApiController < ApplicationController
   private
 
   def setup_generators
-    @generators = Generator.all
+    @generators = Generator.all.order(:name)
   end
 
   def setup_generator
