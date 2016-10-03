@@ -23,39 +23,101 @@ describe Api::V1::ScenariosController do
     }.with_indifferent_access
   end
 
+  def create_valid_scenario_hash_with_stats
+    @generator = create(:generator)
+
+    column = create(:stats_column, name: 'column')
+    @generator.columns << column
+
+    option = create(:option, text: 'option')
+    option2 = create(:option, text: 'option: 2')
+    column.options << option
+    column.options << option2
+
+    options = column.process[:options].map { |option| { id: option[:id], text: option[:text] } }
+
+    @scenario_hash = {
+      columns: [
+        id:      column.id,
+        name:    column.name,
+        help:    column.help,
+        options: options,
+        columns: [],
+      ],
+    }.with_indifferent_access
+  end
+
   describe 'POST create' do
     describe 'with a valid scenario' do
-      before do
-        create_valid_scenario_hash
-      end
-
-      it 'creates a scenario' do
-        expect {
-          post :create, format: :json, generator_id: @generator.id, scenario: @scenario_hash
-        }.to change { Scenario.all.length }.from(0).to(1)
-      end
-
-      describe 'requested' do
+      describe 'with an options column' do
         before do
-          post :create, format: :json, generator_id: @generator.id, scenario: @scenario_hash
-          @body = JSON.parse(response.body).with_indifferent_access
+          create_valid_scenario_hash
         end
 
-        it 'creates a scenario with the passed in scenario hash' do
-          expect(Scenario.last.scenario_hash).to eq @scenario_hash
+        it 'creates a scenario' do
+          expect {
+            post :create, format: :json, generator_id: @generator.id, scenario: @scenario_hash
+          }.to change { Scenario.all.length }.from(0).to(1)
         end
 
-        it 'creates a scenario with api_version 1' do
-          expect(Scenario.last.api_version).to eq 1
+        describe 'requested' do
+          before do
+            post :create, format: :json, generator_id: @generator.id, scenario: @scenario_hash
+            @body = JSON.parse(response.body).with_indifferent_access
+          end
+
+          it 'creates a scenario with the passed in scenario hash' do
+            expect(Scenario.last.scenario_hash).to eq @scenario_hash
+          end
+
+          it 'creates a scenario with api_version 1' do
+            expect(Scenario.last.api_version).to eq 1
+          end
+
+          it 'returns the created scenario' do
+            expect(@body[:scenario]).to eq @scenario_hash
+          end
+
+          it 'returns status 200' do
+            expect(@body[:status]).to eq 200
+            expect(response.status).to eq 200
+          end
+        end
+      end
+
+      describe 'with a stats options column' do
+        before do
+          create_valid_scenario_hash_with_stats
         end
 
-        it 'returns the created scenario' do
-          expect(@body[:scenario]).to eq @scenario_hash
+        it 'creates a scenario' do
+          expect {
+            post :create, format: :json, generator_id: @generator.id, scenario: @scenario_hash
+          }.to change { Scenario.all.length }.from(0).to(1)
         end
 
-        it 'returns status 200' do
-          expect(@body[:status]).to eq 200
-          expect(response.status).to eq 200
+        describe 'requested' do
+          before do
+            post :create, format: :json, generator_id: @generator.id, scenario: @scenario_hash
+            @body = JSON.parse(response.body).with_indifferent_access
+          end
+
+          it 'creates a scenario with the passed in scenario hash' do
+            expect(Scenario.last.scenario_hash).to eq @scenario_hash
+          end
+
+          it 'creates a scenario with api_version 1' do
+            expect(Scenario.last.api_version).to eq 1
+          end
+
+          it 'returns the created scenario' do
+            expect(@body[:scenario]).to eq @scenario_hash
+          end
+
+          it 'returns status 200' do
+            expect(@body[:status]).to eq 200
+            expect(response.status).to eq 200
+          end
         end
       end
     end

@@ -28,5 +28,11 @@ FactoryGirl.define do
   end
 
   factory :stats_column, parent: :column, class: 'Column::Stats' do
+    max 1
+    max_per 2
+    min 1
+    name { Faker::Lorem.sentence(3) }
+    spoilers false
+    parent { create(:generator) }
   end
 end
