@@ -37,7 +37,9 @@ module ScenarioGeneratorApi
 
     config.middleware.insert_before 0, 'Rack::Cors' do
       allow do
-        origins /^http:\/\/([a-zA-Z\.]+\.|())scenariogenerator.net$/, 'http://localhost:3000'
+        origins 'https://staging.scenariogenerator.net',
+                'http://staging.scenariogenerator.net',
+                'http://localhost:3000'
         resource '*', headers: :any, methods: [:get, :post, :options, :patch]
       end
     end
