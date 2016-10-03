@@ -72,6 +72,30 @@ describe Api::V1::ScenariosController do
           expect(@body[:generator][:name]).to eq @generator.name
         end
       end
+
+      describe 'with the correct generator_id using the slug' do
+        before do
+          create_valid_scenario_hash
+          @scenario = Scenario.create(generator:     @generator,
+                                      scenario_hash: @scenario_hash)
+          get :show, format: :json, id: @scenario.uuid, generator_id: @generator.slug
+          @body = JSON.parse(response.body).with_indifferent_access
+        end
+
+        it 'returns the scenario hash' do
+          expect(@body[:scenario]).to eq @scenario_hash
+        end
+
+        it 'returns status 200' do
+          expect(@body[:status]).to eq 200
+          expect(response.status).to eq 200
+        end
+
+        it 'returns generator information' do
+          expect(@body[:generator][:id]).to eq @generator.id
+          expect(@body[:generator][:name]).to eq @generator.name
+        end
+      end
     end
   end
 end

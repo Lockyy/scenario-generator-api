@@ -10,12 +10,9 @@ class ApiController < ApplicationController
 
   def setup_generator
     id = params[:generator_id] || params[:id]
-    @generator = if id == 'random'
-                   @generators.sample
-                 else
-                   @generators.friendly.find(id)
-                 end
-    render_error(404, ['Generator not found']) unless @generator
+    @generator = id == 'random' ? @generators.sample : @generators.find(id) rescue generator_not_found
+
+    generator_not_found unless @generator
   end
 
   def render_error(status, errors)
@@ -25,5 +22,9 @@ class ApiController < ApplicationController
               errors: errors,
               status: status,
             }
+  end
+
+  def generator_not_found
+    render_error(404, ['Generator not found'])
   end
 end

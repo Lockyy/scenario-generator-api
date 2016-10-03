@@ -23,7 +23,7 @@ describe Api::V1::GeneratorsController do
 
       it 'includes id, name, and total_generators for each generator' do
         @json[:generators].each do |generator|
-          [:id, :name, :slug, :ad_link, :type].each do |key|
+          [:id, :name, :slug, :ad_link, :kind].each do |key|
             expect(generator.key?(key)).to eq true
           end
         end
@@ -58,7 +58,7 @@ describe Api::V1::GeneratorsController do
   end
 
   # GET show
-  # json.(@generator, :id, :name, :slug, :ad_link, :type)
+  # json.(@generator, :id, :name, :slug, :ad_link, :kind)
   # json.columns @generator.columns, partial: 'api/v1/generators/column', as: :column
   describe 'GET show' do
     before do
@@ -70,8 +70,6 @@ describe Api::V1::GeneratorsController do
       @option_column = create(:column, parent: @option)
       @column_column = create(:stats_column, parent: @column, max_per: 10, max: 40)
       @column_column_two = create(:column, parent: @column, allow_duplicate_options: true)
-      get :show, id: @generator.id, format: :json
-      @json = JSON.parse(response.body).with_indifferent_access
     end
 
     def expected_hash
@@ -144,16 +142,42 @@ describe Api::V1::GeneratorsController do
       }]
     end
 
-    it 'returns a generators details' do
-      expect(@json[:id]).to eq @generator.id
-      expect(@json[:name]).to eq @generator.name
-      expect(@json[:slug]).to eq @generator.slug
-      expect(@json[:ad_link]).to eq @generator.ad_link
-      expect(@json[:type]).to eq @generator.type
+    describe 'using the generator id' do
+      before do
+        get :show, id: @generator.id, format: :json
+        @json = JSON.parse(response.body).with_indifferent_access
+      end
+
+      it 'returns a generators details' do
+        expect(@json[:id]).to eq @generator.id
+        expect(@json[:name]).to eq @generator.name
+        expect(@json[:slug]).to eq @generator.slug
+        expect(@json[:ad_link]).to eq @generator.ad_link
+        expect(@json[:kind]).to eq @generator.kind
+      end
+
+      it 'returns details on the generator' do
+        expect(@json[:columns]).to eq expected_hash
+      end
     end
 
-    it 'returns details on the generator' do
-      expect(@json[:columns]).to eq expected_hash
+    describe 'using the generator slug' do
+      before do
+        get :show, id: @generator.slug, format: :json
+        @json = JSON.parse(response.body).with_indifferent_access
+      end
+
+      it 'returns a generators details' do
+        expect(@json[:id]).to eq @generator.id
+        expect(@json[:name]).to eq @generator.name
+        expect(@json[:slug]).to eq @generator.slug
+        expect(@json[:ad_link]).to eq @generator.ad_link
+        expect(@json[:kind]).to eq @generator.kind
+      end
+
+      it 'returns details on the generator' do
+        expect(@json[:columns]).to eq expected_hash
+      end
     end
   end
 end
