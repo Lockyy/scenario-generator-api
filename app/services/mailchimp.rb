@@ -30,7 +30,7 @@ class Mailchimp
         body: {
           status:        'subscribed',
           email_address: @email,
-        }
+        },
       }
     end
   end

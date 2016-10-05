@@ -12,9 +12,9 @@ class Importing::Generators
     # to produce column records
     # Returns generator
     def process_generator
-      @generator = Generator.create(name:     @generator_hash[:title],
-                                    kind:     @generator_hash[:generator_title],
-                                    ad_link:  @generator_hash[:buy_link])
+      @generator = Generator.create(name:    @generator_hash[:title],
+                                    kind:    @generator_hash[:generator_title],
+                                    ad_link: @generator_hash[:buy_link])
       @generator.update_attributes(slug: @generator_hash[:title].downcase.gsub(/[^a-zA-Z\d]/, ''))
       @generator.update_attributes(slug: @generator_key)
       @generator.update_attributes(slug: nil)

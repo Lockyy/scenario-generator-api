@@ -10,7 +10,11 @@ class ApiController < ApplicationController
 
   def setup_generator
     id = params[:generator_id] || params[:id]
-    @generator = id == 'random' ? @generators.sample : @generators.find(id) rescue generator_not_found
+    @generator = begin
+                   id == 'random' ? @generators.sample : @generators.find(id)
+                 rescue
+                   generator_not_found
+                 end
 
     generator_not_found unless @generator
   end
