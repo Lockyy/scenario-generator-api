@@ -39,6 +39,10 @@ module ScenarioGeneratorApi
       allow do
         origins 'https://staging.scenariogenerator.net',
                 'http://staging.scenariogenerator.net',
+                'http://www.scenariogenerator.net',
+                'http://scenariogenerator.net',
+                'https://www.scenariogenerator.net',
+                'https://scenariogenerator.net',
                 'http://localhost:3000'
         resource '*', headers: :any, methods: [:get, :post, :options, :patch]
       end
