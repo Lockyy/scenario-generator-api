@@ -14,9 +14,13 @@
 #
 class Column < ActiveRecord::Base
   belongs_to :generator
-  belongs_to :parent, polymorphic: true
 
-  has_many :columns,        as: :parent,        dependent: :destroy
+  has_many :column_parents
+  has_many :child_columns_parents, as: :parent, class_name: "ColumnParent"
+  has_many :columns, through: :child_columns_parents, as: :parent, dependent: :destroy
+  has_many :parent_columns,    through: :column_parents, source: :parent, source_type: 'Column', dependent: :destroy
+  has_many :parent_options,    through: :column_parents, source: :parent, source_type: 'Option', dependent: :destroy
+  has_many :parent_generators, through: :column_parents, source: :parent, source_type: 'Generator', dependent: :destroy
   has_many :option_columns, through: :options,  source: :columns
   has_many :options,        dependent: :destroy
   has_many :exclusion_sets, dependent: :destroy
@@ -28,10 +32,16 @@ class Column < ActiveRecord::Base
   # there is always a value for max to check by using || 0.
   validates :max, presence: true, numericality: { only_integer: true, greater_than_or_equal_to: proc { |column| (column.min || 0) } }
 
+  acts_as_list scope: :generator_id
+
   before_save :set_generator
 
   def self.process_all
     all.flat_map(&:process)
+  end
+
+  def parents
+    parent_columns + parent_options + parent_generators
   end
 
   # Recursively generate a scenario for this column
@@ -53,11 +63,23 @@ class Column < ActiveRecord::Base
     options.create(option_strings.map { |os| { text: os } })
   end
 
+  def search_for_generator
+    return generator if generator
+    parents.each do |parent|
+      puts "Searching parent #{parent.class.name} #{parent.id}"
+      return parent if parent.class == Generator
+      parent_search_result = parent.search_for_generator
+      return parent_search_result if parent_search_result.class == Generator
+    end
+    puts "No Generator found going up through column #{self.id}"
+    false
+  end
+
   private
 
   def set_generator
-    parent_iterator = parent
-    parent_iterator = parent_iterator.parent until parent_iterator.class == Generator
-    self.generator = parent_iterator
+    root_generator = search_for_generator
+    return self.generator = root_generator if root_generator.class == Generator
+    raise RuntimeError, 'No (recursive) parent of column is generator'
   end
 end

@@ -11,6 +11,7 @@ gem 'dotenv-rails', '~> 2.1.1'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'friendly_id', '~> 5.1.0'
 gem 'gibbon', '~> 2.2.3'
+gem 'acts_as_list', '0.9.5'
 
 group :test do
   gem 'rspec-rails', '~> 3.4.2'
@@ -37,5 +38,6 @@ group :development do
   gem 'reek'
   gem 'mina', require: false
   gem 'mina-nginx', require: false
+  gem 'pry'
+  gem 'pry-rails'
 end
-

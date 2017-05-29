@@ -43,6 +43,7 @@ module ScenarioGeneratorApi
                 'http://scenariogenerator.net',
                 'https://www.scenariogenerator.net',
                 'https://scenariogenerator.net',
+                'http://localhost:3456',
                 'http://localhost:3000'
         resource '*', headers: :any, methods: [:get, :post, :options, :patch]
       end

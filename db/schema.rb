@@ -11,16 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828003219) do
+ActiveRecord::Schema.define(version: 20170529153308) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "column_parents", force: :cascade do |t|
+    t.string   "parent_type"
+    t.integer  "parent_id"
+    t.integer  "column_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "columns", force: :cascade do |t|
     t.string   "name"
     t.integer  "generator_id"
-    t.integer  "parent_id"
-    t.string   "parent_type"
     t.boolean  "spoilers",                default: false
     t.integer  "min",                     default: 1
     t.integer  "max",                     default: 1
@@ -31,6 +37,7 @@ ActiveRecord::Schema.define(version: 20160828003219) do
     t.boolean  "allow_duplicate_options", default: false
     t.datetime "created_at",                                          null: false
     t.datetime "updated_at",                                          null: false
+    t.integer  "position"
   end
 
   create_table "exclusion_sets", force: :cascade do |t|

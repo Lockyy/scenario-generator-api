@@ -14,7 +14,8 @@ class Generator < ActiveRecord::Base
   belongs_to :user
 
   has_many :owned_columns, class_name: 'Column'
-  has_many :columns, as: :parent, dependent: :destroy
+  has_many :column_parents, as: :parent
+  has_many :columns, through: :column_parents, as: :parent, dependent: :destroy
   has_many :scenarios
 
   def self.find_from_name(name)
@@ -28,6 +29,6 @@ class Generator < ActiveRecord::Base
   end
 
   def generate
-    columns.map(&:process)
+    columns.order(position: :asc).map(&:process)
   end
 end

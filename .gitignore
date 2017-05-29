@@ -19,3 +19,5 @@ config/unicorn.rb
 config/database.yml
 
 .env
+
+db/backups/*

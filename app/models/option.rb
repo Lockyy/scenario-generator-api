@@ -10,7 +10,8 @@
 class Option < ActiveRecord::Base
   belongs_to :column
 
-  has_many :columns, as: :parent, dependent: :destroy
+  has_many :column_parents, as: :parent
+  has_many :columns, through: :column_parents, as: :parent, dependent: :destroy
   has_many :option_exclusions, dependent: :destroy
   has_many :exclusion_sets, through: :option_exclusions
   has_many :excluded_options, through: :exclusion_sets, class_name: 'Option', source: :options
@@ -69,5 +70,12 @@ class Option < ActiveRecord::Base
     all_exclusions = excluded_options.to_a
     all_exclusions.delete self
     all_exclusions
+  end
+
+  def search_for_generator
+    puts "Searching parent of option #{id}"
+    column_search_result = column.search_for_generator
+    return column_search_result if column_search_result.class == Generator
+    false
   end
 end
