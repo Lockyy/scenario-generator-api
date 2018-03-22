@@ -14,31 +14,28 @@
 class Validation::Scenario::Hash
   class << self
     def valid?(scenario)
-      @scenario = scenario
-      @hash = scenario.scenario_hash
-
-      validate_hash
+      validate_hash(scenario)
     end
 
     private
 
-    def validate_hash
-      overriding_api_version || hash_valid?
+    def validate_hash(scenario)
+      hash_valid?(scenario)
     end
 
-    def overriding_api_version
-      @scenario.api_version == 0
+    def overriding_api_version(scenario)
+      scenario.api_version == 0
     end
 
-    def hash_valid?
-      Validation::Scenario::Keys.valid?(@scenario) &&
-        child_columns_exist? &&
-        Validation::Scenario::Columns.valid?(@scenario, @hash[:columns])
+    def hash_valid?(scenario)
+      Validation::Scenario::Keys.valid?(scenario) &&
+        child_columns_exist?(scenario) &&
+        Validation::Scenario::Columns.valid?(scenario, scenario.scenario_hash[:columns])
     end
 
-    def child_columns_exist?
-      child_column_ids = @scenario.generator.columns.reverse.map(&:id)
-      hash_child_column_ids = @hash[:columns].map { |hash| hash[:id] }
+    def child_columns_exist?(scenario)
+      child_column_ids = scenario.generator.columns.reverse.map(&:id)
+      hash_child_column_ids = scenario.scenario_hash[:columns].map { |hash| hash[:id] }
 
       (hash_child_column_ids - child_column_ids).empty?
     end

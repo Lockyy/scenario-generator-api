@@ -17,23 +17,21 @@ class Validation::Scenario::Keys
     ALLOWED_ROOT_KEYS = %w(columns).freeze
 
     def valid?(scenario)
-      @scenario = scenario
-      @hash = scenario.scenario_hash
-      validate_keys
+      validate_keys(scenario, scenario.scenario_hash)
     end
 
     private
 
-    def validate_keys
-      root_key_valid? && columns_keys_valid?
+    def validate_keys(scenario, scenario_hash)
+      root_key_valid?(scenario, scenario_hash) && columns_keys_valid?(scenario_hash)
     end
 
-    def root_key_valid?
-      @hash.keys == ALLOWED_ROOT_KEYS
+    def root_key_valid?(scenario, scenario_hash)
+      scenario_hash.keys.map(&:to_s) == ALLOWED_ROOT_KEYS
     end
 
-    def columns_keys_valid?
-      @hash[:columns].map { |column| column_keys_valid?(column) }.exclude?(false)
+    def columns_keys_valid?(scenario_hash)
+      scenario_hash[:columns].map { |column| column_keys_valid?(column) }.exclude?(false)
     end
 
     def column_keys_valid?(column)

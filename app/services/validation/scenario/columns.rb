@@ -14,49 +14,45 @@
 class Validation::Scenario::Columns
   class << self
     def valid?(scenario, column_hashes)
-      @scenario = scenario
-      @column_hashes = column_hashes
-
-      validate_columns
+      validate_columns(scenario, column_hashes)
     end
 
     private
 
-    def validate_columns
-      @column_hashes.each do |column_hash|
-        @column_hash = column_hash
-        return false unless validate_column
-      end
-      true
+    def validate_columns(scenario, column_hashes)
+      column_hash_valid_statuses = column_hashes.map do |column_hash|
+                                     validate_column(scenario, column_hash)
+                                   end
+      column_hash_valid_statuses.exclude?(false)
     end
 
-    def validate_column
-      @column = @scenario.generator.owned_columns.find_by(id: @column_hash[:id])
-      column_valid? && children_valid?
+    def validate_column(scenario, column_hash)
+      column = scenario.generator.owned_columns.find_by(id: column_hash[:id])
+      column_valid?(column, column_hash) && children_valid?(scenario, column, column_hash)
     end
 
-    def children_valid?
-      (@column_hash[:columns].nil? || Validation::Scenario::Columns.valid?(@scenario, @column_hash[:columns])) &&
-        Validation::Scenario::Options.valid?(@scenario, @column, @column_hash[:options])
+    def children_valid?(scenario, column, column_hash)
+      (column_hash[:columns].nil? || Validation::Scenario::Columns.valid?(scenario, column_hash[:columns])) &&
+        Validation::Scenario::Options.valid?(column, column_hash[:options])
     end
 
-    def column_valid?
-      @column && column_correct? && child_columns_exist?
+    def column_valid?(column, column_hash)
+      column.present? && column_correct?(column, column_hash) && child_columns_exist?(column, column_hash)
     end
 
-    def column_correct?
-      @column.help == @column_hash[:help] &&
-        @column.name == @column_hash[:name]
+    def column_correct?(column, column_hash)
+      column.help == column_hash[:help] &&
+        column.name == column_hash[:name]
     end
 
-    def child_columns_exist?
-      return true if @column_hash[:columns].nil? && @column.columns.empty?
+    def child_columns_exist?(column, column_hash)
+      return true if column_hash[:columns].nil? && column.columns.empty?
 
-      direct_child_column_ids = @column.columns.reverse.map(&:id)
-      options_child_column_ids = @column.option_columns.reverse.map(&:id)
+      direct_child_column_ids = column.columns.reverse.map(&:id)
+      options_child_column_ids = column.option_columns.reverse.map(&:id)
       child_column_ids = direct_child_column_ids.concat options_child_column_ids
 
-      hash_child_column_ids = @column_hash[:columns].map { |hash| hash[:id] }
+      hash_child_column_ids = column_hash[:columns].map { |hash| hash[:id] }
 
       (hash_child_column_ids - child_column_ids).empty?
     end

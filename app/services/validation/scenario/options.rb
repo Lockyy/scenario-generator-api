@@ -10,46 +10,47 @@
 #
 class Validation::Scenario::Options
   class << self
-    def valid?(scenario, column, option_hashes)
-      @scenario = scenario
-      @column = column
-      @options = @column.options.reverse
-      @option_hashes = option_hashes
+    def valid?(column, option_hashes)
+      options = column.options.reverse
 
-      validate_options
+      validate_options(column, options, option_hashes)
     end
 
     private
 
-    def validate_options
-      return options_exist? && stats_correct? if @column.type == 'Column::Stats'
-      options_exist? && options_correct?
+    def validate_options(column, options, option_hashes)
+      return valid_stats_column?(column, options, option_hashes) if column.type == 'Column::Stats'
+      valid_options_column?(options, option_hashes)
     end
 
-    def options_exist?
-      option_ids = @options.map(&:id)
-      hash_option_ids = @option_hashes.map { |hash| hash[:id] }
+    def valid_stats_column?(column, options, option_hashes)
+      options_exist?(options, option_hashes) && stats_correct?(column, options, option_hashes)
+    end
+
+    def valid_options_column?(options, option_hashes)
+      options_exist?(options, option_hashes) && options_correct?(options, option_hashes)
+    end
+
+    def options_exist?(options, option_hashes)
+      option_ids = options.map(&:id)
+      hash_option_ids = option_hashes.map { |hash| hash[:id] }
       (hash_option_ids - option_ids).empty?
     end
 
-    def option_texts
-      @options.map(&:text)
+    def map_option_hash_texts(option_hashes)
+      option_hashes.map { |hash| hash[:text] }
     end
 
-    def map_option_hash_texts
-      @option_hashes.map { |hash| hash[:text] }
+    def valid_option_strings?(options, option_strings)
+      (option_strings - options.map(&:text)).empty?
     end
 
-    def valid_option_strings?(option_strings)
-      (option_strings - option_texts).empty?
+    def options_correct?(options, option_hashes)
+      valid_option_strings?(options, map_option_hash_texts(option_hashes))
     end
 
-    def options_correct?
-      valid_option_strings?(map_option_hash_texts)
-    end
-
-    def stats_correct?
-      stat_strings = map_option_hash_texts
+    def stats_correct?(column, options, option_hashes)
+      stat_strings = map_option_hash_texts(option_hashes)
       option_strings = []
       stat_strings.each do |option_text|
         return false unless option_text =~ /^.+: \d+$/
@@ -59,9 +60,9 @@ class Validation::Scenario::Options
         option_string, _, option_stat = option_text.rpartition(': ')
         option_strings << option_string
         option_stat_integer = Float(option_stat)
-        return false unless option_stat_integer.between?(@column.min, @column.max_per)
+        return false unless option_stat_integer.between?(column.min, column.max_per)
       end
-      valid_option_strings?(option_strings)
+      valid_option_strings?(options, option_strings)
     rescue
       return false
     end
