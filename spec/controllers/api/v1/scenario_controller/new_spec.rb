@@ -5,9 +5,9 @@ describe Api::V1::ScenariosController do
 
   before do
     @generator = create(:generator)
-    @column = create(:column, min: 1, max: 1, parent: @generator)
+    @column = create(:column, min: 1, max: 1, parent_generators: [@generator])
     @option = create(:option, column: @column)
-    @column_two = create(:column, min: 2, max: 2, parent: @column)
+    @column_two = create(:column, min: 2, max: 2, parent_columns: [@column])
     @options_for_column_two = create_list(:option, 2, column: @column_two)
   end
 
@@ -31,14 +31,14 @@ describe Api::V1::ScenariosController do
 
       it 'will return a random generator' do
         generator_id = @json[:generator][:id]
-        expect([@generator.id, @generator_two.id]).to include generator_id
+        expect(Generator.all.map(&:id)).to include generator_id
       end
     end
 
     describe 'with one column' do
       before do
         @generator = create(:generator)
-        @column = create(:column, min: 1, max: 1, parent: @generator)
+        @column = create(:column, min: 1, max: 1, parent_generators: [@generator])
         @option = create(:option, column: @column)
         @expected_column_result = generate_expected_column_result(@column, [@option])
         get :new, generator_id: @generator.id, format: :json
@@ -216,7 +216,7 @@ describe Api::V1::ScenariosController do
 
       describe 'where an option picked has a child column' do
         before do
-          @option_child_column = create(:column, min: 1, max: 1, parent: @option)
+          @option_child_column = create(:column, min: 1, max: 1, parent_options: [@option])
           @option_child_column_option = create(:option, column: @option_child_column)
           @expected_column_result['columns'] << generate_expected_column_result(@option_child_column, [@option_child_column_option])
         end
@@ -230,7 +230,7 @@ describe Api::V1::ScenariosController do
 
         describe 'and then a column attached to the original column' do
           before do
-            @child_column = create(:column, min: 1, max: 1, parent: @column)
+            @child_column = create(:column, min: 1, max: 1, parent_columns: [@column])
             @child_column_option = create(:option, column: @child_column)
             @expected_column_result['columns'] << generate_expected_column_result(@child_column, [@child_column_option])
           end
@@ -246,7 +246,7 @@ describe Api::V1::ScenariosController do
 
       describe 'that has a child column' do
         before do
-          @child_column = create(:column, min: 1, max: 1, parent: @column)
+          @child_column = create(:column, min: 1, max: 1, parent_columns: [@column])
           @child_column_option = create(:option, column: @child_column)
           @expected_column_result['columns'] << generate_expected_column_result(@child_column, [@child_column_option])
         end

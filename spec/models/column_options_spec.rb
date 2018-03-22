@@ -2,7 +2,6 @@ require 'rails_helper'
 
 describe Column::Options do
   it { should belong_to :generator }
-  it { should belong_to :parent }
   it { should have_many :columns }
 
   it { should validate_presence_of :min }

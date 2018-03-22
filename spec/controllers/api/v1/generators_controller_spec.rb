@@ -63,13 +63,13 @@ describe Api::V1::GeneratorsController do
   describe 'GET show' do
     before do
       @generator = create(:generator)
-      @column = create(:column, parent: @generator)
+      @column = create(:column, parent_generators: [@generator])
       @option = create(:option, column: @column)
       @option_two = create(:option, column: @column, weight: 0.5)
       @exclusion_set = create(:exclusion_set, column: @column, options: [@option, @option_two])
-      @option_column = create(:column, parent: @option)
-      @column_column = create(:stats_column, parent: @column, max_per: 10, max: 40)
-      @column_column_two = create(:column, parent: @column, allow_duplicate_options: true)
+      @option_column = create(:column, parent_options: [@option])
+      @column_column = create(:stats_column, parent_columns: [@column], max_per: 10, max: 40)
+      @column_column_two = create(:column, parent_columns: [@column], allow_duplicate_options: true)
     end
 
     def expected_hash

@@ -13,7 +13,7 @@ class Generator < ActiveRecord::Base
 
   belongs_to :user
 
-  has_many :owned_columns, class_name: 'Column'
+  has_many :owned_columns, class_name: 'Column', inverse_of: :generator
   has_many :column_parents, as: :parent
   has_many :columns, through: :column_parents, as: :parent, dependent: :destroy
   has_many :scenarios

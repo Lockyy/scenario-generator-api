@@ -3,9 +3,9 @@ require 'rails_helper'
 describe Generator do
   before do
     @generator = create(:generator)
-    @column = create(:column, min: 1, max: 1, parent: @generator)
+    @column = create(:column, min: 1, max: 1, parent_generators: [@generator])
     @option = create(:option, column: @column)
-    @column_two = create(:column, min: 2, max: 2, parent: @column)
+    @column_two = create(:column, min: 2, max: 2, parent_columns: [@column])
     @options_for_column_two = create_list(:option, 2, column: @column_two)
   end
 
@@ -16,7 +16,7 @@ describe Generator do
 
     describe 'with a stats column' do
       before do
-        @column = create(:stats_column, min: 1, max: 2, max_per: 2, parent: @generator)
+        @column = create(:stats_column, min: 1, max: 2, max_per: 2, parent_generators: [@generator])
       end
 
       describe 'with enough options to assign all points' do
@@ -63,7 +63,7 @@ describe Generator do
 
     describe 'with one column' do
       before do
-        @column = create(:options_column, min: 1, max: 1, parent: @generator)
+        @column = create(:options_column, min: 1, max: 1, parent_generators: [@generator])
         @option = create(:option, column: @column)
         @expected_column_result = { column: @column, options: [@option], child_columns: [] }
       end
@@ -211,7 +211,7 @@ describe Generator do
 
       describe 'where an option picked has a child column' do
         before do
-          @option_child_column = create(:options_column, min: 1, max: 1, parent: @option)
+          @option_child_column = create(:options_column, min: 1, max: 1, parent_options: [@option])
           @option_child_column_option = create(:option, column: @option_child_column)
           @expected_column_result[:child_columns] << {
             column:        @option_child_column,
@@ -226,7 +226,7 @@ describe Generator do
 
         describe 'and then a column attached to the original column' do
           before do
-            @child_column = create(:options_column, min: 1, max: 1, parent: @column)
+            @child_column = create(:options_column, min: 1, max: 1, parent_columns: [@column])
             @child_column_option = create(:option, column: @child_column)
             @expected_column_result[:child_columns] << {
               column:        @child_column,
@@ -243,7 +243,7 @@ describe Generator do
 
       describe 'that has a child column' do
         before do
-          @child_column = create(:options_column, min: 1, max: 1, parent: @column)
+          @child_column = create(:options_column, min: 1, max: 1, parent_columns: [@column])
           @child_column_option = create(:option, column: @child_column)
           @expected_column_result[:child_columns] << {
             column:        @child_column,

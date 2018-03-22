@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :column do
-    parent { create(:generator) }
+    parent_generators { [create(:generator)] }
     min 1
     max 1
     chance_of_multiple 5
@@ -33,6 +33,5 @@ FactoryGirl.define do
     min 1
     name { Faker::Lorem.sentence(3) }
     spoilers false
-    parent { create(:generator) }
   end
 end

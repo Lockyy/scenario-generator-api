@@ -5,10 +5,8 @@ describe Api::V1::ScenariosController do
 
   def create_valid_scenario_hash
     @generator = create(:generator)
-    column = create(:column, name: 'column')
-    @generator.columns << column
-    option = create(:option, text: 'option')
-    column.options << option
+    column = create(:column, name: 'column', parent_generators: [@generator])
+    option = create(:option, text: 'option', column: column)
     @scenario_hash = {
       columns: [
         id:      column.id,

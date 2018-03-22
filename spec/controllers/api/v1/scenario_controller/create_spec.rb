@@ -5,10 +5,8 @@ describe Api::V1::ScenariosController do
 
   def create_valid_scenario_hash
     @generator = create(:generator)
-    column = create(:column, name: 'column')
-    @generator.columns << column
-    option = create(:option, text: 'option')
-    column.options << option
+    column = create(:column, name: 'column', parent_generators: [@generator])
+    option = create(:option, text: 'option', column: column)
     @scenario_hash = {
       columns: [
         id:      column.id,
@@ -26,13 +24,9 @@ describe Api::V1::ScenariosController do
   def create_valid_scenario_hash_with_stats
     @generator = create(:generator)
 
-    column = create(:stats_column, name: 'column')
-    @generator.columns << column
-
-    option = create(:option, text: 'option')
-    option2 = create(:option, text: 'option: 2')
-    column.options << option
-    column.options << option2
+    column = create(:stats_column, name: 'column', parent_generators: [@generator])
+    option = create(:option, text: 'option', column: column)
+    option2 = create(:option, text: 'option: 2', column: column)
 
     options = column.process[:options].map { |option| { id: option[:id], text: option[:text] } }
 

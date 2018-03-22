@@ -13,7 +13,7 @@
 # updated_at
 #
 class Column < ActiveRecord::Base
-  belongs_to :generator
+  belongs_to :generator, inverse_of: :owned_columns
 
   has_many :column_parents
   has_many :child_columns_parents, as: :parent, class_name: "ColumnParent"
