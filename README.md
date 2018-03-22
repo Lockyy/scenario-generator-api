@@ -10,12 +10,11 @@ It allows you to specify a branching scenario and then have the generate pick a 
 
 1. Clone the repo: `git clone git@github.com:scenario-generator/api.git`
 2. Bundle the gems `bundle install`
-3. Set up the database.yml file, you'll find an example database.yml at config/database.yml.example.
-4. You have three options for setting up the database.
+3. You have three options for setting up the database.
   i. Run `rake db:setup` to have an empty database.
   ii. or run `rake db:restore[example_database]` to import the example database which includes all the live generators.
   iii. Manually import the sql file that is stored at `db/backups/example_database.sql`.
-5. Run `rails s` to start the server.
+4. Run `rails s` to start the server.
 
 ### Example
 
