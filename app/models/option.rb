@@ -73,7 +73,6 @@ class Option < ActiveRecord::Base
   end
 
   def search_for_generator
-    puts "Searching parent of option #{id}"
     column_search_result = column.search_for_generator
     return column_search_result if column_search_result.class == Generator
     false

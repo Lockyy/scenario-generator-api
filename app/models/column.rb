@@ -66,12 +66,10 @@ class Column < ActiveRecord::Base
   def search_for_generator
     return generator if generator
     parents.each do |parent|
-      puts "Searching parent #{parent.class.name} #{parent.id}"
       return parent if parent.class == Generator
       parent_search_result = parent.search_for_generator
       return parent_search_result if parent_search_result.class == Generator
     end
-    puts "No Generator found going up through column #{self.id}"
     false
   end
 
