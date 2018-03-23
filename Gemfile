@@ -18,6 +18,7 @@ group :test do
   gem 'database_cleaner', '~> 1.4'
   gem 'faker', '~> 1.4'
   gem 'shoulda-matchers', '~> 3.1'
+  gem 'rspec_junit_formatter', '~> 0.3'
 end
 
 group :development, :test do
