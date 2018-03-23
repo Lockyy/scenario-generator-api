@@ -1,6 +1,6 @@
 ## Scenario Generator API
 
-[![](https://circleci.com/gh/Lockyy/scenario-generator-api.png?style=shield&circle-token=:circle-token)](https://circleci.com/gh/Lockyy/scenario-generator-api)
+[![CircleCI](https://circleci.com/gh/scenario-generator/api.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/scenario-generator/api)
 
 This API is intended to be the replacement for the backend of the website currently up at [scenariogenerator.net](http://www.scenariogenerator.net)
 
