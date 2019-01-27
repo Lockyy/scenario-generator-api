@@ -1,4 +1,6 @@
-require File.expand_path('../boot', __FILE__)
+# frozen_string_literal: true
+
+require File.expand_path('boot', __dir__)
 
 require 'rails'
 # Pick the frameworks you want:
@@ -42,7 +44,7 @@ module ScenarioGeneratorApi
                 'https://scenariogenerator.net',
                 'http://localhost:3456',
                 'http://localhost:3000'
-        resource '*', headers: :any, methods: [:get, :post, :options, :patch]
+        resource '*', headers: :any, methods: %i[get post options patch]
       end
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is a saved scenario
 # There are two types of saved scenario, the old version from the old site that has been imported here.
 # These use the UUID as their identifier and are not compatible with the new rerolling system so old scenarios will not
@@ -29,6 +31,7 @@ class Scenario < ApplicationRecord
 
   def validate_scenario_hash
     return true if Validation::Scenario::Hash.valid?(self)
+
     errors.add(:scenario_hash, 'is invalid')
     false
   end

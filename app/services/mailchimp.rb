@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Mailchimp
   class << self
     def subscribe(email)
       @email = email
       list.members.create(subscription_hash)
-    rescue => error
+    rescue StandardError => error
       error.body
     end
 

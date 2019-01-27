@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is the actual generator.
 #
 # id
@@ -9,7 +11,7 @@
 #
 class Generator < ApplicationRecord
   extend FriendlyId
-  friendly_id :name, use: [:slugged, :history, :finders]
+  friendly_id :name, use: %i[slugged history finders]
 
   belongs_to :user
 
@@ -21,6 +23,7 @@ class Generator < ApplicationRecord
   def self.find_from_name(name)
     generator = friendly.find(name) || find_by(name: name)
     raise RuntimeError unless generator
+
     generator
   end
 

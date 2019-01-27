@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # A set of options that are exclusive to each other.
 # If an option in an exclusion set is in a set of options then no other options from that set can be returned.
 class ExclusionSet < ApplicationRecord
@@ -14,7 +16,7 @@ class ExclusionSet < ApplicationRecord
   private
 
   def ensure_column
-    column = options.first.column unless column
+    column ||= options.first.column
   end
 
   def all_options_same_column

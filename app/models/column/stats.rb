@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is a Column::Stats.
 # It is used for generating a set of stats to be used by the user.
 # For example in Fallout this would assign stats for Charisma, Strength etc.
@@ -25,7 +27,7 @@ class Column::Stats < Column
   def create_sorted_stat_hashes(stats)
     stat_hashes = stats.map { |stat, value| create_stat_hash(stat, value) }
     # Ensure the stats always come out in the same order
-    stat_hashes.sort { |left, right| left[:text] <=> right[:text] }
+    stat_hashes.sort_by { |a| a[:text] }
   end
 
   def create_stat_hash(stat, value)

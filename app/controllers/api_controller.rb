@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Base Controller for API endpoints.
 #
 # Holds functions for setting up records
@@ -12,7 +14,7 @@ class ApiController < ApplicationController
     id = params[:generator_id] || params[:id]
     @generator = begin
                    id == 'random' ? @generators.sample : @generators.find(id)
-                 rescue
+                 rescue StandardError
                    generator_not_found
                  end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Api::V1::GeneratorsController
 #
 # API endpoints for Generators
@@ -9,9 +11,7 @@ class Api::V1::GeneratorsController < ApiController
   before_action :setup_generators
   before_action :setup_generator, except: [:index]
 
-  def index
-  end
+  def index; end
 
-  def show
-  end
+  def show; end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is an option for it's parent.
 # An option may have a column dependent on it. These are stored in the columns relation.
 # It will be inserted into the generated scenario by the generator.
@@ -57,9 +59,10 @@ class Option < ApplicationRecord
   # TODO: Refactor
   def self.without_exclusions(options)
     all_options = options
-    for option_index in 0..all_options.length
+    (0..all_options.length).each do |option_index|
       option = all_options[option_index]
       break unless option
+
       all_options -= option.exclusions
     end
     all_options
@@ -75,6 +78,7 @@ class Option < ApplicationRecord
   def search_for_generator
     column_search_result = column.search_for_generator
     return column_search_result if column_search_result.class == Generator
+
     false
   end
 end

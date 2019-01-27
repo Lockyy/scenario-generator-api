@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is an options column. It is for generating a random set of options from a list.
 # max: The maximum number of points a stat can have.
 # chance_of_multiple: The total points that can be distributed across all stats.
@@ -20,6 +22,7 @@ class Column::Options < Column
   # be able to pick two options, because if you try to go to three you'll always get a conflict.
   def max_options
     return max if allow_duplicate_options
+
     options_in_exclusion_sets = exclusion_sets.map { |es| es.options.length }.sum
     [options.length + exclusion_sets.length - options_in_exclusion_sets, max].min
   end
@@ -27,6 +30,7 @@ class Column::Options < Column
   def amount_to_pick
     return (min..max).to_a.sample if chance_of_multiple < 0
     return min if chance_of_multiple == 0
+
     amount = min
     amount += 1 while rand(100) <= chance_of_multiple && amount < max_options
     enforce_amount_rules(amount)

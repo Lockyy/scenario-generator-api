@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Api::V1::ScenariosController
 #
 # API endpoints for Scenarios
@@ -41,7 +43,7 @@ class Api::V1::ScenariosController < ApiController
   def update
     @scenario_model = @generator.scenarios.find_by(uuid: params[:id])
 
-    if @scenario_model && @scenario_model.update_attributes(scenario_hash: scenario_hash)
+    if @scenario_model&.update(scenario_hash: scenario_hash)
       render :show
     else
       render_error 400, @scenario_model.errors.full_messages

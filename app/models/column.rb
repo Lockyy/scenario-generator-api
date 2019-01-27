@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # These are the columns in a generator.
 # It has many options.
 #
@@ -16,12 +18,12 @@ class Column < ApplicationRecord
   belongs_to :generator, inverse_of: :owned_columns
 
   has_many :column_parents
-  has_many :child_columns_parents, as: :parent, class_name: "ColumnParent"
+  has_many :child_columns_parents, as: :parent, class_name: 'ColumnParent'
   has_many :columns, through: :child_columns_parents, as: :parent, dependent: :destroy
   has_many :parent_columns,    through: :column_parents, source: :parent, source_type: 'Column', dependent: :destroy
   has_many :parent_options,    through: :column_parents, source: :parent, source_type: 'Option', dependent: :destroy
   has_many :parent_generators, through: :column_parents, source: :parent, source_type: 'Generator', dependent: :destroy
-  has_many :option_columns, through: :options,  source: :columns
+  has_many :option_columns, through: :options, source: :columns
   has_many :options,        dependent: :destroy
   has_many :exclusion_sets, dependent: :destroy
 
@@ -65,8 +67,10 @@ class Column < ApplicationRecord
 
   def search_for_generator
     return generator if generator
+
     parents.each do |parent|
       return parent if parent.class == Generator
+
       parent_search_result = parent.search_for_generator
       return parent_search_result if parent_search_result.class == Generator
     end
@@ -78,6 +82,7 @@ class Column < ApplicationRecord
   def set_generator
     root_generator = search_for_generator
     return self.generator = root_generator if root_generator.class == Generator
-    raise RuntimeError, 'No (recursive) parent of column is generator'
+
+    raise 'No (recursive) parent of column is generator'
   end
 end

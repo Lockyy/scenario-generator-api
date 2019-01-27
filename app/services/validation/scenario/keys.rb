@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Validation::Scenario::Hash
 #
@@ -12,9 +14,9 @@
 #
 class Validation::Scenario::Keys
   class << self
-    ALLOWED_COLUMN_KEYS = %w(id name help options columns).freeze
-    ALLOWED_OPTION_KEYS = %w(id text).freeze
-    ALLOWED_ROOT_KEYS = %w(columns).freeze
+    ALLOWED_COLUMN_KEYS = %w[id name help options columns].freeze
+    ALLOWED_OPTION_KEYS = %w[id text].freeze
+    ALLOWED_ROOT_KEYS = %w[columns].freeze
 
     def valid?(scenario)
       validate_keys(scenario, scenario.scenario_hash)
@@ -26,7 +28,7 @@ class Validation::Scenario::Keys
       root_key_valid?(scenario, scenario_hash) && columns_keys_valid?(scenario_hash)
     end
 
-    def root_key_valid?(scenario, scenario_hash)
+    def root_key_valid?(_scenario, scenario_hash)
       scenario_hash.keys.map(&:to_s) == ALLOWED_ROOT_KEYS
     end
 

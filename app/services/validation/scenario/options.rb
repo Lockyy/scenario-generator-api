@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 #
 # Validation::Scenario::Hash
 #
@@ -20,6 +22,7 @@ class Validation::Scenario::Options
 
     def validate_options(column, options, option_hashes)
       return valid_stats_column?(column, options, option_hashes) if column.type == 'Column::Stats'
+
       valid_options_column?(options, option_hashes)
     end
 
@@ -54,6 +57,7 @@ class Validation::Scenario::Options
       option_strings = []
       stat_strings.each do |option_text|
         return false unless option_text =~ /^.+: \d+$/
+
         # We use rpartition instead of split so that we can split the string into everything up to the last
         # colon and everything after.
         # This is because 'asd: 1: 1' would be a valid stat option hash text if 'asd: 1' was the option model's text.
@@ -63,8 +67,8 @@ class Validation::Scenario::Options
         return false unless option_stat_integer.between?(column.min, column.max_per)
       end
       valid_option_strings?(options, option_strings)
-    rescue
-      return false
+    rescue StandardError
+      false
     end
   end
 end

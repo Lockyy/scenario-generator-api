@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PrettyJsonResponse
   def initialize(app)
     @app = app
@@ -5,7 +7,7 @@ class PrettyJsonResponse
 
   def call(env)
     status, headers, response = @app.call(env)
-    if headers['Content-Type'] =~ %r{^application/json}
+    if %r{^application/json}.match?(headers['Content-Type'])
       obj = JSON.parse(response.body)
       pretty_str = JSON.pretty_unparse(obj)
       response = [pretty_str]
