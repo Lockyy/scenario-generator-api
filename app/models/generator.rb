@@ -7,7 +7,7 @@
 # created_at
 # updated_at
 #
-class Generator < ActiveRecord::Base
+class Generator < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: [:slugged, :history, :finders]
 

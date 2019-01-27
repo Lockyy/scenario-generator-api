@@ -12,7 +12,7 @@
 # created_at
 # updated_at
 #
-class Column < ActiveRecord::Base
+class Column < ApplicationRecord
   belongs_to :generator, inverse_of: :owned_columns
 
   has_many :column_parents

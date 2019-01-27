@@ -7,7 +7,7 @@
 # created_at
 # updated_at
 #
-class Option < ActiveRecord::Base
+class Option < ApplicationRecord
   belongs_to :column
 
   has_many :column_parents, as: :parent

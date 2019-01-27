@@ -11,7 +11,7 @@
 # created_at
 # updated_at
 #
-class Scenario < ActiveRecord::Base
+class Scenario < ApplicationRecord
   serialize :scenario_hash
 
   belongs_to :generator
