@@ -30,7 +30,7 @@ class ExclusionSet < ApplicationRecord
   private
 
   def ensure_column
-    column ||= options.first.column
+    self.column ||= options.first.column
   end
 
   def all_options_same_column
