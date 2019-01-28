@@ -8,7 +8,8 @@
 #
 # An option_hash is valid if:
 # a) They exist in the database as children of the column; and
-# b) They only contain data from the database. No extra or changed data may be present in the option_hash.
+# b) They only contain data from the database. No extra or changed data may be
+#    present in the option_hash.
 #
 module Validation
   module Scenario
@@ -62,7 +63,8 @@ module Validation
 
             # We use rpartition instead of split so that we can split the string into everything up to the last
             # colon and everything after.
-            # This is because 'asd: 1: 1' would be a valid stat option hash text if 'asd: 1' was the option model's text.
+            # This is because 'asd: 1: 1' would be a valid stat option hash text
+            # if 'asd: 1' was the option model's text.
             option_string, _, option_stat = option_text.rpartition(': ')
             option_strings << option_string
             option_stat_integer = Float(option_stat)
