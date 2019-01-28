@@ -7,11 +7,15 @@
 # GET  show   - Shows a specific generator and it's columns
 # GET  index  - Shows all generators
 #
-class Api::V1::GeneratorsController < ApiController
-  before_action :setup_generators
-  before_action :setup_generator, except: [:index]
+module Api
+  module V1
+    class GeneratorsController < ApiController
+      before_action :setup_generators
+      before_action :setup_generator, except: [:index]
 
-  def index; end
+      def index; end
 
-  def show; end
+      def show; end
+    end
+  end
 end

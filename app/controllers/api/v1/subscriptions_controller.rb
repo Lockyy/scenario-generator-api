@@ -7,9 +7,13 @@
 #
 # POST  create - Subscribe to the mailing list
 #
-class Api::V1::SubscriptionsController < ApiController
-  def create
-    subscription_response = Mailchimp.subscribe(params[:email])
-    render_error(400, [subscription_response['title']]) unless subscription_response['status'] == 'subscribed'
+module Api
+  module V1
+    class SubscriptionsController < ApiController
+      def create
+        subscription_response = Mailchimp.subscribe(params[:email])
+        render_error(400, [subscription_response['title']]) unless subscription_response['status'] == 'subscribed'
+      end
+    end
   end
 end

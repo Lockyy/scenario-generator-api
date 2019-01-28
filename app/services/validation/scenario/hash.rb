@@ -13,33 +13,37 @@
 # c) The first level of columns are direct_columns of the generator; and
 # d) All columns are valid.
 #
-class Validation::Scenario::Hash
-  class << self
-    def valid?(scenario)
-      validate_hash(scenario)
-    end
+module Validation
+  module Scenario
+    class Hash
+      class << self
+        def valid?(scenario)
+          validate_hash(scenario)
+        end
 
-    private
+        private
 
-    def validate_hash(scenario)
-      hash_valid?(scenario)
-    end
+        def validate_hash(scenario)
+          hash_valid?(scenario)
+        end
 
-    def overriding_api_version(scenario)
-      scenario.api_version == 0
-    end
+        def overriding_api_version(scenario)
+          scenario.api_version == 0
+        end
 
-    def hash_valid?(scenario)
-      Validation::Scenario::Keys.valid?(scenario) &&
-        child_columns_exist?(scenario) &&
-        Validation::Scenario::Columns.valid?(scenario, scenario.scenario_hash[:columns])
-    end
+        def hash_valid?(scenario)
+          Validation::Scenario::Keys.valid?(scenario) &&
+            child_columns_exist?(scenario) &&
+            Validation::Scenario::Columns.valid?(scenario, scenario.scenario_hash[:columns])
+        end
 
-    def child_columns_exist?(scenario)
-      child_column_ids = scenario.generator.columns.reverse.map(&:id)
-      hash_child_column_ids = scenario.scenario_hash[:columns].map { |hash| hash[:id] }
+        def child_columns_exist?(scenario)
+          child_column_ids = scenario.generator.columns.reverse.map(&:id)
+          hash_child_column_ids = scenario.scenario_hash[:columns].map { |hash| hash[:id] }
 
-      (hash_child_column_ids - child_column_ids).empty?
+          (hash_child_column_ids - child_column_ids).empty?
+        end
+      end
     end
   end
 end
