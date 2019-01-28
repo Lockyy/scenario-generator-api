@@ -33,13 +33,7 @@ module Api
       end
 
       def new
-        @scenario_generator = if column_id = params[:column_id]
-                                @generator.owned_columns.find_by(id: column_id)
-                              else
-                                @generator
-                              end
-
-        @scenario = @scenario_generator.generate
+        @scenario = scenario_generator.generate
       end
 
       def update
@@ -53,6 +47,12 @@ module Api
       end
 
       private
+
+      def scenario_generator
+        return @generator unless params[:column_id]
+
+        @generator.owned_columns.find_by(id: params[:column_id])
+      end
 
       def scenario_hash
         params[:scenario].permit!.to_hash.with_indifferent_access
