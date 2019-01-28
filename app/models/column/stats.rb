@@ -19,7 +19,10 @@
 #  updated_at              :datetime         not null
 #  generator_id            :integer
 #
-
+# Indexes
+#
+#  index_columns_on_generator_id  (generator_id)
+#
 
 # This is a Column::Stats.
 # It is used for generating a set of stats to be used by the user.

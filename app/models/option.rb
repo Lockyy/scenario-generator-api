@@ -11,7 +11,10 @@
 #  updated_at :datetime         not null
 #  column_id  :integer
 #
-
+# Indexes
+#
+#  index_options_on_column_id  (column_id)
+#
 
 # This is an option for it's parent.
 # An option may have a column dependent on it. These are stored in the columns relation.

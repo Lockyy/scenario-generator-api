@@ -9,7 +9,10 @@
 #  updated_at :datetime         not null
 #  column_id  :integer
 #
-
+# Indexes
+#
+#  index_exclusion_sets_on_column_id  (column_id)
+#
 
 # A set of options that are exclusive to each other.
 # If an option in an exclusion set is in a set of options then no other options from that set can be returned.

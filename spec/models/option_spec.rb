@@ -9,6 +9,10 @@
 #  updated_at :datetime         not null
 #  column_id  :integer
 #
+# Indexes
+#
+#  index_options_on_column_id  (column_id)
+#
 
 require 'rails_helper'
 

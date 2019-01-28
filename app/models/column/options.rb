@@ -19,7 +19,10 @@
 #  updated_at              :datetime         not null
 #  generator_id            :integer
 #
-
+# Indexes
+#
+#  index_columns_on_generator_id  (generator_id)
+#
 
 # This is an options column. It is for generating a random set of options from a list.
 # max: The maximum number of points a stat can have.

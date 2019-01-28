@@ -14,7 +14,11 @@
 #  updated_at :datetime         not null
 #  user_id    :integer
 #
-
+# Indexes
+#
+#  index_generators_on_name     (name)
+#  index_generators_on_user_id  (user_id)
+#
 
 # This is the actual generator.
 #

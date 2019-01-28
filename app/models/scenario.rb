@@ -12,7 +12,11 @@
 #  updated_at    :datetime         not null
 #  generator_id  :integer
 #
-
+# Indexes
+#
+#  index_scenarios_on_generator_id  (generator_id)
+#  index_scenarios_on_uuid          (uuid)
+#
 
 # This is a saved scenario
 # There are two types of saved scenario, the old version from the old site that has been imported here.

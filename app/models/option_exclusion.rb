@@ -10,7 +10,11 @@
 #  exclusion_set_id :integer
 #  option_id        :integer
 #
-
+# Indexes
+#
+#  index_option_exclusions_on_exclusion_set_id  (exclusion_set_id)
+#  index_option_exclusions_on_option_id         (option_id)
+#
 
 class OptionExclusion < ApplicationRecord
   belongs_to :option
