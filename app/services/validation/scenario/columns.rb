@@ -24,10 +24,9 @@ module Validation
         private
 
         def validate_columns(scenario, column_hashes)
-          column_hash_valid_statuses = column_hashes.map do |column_hash|
-                                         validate_column(scenario, column_hash)
-                                       end
-          column_hash_valid_statuses.exclude?(false)
+          column_hashes.map do |column_hash|
+            validate_column(scenario, column_hash)
+          end.exclude?(false)
         end
 
         def validate_column(scenario, column_hash)
