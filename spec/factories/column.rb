@@ -1,11 +1,11 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :column do
     parent_generators { [create(:generator)] }
-    min 1
-    max 1
-    chance_of_multiple 5
+    min { 1 }
+    max { 1 }
+    chance_of_multiple { 5 }
     name { Faker::Lorem.sentence(3) }
-    spoilers false
+    spoilers { false }
 
     trait :with_options do
       options { create_list(:option, 3) }
@@ -16,7 +16,7 @@ FactoryGirl.define do
     end
 
     trait :spoilers do
-      spoilers true
+      spoilers { true }
     end
 
     trait :with_column do
@@ -28,10 +28,10 @@ FactoryGirl.define do
   end
 
   factory :stats_column, parent: :column, class: 'Column::Stats' do
-    max 1
-    max_per 2
-    min 1
+    max { 1 }
+    max_per { 2 }
+    min { 1 }
     name { Faker::Lorem.sentence(3) }
-    spoilers false
+    spoilers { false }
   end
 end

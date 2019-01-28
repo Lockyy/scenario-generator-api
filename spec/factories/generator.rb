@@ -1,10 +1,10 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :generator do
-    spoilers false
+    spoilers { false }
     name { Faker::Lorem.sentence(3) }
 
     trait :spoilers do
-      spoilers true
+      spoilers { true }
     end
 
     trait :with_column do

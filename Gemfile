@@ -15,7 +15,7 @@ gem 'annotate', '~> 2.7'
 
 group :test do
   gem 'rspec-rails', '~> 3.8'
-  gem 'factory_girl_rails', '~> 4.9'
+  gem 'factory_bot_rails', '~> 4.11'
   gem 'database_cleaner', '~> 1.7'
   gem 'faker', '~> 1.9'
   gem 'shoulda-matchers', '~> 3.1'
