@@ -1,5 +1,26 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: columns
+#
+#  id                      :bigint(8)        not null, primary key
+#  allow_duplicate_options :boolean          default(FALSE)
+#  chance_of_multiple      :integer          default(0)
+#  help                    :string
+#  max                     :integer          default(1)
+#  max_per                 :integer
+#  min                     :integer          default(1)
+#  name                    :string
+#  position                :integer
+#  spoilers                :boolean          default(FALSE)
+#  type                    :string           default("Column::Options")
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  generator_id            :integer
+#
+
+
 # This is an options column. It is for generating a random set of options from a list.
 # max: The maximum number of points a stat can have.
 # chance_of_multiple: The total points that can be distributed across all stats.

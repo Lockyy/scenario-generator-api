@@ -1,5 +1,16 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: exclusion_sets
+#
+#  id         :bigint(8)        not null, primary key
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  column_id  :integer
+#
+
+
 # A set of options that are exclusive to each other.
 # If an option in an exclusion set is in a set of options then no other options from that set can be returned.
 class ExclusionSet < ApplicationRecord

@@ -1,5 +1,19 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: scenarios
+#
+#  id            :bigint(8)        not null, primary key
+#  api_version   :integer          default(1)
+#  scenario_hash :string
+#  uuid          :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  generator_id  :integer
+#
+
+
 # This is a saved scenario
 # There are two types of saved scenario, the old version from the old site that has been imported here.
 # These use the UUID as their identifier and are not compatible with the new rerolling system so old scenarios will not

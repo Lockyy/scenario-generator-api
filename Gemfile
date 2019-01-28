@@ -11,6 +11,7 @@ gem 'rack-cors', '~> 0.4', :require => 'rack/cors'
 gem 'friendly_id', '~> 5.2'
 gem 'gibbon', '~> 2.2'
 gem 'acts_as_list', '~> 0.9'
+gem 'annotate', '~> 2.7'
 
 group :test do
   gem 'rspec-rails', '~> 3.8'

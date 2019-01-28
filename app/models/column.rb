@@ -1,5 +1,26 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: columns
+#
+#  id                      :bigint(8)        not null, primary key
+#  allow_duplicate_options :boolean          default(FALSE)
+#  chance_of_multiple      :integer          default(0)
+#  help                    :string
+#  max                     :integer          default(1)
+#  max_per                 :integer
+#  min                     :integer          default(1)
+#  name                    :string
+#  position                :integer
+#  spoilers                :boolean          default(FALSE)
+#  type                    :string           default("Column::Options")
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
+#  generator_id            :integer
+#
+
+
 # These are the columns in a generator.
 # It has many options.
 #

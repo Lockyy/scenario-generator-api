@@ -1,5 +1,21 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: generators
+#
+#  id         :bigint(8)        not null, primary key
+#  ad_link    :string
+#  kind       :string
+#  name       :string
+#  slug       :string
+#  spoilers   :boolean
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  user_id    :integer
+#
+
+
 # This is the actual generator.
 #
 # id

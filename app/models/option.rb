@@ -1,5 +1,18 @@
 # frozen_string_literal: true
 
+# == Schema Information
+#
+# Table name: options
+#
+#  id         :bigint(8)        not null, primary key
+#  text       :string
+#  weight     :float            default(1.0)
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  column_id  :integer
+#
+
+
 # This is an option for it's parent.
 # An option may have a column dependent on it. These are stored in the columns relation.
 # It will be inserted into the generated scenario by the generator.
