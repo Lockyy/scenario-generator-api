@@ -51,13 +51,18 @@ module Validation
         def child_columns_exist?(column, column_hash)
           return true if column_hash[:columns].nil? && column.columns.empty?
 
-          direct_child_column_ids = column.columns.reverse.map(&:id)
+          abberant_column_ids = hash_child_column_ids(column_hash) - valid_child_column_ids(column)
+          abberant_column_ids.empty?
+        end
+
+        def hash_child_column_ids(column_hash)
+          column_hash[:columns].map { |hash| hash[:id] }
+        end
+
+        def valid_child_column_ids(column)
+          direct_child_column_ids  = column.columns.reverse.map(&:id)
           options_child_column_ids = column.option_columns.reverse.map(&:id)
-          child_column_ids = direct_child_column_ids.concat options_child_column_ids
-
-          hash_child_column_ids = column_hash[:columns].map { |hash| hash[:id] }
-
-          (hash_child_column_ids - child_column_ids).empty?
+          direct_child_column_ids.concat(options_child_column_ids)
         end
       end
     end

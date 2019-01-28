@@ -46,8 +46,17 @@ module Validation
         end
 
         def column_children_keys_valid?(column)
-          column[:options].map { |child_option| options_keys_valid?(child_option) }.exclude?(false) &&
-            (column[:columns].nil? || column[:columns].map { |child_column| column_keys_valid?(child_column) }.exclude?(false))
+          options_valid?(column) && child_columns_valid?(column)
+        end
+
+        def options_valid?(column)
+          column[:options].map(&method(:options_keys_valid?)).all?
+        end
+
+        def child_columns_valid?(column)
+          return true if column[:columns].nil?
+
+          column[:columns].map(&method(:column_keys_valid?)).all?
         end
 
         def options_keys_valid?(option)

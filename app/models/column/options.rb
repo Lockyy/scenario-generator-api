@@ -53,9 +53,13 @@ class Column
     end
 
     def amount_to_pick
-      return (min..max).to_a.sample if chance_of_multiple < 0
-      return min if chance_of_multiple == 0
+      return (min..max).to_a.sample if chance_of_multiple.negative?
+      return min if chance_of_multiple.zero?
 
+      generate_amount_to_pick
+    end
+
+    def generate_amount_to_pick
       amount = min
       amount += 1 while rand(100) <= chance_of_multiple && amount < max_options
       enforce_amount_rules(amount)
