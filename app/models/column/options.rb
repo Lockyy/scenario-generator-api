@@ -48,7 +48,7 @@ class Column
     def max_options
       return max if allow_duplicate_options
 
-      options_in_exclusion_sets = exclusion_sets.map { |es| es.options.length }.sum
+      options_in_exclusion_sets = exclusion_sets.map(&:options_count).sum
       [options.length + exclusion_sets.length - options_in_exclusion_sets, max].min
     end
 

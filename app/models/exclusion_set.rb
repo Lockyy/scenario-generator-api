@@ -27,6 +27,8 @@ class ExclusionSet < ApplicationRecord
   validate :all_options_same_column
   validates :option_exclusions, length: { minimum: 1 }
 
+  delegate :count, to: :options, prefix: true
+
   private
 
   def ensure_column
