@@ -45,7 +45,7 @@ class Option < ApplicationRecord
 
   def self.sample_without_exclusions(total_amount = 1, allow_duplicates = false)
     options = []
-    while (remaining_options = total_amount - options.length) > 0
+    while (remaining_options = total_amount - options.length).positive?
       new_options = all.weighted_sample(remaining_options)
       options = merge_without_exclusions(options, new_options, allow_duplicates)
     end

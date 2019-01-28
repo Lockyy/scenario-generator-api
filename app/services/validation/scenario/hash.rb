@@ -28,7 +28,7 @@ module Validation
         end
 
         def overriding_api_version(scenario)
-          scenario.api_version == 0
+          scenario.api_version.zero?
         end
 
         def hash_valid?(scenario)
