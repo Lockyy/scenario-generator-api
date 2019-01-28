@@ -41,8 +41,8 @@
 class Column < ApplicationRecord
   belongs_to :generator, inverse_of: :owned_columns
 
-  has_many :column_parents
-  has_many :child_columns_parents, as: :parent, class_name: 'ColumnParent'
+  has_many :column_parents, dependent: :destroy
+  has_many :child_columns_parents, as: :parent, class_name: 'ColumnParent', dependent: :destroy
   has_many :columns, through: :child_columns_parents, as: :parent, dependent: :destroy
   has_many :parent_columns,    through: :column_parents, source: :parent, source_type: 'Column', dependent: :destroy
   has_many :parent_options,    through: :column_parents, source: :parent, source_type: 'Option', dependent: :destroy

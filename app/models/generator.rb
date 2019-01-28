@@ -35,10 +35,10 @@ class Generator < ApplicationRecord
 
   belongs_to :user
 
-  has_many :owned_columns, class_name: 'Column', inverse_of: :generator
-  has_many :column_parents, as: :parent
+  has_many :owned_columns, class_name: 'Column', inverse_of: :generator, dependent: :destroy
+  has_many :column_parents, as: :parent, dependent: :destroy
   has_many :columns, through: :column_parents, as: :parent, dependent: :destroy
-  has_many :scenarios
+  has_many :scenarios, dependent: :destroy
 
   def self.find_from_name(name)
     generator = friendly.find(name) || find_by(name: name)

@@ -28,7 +28,7 @@
 class Option < ApplicationRecord
   belongs_to :column
 
-  has_many :column_parents, as: :parent
+  has_many :column_parents, as: :parent, dependent: :destroy
   has_many :columns, through: :column_parents, as: :parent, dependent: :destroy
   has_many :option_exclusions, dependent: :destroy
   has_many :exclusion_sets, through: :option_exclusions
