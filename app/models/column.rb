@@ -64,6 +64,8 @@ class Column < ApplicationRecord
                     greater_than_or_equal_to: proc { |column| (column.min || 0) },
                   }
 
+  scope :old_to_new, -> { order(created_at: :asc) }
+
   acts_as_list scope: :generator_id
 
   before_save :set_generator

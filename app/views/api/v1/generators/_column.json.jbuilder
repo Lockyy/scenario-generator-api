@@ -5,4 +5,4 @@ json.exclusion_sets column.exclusion_sets do |exclusion_set|
   json.array! exclusion_set.options.map(&:id)
 end
 
-json.columns column.columns, partial: 'api/v1/generators/column', as: :column
+json.columns column.columns.old_to_new, partial: 'api/v1/generators/column', as: :column
