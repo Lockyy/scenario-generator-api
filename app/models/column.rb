@@ -23,8 +23,8 @@ class Column < ApplicationRecord
   has_many :parent_columns,    through: :column_parents, source: :parent, source_type: 'Column', dependent: :destroy
   has_many :parent_options,    through: :column_parents, source: :parent, source_type: 'Option', dependent: :destroy
   has_many :parent_generators, through: :column_parents, source: :parent, source_type: 'Generator', dependent: :destroy
-  has_many :option_columns, through: :options, source: :columns
   has_many :options,        dependent: :destroy
+  has_many :option_columns, through: :options, source: :columns
   has_many :exclusion_sets, dependent: :destroy
 
   validates :min, presence: true, numericality: { only_integer: true, greater_than: -1 }

@@ -13,7 +13,7 @@ describe Api::V1::GeneratorsController do
       before do
         create_list(:generator, INDEX_GENERATORS_TO_CREATE)
         expect(Generator.all.length).to eq INDEX_GENERATORS_TO_CREATE
-        get :index, format: :json
+        get :index, as: :json
         @json = JSON.parse(response.body).with_indifferent_access
       end
 
@@ -43,7 +43,7 @@ describe Api::V1::GeneratorsController do
     describe 'without generators' do
       before do
         expect(Generator.all.length).to eq 0
-        get :index, format: :json
+        get :index, as: :json
         @json = JSON.parse(response.body).with_indifferent_access
       end
 

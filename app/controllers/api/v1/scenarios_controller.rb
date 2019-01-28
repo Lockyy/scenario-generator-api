@@ -53,6 +53,6 @@ class Api::V1::ScenariosController < ApiController
   private
 
   def scenario_hash
-    params[:scenario].to_hash.with_indifferent_access
+    params[:scenario].permit!.to_hash.with_indifferent_access
   end
 end

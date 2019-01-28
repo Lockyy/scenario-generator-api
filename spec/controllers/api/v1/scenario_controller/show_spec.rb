@@ -24,7 +24,7 @@ describe Api::V1::ScenariosController do
   describe 'GET show' do
     describe 'for a generator that doesn\'t exist' do
       before do
-        get :show, format: :json, id: 100, generator_id: 500
+        get :show, as: :json, params: { id: 100, generator_id: 500 }
         @body = JSON.parse(response.body).with_indifferent_access
       end
 
@@ -36,7 +36,7 @@ describe Api::V1::ScenariosController do
 
     describe 'for a scenario that doesn\'t exist' do
       before do
-        get :show, format: :json, id: 100, generator_id: create(:generator).id
+        get :show, as: :json, params: { id: 100, generator_id: create(:generator).id }
         @body = JSON.parse(response.body).with_indifferent_access
       end
 
@@ -52,7 +52,7 @@ describe Api::V1::ScenariosController do
           create_valid_scenario_hash
           @scenario = Scenario.create(generator:     @generator,
                                       scenario_hash: @scenario_hash)
-          get :show, format: :json, id: @scenario.uuid, generator_id: @generator.id
+          get :show, as: :json, params: { id: @scenario.uuid, generator_id: @generator.id }
           @body = JSON.parse(response.body).with_indifferent_access
         end
 
@@ -76,7 +76,7 @@ describe Api::V1::ScenariosController do
           create_valid_scenario_hash
           @scenario = Scenario.create(generator:     @generator,
                                       scenario_hash: @scenario_hash)
-          get :show, format: :json, id: @scenario.uuid, generator_id: @generator.slug
+          get :show, as: :json, params: { id: @scenario.uuid, generator_id: @generator.slug }
           @body = JSON.parse(response.body).with_indifferent_access
         end
 

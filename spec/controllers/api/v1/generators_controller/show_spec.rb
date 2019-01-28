@@ -90,7 +90,9 @@ describe Api::V1::GeneratorsController do
 
     describe 'using the generator id' do
       before do
-        get :show, id: @generator.id, format: :json
+        get :show, as: :json, params: {
+          id: @generator.id
+        }
         @json = JSON.parse(response.body).with_indifferent_access
       end
 
@@ -109,7 +111,9 @@ describe Api::V1::GeneratorsController do
 
     describe 'using the generator slug' do
       before do
-        get :show, id: @generator.slug, format: :json
+        get :show, as: :json, params: {
+          id: @generator.slug
+        }
         @json = JSON.parse(response.body).with_indifferent_access
       end
 
