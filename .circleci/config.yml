@@ -8,13 +8,13 @@ jobs:
     working_directory: ~/scenario_generator_api
 
     docker:
-      - image: circleci/ruby:2.4.1-node-browsers
+      - image: circleci/ruby:2.6.0-node-browsers
         environment:
         - RAILS_ENV: test
         - PGHOST: 127.0.0.1
         - PGUSER: root
 
-      - image: circleci/postgres:10.1
+      - image: circleci/postgres:11.1
         environment:
         - POSTGRES_USER: root
         - POSTGRES_DB: scenario_generator_api_test
