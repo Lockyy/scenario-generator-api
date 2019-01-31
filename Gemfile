@@ -33,6 +33,7 @@ group :development do
   gem 'letter_opener', '~> 1.7'
   gem 'mina-nginx', '~> 0.0', require: false
   gem 'mina', '~> 0.3', require: false
+  gem 'pessimize', '~> 0.4'
   gem 'pry-rails', '~> 0.3'
   gem 'pry', '~> 0.12'
   gem 'reek', '~> 4.8'

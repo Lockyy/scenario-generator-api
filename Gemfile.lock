@@ -136,6 +136,9 @@ GEM
     parallel (1.13.0)
     parser (2.5.3.0)
       ast (~> 2.4.0)
+    pessimize (0.4.0)
+      bundler
+      trollop
     pg (1.1.4)
     powerpack (0.1.2)
     pry (0.12.2)
@@ -221,6 +224,7 @@ GEM
       sprockets (>= 3.0.0)
     thor (0.20.3)
     thread_safe (0.3.6)
+    trollop (2.9.9)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
     unicode-display_width (1.4.1)
@@ -262,6 +266,7 @@ DEPENDENCIES
   letter_opener (~> 1.7)
   mina (~> 0.3)
   mina-nginx (~> 0.0)
+  pessimize (~> 0.4)
   pg (~> 1.1)
   pry (~> 0.12)
   pry-rails (~> 0.3)
