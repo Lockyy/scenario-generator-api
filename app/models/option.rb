@@ -57,25 +57,20 @@ class Option < ApplicationRecord
     WeightedRandomizer.new(option_weight_hash).sample(amount)
   end
 
-  # We do it this way instead of like this:
-  # ```
-  # all_options.each do |option|
-  #   all_options -= option.exclusions
-  # end
-  # ```
-  # because the all_options used by the each is not the same as the one we remove from.
-  # If the code was set up like that then every time there was an exclusion both sides of the exclusion would be
-  # removed, instead of just one.
-  # TODO: Refactor
+  # We're building up a list of options so that we don't included
+  # any two options that appear in the same exclusion set.
+  # So we create a new list of options by iterating over each option
+  # and adding it to the list if it doesn't conflict with anything already in
+  # the list
+  # Probably a better way to do this in SQL.
   def self.without_exclusions(options)
-    all_options = options
-    (0..all_options.length).each do |option_index|
-      option = all_options[option_index]
-      break unless option
-
-      all_options -= option.exclusions
+    [].tap do |filtered_options|
+      options.each do |option|
+        if (filtered_options & option.exclusions).empty?
+          filtered_options << option
+        end
+      end
     end
-    all_options
   end
 
   # If an option appears in exclusions then it cannot be included in the same column as this one.
