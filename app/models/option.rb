@@ -19,12 +19,6 @@
 # This is an option for it's parent.
 # An option may have a column dependent on it. These are stored in the columns relation.
 # It will be inserted into the generated scenario by the generator.
-#
-# id
-# text
-# created_at
-# updated_at
-#
 class Option < ApplicationRecord
   belongs_to :column
 

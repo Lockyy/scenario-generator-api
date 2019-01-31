@@ -22,15 +22,6 @@
 # There are two types of saved scenario, the old version from the old site that has been imported here.
 # These use the UUID as their identifier and are not compatible with the new rerolling system so old scenarios will not
 # be as functional as before. This is unfortunate but is unavoidable.
-#
-# id
-# generator_id
-# uuid
-# hash
-# api_version
-# created_at
-# updated_at
-#
 class Scenario < ApplicationRecord
   serialize :scenario_hash
 

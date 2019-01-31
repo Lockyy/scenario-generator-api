@@ -26,18 +26,6 @@
 
 # These are the columns in a generator.
 # It has many options.
-#
-# id
-# name
-# generator_id
-# spoilers
-# min
-# max
-# help
-# chance_of_multiple
-# created_at
-# updated_at
-#
 class Column < ApplicationRecord
   belongs_to :generator, inverse_of: :owned_columns
 

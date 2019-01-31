@@ -20,15 +20,7 @@
 #  index_generators_on_user_id  (user_id)
 #
 
-# This is the actual generator.
-#
-# id
-# user_id
-# spoilers
-# name
-# created_at
-# updated_at
-#
+# This is the actual generator
 class Generator < ApplicationRecord
   extend FriendlyId
   friendly_id :name, use: %i[slugged history finders]
