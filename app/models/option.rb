@@ -66,16 +66,14 @@ class Option < ApplicationRecord
   def self.without_exclusions(options)
     [].tap do |filtered_options|
       options.each do |option|
-        if (filtered_options & option.exclusions).empty?
-          filtered_options << option
-        end
+        filtered_options << option if (filtered_options & option.exclusions).empty?
       end
     end
   end
 
   # If an option appears in exclusions then it cannot be included in the same column as this one.
   def exclusions
-    excluded_options.where.not(id: self.id)
+    excluded_options.where.not(id: id)
   end
 
   def search_for_generator
