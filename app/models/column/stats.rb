@@ -72,9 +72,9 @@ class Column
 
     def assign_points_to_options
       stats = base_stats
-      points_to_assign.times {
+      points_to_assign.times do
         assign_point_to_random_stat(stats)
-      }
+      end
       stats
     end
 
