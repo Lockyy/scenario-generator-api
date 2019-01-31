@@ -89,19 +89,18 @@ class Column < ApplicationRecord
     return generator if generator
 
     parents.each do |parent|
-      return parent if parent.class == Generator
+      return parent if parent.is_a?(Generator)
 
       parent_search_result = parent.search_for_generator
-      return parent_search_result if parent_search_result.class == Generator
+      return parent_search_result if parent_search_result.is_a?(Generator)
     end
-    false
   end
 
   private
 
   def set_generator
     root_generator = search_for_generator
-    return self.generator = root_generator if root_generator.class == Generator
+    return self.generator = root_generator if root_generator.is_a?(Generator)
 
     raise 'No (recursive) parent of column is generator'
   end
