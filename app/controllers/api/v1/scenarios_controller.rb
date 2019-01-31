@@ -11,25 +11,22 @@
 module Api
   module V1
     class ScenariosController < ApiController
-      before_action :setup_generators
-      before_action :setup_generator
+      before_action :load_generator
 
       def show
         @scenario_model = @generator.scenarios.find_by(uuid: params[:id])
-        if @scenario_model
-          @generator = @scenario_model.generator
-        else
-          render_error 404, ['Scenario not found']
-        end
+
+        return render_missing_scenario if @scenario_model.blank?
+
+        @generator = @scenario_model.generator
       end
 
       def create
-        @scenario_model = @generator.scenarios.new(scenario_hash: scenario_hash)
-        if @scenario_model.save
-          render :show
-        else
-          render_error 400, @scenario_model.errors.full_messages
-        end
+        @scenario_model = @generator.scenarios.new(scenario_hash: create_params)
+
+        return render_failed_save unless @scenario_model.save
+
+        render(:show)
       end
 
       def new
@@ -37,13 +34,11 @@ module Api
       end
 
       def update
-        @scenario_model = @generator.scenarios.find_by(uuid: params[:id])
+        @scenario_model = @generator.scenarios.find(uuid: params[:id])
 
-        if @scenario_model&.update(scenario_hash: scenario_hash)
-          render :show
-        else
-          render_error 400, @scenario_model.errors.full_messages
-        end
+        return render_failed_save unless update_scenario
+
+        render(:show)
       end
 
       private
@@ -54,8 +49,21 @@ module Api
         @generator.owned_columns.find_by(id: params[:column_id])
       end
 
-      def scenario_hash
+      def update_scenario
+        @scenario_model.update(scenario_hash: update_params)
+      end
+
+      def create_params
         params[:scenario].permit!.to_hash.with_indifferent_access
+      end
+      alias update_params create_params
+
+      def render_missing_scenario
+        render_error(404, ['Scenario not found'])
+      end
+
+      def render_failed_save
+        render_error(400, @scenario_model.errors.full_messages)
       end
     end
   end
