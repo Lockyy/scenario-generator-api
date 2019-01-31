@@ -10,6 +10,8 @@
 module Api
   module V1
     class GeneratorsController < ApiController
+      include GeneratorLoading
+
       def index
         load_generators
       end

@@ -11,6 +11,8 @@
 module Api
   module V1
     class ScenariosController < ApiController
+      include GeneratorLoading
+
       before_action :load_generator
 
       def show
