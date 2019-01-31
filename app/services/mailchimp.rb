@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
+# Subscribes a use to the mailing list
 class Mailchimp
   class << self
     def subscribe(email)
-      @email = email
-      list.members.create(subscription_hash)
+      list.members.create(subscription_hash(email))
     rescue StandardError => error
       error.body
     end
@@ -27,11 +27,11 @@ class Mailchimp
       gibbon.lists(list_id)
     end
 
-    def subscription_hash
+    def subscription_hash(email)
       {
         body: {
           status:        'subscribed',
-          email_address: @email,
+          email_address: email,
         },
       }
     end
