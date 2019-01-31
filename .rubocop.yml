@@ -4,8 +4,9 @@
 AllCops:
   Include:
     - '**/*.rb'
-    - '**/Rakefile'
     - '**/config.ru'
+    - '**/Rakefile'
+    - 'Gemfile'
   Exclude:
     - 'vendor/**/*'
     - 'spec/fixtures/**/*'
