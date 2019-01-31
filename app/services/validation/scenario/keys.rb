@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-#
-# Validation::Scenario::Hash
-#
-# Takes in a Scenario and recursively checks that no unacceptable keys are included in the hash
-#
-# An scenario_hash's keys are valid if:
-# a) Columns only contain keys from ALLOWED_COLUMN_KEYS;
-# b) Options only contain keys from ALLOWED_OPTION_KEYS; and
-# c) The root hash is equal to ALLOWED_ROOT_KEYS.
-#
-# These are checked recursively.
-#
 module Validation
   module Scenario
+    #
+    # Validation::Scenario::Keys
+    #
+    # Takes in a Scenario and recursively checks that no unacceptable keys are included in the hash
+    #
+    # An scenario_hash's keys are valid if:
+    # a) Columns only contain keys from ALLOWED_COLUMN_KEYS;
+    # b) Options only contain keys from ALLOWED_OPTION_KEYS; and
+    # c) The root hash is equal to ALLOWED_ROOT_KEYS.
+    #
+    # These are checked recursively.
+    #
     class Keys
       class << self
         ALLOWED_COLUMN_KEYS = %w[id name help options columns].freeze

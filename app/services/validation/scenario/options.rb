@@ -1,18 +1,18 @@
 # frozen_string_literal: true
 
-#
-# Validation::Scenario::Hash
-#
-# Takes in a Scenario, a column, and a set of option_hashes.
-# Checks that the option_hashes are valid for the given column.
-#
-# An option_hash is valid if:
-# a) They exist in the database as children of the column; and
-# b) They only contain data from the database. No extra or changed data may be
-#    present in the option_hash.
-#
 module Validation
   module Scenario
+    #
+    # Validation::Scenario::Options
+    #
+    # Takes in a Scenario, a column, and a set of option_hashes.
+    # Checks that the option_hashes are valid for the given column.
+    #
+    # An option_hash is valid if:
+    # a) They exist in the database as children of the column; and
+    # b) They only contain data from the database. No extra or changed data may be
+    #    present in the option_hash.
+    #
     class Options
       class << self
         def valid?(column, option_hashes)

@@ -1,20 +1,20 @@
 # frozen_string_literal: true
 
-#
-# Validation::Scenario::Hash
-#
-# Takes in a Scenario and checks whether its scenario_hash is valid
-# Lots of recursion and validation throughout the hash.
-#
-# A scenario_hash is valid if:
-# a) Scenario.api_version == 0. This is because these are imported directly from the old site and
-#    do not have corresponding database tables;
-# b) No dissallowed keys are present;
-# c) The first level of columns are direct_columns of the generator; and
-# d) All columns are valid.
-#
 module Validation
   module Scenario
+    #
+    # Validation::Scenario::Hash
+    #
+    # Takes in a Scenario and checks whether its scenario_hash is valid
+    # Lots of recursion and validation throughout the hash.
+    #
+    # A scenario_hash is valid if:
+    # a) Scenario.api_version == 0. This is because these are imported directly from the old site and
+    #    do not have corresponding database tables;
+    # b) No dissallowed keys are present;
+    # c) The first level of columns are direct_columns of the generator; and
+    # d) All columns are valid.
+    #
     class Hash
       class << self
         def valid?(scenario)
