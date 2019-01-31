@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :generator do
     spoilers { false }
-    name { Faker::Lorem.sentence(3) }
+    name     { Faker::Lorem.sentence(3) }
 
     trait :spoilers do
       spoilers { true }
