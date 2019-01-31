@@ -52,7 +52,7 @@ class Column
     def create_sorted_stat_hashes(stats)
       stat_hashes = stats.map { |stat, value| create_stat_hash(stat, value) }
       # Ensure the stats always come out in the same order
-      stat_hashes.sort_by { |a| a[:text] }
+      stat_hashes.sort_by { |stat_hash| stat_hash[:text] }
     end
 
     def create_stat_hash(stat, value)
