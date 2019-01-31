@@ -132,3 +132,4 @@ exclude_paths:
   - 'config'
   - 'db'
   - 'spec'
+  - 'app/middleware'
