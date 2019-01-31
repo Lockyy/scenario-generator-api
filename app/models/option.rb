@@ -75,9 +75,7 @@ class Option < ApplicationRecord
 
   # If an option appears in exclusions then it cannot be included in the same column as this one.
   def exclusions
-    all_exclusions = excluded_options.to_a
-    all_exclusions.delete self
-    all_exclusions
+    excluded_options.where.not(id: self.id)
   end
 
   def search_for_generator
