@@ -11,6 +11,7 @@ gem 'jbuilder', '~> 2.8'
 gem 'pg', '~> 1.1'
 gem 'rack-cors', '~> 0.4', require: 'rack/cors'
 gem 'rails', '~> 5.2'
+gem 'rubocop-rails', '~> 2.0'
 gem 'unicorn', '~> 5.4'
 gem 'weighted_randomizer', '~> 0.1'
 
