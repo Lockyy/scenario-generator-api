@@ -50,13 +50,16 @@ describe Api::V1::ScenariosController do
 
         it 'creates a scenario' do
           expect {
-            post :create, format: :json, generator_id: @generator.id, scenario: @scenario_hash
+            post :create, as: :json, params: {
+              generator_id: @generator.id,
+              scenario: @scenario_hash
+            }
           }.to change { Scenario.all.length }.from(0).to(1)
         end
 
         describe 'requested' do
           before do
-            post :create, format: :json, generator_id: @generator.id, scenario: @scenario_hash
+            post :create, as: :json, params: { generator_id: @generator.id, scenario: @scenario_hash }
             @body = JSON.parse(response.body).with_indifferent_access
           end
 
@@ -86,13 +89,19 @@ describe Api::V1::ScenariosController do
 
         it 'creates a scenario' do
           expect {
-            post :create, format: :json, generator_id: @generator.id, scenario: @scenario_hash
+            post :create, as: :json, params: {
+              generator_id: @generator.id,
+              scenario: @scenario_hash
+            }
           }.to change { Scenario.all.length }.from(0).to(1)
         end
 
         describe 'requested' do
           before do
-            post :create, format: :json, generator_id: @generator.id, scenario: @scenario_hash
+            post :create, as: :json, params: {
+              generator_id: @generator.id,
+              scenario: @scenario_hash
+            }
             @body = JSON.parse(response.body).with_indifferent_access
           end
 
@@ -125,17 +134,19 @@ describe Api::V1::ScenariosController do
 
           it 'does not create a scenario' do
             expect {
-              post :create, format:       :json,
-                            generator_id: @invalid_scenario_info[:generator].id,
-                            scenario:     @invalid_scenario_info[:scenario_hash]
+              post :create, format:       :json, params: {
+                generator_id: @invalid_scenario_info[:generator].id,
+                scenario:     @invalid_scenario_info[:scenario_hash]
+              }
             }.to_not change { Scenario.all.length }
           end
 
           describe 'requested' do
             before do
-              post :create, format:       :json,
-                            generator_id: @invalid_scenario_info[:generator].id,
-                            scenario:     @invalid_scenario_info[:scenario_hash]
+              post :create, format:       :json, params: {
+                generator_id: @invalid_scenario_info[:generator].id,
+                scenario:     @invalid_scenario_info[:scenario_hash]
+              }
               @body = JSON.parse(response.body).with_indifferent_access
             end
 

@@ -1,4 +1,6 @@
-require File.expand_path('../boot', __FILE__)
+# frozen_string_literal: true
+
+require File.expand_path('boot', __dir__)
 
 require 'rails'
 # Pick the frameworks you want:
@@ -29,13 +31,10 @@ module ScenarioGeneratorApi
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    # Do not swallow errors in after_commit/after_rollback callbacks.
-    config.active_record.raise_in_transactional_callbacks = true
-
     config.action_dispatch.default_headers.merge!('Access-Control-Allow-Origin' => '*',
                                                   'Access-Control-Request-Method' => '*')
 
-    config.middleware.insert_before 0, 'Rack::Cors' do
+    config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins 'https://staging.scenariogenerator.net',
                 'http://staging.scenariogenerator.net',
@@ -45,7 +44,7 @@ module ScenarioGeneratorApi
                 'https://scenariogenerator.net',
                 'http://localhost:3456',
                 'http://localhost:3000'
-        resource '*', headers: :any, methods: [:get, :post, :options, :patch]
+        resource '*', headers: :any, methods: %i[get post options patch]
       end
     end
   end

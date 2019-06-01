@@ -3,8 +3,10 @@
 
 AllCops:
   Include:
-    - '**/Rakefile'
+    - '**/*.rb'
     - '**/config.ru'
+    - '**/Rakefile'
+    - 'Gemfile'
   Exclude:
     - 'vendor/**/*'
     - 'spec/fixtures/**/*'
@@ -29,22 +31,23 @@ Metrics/LineLength:
 Style/Documentation:
   Enabled: false
 
-Style/BlockDelimiters:
-  Enabled: false
-
 Metrics/MethodLength:
   Max: 15
 
-Style/IndentArray:
+Layout/IndentArray:
   Enabled: false
 
 Style/Lambda:
   Enabled: false
 
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
   Enabled: true
   EnforcedStyleForMultiline: comma
 
-Style/AlignHash:
+Style/TrailingCommaInHashLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
+
+Layout/AlignHash:
   Enabled: true
   EnforcedColonStyle: table

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Api::V1::GeneratorsController
 #
 # API endpoints for Generators
@@ -5,13 +7,18 @@
 # GET  show   - Shows a specific generator and it's columns
 # GET  index  - Shows all generators
 #
-class Api::V1::GeneratorsController < ApiController
-  before_action :setup_generators
-  before_action :setup_generator, except: [:index]
+module Api
+  module V1
+    class GeneratorsController < ApiController
+      include GeneratorLoading
 
-  def index
-  end
+      def index
+        load_generators
+      end
 
-  def show
+      def show
+        load_generator
+      end
+    end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Api::V1::SubscriptionsController
 #
 # API endpoints for Email subs
@@ -5,11 +7,23 @@
 #
 # POST  create - Subscribe to the mailing list
 #
-class Api::V1::SubscriptionsController < ApiController
-  def create
-    subscription_response = Mailchimp.subscribe(params[:email])
-    unless subscription_response['status'] == 'subscribed'
-      render_error(400, [subscription_response['title']])
+module Api
+  module V1
+    class SubscriptionsController < ApiController
+      def create
+        render_subscription_failure unless subscribe_to_mailchimp
+      end
+
+      private
+
+      def subscribe_to_mailchimp
+        subscription_response = Mailchimp.subscribe(params[:email])
+        subscription_response['status'] == 'subscribed'
+      end
+
+      def render_subscription_failure
+        render_error(400, [subscription_response['title']])
+      end
     end
   end
 end

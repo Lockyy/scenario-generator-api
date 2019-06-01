@@ -1,6 +1,23 @@
+# frozen_string_literal: true
+
+# == Schema Information
+#
+# Table name: exclusion_sets
+#
+#  id         :bigint(8)        not null, primary key
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  column_id  :integer
+#
+# Indexes
+#
+#  index_exclusion_sets_on_column_id  (column_id)
+#
+
 # A set of options that are exclusive to each other.
-# If an option in an exclusion set is in a set of options then no other options from that set can be returned.
-class ExclusionSet < ActiveRecord::Base
+# If an option in an exclusion set is in a set of options then no other
+# options from that set can be returned.
+class ExclusionSet < ApplicationRecord
   has_many :option_exclusions, dependent: :destroy
   has_many :options, through: :option_exclusions
 
@@ -11,10 +28,12 @@ class ExclusionSet < ActiveRecord::Base
   validate :all_options_same_column
   validates :option_exclusions, length: { minimum: 1 }
 
+  delegate :count, to: :options, prefix: true
+
   private
 
   def ensure_column
-    column = options.first.column unless column
+    self.column ||= options.first.column
   end
 
   def all_options_same_column
