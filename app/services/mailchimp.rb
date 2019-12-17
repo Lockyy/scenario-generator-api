@@ -5,8 +5,8 @@ class Mailchimp
   class << self
     def subscribe(email)
       list.members.create(subscription_hash(email))
-    rescue StandardError => error
-      error.body
+    rescue StandardError => e
+      e.body
     end
 
     private
