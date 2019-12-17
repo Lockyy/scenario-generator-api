@@ -10,11 +10,11 @@ GAMES[:fallout3] = {
   last_updated:    Date.strptime('20150404', '%Y%m%d'),
   columns: {
     special: {
-      max_per: 10,
-      min:     1,
-      max:     40,
+      max_per:      10,
+      min:          1,
+      max:          40,
       stats_column: true,
-      options: %i[strength perception endurance charisma intelligence agility luck],
+      options:      %i[strength perception endurance charisma intelligence agility luck],
     },
     tag_skills: {
       chance_of_multiple: 100,

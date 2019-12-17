@@ -24,11 +24,11 @@ GAMES[:expeditions_conquistador] = {
       ],
     },
     stats: {
-      min:     5,
-      max:     8,
-      max_per: 13,
+      min:          5,
+      max:          8,
+      max_per:      13,
       stats_column: true,
-      options: %i[
+      options:      %i[
         tactics
         diplomacy
         healing
