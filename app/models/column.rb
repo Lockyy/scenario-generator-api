@@ -56,7 +56,7 @@ class Column < ApplicationRecord
 
   acts_as_list scope: :generator_id
 
-  before_save :set_generator
+  after_save :set_generator
 
   def self.process_all
     all.flat_map(&:process)
