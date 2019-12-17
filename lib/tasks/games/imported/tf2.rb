@@ -6,8 +6,8 @@ GAMES[:tf2] = {
   title:           'Team Fortress 2',
   generator_title: 'Loadout',
   background:      'tf2.jpg',
-  columns:         {
-    class:     {
+  columns: {
+    class: {
       sub_trees:          %i[
         scout_shotgun scout_pistol bat scout_hat
         rocket_launcher soldier_shotgun soldier_melee_weapon soldier_hat
@@ -24,7 +24,7 @@ GAMES[:tf2] = {
       max:                1,
       options:            [
         {
-          scout:  {
+          scout: {
             title:              'Shotgun',
             chance_of_multiple: 0,
             min:                1,
@@ -52,7 +52,7 @@ GAMES[:tf2] = {
               :'Flying Guillotine',
             ],
           },
-          bat:    {
+          bat: {
             chance_of_multiple: 0,
             min:                1,
             max:                1,
@@ -68,7 +68,7 @@ GAMES[:tf2] = {
               :'Wrap Assassin',
             ],
           },
-          hat:    {
+          hat: {
             help:               "This is optional, unless you don't want it to be, in which case it isn't",
             chance_of_multiple: 0,
             min:                1,
@@ -108,7 +108,7 @@ GAMES[:tf2] = {
           },
         },
         {
-          soldier:      {
+          soldier: {
             title:              'Rocket Launcher',
             help:               'Rawket Lawnchair',
             chance_of_multiple: 0,
@@ -126,7 +126,7 @@ GAMES[:tf2] = {
               :'Air Strike',
             ],
           },
-          shotgun:      {
+          shotgun: {
             chance_of_multiple: 0,
             min:                1,
             max:                1,
@@ -157,7 +157,7 @@ GAMES[:tf2] = {
               :'Escape Plan',
             ],
           },
-          hat:          {
+          hat: {
             help:               "This is optional, unless you don't want it to be, in which case it isn't",
             chance_of_multiple: 0,
             min:                1,
@@ -202,7 +202,7 @@ GAMES[:tf2] = {
           },
         },
         {
-          pyro:         {
+          pyro: {
             title:              'Flamethrower',
             chance_of_multiple: 0,
             min:                1,
@@ -215,7 +215,7 @@ GAMES[:tf2] = {
               :Rainblower,
             ],
           },
-          shotgun:      {
+          shotgun: {
             chance_of_multiple: 0,
             min:                1,
             max:                1,
@@ -245,7 +245,7 @@ GAMES[:tf2] = {
               :'Neon Annihilator',
             ],
           },
-          hat:          {
+          hat: {
             help:               "This is optional, unless you don't want it to be, in which case it isn't",
             chance_of_multiple: 0,
             min:                1,
@@ -288,7 +288,7 @@ GAMES[:tf2] = {
           },
         },
         {
-          demoman:         {
+          demoman: {
             title:              'Primary Weapon',
             chance_of_multiple: 0,
             min:                1,
@@ -316,7 +316,7 @@ GAMES[:tf2] = {
               :'Quickiebomb Launcher',
             ],
           },
-          melee_weapon:    {
+          melee_weapon: {
             chance_of_multiple: 0,
             min:                1,
             max:                1,
@@ -331,7 +331,7 @@ GAMES[:tf2] = {
               :'Persian Persuader',
             ],
           },
-          hat:             {
+          hat: {
             help:               "This is optional, unless you don't want it to be, in which case it isn't",
             chance_of_multiple: 0,
             min:                1,
@@ -371,7 +371,7 @@ GAMES[:tf2] = {
           },
         },
         {
-          heavy:            {
+          heavy: {
             title:              'Minigun',
             chance_of_multiple: 0,
             min:                1,
@@ -397,7 +397,7 @@ GAMES[:tf2] = {
               :'Panic Attack',
             ],
           },
-          fists:            {
+          fists: {
             chance_of_multiple: 0,
             min:                1,
             max:                1,
@@ -411,7 +411,7 @@ GAMES[:tf2] = {
               :'Holiday Punch',
             ],
           },
-          hat:              {
+          hat: {
             help:               "This is optional, unless you don't want it to be, in which case it isn't",
             chance_of_multiple: 0,
             min:                1,
@@ -455,7 +455,7 @@ GAMES[:tf2] = {
           },
         },
         {
-          engineer:         {
+          engineer: {
             title:              'Shotgun',
             chance_of_multiple: 0,
             min:                1,
@@ -479,7 +479,7 @@ GAMES[:tf2] = {
               :'Short Circuit',
             ],
           },
-          wrench:           {
+          wrench: {
             chance_of_multiple: 0,
             min:                1,
             max:                1,
@@ -491,7 +491,7 @@ GAMES[:tf2] = {
               :'Eureka Effect',
             ],
           },
-          hat:              {
+          hat: {
             help:               "This is optional, unless you don't want it to be, in which case it isn't",
             chance_of_multiple: 0,
             min:                1,
@@ -530,7 +530,7 @@ GAMES[:tf2] = {
           },
         },
         {
-          medic:       {
+          medic: {
             title:              'Medigun',
             chance_of_multiple: 0,
             min:                1,
@@ -553,7 +553,7 @@ GAMES[:tf2] = {
               :Overdose,
             ],
           },
-          saw:         {
+          saw: {
             chance_of_multiple: 0,
             min:                1,
             max:                1,
@@ -565,7 +565,7 @@ GAMES[:tf2] = {
               :'Solemn Vow',
             ],
           },
-          hat:         {
+          hat: {
             help:               "This is optional, unless you don't want it to be, in which case it isn't",
             chance_of_multiple: 0,
             min:                1,
@@ -606,7 +606,7 @@ GAMES[:tf2] = {
           },
         },
         {
-          sniper:           {
+          sniper: {
             title:              'Rifle',
             chance_of_multiple: 0,
             min:                1,
@@ -634,7 +634,7 @@ GAMES[:tf2] = {
               :'Cleaner\'s Carbine',
             ],
           },
-          melee_weapon:     {
+          melee_weapon: {
             chance_of_multiple: 0,
             min:                1,
             max:                1,
@@ -645,7 +645,7 @@ GAMES[:tf2] = {
               :Shahanshah,
             ],
           },
-          hat:              {
+          hat: {
             help:               "This is optional, unless you don't want it to be, in which case it isn't",
             chance_of_multiple: 0,
             min:                1,
@@ -683,7 +683,7 @@ GAMES[:tf2] = {
           },
         },
         {
-          spy:    {
+          spy: {
             title:              'Knife',
             chance_of_multiple: 0,
             min:                1,
@@ -708,7 +708,7 @@ GAMES[:tf2] = {
               Diamondback
             ],
           },
-          watch:  {
+          watch: {
             chance_of_multiple: 0,
             min:                1,
             max:                1,
@@ -727,7 +727,7 @@ GAMES[:tf2] = {
               :'Red-Tape Recorder',
             ],
           },
-          hat:    {
+          hat: {
             help:               "This is optional, unless you don't want it to be, in which case it isn't",
             chance_of_multiple: 0,
             min:                1,

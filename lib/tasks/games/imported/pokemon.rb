@@ -6,8 +6,8 @@ GAMES[:pokemon] = {
   background:      'pokemon.jpg',
   added:           Date.strptime('20150305', '%Y%m%d'),
   last_updated:    Date.strptime('20150305', '%Y%m%d'),
-  columns:         {
-    game:        {
+  columns: {
+    game: {
       help:               'This is optional, play whatever you want to play',
       chance_of_multiple: 0,
       min:                1,
@@ -30,7 +30,7 @@ GAMES[:pokemon] = {
         :'Omega Ruby or Alpha Sapphire',
       ],
     },
-    starter:     {
+    starter: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -66,7 +66,7 @@ GAMES[:pokemon] = {
         Fairy
       ],
     },
-    modifiers:   {
+    modifiers: {
       chance_of_multiple: 35,
       min:                1,
       max:                5,

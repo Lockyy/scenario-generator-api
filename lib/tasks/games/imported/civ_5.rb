@@ -51,14 +51,14 @@ GAMES[:civilization_v] = {
   site:       'gmg',
   title:      'Civilization V',
   background: 'civ5.jpg',
-  columns:    {
-    civilization:          {
+  columns: {
+    civilization: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
       options:            civs,
     },
-    victory_type:          {
+    victory_type: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -69,7 +69,7 @@ GAMES[:civilization_v] = {
         Diplomatic
       ],
     },
-    ideology:              {
+    ideology: {
       help:               'The ideology you must initially pick and attempt to spread. Only swap if absolutely necessary. BNW only.',
       chance_of_multiple: 0,
       min:                1,
@@ -80,7 +80,7 @@ GAMES[:civilization_v] = {
         Order
       ],
     },
-    difficulty:            {
+    difficulty: {
       help:               'If you get a difficulty way too high or low for you, you can always reroll',
       chance_of_multiple: 0,
       min:                1,
@@ -96,7 +96,7 @@ GAMES[:civilization_v] = {
         Deity
       ],
     },
-    personality:           {
+    personality: {
       help:               'The overall way you act towards your fellow civilizations',
       chance_of_multiple: 0,
       min:                1,
@@ -113,7 +113,7 @@ GAMES[:civilization_v] = {
         :'Friendly to those of your ideology',
       ],
     },
-    religion:              {
+    religion: {
       help:               'G&K only.',
       chance_of_multiple: 0,
       min:                1,
@@ -134,7 +134,7 @@ GAMES[:civilization_v] = {
         :Zoroastrianism,
       ],
     },
-    expansion_policy:      {
+    expansion_policy: {
       help:               'Tall = A few very large cities. Wide = Lots of smaller cities.',
       chance_of_multiple: 0,
       min:                1,
@@ -146,7 +146,7 @@ GAMES[:civilization_v] = {
         :'One City Challenge',
       ],
     },
-    game_pace:             {
+    game_pace: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -173,13 +173,13 @@ GAMES[:civilization_v] = {
         Rationalism
       ],
     },
-    opponents:             {
+    opponents: {
       chance_of_multiple: -1,
       min:                1,
       max:                12,
       options:            civs,
     },
-    goal_wonders:          {
+    goal_wonders: {
       chance_of_multiple: 45,
       min:                1,
       max:                7,
@@ -232,7 +232,7 @@ GAMES[:civilization_v] = {
         :'International Space Station (BNW)',
       ],
     },
-    map_type:              {
+    map_type: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,

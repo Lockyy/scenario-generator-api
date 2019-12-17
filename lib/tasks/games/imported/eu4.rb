@@ -5,8 +5,8 @@ GAMES[:europa_universalis_IV] = {
   site:       'gmg',
   title:      'Europa Universalis IV',
   background: 'eu4.jpg',
-  columns:    {
-    tech_group:   {
+  columns: {
+    tech_group: {
       sub_trees:          %i[
         western_country western_goals ottoman_country ottoman_goals muslim_country muslim_goals
         indian_country indian_goals eastern_country eastern_goals chinese_country
@@ -1096,7 +1096,7 @@ GAMES[:europa_universalis_IV] = {
           },
         },
         {
-          eastern:       {
+          eastern: {
             sub_trees:          %i[
               albania_goals athens_goals bosnia_goals byzantium_goals corfu_goals cyprus_goals georgia_goals hungary_goals lithuania_goals mazovia_goals moldavia_goals muscovy_goals naxos_goals novgorod_goals perm_goals poland_goals pskov_goals ragusa_goals ryazan_goals serbia_goals trebizond_goals tver_goals wallachia_goals yaroslavl_goals
             ],
@@ -1335,7 +1335,7 @@ GAMES[:europa_universalis_IV] = {
           },
         },
         {
-          ottoman:       {
+          ottoman: {
             sub_trees:          %i[
               candar_goals dulkadir_goals karaman_goals the_ottomans_goals ramazan_goals
             ],
@@ -1380,7 +1380,7 @@ GAMES[:europa_universalis_IV] = {
           },
         },
         {
-          muslim:       {
+          muslim: {
             sub_trees:          %i[
               adal_goals algiers_goals alodia_goals baluchistan_goals djerid_goals ethiopia_goals fezzan_goals gazikumukh_goals granada_goals haasa_goals hedjaz_goals kaffa_goals makuria_goals marehan_goals the_mamluks_goals medri_bahri_goals morocco_goals mzab_goals najd_goals oman_goals shammar_goals shirvan_goals tabarestan_goals tlemcen_goals touggourt_goals tripoli_goals tunisia_goals warsangali_goals yemen_goals
             ],
@@ -1513,7 +1513,7 @@ GAMES[:europa_universalis_IV] = {
           },
         },
         {
-          indian:       {
+          indian: {
             sub_trees:          %i[
               assam_goals ajuuraan_goals bagelkhand_goals baglana_goals bahmanis_goals bastar_goals bengal_goals bundelkhand_goals ceylon_goals chanda_goals delhi_goals dhundhar_goals garjat_goals garhwal_goals gondwana_goals gujarat_goals gwalior_goals hadoti_goals jaffna_goals jaisalmer_goals jangladesh_goals jaunpur_goals jharkhand_goals kachar_goals kangra_goals kashmir_goals kathiawar_goals khandesh_goals kilwa_goals koch_goals kochin_goals ladakh_goals madurai_goals malabar_goals malindi_goals malwa_goals manipur_goals marwar_goals mewar_goals mewat_goals mogadishu_goals mombasa_goals multan_goals mutapa_goals mysore_goals nagaur_goals nepal_goals orissa_goals pate_goals rewa_kantha_goals sadiya_goals sind_goals sofala_goals tirhut_goals tripura_goals venad_goals vijayanagar_goals
             ],
@@ -1655,7 +1655,7 @@ GAMES[:europa_universalis_IV] = {
           },
         },
         {
-          chinese:       {
+          chinese: {
             sub_trees:          %i[
               ainu_goals arakan_goals aceh_goals ava_goals ayutthaya_goals brunei_goals buryatia_goals buton_goals champa_goals chavchuveny_goals chukchi_goals dai_viet_goals date_goals guge_goals hatakeyama_goals hosokawa_goals hsenwi_goals imagawa_goals japan_goals kamchadals_goals kedah_goals kham_goals khmer_goals khodynt_goals korea_goals kutai_goals lan_na_goals lan_xang_goals ligor_goals luwu_goals majapahit_goals makassar_goals malacca_goals ming_goals mong_yang_goals otomo_goals ouchi_goals pagarruyung_goals pasai_goals pegu_goals perak_goals ryukyu_goals shan_goals shiba_goals shimazu_goals siak_goals sukhothai_goals sunda_goals takeda_goals taungu_goals ternate_goals tidore_goals uesugi_goals utsang_goals yamana_goals yarkand_goals
             ],
@@ -1989,7 +1989,7 @@ GAMES[:europa_universalis_IV] = {
           },
         },
         {
-          nomad:       {
+          nomad: {
             sub_trees:          %i[
               aq_qoyunlu_goals chagatai_goals crimea_goals golden_horde_goals haixi_goals jianzhou_goals kara_del_goals kazan_goals korchin_goals manchu_goals mongolia_goals nogai_goals oirat_goals qara_qoyunlu_goals sarig_yogir_goals timurids_goals uzbek_goals yeren
             ],
@@ -2117,7 +2117,7 @@ GAMES[:europa_universalis_IV] = {
           },
         },
         {
-          sub_saharan:       {
+          sub_saharan: {
             sub_trees:          %i[
               air_goals benin_goals bonoman_goals dagbon_goals dahomey_goals jolof_goals jenné_goals kanem_bornu_goals kano_goals katsina_goals kong_goals kongo_goals loango_goals macina_goals mali_goals mossi_goals ndongo_goals nupe_goals oyo_goals songhai_goals timbuktu_goals yao_goals zazzau_goals
             ],
@@ -2200,7 +2200,7 @@ GAMES[:europa_universalis_IV] = {
           },
         },
         {
-          north_american:       {
+          north_american: {
             sub_trees:          %i[
               abenaki_goals apache_goals arapaho_goals assiniboine_goals blackfoot_goals caddo_goals cherokee_goals cheyenne_goals choctaw_goals chickasaw_goals chinook_goals comanche_goals cree_goals creek_goals fox_goals haida_goals huron_goals iroquois_goals illiniwek_goals kiowa_goals lenape_goals mahican_goals miami_goals mikmaq_goals navajo_goals ojibwe_goals osage_goals ottawa_goals pawnee_goals pequot_goals pima_goals potawatomi_goals powhatan_goals pueblo_goals salish_goals shawnee_goals shoshone_goals sioux_goals susquehannock_goals wichita_goals
             ],
@@ -2276,7 +2276,7 @@ GAMES[:europa_universalis_IV] = {
           },
         },
         {
-          meso_american:       {
+          meso_american: {
             sub_trees:          %i[
               aztec_goals colima_goals cocomes_goals itza_goals kiche_goals mixtec_goals tarascan_goals tlapanec_goals tlaxcala_goals totonac_goals xiu_goals zapotec_goals
             ],
@@ -2314,7 +2314,7 @@ GAMES[:europa_universalis_IV] = {
           },
         },
         {
-          andean:       {
+          andean: {
             sub_trees:          %i[
               cajamarca calchaqui chachapoya charca chimu colla cusco huyla inca muisca quito pacajes wanka
             ],
@@ -2354,7 +2354,7 @@ GAMES[:europa_universalis_IV] = {
           },
         },
         {
-          south_american:       {
+          south_american: {
             sub_trees:          %i[
               arawak_goals charrua_goals guarani_goals mapuche_goals potiguara_goals tupinamba_goals tupiniquim_goals tapuia_goals
             ],
@@ -2389,7 +2389,7 @@ GAMES[:europa_universalis_IV] = {
         },
       ],
     },
-    goals:        {
+    goals: {
       help:               'These may be difficult for non-european powers',
       chance_of_multiple: 50,
       min:                1,

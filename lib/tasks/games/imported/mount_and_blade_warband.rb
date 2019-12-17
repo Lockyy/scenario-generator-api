@@ -256,47 +256,47 @@ GAMES[:mount_and_blade_warband] = {
   background:      'mountain_glade.jpg',
   added:           Date.strptime('20150404', '%Y%m%d'),
   last_updated:    Date.strptime('20150404', '%Y%m%d'),
-  columns:         {
-    father:                {
+  columns: {
+    father: {
       options: father,
     },
-    early_life:            {
+    early_life: {
       options: early_life,
     },
-    gender:                {
+    gender: {
       options: %i[
         Male
         Female
       ],
     },
-    adulthood:             {
+    adulthood: {
       options: adulthood,
     },
     reasons_for_adventure: {
       options: reasons_for_adventure,
     },
-    starting_location:     {
+    starting_location: {
       options: starting_locations,
     },
     primary_income_source: {
       help:    'If this conflicts with a challenge, reroll',
       options: income_sources,
     },
-    weapons:               {
+    weapons: {
       options: primary_weapons,
     },
-    challenges:            {
+    challenges: {
       max:                6,
       chance_of_multiple: -1,
       options:            challenges,
     },
-    required_companions:   {
+    required_companions: {
       help:               'If two companions start arguing, whoever comes first on the list wins',
       max:                4,
       chance_of_multiple: -1,
       options:            companions,
     },
-    army_makeup:           {
+    army_makeup: {
       max:                4,
       chance_of_multiple: -1,
       options:            troop_types,

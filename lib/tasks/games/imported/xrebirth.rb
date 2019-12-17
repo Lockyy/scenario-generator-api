@@ -5,8 +5,8 @@ GAMES[:xrebirth] = {
   site:       'gmg',
   title:      'X-Rebirth',
   background: 'x_rebirth.png',
-  columns:    {
-    game_starts:           {
+  columns: {
+    game_starts: {
       title:              'Game Starts',
       chance_of_multiple: 0,
       min:                1,
@@ -20,7 +20,7 @@ GAMES[:xrebirth] = {
         :'The Teladi Outpost',
       ],
     },
-    restrictions:          {
+    restrictions: {
       title:              'Restrictions',
       sub_trees:          [:primary_weapon],
       chance_of_multiple: 15,
@@ -61,7 +61,7 @@ GAMES[:xrebirth] = {
         },
       ],
     },
-    trade_goals:           {
+    trade_goals: {
       title:              'Trade Goals',
       chance_of_multiple: 5,
       min:                1,
@@ -80,7 +80,7 @@ GAMES[:xrebirth] = {
         :'Have at least one pilot, one captain and one engineer who all have 5 stars in their primary skills',
       ],
     },
-    fight_goals:           {
+    fight_goals: {
       title:              'Fight Goals',
       chance_of_multiple: 5,
       min:                1,
@@ -103,7 +103,7 @@ GAMES[:xrebirth] = {
         :'Successfully board at least one of every possible ship',
       ],
     },
-    build_goals:           {
+    build_goals: {
       title:              'Build Goals',
       sub_trees:          [:specific_zone_build],
       chance_of_multiple: 5,
@@ -142,7 +142,7 @@ GAMES[:xrebirth] = {
         },
       ],
     },
-    discovery_goals:       {
+    discovery_goals: {
       title:              'Discovery Goals',
       chance_of_multiple: 5,
       min:                1,
@@ -158,7 +158,7 @@ GAMES[:xrebirth] = {
         :'Survive the Serpentine Haze with less than 5% hull',
       ],
     },
-    faction_relations:     {
+    faction_relations: {
       title:              'Faction Relationships',
       help:               'Defines which relationships you are allowed to build with which factions',
       chance_of_multiple: 0,
@@ -191,7 +191,7 @@ GAMES[:xrebirth] = {
         :'Stealing from stations',
       ],
     },
-    criminal_activity:     {
+    criminal_activity: {
       title:              'Criminal Activity',
       chance_of_multiple: 0,
       min:                1,
@@ -204,7 +204,7 @@ GAMES[:xrebirth] = {
         :'The only way you can function',
       ],
     },
-    hard_difficulty:       {
+    hard_difficulty: {
       title:              'Hard Difficulty',
       chance_of_multiple: 0,
       min:                1,

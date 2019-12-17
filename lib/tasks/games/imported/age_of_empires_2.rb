@@ -34,8 +34,8 @@ GAMES[:age_of_empires_2] = {
   background:      'age_of_empires.jpg',
   added:           Date.strptime('20150305', '%Y%m%d'),
   last_updated:    Date.strptime('20150305', '%Y%m%d'),
-  columns:         {
-    civilization:  {
+  columns: {
+    civilization: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -48,7 +48,7 @@ GAMES[:age_of_empires_2] = {
       allow_duplicate_options: true,
       options:                 civs,
     },
-    game_mode:     {
+    game_mode: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -62,7 +62,7 @@ GAMES[:age_of_empires_2] = {
         :'Sudden Death',
       ],
     },
-    restrictions:  {
+    restrictions: {
       help:               'Optional',
       chance_of_multiple: 25,
       min:                1,

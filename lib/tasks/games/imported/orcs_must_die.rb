@@ -8,7 +8,7 @@ GAMES[:orcs_must_die] = {
   background:      'omd1.jpg',
   added:           Date.strptime('20150323', '%Y%m%d'),
   last_updated:    Date.strptime('20150323', '%Y%m%d'),
-  columns:         {
+  columns: {
     traps_and_weapons: {
       help:               "If you haven't unlocked a trap or weapon, replace it with your own choice",
       chance_of_multiple: 0,
@@ -42,7 +42,7 @@ GAMES[:orcs_must_die] = {
         :'Wind Belt',
       ],
     },
-    level:             {
+    level: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,

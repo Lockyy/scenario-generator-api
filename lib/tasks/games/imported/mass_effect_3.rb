@@ -7,8 +7,8 @@ GAMES[:mass_effect_3] = {
   generator_title: 'Playthrough',
   background:      'masseffect3.jpg',
   previous_game:   :mass_effect_2,
-  columns:         {
-    morality:                   {
+  columns: {
+    morality: {
       help:               'General reaction in conversations, does not overrule story options from below',
       chance_of_multiple: 0,
       min:                1,
@@ -19,7 +19,7 @@ GAMES[:mass_effect_3] = {
         Balanced
       ],
     },
-    class:                      {
+    class: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -32,7 +32,7 @@ GAMES[:mass_effect_3] = {
         Vanguard
       ],
     },
-    gender:                     {
+    gender: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -77,7 +77,7 @@ GAMES[:mass_effect_3] = {
         },
       ],
     },
-    rachni_queen:               {
+    rachni_queen: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -87,7 +87,7 @@ GAMES[:mass_effect_3] = {
         :'Save the Krogan Squad',
       ],
     },
-    samara:                     {
+    samara: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -98,7 +98,7 @@ GAMES[:mass_effect_3] = {
         [:'Stop Samara from killing herself', 2],
       ],
     },
-    'Omega: The Reactor':       {
+    'Omega: The Reactor': {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -118,7 +118,7 @@ GAMES[:mass_effect_3] = {
         :'Let Aria kill him',
       ],
     },
-    the_genophage:              {
+    the_genophage: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -128,7 +128,7 @@ GAMES[:mass_effect_3] = {
         :'Do not cure the genophage',
       ],
     },
-    'Quarians and the Geth':    {
+    'Quarians and the Geth': {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -139,7 +139,7 @@ GAMES[:mass_effect_3] = {
         :'If possible, negotiate a ceasefire. If not, reroll',
       ],
     },
-    party_theme:                {
+    party_theme: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -149,7 +149,7 @@ GAMES[:mass_effect_3] = {
         Wild
       ],
     },
-    ending:                     {
+    ending: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,

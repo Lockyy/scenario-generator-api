@@ -424,40 +424,40 @@ music = [
 ]
 
 sim = {
-  sim:             {
+  sim: {
     title:   'Gender',
     options: genders,
   },
-  hair_colour:     {
+  hair_colour: {
     options: hair_colours,
   },
-  eye_colour:      {
+  eye_colour: {
     options: eye_colours,
   },
-  style:           {
+  style: {
     options: styles,
   },
   favourite_music: {
     options: music,
   },
-  favourite_food:  {
+  favourite_food: {
     options: foods,
   },
   favourite_color: {
     options: colours,
   },
-  traits:          {
+  traits: {
     min:     5,
     options: traits,
   },
-  lifetime_wish:   {
+  lifetime_wish: {
     options: aspirations,
   },
-  career_path:     {
+  career_path: {
     help:    "This will probably conflict with your aspiration, complete that first before moving on to your assigned job.\nThis assumes you have all expansions, reroll if you don't have access to a career.",
     options: jobs,
   },
-  another_sim:     {
+  another_sim: {
     title:   'Another sim?',
     help:    "Hit the big reroll button above to create your next sim, don't forget to create this one first!",
     options: [

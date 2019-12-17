@@ -8,8 +8,8 @@ GAMES[:age_of_mythology] = {
   background:      'age_of_mythology.jpg',
   added:           Date.strptime('20150305', '%Y%m%d'),
   last_updated:    Date.strptime('20150305', '%Y%m%d'),
-  columns:         {
-    race:         {
+  columns: {
+    race: {
       sub_trees:          %i[
         major_eygptian_god major_norse_god major_atlantean_god major_greek_god
         first_minor_god_(zeus) second_minor_god_(zeus) third_minor_god_(zeus)
@@ -42,7 +42,7 @@ GAMES[:age_of_mythology] = {
             max:                1,
             options:            [
               {
-                zeus:               {
+                zeus: {
                   title:              'First Minor God',
                   chance_of_multiple: 0,
                   min:                1,
@@ -61,7 +61,7 @@ GAMES[:age_of_mythology] = {
                     Dionysus
                   ],
                 },
-                'Third Minor God':  {
+                'Third Minor God': {
                   chance_of_multiple: 0,
                   min:                1,
                   max:                1,
@@ -72,7 +72,7 @@ GAMES[:age_of_mythology] = {
                 },
               },
               {
-                poseidon:           {
+                poseidon: {
                   title:              'First Minor God',
                   chance_of_multiple: 0,
                   min:                1,
@@ -91,7 +91,7 @@ GAMES[:age_of_mythology] = {
                     Dionysus
                   ],
                 },
-                'Third Minor God':  {
+                'Third Minor God': {
                   chance_of_multiple: 0,
                   min:                1,
                   max:                1,
@@ -102,7 +102,7 @@ GAMES[:age_of_mythology] = {
                 },
               },
               {
-                hades:              {
+                hades: {
                   title:              'First Minor God',
                   chance_of_multiple: 0,
                   min:                1,
@@ -121,7 +121,7 @@ GAMES[:age_of_mythology] = {
                     Apollo
                   ],
                 },
-                'Third Minor God':  {
+                'Third Minor God': {
                   chance_of_multiple: 0,
                   min:                1,
                   max:                1,
@@ -147,7 +147,7 @@ GAMES[:age_of_mythology] = {
             max:                1,
             options:            [
               {
-                ra:                 {
+                ra: {
                   title:              'First Minor God',
                   chance_of_multiple: 0,
                   min:                1,
@@ -166,7 +166,7 @@ GAMES[:age_of_mythology] = {
                     Sekhmet
                   ],
                 },
-                'Third Minor God':  {
+                'Third Minor God': {
                   chance_of_multiple: 0,
                   min:                1,
                   max:                1,
@@ -177,7 +177,7 @@ GAMES[:age_of_mythology] = {
                 },
               },
               {
-                isis:               {
+                isis: {
                   title:              'First Minor God',
                   chance_of_multiple: 0,
                   min:                1,
@@ -196,7 +196,7 @@ GAMES[:age_of_mythology] = {
                     Hathor
                   ],
                 },
-                'Third Minor God':  {
+                'Third Minor God': {
                   chance_of_multiple: 0,
                   min:                1,
                   max:                1,
@@ -207,7 +207,7 @@ GAMES[:age_of_mythology] = {
                 },
               },
               {
-                set:                {
+                set: {
                   title:              'First Minor God',
                   chance_of_multiple: 0,
                   min:                1,
@@ -226,7 +226,7 @@ GAMES[:age_of_mythology] = {
                     Nephthys
                   ],
                 },
-                'Third Minor God':  {
+                'Third Minor God': {
                   chance_of_multiple: 0,
                   min:                1,
                   max:                1,
@@ -252,7 +252,7 @@ GAMES[:age_of_mythology] = {
             max:                1,
             options:            [
               {
-                odin:               {
+                odin: {
                   title:              'First Minor God',
                   chance_of_multiple: 0,
                   min:                1,
@@ -271,7 +271,7 @@ GAMES[:age_of_mythology] = {
                     Njord
                   ],
                 },
-                'Third Minor God':  {
+                'Third Minor God': {
                   chance_of_multiple: 0,
                   min:                1,
                   max:                1,
@@ -282,7 +282,7 @@ GAMES[:age_of_mythology] = {
                 },
               },
               {
-                thor:               {
+                thor: {
                   title:              'First Minor God',
                   chance_of_multiple: 0,
                   min:                1,
@@ -301,7 +301,7 @@ GAMES[:age_of_mythology] = {
                     Skaldi
                   ],
                 },
-                'Third Minor God':  {
+                'Third Minor God': {
                   chance_of_multiple: 0,
                   min:                1,
                   max:                1,
@@ -312,7 +312,7 @@ GAMES[:age_of_mythology] = {
                 },
               },
               {
-                loki:               {
+                loki: {
                   title:              'First Minor God',
                   chance_of_multiple: 0,
                   min:                1,
@@ -331,7 +331,7 @@ GAMES[:age_of_mythology] = {
                     Bragi
                   ],
                 },
-                'Third Minor God':  {
+                'Third Minor God': {
                   chance_of_multiple: 0,
                   min:                1,
                   max:                1,
@@ -357,7 +357,7 @@ GAMES[:age_of_mythology] = {
             max:                1,
             options:            [
               {
-                kronos:             {
+                kronos: {
                   title:              'First Minor God',
                   chance_of_multiple: 0,
                   min:                1,
@@ -376,7 +376,7 @@ GAMES[:age_of_mythology] = {
                     Rheia
                   ],
                 },
-                'Third Minor God':  {
+                'Third Minor God': {
                   chance_of_multiple: 0,
                   min:                1,
                   max:                1,
@@ -387,7 +387,7 @@ GAMES[:age_of_mythology] = {
                 },
               },
               {
-                gaia:               {
+                gaia: {
                   title:              'First Minor God',
                   chance_of_multiple: 0,
                   min:                1,
@@ -406,7 +406,7 @@ GAMES[:age_of_mythology] = {
                     Theia
                   ],
                 },
-                'Third Minor God':  {
+                'Third Minor God': {
                   chance_of_multiple: 0,
                   min:                1,
                   max:                1,
@@ -417,7 +417,7 @@ GAMES[:age_of_mythology] = {
                 },
               },
               {
-                oranos:             {
+                oranos: {
                   title:              'First Minor God',
                   chance_of_multiple: 0,
                   min:                1,
@@ -436,7 +436,7 @@ GAMES[:age_of_mythology] = {
                     Hyperion
                   ],
                 },
-                'Third Minor God':  {
+                'Third Minor God': {
                   chance_of_multiple: 0,
                   min:                1,
                   max:                1,
@@ -451,7 +451,7 @@ GAMES[:age_of_mythology] = {
         },
       ],
     },
-    game_mode:    {
+    game_mode: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,

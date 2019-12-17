@@ -7,8 +7,8 @@ GAMES[:endless_legend] = {
   background:   'endless_legend.jpg',
   added:        Date.strptime('20150306', '%Y%m%d'),
   last_updated: Date.strptime('20150306', '%Y%m%d'),
-  columns:      {
-    major_faction:          {
+  columns: {
+    major_faction: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -47,7 +47,7 @@ GAMES[:endless_legend] = {
         :'Eyeless Ones',
       ],
     },
-    victory_type:           {
+    victory_type: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -62,7 +62,7 @@ GAMES[:endless_legend] = {
         Score
       ],
     },
-    difficulty:             {
+    difficulty: {
       help:               'If you get a difficulty way too high or low for you, you can always reroll',
       chance_of_multiple: 0,
       min:                1,
@@ -77,7 +77,7 @@ GAMES[:endless_legend] = {
         Endless
       ],
     },
-    game_speed:             {
+    game_speed: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -89,7 +89,7 @@ GAMES[:endless_legend] = {
         :Endless,
       ],
     },
-    map_size:               {
+    map_size: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -103,7 +103,7 @@ GAMES[:endless_legend] = {
         :Huge,
       ],
     },
-    map_type:               {
+    map_type: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,

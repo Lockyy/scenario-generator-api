@@ -6,7 +6,7 @@ GAMES[:kerbal_space_program] = {
   title:           'Kerbal Space Program',
   generator_title: 'Challenge',
   background:      'ksp.jpg',
-  columns:         {
+  columns: {
     target_body: {
       sub_trees:          %i[
         goal_for_kerbol

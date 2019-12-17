@@ -7,7 +7,7 @@ GAMES[:the_witcher_2] = {
   generator_title: 'Playthrough',
   background:      'witcher2.jpg',
   previous_game:   :the_witcher,
-  columns:         {
+  columns: {
     "Aryan La Valette": {
       spoiler:            true,
       chance_of_multiple: 0,
@@ -18,7 +18,7 @@ GAMES[:the_witcher_2] = {
         :'Convince him to stand down',
       ],
     },
-    malena:             {
+    malena: {
       spoiler:            true,
       chance_of_multiple: 0,
       max:                1,
@@ -28,7 +28,7 @@ GAMES[:the_witcher_2] = {
         :'Side with her',
       ],
     },
-    iorveth_sword:      {
+    iorveth_sword: {
       title:              "Iorveth's Sword",
       spoiler:            true,
       chance_of_multiple: 0,
@@ -38,7 +38,7 @@ GAMES[:the_witcher_2] = {
         :'Punch him in the throat',
       ],
     },
-    roche_or_iorveth:   {
+    roche_or_iorveth: {
       spoiler:            true,
       sub_trees:          %i[hensalt stennis hero_or_avenger triss_or_temeria saskia_or_triss],
       chance_of_multiple: 0,
@@ -46,7 +46,7 @@ GAMES[:the_witcher_2] = {
       max:                1,
       options:            [
         {
-          roche:            {
+          roche: {
             spoiler:            true,
             title:              'Hensalt',
             chance_of_multiple: 0,
@@ -69,7 +69,7 @@ GAMES[:the_witcher_2] = {
           },
         },
         {
-          iorveth:         {
+          iorveth: {
             title:              'Stennis',
             spoiler:            true,
             chance_of_multiple: 0,
@@ -113,7 +113,7 @@ GAMES[:the_witcher_2] = {
         :'Leave the diamond',
       ],
     },
-    letho:              {
+    letho: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,

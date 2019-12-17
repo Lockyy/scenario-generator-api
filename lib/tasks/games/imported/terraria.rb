@@ -6,7 +6,7 @@ GAMES[:terraria] = {
   title:           'Terraria',
   generator_title: 'Challenge',
   background:      'terraria.jpg',
-  columns:         {
+  columns: {
     main_base_biome: {
       chance_of_multiple: 0,
       min:                1,
@@ -23,7 +23,7 @@ GAMES[:terraria] = {
         :"Sky Islands",
       ],
     },
-    restrictions:    {
+    restrictions: {
       chance_of_multiple: 5,
       min:                1,
       max:                4,
@@ -107,7 +107,7 @@ GAMES[:terraria] = {
         :"You cannot fish",
       ],
     },
-    goals:           {
+    goals: {
       chance_of_multiple: 75,
       min:                1,
       max:                6,

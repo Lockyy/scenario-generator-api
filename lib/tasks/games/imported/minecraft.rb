@@ -6,7 +6,7 @@ GAMES[:minecraft] = {
   title:           'Minecraft',
   generator_title: 'Challenge',
   background:      'minecraft.png',
-  columns:         {
+  columns: {
     main_base_biome: {
       chance_of_multiple: 0,
       min:                1,
@@ -49,7 +49,7 @@ GAMES[:minecraft] = {
         :Hills,
       ],
     },
-    restrictions:    {
+    restrictions: {
       chance_of_multiple: 5,
       min:                1,
       max:                2,
@@ -182,7 +182,7 @@ GAMES[:minecraft] = {
         :"No cats",
       ],
     },
-    goals:           {
+    goals: {
       chance_of_multiple: 75,
       min:                1,
       max:                5,

@@ -6,8 +6,8 @@ GAMES[:dwarffortress] = {
   title:        'Dwarf Fortress',
   background:   'dwarffortress.png',
   last_updated: Date.strptime('20150228', '%Y%m%d'),
-  columns:      {
-    biome:        {
+  columns: {
+    biome: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -47,7 +47,7 @@ GAMES[:dwarffortress] = {
         :"Free-pick",
       ],
     },
-    challenges:   {
+    challenges: {
       chance_of_multiple: 35,
       min:                1,
       max:                3,
@@ -118,7 +118,7 @@ GAMES[:dwarffortress] = {
         :'1x1 embark',
       ],
     },
-    goals:        {
+    goals: {
       chance_of_multiple: 45,
       min:                1,
       max:                6,

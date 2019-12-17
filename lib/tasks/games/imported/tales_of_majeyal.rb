@@ -7,8 +7,8 @@ GAMES[:tales_of_majeyal] = {
   background:   'tome.jpg',
   added:        Date.strptime('20150306', '%Y%m%d'),
   last_updated: Date.strptime('20150306', '%Y%m%d'),
-  columns:      {
-    campaigns:  {
+  columns: {
+    campaigns: {
       sub_trees:          %i[infinite_dungeon_lives age_of_ascendancy_lives],
       chance_of_multiple: 0,
       min:                1,
@@ -58,7 +58,7 @@ GAMES[:tales_of_majeyal] = {
         :'Free Pick',
       ],
     },
-    race:       {
+    race: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -75,7 +75,7 @@ GAMES[:tales_of_majeyal] = {
         :'Free Pick',
       ],
     },
-    class:      {
+    class: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -109,7 +109,7 @@ GAMES[:tales_of_majeyal] = {
         :'Free Pick',
       ],
     },
-    gender:     {
+    gender: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -119,7 +119,7 @@ GAMES[:tales_of_majeyal] = {
         :'Free Pick',
       ],
     },
-    ziguranth:  {
+    ziguranth: {
       help:               'Ignore if you are a mage',
       chance_of_multiple: 0,
       min:                1,

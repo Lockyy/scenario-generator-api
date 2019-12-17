@@ -5,7 +5,7 @@ GAMES[:crusaderkings] = {
   site:       'gmg',
   title:      'Crusader Kings 2',
   background: 'crusaderkings.jpg',
-  columns:    {
+  columns: {
     starting_duchy: {
       help:               'When starting, pick the duke of this duchy, a dejure vassal, or the dejure liege',
       title:              'Starting Duchy',
@@ -367,7 +367,7 @@ GAMES[:crusaderkings] = {
         :Pomerania,
       ],
     },
-    restrictions:   {
+    restrictions: {
       chance_of_multiple: 5,
       min:                1,
       max:                3,
@@ -445,7 +445,7 @@ GAMES[:crusaderkings] = {
         :'Always have an antipope',
       ],
     },
-    goals:          {
+    goals: {
       sub_trees:          %i[target_religion target_empire],
       chance_of_multiple: -1,
       min:                1,

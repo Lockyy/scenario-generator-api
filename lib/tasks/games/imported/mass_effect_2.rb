@@ -8,8 +8,8 @@ GAMES[:mass_effect_2] = {
   background:      'masseffect2.jpg',
   previous_game:   :mass_effect,
   next_game:       :mass_effect_3,
-  columns:         {
-    morality:                    {
+  columns: {
+    morality: {
       help:               'General reaction in conversations, does not overrule story options from below',
       chance_of_multiple: 0,
       min:                1,
@@ -20,7 +20,7 @@ GAMES[:mass_effect_2] = {
         Balanced
       ],
     },
-    class:                       {
+    class: {
       sub_trees:          %i[
         vanguard_specialization adept_specialization soldier_specialization
         engineer_specialization sentinel_specialization infiltrator_specialization
@@ -103,7 +103,7 @@ GAMES[:mass_effect_2] = {
         },
       ],
     },
-    gender:                      {
+    gender: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -142,7 +142,7 @@ GAMES[:mass_effect_2] = {
         },
       ],
     },
-    Veetor:                      {
+    Veetor: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -152,7 +152,7 @@ GAMES[:mass_effect_2] = {
         :'Send to Cerberus',
       ],
     },
-    "Mordin's Loyalty Mission":  {
+    "Mordin's Loyalty Mission": {
       spoiler:            true,
       chance_of_multiple: 100,
       min:                2,
@@ -168,7 +168,7 @@ GAMES[:mass_effect_2] = {
         ],
       ],
     },
-    "Jacob's Loyalty Mission":   {
+    "Jacob's Loyalty Mission": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -188,7 +188,7 @@ GAMES[:mass_effect_2] = {
         :'Tell her sister',
       ],
     },
-    "Jack's Loyalty Mission":    {
+    "Jack's Loyalty Mission": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -198,7 +198,7 @@ GAMES[:mass_effect_2] = {
         :'Kill Aresh',
       ],
     },
-    "Garrus's Loyalty Mission":  {
+    "Garrus's Loyalty Mission": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -208,7 +208,7 @@ GAMES[:mass_effect_2] = {
         :"Don't kill Sidonis",
       ],
     },
-    "Samara's Loyalty Mission":  {
+    "Samara's Loyalty Mission": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -218,7 +218,7 @@ GAMES[:mass_effect_2] = {
         :'Side with Morinth',
       ],
     },
-    "Tali's Loyalty Mission":    {
+    "Tali's Loyalty Mission": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -229,7 +229,7 @@ GAMES[:mass_effect_2] = {
         :'Convince the Board to let Tali go free',
       ],
     },
-    "Legion's Loyalty Mission":  {
+    "Legion's Loyalty Mission": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -239,7 +239,7 @@ GAMES[:mass_effect_2] = {
         :"Brainwash the traitors",
       ],
     },
-    "Zaeed's Loyalty Mission":   {
+    "Zaeed's Loyalty Mission": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -249,7 +249,7 @@ GAMES[:mass_effect_2] = {
         :"Let Vido go",
       ],
     },
-    "Kasumi's Loyalty Mission":  {
+    "Kasumi's Loyalty Mission": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -259,7 +259,7 @@ GAMES[:mass_effect_2] = {
         :"Keep the Greybox",
       ],
     },
-    "Project Overlord":          {
+    "Project Overlord": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -269,7 +269,7 @@ GAMES[:mass_effect_2] = {
         :"Leave David with Gavin",
       ],
     },
-    "Jack vs. Miranda":          {
+    "Jack vs. Miranda": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -280,7 +280,7 @@ GAMES[:mass_effect_2] = {
         :'Convince both',
       ],
     },
-    "Legion vs. Tali":           {
+    "Legion vs. Tali": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -291,7 +291,7 @@ GAMES[:mass_effect_2] = {
         :'Convince both',
       ],
     },
-    "The Normandy's Crew":       {
+    "The Normandy's Crew": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -303,7 +303,7 @@ GAMES[:mass_effect_2] = {
         :"Don't rush to help",
       ],
     },
-    "Vent Specialist":           {
+    "Vent Specialist": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -323,7 +323,7 @@ GAMES[:mass_effect_2] = {
         :Zaeed,
       ],
     },
-    "First Fire Team":           {
+    "First Fire Team": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -343,7 +343,7 @@ GAMES[:mass_effect_2] = {
         :Zaeed,
       ],
     },
-    "Biotic Specialist":         {
+    "Biotic Specialist": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -356,7 +356,7 @@ GAMES[:mass_effect_2] = {
         :Thane,
       ],
     },
-    "Second Fire Team":          {
+    "Second Fire Team": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -376,7 +376,7 @@ GAMES[:mass_effect_2] = {
         :Zaeed,
       ],
     },
-    "Escort":                    {
+    "Escort": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -396,7 +396,7 @@ GAMES[:mass_effect_2] = {
         :Zaeed,
       ],
     },
-    "Final Battle Squad":        {
+    "Final Battle Squad": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                2,
@@ -416,7 +416,7 @@ GAMES[:mass_effect_2] = {
         Zaeed
       ],
     },
-    "Collector Base":            {
+    "Collector Base": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,

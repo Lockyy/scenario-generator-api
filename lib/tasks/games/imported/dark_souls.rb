@@ -6,7 +6,7 @@ GAMES[:dark_souls] = {
   title:           'Dark Souls',
   generator_title: 'Character',
   background:      'darksouls.jpg',
-  columns:         {
+  columns: {
     right_handed_weapon: {
       help:               'If you get a special weapon, use a weapon of the same class until you acquire it',
       chance_of_multiple: 0,
@@ -74,7 +74,7 @@ GAMES[:dark_souls] = {
         :'Priscilla\'s Dagger',
       ],
     },
-    left_handed_weapon:  {
+    left_handed_weapon: {
       help:               'If your primary weapon is two handed, skip this',
       chance_of_multiple: 0,
       min:                1,
@@ -173,7 +173,7 @@ GAMES[:dark_souls] = {
         :'Dark Hand',
       ],
     },
-    rings:               {
+    rings: {
       help:               'Do not equip any other rings, except those required to advance through the story',
       chance_of_multiple: 0,
       min:                2,
@@ -233,7 +233,7 @@ GAMES[:dark_souls] = {
         Chaos
       ],
     },
-    armour_set:          {
+    armour_set: {
       help:               'Do not exceed your assigned set\'s weight before acquiring it. This does not apply for non-specific sets.',
       chance_of_multiple: 0,
       min:                1,
@@ -295,7 +295,7 @@ GAMES[:dark_souls] = {
         :'No armour',
       ],
     },
-    challenge:           {
+    challenge: {
       chance_of_multiple: 15,
       min:                1,
       max:                5,
@@ -398,7 +398,7 @@ GAMES[:dark_souls] = {
         :'You have two attempts on each boss, if you run out and the boss is not optional for advancement, game over',
       ],
     },
-    primary_covenant:    {
+    primary_covenant: {
       help:               'This is your primary covenant. You can swap, but only to complete challenges. You must swap back as soon as possible.',
       chance_of_multiple: 0,
       min:                1,
@@ -415,7 +415,7 @@ GAMES[:dark_souls] = {
         :'Way of White',
       ],
     },
-    starting_class:      {
+    starting_class: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -432,7 +432,7 @@ GAMES[:dark_souls] = {
         Deprived
       ],
     },
-    starting_gift:       {
+    starting_gift: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,

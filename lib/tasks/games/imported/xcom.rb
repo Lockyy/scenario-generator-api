@@ -6,8 +6,8 @@ GAMES[:xcom] = {
   title:           'X-Com: Enemy Unknown',
   generator_title: 'Challenge',
   background:      'xcom.jpg',
-  columns:         {
-    difficulty:          {
+  columns: {
+    difficulty: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -49,7 +49,7 @@ GAMES[:xcom] = {
         :'Itchy Trigger Tentacle',
       ],
     },
-    ideal_squad:         {
+    ideal_squad: {
       help:                    "Bring rookies if you don't have the classes required",
       chance_of_multiple:      0,
       min:                     6,
@@ -62,7 +62,7 @@ GAMES[:xcom] = {
         Sniper
       ],
     },
-    starting_country:    {
+    starting_country: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,

@@ -7,8 +7,8 @@ GAMES[:mass_effect] = {
   generator_title: 'Playthrough',
   background:      'masseffect1.jpg',
   next_game:       :mass_effect_2,
-  columns:         {
-    background:            {
+  columns: {
+    background: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -28,7 +28,7 @@ GAMES[:mass_effect] = {
         :Ruthless,
       ],
     },
-    morality:              {
+    morality: {
       help:               'General reaction in conversations, does not overrule story options from below',
       chance_of_multiple: 0,
       min:                1,
@@ -39,7 +39,7 @@ GAMES[:mass_effect] = {
         Balanced
       ],
     },
-    class:                 {
+    class: {
       sub_trees:          %i[
         vanguard_specialization adept_specialization soldier_specialization
         engineer_specialization sentinel_specialization infiltrator_specialization
@@ -122,7 +122,7 @@ GAMES[:mass_effect] = {
         },
       ],
     },
-    gender:                {
+    gender: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -157,7 +157,7 @@ GAMES[:mass_effect] = {
         },
       ],
     },
-    "garrus's morality":   {
+    "garrus's morality": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -167,7 +167,7 @@ GAMES[:mass_effect] = {
         :'Push towards Renegade',
       ],
     },
-    rachni_queen:          {
+    rachni_queen: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -177,7 +177,7 @@ GAMES[:mass_effect] = {
         Release
       ],
     },
-    bring_down_the_sky:    {
+    bring_down_the_sky: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -187,7 +187,7 @@ GAMES[:mass_effect] = {
         :'Kill Balek and let the hostages die',
       ],
     },
-    wrex_on_virmire:       {
+    wrex_on_virmire: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -197,7 +197,7 @@ GAMES[:mass_effect] = {
         :'Kill Wrex',
       ],
     },
-    virmire:               {
+    virmire: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -207,7 +207,7 @@ GAMES[:mass_effect] = {
         :'Kaidan is left behind',
       ],
     },
-    the_council:           {
+    the_council: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -217,7 +217,7 @@ GAMES[:mass_effect] = {
         :'Let them die',
       ],
     },
-    human_council_member:  {
+    human_council_member: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,

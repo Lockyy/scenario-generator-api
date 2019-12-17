@@ -6,8 +6,8 @@ GAMES[:baldurs_gate] = {
   title:           'Baldur\'s Gate',
   generator_title: 'Character',
   background:      'balders_gate.jpg',
-  columns:         {
-    gender:    {
+  columns: {
+    gender: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -16,7 +16,7 @@ GAMES[:baldurs_gate] = {
         Female
       ],
     },
-    race:      {
+    race: {
       sub_trees:          %i[
         human_class/kit elf_class/kit half_elf_class/kit gnome_class/kit
         gnome_class/kit halfling_class/kit dwarf_class/kit half_orc_class/kit

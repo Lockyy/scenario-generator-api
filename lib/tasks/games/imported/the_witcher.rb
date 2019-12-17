@@ -7,8 +7,8 @@ GAMES[:the_witcher] = {
   generator_title: 'Playthrough',
   background:      'witcher.jpg',
   next_game:       :the_witcher_2,
-  columns:         {
-    triss_or_vesemir:      {
+  columns: {
+    triss_or_vesemir: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -18,7 +18,7 @@ GAMES[:the_witcher] = {
         :'Fight the frightener',
       ],
     },
-    the_escort:            {
+    the_escort: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -28,7 +28,7 @@ GAMES[:the_witcher] = {
         :"Don't escort Vesna",
       ],
     },
-    racist_encounter:      {
+    racist_encounter: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -38,7 +38,7 @@ GAMES[:the_witcher] = {
         :"Don't help Zoltan",
       ],
     },
-    arms:                  {
+    arms: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -49,7 +49,7 @@ GAMES[:the_witcher] = {
         :"Kill the Scoia'tael",
       ],
     },
-    lesser_evil:           {
+    lesser_evil: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -59,7 +59,7 @@ GAMES[:the_witcher] = {
         :'Side with the Reverend',
       ],
     },
-    seigfried:             {
+    seigfried: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -69,7 +69,7 @@ GAMES[:the_witcher] = {
         :'Fight alone',
       ],
     },
-    force_recon:           {
+    force_recon: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -80,7 +80,7 @@ GAMES[:the_witcher] = {
         :'Remain Neutral',
       ],
     },
-    guardian:              {
+    guardian: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -90,7 +90,7 @@ GAMES[:the_witcher] = {
         :'Leave Alvin with Triss',
       ],
     },
-    thaler:                {
+    thaler: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -100,7 +100,7 @@ GAMES[:the_witcher] = {
         :'Spare Thaler',
       ],
     },
-    werewolf:              {
+    werewolf: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -111,7 +111,7 @@ GAMES[:the_witcher] = {
         :"Save but don't cure him",
       ],
     },
-    bank_robbery:          {
+    bank_robbery: {
       sub_trees:          %I[
         vodyenoi_conflict forgiveness
         continue_with_the_scoia'tael? continue_with_the_order?
@@ -122,7 +122,7 @@ GAMES[:the_witcher] = {
       max:                1,
       options:            [
         {
-          "Side with the Scoia'tael":      {
+          "Side with the Scoia'tael": {
             title:              'Vodyenoi Conflict',
             spoiler:            true,
             chance_of_multiple: 0,
@@ -134,7 +134,7 @@ GAMES[:the_witcher] = {
               :'Reach a compromise',
             ],
           },
-          forgiveness:                     {
+          forgiveness: {
             spoiler:            true,
             chance_of_multiple: 0,
             min:                1,
@@ -156,7 +156,7 @@ GAMES[:the_witcher] = {
           },
         },
         {
-          'Side with the Order':      {
+          'Side with the Order': {
             title:              'Vodyenoi Conflict',
             spoiler:            true,
             chance_of_multiple: 0,
@@ -168,7 +168,7 @@ GAMES[:the_witcher] = {
               :'Reach a compromise',
             ],
           },
-          forgiveness:                {
+          forgiveness: {
             spoiler:            true,
             chance_of_multiple: 0,
             min:                1,
@@ -191,7 +191,7 @@ GAMES[:the_witcher] = {
         },
       ],
     },
-    striga:                {
+    striga: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,

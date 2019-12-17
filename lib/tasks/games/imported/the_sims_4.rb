@@ -148,24 +148,24 @@ jobs = [
 ]
 
 sim = {
-  sim:         {
+  sim: {
     title:   'Gender',
     options: genders,
   },
   hair_colour: {
     options: hair_colours,
   },
-  eye_colour:  {
+  eye_colour: {
     options: eye_colours,
   },
-  style:       {
+  style: {
     options: styles,
   },
-  traits:      {
+  traits: {
     min:     3,
     options: traits,
   },
-  aspiration:  {
+  aspiration: {
     options: aspirations,
   },
   career_path: {

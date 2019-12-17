@@ -8,8 +8,8 @@ GAMES[:dungeons_of_dredmor] = {
   background:      'dungeons-of-dredmor.jpg',
   added:           Date.strptime('20150227', '%Y%m%d'),
   last_updated:    Date.strptime('20150227', '%Y%m%d'),
-  columns:         {
-    skills:     {
+  columns: {
+    skills: {
       chance_of_multiple: 0,
       min:                7,
       max:                7,
@@ -67,7 +67,7 @@ GAMES[:dungeons_of_dredmor] = {
         :Tourist,
       ],
     },
-    gender:     {
+    gender: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,

@@ -7,15 +7,15 @@ GAMES[:ftl] = {
   background:   'ftl.png',
   added:        Date.strptime('20150323', '%Y%m%d'),
   last_updated: Date.strptime('20150323', '%Y%m%d'),
-  columns:      {
-    advanced_edition?:    {
+  columns: {
+    advanced_edition?: {
       sub_trees:          %i[ship_(ae) ship_layout_(ae) ship ship_layout],
       chance_of_multiple: 0,
       min:                1,
       max:                1,
       options:            [
         {
-          On:            {
+          On: {
             title:              'Ship',
             chance_of_multiple: 0,
             min:                1,
@@ -42,7 +42,7 @@ GAMES[:ftl] = {
           },
         },
         {
-          Off:         {
+          Off: {
             title:              'Ship',
             chance_of_multiple: 0,
             min:                1,
@@ -83,7 +83,7 @@ GAMES[:ftl] = {
         Flak
       ],
     },
-    challenges:           {
+    challenges: {
       help:               'These are optional and can be done across multiple runs',
       chance_of_multiple: 33,
       min:                1,
@@ -170,7 +170,7 @@ GAMES[:ftl] = {
         :'Empty the oxygen (Net level less than 5 percent) of a non-automated, hostile enemy ship',
       ],
     },
-    difficulty:           {
+    difficulty: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,

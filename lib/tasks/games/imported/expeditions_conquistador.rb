@@ -16,18 +16,18 @@ GAMES[:expeditions_conquistador] = {
   background:      'expeditions_conquistador.jpg',
   added:           Date.strptime('20150420', '%Y%m%d'),
   last_updated:    Date.strptime('20150420', '%Y%m%d'),
-  columns:         {
-    difficulty:                 {
+  columns: {
+    difficulty: {
       options: %i[
         Ironman
         Normal
       ],
     },
-    stats:                      {
+    stats: {
       min:     5,
       max:     8,
       max_per: 13,
-      type:    'Column::Stats',
+      stats_column: true,
       options: %i[
         tactics
         diplomacy
@@ -37,7 +37,7 @@ GAMES[:expeditions_conquistador] = {
         leadership
       ],
     },
-    attitude_towards_natives:   {
+    attitude_towards_natives: {
       help:    'Whilst mostly self-explanatory, the interpretation of this is up to you',
       options: [
         :Hostile,
@@ -77,7 +77,7 @@ GAMES[:expeditions_conquistador] = {
         :Pushover,
       ],
     },
-    starting_followers:         {
+    starting_followers: {
       min:                     10,
       allow_duplicate_options: true,
       options:                 followers_array,

@@ -8,15 +8,15 @@ GAMES[:falloutnewvegas] = {
   background:      'newvegas.jpg',
   added:           Date.strptime('20150227', '%Y%m%d'),
   last_updated:    Date.strptime('20150227', '%Y%m%d'),
-  columns:         {
-    special:           {
+  columns: {
+    special: {
       max_per: 10,
       min:     1,
       max:     21,
-      type:    'Column::Stats',
+      stats_column: true,
       options: %i[strength perception endurance charisma intelligence agility luck],
     },
-    tag_skills:        {
+    tag_skills: {
       chance_of_multiple: 100,
       min:                3,
       max:                3,
@@ -32,7 +32,7 @@ GAMES[:falloutnewvegas] = {
         :'Appropriate for your primary weapon',
       ],
     },
-    traits:            {
+    traits: {
       chance_of_multiple: 100,
       min:                2,
       max:                2,
@@ -55,7 +55,7 @@ GAMES[:falloutnewvegas] = {
         :Skilled,
       ],
     },
-    hardcore_mode:     {
+    hardcore_mode: {
       title:              'Hardcore Mode',
       chance_of_multiple: 0,
       min:                1,
@@ -65,7 +65,7 @@ GAMES[:falloutnewvegas] = {
         [:Off, 2],
       ],
     },
-    primary_weapon:    {
+    primary_weapon: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -87,7 +87,7 @@ GAMES[:falloutnewvegas] = {
         :Pacifist,
       ],
     },
-    faction:           {
+    faction: {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -99,7 +99,7 @@ GAMES[:falloutnewvegas] = {
         :"Yes Man",
       ],
     },
-    human_companion:   {
+    human_companion: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -113,7 +113,7 @@ GAMES[:falloutnewvegas] = {
         Veronica
       ],
     },
-    other_companion:   {
+    other_companion: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -123,7 +123,7 @@ GAMES[:falloutnewvegas] = {
         Rex
       ],
     },
-    freelance_theft:   {
+    freelance_theft: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,

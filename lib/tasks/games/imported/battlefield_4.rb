@@ -261,8 +261,8 @@ GAMES[:battlefield_4] = {
   background:      'bf4.jpg',
   added:           Date.strptime('20150323', '%Y%m%d'),
   last_updated:    Date.strptime('20150323', '%Y%m%d'),
-  columns:         {
-    character:        {
+  columns: {
+    character: {
       sub_trees:          class_kit_subtrees,
       chance_of_multiple: 0,
       min:                1,
@@ -275,13 +275,13 @@ GAMES[:battlefield_4] = {
       max:                1,
       options:            secondary_weapons,
     },
-    grenades:         {
+    grenades: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
       options:            grenades,
     },
-    knife:            {
+    knife: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,

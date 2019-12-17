@@ -8,15 +8,15 @@ GAMES[:fallout3] = {
   background:      'fallout3.jpg',
   added:           Date.strptime('20150404', '%Y%m%d'),
   last_updated:    Date.strptime('20150404', '%Y%m%d'),
-  columns:         {
-    special:           {
+  columns: {
+    special: {
       max_per: 10,
       min:     1,
       max:     40,
-      type:    'Column::Stats',
+      stats_column: true,
       options: %i[strength perception endurance charisma intelligence agility luck],
     },
-    tag_skills:        {
+    tag_skills: {
       chance_of_multiple: 100,
       min:                3,
       max:                3,
@@ -31,7 +31,7 @@ GAMES[:fallout3] = {
         :'Appropriate for your primary weapon',
       ],
     },
-    primary_weapon:    {
+    primary_weapon: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -52,7 +52,7 @@ GAMES[:fallout3] = {
         :"Unarmed: Bare Fists",
       ],
     },
-    human_companion:   {
+    human_companion: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -66,7 +66,7 @@ GAMES[:fallout3] = {
         :Charon,
       ],
     },
-    freelance_theft:   {
+    freelance_theft: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -88,7 +88,7 @@ GAMES[:fallout3] = {
         :'Constant rampage',
       ],
     },
-    "Megaton":         {
+    "Megaton": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,
@@ -98,7 +98,7 @@ GAMES[:fallout3] = {
         :"Do not blow it up",
       ],
     },
-    "The FEV vial":    {
+    "The FEV vial": {
       spoiler:            true,
       chance_of_multiple: 0,
       min:                1,

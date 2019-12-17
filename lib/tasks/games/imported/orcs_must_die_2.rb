@@ -8,8 +8,8 @@ GAMES[:orcs_must_die_2] = {
   background:      'omd2.jpg',
   added:           Date.strptime('20150323', '%Y%m%d'),
   last_updated:    Date.strptime('20150323', '%Y%m%d'),
-  columns:         {
-    character:  {
+  columns: {
+    character: {
       sub_trees:          %i[sorcerer_traps_and_weapons war_mage_traps_and_weapons],
       chance_of_multiple: 0,
       min:                1,

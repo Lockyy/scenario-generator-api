@@ -6,8 +6,8 @@ GAMES[:skyrim] = {
   title:           'Skyrim',
   generator_title: 'Character',
   background:      'skyrim.jpg',
-  columns:         {
-    race:              {
+  columns: {
+    race: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -24,7 +24,7 @@ GAMES[:skyrim] = {
         Redguard
       ],
     },
-    birthsign:         {
+    birthsign: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -44,7 +44,7 @@ GAMES[:skyrim] = {
         :'The Warrior',
       ],
     },
-    focus_skills:      {
+    focus_skills: {
       help:               'The primary skills you should aim to use and improve',
       chance_of_multiple: 100,
       min:                3,
@@ -64,7 +64,7 @@ GAMES[:skyrim] = {
         Alchemy
       ],
     },
-    factions_to_join:  {
+    factions_to_join: {
       help:               'The factions you are required to join, you can join others if you want as well',
       chance_of_multiple: -1,
       min:                1,
@@ -77,7 +77,7 @@ GAMES[:skyrim] = {
         :'Thieves Guild',
       ],
     },
-    weapons:           {
+    weapons: {
       chance_of_multiple: 100,
       min:                2,
       max:                2,
@@ -110,7 +110,7 @@ GAMES[:skyrim] = {
         :Crossbows,
       ],
     },
-    armour:            {
+    armour: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -122,7 +122,7 @@ GAMES[:skyrim] = {
         :Robes,
       ],
     },
-    civil_war_side:    {
+    civil_war_side: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -131,7 +131,7 @@ GAMES[:skyrim] = {
         :Stormcloaks,
       ],
     },
-    dawnguard_side:    {
+    dawnguard_side: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -140,7 +140,7 @@ GAMES[:skyrim] = {
         :'The Dawnguard',
       ],
     },
-    home:              {
+    home: {
       chance_of_multiple: 20,
       min:                1,
       max:                8,
@@ -155,7 +155,7 @@ GAMES[:skyrim] = {
         :'Windstad Manor (Morthal)',
       ],
     },
-    companion:         {
+    companion: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,
@@ -198,7 +198,7 @@ GAMES[:skyrim] = {
         :Vigilance,
       ],
     },
-    freelance_theft:   {
+    freelance_theft: {
       chance_of_multiple: 0,
       min:                1,
       max:                1,

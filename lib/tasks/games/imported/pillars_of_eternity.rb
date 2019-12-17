@@ -59,7 +59,7 @@ classes = [
   :Ranger,
   :Rogue,
   {
-    Chanter:     {
+    Chanter: {
       title:   'Phrases',
       min:     2,
       options: [
@@ -266,28 +266,28 @@ GAMES[:pillars_of_eternity] = {
   background:      'pillars_of_eternity.jpg',
   added:           Date.strptime('20150404', '%Y%m%d'),
   last_updated:    Date.strptime('20150404', '%Y%m%d'),
-  columns:         {
-    sex:               {
+  columns: {
+    sex: {
       options: %i[
         Male
         Female
       ],
     },
-    race:              {
+    race: {
       options: race_options,
     },
-    class:             {
+    class: {
       sub_trees: class_subtrees,
       options:   classes,
     },
     primary_attribute: {
       options: attributes,
     },
-    culture:           {
+    culture: {
       sub_trees: cultures_sub_trees,
       options:   cultures_array,
     },
-    voice:             {
+    voice: {
       options: voices,
     },
   },

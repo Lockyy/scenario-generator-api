@@ -699,12 +699,12 @@ GAMES[:gta_v_online] = {
   background:      'gtavonline.jpg',
   added:           Date.strptime('20150424', '%Y%m%d'),
   last_updated:    Date.strptime('20150424', '%Y%m%d'),
-  columns:         {
-    car:               {
+  columns: {
+    car: {
       help:    'Only ever drive this car. Drive a car in the same class until you can get it.',
       options: cars,
     },
-    car_colour:        {
+    car_colour: {
       help:    "The exact shade is your own choice. Yeah, it's colour not color, deal with it.",
       options: car_colours,
     },
@@ -715,7 +715,7 @@ GAMES[:gta_v_online] = {
       help:    "Spawn point and area you prefer to hang around. If this isn't high-end you can get one as your secondary for heists.",
       options: apartments,
     },
-    clothing:          {
+    clothing: {
       sub_trees: %i[custom outfit],
       options:   [
         {
@@ -734,11 +734,11 @@ GAMES[:gta_v_online] = {
         },
       ],
     },
-    primary_weapon:    {
+    primary_weapon: {
       help:    'You may only use this weapon, except when absolutely necessary',
       options: weapons,
     },
-    challenges:        {
+    challenges: {
       min:                4,
       max:                6,
       chance_of_multiple: 25,
