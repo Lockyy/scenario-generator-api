@@ -24,3 +24,5 @@ config/unicorn.rb
 db/backups/*
 
 .rspec.persistence
+
+lib/tasks/games_to_import/*.rb
