@@ -25,4 +25,4 @@ db/backups/*
 
 .rspec.persistence
 
-lib/tasks/games_to_import/*.rb
+lib/tasks/games/to_import/*.rb

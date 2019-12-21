@@ -110,11 +110,13 @@ class Importers::GeneratorImporter
   end
 
   def create_column_params(key, params)
+    type = params[:stats_column].present? ? 'Column::Stats' : 'Column::Options'
+
     column_param_hash = {
       name:                    params[:title] || key_to_title_string(key),
       help:                    params[:help],
       spoilers:                params[:spoilers],
-      type:                    params[:type],
+      type:                    type,
       allow_duplicate_options: params[:allow_duplicate_options],
       chance_of_multiple:      params[:chance_of_multiple],
     }.delete_if { |_k, v| v.nil? }
