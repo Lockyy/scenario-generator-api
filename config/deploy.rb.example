@@ -16,10 +16,10 @@ set :forward_agent, true
 
 set :rvm_path, '/home/deploy/.rvm/scripts/rvm'
 
-set :shared_paths, ['config/unicorn.rb', '.env', 'log', 'tmp']
+set :shared_paths, ['config/unicorn.rb', '.env', 'log', 'tmp', 'lib/tasks/games/to_import']
 
 task :environment do
-  invoke :'rvm:use[ruby-2.6.0@default]'
+  invoke :'rvm:use[ruby-2.6.5@default]'
 end
 
 task setup: :environment do
@@ -29,6 +29,8 @@ task setup: :environment do
   queue! %(chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/log")
   queue! %(mkdir -p "#{deploy_to}/#{shared_path}/tmp")
   queue! %(chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/tmp")
+  queue! %(mkdir -p "#{deploy_to}/#{shared_path}/lib/tasks/games/to_import")
+  queue! %(chmod g+rx,u+rwx "#{deploy_to}/#{shared_path}/lib/tasks/games/to_import")
 
   queue! %[touch "#{deploy_to}/#{shared_path}/config/unicorn.rb"]
   queue! %[touch "#{deploy_to}/#{shared_path}/.env"]
