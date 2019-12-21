@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.6.0'
+ruby '2.6.5'
 
 gem 'acts_as_list', '~> 0.9'
 gem 'dotenv-rails', '~> 2.6'
