@@ -50,9 +50,7 @@ class Column
 
     # Turns stats into an array of hashes with all the data that a regular option would have.
     def create_sorted_stat_hashes(stats)
-      stat_hashes = stats.map { |stat, value| create_stat_hash(stat, value) }
-      # Ensure the stats always come out in the same order
-      stat_hashes.sort_by { |stat_hash| stat_hash[:text] }
+      stats.map(&method(:create_stat_hash))
     end
 
     def create_stat_hash(stat, value)
@@ -65,7 +63,7 @@ class Column
 
     def base_stats
       # We do this rather than Hash.new(min) to ensure all options appear in the final hash
-      options.order(:text).to_a.product([min]).to_h
+      options.order(:id).to_a.product([min]).to_h
     end
 
     def points_to_assign
