@@ -1,6 +1,8 @@
 # This is the configuration used to check the rubocop source code.
 # Check out: https://github.com/bbatsov/rubocop
 
+require: rubocop-rails
+
 AllCops:
   Include:
     - '**/*.rb'
@@ -34,7 +36,7 @@ Style/Documentation:
 Metrics/MethodLength:
   Max: 15
 
-Layout/IndentArray:
+Layout/IndentFirstArrayElement:
   Enabled: false
 
 Style/Lambda:

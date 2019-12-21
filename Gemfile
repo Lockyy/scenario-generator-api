@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '2.6.0'
+ruby '2.6.5'
 
 gem 'acts_as_list', '~> 0.9'
 gem 'dotenv-rails', '~> 2.6'
@@ -11,7 +11,6 @@ gem 'jbuilder', '~> 2.8'
 gem 'pg', '~> 1.1'
 gem 'rack-cors', '~> 0.4', require: 'rack/cors'
 gem 'rails', '~> 5.2'
-gem 'rubocop-rails', '~> 2.0'
 gem 'unicorn', '~> 5.4'
 gem 'weighted_randomizer', '~> 0.1'
 
@@ -42,6 +41,7 @@ group :development do
   gem 'reek', '~> 5.3'
   gem 'rubocop', '~> 0.63'
   gem 'rubocop-checkstyle_formatter', '~> 0.4', require: false
+  gem 'rubocop-rails', '~> 2.0'
   gem 'spring', '~> 1.7'
   gem 'web-console', '~> 2.3'
 end
