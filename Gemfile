@@ -4,10 +4,12 @@ source 'https://rubygems.org'
 ruby '2.6.5'
 
 gem 'acts_as_list', '~> 0.9'
+gem 'annotate', '~> 2.7'
 gem 'dotenv-rails', '~> 2.6'
 gem 'friendly_id', '~> 5.2'
 gem 'gibbon', '~> 2.2'
 gem 'jbuilder', '~> 2.8'
+gem 'json-schema', '~> 2.8'
 gem 'pg', '~> 1.1'
 gem 'rack-cors', '~> 0.4', require: 'rack/cors'
 gem 'rails', '~> 5.2'
@@ -28,7 +30,6 @@ group :development, :test do
 end
 
 group :development do
-  gem 'annotate', '~> 2.7'
   gem 'better_errors', '~> 2.5'
   gem 'binding_of_caller', '~> 0.8'
   gem 'brakeman', '~> 4.4', require: false
