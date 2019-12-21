@@ -19,7 +19,7 @@ set :rvm_path, '/home/deploy/.rvm/scripts/rvm'
 set :shared_paths, ['config/unicorn.rb', '.env', 'log', 'tmp']
 
 task :environment do
-  invoke :'rvm:use[ruby-2.6.0@default]'
+  invoke :'rvm:use[ruby-2.6.5@default]'
 end
 
 task setup: :environment do
