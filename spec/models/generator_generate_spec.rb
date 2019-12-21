@@ -16,7 +16,7 @@ describe Generator do
 
     describe 'with a stats column' do
       before do
-        @column = create(:stats_column, min: 1, max: 2, max_per: 2, parent_generators: [@generator])
+        @column = create(:stats_column, min: 1, max: 5, max_per: 2, parent_generators: [@generator])
       end
 
       describe 'with enough options to assign all points' do
@@ -29,8 +29,7 @@ describe Generator do
         end
 
         it 'assigns all points correctly' do
-          total_assigned_points = @stat_values.sum - (@stat_values.length * @column.min)
-          expect(total_assigned_points).to eq @column.max
+          expect(@stat_values.sum).to eq @column.max
         end
 
         it 'applies up to max_per per option' do

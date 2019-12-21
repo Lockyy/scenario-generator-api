@@ -64,37 +64,25 @@ class Column
     end
 
     def base_stats
-      # We iterate over options and set it to min manually instead of just doing
-      # stats = Hash.new(min) because this way it ensures that every stat definitely appears
-      # in the results even if it has no extra points put into it.
-      options.map { |stat| [stat, min] }.to_h
+      # We do this rather than Hash.new(min) to ensure all options appear in the final hash
+      options.order(:text).to_a.product([min]).to_h
+    end
+
+    def points_to_assign
+      [max - (options.count * min), 0].max
     end
 
     def assign_points_to_options
       stats = base_stats
+
       points_to_assign.times do
-        assign_point_to_random_stat(stats)
+        assignable_stats = stats.select { |stat, value| value < max_per }.to_h.keys
+        return stats if assignable_stats.empty?
+
+        stats[assignable_stats.sample] += 1
       end
+
       stats
-    end
-
-    def assign_point_to_random_stat(stats)
-      stats[stat_to_assign_to(stats)] += 1
-    end
-
-    def stat_to_assign_to(stats)
-      stat = options[rand(options.length)] until stat && stats[stat] < max_per
-      stat
-    end
-
-    # This is the max points we could assign if we could assign as many as we wanted.
-    # If we had 5 options and each had a max_per of 10 and min of 1 then our max assignable points would be 45
-    def max_assignable_points
-      options.length * (max_per - min)
-    end
-
-    def points_to_assign
-      [max, max_assignable_points].min
     end
   end
 end
