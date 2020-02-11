@@ -33,6 +33,7 @@ describe Api::V1::GeneratorsController do
             'id' => @option.id,
             'text' => @option.text,
             'weight' => @option.weight,
+            'exclusive_options' => [@option_two.id],
             'columns' => [{
               'id' => @option_column.id,
               'name' => @option_column.name,
@@ -52,6 +53,7 @@ describe Api::V1::GeneratorsController do
             'text' => @option_two.text,
             'weight' => @option_two.weight,
             'columns' => [],
+            'exclusive_options' => [@option.id]
           },
         ],
         'exclusion_sets' => [
