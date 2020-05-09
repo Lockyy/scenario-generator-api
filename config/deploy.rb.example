@@ -48,7 +48,6 @@ task deploy: :environment do
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     invoke :'rails:db_migrate'
-    invoke :'compile_assets'
     invoke :'deploy:cleanup'
     invoke :'unicorn:stop'
     invoke :'unicorn:start'
